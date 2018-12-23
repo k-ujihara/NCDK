@@ -45,23 +45,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#fractionalPSA")]
     public class FractionalPSADescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        private readonly IAtomContainer container;
-
-        public FractionalPSADescriptor(IAtomContainer container)
+        public FractionalPSADescriptor()
         {
-            container = (IAtomContainer)container.Clone();
-
-            // type & assign implicit hydrogens
-            var matcher = CDK.AtomTypeMatcher;
-            foreach (var atom in container.Atoms)
-            {
-                var type = matcher.FindMatchingAtomType(container, atom);
-                AtomTypeManipulator.Configure(atom, type);
-            }
-            var adder = CDK.HydrogenAdder;
-            adder.AddImplicitHydrogens(container);
-
-            this.container = container;
         }
 
         [DescriptorResult]
@@ -82,14 +67,26 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// Calculates the topological polar surface area and expresses it as a ratio to molecule size.
         /// </summary>
         /// <returns>Descriptor(s) retaining to polar surface area</returns>
-        public Result Calculate()
+        public Result Calculate(IAtomContainer container)
         {
+            container = (IAtomContainer)container.Clone();
+
+            // type & assign implicit hydrogens
+            var matcher = CDK.AtomTypeMatcher;
+            foreach (var atom in container.Atoms)
+            {
+                var type = matcher.FindMatchingAtomType(container, atom);
+                AtomTypeManipulator.Configure(atom, type);
+            }
+            var adder = CDK.HydrogenAdder;
+            adder.AddImplicitHydrogens(container);
+
             double polar = 0;
             double weight = 0;
 
             // polar surface area: chain it off the TPSADescriptor
-            var tpsa = new TPSADescriptor(container);
-            var value = tpsa.Calculate();
+            var tpsa = new TPSADescriptor();
+            var value = tpsa.Calculate(container);
             polar = value.Value;
 
             //  molecular weight
@@ -102,6 +99,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return new Result(weight == 0 ? 0 : polar / weight);
         }
 
-        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
+        IDescriptorResult IMolecularDescriptor.Calculate(IAtomContainer mol) => Calculate(mol);
     }
 }

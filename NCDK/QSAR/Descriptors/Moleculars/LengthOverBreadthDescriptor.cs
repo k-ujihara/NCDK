@@ -46,11 +46,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#lengthOverBreadth")]
     public class LengthOverBreadthDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        private readonly IAtomContainer container;
-
-        public LengthOverBreadthDescriptor(IAtomContainer container)
+        public LengthOverBreadthDescriptor()
         {
-            this.container = container;
+            
         }
 
         [DescriptorResult]
@@ -81,7 +79,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// Evaluate the descriptor for the molecule.
         /// </summary>
         /// <returns>LOBMAX and LOBMIN in that order</returns>
-        public Result Calculate()
+        public Result Calculate(IAtomContainer container)
         {
             if (!GeometryUtil.Has3DCoordinates(container))
                 throw new ThreeDRequiredException("Molecule must have 3D coordinates");
@@ -217,6 +215,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return ranges;
         }
 
-        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
+        IDescriptorResult IMolecularDescriptor.Calculate(IAtomContainer mol) => Calculate(mol);
     }
 }

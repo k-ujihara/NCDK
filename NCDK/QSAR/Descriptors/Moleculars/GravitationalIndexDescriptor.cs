@@ -17,7 +17,6 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Config;
 using NCDK.Geometries;
 using System;
 using System.Collections.Generic;
@@ -42,12 +41,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#gravitationalIndex")]
     public class GravitationalIndexDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        private readonly IAtomContainer container;
-
-        public GravitationalIndexDescriptor(IAtomContainer container)
+        public GravitationalIndexDescriptor()
         {
-            container = (IAtomContainer)container.Clone();
-            this.container = container;
         }
 
         [DescriptorResult]
@@ -126,8 +121,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// Calculates the 9 gravitational indices.
         /// </summary>
         /// <returns>An ArrayList containing 9 elements in the order described above</returns>
-        public Result Calculate()
+        public Result Calculate(IAtomContainer container)
         {
+            container = (IAtomContainer)container.Clone();
+
             if (!GeometryUtil.Has3DCoordinates(container))
                 throw new ThreeDRequiredException("Molecule must have 3D coordinates");
 
@@ -249,6 +246,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 });
         }
        
-        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
+        IDescriptorResult IMolecularDescriptor.Calculate(IAtomContainer mol) => Calculate(mol);
     }
 }

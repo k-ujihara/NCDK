@@ -26,7 +26,6 @@ namespace NCDK
     /// </summary>
     // @author     egonw
     // @cdk.module interfaces
-    // @cdk.githash
     public interface ISubstance
         : IChemObjectSet<IAtomContainer>
     {

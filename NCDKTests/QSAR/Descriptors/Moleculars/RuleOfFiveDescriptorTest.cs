@@ -25,7 +25,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     [TestClass()]
     public class RuleOfFiveDescriptorTest : MolecularDescriptorTest<RuleOfFiveDescriptor>
     {
-        protected override RuleOfFiveDescriptor CreateDescriptor(IAtomContainer mol) => new RuleOfFiveDescriptor(mol, checkAromaticity: true);
+        protected override RuleOfFiveDescriptor CreateDescriptor() => new RuleOfFiveDescriptor(checkAromaticity: true);
 
         [TestMethod()]
         public void TestRuleOfFiveDescriptor()
@@ -33,7 +33,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("CCCC(OCC)OCC(c1cccc2ccccc12)C4CCC(CCCO)C(CC3CNCNC3)C4"); //
             AddExplicitHydrogens(mol);
-            Assert.AreEqual(3, CreateDescriptor(mol).Calculate().Value);
+            Assert.AreEqual(3, CreateDescriptor().Calculate(mol).Value);
         }
 
         [TestMethod()]
@@ -42,7 +42,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("CCCC1=CC(NC(=O)CC)=CC(CCC)=C1"); // nRot = 10 (excl. amide C-N bond)
             AddExplicitHydrogens(mol);
-            Assert.AreEqual(0, CreateDescriptor(mol).Calculate().Value);
+            Assert.AreEqual(0, CreateDescriptor().Calculate(mol).Value);
         }
 
         [TestMethod()]
@@ -51,7 +51,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("CCCCC1=CC(CCC)=CC(NC(=O)CC)=C1"); // nRot = 11 (excl. amide C-N bond)
             AddExplicitHydrogens(mol);
-            Assert.AreEqual(1, CreateDescriptor(mol).Calculate().Value);
+            Assert.AreEqual(1, CreateDescriptor().Calculate(mol).Value);
         }
     }
 }

@@ -18,7 +18,6 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Config;
 using NCDK.Graphs;
 using NCDK.Tools.Manipulator;
 using System;
@@ -43,13 +42,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#weightedPath")]
     public class WeightedPathDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        private readonly IAtomContainer container;
-
-        public WeightedPathDescriptor(IAtomContainer container)
+        public WeightedPathDescriptor()
         {
-            container = AtomContainerManipulator.RemoveHydrogens(container);
-
-            this.container = container;
         }
 
         [DescriptorResult]
@@ -97,8 +91,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// Calculates the weighted path descriptors.
         /// </summary>
         /// <returns>A value representing the weighted path values</returns>
-        public Result Calculate()
+        public Result Calculate(IAtomContainer container)
         {
+            container = AtomContainerManipulator.RemoveHydrogens(container);
+
             int natom = container.Atoms.Count;
             var retval = new List<double>(5);
 
@@ -218,6 +214,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return pathWts;
         }
 
-        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
+        IDescriptorResult IMolecularDescriptor.Calculate(IAtomContainer mol) => Calculate(mol);
     }
 }

@@ -37,7 +37,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             {
                 container = reader.Read(CDK.Builder.NewAtomContainer());
             }
-            var result = CreateDescriptor(container).Calculate();
+            var result = CreateDescriptor().Calculate(container);
             Assert.AreEqual(5, result.Values.Count);
             Assert.IsTrue(result.Values is IEnumerable<double>);
             for (int i = 0; i < 5; i++)
@@ -60,7 +60,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             {
                 container = reader.Read(CDK.Builder.NewAtomContainer());
             }
-            var result = CreateDescriptor(container).Calculate();
+            var result = CreateDescriptor().Calculate(container);
             Assert.AreEqual(5, result.Values.Count);
             Assert.IsTrue(result.Values is IEnumerable<double>);
             for (int i = 0; i < 5; i++)
@@ -83,7 +83,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             {
                 container = reader.Read(CDK.Builder.NewAtomContainer());
             }
-            var result = CreateDescriptor(container).Calculate();
+            var result = CreateDescriptor().Calculate(container);
             Assert.AreEqual(5, result.Values.Count);
             Assert.IsTrue(result.Values is IEnumerable<double>);
             for (int i = 0; i < 5; i++)

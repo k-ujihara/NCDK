@@ -65,12 +65,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#eccentricConnectivityIndex")]
     public class EccentricConnectivityIndexDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        private readonly IAtomContainer container;
-
-        public EccentricConnectivityIndexDescriptor(IAtomContainer container)
+        public EccentricConnectivityIndexDescriptor()
         {
-            container = AtomContainerManipulator.RemoveHydrogens(container);
-            this.container = container;
         }
 
         [DescriptorResult]
@@ -91,8 +87,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// Calculates the eccentric connectivity
         /// </summary>
         /// <returns>A <see cref="Result"/> value representing the eccentric connectivity index</returns>
-        public Result Calculate()
+        public Result Calculate(IAtomContainer container)
         {
+            container = AtomContainerManipulator.RemoveHydrogens(container);
+
             var natom = container.Atoms.Count;
             var admat = AdjacencyMatrix.GetMatrix(container);
             var distmat = PathTools.ComputeFloydAPSP(admat);
@@ -112,6 +110,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return new Result(eccenindex);
         }
 
-        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
+        IDescriptorResult IMolecularDescriptor.Calculate(IAtomContainer mol) => Calculate(mol);
     }
 }

@@ -25,12 +25,13 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 {
     // @cdk.module test-qsarmolecular
     [TestClass()]
-    public class AcidicGroupCountDescriptorTest : MolecularDescriptorTest<AcidicGroupCountDescriptor>
+    public class AcidicGroupCountDescriptorTest 
+        : MolecularDescriptorTest<AcidicGroupCountDescriptor>
     {
         [TestMethod()]
         public void TestConstructor()
         {
-            Assert.IsNotNull(new AcidicGroupCountDescriptor(Water));
+            Assert.IsNotNull(new AcidicGroupCountDescriptor());
         }
 
         [TestMethod()]
@@ -38,7 +39,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("CC(=O)O");
-            var result = CreateDescriptor(mol).Calculate();
+            var result = CreateDescriptor().Calculate(mol);
             Assert.AreEqual(1, result.Value);
         }
 
@@ -47,7 +48,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("OS(=O)(=O)O");
-            var result = CreateDescriptor(mol).Calculate();
+            var result = CreateDescriptor().Calculate(mol);
             Assert.AreEqual(2, result.Value);
         }
 
@@ -57,7 +58,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("O=P(=O)O");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
-            var result = CreateDescriptor(mol).Calculate();
+            var result = CreateDescriptor().Calculate(mol);
             Assert.AreEqual(1, result.Value);
         }
 
@@ -67,7 +68,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("[NH](S(=O)=O)C(F)(F)F");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
-            var result = CreateDescriptor(mol).Calculate();
+            var result = CreateDescriptor().Calculate(mol);
             Assert.AreEqual(1, result.Value);
         }
 
@@ -76,7 +77,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("[nH]1nnnc1");
-            var result = CreateDescriptor(mol).Calculate();
+            var result = CreateDescriptor().Calculate(mol);
             Assert.AreEqual(2, result.Value);
         }
 
@@ -149,7 +150,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AddImplicitHydrogens(mol);
 
-            var result = CreateDescriptor(mol).Calculate();
+            var result = CreateDescriptor().Calculate(mol);
             Assert.AreEqual(3, result.Value);
         }
 
@@ -332,7 +333,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             mol.Bonds.Add(b28);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AddImplicitHydrogens(mol);
-            var result = CreateDescriptor(mol).Calculate();
+            var result = CreateDescriptor().Calculate(mol);
             Assert.AreEqual(2, result.Value);
         }
     }

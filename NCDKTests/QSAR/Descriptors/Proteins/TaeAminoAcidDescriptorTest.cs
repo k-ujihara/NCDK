@@ -32,7 +32,7 @@ namespace NCDK.QSAR.Descriptors.Proteins
         public void TestTaeAminoAcidDescriptor()
         {
             var pepseq = ProteinBuilderTool.CreateProtein("ACDEFGH", CDK.Builder);
-            var result = CreateDescriptor(pepseq).Calculate();
+            var result = CreateDescriptor().Calculate(pepseq);
 
             Assert.AreEqual(147, result.Values.Count);
         }

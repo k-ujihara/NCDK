@@ -33,7 +33,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             IBond b4 = mol.Builder.NewBond(a4, a2, BondOrder.Single);
             mol.Bonds.Add(b4);
 
-            var ret = CreateDescriptor(mol).Calculate().Values;
+            var ret = CreateDescriptor().Calculate(mol).Values;
 
             Assert.AreEqual(0.0000, ret[0], 0.0001);
             Assert.AreEqual(0.0000, ret[1], 0.0001);
@@ -88,7 +88,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             IBond b8 = mol.Builder.NewBond(a8, a2, BondOrder.Single);
             mol.Bonds.Add(b8);
 
-            var ret = CreateDescriptor(mol).Calculate().Values;
+            var ret = CreateDescriptor().Calculate(mol).Values;
 
             Assert.AreEqual(0.7416, ret[0], 0.0001);
             Assert.AreEqual(1.0934, ret[1], 0.0001);
@@ -153,7 +153,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             IBond b10 = mol.Builder.NewBond(a10, a1, BondOrder.Single);
             mol.Bonds.Add(b10);
 
-            var ret = CreateDescriptor(mol).Calculate().Values;
+            var ret = CreateDescriptor().Calculate(mol).Values;
 
             Assert.AreEqual(1.6076, ret[0], 0.0001);
             Assert.AreEqual(3.6550, ret[1], 0.0001);

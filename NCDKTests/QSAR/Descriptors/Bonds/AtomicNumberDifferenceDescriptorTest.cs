@@ -25,12 +25,15 @@ namespace NCDK.QSAR.Descriptors.Bonds
     [TestClass()]
     public class AtomicNumberDifferenceDescriptorTest : BondDescriptorTest<AtomicNumberDifferenceDescriptor>
     {
+        protected override AtomicNumberDifferenceDescriptor Descriptor { get; } = new AtomicNumberDifferenceDescriptor();
+        protected override AtomicNumberDifferenceDescriptor CreateDescriptor(IAtomContainer mol) => CreateDescriptor();
+
         [TestMethod()]
         public void TestDescriptor1()
         {
             var sp = CDK.SmilesParser;
             var mol1 = sp.ParseSmiles("CC");
-            var value = CreateDescriptor(mol1).Calculate(mol1.Bonds[0]).Value;
+            var value = CreateDescriptor().Calculate(mol1.Bonds[0]).Value;
             Assert.AreEqual(0, value, 0.0000);
         }
 
@@ -39,7 +42,7 @@ namespace NCDK.QSAR.Descriptors.Bonds
         {
             var sp = CDK.SmilesParser;
             var mol1 = sp.ParseSmiles("CO");
-            double value = CreateDescriptor(mol1).Calculate(mol1.Bonds[0]).Value;
+            double value = CreateDescriptor().Calculate(mol1.Bonds[0]).Value;
             Assert.AreEqual(2, value, 0.0000);
         }
     }

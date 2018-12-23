@@ -29,13 +29,24 @@ namespace NCDK.QSAR.Descriptors
     /// </summary>
     /// <typeparam name="T"></typeparam>
     // @cdk.module test-qsar
-    public abstract class DescriptorTest<T> : CDKTestCase where T : IDescriptor
+    public abstract class DescriptorTest<T>
+        : CDKTestCase where T : IDescriptor
     {
         private ConstructorInfo ctor;
         private ParameterInfo[] parametersInfos;
         private readonly object syncctor = new object();
 
+        protected virtual T CreateDescriptor()
+        {
+            return CreateDescriptorImpl(null);
+        }
+
         protected virtual T CreateDescriptor(IAtomContainer mol)
+        {
+            return CreateDescriptorImpl(mol);
+        }
+
+        private T CreateDescriptorImpl(IAtomContainer mol)
         {
             if (this.ctor == null)
                 lock (syncctor)
@@ -44,12 +55,15 @@ namespace NCDK.QSAR.Descriptors
                     foreach (var ctor in ctors)
                     {
                         var parametersInfos = ctor.GetParameters();
-                        if (parametersInfos.Length < 1)
-                            continue;
-                        var first = parametersInfos.First();
-                        if (!typeof(IAtomContainer).IsAssignableFrom(first.ParameterType))
-                            continue;
-                        var isAllHaveDefault = !parametersInfos.Skip(1).Any(n => !n.HasDefaultValue);
+                        if (mol != null)
+                        {
+                            if (parametersInfos.Length < 1)
+                                continue;
+                            var first = parametersInfos.First();
+                            if (!typeof(IAtomContainer).IsAssignableFrom(first.ParameterType))
+                                continue;
+                        }
+                        var isAllHaveDefault = !parametersInfos.Skip(mol== null ? 0 : 1).Any(n => !n.HasDefaultValue);
                         if (isAllHaveDefault)
                         {
                             // found it 
@@ -62,8 +76,10 @@ namespace NCDK.QSAR.Descriptors
                         throw new Exception($"Could not found {typeof(T).FullName}.{typeof(T).Name}({nameof(IAtomContainer)})");
                 }
             var parameters = new object[parametersInfos.Length];
-            parameters[0] = mol;
-            for (int i = 1; i < parametersInfos.Length; i++)
+            int i = 0;
+            if (mol != null)
+                parameters[i++] = mol;
+            for (; i < parametersInfos.Length; i++)
                 parameters[i] = parametersInfos[i].DefaultValue;
             return (T)ctor.Invoke(parameters);
         }

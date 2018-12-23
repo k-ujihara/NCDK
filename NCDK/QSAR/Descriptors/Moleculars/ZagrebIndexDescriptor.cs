@@ -33,11 +33,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#zagrebIndex")]
     public class ZagrebIndexDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        private readonly IAtomContainer container;
-
-        public ZagrebIndexDescriptor(IAtomContainer container)
+        public ZagrebIndexDescriptor()
         {
-            this.container = container;
         }
 
         [DescriptorResult]
@@ -61,7 +58,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// Evaluate the Zagreb Index for a molecule.
         /// </summary>
         /// <returns>Zagreb index</returns>
-        public Result Calculate()
+        public Result Calculate(IAtomContainer container)
         {
             double zagreb = 0;
             foreach (var atom in container.Atoms)
@@ -83,6 +80,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return new Result(zagreb);
         }
 
-        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
+        IDescriptorResult IMolecularDescriptor.Calculate(IAtomContainer mol) => Calculate(mol);
     }
 }

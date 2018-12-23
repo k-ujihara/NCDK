@@ -27,11 +27,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#Fsp3")]
     public class FractionalCSP3Descriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        private readonly IAtomContainer container;
-
-        public FractionalCSP3Descriptor(IAtomContainer container)
-        {
-            this.container = container;
+        public FractionalCSP3Descriptor()
+        {            
         }
 
         [DescriptorResult]
@@ -51,8 +48,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// Calculates the fraction of C atoms that are SP3 hybridized.
         /// </summary>
-        /// <returns>F<sub>sp</sub><sup>3</sup></returns>
-        public Result Calculate()
+        /// <returns>Fsp<sup>3</sup></returns>
+        public Result Calculate(IAtomContainer container)
         {
             double v;
             int nC = 0;
@@ -75,6 +72,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return new Result(v);
         }
 
-        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
+        IDescriptorResult IMolecularDescriptor.Calculate(IAtomContainer mol) => Calculate(mol);
     }
 }

@@ -34,11 +34,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#vAdjMa")]
     public class VAdjMaDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        private readonly IAtomContainer container;
-
-        public VAdjMaDescriptor(IAtomContainer container)
+        public VAdjMaDescriptor()
         {
-            this.container = container;
         }
 
         [DescriptorResult]
@@ -55,7 +52,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             public double Value => VertexAdjacency;
         }
 
-        public Result Calculate()
+        public Result Calculate(IAtomContainer container)
         {
             var n = container.Bonds
                 .Count(bond => bond.Atoms[0].AtomicNumber != 1 
@@ -66,6 +63,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return new Result(vadjMa);
         }
 
-        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
+        IDescriptorResult IMolecularDescriptor.Calculate(IAtomContainer mol) => Calculate(mol);
     }
 }

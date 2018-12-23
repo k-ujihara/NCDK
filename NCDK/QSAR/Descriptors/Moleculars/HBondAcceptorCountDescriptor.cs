@@ -18,7 +18,6 @@
  */
 
 using NCDK.Aromaticities;
-using NCDK.Config;
 using NCDK.Tools.Manipulator;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
@@ -47,18 +46,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#hBondacceptors")]
     public class HBondAcceptorCountDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        private readonly IAtomContainer container;
+        private readonly bool checkAromaticity;
 
-        public HBondAcceptorCountDescriptor(IAtomContainer container, bool checkAromaticity = false)
+        public HBondAcceptorCountDescriptor(bool checkAromaticity = false)
         {
-            // do aromaticity detection
-            if (checkAromaticity)
-            {
-                container = (IAtomContainer)container.Clone(); // don't mod original
-                AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(container);
-                Aromaticity.CDKLegacy.Apply(container);
-            }
-            this.container = container;
+            this.checkAromaticity = checkAromaticity;
         }
 
         [DescriptorResult]
@@ -79,8 +71,16 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// Calculates the number of H bond acceptors.
         /// </summary>
         /// <returns>number of H bond acceptors</returns>
-        public Result Calculate()
+        public Result Calculate(IAtomContainer container)
         {
+            // do aromaticity detection
+            if (checkAromaticity)
+            {
+                container = (IAtomContainer)container.Clone(); // don't mod original
+                AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(container);
+                Aromaticity.CDKLegacy.Apply(container);
+            }
+
             int hBondAcceptors = 0;
 
             // labelled for loop to allow for labelled continue statements within the loop
@@ -134,6 +134,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return new Result(hBondAcceptors);
         }
 
-        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
+        IDescriptorResult IMolecularDescriptor.Calculate(IAtomContainer mol) => Calculate(mol);
     }
 }

@@ -17,9 +17,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Aromaticities;
-using NCDK.Config;
-using NCDK.Tools.Manipulator;
+using System.Linq;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
@@ -50,12 +48,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#hBondDonors")]
     public class HBondDonorCountDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        private readonly IAtomContainer container;
-
-        public HBondDonorCountDescriptor(IAtomContainer container)
+        public HBondDonorCountDescriptor()
         {
-            container = (IAtomContainer)container.Clone(); // don't mod original
-            this.container = container;
         }
 
         [DescriptorResult]
@@ -76,16 +70,17 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// Calculates the number of H bond donors.
         /// </summary>
         /// <returns>number of H bond donors</returns>
-        public Result Calculate()
+        public Result Calculate(IAtomContainer container)
         {
+            container = (IAtomContainer)container.Clone(); // don't mod original
+
             int hBondDonors = 0;
 
             // iterate over all atoms of this AtomContainer; use label atomloop to allow for labelled continue
 
             //atomloop:
-            for (int atomIndex = 0; atomIndex < container.Atoms.Count; atomIndex++)
+            foreach (var atom in container.Atoms)
             {
-                var atom = container.Atoms[atomIndex];
                 // checking for O and N atoms where the formal charge is >= 0
                 switch (atom.AtomicNumber)
                 {
@@ -93,33 +88,28 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     case AtomicNumbers.N:
                         if (atom.FormalCharge >= 0)
                         {
-                            // implicit hydrogens
                             var implicitH = atom.ImplicitHydrogenCount ?? 0;
                             if (implicitH > 0)
                             {
+                                // implicit hydrogens
                                 hBondDonors++;
-                                goto continue_atomloop; // we skip the explicit hydrogens part cause we found implicit hydrogens
+                                // we skip the explicit hydrogens part cause we found implicit hydrogens
                             }
-                            // explicit hydrogens
-                            var neighbours = container.GetConnectedAtoms(atom);
-                            foreach (var neighbour in neighbours)
+                            else
                             {
-                                if ((neighbour).AtomicNumber.Equals(AtomicNumbers.H))
-                                {
+                                // explicit hydrogens
+                                var neighbours = container.GetConnectedAtoms(atom);
+                                if (neighbours.Any(neighbour => neighbour.AtomicNumber == AtomicNumbers.H))
                                     hBondDonors++;
-                                    goto continue_atomloop;
-                                }
                             }
                         }
                         break;
                 }
-                continue_atomloop:
-                ;
             }
 
             return new Result(hBondDonors);
         }
 
-        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
+        IDescriptorResult IMolecularDescriptor.Calculate(IAtomContainer mol) => Calculate(mol);
     }
 }

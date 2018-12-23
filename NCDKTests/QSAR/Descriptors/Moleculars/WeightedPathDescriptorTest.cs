@@ -33,7 +33,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var sp = CDK.SmilesParser;
             {
                 var mol = sp.ParseSmiles("CCCC");
-                var result = CreateDescriptor(mol).Calculate();
+                var result = CreateDescriptor().Calculate(mol);
                 var values = result.Values;
                 Assert.AreEqual(6.871320, values[0], 0.000001);
                 Assert.AreEqual(1.717830, values[1], 0.000001);
@@ -52,7 +52,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 var cList = ChemFileManipulator.GetAllAtomContainers(content).ToReadOnlyList();
                 var mol = cList[0];
                 mol = AtomContainerManipulator.RemoveHydrogens(mol);
-                var result = CreateDescriptor(mol).Calculate();
+                var result = CreateDescriptor().Calculate(mol);
                 var values = result.Values;
                 Assert.AreEqual(18.42026, values[0], 0.00001);
                 Assert.AreEqual(1.842026, values[1], 0.00001);
@@ -71,7 +71,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 var cList = ChemFileManipulator.GetAllAtomContainers(content).ToReadOnlyList();
                 var mol = cList[0];
                 mol = AtomContainerManipulator.RemoveHydrogens(mol);
-                var result = CreateDescriptor(mol).Calculate();
+                var result = CreateDescriptor().Calculate(mol);
                 var values = result.Values;
                 Assert.AreEqual(26.14844, values[0], 0.00001);
                 Assert.AreEqual(1.867746, values[1], 0.00001);

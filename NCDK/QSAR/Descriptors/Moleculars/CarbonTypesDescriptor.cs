@@ -17,7 +17,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Config;
 using NCDK.Tools.Manipulator;
 using System.Collections.Generic;
 
@@ -48,12 +47,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.keyword descriptor
     [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#carbonTypes")]
     public class CarbonTypesDescriptor : AbstractDescriptor, IMolecularDescriptor
-    {
-        private readonly IAtomContainer container;
-
-        public CarbonTypesDescriptor(IAtomContainer container)
-        {
-            this.container = container;
+    { 
+        public CarbonTypesDescriptor()
+        {            
         }
 
         [DescriptorResult]
@@ -90,7 +86,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// Calculates the 9 carbon types descriptors
         /// </summary>
         /// <returns>An ArrayList containing 9 elements in the order described above</returns>
-        public Result Calculate()
+        public Result Calculate(IAtomContainer container)
         {
             int c1sp1 = 0;
             int c2sp1 = 0;
@@ -181,6 +177,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return maxOrder;
         }
 
-        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
+        IDescriptorResult IMolecularDescriptor.Calculate(IAtomContainer mol) => Calculate(mol);
     }
 }

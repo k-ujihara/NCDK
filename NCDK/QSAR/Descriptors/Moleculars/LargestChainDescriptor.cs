@@ -33,16 +33,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#largestChain")]
     public class LargestChainDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        private readonly IAtomContainer container;
+        private readonly bool checkAromaticity;
+        private readonly bool checkRingSystem;
 
-        /// <param name="container"></param>
         /// <param name="checkRingSystem"><see langword="true"/> is the <see cref="IMolecularEntity.IsInRing"/> has to be set</param>
-        public LargestChainDescriptor(IAtomContainer container, bool checkAromaticity = false, bool checkRingSystem = false)
+        public LargestChainDescriptor(bool checkAromaticity = false, bool checkRingSystem = false)
         {
-            if (checkRingSystem)
-                Cycles.MarkRingAtomsAndBonds(container);
-
-            this.container = container;
+            this.checkAromaticity = checkAromaticity;
+            this.checkRingSystem = checkRingSystem;
         }
 
         [DescriptorResult]
@@ -66,8 +64,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// Calculate the count of atoms of the largest chain in the supplied <see cref="IAtomContainer"/>.
         /// </summary>
         /// <returns>the number of atoms in the largest chain.</returns>
-        public Result Calculate()
+        public Result Calculate(IAtomContainer container)
         {
+            if (checkRingSystem)
+                Cycles.MarkRingAtomsAndBonds(container);
+
             // make a subset molecule only including acyclic non-hydrogen atoms
             var included = new HashSet<IAtom>(container.Atoms.Where(atom => !atom.IsInRing && atom.AtomicNumber != 1));
             var subset = SubsetMol(container, included);
@@ -101,6 +102,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return cpy;
         }
 
-        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
+        IDescriptorResult IMolecularDescriptor.Calculate(IAtomContainer mol) => Calculate(mol);
     }
 }

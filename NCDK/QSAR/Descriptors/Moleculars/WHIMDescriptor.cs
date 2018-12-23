@@ -19,7 +19,6 @@
 
 using MathNet.Numerics.LinearAlgebra;
 using NCDK.Common.Collections;
-using NCDK.Config;
 using NCDK.Geometries;
 using System;
 using System.Collections.Generic;
@@ -178,11 +177,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             Polarizability = 5,
         }
 
-        private readonly IAtomContainer container;
-
-        public WHIMDescriptor(IAtomContainer container)
+        public WHIMDescriptor()
         {
-            this.container = container;
         }
 
         [DescriptorResult]
@@ -250,7 +246,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// the specified weighting scheme
         /// </summary>
         /// <returns>An ArrayList containing the descriptors in the order described above.</returns>
-        public Result Calculate(AtomWeightingType type = AtomWeightingType.Unity)
+        public Result Calculate(IAtomContainer container, AtomWeightingType type = AtomWeightingType.Unity)
         {
             if (!GeometryUtil.Has3DCoordinates(container))
                 throw new ThreeDRequiredException("Molecule must have 3D coordinates");
@@ -484,6 +480,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
+        IDescriptorResult IMolecularDescriptor.Calculate(IAtomContainer mol) => Calculate(mol);
     }
 }

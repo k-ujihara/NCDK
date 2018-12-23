@@ -38,20 +38,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#lipinskifailures")]
     public class RuleOfFiveDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        private readonly IAtomContainer container;
+        private readonly bool checkAromaticity;
 
-        public RuleOfFiveDescriptor(IAtomContainer container, bool checkAromaticity = false)
+        public RuleOfFiveDescriptor(bool checkAromaticity = false)
         {
-            // do aromaticity detection
-            if (checkAromaticity)
-            {
-                container = (IAtomContainer)container.Clone(); // don't mod original
-
-                AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(container);
-                Aromaticity.CDKLegacy.Apply(container);
-            }
-
-            this.container = container;
+            this.checkAromaticity = checkAromaticity;
         }
 
         [DescriptorResult]
@@ -71,18 +62,27 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             public int Value => LipinskiFailures;
         }
 
-        public Result Calculate(
+        public Result Calculate(IAtomContainer container,
             Func<IAtomContainer, double> calcLogP = null,
             Func<IAtomContainer, int> calcHBondAcceptorCount = null,
             Func<IAtomContainer, int> calcHBondDonorCount = null,
             Func<IAtomContainer, double> calcWeight = null,
             Func<IAtomContainer, int> calcRotatableBondsCount = null)
         {
-            calcLogP = calcLogP ?? (mol => new XLogPDescriptor(mol).Calculate(correctSalicylFactor: true).Value);
-            calcHBondAcceptorCount = calcHBondAcceptorCount ?? (mol => new HBondAcceptorCountDescriptor(mol).Calculate().Value);
-            calcHBondDonorCount = calcHBondDonorCount ?? (mol => new HBondDonorCountDescriptor(mol).Calculate().Value);
-            calcWeight = calcWeight ?? (mol => new WeightDescriptor(mol).Calculate().Value);
-            calcRotatableBondsCount = calcRotatableBondsCount ?? (mol => new RotatableBondsCountDescriptor(mol).Calculate(includeTerminals: false, excludeAmides: true).Value);
+            // do aromaticity detection
+            if (checkAromaticity)
+            {
+                container = (IAtomContainer)container.Clone(); // don't mod original
+
+                AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(container);
+                Aromaticity.CDKLegacy.Apply(container);
+            }
+
+            calcLogP = calcLogP ?? (mol => new XLogPDescriptor().Calculate(mol, correctSalicylFactor: true).Value);
+            calcHBondAcceptorCount = calcHBondAcceptorCount ?? (mol => new HBondAcceptorCountDescriptor().Calculate(mol).Value);
+            calcHBondDonorCount = calcHBondDonorCount ?? (mol => new HBondDonorCountDescriptor().Calculate(mol).Value);
+            calcWeight = calcWeight ?? (mol => new WeightDescriptor().Calculate(mol).Value);
+            calcRotatableBondsCount = calcRotatableBondsCount ?? (mol => new RotatableBondsCountDescriptor().Calculate(mol, includeTerminals: false, excludeAmides: true).Value);
 
             int lipinskifailures = 0;
 
@@ -110,6 +110,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return new Result(lipinskifailures);
         }
 
-        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
+        IDescriptorResult IMolecularDescriptor.Calculate(IAtomContainer mol) => Calculate(mol);
     }
 }

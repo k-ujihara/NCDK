@@ -17,7 +17,6 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Config;
 using NCDK.Tools.Manipulator;
 using System;
 
@@ -43,12 +42,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#NilaComplexity")]
     public class FragmentComplexityDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        private readonly IAtomContainer container;
-
-        public FragmentComplexityDescriptor(IAtomContainer container)
+        public FragmentComplexityDescriptor()
         {
-            container = (IAtomContainer)container.Clone();
-            this.container = container;
         }
 
         [DescriptorResult]
@@ -69,8 +64,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// Calculate the complexity in the supplied <see cref="IAtomContainer"/>.
         /// </summary>
         /// <returns>the complexity</returns>
-        public Result Calculate()
+        public Result Calculate(IAtomContainer container)
         {
+            container = (IAtomContainer)container.Clone();
+
             int a = 0;
             double h = 0;
             foreach (var atom in container.Atoms)
@@ -93,6 +90,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return new Result(c);
         }
 
-        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
+        IDescriptorResult IMolecularDescriptor.Calculate(IAtomContainer mol) => Calculate(mol);
     }
 }

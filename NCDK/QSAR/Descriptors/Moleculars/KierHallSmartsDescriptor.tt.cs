@@ -55,14 +55,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#kierHallSmarts")]
     public class KierHallSmartsDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        private readonly IAtomContainer container;
-
-        public KierHallSmartsDescriptor(IAtomContainer container)
+        public KierHallSmartsDescriptor()
         {
-            container = (IAtomContainer)container.Clone();
-            container = AtomContainerManipulator.RemoveHydrogens(container);
-
-            this.container = container;
         }
 
         [DescriptorResult]
@@ -477,8 +471,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// This method calculates occurrences of the Kier &amp; Hall E-state fragments.
         /// </summary>
         /// <returns>Counts of the fragments</returns>
-        public Result Calculate()
+        public Result Calculate(IAtomContainer container)
         {
+            container = AtomContainerManipulator.RemoveHydrogens(container);
+            
             var counts = new int[SMARTS.Count];
             SmartsPattern.Prepare(container);
             for (int i = 0; i < SMARTS.Count; i++)
@@ -487,6 +483,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return new Result(counts);
         }
    
-        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
+        IDescriptorResult IMolecularDescriptor.Calculate(IAtomContainer mol) => Calculate(mol);
     }
 }

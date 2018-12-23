@@ -35,6 +35,9 @@ namespace NCDK
     /// <remarks>
     /// Most of method names are from RDKit. 
     /// </remarks>
+    /// <example>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Chem_Example.cs"]/*' />
+    /// </example>
     public partial class Chem
     {
         public static IAtomContainer MolFromSmiles(string smiles)

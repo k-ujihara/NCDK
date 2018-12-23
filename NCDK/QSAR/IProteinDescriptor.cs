@@ -30,6 +30,6 @@ namespace NCDK.QSAR
         /// Calculates the descriptor value.
         /// </summary>
         /// <returns>An object contains the calculated value as well as specification details</returns>
-        IDescriptorResult Calculate();
+        IDescriptorResult Calculate(IBioPolymer mol);
     }
 }

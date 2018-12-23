@@ -22,7 +22,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var ac = cList[0];
             BODRIsotopeFactory.Instance.ConfigureAtoms(ac);
 
-            var result = CreateDescriptor(ac).Calculate();
+            var result = CreateDescriptor().Calculate(ac);
 
             Assert.AreEqual(3.5029, result.Values[0], 0.001);
             Assert.AreEqual(3.5029, result.Values[1], 0.001);
@@ -41,7 +41,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var ac = cList[1];
             BODRIsotopeFactory.Instance.ConfigureAtoms(ac);
 
-            var result = CreateDescriptor(ac).Calculate();
+            var result = CreateDescriptor().Calculate(ac);
 
             Assert.AreEqual(1.1476784, result.Values[0], 0.01);
             Assert.AreEqual(1.0936984, result.Values[1], 0.01);
@@ -61,7 +61,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
             BODRIsotopeFactory.Instance.ConfigureAtoms(ac);
 
-            var result = CreateDescriptor(ac).Calculate();
+            var result = CreateDescriptor().Calculate(ac);
 
             Assert.AreEqual(1.3083278, result.Values[0], 0.01);
             Assert.AreEqual(1.3083278, result.Values[1], 0.01);
@@ -80,7 +80,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var ac = cList[3];
             BODRIsotopeFactory.Instance.ConfigureAtoms(ac);
 
-            var result = CreateDescriptor(ac).Calculate();
+            var result = CreateDescriptor().Calculate(ac);
 
             Assert.AreEqual(2.0880171, result.Values[0], 0.000001);
             Assert.AreEqual(2.0880171, result.Values[1], 0.000001);
@@ -100,7 +100,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var ac = cList[0];
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(ac);
 
-            var result = CreateDescriptor(ac).Calculate();
+            var result = CreateDescriptor().Calculate(ac);
             Assert.IsNotNull(result);
         }
     }

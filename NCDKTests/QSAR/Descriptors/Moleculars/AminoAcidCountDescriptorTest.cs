@@ -47,7 +47,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestAACount()
         {
             var protein = ProteinBuilderTool.CreateProtein("ARNDCFQEGHIPLKMSTYVW");
-            var result = CreateDescriptor(protein).Calculate();
+            var result = CreateDescriptor().Calculate(protein);
             foreach (var n in result.Values)
                 Assert.IsTrue(n >= 1); // all AAs are found at least once
             Assert.AreEqual(20, result.NumberOfG); // glycine is in all of them, so 20 times
@@ -57,7 +57,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestFCount()
         {
             var protein = ProteinBuilderTool.CreateProtein("FF", Silent.ChemObjectBuilder.Instance);
-            var result = CreateDescriptor(protein).Calculate();
+            var result = CreateDescriptor().Calculate(protein);
             Assert.AreEqual(2, result.NumberOfG);
             Assert.AreEqual(4, result.NumberOfF); // thingy is symmetrical, so two mappings at each AA position possible
         }
@@ -66,7 +66,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestTCount()
         {
             var protein = ProteinBuilderTool.CreateProtein("TT");
-            var result = CreateDescriptor(protein).Calculate();
+            var result = CreateDescriptor().Calculate(protein);
             Assert.AreEqual(2, result.NumberOfG);
             Assert.AreEqual(2, result.NumberOfT);
         }

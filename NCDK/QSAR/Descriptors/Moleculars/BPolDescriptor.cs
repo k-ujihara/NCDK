@@ -38,13 +38,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bpol")]
     public class BPolDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        internal static readonly double[] polarizabilities = APolDescriptor.polarizabilities;
+        internal static readonly double[] polarizabilities = APolDescriptor.polarizabilities;        
 
-        private readonly IAtomContainer container;
-
-        public BPolDescriptor(IAtomContainer container)
-        {
-            this.container = container;
+        public BPolDescriptor()
+        {            
         }
 
         [DescriptorResult]
@@ -66,7 +63,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// the difference between atomic polarizabilities of all bonded atoms in the molecule
         /// </summary>
         /// <returns>The sum of atomic polarizabilities</returns>
-        public Result Calculate()
+        public Result Calculate(IAtomContainer container)
         {
             double bpol = 0;
 
@@ -87,6 +84,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return new Result(bpol);
         }
 
-        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
+        IDescriptorResult IMolecularDescriptor.Calculate(IAtomContainer mol) => Calculate(mol);
     }
 }

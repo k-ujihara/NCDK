@@ -18,7 +18,6 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Config;
 using NCDK.Tools.Manipulator;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
@@ -39,13 +38,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#hybratio")]
     public class HybridizationRatioDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        private readonly IAtomContainer container;
-
-        public HybridizationRatioDescriptor(IAtomContainer container)
+        public HybridizationRatioDescriptor()
         {
-            container = (IAtomContainer)container.Clone();
-            AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(container);
-            this.container = container;
         }
 
         [DescriptorResult]
@@ -66,8 +60,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// Calculate sp3/sp2 hybridization ratio in the supplied <see cref="IAtomContainer"/>.
         /// </summary>
         /// <returns>The ratio of sp3 to sp2 carbons</returns>
-        public Result Calculate()
+        public Result Calculate(IAtomContainer container)
         {
+            container = (IAtomContainer)container.Clone();
+            AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(container);
+
             int nsp2 = 0;
             int nsp3 = 0;
             foreach (var atom in container.Atoms)
@@ -88,6 +85,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return new Result(ratio);
         }
 
-        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
+        IDescriptorResult IMolecularDescriptor.Calculate(IAtomContainer mol) => Calculate(mol);
     }
 }

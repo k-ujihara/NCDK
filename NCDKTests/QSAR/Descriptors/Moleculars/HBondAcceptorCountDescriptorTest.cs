@@ -26,7 +26,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     [TestClass()]
     public class HBondAcceptorCountDescriptorTest : MolecularDescriptorTest<HBondAcceptorCountDescriptor>
     {
-        public HBondAcceptorCountDescriptor CreateDescriptor(IAtomContainer mol, bool checkAromaticity) => new HBondAcceptorCountDescriptor(mol, checkAromaticity);
+        public HBondAcceptorCountDescriptor CreateDescriptor(bool checkAromaticity) => new HBondAcceptorCountDescriptor(checkAromaticity);
             
         [TestMethod()]
         public void TestHBondAcceptorCountDescriptor()
@@ -35,7 +35,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             // original molecule O=N(=O)c1cccc2cn[nH]c12 - correct kekulisation will give
             // the same result. this test though should depend on kekulisation working
             var mol = sp.ParseSmiles("O=N(=O)C1=C2NN=CC2=CC=C1");
-            Assert.AreEqual(1, CreateDescriptor(mol, true).Calculate().Value);
+            Assert.AreEqual(1, CreateDescriptor(true).Calculate(mol).Value);
         }
 
         // @cdk.bug   3133610
@@ -94,7 +94,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             IBond b8 = builder.NewBond(a5, a8, BondOrder.Single);
             mol.Bonds.Add(b8);
 
-            Assert.AreEqual(2, CreateDescriptor(mol, true).Calculate().Value);
+            Assert.AreEqual(2, CreateDescriptor(true).Calculate(mol).Value);
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             var sp = CDK.SmilesParser;
             var m = sp.ParseSmiles("Cn1c2nc([nH]c2c(=O)n(c1=O)C)C1CCCC1");
-            int actual = CreateDescriptor(m).Calculate().Value;
+            int actual = CreateDescriptor().Calculate(m).Value;
             Assert.AreEqual(3, actual);
         }
     }

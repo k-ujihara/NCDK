@@ -34,7 +34,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             methanol.Atoms.Add(builder.NewAtom("C"));
             methanol.Atoms.Add(builder.NewAtom("O"));
             methanol.AddBond(methanol.Atoms[0], methanol.Atoms[1], BondOrder.Single);
-            var result = CreateDescriptor(methanol).Calculate();
+            var result = CreateDescriptor().Calculate(methanol);
             Assert.IsInstanceOfType(result.Value, typeof(double));
             Assert.AreEqual(1.46, result.Value, 0.01);
         }
@@ -45,7 +45,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var builder = Silent.ChemObjectBuilder.Instance;
             IAtomContainer methane = builder.NewAtomContainer();
             methane.Atoms.Add(builder.NewAtom("C"));
-            var result = CreateDescriptor(methane).Calculate();
+            var result = CreateDescriptor().Calculate(methane);
             Assert.IsInstanceOfType(result.Value, typeof(double));
             Assert.AreEqual(1.57, result.Value, 0.01);
         }
@@ -61,7 +61,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 chloroform.Atoms.Add(builder.NewAtom("Cl"));
                 chloroform.AddBond(chloroform.Atoms[0], chloroform.Atoms[i + 1], BondOrder.Single);
             }
-            var result = CreateDescriptor(chloroform).Calculate();
+            var result = CreateDescriptor().Calculate(chloroform);
             Assert.IsInstanceOfType(result.Value, typeof(double));
             Assert.AreEqual(1.24, result.Value, 0.01);
         }

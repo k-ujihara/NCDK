@@ -3,9 +3,9 @@
     <OutputType>Library</OutputType>
     <TargetFramework>net461</TargetFramework>
 
-    <AssemblyVersion>1.5.0.0</AssemblyVersion>
-    <FileVersion>1.5.0.0</FileVersion>
-    <Version>1.5.0</Version>
+    <AssemblyVersion>1.5.1.0</AssemblyVersion>
+    <FileVersion>1.5.1.0</FileVersion>
+    <Version>1.5.1</Version>
     <Copyright>Copyright © 2016-2018 Kazuya Ujihara</Copyright>
 
     <PackageId>NCDK.Display</PackageId>
@@ -27,11 +27,11 @@
 
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <NoWarn>1701;1702;0212;0219;0612;0618</NoWarn>
+    <NoWarn>1701;1702;0212;0219;0612;0618;1573;1591</NoWarn>
     <DocumentationFile>bin\Release\net461\NCDK.Display.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <NoWarn>1701;1702;0212;0219;0612;0618</NoWarn>
+    <NoWarn>1701;1702;0212;0219;0612;0618;1573;1591</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

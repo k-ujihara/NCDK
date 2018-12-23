@@ -33,10 +33,23 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// </summary>
     // @cdk.module test-qsarmolecular
     [TestClass()]
-    public abstract class MolecularDescriptorTest<T> : DescriptorTest<T> where T : IMolecularDescriptor
+    public abstract class MolecularDescriptorTest<T> 
+        : DescriptorTest<T> 
+        where T : IMolecularDescriptor
     {
         private static readonly DictionaryDatabase dictDB = new DictionaryDatabase();
         private static readonly EntryDictionary dict = dictDB.GetDictionary("descriptor-algorithms");
+
+        protected override T CreateDescriptor()
+        {
+            return base.CreateDescriptor();
+        }
+
+        protected override T CreateDescriptor(IAtomContainer mol)
+        {
+            Assert.Fail();
+            return default(T);
+        }
 
         private static uint FlagsToInt(IAtomContainer mol)
         {
@@ -141,10 +154,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var mflags = FlagsToInt(mol);
             var aflags = GetAtomFlags(mol);
             var bflags = GetBondFlags(mol);
-            var descriptor = CreateDescriptor(mol);
+            var descriptor = CreateDescriptor();
             try
             {
-                descriptor.Calculate();
+                descriptor.Calculate(mol);
             }
             catch (ThreeDRequiredException)
             {
@@ -160,7 +173,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestCalculate_IAtomContainer()
         {
             var mol = SomeoneBringMeSomeWater();
-            var v = CreateDescriptor(mol).Calculate();
+            var v = CreateDescriptor().Calculate(mol);
             Assert.IsNotNull(v);
             Assert.AreNotEqual(0, v.Count, "The descriptor did not calculate any value.");
         }
@@ -170,7 +183,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             var mol = SomeoneBringMeSomeWater();
             var clone = (IAtomContainer)mol.Clone();
-            CreateDescriptor(mol).Calculate();
+            CreateDescriptor().Calculate(mol);
             var diff = AtomContainerDiff.Diff(clone, mol);
             Assert.AreEqual(0, diff.Length, $"The descriptor must not change the passed molecule in any respect, but found this diff: {diff}");
         }
@@ -184,7 +197,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             var mol = SomeoneBringMeSomeWater();
 
-            var v = CreateDescriptor(mol).Calculate();
+            var v = CreateDescriptor().Calculate(mol);
             Assert.IsNotNull(v);
             var names = v.Keys.ToReadOnlyList();
             Assert.IsNotNull(names, "The descriptor must return labels using the Names method.");
@@ -229,10 +242,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
             try
             {
-                var v1 = CreateDescriptor(methane1).Calculate();
-                var v2 = CreateDescriptor(methane2).Calculate();
+                var v1 = CreateDescriptor().Calculate(methane1);
+                var v2 = CreateDescriptor().Calculate(methane2);
 
-                var errorMessage = $"({Descriptor.GetType().FullName}) The descriptor does not give the same results depending on whether hydrogens are implicit or explicit.";
+                var errorMessage = $"({typeof(T)}) The descriptor does not give the same results depending on whether hydrogens are implicit or explicit.";
                 AssertEqualOutput(v1, v2, errorMessage);
             }
             catch (ThreeDRequiredException)
@@ -290,9 +303,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
             try
             {
-                var v1 = CreateDescriptor(ethane1).Calculate();
-                var v2 = CreateDescriptor(ethane2).Calculate();
-                var errorMessage = $"({Descriptor.GetType().FullName}) The descriptor does not give the same results depending on whether hydrogens are implicit or explicit.";
+                var v1 = CreateDescriptor().Calculate(ethane1);
+                var v2 = CreateDescriptor().Calculate(ethane2);
+                var errorMessage = $"({typeof(T)}) The descriptor does not give the same results depending on whether hydrogens are implicit or explicit.";
                 AssertEqualOutput(v1, v2, errorMessage);
             }
             catch (ThreeDRequiredException)
@@ -307,10 +320,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var water1 = SomeoneBringMeSomeWater();
             var water2 = SomeoneBringMeSomeWater();
 
-            var v1 = CreateDescriptor(water1).Calculate();
-            var v2 = CreateDescriptor(water2).Calculate();
+            var v1 = CreateDescriptor().Calculate(water1);
+            var v2 = CreateDescriptor().Calculate(water2);
 
-            var errorMessage = $"({Descriptor.GetType().FullName}) The descriptor does not give the same results depending on the actual IChemObject implementation set (data, nonotify).";
+            var errorMessage = $"({typeof(T)}) The descriptor does not give the same results depending on the actual IChemObject implementation set (data, nonotify).";
             AssertEqualOutput(v1, v2, errorMessage);
         }
 
@@ -324,10 +337,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
             try
             {
-                var v1 = CreateDescriptor(water1).Calculate();
-                var v2 = CreateDescriptor(water2).Calculate();
+                var v1 = CreateDescriptor().Calculate(water1);
+                var v2 = CreateDescriptor().Calculate(water2);
 
-                var errorMessage = $"({Descriptor.GetType().FullName}) The descriptor does not give the same results depending on it being passed an IAtomContainer or an IAtomContainer.";
+                var errorMessage = $"({typeof(T)}) The descriptor does not give the same results depending on it being passed an IAtomContainer or an IAtomContainer.";
                 AssertEqualOutput(v1, v2, errorMessage);
             }
             catch (ThreeDRequiredException)
@@ -355,7 +368,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
             try
             {
-                var v1 = CreateDescriptor(disconnected).Calculate();
+                var v1 = CreateDescriptor().Calculate(disconnected);
             }
             catch (ThreeDRequiredException)
             {
@@ -386,10 +399,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
             try
             {
-                var v1 = CreateDescriptor(ethane1).Calculate();
-                var v2 = CreateDescriptor(ethane2).Calculate();
+                var v1 = CreateDescriptor().Calculate(ethane1);
+                var v2 = CreateDescriptor().Calculate(ethane2);
 
-                string errorMessage = $"({Descriptor.GetType().ToString()}) The descriptor does not give the same results depending on whether bond order or atom type are considered.";
+                string errorMessage = $"({typeof(T)}) The descriptor does not give the same results depending on whether bond order or atom type are considered.";
                 AssertEqualOutput(v1, v2, errorMessage);
             }
             catch (ThreeDRequiredException)

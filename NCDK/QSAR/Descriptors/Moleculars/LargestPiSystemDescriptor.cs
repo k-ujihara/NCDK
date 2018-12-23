@@ -18,7 +18,6 @@
  */
 
 using NCDK.Aromaticities;
-using NCDK.Config;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
@@ -36,19 +35,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#largestPiSystem")]
     public class LargestPiSystemDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        private readonly IAtomContainer container;
+        private readonly bool checkAromaticity;
 
-        public LargestPiSystemDescriptor(IAtomContainer container, bool checkAromaticity = false)
+        public LargestPiSystemDescriptor(bool checkAromaticity = false)
         {
-            container = (IAtomContainer)container.Clone();
-
-            if (checkAromaticity)
-            {
-                AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(container);
-                Aromaticity.CDKLegacy.Apply(container);
-            }
-
-            this.container = container;
+            this.checkAromaticity = checkAromaticity;
         }
 
         [DescriptorResult]
@@ -72,8 +63,16 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// Calculate the count of atoms of the largest pi system in the supplied <see cref="IAtomContainer"/>.
         /// </summary>
         /// <returns>the number of atoms in the largest pi system of this AtomContainer</returns>
-        public Result Calculate()
+        public Result Calculate(IAtomContainer container)
         {
+            container = (IAtomContainer)container.Clone();
+
+            if (checkAromaticity)
+            {
+                AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(container);
+                Aromaticity.CDKLegacy.Apply(container);
+            }
+
             int largestPiSystemAtomsCount = 0;
 
             //Set all VisitedFlags to False
@@ -148,6 +147,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
+        IDescriptorResult IMolecularDescriptor.Calculate(IAtomContainer mol) => Calculate(mol);
     }
 }

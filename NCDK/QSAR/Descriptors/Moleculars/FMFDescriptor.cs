@@ -48,12 +48,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#fmf")]
     public class FMFDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        private readonly IAtomContainer container;
-
-        public FMFDescriptor(IAtomContainer container)
+        public FMFDescriptor()
         {
-            container = (IAtomContainer)container.Clone();
-            this.container = container;
         }
 
         [DescriptorResult]
@@ -75,24 +71,28 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// </summary>
         /// <returns>An object of <see cref="Result"/> that contains the
         /// calculated FMF descriptor value as well as specification details</returns>
-        public Result Calculate()
+        public Result Calculate(IAtomContainer container)
         {
-            double result;
+            container = (IAtomContainer)container.Clone();
 
             var fragmenter = new MurckoFragmenter(true, 3);
             fragmenter.GenerateFragments(container);
             var framework = fragmenter.GetFrameworksAsContainers().ToReadOnlyList();
             var ringSystems = fragmenter.GetRingSystemsAsContainers().ToReadOnlyList();
-            if (framework.Count == 1)
-                result = framework[0].Atoms.Count / (double)container.Atoms.Count;
-            else if (framework.Count == 0 && ringSystems.Count == 1)
-                result = ringSystems[0].Atoms.Count / (double)container.Atoms.Count;
-            else
-                result = 0;
+            {
+                double result;
 
-            return new Result(result);
+                if (framework.Count == 1)
+                    result = framework[0].Atoms.Count / (double)container.Atoms.Count;
+                else if (framework.Count == 0 && ringSystems.Count == 1)
+                    result = ringSystems[0].Atoms.Count / (double)container.Atoms.Count;
+                else
+                    result = 0;
+
+                return new Result(result);
+            }
         }
 
-        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
+        IDescriptorResult IMolecularDescriptor.Calculate(IAtomContainer mol) => Calculate(mol);
     }
 }

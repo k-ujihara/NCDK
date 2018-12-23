@@ -50,17 +50,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#aromaticAtomsCount")]
     public class AromaticAtomsCountDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        private readonly IAtomContainer container;
+        private readonly bool checkAromaticity;
 
-        public AromaticAtomsCountDescriptor(IAtomContainer container, bool checkAromaticity = false)
+        public AromaticAtomsCountDescriptor(bool checkAromaticity = false)
         {
-            if (checkAromaticity)
-            {
-                container = (IAtomContainer)container.Clone();
-                AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(container);
-                Aromaticity.CDKLegacy.Apply(container);
-            }
-            this.container = container;
+            this.checkAromaticity = checkAromaticity;
         }
 
         [DescriptorResult]
@@ -81,12 +75,19 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// Calculate the count of aromatic atoms in the supplied <see cref="IAtomContainer"/>.
         /// </summary>
         /// <returns>the number of aromatic atoms of this AtomContainer</returns>
-        public Result Calculate()
+        public Result Calculate(IAtomContainer container)
         {
+            if (checkAromaticity)
+            {
+                container = (IAtomContainer)container.Clone();
+                AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(container);
+                Aromaticity.CDKLegacy.Apply(container);
+            }
+
             var count = container.Atoms.Count(n => n.IsAromatic);
             return new Result(count);
         }
 
-        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
+        IDescriptorResult IMolecularDescriptor.Calculate(IAtomContainer mol) => Calculate(mol);
     }
 }

@@ -31,7 +31,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestDecalin()
         {
             var mol = sp.ParseSmiles("C1CCC2CCCCC2C1"); // ethanol
-            var value = CreateDescriptor(mol).Calculate();
+            var value = CreateDescriptor().Calculate(mol);
             Assert.AreEqual(0, value.Value);
             Assert.AreEqual(1, value.Keys.Count());
             Assert.AreEqual("nSpiroAtoms", value.Keys.First());
@@ -41,7 +41,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestNorbornane()
         {
             var mol = sp.ParseSmiles("C1CC2CCC1C2"); // ethanol
-            var value = CreateDescriptor(mol).Calculate();
+            var value = CreateDescriptor().Calculate(mol);
             Assert.AreEqual(0, value.Value);
         }
 
@@ -49,7 +49,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestSpiroUndecane()
         {
             var mol = sp.ParseSmiles("C1CCC2(CC1)CCCCC2"); // ethanol
-            var value = CreateDescriptor(mol).Calculate();
+            var value = CreateDescriptor().Calculate(mol);
             Assert.AreEqual(1, value.Value);
         }
 
@@ -57,7 +57,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestDiSpiroPentane()
         {
             var mol = sp.ParseSmiles("CC1C[C]11(CC1)[C]123CC1.C2C3"); // ethanol
-            var value = CreateDescriptor(mol).Calculate();
+            var value = CreateDescriptor().Calculate(mol);
             Assert.AreEqual(2, value.Value);
         }
 
@@ -65,7 +65,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestSpiroNaphthalene()
         {
             var mol = sp.ParseSmiles("C1CCC2(CC1)CC=C1C=CC=CC1=C2"); // ethanol
-            var value = CreateDescriptor(mol).Calculate();
+            var value = CreateDescriptor().Calculate(mol);
             Assert.AreEqual(1, value.Value);
         }
 
@@ -73,7 +73,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestTriSpiro()
         {
             var mol = sp.ParseSmiles("C1OOC[Fe]1123COOC1.C2OOC3"); // ethanol
-            var value = CreateDescriptor(mol).Calculate();
+            var value = CreateDescriptor().Calculate(mol);
             Assert.AreEqual(1, value.Value);
         }
     }

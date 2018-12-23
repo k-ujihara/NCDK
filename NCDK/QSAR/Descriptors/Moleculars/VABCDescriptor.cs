@@ -32,13 +32,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#vabc")]
     public class VABCDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        private readonly IAtomContainer container;
-
-        public VABCDescriptor(IAtomContainer container)
+        public VABCDescriptor()
         {
-            container = (IAtomContainer)container.Clone(); // don't mod original
-
-            this.container = container;
         }
 
         [DescriptorResult]
@@ -61,8 +56,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// Calculates the descriptor value using the <see cref="VABCVolume"/> class.
         /// </summary>
         /// <returns>A double containing the volume</returns>
-        public Result Calculate()
+        public Result Calculate(IAtomContainer container)
         {
+            container = (IAtomContainer)container.Clone(); // don't mod original
+
             try
             {
                 return new Result(VABCVolume.Calculate(container));
@@ -73,6 +70,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
+        IDescriptorResult IMolecularDescriptor.Calculate(IAtomContainer mol) => Calculate(mol);
     }
 }

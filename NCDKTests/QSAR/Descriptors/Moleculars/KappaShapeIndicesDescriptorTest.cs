@@ -36,7 +36,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("O=C(O)CC");
             AtomContainerManipulator.RemoveHydrogens(mol);
-            var retval = CreateDescriptor(mol).Calculate().Values;
+            var retval = CreateDescriptor().Calculate(mol).Values;
             Assert.AreEqual(testResult[2], retval[2], 0.0001);
         }
     }

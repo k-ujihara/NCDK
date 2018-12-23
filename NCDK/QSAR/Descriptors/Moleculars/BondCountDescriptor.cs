@@ -17,7 +17,6 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Config;
 using System;
 using System.Linq;
 
@@ -36,11 +35,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondCount")]
     public class BondCountDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        private readonly IAtomContainer container;
-
         public BondCountDescriptor(IAtomContainer container)
         {
-            this.container = container;
         }
 
         [DescriptorResult]
@@ -76,7 +72,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// </summary>
         /// <param name="order">The bond order. Default is <see cref="BondOrder.Unset"/>, which means count all bonds.</param>
         /// <returns>The number of bonds of a certain type.</returns>
-        public Result Calculate(BondOrder order = BondOrder.Unset)
+        public Result Calculate(IAtomContainer container, BondOrder order = BondOrder.Unset)
         {
             if (order.IsUnset())
             {
@@ -93,6 +89,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
+        IDescriptorResult IMolecularDescriptor.Calculate(IAtomContainer mol) => Calculate(mol);
     }
 }

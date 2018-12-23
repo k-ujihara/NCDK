@@ -28,7 +28,7 @@
       <Argument Key="defaultLanguage" Value="cs" />
       <Argument Key="includeEnumValues" Value="false" />
       <Argument Key="baseSourceCodeUrl" Value="https://github.com/kazuyaujihara/NCDK/tree/master/" />
-      <Argument Key="requestExampleUrl" Value="" />
+      <Argument Key="requestExampleUrl" Value="https://github.com/kazuyaujihara/NCDK/issues/new" />
     </TransformComponentArguments>
     <SaveComponentCacheCapacity>0</SaveComponentCacheCapacity>
     <BuildAssemblerVerbosity>OnlyWarningsAndErrors</BuildAssemblerVerbosity>
@@ -132,6 +132,7 @@
     <None Include="Content\VersionHistory\v1.0.3.0.aml" />
     <None Include="Content\VersionHistory\v1.1.2.0.aml" />
     <None Include="Content\VersionHistory\v1.3.0.0.aml" />
+    <None Include="Content\VersionHistory\v1.5.1.0.aml" />
     <None Include="Content\VersionHistory\VersionHistory.aml" />
     <None Include="Content\VersionHistory\v1.1.1.0.aml" />
     <None Include="Content\VersionHistory\v1.3.1.0.aml" />

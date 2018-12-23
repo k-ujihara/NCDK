@@ -20,7 +20,6 @@
 
 using MathNet.Numerics.LinearAlgebra;
 using NCDK.Common.Collections;
-using NCDK.Config;
 using NCDK.Geometries;
 using NCDK.Tools.Manipulator;
 using System;
@@ -51,18 +50,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#momentOfInertia")]
     public class MomentOfInertiaDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        private readonly IsotopeFactory factory;
-
-        private readonly IAtomContainer container;
-
-        public MomentOfInertiaDescriptor(IAtomContainer container)
+        public MomentOfInertiaDescriptor()
         {
-            container = (IAtomContainer)container.Clone();
-
-            factory = CDK.IsotopeFactory;
-            factory.ConfigureAtoms(container);
-
-            this.container = container;
         }
 
         [DescriptorResult]
@@ -123,8 +112,13 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// The molecule should have hydrogens.
         /// </summary>
         /// <returns>An <see cref="Result"/> containing 7 elements in the order described above</returns>
-        public Result Calculate()
+        public Result Calculate(IAtomContainer container)
         {
+            container = (IAtomContainer)container.Clone();
+
+            var factory = CDK.IsotopeFactory;
+            factory.ConfigureAtoms(container);
+
             if (!GeometryUtil.Has3DCoordinates(container))
                 throw new ThreeDRequiredException("Molecule must have 3D coordinates");
 
@@ -147,7 +141,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 var currentAtom = container.Atoms[i];
 
                 var _mass = factory.GetMajorIsotope(currentAtom.Symbol).ExactMass;
-                double mass = _mass == null ? factory.GetNaturalMass(currentAtom.Element) : _mass.Value;
+                var mass = _mass == null ? factory.GetNaturalMass(currentAtom.Element) : _mass.Value;
 
                 var p = currentAtom.Point3D.Value;
                 xdif = p.X - centerOfMass.X;
@@ -201,17 +195,15 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
 
             // finally get the radius of gyration
-            double pri;
             var formula = MolecularFormulaManipulator.GetMolecularFormula(container);
-            if (Math.Abs(eval[2]) > eps)
-                pri = Math.Pow(eval[0] * eval[1] * eval[2], 1.0 / 3.0);
-            else
-                pri = Math.Sqrt(eval[0] * ccf / MolecularFormulaManipulator.GetTotalExactMass(formula));
+            var pri = Math.Abs(eval[2]) > eps
+                    ? Math.Pow(eval[0] * eval[1] * eval[2], 1.0 / 3.0)
+                    : Math.Sqrt(eval[0] * ccf / MolecularFormulaManipulator.GetTotalExactMass(formula));
             retval.Add(Math.Sqrt(Math.PI * 2 * pri * ccf / MolecularFormulaManipulator.GetTotalExactMass(formula)));
 
             return new Result(retval);
         }
 
-        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
+        IDescriptorResult IMolecularDescriptor.Calculate(IAtomContainer mol) => Calculate(mol);
     }
 }

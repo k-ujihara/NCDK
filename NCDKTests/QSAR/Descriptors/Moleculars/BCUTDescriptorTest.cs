@@ -30,7 +30,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     [TestClass()]
     public class BCUTDescriptorTest : MolecularDescriptorTest<BCUTDescriptor>
     {
-        public BCUTDescriptor CreateDescriptor(IAtomContainer mol, bool checkAromaticity) => new BCUTDescriptor(mol, checkAromaticity);
+        public BCUTDescriptor CreateDescriptor(bool checkAromaticity) => new BCUTDescriptor(checkAromaticity);
 
         [TestMethod()]
         public void TestBCUT()
@@ -44,8 +44,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var cList = ChemFileManipulator.GetAllAtomContainers(content).ToReadOnlyList();
             var ac = cList[0];
 
-            var descriptor = CreateDescriptor(ac, true);
-            var descriptorValue = descriptor.Calculate(2, 2);
+            var descriptor = CreateDescriptor(true);
+            var descriptorValue = descriptor.Calculate(ac, 2, 2);
 
             var retval = descriptorValue.Values;
             Assert.IsNotNull(retval);
@@ -88,8 +88,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var cList = ChemFileManipulator.GetAllAtomContainers(content).ToReadOnlyList();
             var ac = cList[0];
 
-            var descriptor = CreateDescriptor(ac, true);
-            var descriptorValue = descriptor.Calculate(0, 25);
+            var descriptor = CreateDescriptor(true);
+            var descriptorValue = descriptor.Calculate(ac, 0, 25);
 
             var retval = descriptorValue.Values;
             int nheavy = 20;
@@ -121,8 +121,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             Aromaticity.CDKLegacy.Apply(mol1);
             Aromaticity.CDKLegacy.Apply(mol2);
 
-            var result1 = CreateDescriptor(mol1).Calculate().Values;
-            var result2 = CreateDescriptor(mol2).Calculate().Values;
+            var result1 = CreateDescriptor().Calculate(mol1).Values;
+            var result2 = CreateDescriptor().Calculate(mol2).Values;
 
             Assert.AreEqual(result1.Count, result2.Count);
             for (int i = 0; i < result1.Count; i++)
@@ -136,7 +136,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("C=1C=CC(=CC1)CNC2=CC=C(C=C2N(=O)=O)S(=O)(=O)C(Cl)(Cl)Br");
-            var result1 = CreateDescriptor(mol).Calculate().Values;
+            var result1 = CreateDescriptor().Calculate(mol).Values;
             foreach (var v in result1)
                 Assert.IsTrue(v != double.NaN);
         }
@@ -159,7 +159,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             AddExplicitHydrogens(ac);
             Aromaticity.CDKLegacy.Apply(ac);
 
-            var e = CreateDescriptor(ac).Calculate().Exception;
+            var e = CreateDescriptor().Calculate(ac).Exception;
             Assert.IsNotNull(e);
             // make sure exception was a NPE etc.
             Assert.AreEqual("Could not calculate partial charges: Partial charge not-supported for element: 'As'.", e.Message);

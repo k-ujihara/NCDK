@@ -27,7 +27,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             foreach (var setOfFragment in setOfFragments)
             {
                 AddExplicitHydrogens(setOfFragment);
-                Complexity = CreateDescriptor(setOfFragment).Calculate().Value;
+                Complexity = CreateDescriptor().Calculate(setOfFragment).Value;
             }
             Assert.AreEqual(659.00, Complexity, 0.01);
         }
@@ -48,7 +48,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             foreach (var setOfFragment in setOfFragments)
             {
                 AddExplicitHydrogens(setOfFragment);
-                Complexity = CreateDescriptor(setOfFragment).Calculate().Value;
+                Complexity = CreateDescriptor().Calculate(setOfFragment).Value;
             }
             Assert.AreEqual(544.01, Complexity, 0.01);
         }

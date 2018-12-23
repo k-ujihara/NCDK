@@ -17,8 +17,6 @@
  * 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-using NCDK.Config;
-
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
     /// <summary>
@@ -32,12 +30,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#mannholdLogP")]
     public class MannholdLogPDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        private readonly IAtomContainer container;
-
-        public MannholdLogPDescriptor(IAtomContainer container)
+        public MannholdLogPDescriptor()
         {
-            container = (IAtomContainer)container.Clone();
-            this.container = container;
         }
 
         [DescriptorResult]
@@ -58,7 +52,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// Calculates the Mannhold LogP for an atom container.
         /// </summary>
         /// <returns>A descriptor value wrapping a <see cref="System.Double"/>.</returns>
-        public Result Calculate()
+        public Result Calculate(IAtomContainer container)
         {
             int carbonCount = 0;
             int heteroCount = 0;
@@ -81,6 +75,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return new Result(mLogP);
         }
 
-        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
+        IDescriptorResult IMolecularDescriptor.Calculate(IAtomContainer mol) => Calculate(mol);
     }
 }

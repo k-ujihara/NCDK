@@ -29,7 +29,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestConstructor()
         {
-            Assert.IsNotNull(new BasicGroupCountDescriptor(Water));
+            Assert.IsNotNull(new BasicGroupCountDescriptor());
         }
 
         [TestMethod()]
@@ -37,7 +37,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("NC");
-            var result = CreateDescriptor(mol).Calculate();
+            var result = CreateDescriptor().Calculate(mol);
             Assert.AreEqual(1, result.Value);
         }
 
@@ -81,7 +81,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AddImplicitHydrogens(mol);
 
-            var result = CreateDescriptor(mol).Calculate();
+            var result = CreateDescriptor().Calculate(mol);
             // two SMARTS matches
             Assert.AreEqual(2, result.Value);
         }

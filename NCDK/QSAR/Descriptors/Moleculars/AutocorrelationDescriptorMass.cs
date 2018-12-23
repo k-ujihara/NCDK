@@ -36,13 +36,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         private const int DefaultSize = 5;
         private const double CarbonMass = 12.010735896788;
 
-        private readonly IAtomContainer container;
-
-        public AutocorrelationDescriptorMass(IAtomContainer container)
+        public AutocorrelationDescriptorMass()
         {
-            container = (IAtomContainer)container.Clone();
-            container = AtomContainerManipulator.RemoveHydrogens(container);
-            this.container = container;
         }
 
         [DescriptorResult(prefix: "ATSm", baseIndex: 1)]
@@ -74,8 +69,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// This method calculate the ATS Autocorrelation descriptor.
         /// </summary>
-        public Result Calculate(int count = DefaultSize)
+        public Result Calculate(IAtomContainer container, int count = DefaultSize)
         {
+            container = (IAtomContainer)container.Clone();
+            container = AtomContainerManipulator.RemoveHydrogens(container);
+
             var w = ListConvertion(container);
             var natom = container.Atoms.Count;
             var distancematrix = TopologicalMatrix.GetMatrix(container);
@@ -95,6 +93,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return new Result(masSum);
         }
 
-        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
+        IDescriptorResult IMolecularDescriptor.Calculate(IAtomContainer mol) => Calculate(mol);
     }
 }

@@ -31,7 +31,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("O=C(O)CC");
             AddExplicitHydrogens(mol);
-            Assert.AreEqual(10.88, CreateDescriptor(mol).Calculate().Value, 0.01);
+            Assert.AreEqual(10.88, CreateDescriptor().Calculate(mol).Value, 0.01);
         }
     }
 }

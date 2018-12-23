@@ -37,13 +37,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     {
         private const int DefaultSize = 5;
 
-        private readonly IAtomContainer container;
-
-        public AutocorrelationDescriptorCharge(IAtomContainer container)
+        public AutocorrelationDescriptorCharge()
         {
-            container = (IAtomContainer)container.Clone();
-            container = AtomContainerManipulator.RemoveHydrogens(container);
-            this.container = container;
         }
 
         [DescriptorResult(prefix: "ATSc", baseIndex: 1)]
@@ -76,8 +71,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return charges;
         }
 
-        public Result Calculate(int count = DefaultSize)
+        public Result Calculate(IAtomContainer container, int count = DefaultSize)
         {
+            container = (IAtomContainer)container.Clone();
+            container = AtomContainerManipulator.RemoveHydrogens(container);
+
             try
             {
                 var w = Listcharges(container);
@@ -106,6 +104,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
+        IDescriptorResult IMolecularDescriptor.Calculate(IAtomContainer mol) => Calculate(mol);
     }
 }

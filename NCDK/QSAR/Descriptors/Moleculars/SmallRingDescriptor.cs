@@ -27,7 +27,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Config;
 using NCDK.Fingerprints;
 using System;
 using System.Collections.Generic;
@@ -44,12 +43,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.keyword descriptor
     [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#smallRings")]
     public class SmallRingDescriptor : AbstractDescriptor, IMolecularDescriptor
-    {
-        private readonly IAtomContainer container;
-
-        public SmallRingDescriptor(IAtomContainer container)
+    { 
+        public SmallRingDescriptor()
         {
-            this.container = container;
         }
 
         [DescriptorResult]
@@ -148,7 +144,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             public int NRings9 { get; private set; }
         }
 
-        public Result Calculate()
+        public Result Calculate(IAtomContainer container)
         {
             return new Calculator(container).Calculate();
         }
@@ -754,6 +750,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
+        IDescriptorResult IMolecularDescriptor.Calculate(IAtomContainer mol) => Calculate(mol);
     }
 }

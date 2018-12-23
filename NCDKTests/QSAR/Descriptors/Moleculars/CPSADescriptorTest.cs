@@ -41,7 +41,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var cList = ChemFileManipulator.GetAllAtomContainers(content).ToReadOnlyList();
             var ac = cList[0];
 
-            var retval = CreateDescriptor(ac).Calculate().Values;
+            var retval = CreateDescriptor().Calculate(ac).Values;
 
             Assert.AreEqual(0, retval[28], 0.0001);
             Assert.AreEqual(1, retval[27], 0.0001);
@@ -61,7 +61,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var cList = ChemFileManipulator.GetAllAtomContainers(content).ToReadOnlyList();
             var ac = cList[0];
 
-            var retval = CreateDescriptor(ac).Calculate().Values;
+            var retval = CreateDescriptor().Calculate(ac).Values;
             int ndesc = retval.Count;
             for (int i = 0; i < ndesc; i++)
                 Assert.IsTrue(retval[i] != double.NaN);
@@ -79,7 +79,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var cList = ChemFileManipulator.GetAllAtomContainers(content).ToReadOnlyList();
             var ac = cList[0];
 
-            var retval = CreateDescriptor(ac).Calculate().Values;
+            var retval = CreateDescriptor().Calculate(ac).Values;
             int ndesc = retval.Count;
             for (int i = 0; i < ndesc; i++)
                 Assert.IsTrue(retval[i] != double.NaN);

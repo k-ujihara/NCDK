@@ -42,7 +42,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var cList = ChemFileManipulator.GetAllAtomContainers(content).ToReadOnlyList();
             var ac = cList[0];
 
-            var retval = CreateDescriptor(ac).Calculate().Values;
+            var retval = CreateDescriptor().Calculate(ac).Values;
 
             Assert.AreEqual(1756.5060703860984, retval[0], 0.00000001);
             Assert.AreEqual(41.91069159994975, retval[1], 0.00000001);

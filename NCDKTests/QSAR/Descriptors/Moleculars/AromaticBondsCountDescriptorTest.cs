@@ -26,14 +26,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     [TestClass()]
     public class AromaticBondsCountDescriptorTest : MolecularDescriptorTest<AromaticBondsCountDescriptor>
     {
-        public AromaticBondsCountDescriptor CreateDescriptor(IAtomContainer mol, bool checkAromaticity) => new AromaticBondsCountDescriptor(mol, checkAromaticity);
+        public AromaticBondsCountDescriptor CreateDescriptor(bool checkAromaticity) => new AromaticBondsCountDescriptor(checkAromaticity);
 
         [TestMethod()]
         public void TestAromaticBondsCountDescriptor()
         {
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("CCOc1ccccc1"); // ethanol
-            Assert.AreEqual(6, CreateDescriptor(mol, true).Calculate().Value);
+            Assert.AreEqual(6, CreateDescriptor(true).Calculate(mol).Value);
         }
 
         [TestMethod()]
@@ -42,7 +42,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             IAtomContainer molecule = TestMoleculeFactory.MakeBenzene();
             foreach (var bond in molecule.Bonds)
                 bond.IsAromatic = true;
-            Assert.AreEqual(6, CreateDescriptor(molecule).Calculate().Value);
+            Assert.AreEqual(6, CreateDescriptor().Calculate(molecule).Value);
         }
     }
 }

@@ -88,23 +88,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#BCUT")]
     public class BCUTDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        private readonly IAtomContainer container;
+        private readonly bool checkAromaticity;
 
-        public BCUTDescriptor(IAtomContainer container, bool checkAromaticity = false)
+        public BCUTDescriptor(bool checkAromaticity = false)
         {
-            container = (IAtomContainer)container.Clone();
-
-            AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(container);
-            var hAdder = CDK.HydrogenAdder;
-            hAdder.AddImplicitHydrogens(container);
-            AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(container);
-            if (checkAromaticity)
-            {
-                AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(container);
-                Aromaticity.CDKLegacy.Apply(container);
-            }
-
-            this.container = container;
+            this.checkAromaticity = checkAromaticity;
         }
 
         public class Result : IDescriptorResult
@@ -283,11 +271,23 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// </returns>
         /// <param name="nhigh">The number of highest eigenvalue</param>         
         /// <param name="nlow">The number of lowest eigenvalue</param>
-        public Result Calculate(int nhigh = 1, int nlow = 1)
+        public Result Calculate(IAtomContainer container, int nhigh = 1, int nlow = 1)
         {
+            container = (IAtomContainer)container.Clone();
+
+            AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(container);
+            var hAdder = CDK.HydrogenAdder;
+            hAdder.AddImplicitHydrogens(container);
+            AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(container);
+            if (checkAromaticity)
+            {
+                AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(container);
+                Aromaticity.CDKLegacy.Apply(container);
+            }
+
             try
             {
-                return CalculateMain(nhigh, nlow);
+                return CalculateMain(container, nhigh, nlow);
             }
             catch (CDKException e)
             {
@@ -295,7 +295,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        private Result CalculateMain(int nhigh, int nlow)
+        private static Result CalculateMain(IAtomContainer container, int nhigh, int nlow)
         {
             var iso = CDK.IsotopeFactory;
             int nheavy = 0;
@@ -434,6 +434,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return new Result(retval, nhigh, nlow);
         }
 
-        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
+        IDescriptorResult IMolecularDescriptor.Calculate(IAtomContainer mol) => Calculate(mol);
     }
 }

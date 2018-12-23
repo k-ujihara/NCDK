@@ -19,7 +19,6 @@
 
 using NCDK.Aromaticities;
 using NCDK.Charges;
-using NCDK.Config;
 using NCDK.Graphs;
 using NCDK.Graphs.Matrix;
 using NCDK.Tools.Manipulator;
@@ -39,19 +38,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     {
         private const int DefaultSize = 5;
 
-        private readonly IAtomContainer container;
-
-        public AutocorrelationDescriptorPolarizability(IAtomContainer container)
+        public AutocorrelationDescriptorPolarizability()
         {
-            container = (IAtomContainer)container.Clone();
-
-            AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(container);
-            var hAdder = CDK.HydrogenAdder;
-            hAdder.AddImplicitHydrogens(container);
-            AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(container);
-            Aromaticity.CDKLegacy.Apply(container);
-
-            this.container = container;
         }
 
         [DescriptorResult(prefix: "ATSp", baseIndex: 1)]
@@ -87,8 +75,16 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// This method calculate the ATS Autocorrelation descriptor.
         /// </summary>
-        public Result Calculate()
+        public Result Calculate(IAtomContainer container)
         {
+            container = (IAtomContainer)container.Clone();
+
+            AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(container);
+            var hAdder = CDK.HydrogenAdder;
+            hAdder.AddImplicitHydrogens(container);
+            AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(container);
+            Aromaticity.CDKLegacy.Apply(container);
+
             // get the distance matrix for pol calcs as well as for later on
             var distancematrix = PathTools.ComputeFloydAPSP(AdjacencyMatrix.GetMatrix(container));
 
@@ -118,6 +114,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return new Result(polarizabilitySum);
         }
 
-        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
+        IDescriptorResult IMolecularDescriptor.Calculate(IAtomContainer mol) => Calculate(mol);
     }
 }

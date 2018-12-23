@@ -38,7 +38,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// </remarks>
     // @author     Rajarshi Guha
     // @cdk.module qsarmolecular
-    // @cdk.githash
     internal class ChiIndexUtils
     {
         /// <summary>

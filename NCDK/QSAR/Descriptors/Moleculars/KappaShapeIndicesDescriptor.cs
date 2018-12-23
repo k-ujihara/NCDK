@@ -49,13 +49,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#kierValues")]
     public class KappaShapeIndicesDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        private readonly IAtomContainer container;
-
-        public KappaShapeIndicesDescriptor(IAtomContainer container)
+        public KappaShapeIndicesDescriptor()
         {
-            container = (IAtomContainer)container.Clone();
-            container = AtomContainerManipulator.RemoveHydrogens(container);
-            this.container = container;
         }
 
         [DescriptorResult(prefix: "Kier", baseIndex: 1)]
@@ -80,8 +75,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// Calculates the kier shape indices for an atom container
         /// </summary>
         /// <returns>kier1, kier2 and kier3 are returned as arrayList of doubles</returns>
-        public Result Calculate()
+        public Result Calculate(IAtomContainer container)
         {
+            container = (IAtomContainer)container.Clone();
+            container = AtomContainerManipulator.RemoveHydrogens(container);
+
             var singlePaths = new List<double>();
             var doublePaths = new List<string>();
             var triplePaths = new List<string>();
@@ -140,7 +138,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 }
             }
 
-            double[] kier = new double[] { 0, 0, 0, };
+            var kier = new double[] { 0, 0, 0, };
             do
             {
                 if (container.Atoms.Count == 1)
@@ -166,6 +164,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return new Result(kier);
         }
 
-        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
+        IDescriptorResult IMolecularDescriptor.Calculate(IAtomContainer mol) => Calculate(mol);
     }
 }

@@ -18,8 +18,6 @@
  */
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
@@ -34,11 +32,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomCount")]
     public class AtomCountDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        private readonly IAtomContainer container;
-
-        public AtomCountDescriptor(IAtomContainer container)
-        {
-            this.container = container;
+        public AtomCountDescriptor()
+        {            
         }
 
         [DescriptorResult]
@@ -55,7 +50,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// </summary>
         /// <returns>Number of atoms of a certain type is returned.</returns>
         /// <param name="elementName">Symbol of the element we want to count. "*" get the count of all atoms.</param>
-        public Result Calculate(string elementName = "*")
+        public Result Calculate(IAtomContainer container, string elementName = "*")
         {
             // it could be interesting to accept as elementName a SMARTS atom, to get the frequency of this atom
             // this could be useful for other descriptors like polar surface area...
@@ -79,6 +74,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return new Result(atomCount, elementName);
         }
 
-        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
+        IDescriptorResult IMolecularDescriptor.Calculate(IAtomContainer mol) => Calculate(mol);
     }
 }

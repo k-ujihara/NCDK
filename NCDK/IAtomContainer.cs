@@ -28,9 +28,7 @@ namespace NCDK
     /// </summary>
     /// <example>
     /// Looping over all <see cref="IBond"/>s in the <see cref="IAtomContainer"/> is typically done like:
-    /// <example>
     /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.IAtomContainer_Example.cs"]/*' />
-    /// </example>
     /// </example>
     // @author     steinbeck
     // @cdk.module interfaces

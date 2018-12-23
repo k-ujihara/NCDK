@@ -45,8 +45,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 mol = mdl.Read(CDK.Builder.NewAtomContainer());
             }
 
-            var fpsa = CreateDescriptor(mol);
-            var results = fpsa.Calculate();
+            var fpsa = CreateDescriptor();
+            var results = fpsa.Calculate(mol);
 
             // note: test currently assumes that just one Descriptor is calculated
             var names = results.Keys.ToReadOnlyList();

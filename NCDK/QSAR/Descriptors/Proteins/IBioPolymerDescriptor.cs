@@ -1,4 +1,4 @@
-/* Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+/* Copyright (C) 2006-2007  Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -17,21 +17,20 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-namespace NCDK.QSAR.Descriptors.Moleculars
+namespace NCDK.QSAR.Descriptors.Proteins
 {
-    // @cdk.module test-qsarmolecular
-    [TestClass()]
-    public class BPolDescriptorTest : MolecularDescriptorTest<BPolDescriptor>
+    /// <summary>
+    /// Classes that implement this interface are QSAR descriptor calculators
+    /// for <see cref="IBioPolymer"/> objects.
+    /// </summary>
+    // @cdk.module qsar
+    public interface IBioPolymerDescriptor
+        : IDescriptor
     {
-        [TestMethod()]
-        public void TestBPolDescriptor()
-        {
-            var sp = CDK.SmilesParser;
-            var mol = sp.ParseSmiles("O=C(O)CC");
-            AddExplicitHydrogens(mol);
-            Assert.AreEqual(7.517242, CreateDescriptor().Calculate(mol).Value, 0.01);
-        }
+        /// <summary>
+        /// Calculates the descriptor value.
+        /// </summary>
+        /// <returns>An object contains the calculated value as well as specification details</returns>
+        IDescriptorResult Calculate(IBioPolymer mol);
     }
 }

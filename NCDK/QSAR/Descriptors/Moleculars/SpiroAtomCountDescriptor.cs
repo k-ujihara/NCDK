@@ -30,12 +30,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#nSpiroAtom")]
     public class SpiroAtomCountDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        private readonly IAtomContainer container;
-
-        public SpiroAtomCountDescriptor(IAtomContainer container)
+        public SpiroAtomCountDescriptor()
         {
-            container = (IAtomContainer)container.Clone();
-            this.container = container;
         }
 
         [DescriptorResult]
@@ -97,8 +93,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return degree < 2 ? 0 : degree;
         }
 
-        public Result Calculate()
+        public Result Calculate(IAtomContainer container)
         {
+            container = (IAtomContainer)container.Clone();
+
             int nSpiro = 0;
 
             Cycles.MarkRingAtomsAndBonds(container);
@@ -111,6 +109,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return new Result(nSpiro);
         }
 
-        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
+        IDescriptorResult IMolecularDescriptor.Calculate(IAtomContainer mol) => Calculate(mol);
     }
 }

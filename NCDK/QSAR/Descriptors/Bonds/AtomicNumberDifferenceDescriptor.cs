@@ -29,16 +29,11 @@ namespace NCDK.QSAR.Descriptors.Bonds
     // @author      Egon Willighagen
     // @cdk.created 2007-12-29
     // @cdk.module  qsarbond
-    // @cdk.githash
     // @cdk.dictref qsar-descriptors:bondAtomicNumberImbalance
     [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondAtomicNumberImbalance")]
     public class AtomicNumberDifferenceDescriptor : AbstractDescriptor, IBondDescriptor
     {
         public AtomicNumberDifferenceDescriptor()
-        {
-        }
-
-        public AtomicNumberDifferenceDescriptor(IAtomContainer container)
         {
         }
 

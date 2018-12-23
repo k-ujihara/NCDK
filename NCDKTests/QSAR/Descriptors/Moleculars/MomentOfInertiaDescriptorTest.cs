@@ -36,7 +36,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var mol = sp.ParseSmiles("CCCC");
             try
             {
-                var value = CreateDescriptor(mol).Calculate();
+                var value = CreateDescriptor().Calculate(mol);
                 Assert.Fail();
             }
             catch (ThreeDRequiredException)
@@ -56,7 +56,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var cList = ChemFileManipulator.GetAllAtomContainers(content).ToReadOnlyList();
             var ac = cList[0];
 
-            var retval = CreateDescriptor(ac).Calculate().Values;
+            var retval = CreateDescriptor().Calculate(ac).Values;
 
             Assert.AreEqual(1820.692519, retval[0], 0.00001);
             Assert.AreEqual(1274.532522, retval[1], 0.00001);
@@ -79,7 +79,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var cList = ChemFileManipulator.GetAllAtomContainers(content).ToReadOnlyList();
             var ac = cList[0];
 
-            var retval = CreateDescriptor(ac).Calculate().Values;
+            var retval = CreateDescriptor().Calculate(ac).Values;
 
             Assert.AreEqual(10068.419360, retval[0], 0.00001);
             Assert.AreEqual(9731.078356, retval[1], 0.00001);

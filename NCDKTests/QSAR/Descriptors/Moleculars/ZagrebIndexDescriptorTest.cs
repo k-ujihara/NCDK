@@ -33,7 +33,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("O=C(O)CC");
-            Assert.AreEqual(16, CreateDescriptor(mol).Calculate().Value, 0.0001);
+            Assert.AreEqual(16, CreateDescriptor().Calculate(mol).Value, 0.0001);
         }
 
         [TestMethod()]
@@ -46,7 +46,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             Aromaticity.CDKLegacy.Apply(mol);
 
-            double value2D = CreateDescriptor(mol).Calculate().Value;
+            double value2D = CreateDescriptor().Calculate(mol).Value;
 
             var filename = "NCDK.Data.MDL.cpsa-uncharged.sdf";
             IChemFile content;
@@ -59,7 +59,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             Aromaticity.CDKLegacy.Apply(mol);
 
-            var value3D = CreateDescriptor(mol).Calculate().Value;
+            var value3D = CreateDescriptor().Calculate(mol).Value;
 
             Assert.AreEqual(value2D, value3D, 0.001);
         }

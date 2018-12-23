@@ -83,7 +83,7 @@ namespace NCDK.QSAR.Descriptors.Proteins
     // @cdk.module  qsarprotein
     // @cdk.dictref qsar-descriptors:taeAminoAcid
     [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#taeAminoAcid")]
-    public partial class TaeAminoAcidDescriptor : AbstractDescriptor, IMolecularDescriptor
+    public partial class TaeAminoAcidDescriptor : AbstractDescriptor, IBioPolymerDescriptor
     {
         private static List<IMonomer> GetMonomers(IBioPolymer iBioPolymer)
         {
@@ -134,13 +134,8 @@ namespace NCDK.QSAR.Descriptors.Proteins
             return taeParams;
         }
 
-        private readonly IBioPolymer peptide;
-
-        public TaeAminoAcidDescriptor(IBioPolymer container)
+        public TaeAminoAcidDescriptor()
         {
-            container = (IBioPolymer)container.Clone(); // don't mod original
-
-            this.peptide = container;
         }
 
         [DescriptorResult(prefix: "TAE", baseIndex: 0)]
@@ -153,8 +148,12 @@ namespace NCDK.QSAR.Descriptors.Proteins
         /// Calculates the 147 TAE descriptors for amino acids.
         /// </summary>
         /// <returns>The 147 TAE descriptors</returns>
-        public Result Calculate()
+        public Result Calculate(IBioPolymer container)
         {
+            container = (IBioPolymer)container.Clone(); // don't mod original
+
+            var peptide = container;
+
             // I assume that we get single letter names
             var desc = new double[ndesc];
             for (int i = 0; i < ndesc; i++)
@@ -184,6 +183,6 @@ namespace NCDK.QSAR.Descriptors.Proteins
             return new Result(desc);
         }
 
-        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
+        IDescriptorResult IBioPolymerDescriptor.Calculate(IBioPolymer mol) => Calculate(mol);
     }
 }

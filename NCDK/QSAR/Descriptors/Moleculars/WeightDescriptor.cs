@@ -17,7 +17,6 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Config;
 using System;
 using System.Linq;
 
@@ -33,13 +32,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#weight")]
     public class WeightDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        private readonly IAtomContainer container;
-
-        /// <param name="container">The AtomContainer for which this descriptor is to be calculated. If 'H'
-        /// is specified as the element symbol make sure that the AtomContainer has hydrogens.</param>
-        public WeightDescriptor(IAtomContainer container)
+        public WeightDescriptor()
         {
-            this.container = container;
         }
 
         [DescriptorResult]
@@ -62,8 +56,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// Calculate the weight of specified element type in the supplied <see cref="IAtomContainer"/>.
         /// </summary>
         /// <returns>The total weight of atoms of the specified element type</returns>
+        /// <param name="container">
+        /// The AtomContainer for which this descriptor is to be calculated. If 'H'
+        /// is specified as the element symbol make sure that the AtomContainer has hydrogens.
+        /// </param>
         /// <param name="symbol">If *, returns the molecular weight, otherwise the weight for the given element</param>
-        public Result Calculate(string symbol = "*")
+        public Result Calculate(IAtomContainer container, string symbol = "*")
         {
             var iso = CDK.IsotopeFactory;
             var h = iso.GetMajorIsotope(AtomicNumbers.H);
@@ -94,6 +92,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return new Result(weight);
         }
 
-        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
+        IDescriptorResult IMolecularDescriptor.Calculate(IAtomContainer mol) => Calculate(mol);
     }
 }

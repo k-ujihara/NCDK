@@ -326,16 +326,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             REFRACVAL[120] = 5.2806;
         }
 
-        private readonly IAtomContainer container;
-
-        public ALogPDescriptor(IAtomContainer container)
+        public ALogPDescriptor()
         {
-            container = (IAtomContainer)container.Clone();
-            AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(container);
-            var hAdder = CDK.HydrogenAdder;
-            hAdder.AddImplicitHydrogens(container);
-            AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(container);
-            this.container = container;
         }
 
         [DescriptorResult]
@@ -367,9 +359,15 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// TODO: Ideally we should explicit H addition should be cached
         /// </remarks>
         /// <returns>the result of the calculation</returns>
-        public Result Calculate()
+        public Result Calculate(IAtomContainer container)
         {
-            return new Calculator(this).Calculate();
+            container = (IAtomContainer)container.Clone();
+            AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(container);
+            var hAdder = CDK.HydrogenAdder;
+            hAdder.AddImplicitHydrogens(container);
+            AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(container);
+
+            return new Calculator(container).Calculate();
         }
 
         class Calculator
@@ -405,9 +403,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 }
             }
 
-            public Calculator(ALogPDescriptor parent)
+            public Calculator(IAtomContainer container)
             {
-                this.container = parent.container;
+                this.container = container;
                 this.fragment = new string[container.Atoms.Count];
             }
 
@@ -2306,6 +2304,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
+        IDescriptorResult IMolecularDescriptor.Calculate(IAtomContainer mol) => Calculate(mol);
     }
 }

@@ -53,7 +53,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
 
-            var result = CreateDescriptor(mol).Calculate();
+            var result = CreateDescriptor().Calculate(mol);
             Assert.AreEqual(0.5192, result.ALogP, 0.0001);
             Assert.AreEqual(19.1381, result.AMR, 0.0001);
         }

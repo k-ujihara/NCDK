@@ -17,7 +17,6 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Config;
 using NCDK.Graphs;
 using NCDK.Tools.Manipulator;
 using System.Linq;
@@ -41,13 +40,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#rotatableBondsCount")]
     public class RotatableBondsCountDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        private readonly IAtomContainer container;
-
-        public RotatableBondsCountDescriptor(IAtomContainer container)
+        public RotatableBondsCountDescriptor()
         {
-            container = (IAtomContainer)container.Clone();
-            
-            this.container = container;
         }
 
         [DescriptorResult]
@@ -74,8 +68,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <returns>number of rotatable bonds</returns>
         /// <param name="includeTerminals"><see langword="true"/> if terminal bonds are included</param>
         /// <param name="excludeAmides"><see langword="true"/> if amide C-N bonds should be excluded</param>
-        public Result Calculate(bool includeTerminals = false, bool excludeAmides = false)
+        public Result Calculate(IAtomContainer container, bool includeTerminals = false, bool excludeAmides = false)
         {
+            container = (IAtomContainer)container.Clone();
+
             IRingSet ringSet;
             try
             {
@@ -152,6 +148,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return container.GetConnectedAtoms(atom).Count(n => n.AtomicNumber.Equals(AtomicNumbers.H));
         }
 
-        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
+        IDescriptorResult IMolecularDescriptor.Calculate(IAtomContainer mol) => Calculate(mol);
     }
 }

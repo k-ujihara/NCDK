@@ -33,7 +33,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("[H]C([H])([H])C([H])([H])C(=O)O");
             AtomContainerManipulator.RemoveHydrogens(mol);
-            var retval = CreateDescriptor(mol).Calculate();
+            var retval = CreateDescriptor().Calculate(mol);
             Assert.AreEqual(testResult[0], retval.PathNumber, 0.0001);
             Assert.AreEqual(testResult[1], retval.PolarityNumber, 0.0001);
         }
@@ -47,7 +47,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             double[] testResult = { 18, 2 };
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("[H]C([H])([H])C([H])([H])C(=O)O");
-            var retval = CreateDescriptor(mol).Calculate();
+            var retval = CreateDescriptor().Calculate(mol);
             Assert.AreEqual(testResult[0], retval.PathNumber, 0.0001);
             Assert.AreEqual(testResult[1], retval.PolarityNumber, 0.0001);
         }
@@ -65,7 +65,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             {
                 smiles += "C"; // create the matching paraffin
                 var mol = sp.ParseSmiles(smiles);
-                var retval = CreateDescriptor(mol).Calculate();
+                var retval = CreateDescriptor().Calculate(mol);
                 Assert.AreEqual(testResult[i], retval.PathNumber, 0.0001);
             }
         }

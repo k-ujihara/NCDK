@@ -42,15 +42,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#petitjeanNumber")]
     public class PetitjeanNumberDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        private static readonly string[] NAMES = { "PetitjeanNumber" };
-
-        private readonly IAtomContainer container;
-
-        public PetitjeanNumberDescriptor(IAtomContainer container)
+        public PetitjeanNumberDescriptor()
         {
-            container = AtomContainerManipulator.RemoveHydrogens(container);
-
-            this.container = container;
         }
 
         [DescriptorResult]
@@ -71,8 +64,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// Evaluate the descriptor for the molecule.
         /// </summary>
         /// <returns>petitjean number</returns>
-        public Result Calculate()
+        public Result Calculate(IAtomContainer container)
         {
+            container = AtomContainerManipulator.RemoveHydrogens(container);
+
             var diameter = PathTools.GetMolecularGraphDiameter(container);
             var radius = PathTools.GetMolecularGraphRadius(container);
 
@@ -81,6 +76,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return new Result(petitjeanNumber);
         }
         
-        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
+        IDescriptorResult IMolecularDescriptor.Calculate(IAtomContainer mol) => Calculate(mol);
     }
 }

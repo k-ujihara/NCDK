@@ -22,7 +22,6 @@ using NCDK.Isomorphisms.Matchers;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
@@ -65,13 +64,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#chiChain")]
     public class ChiChainDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        private readonly IAtomContainer container;
-
-        public ChiChainDescriptor(IAtomContainer container)
+        public ChiChainDescriptor()
         {
-            // we don't make a clone, since removeHydrogens returns a deep copy
-            container = AtomContainerManipulator.RemoveHydrogens(container);
-            this.container = container;
         }
 
         [DescriptorResult]
@@ -108,8 +102,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             public new IReadOnlyList<double> Values { get; private set; }
         }
 
-        public Result Calculate()
+        public Result Calculate(IAtomContainer container)
         {
+            // we don't make a clone, since removeHydrogens returns a deep copy
+            container = AtomContainerManipulator.RemoveHydrogens(container);
+
             var matcher = CDK.AtomTypeMatcher;
             foreach (var atom in container.Atoms)
             {
@@ -234,6 +231,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return ChiIndexUtils.GetFragments(atomContainer, queries7);
         }
 
-        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
+        IDescriptorResult IMolecularDescriptor.Calculate(IAtomContainer mol) => Calculate(mol);
     }
 }

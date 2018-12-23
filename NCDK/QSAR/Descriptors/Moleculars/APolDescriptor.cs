@@ -51,11 +51,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 22.7, 20.5, 19.7, 23.8, 18.2, 17.5
             };
 
-        private readonly IAtomContainer container;
-
-        public APolDescriptor(IAtomContainer container)
+        public APolDescriptor()
         {
-            this.container = container;
         }
 
         [DescriptorResult]
@@ -76,7 +73,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// Calculate the sum of atomic polarizabilities in an <see cref="IAtomContainer"/>.
         /// </summary>
         /// <returns>The sum of atomic polarizabilities <see cref="IsotopeFactory"/></returns>
-        public Result Calculate()
+        public Result Calculate(IAtomContainer container)
         {
             var polarizabilitiesH = polarizabilities[AtomicNumbers.H];
             var apol = container.Atoms
@@ -87,6 +84,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return new Result(apol);
         }
 
-        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
+        IDescriptorResult IMolecularDescriptor.Calculate(IAtomContainer mol) => Calculate(mol);
     }
 }

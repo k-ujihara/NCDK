@@ -12,7 +12,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("CCCC[Sn](CCCC)(CCCC)c1cc(Cl)c(Nc2nc(C)nc(N(CCC)CC3CC3)c2Cl)c(Cl)c1");
-            dynamic result = CreateDescriptor(mol).Calculate();
+            dynamic result = CreateDescriptor().Calculate(mol);
 
             var ret = (IEnumerable<double>)result.Values;
             Assert.IsNotNull(ret);
@@ -24,7 +24,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("CC1CN[Pt]2(N1)OC(=O)C(C)P(=O)(O)O2");
-            var result = CreateDescriptor(mol).Calculate();
+            var result = CreateDescriptor().Calculate(mol);
             Assert.IsNotNull(result.Exception);
         }
     }
@@ -36,7 +36,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("CCCC[Sn](CCCC)(CCCC)c1cc(Cl)c(Nc2nc(C)nc(N(CCC)CC3CC3)c2Cl)c(Cl)c1");
-            dynamic result = CreateDescriptor(mol).Calculate();
+            dynamic result = CreateDescriptor().Calculate(mol);
 
             var ret = (IEnumerable<double>)result.Values;
             Assert.IsNotNull(ret);
@@ -48,7 +48,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("CC1CN[Pt]2(N1)OC(=O)C(C)P(=O)(O)O2");
-            var result = CreateDescriptor(mol).Calculate();
+            var result = CreateDescriptor().Calculate(mol);
             Assert.IsNotNull(result.Exception);
         }
     }
@@ -60,7 +60,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("CCCC[Sn](CCCC)(CCCC)c1cc(Cl)c(Nc2nc(C)nc(N(CCC)CC3CC3)c2Cl)c(Cl)c1");
-            dynamic result = CreateDescriptor(mol).Calculate();
+            dynamic result = CreateDescriptor().Calculate(mol);
 
             var ret = (IEnumerable<double>)result.Values;
             Assert.IsNotNull(ret);
@@ -72,7 +72,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("CC1CN[Pt]2(N1)OC(=O)C(C)P(=O)(O)O2");
-            var result = CreateDescriptor(mol).Calculate();
+            var result = CreateDescriptor().Calculate(mol);
             Assert.IsNotNull(result.Exception);
         }
     }
@@ -84,7 +84,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("CCCC[Sn](CCCC)(CCCC)c1cc(Cl)c(Nc2nc(C)nc(N(CCC)CC3CC3)c2Cl)c(Cl)c1");
-            dynamic result = CreateDescriptor(mol).Calculate();
+            dynamic result = CreateDescriptor().Calculate(mol);
 
             var ret = (IEnumerable<double>)result.Values;
             Assert.IsNotNull(ret);
@@ -96,7 +96,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("CC1CN[Pt]2(N1)OC(=O)C(C)P(=O)(O)O2");
-            var result = CreateDescriptor(mol).Calculate();
+            var result = CreateDescriptor().Calculate(mol);
             Assert.IsNotNull(result.Exception);
         }
     }

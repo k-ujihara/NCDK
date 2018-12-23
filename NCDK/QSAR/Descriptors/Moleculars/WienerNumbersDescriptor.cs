@@ -21,7 +21,6 @@
 using NCDK.Graphs;
 using NCDK.Graphs.Matrix;
 using NCDK.Tools.Manipulator;
-using System.Collections.Generic;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
@@ -49,16 +48,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.keyword    Wiener number
     [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#wienerNumbers")]
     public class WienerNumbersDescriptor : AbstractDescriptor, IMolecularDescriptor
-    {
-        private readonly IAtomContainer container;
-        private readonly double[][] matr;
-
-        public WienerNumbersDescriptor(IAtomContainer container)
+    {        
+        public WienerNumbersDescriptor()
         {
-            // RemoveHydrogens does not break container
-            matr = ConnectionMatrix.GetMatrix(AtomContainerManipulator.RemoveHydrogens(container));
-
-            this.container = container;
         }
 
         [DescriptorResult]
@@ -89,8 +81,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// Calculate the Wiener numbers.
         /// </summary>
         /// <returns>wiener numbers as array of 2 doubles</returns>
-        public Result Calculate()
+        public Result Calculate(IAtomContainer container)
         {
+            // RemoveHydrogens does not break container
+            var matr = ConnectionMatrix.GetMatrix(AtomContainerManipulator.RemoveHydrogens(container));
+
             int wienerPathNumber = 0; //wienerPath
             int wienerPolarityNumber = 0; //wienerPol
 
@@ -111,6 +106,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return new Result((double)wienerPathNumber / 2, (double)wienerPolarityNumber / 2);
         }
 
-        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
+        IDescriptorResult IMolecularDescriptor.Calculate(IAtomContainer mol) => Calculate(mol);
     }
 }

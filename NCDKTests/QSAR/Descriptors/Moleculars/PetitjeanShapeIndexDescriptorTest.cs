@@ -40,12 +40,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var cList = ChemFileManipulator.GetAllAtomContainers(content).ToReadOnlyList();
             var ac = cList[0];
 
-            var result = CreateDescriptor(ac).Calculate();
+            var result = CreateDescriptor().Calculate(ac);
             Assert.AreEqual(0.5, result.TopologicalShapeIndex, 0.00001);
             Assert.AreEqual(0.606477, result.GeometricShapeIndex, 0.000001);
 
             ac = cList[1];
-            result = CreateDescriptor(ac).Calculate();
+            result = CreateDescriptor().Calculate(ac);
             Assert.AreEqual(0.666666, result.TopologicalShapeIndex, 0.000001);
             Assert.AreEqual(0.845452, result.GeometricShapeIndex, 0.000001);
 
@@ -56,7 +56,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             var sp = CDK.SmilesParser;
             var atomContainer = sp.ParseSmiles("CCCOCCC(O)=O");
-            var result = CreateDescriptor(atomContainer).Calculate();
+            var result = CreateDescriptor().Calculate(atomContainer);
             Assert.IsTrue(double.IsNaN(result.GeometricShapeIndex));
         }
     }

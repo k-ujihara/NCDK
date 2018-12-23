@@ -9,6 +9,7 @@
     {
         static void Main(string[] args)
         {
+            #region
             var toluene = Chem.MolFromSmiles("Cc1ccccc1");
             var mol1 = Chem.MolFromFile("Data/input.mol");
             var stringWithMolData = new StreamReader("Data/input.mol").ReadToEnd();
@@ -43,6 +44,7 @@
             {
                 Console.WriteLine(gzsuppl.Count(x => x != null));
             }
+            #endregion
         }
     }
 }

@@ -53,11 +53,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return substructureSet;
         }
 
-        private readonly IAtomContainer container;
-
-        public AminoAcidCountDescriptor(IAtomContainer container)
+        public AminoAcidCountDescriptor()
         {
-            this.container = (IAtomContainer)container.Clone();
         }
 
         [DescriptorResult]
@@ -118,8 +115,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// Determine the number of amino acids groups the supplied <see cref="IAtomContainer"/>.
         /// </summary>
         /// <returns>the number of aromatic atoms of this AtomContainer</returns>
-        public Result Calculate()
+        public Result Calculate(IAtomContainer container)
         {            
+            container = (IAtomContainer)container.Clone();
             var results = new List<int>(substructureSet.Count);
 
             var universalIsomorphismTester = new UniversalIsomorphismTester();
@@ -132,6 +130,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return new Result(results);
         }
 
-        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
+        IDescriptorResult IMolecularDescriptor.Calculate(IAtomContainer mol) => Calculate(mol);
     }
 }

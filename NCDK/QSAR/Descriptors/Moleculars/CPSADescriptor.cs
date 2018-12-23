@@ -115,13 +115,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#CPSA")]
     public class CPSADescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-
-        private readonly IAtomContainer container;
-
-        public CPSADescriptor(IAtomContainer container)
+        public CPSADescriptor()
         {
-            container = (IAtomContainer)container.Clone();
-            this.container = container;
         }
 
         [DescriptorResult]
@@ -226,10 +221,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// Evaluates the 29 CPSA descriptors using Gasteiger-Marsilli charges.
         /// </summary>
         /// <returns>An ArrayList containing 29 elements in the order described above</returns>
-        public Result Calculate()
+        public Result Calculate(IAtomContainer container)
         {
+            container = (IAtomContainer)container.Clone();
+
             if (!GeometryUtil.Has3DCoordinates(container))
-                throw new CDKException("Molecule must have 3D coordinates");
+                throw new ThreeDRequiredException("Molecule must have 3D coordinates");
 
             var peoe = new GasteigerMarsiliPartialCharges();
             peoe.AssignGasteigerMarsiliSigmaPartialCharges(container, true);
@@ -369,6 +366,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 });
         }
 
-        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
+        IDescriptorResult IMolecularDescriptor.Calculate(IAtomContainer mol) => Calculate(mol);
     }
 }

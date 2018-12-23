@@ -32,7 +32,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("O=C(O)CC");
             AtomContainerManipulator.RemoveHydrogens(mol);
-            Assert.AreEqual(0.33333334, CreateDescriptor(mol).Calculate().Value, 0.01);
+            Assert.AreEqual(0.33333334, CreateDescriptor().Calculate(mol).Value, 0.01);
         }
 
         [TestMethod()]
@@ -40,7 +40,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("O");
-            Assert.AreEqual(0, CreateDescriptor(mol).Calculate().Value, 0.01);
+            Assert.AreEqual(0, CreateDescriptor().Calculate(mol).Value, 0.01);
         }
     }
 }

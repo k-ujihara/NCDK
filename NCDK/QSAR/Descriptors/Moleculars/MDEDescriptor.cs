@@ -44,19 +44,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#mde")]
     public class MDEDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        private readonly IAtomContainer container;
-        private readonly int[][] adjMatrix;
-        private readonly int[][] tdist;
-
-        /// <param name="container">The AtomContainer for which this descriptor is to be calculated. If 'H'
-        /// is specified as the element symbol make sure that the AtomContainer has hydrogens.</param>
-        public MDEDescriptor(IAtomContainer container)
+        public MDEDescriptor()
         {
-            container = AtomContainerManipulator.RemoveHydrogens(container); // it returns clone
-            adjMatrix = AdjacencyMatrix.GetMatrix(container);
-            tdist = PathTools.ComputeFloydAPSP(adjMatrix);
-
-            this.container = container;
         }
 
         [DescriptorResult]
@@ -200,170 +189,193 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// Calculate the weight of specified element type in the supplied <see cref="IAtomContainer"/>.
         /// </summary>
+        /// <param name="container">
+        /// The AtomContainer for which this descriptor is to be calculated. If 'H
+        /// is specified as the element symbol make sure that the AtomContainer has hydrogens.
+        /// </param>
         /// <returns>The total weight of atoms of the specified element type</returns>
-        public Result Calculate()
+        public Result Calculate(IAtomContainer container)
         {
-            var retval = new double[19];
-            for (int i = 0; i < 19; i++)
-                retval[i] = Dedge(i);
-
-            return new Result(retval);
-        }
-            
-        private double Dedge(int which)
-        {
-            int[][] atypes = null;
-
-            switch (which)
-            {
-                case MDEC11:
-                case MDEC12:
-                case MDEC13:
-                case MDEC14:
-                case MDEC22:
-                case MDEC23:
-                case MDEC24:
-                case MDEC33:
-                case MDEC34:
-                case MDEC44:
-                    atypes = EvalATable(6);
-                    break;
-                case MDEO11:
-                case MDEO12:
-                case MDEO22:
-                    atypes = EvalATable(8);
-                    break;
-                case MDEN11:
-                case MDEN12:
-                case MDEN13:
-                case MDEN22:
-                case MDEN23:
-                case MDEN33:
-                    atypes = EvalATable(7);
-                    break;
-            }
-            double retval = 0;
-            switch (which)
-            {
-                case MDEC11:
-                    retval = EvalCValue(atypes, C_1, C_1);
-                    break;
-                case MDEC12:
-                    retval = EvalCValue(atypes, C_1, C_2);
-                    break;
-                case MDEC13:
-                    retval = EvalCValue(atypes, C_1, C_3);
-                    break;
-                case MDEC14:
-                    retval = EvalCValue(atypes, C_1, C_4);
-                    break;
-                case MDEC22:
-                    retval = EvalCValue(atypes, C_2, C_2);
-                    break;
-                case MDEC23:
-                    retval = EvalCValue(atypes, C_2, C_3);
-                    break;
-                case MDEC24:
-                    retval = EvalCValue(atypes, C_2, C_4);
-                    break;
-                case MDEC33:
-                    retval = EvalCValue(atypes, C_3, C_3);
-                    break;
-                case MDEC34:
-                    retval = EvalCValue(atypes, C_3, C_4);
-                    break;
-                case MDEC44:
-                    retval = EvalCValue(atypes, C_4, C_4);
-                    break;
-
-                case MDEO11:
-                    retval = EvalCValue(atypes, O_1, O_1);
-                    break;
-                case MDEO12:
-                    retval = EvalCValue(atypes, O_1, O_2);
-                    break;
-                case MDEO22:
-                    retval = EvalCValue(atypes, O_2, O_2);
-                    break;
-
-                case MDEN11:
-                    retval = EvalCValue(atypes, N_1, N_1);
-                    break;
-                case MDEN12:
-                    retval = EvalCValue(atypes, N_1, N_2);
-                    break;
-                case MDEN13:
-                    retval = EvalCValue(atypes, N_1, N_3);
-                    break;
-                case MDEN22:
-                    retval = EvalCValue(atypes, N_2, N_2);
-                    break;
-                case MDEN23:
-                    retval = EvalCValue(atypes, N_2, N_3);
-                    break;
-                case MDEN33:
-                    retval = EvalCValue(atypes, N_3, N_3);
-                    break;
-            }
-
-            return retval;
+            return new Calculator(container).Calculate();
         }
 
-        private int[][] EvalATable(int atomicNum)
+        class Calculator
         {
-            var natom = container.Atoms.Count;
-            var atypes = Arrays.CreateJagged<int>(natom, 2);
-            for (int i = 0; i < natom; i++)
-            {
-                var atom = container.Atoms[i];
-                var numConnectedBonds = container.GetConnectedBonds(atom).Count();
-                atypes[i][1] = i;
-                if (atomicNum == atom.AtomicNumber)
-                    atypes[i][0] = numConnectedBonds;
-                else
-                    atypes[i][0] = -1;
-            }
-            return atypes;
-        }
+            private readonly IAtomContainer container;
+            private readonly int[][] adjMatrix;
+            private readonly int[][] tdist;
 
-        private double EvalCValue(int[][] codemat, int type1, int type2)
-        {
-            double lambda = 1;
-            double n = 0;
-
-            var v1 = new List<int>();
-            var v2 = new List<int>();
-            for (int i = 0; i < codemat.Length; i++)
+            public Calculator(IAtomContainer container)
             {
-                if (codemat[i][0] == type1) v1.Add(codemat[i][1]);
-                if (codemat[i][0] == type2) v2.Add(codemat[i][1]);
+                this.container = AtomContainerManipulator.RemoveHydrogens(container); // it returns clone
+                adjMatrix = AdjacencyMatrix.GetMatrix(container);
+                tdist = PathTools.ComputeFloydAPSP(adjMatrix);
             }
 
-            for (int i = 0; i < v1.Count; i++)
+            public Result Calculate()
+            { 
+                var retval = new double[19];
+                for (int i = 0; i < 19; i++)
+                    retval[i] = Dedge(i);
+
+                return new Result(retval);
+            }
+
+            private double Dedge(int which)
             {
-                for (int j = 0; j < v2.Count; j++)
+                int[][] atypes = null;
+
+                switch (which)
                 {
-                    var a = v1[i];
-                    var b = v2[j];
-                    if (a == b)
-                        continue;
-                    var distance = tdist[a][b];
-                    lambda = lambda * distance;
-                    n++;
+                    case MDEC11:
+                    case MDEC12:
+                    case MDEC13:
+                    case MDEC14:
+                    case MDEC22:
+                    case MDEC23:
+                    case MDEC24:
+                    case MDEC33:
+                    case MDEC34:
+                    case MDEC44:
+                        atypes = EvalATable(6);
+                        break;
+                    case MDEO11:
+                    case MDEO12:
+                    case MDEO22:
+                        atypes = EvalATable(8);
+                        break;
+                    case MDEN11:
+                    case MDEN12:
+                    case MDEN13:
+                    case MDEN22:
+                    case MDEN23:
+                    case MDEN33:
+                        atypes = EvalATable(7);
+                        break;
                 }
+                double retval = 0;
+                switch (which)
+                {
+                    case MDEC11:
+                        retval = EvalCValue(atypes, C_1, C_1);
+                        break;
+                    case MDEC12:
+                        retval = EvalCValue(atypes, C_1, C_2);
+                        break;
+                    case MDEC13:
+                        retval = EvalCValue(atypes, C_1, C_3);
+                        break;
+                    case MDEC14:
+                        retval = EvalCValue(atypes, C_1, C_4);
+                        break;
+                    case MDEC22:
+                        retval = EvalCValue(atypes, C_2, C_2);
+                        break;
+                    case MDEC23:
+                        retval = EvalCValue(atypes, C_2, C_3);
+                        break;
+                    case MDEC24:
+                        retval = EvalCValue(atypes, C_2, C_4);
+                        break;
+                    case MDEC33:
+                        retval = EvalCValue(atypes, C_3, C_3);
+                        break;
+                    case MDEC34:
+                        retval = EvalCValue(atypes, C_3, C_4);
+                        break;
+                    case MDEC44:
+                        retval = EvalCValue(atypes, C_4, C_4);
+                        break;
+
+                    case MDEO11:
+                        retval = EvalCValue(atypes, O_1, O_1);
+                        break;
+                    case MDEO12:
+                        retval = EvalCValue(atypes, O_1, O_2);
+                        break;
+                    case MDEO22:
+                        retval = EvalCValue(atypes, O_2, O_2);
+                        break;
+
+                    case MDEN11:
+                        retval = EvalCValue(atypes, N_1, N_1);
+                        break;
+                    case MDEN12:
+                        retval = EvalCValue(atypes, N_1, N_2);
+                        break;
+                    case MDEN13:
+                        retval = EvalCValue(atypes, N_1, N_3);
+                        break;
+                    case MDEN22:
+                        retval = EvalCValue(atypes, N_2, N_2);
+                        break;
+                    case MDEN23:
+                        retval = EvalCValue(atypes, N_2, N_3);
+                        break;
+                    case MDEN33:
+                        retval = EvalCValue(atypes, N_3, N_3);
+                        break;
+                }
+
+                return retval;
             }
 
-            if (type1 == type2)
+            private int[][] EvalATable(int atomicNum)
             {
-                lambda = Math.Sqrt(lambda);
-                n = n / 2;
+                var natom = container.Atoms.Count;
+                var atypes = Arrays.CreateJagged<int>(natom, 2);
+                for (int i = 0; i < natom; i++)
+                {
+                    var atom = container.Atoms[i];
+                    var numConnectedBonds = container.GetConnectedBonds(atom).Count();
+                    atypes[i][1] = i;
+                    if (atomicNum == atom.AtomicNumber)
+                        atypes[i][0] = numConnectedBonds;
+                    else
+                        atypes[i][0] = -1;
+                }
+                return atypes;
             }
-            if (n == 0)
-                return 0.0;
-            else
-                return n / Math.Pow(Math.Pow(lambda, 1.0 / (2.0 * n)), 2);
-        }
 
-        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
+            private double EvalCValue(int[][] codemat, int type1, int type2)
+            {
+                double lambda = 1;
+                double n = 0;
+
+                var v1 = new List<int>();
+                var v2 = new List<int>();
+                for (int i = 0; i < codemat.Length; i++)
+                {
+                    if (codemat[i][0] == type1) v1.Add(codemat[i][1]);
+                    if (codemat[i][0] == type2) v2.Add(codemat[i][1]);
+                }
+
+                for (int i = 0; i < v1.Count; i++)
+                {
+                    for (int j = 0; j < v2.Count; j++)
+                    {
+                        var a = v1[i];
+                        var b = v2[j];
+                        if (a == b)
+                            continue;
+                        var distance = tdist[a][b];
+                        lambda = lambda * distance;
+                        n++;
+                    }
+                }
+
+                if (type1 == type2)
+                {
+                    lambda = Math.Sqrt(lambda);
+                    n = n / 2;
+                }
+                if (n == 0)
+                    return 0.0;
+                else
+                    return n / Math.Pow(Math.Pow(lambda, 1.0 / (2.0 * n)), 2);
+            }
+        }       
+
+        IDescriptorResult IMolecularDescriptor.Calculate(IAtomContainer mol) => Calculate(mol);
     }
 }

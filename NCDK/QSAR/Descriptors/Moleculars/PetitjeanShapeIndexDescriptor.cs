@@ -42,13 +42,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#petitjeanShapeIndex")]
     public class PetitjeanShapeIndexDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        private static readonly string[] NAMES = { "topoShape", "geomShape" };
-
-        private readonly IAtomContainer container;
-
-        public PetitjeanShapeIndexDescriptor(IAtomContainer container)
+        public PetitjeanShapeIndexDescriptor()
         {
-            this.container = container;
         }
 
         [DescriptorResult]
@@ -79,7 +74,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// Calculates the two Petitjean shape indices.
         /// </summary>
         /// <returns>A <see cref="ResolveEventArgs"/> representing the Petitjean shape indices</returns>
-        public Result Calculate()
+        public Result Calculate(IAtomContainer container)
         {
             var local = AtomContainerManipulator.RemoveHydrogens(container);
 
@@ -133,6 +128,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return new Result(topoShape, geomShape);
         }
 
-        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
+        IDescriptorResult IMolecularDescriptor.Calculate(IAtomContainer mol) => Calculate(mol);
     }
 }

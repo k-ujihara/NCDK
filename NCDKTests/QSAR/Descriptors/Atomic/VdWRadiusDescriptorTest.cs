@@ -25,13 +25,15 @@ namespace NCDK.QSAR.Descriptors.Atomic
     [TestClass()]
     public class VdWRadiusDescriptorTest : AtomicDescriptorTest<VdWRadiusDescriptor>
     {
+        protected override VdWRadiusDescriptor Descriptor { get; } = new VdWRadiusDescriptor();
+            
         [TestMethod()]
         public void TestVdWRadiusDescriptor()
         {
             double[] testResult = { 1.7 };
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("NCCN(C)(C)");
-            var descriptor = CreateDescriptor(mol);
+            var descriptor = CreateDescriptor();
             var retval = descriptor.Calculate(mol.Atoms[1]).Value;
 
             Assert.AreEqual(testResult[0], retval, 0.01);

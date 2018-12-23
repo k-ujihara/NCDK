@@ -12,7 +12,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("CCCC");
 
-            var ret = CreateDescriptor(mol).Calculate().Values;
+            var ret = CreateDescriptor().Calculate(mol).Values;
 
             Assert.AreEqual(0, ret[0]);
             Assert.AreEqual(0, ret[1]);
@@ -31,7 +31,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("C(C)(C)C=C(C)C");
 
-            var ret = CreateDescriptor(mol).Calculate().Values;
+            var ret = CreateDescriptor().Calculate(mol).Values;
 
             Assert.AreEqual(0, ret[0]);
             Assert.AreEqual(0, ret[1]);
@@ -50,7 +50,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("C#CC(C)=C");
 
-            var ret = CreateDescriptor(mol).Calculate().Values;
+            var ret = CreateDescriptor().Calculate(mol).Values;
 
             Assert.AreEqual(1, ret[0]);
             Assert.AreEqual(1, ret[1]);

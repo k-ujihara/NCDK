@@ -21,7 +21,6 @@
 
 using NCDK.Aromaticities;
 using NCDK.Common.Collections;
-using NCDK.Config;
 using NCDK.Graphs;
 using NCDK.Isomorphisms;
 using NCDK.Isomorphisms.Matchers;
@@ -86,25 +85,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#xlogP")]
     public class XLogPDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        private readonly IAtomContainer container;
-        readonly IRingSet rs;
+        private readonly bool checkAromaticity;
 
-        public XLogPDescriptor(IAtomContainer container, bool checkAromaticity = false)
+        public XLogPDescriptor(bool checkAromaticity = false)
         {
-            container = (IAtomContainer)container.Clone();
-
-            AtomContainerManipulator.PercieveAtomTypesAndConfigureUnsetProperties(container);
-            var hAdder = CDK.HydrogenAdder;
-            hAdder.AddImplicitHydrogens(container);
-            AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(container);
-
-            rs = Cycles.FindSSSR(container).ToRingSet();
-            if (checkAromaticity)
-            {
-                Aromaticity.CDKLegacy.Apply(container);
-            }
-
-            this.container = container;
+            this.checkAromaticity = checkAromaticity;
         }
 
         [DescriptorResult]
@@ -128,8 +113,21 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// </summary>
         /// <returns>XLogP is a double</returns>
         /// <param name="correctSalicylFactor"><see langword="true"/> is to use the salicyl acid correction factor</param>
-        public Result Calculate(bool correctSalicylFactor = false)
+        public Result Calculate(IAtomContainer container, bool correctSalicylFactor = false)
         {
+            container = (IAtomContainer)container.Clone();
+
+            AtomContainerManipulator.PercieveAtomTypesAndConfigureUnsetProperties(container);
+            var hAdder = CDK.HydrogenAdder;
+            hAdder.AddImplicitHydrogens(container);
+            AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(container);
+
+            var rs = Cycles.FindSSSR(container).ToRingSet();
+            if (checkAromaticity)
+            {
+                Aromaticity.CDKLegacy.Apply(container);
+            }
+
             double xlogP = 0;
             string symbol = "";
             int bondCount = 0;
@@ -143,7 +141,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             IAtom atomi = null;
             for (int i = 0; i < atomCount; i++)
             {
-                atomi = (IAtom)container.Atoms[i];
+                atomi = container.Atoms[i];
                 // Problem fused ring systems
                 var atomRingSet = rs.GetRings(atomi).ToList();
                 atomi.SetProperty("IS_IN_AROMATIC_RING", false);
@@ -154,12 +152,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     {
                         var containers = RingSetManipulator.GetAllAtomContainers(atomRingSet);
                         atomRingSet = rs.Builder.NewRingSet().ToList();
-                        foreach (var container in containers)
+                        foreach (var mol in containers)
                         {
                             // XXX: we're already in the SSSR, but then get the esential cycles
                             // of this atomRingSet... this code doesn't seem to make sense as
                             // essential cycles are a subset of SSSR and can be found directly
-                            foreach (var ring in Cycles.FindEssential(container).ToRingSet())
+                            foreach (var ring in Cycles.FindEssential(mol).ToRingSet())
                                 atomRingSet.Add(ring);
                         }
                     }
@@ -1643,6 +1641,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return container;
         }
 
-        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
+        IDescriptorResult IMolecularDescriptor.Calculate(IAtomContainer mol) => Calculate(mol);
     }
 }

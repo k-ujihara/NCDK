@@ -32,18 +32,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#longestAliphaticChain")]
     public class LongestAliphaticChainDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        private readonly IAtomContainer container;
+        private readonly bool checkRingSystem;
 
         /// <param name="checkRingSystem"><see langword="true"/> is the <see cref="IMolecularEntity.IsInRing"/> has to be set</param>
-        public LongestAliphaticChainDescriptor(IAtomContainer container, bool checkRingSystem = false)
+        public LongestAliphaticChainDescriptor(bool checkRingSystem = false)
         {
-            if (checkRingSystem)
-            {
-                container = (IAtomContainer)container.Clone();
-                Cycles.MarkRingAtomsAndBonds(container);
-            }
-
-            this.container = container;
+            this.checkRingSystem = checkRingSystem;
         }
 
         [DescriptorResult]
@@ -99,8 +93,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// if checkRingSyste is true the <see cref="IMolecularEntity.IsInRing"/> will be set
         /// </remarks>
         /// <returns>the number of atoms in the longest aliphatic chain of this AtomContainer</returns>
-        public Result Calculate()
+        public Result Calculate(IAtomContainer container)
         {
+            if (checkRingSystem)
+            {
+                container = (IAtomContainer)container.Clone();
+                Cycles.MarkRingAtomsAndBonds(container);
+            }
+
             var aliphaticParts = CDK.Builder.NewAtomContainer();
             foreach (var atom in container.Atoms)
             {
@@ -129,6 +129,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return new Result(longest);
         }
 
-        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
+        IDescriptorResult IMolecularDescriptor.Calculate(IAtomContainer mol) => Calculate(mol);
     }
 }

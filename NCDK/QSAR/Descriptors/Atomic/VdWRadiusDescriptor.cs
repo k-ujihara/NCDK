@@ -35,11 +35,6 @@ namespace NCDK.QSAR.Descriptors.Atomic
         {
         }
 
-        /// <param name="container">Ignore this</param>
-        public VdWRadiusDescriptor(IAtomContainer container)
-        {
-        }
-
         [DescriptorResult]
         public class Result : AbstractDescriptorResult
         {

@@ -29,7 +29,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestIronChloride()
         {
             var ironChloride = CDK.SmilesParser.ParseSmiles("Cl[Fe]Cl");
-            Assert.AreEqual(double.NaN, CreateDescriptor(ironChloride).Calculate().Value);
+            Assert.AreEqual(double.NaN, CreateDescriptor().Calculate(ironChloride).Value);
         }
     }
 }

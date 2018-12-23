@@ -18,7 +18,6 @@
  */
 
 using NCDK.Aromaticities;
-using NCDK.Config;
 using NCDK.RingSearches;
 using NCDK.Tools.Manipulator;
 using System.Collections.Generic;
@@ -117,23 +116,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 ["P+2.0+5.0+4+1+0+0+0+3+1+0"] = 23.47 //43
             };
 
-        private readonly IAtomContainer container;
-        private readonly IRingSet rs;
+        private readonly bool checkAromaticity;
 
-        public TPSADescriptor(IAtomContainer container, bool checkAromaticity = false)
+        public TPSADescriptor(bool checkAromaticity = false)
         {
-            container = (IAtomContainer)container.Clone(); // don't mod original
-
-            rs = (new AllRingsFinder()).FindAllRings(container);
-
-            // do aromaticity detection
-            if (checkAromaticity)
-            {
-                AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(container);
-                Aromaticity.CDKLegacy.Apply(container);
-            }
-
-            this.container = container;
+            this.checkAromaticity = checkAromaticity;
         }
 
         [DescriptorResult]
@@ -162,8 +149,19 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <see cref="AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(IAtomContainer)"/>.
         /// </remarks>
         /// <returns>A double containing the topological surface area</returns>
-        public Result Calculate()
+        public Result Calculate(IAtomContainer container)
         {
+            container = (IAtomContainer)container.Clone(); // don't mod original
+
+            var rs = (new AllRingsFinder()).FindAllRings(container);
+
+            // do aromaticity detection
+            if (checkAromaticity)
+            {
+                AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(container);
+                Aromaticity.CDKLegacy.Apply(container);
+            }
+
             var profiles = new List<string>();
 
             // iterate over all atoms of container
@@ -256,6 +254,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return new Result(tpsa);
         }
 
-        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
+        IDescriptorResult IMolecularDescriptor.Calculate(IAtomContainer mol) => Calculate(mol);
     }
 }

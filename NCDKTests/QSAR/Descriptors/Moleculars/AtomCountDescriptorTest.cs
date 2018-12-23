@@ -31,8 +31,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("CCO"); // ethanol
-            var descriptor = CreateDescriptor(mol);
-            var result = descriptor.Calculate("C");
+            var descriptor = CreateDescriptor();
+            var result = descriptor.Calculate(mol, "C");
             Assert.AreEqual(2, result.Value);
             Assert.AreEqual(1, result.Keys.Count());
             Assert.AreEqual("nC", result.Keys.First());
@@ -43,11 +43,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("C");
-            var result = CreateDescriptor(mol).Calculate("*");
+            var result = CreateDescriptor().Calculate(mol, "*");
             Assert.AreEqual(5, result.Value);
 
             mol = sp.ParseSmiles("[C]");
-            result = CreateDescriptor(mol).Calculate();
+            result = CreateDescriptor().Calculate(mol);
             Assert.AreEqual(1, result.Value);
         }
     }

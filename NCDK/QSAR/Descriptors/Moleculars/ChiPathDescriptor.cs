@@ -54,13 +54,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#chiPath")]
     public class ChiPathDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
-        private readonly IAtomContainer container;
-
-        public ChiPathDescriptor(IAtomContainer container)
+        public ChiPathDescriptor()
         {
-            // we don't make a clone, since removeHydrogens returns a deep copy
-            container = AtomContainerManipulator.RemoveHydrogens(container);
-            this.container = container;
         }
 
         [DescriptorResult]
@@ -143,8 +138,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             public new IReadOnlyList<double> Values { get; private set; }
         }
 
-        public Result Calculate()
+        public Result Calculate(IAtomContainer container)
         {
+            // we don't make a clone, since removeHydrogens returns a deep copy
+            container = AtomContainerManipulator.RemoveHydrogens(container);
+
             var matcher = CDK.AtomTypeMatcher;
             foreach (var atom in container.Atoms)
             {
@@ -249,6 +247,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         private static List<List<int>> Order6(IAtomContainer atomContainer) => ChiIndexUtils.GetFragments(atomContainer, queries6);
         private static List<List<int>> Order7(IAtomContainer atomContainer) => ChiIndexUtils.GetFragments(atomContainer, queries7);
 
-        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
+        IDescriptorResult IMolecularDescriptor.Calculate(IAtomContainer mol) => Calculate(mol);
     }
 }

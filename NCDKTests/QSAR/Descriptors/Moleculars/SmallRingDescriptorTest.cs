@@ -61,7 +61,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 // stream the contents form the zipfile: these are all short
                 foreach (var ze in zip.Entries)
                 {
-                    string fn = ze.Name;
+                    var fn = ze.Name;
                     using (var buff = new MemoryStream())
                     using (var zs = ze.Open())
                     {
@@ -75,7 +75,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
             for (int idx = 1; ; idx++)
             {
-                string basefn = idx.ToString();
+                var basefn = idx.ToString();
                 while (basefn.Length < 6)
                     basefn = "0" + basefn;
                 if (!content.TryGetValue(basefn + ".mol", out byte[] molBytes))
@@ -101,8 +101,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                         + wantSmallRings + " nRingBlocks=" + wantRingBlocks + " nAromRings=" + wantAromRings
                         + " nAromBlocks=" + wantAromBlocks);
 
-                var descr = new SmallRingDescriptor(mol);
-                var results = descr.Calculate();
+                var descr = new SmallRingDescriptor();
+                var results = descr.Calculate(mol);
                 var names = results.Keys;
                 var values = results.Values.Cast<int>().ToReadOnlyList();
 

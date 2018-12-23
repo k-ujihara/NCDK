@@ -51,21 +51,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 "[$(N-C=N)]"
             }.Select(n => SmartsPattern.Create(n)).ToArray();
 
-        private readonly IAtomContainer container;
+        private readonly bool checkAromaticity;
 
-        public BasicGroupCountDescriptor(IAtomContainer container, bool checkAromaticity = false)
+        public BasicGroupCountDescriptor(bool checkAromaticity = false)
         {
-            container = (IAtomContainer)container.Clone(); // don't mod original
-
-            // do aromaticity detection
-            if (checkAromaticity)
-            {
-                container = (IAtomContainer)container.Clone(); // don't mod original
-                AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(container);
-                Aromaticity.CDKLegacy.Apply(container);
-            }
-
-            this.container = container;
+            this.checkAromaticity = checkAromaticity;
         }
 
         [DescriptorResult]
@@ -82,12 +72,21 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             public int Value => NumberOfBase;
         }
 
-        public Result Calculate()
+        public Result Calculate(IAtomContainer container)
         {
+            container = (IAtomContainer)container.Clone(); // don't mod original
+
+            // do aromaticity detection
+            if (checkAromaticity)
+            {
+                AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(container);
+                Aromaticity.CDKLegacy.Apply(container);
+            }
+
             var count = tools.Select(n => n.MatchAll(container).Count()).Sum();
             return new Result(count);
         }
 
-        IDescriptorResult IMolecularDescriptor.Calculate() => Calculate();
+        IDescriptorResult IMolecularDescriptor.Calculate(IAtomContainer mol) => Calculate(mol);
     }
 }

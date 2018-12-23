@@ -12,7 +12,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("c1ccccc1"); // benzol
-            Assert.AreEqual(6, CreateDescriptor(mol).Calculate().Value);
+            Assert.AreEqual(6, CreateDescriptor().Calculate(mol).Value);
         }
 
         [TestMethod()]
@@ -20,7 +20,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("C=CC=Cc1ccccc1");
-            Assert.AreEqual(10, CreateDescriptor(mol).Calculate().Value);
+            Assert.AreEqual(10, CreateDescriptor().Calculate(mol).Value);
         }
 
         [TestMethod()]
@@ -28,7 +28,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("C=CC=CCc2ccc(Cc1ccncc1C=C)cc2");
-            Assert.AreEqual(8, CreateDescriptor(mol).Calculate().Value);
+            Assert.AreEqual(8, CreateDescriptor().Calculate(mol).Value);
         }
 
         [TestMethod()]
@@ -36,7 +36,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("CC=CNCC");
-            Assert.AreEqual(3, CreateDescriptor(mol).Calculate().Value);
+            Assert.AreEqual(3, CreateDescriptor().Calculate(mol).Value);
         }
 
         [TestMethod()]
@@ -44,7 +44,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("C=C[NH2+]CC");
-            Assert.AreEqual(3, CreateDescriptor(mol).Calculate().Value);
+            Assert.AreEqual(3, CreateDescriptor().Calculate(mol).Value);
         }
 
         [TestMethod()]
@@ -52,7 +52,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("CCNOC");
-            Assert.AreEqual(2, CreateDescriptor(mol).Calculate().Value);
+            Assert.AreEqual(2, CreateDescriptor().Calculate(mol).Value);
         }
 
         [TestMethod()]
@@ -60,7 +60,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("CC=CC(C)=O");
-            Assert.AreEqual(4, CreateDescriptor(mol).Calculate().Value);
+            Assert.AreEqual(4, CreateDescriptor().Calculate(mol).Value);
         }
     }
 }
