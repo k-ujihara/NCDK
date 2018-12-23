@@ -90,6 +90,7 @@
                                 content.Add(item);
                                 break;
                             case "phdthesis":
+                                toAddText = MakeExternalLink(cont, item);
                                 toAddText.Add(MakeElement(cont, "author", "?Authors?"));
                                 toAddText.Add(", ");
                                 toAddText.Add(MakeElement(cont, "i", "title", "?Title?"));
@@ -100,6 +101,7 @@
                                 content.Add(item);
                                 break;
                             case "book":
+                                toAddText = MakeExternalLink(cont, item);
                                 toAddText.Add(MakeElement(cont, "author", "?Authors?"));
                                 toAddText.Add(", ");
                                 toAddText.Add(MakeElement(cont, "i", "title", "?Title?"));
@@ -110,12 +112,14 @@
                                 content.Add(item);
                                 break;
                             case "misc":
+                                toAddText = MakeExternalLink(cont, item);
                                 toAddText.Add(MakeElement(cont, "author", "?Authors?"));
                                 toAddText.Add(", ");
                                 toAddText.Add(MakeElement(cont, "i", "title", "?Title?"));
                                 content.Add(item);
                                 break;
                             case "techreport":
+                                toAddText = MakeExternalLink(cont, item);
                                 toAddText.Add(MakeElement(cont, "author", "?Authors?"));
                                 toAddText.Add(", ");
                                 toAddText.Add(MakeElement(cont, "i", "title", "?Title?"));
@@ -132,6 +136,7 @@
                                 content.Add(item);
                                 break;
                             case "inproceedings":
+                                toAddText = MakeExternalLink(cont, item);
                                 toAddText.Add(MakeElement(cont, "author", "?Authors?"));
                                 toAddText.Add(", ");
                                 toAddText.Add(MakeElement(cont, "i", "title", "?Title?"));
@@ -147,6 +152,7 @@
                                 content.Add(item);
                                 break;
                             case "thesis":
+                                toAddText = MakeExternalLink(cont, item);
                                 toAddText.Add(MakeElement(cont, "author", "?Authors?"));
                                 toAddText.Add(", ");
                                 toAddText.Add(MakeElement(cont, "i", "title", "?Title?"));
@@ -159,6 +165,7 @@
                                 content.Add(item);
                                 break;
                             case "manual":
+                                toAddText = MakeExternalLink(cont, item);
                                 toAddText.Add(MakeElement(cont, "author", "?Authors?"));
                                 toAddText.Add(", ");
                                 toAddText.Add(MakeElement(cont, "i", "title", "?Title?"));
@@ -211,6 +218,13 @@
                 {
                     externalLink = new XElement("a");
                     externalLink.SetAttributeValue("href", "https://dx.doi.org/" + doi);
+                    item.Add(externalLink);
+                }
+                var url = GetString(cont, "url", null);
+                if (url != null)
+                {
+                    externalLink = new XElement("a");
+                    externalLink.SetAttributeValue("href", url);
                     item.Add(externalLink);
                 }
             }

@@ -1,11 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <content xml:space="preserve" xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
   <item id="cdk-cite-AiresDeSousa2002">Aires-de-Sousa, J. and Hemmer, M.C. and Gasteiger, J., <i>Prediction of 1H NMR Chemical Shifts Using Neural Networks</i>, J. Chem. Inf. Mod., <b>2002</b>, 74:80-90</item>
-  <item id="cdk-cite-batchelor13">Colin Batchelor and Ken Karapetyan and Valery Tkachenko and Anthony Williams, <i>Validation and standardization of molecular structures in general and sugars in particular: a case study</i>, <b>2013</b>, 6th Joint Sheffield Conference on Chemoinformatics</item>
-  <item id="cdk-cite-BER2001">Bernstein, H.J., <i>Manual RasMol 2.7.2.1 - CPK Colours</i></item>
+  <item id="cdk-cite-batchelor13">
+    <a href="http://www.slideshare.net/RSC-Chemistry/20130724-cisrg-sugarsbatchelor">Colin Batchelor and Ken Karapetyan and Valery Tkachenko and Anthony Williams, <i>Validation and standardization of molecular structures in general and sugars in particular: a case study</i>, <b>2013</b>, 6th Joint Sheffield Conference on Chemoinformatics</a>
+  </item>
+  <item id="cdk-cite-BER2001">
+    <a href="http://www.openrasmol.org/doc/rasmol.html#cpkcolours">Bernstein, H.J., <i>Manual RasMol 2.7.2.1 - CPK Colours</i></a>
+  </item>
   <item id="cdk-cite-BGdV04a">Berger, F. and Gritzmann, P. and De Vries, S., <i>Minimum cycle bases for network graphs</i>, Algorithmica, <b>2004</b>, ?:51-62</item>
-  <item id="cdk-cite-BODR10">Willighagen, E. and Hutchinson, G. and Niehaus, C. and Buchwald, J. and Pfeiffer, M. and Leidert, D. and Brefort, J., <i>Blue Obelisk Data Repository (version 10)</i></item>
-  <item id="cdk-cite-BODR10">Willighagen, E. and Hutchinson, G. and Niehaus, C. and Buchwald, J. and Pfeiffer, M. and Leidert, D. and Brefort, J., <i>Blue Obelisk Data Repository (version 10)</i></item>
+  <item id="cdk-cite-BODR10">
+    <a href="https://dx.doi.org/10.6084/m9.figshare.1025775.v1">Willighagen, E. and Hutchinson, G. and Niehaus, C. and Buchwald, J. and Pfeiffer, M. and Leidert, D. and Brefort, J., <i>Blue Obelisk Data Repository (version 10)</i></a>
+  </item>
+  <item id="cdk-cite-BODR10">
+    <a href="https://dx.doi.org/10.6084/m9.figshare.1025775.v1">Willighagen, E. and Hutchinson, G. and Niehaus, C. and Buchwald, J. and Pfeiffer, M. and Leidert, D. and Brefort, J., <i>Blue Obelisk Data Repository (version 10)</i></a>
+  </item>
   <item id="cdk-cite-Brecher08">Jonathan Brecher, <i>Graphical representation standards for chemical structure diagrams (IUPAC Recommendations 2008)</i>, Pure Appl. Chem, <b>2008</b>, 80:277–410</item>
   <item id="cdk-cite-Cahn1966">Cahn, R.S. and Ingold, C. and Prelog, V., <i>Specification of Molecular Chirality</i>, Angew. Chem. Int. Ed., <b>1966</b>, 5:385-415</item>
   <item id="cdk-cite-Cieplak2001">Cieplak, T and Wisniewski J. L., <i>A New Effective Algorithm for the Unambiguous Identification of the Stereochemical Characteristics of Compounds During Their Registration in Databases</i>, Molecules, <b>2001</b>, 6:915-926</item>
@@ -13,7 +21,9 @@
   <item id="cdk-cite-Clark13">Clark A., <i>Rendering Molecular Sketches for Publication Quality Output</i>, Molecular Informatics, <b>2013</b>, 32:291-301</item>
   <item id="cdk-cite-Downs89">Downs, G and Gillet, V and Holliday, J, and Lynch, M, <i>Theoretical Aspects of Ring Perception and Development of the Extended Set of Smallest Ring Concepts</i>, J. Chem. Inf. Comput. Sci, <b>1989</b>, 29:187-206</item>
   <item id="cdk-cite-Moreau1980">Moreau G. and Broto P., <i>The autocorrelation of a topological structure: A new molecular descriptor</i>, Nouveau Journal de Chimie, <b>1980</b>, ?:359-360</item>
-  <item id="cdk-cite-BGdV04b">Berger, F. and Gritzmann, P. and De Vries, S., <i>Cyclic Invariants for Molecular Graphs</i>, <b>2004</b>, Lehrstuhl für Angewandte Geometrie und Diskrete Mathematik, Technische Universität München, http://www-m9.ma.tum.de/dm/cycles/</item>
+  <item id="cdk-cite-BGdV04b">
+    <a href="http://www-m9.ma.tum.de/dm/cycles/">Berger, F. and Gritzmann, P. and De Vries, S., <i>Cyclic Invariants for Molecular Graphs</i>, <b>2004</b>, Lehrstuhl für Angewandte Geometrie und Diskrete Mathematik, Technische Universität München, http://www-m9.ma.tum.de/dm/cycles/</a>
+  </item>
   <item id="cdk-cite-Berger04">Berger, F. and Flamm, C and Gleiss, P and Leydold, J and Stadler, P, <i>Counterexamples in Chemical Ring Perception</i>, J. Chem. Inf. Comput. Sci., <b>2004</b>, 44:323-331</item>
   <item id="cdk-cite-BLE91">
         Bley, K. and Brandt, J. and Dengler, A. and
@@ -93,11 +103,14 @@
         Molecular Graph
       </i>, J. Chem. Inf. Comput. Sci., <b>1996</b>, 36:1146-1152</item>
   <item id="cdk-cite-Hinselmann2011">
+    <a href="https://dx.doi.org/10.1186/1758-2946-3-3" />
     <a href="https://dx.doi.org/10.1186/1758-2946-3-3">Hinselmann and Georg and Rosenbaum and Lars and Jahn and Andreas and Fechner and Nikolas and Zell and Andreas, <i>jCompoundMapper: An open source Java library and command line tool for chemical fingerprints</i>, Journal of Cheminformatics, <b>2011</b>, 3:1-14</a>
   </item>
   <item id="cdk-cite-HEL99">Helson, Harold E., <i>Structure Diagram Generation</i>, Reviews in Computational Chemistry, Ch. ?chapter?, <b>1999</b>, 13:313-398, Eds. Lipkowitz, K. B. and Boyd, D. B.</item>
   <item id="cdk-cite-BGdV04a">Berger, F. and Gritzmann, P. and De Vries, S., <i>Minimum cycle bases for network graphs</i>, Algorithmica, <b>2004</b>, ?:51-62</item>
-  <item id="cdk-cite-HEL01">Stein, S. and Heller, S., <i>IUPAC Chemical Identifier (IChI)</i>, Chemistry International, <b>2001</b>, 23:?-?</item>
+  <item id="cdk-cite-HEL01">
+    <a href="http://www.iupac.org/publications/ci/2001/may/project_2000-025-1-050.html">Stein, S. and Heller, S., <i>IUPAC Chemical Identifier (IChI)</i>, Chemistry International, <b>2001</b>, 23:?-?</a>
+  </item>
   <item id="cdk-cite-Hu94">Hu, C.Y. and Xu, L., <i>Algorithm for computer perception of topological symmetry</i>, Analytical Chimica Acta, <b>1994</b>, 295:127</item>
   <item id="cdk-cite-Hu94b">Hu, C.Y. and Xu, L., <i>A New Scheme for Assignment of a Canonical Connection Table</i>, J.Chem.Inf.Comput.Sci., <b>1994</b>, 34:840</item>
   <item id="cdk-cite-HU96">Chang-Yu Hu and Lu Xu, <i>On Highly Discriminating Molecular Topological Index</i>, J. Chem. Inf. Comput. Sci., <b>1996</b>, 36:82-90</item>
@@ -130,7 +143,9 @@
         Structures - A Technique Developed at Chemical Abstracts Service.
       </i>, J.Chem.Doc., <b>1965</b>, 5:107-113</item>
   <item id="cdk-cite-Nilakantan06">Nilakantan, R. and Nunn, D.S. and Greenblatt, L. and Walker, G. and Haraki, K. and Mobilio, D., <i>A family of ring system-based structural fragments for use in structure-activity studies: database mining and recursive partitioning.</i>, Journal of chemical information and modeling, <b>2006</b>, 46:1069-1077</item>
-  <item id="cdk-cite-OS">?Authors?, <i>The Open Source Reader</i>, <b>2002</b>, Csaszar, F.</item>
+  <item id="cdk-cite-OS">
+    <a href="http://www.csaszar.org/interesting/The_Open_Source_Reader.pdf">?Authors?, <i>The Open Source Reader</i>, <b>2002</b>, Csaszar, F.</a>
+  </item>
   <item id="cdk-cite-PEA99">Pearlman, R.S. and Smith, K.M., <i> Metric Validation and the Receptor-Relevant Subspace Concept</i>, J. Chem. Inf. Comput. Sci., <b>1999</b>, 39:28-35</item>
   <item id="cdk-cite-PMR99">Murray-Rust, P. and Rzepa, H.S., <i>
         Chemical markup, XML, and the Worldwide Web. 1. Basic
@@ -145,12 +160,18 @@
         Sciences
       , <b>2003</b>, 43:757-772</a>
   </item>
-  <item id="cdk-cite-PMR2002">Murray-Rust, P. and Rzepa, H.S., <i>STMML. A MARKUP LANGUAGE FOR SCIENTIFIC, TECHNICAL AND MEDICAL PUBLISHING</i></item>
+  <item id="cdk-cite-PMR2002">
+    <a href="http://www.ch.ic.ac.uk/rzepa/codata2/">Murray-Rust, P. and Rzepa, H.S., <i>STMML. A MARKUP LANGUAGE FOR SCIENTIFIC, TECHNICAL AND MEDICAL PUBLISHING</i></a>
+  </item>
   <item id="cdk-cite-RZEPA04">
     <a href="https://dx.doi.org/10.1021/ci034244p">Murray-Rust, P. and Rzepa, H.S. and Williamson, M.J. and Willighagen, E.L., <i>Chemical Markup, XML, and the World Wide Web. 5. Applications of Chemical Metadata in RSS Aggregators</i>, J. Chem. Inf. Comput. Sci., <b>2004</b>, 44:462-469</a>
   </item>
-  <item id="cdk-cite-SMILESTUT">?Authors?, <i>SMILES Tutorial</i></item>
-  <item id="cdk-cite-SSMILESTUT">?Authors?, <i>SSMILES Tutorial</i></item>
+  <item id="cdk-cite-SMILESTUT">
+    <a href="http://www.daylight.com/dayhtml/smiles/smiles-intro.html">?Authors?, <i>SMILES Tutorial</i></a>
+  </item>
+  <item id="cdk-cite-SSMILESTUT">
+    <a href="http://www.daylight.com/dayhtml/smiles/ssmiles.html">?Authors?, <i>SSMILES Tutorial</i></a>
+  </item>
   <item id="cdk-cite-SCH84">Von Scholley, A., <i></i>, J. Chem. Inf. Comput. Sci., <b>1984</b>, 24:235-241</item>
   <item id="cdk-cite-STE2001">
     <a href="https://dx.doi.org/10.1021/ci000407n">Steinbeck, C., <i>
@@ -162,7 +183,8 @@
     <a href="https://dx.doi.org/10.1021/ci0341363">Steinbeck, C. and Kuhn, S. and Krause, S., <i>NMRShiftDB - Constructing a Chemical Information System with Open Source Components</i>, Journal of Chemical Information and Computer Sciences, <b>2002</b>, 43:?-?</a>
   </item>
   <item id="cdk-cite-STE2003">
-    <a href="https://dx.doi.org/10.1021/ci025584y">Steinbeck, C. and Han, Y. and Kuhn, S, and Horlacher, O. and Luttmann, E. and Willighagen, E., <i>The Chemistry Development Kit (CDK): An Open-Source Java Library for Chemo- and Bioinformatics</i>, Journal of Chemical Information and Computer Sciences, <b>2003</b>, 43:493-500</a>
+    <a href="https://dx.doi.org/10.1021/ci025584y" />
+    <a href="http://www.cdk.org/">Steinbeck, C. and Han, Y. and Kuhn, S, and Horlacher, O. and Luttmann, E. and Willighagen, E., <i>The Chemistry Development Kit (CDK): An Open-Source Java Library for Chemo- and Bioinformatics</i>, Journal of Chemical Information and Computer Sciences, <b>2003</b>, 43:493-500</a>
   </item>
   <item id="cdk-cite-Steffen09">
     <a href="https://dx.doi.org/10.1021/ci800326z">Andreas Steffen, Thierry Kogej, Christian Tyrchan and Ola Engkvist, <i>Comparison of Molecular Fingerprint Methods on the Basis of Biological Profile Data</i>, J. Chem. Inf. Model., <b>2009</b>, 49:338–347</a>
@@ -229,7 +251,9 @@
         and to Dot Surface Contourin gof Molecular Assemblies
       </i>, Journal of Computational Chemistry, <b>1995</b>, 16:273-284</item>
   <item id="cdk-cite-WIL01">Willighagen, E.L., <i>Processing CML Conventions in Java</i>, Internet Journal of Chemistry, <b>2001</b>, 4:?-?</item>
-  <item id="cdk-cite-XML">World Wide Web Consortium, <i>Extensible Markup Language (XML) 1.0</i></item>
+  <item id="cdk-cite-XML">
+    <a href="http://www.w3.org/TR/1998/REC-xml-19980210">World Wide Web Consortium, <i>Extensible Markup Language (XML) 1.0</i></a>
+  </item>
   <item id="cdk-cite-PET92">
         Petitjean, M.
       , <i>Applications of the radius-diameter diagram to the classification of topological and geometrical shapes of chemical compounds</i>, Journal of Chemical Information and Computer Science, <b>1992</b>, 32:331-337</item>
@@ -331,16 +355,21 @@
     <a href="https://dx.doi.org/10.1093/bioinformatics/btn479">Klekota, Justin and Roth, Frederick P., <i>Chemical substructures that enrich for biological activity</i>, Bioinformatics, <b>2008</b>, 24:2518-2525</a>
   </item>
   <item id="cdk-cite-Ullmann76">
-    <a href="https://dx.doi.org/10.1145/321921.321925">Ullmann J R, <i>An Algorithm for Subgraph Isomorphism</i>, Journal of the Association for Computing Machinery, <b>1976</b>, 23:?-?</a>
+    <a href="https://dx.doi.org/10.1145/321921.321925" />
+    <a href="http://www.engr.uconn.edu/~vkk06001/GraphIsomorphism/Papers/Ullman_Algorithm.pdf">Ullmann J R, <i>An Algorithm for Subgraph Isomorphism</i>, Journal of the Association for Computing Machinery, <b>1976</b>, 23:?-?</a>
   </item>
-  <item id="cdk-cite-Vismara97">Vismara, Philippe, <i>Union of all the minimum cycle bases of a graph</i>, Combinatorics, <b>1997</b>, 4:?-?</item>
+  <item id="cdk-cite-Vismara97">
+    <a href="http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.47.3674">Vismara, Philippe, <i>Union of all the minimum cycle bases of a graph</i>, Combinatorics, <b>1997</b>, 4:?-?</a>
+  </item>
   <item id="cdk-cite-InChITechManual">
+    <a href="&#xA;        http://www.inchi-trust.org/fileadmin/user_upload/software/inchi-v1.04/InChI_TechMan.pdf&#xA;      ">
         Stein, Stephen and Heller, Stephen and Tchekhovskoi,
         Dmitrii and Pletnev, Igor
       , <i>
         IUPAC International Chemical Identifier (InChI), InChI
         version 1, software version 1.04 (2011), Technical Manual
-      </i>, <b>2011</b>, </item>
+      </i>, <b>2011</b>, </a>
+  </item>
   <item id="cdk-cite-Razinger93">
     <a href="https://dx.doi.org/10.1021/ci00016a003">Razinger, Marko and Balasubramaniam, Krishnan and Perdih, Marko and Munk, Morton, <i>Stereoisomer Generation in Computer-Enhanced Structure Elucidation</i>, J. Chem. Inf. Comput. Sci, <b>1993</b>, 33:812-825</a>
   </item>
@@ -352,9 +381,15 @@
   </item>
   <item id="cdk-cite-Edmonds65">Edmonds, Jack, <i>Paths, trees and flowers</i>, Canad. J. Math., <b>1965</b>, 17:?-?</item>
   <item id="cdk-cite-Pluskal2012">Pluskal, Tomas and Uehara, Taisuke and Yanagida, Mitsuhiro, <i>Highly accurate chemical formula prediction tool utilizing high-resolution mass spectra, MS/MS fragmentation, heuristic rules, and isotope pattern matching</i>, Analytical Chemistry, <b>2012</b>, 84:4396-4403</item>
-  <item id="cdk-cite-Boecker2008">Böcker, Sebastian and Lipták, Zsuzsanna and Martin, Marcel and Pervukhin, Anton and Sudek, Henner, <i>DECOMP--from interpreting Mass Spectrometry peaks to solving the Money Changing Problem.</i>, Bioinformatics, <b>2008</b>, 24:591--593</item>
-  <item id="cdk-cite-Duehrkop2013">Dührkop, Kai and Ludwig, Marcus and Meusel, Marvin and Böcker, Sebastian, <i>Faster mass decomposition</i>, <b>2013</b>, Proc. of Workshop on Algorithms in Bioinformatics (WABI 2013)</item>
+  <item id="cdk-cite-Boecker2008">
+    <a href="http://bioinformatics.oxfordjournals.org/cgi/reprint/24/4/591?ijkey=1lM50Bkzz4SCLsa">Böcker, Sebastian and Lipták, Zsuzsanna and Martin, Marcel and Pervukhin, Anton and Sudek, Henner, <i>DECOMP--from interpreting Mass Spectrometry peaks to solving the Money Changing Problem.</i>, Bioinformatics, <b>2008</b>, 24:591--593</a>
+  </item>
+  <item id="cdk-cite-Duehrkop2013">
+    <a href="http://arxiv.org/abs/1307.7805">Dührkop, Kai and Ludwig, Marcus and Meusel, Marvin and Böcker, Sebastian, <i>Faster mass decomposition</i>, <b>2013</b>, Proc. of Workshop on Algorithms in Bioinformatics (WABI 2013)</a>
+  </item>
   <item id="cdk-cite-Ray57">Louis C. Ray and Russell A. Kirsch, <i>Finding Chemical Records by Digital Computers</i>, Science, <b>1957</b>, 126:814-819</item>
   <item id="cdk-cite-Jeliazkova18">Nina Jeliazkova and Nikolay Kochev, <i>AMBIT‐SMARTS: Efficient Searching of Chemical Structures and Fragments</i>, Molecular Informatics, <b>2011</b>, 30:707-720</item>
-  <item id="cdk-cite-Lovering2009">Lovering, Frank and Bikker, Jack and Humblet, Christine, <i>Escape from Flatland: Increasing Saturation as an Approach to Improving Clinical Success</i>, J. Med. Chem., <b>2009</b>, 52:6752-6756</item>
+  <item id="cdk-cite-Lovering2009">
+    <a href="http://pubs.acs.org/doi/abs/10.1021/jm901241e">Lovering, Frank and Bikker, Jack and Humblet, Christine, <i>Escape from Flatland: Increasing Saturation as an Approach to Improving Clinical Success</i>, J. Med. Chem., <b>2009</b>, 52:6752-6756</a>
+  </item>
 </content>
