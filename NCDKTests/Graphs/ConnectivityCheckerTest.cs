@@ -15,12 +15,10 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
 using NCDK.IO;
-using NCDK.Smiles;
 using NCDK.Templates;
 using NCDK.Tools.Manipulator;
 using System.Linq;
@@ -36,6 +34,8 @@ namespace NCDK.Graphs
     [TestClass()]
     public class ConnectivityCheckerTest : CDKTestCase
     {
+        IChemObjectBuilder builder = CDK.Builder;
+
         public ConnectivityCheckerTest()
             : base()
         { }
@@ -47,11 +47,11 @@ namespace NCDK.Graphs
         public void TestPartitionIntoMolecules_IAtomContainer()
         {
             //Debug.WriteLine(atomCon);
-            AtomContainer atomCon = new AtomContainer();
+            var atomCon = builder.NewAtomContainer();
             atomCon.Add(TestMoleculeFactory.Make4x3CondensedRings());
             atomCon.Add(TestMoleculeFactory.MakeAlphaPinene());
             atomCon.Add(TestMoleculeFactory.MakeSpiroRings());
-            IChemObjectSet<IAtomContainer> moleculeSet = ConnectivityChecker.PartitionIntoMolecules(atomCon);
+            var moleculeSet = ConnectivityChecker.PartitionIntoMolecules(atomCon).ToReadOnlyList();
             Assert.IsNotNull(moleculeSet);
             Assert.AreEqual(3, moleculeSet.Count);
         }
@@ -62,14 +62,14 @@ namespace NCDK.Graphs
         [TestMethod()]
         public void TestPartitionIntoMoleculesKeepsAtomIDs()
         {
-            AtomContainer atomCon = new AtomContainer();
-            Atom atom1 = new Atom("C");
+            var atomCon = builder.NewAtomContainer();
+            var atom1 = builder.NewAtom("C");
             atom1.Id = "atom1";
-            Atom atom2 = new Atom("C");
+            var atom2 = builder.NewAtom("C");
             atom2.Id = "atom2";
             atomCon.Atoms.Add(atom1);
             atomCon.Atoms.Add(atom2);
-            IChemObjectSet<IAtomContainer> moleculeSet = ConnectivityChecker.PartitionIntoMolecules(atomCon);
+            var moleculeSet = ConnectivityChecker.PartitionIntoMolecules(atomCon).ToReadOnlyList();
             Assert.IsNotNull(moleculeSet);
             Assert.AreEqual(2, moleculeSet.Count);
             IAtom copy1 = moleculeSet[0].Atoms[0];
@@ -87,11 +87,11 @@ namespace NCDK.Graphs
         public void TestPartitionIntoMolecules_IsConnected_Consistency()
         {
             //Debug.WriteLine(atomCon);
-            AtomContainer atomCon = new AtomContainer();
+            var atomCon = builder.NewAtomContainer();
             atomCon.Add(TestMoleculeFactory.Make4x3CondensedRings());
             atomCon.Add(TestMoleculeFactory.MakeAlphaPinene());
             atomCon.Add(TestMoleculeFactory.MakeSpiroRings());
-            IChemObjectSet<IAtomContainer> moleculeSet = ConnectivityChecker.PartitionIntoMolecules(atomCon);
+            var moleculeSet = ConnectivityChecker.PartitionIntoMolecules(atomCon).ToReadOnlyList();
             Assert.IsNotNull(moleculeSet);
             Assert.AreEqual(3, moleculeSet.Count);
 
@@ -107,25 +107,25 @@ namespace NCDK.Graphs
         [TestMethod()]
         public void TestDontDeleteSingleElectrons()
         {
-            AtomContainer atomCon = new AtomContainer();
+            var atomCon = builder.NewAtomContainer();
             // make two molecules; one with an LonePair, the other with a SingleElectron
-            IAtomContainer mol1 = new AtomContainer();
-            Atom atom1 = new Atom("C");
+            var mol1 = builder.NewAtomContainer();
+            var atom1 = builder.NewAtom("C");
             mol1.Atoms.Add(atom1);
-            LonePair lp1 = new LonePair(atom1);
+            var lp1 = builder.NewLonePair(atom1);
             mol1.LonePairs.Add(lp1);
             // mol2
-            IAtomContainer mol2 = new AtomContainer();
-            Atom atom2 = new Atom("C");
+            var mol2 = builder.NewAtomContainer();
+            var atom2 = builder.NewAtom("C");
             mol2.Atoms.Add(atom2);
-            SingleElectron se2 = new SingleElectron(atom2);
+            var se2 = builder.NewSingleElectron(atom2);
             mol2.SingleElectrons.Add(se2);
 
             atomCon.Add(mol1);
             atomCon.Add(mol2);
 
             // now partition
-            IChemObjectSet<IAtomContainer> moleculeSet = ConnectivityChecker.PartitionIntoMolecules(atomCon);
+            var moleculeSet = ConnectivityChecker.PartitionIntoMolecules(atomCon).ToReadOnlyList();
             Assert.IsNotNull(moleculeSet);
             Assert.AreEqual(2, moleculeSet.Count);
 
@@ -174,8 +174,8 @@ namespace NCDK.Graphs
         {
             var filename = "NCDK.Data.HIN.connectivity1.hin";
             var ins = ResourceLoader.GetAsStream(filename);
-            ISimpleChemObjectReader reader = new HINReader(ins);
-            ChemFile content = (ChemFile)reader.Read((ChemObject)new ChemFile());
+            var reader = new HINReader(ins);
+            var content = reader.Read(builder.NewChemFile());
             var cList = ChemFileManipulator.GetAllAtomContainers(content);
             IAtomContainer ac = cList.First();
 
@@ -190,8 +190,8 @@ namespace NCDK.Graphs
         {
             var filename = "NCDK.Data.MDL.mdeotest.sdf";
             var ins = ResourceLoader.GetAsStream(filename);
-            ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
-            ChemFile content = (ChemFile)reader.Read((ChemObject)new ChemFile());
+            var reader = new MDLV2000Reader(ins);
+            var content = reader.Read(builder.NewChemFile());
             var cList = ChemFileManipulator.GetAllAtomContainers(content);
             IAtomContainer ac = cList.First();
 
@@ -201,9 +201,9 @@ namespace NCDK.Graphs
         [TestMethod()]
         public void TestPartitionExtendedTetrahedral()
         {
-            SmilesParser smipar = CDK.SmilesParser;
+            var smipar = CDK.SmilesParser;
             var container = smipar.ParseSmiles("CC=[C@]=CC.C");
-            IChemObjectSet<IAtomContainer> containerSet = ConnectivityChecker.PartitionIntoMolecules(container);
+            var containerSet = ConnectivityChecker.PartitionIntoMolecules(container).ToReadOnlyList();
             Assert.AreEqual(2, containerSet.Count);
             Assert.IsTrue(containerSet[0].StereoElements.GetEnumerator().MoveNext());
         }
@@ -214,9 +214,8 @@ namespace NCDK.Graphs
         [TestMethod()]
         public void TestNoAtomsIsConnected()
         {
-            IAtomContainer container = new AtomContainer();
+            var container = builder.NewAtomContainer();
             Assert.IsTrue(ConnectivityChecker.IsConnected(container), "Molecule appears not to be connected");
         }
-
     }
 }

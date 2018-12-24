@@ -16,6 +16,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Reactions.Types.Parameters;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +26,6 @@ namespace NCDK.Reactions.Types
     // @author         Miguel Rojas
     // @cdk.created    2006-04-01
     // @cdk.module     reaction
-    // @cdk.githash
     public abstract class AbstractElectronImpactDBReaction : ReactionEngine, IReactionProcess
     {
         /// <inheritdoc/>
@@ -40,23 +40,23 @@ namespace NCDK.Reactions.Types
         {
             CheckInitiateParams(reactants, agents);
 
-            IReactionSet setOfReactions = reactants.Builder.NewReactionSet();
-            IAtomContainer reactant = reactants[0];
+            var setOfReactions = reactants.Builder.NewReactionSet();
+            var reactant = reactants[0];
 
             // if the parameter hasActiveCenter is not fixed yet, set the active centers
-            IParameterReaction ipr = base.GetParameterClass(typeof(SetReactionCenter));
+            var ipr = base.GetParameterClass(typeof(SetReactionCenter));
             if (ipr != null && !ipr.IsSetParameter) SetActiveCenters(reactant, bondChecker);
             foreach (var bondi in reactant.Bonds)
             {
-                IAtom atom1 = bondi.Begin;
-                IAtom atom2 = bondi.End;
+                var atom1 = bondi.Begin;
+                var atom2 = bondi.End;
                 if (bondi.IsReactiveCenter
-                        && bondChecker(bondi)
-                        && atom1.IsReactiveCenter && atom2.IsReactiveCenter
-                        && (atom1.FormalCharge ?? 0) == 0
-                        && (atom2.FormalCharge ?? 0) == 0
-                        && !reactant.GetConnectedSingleElectrons(atom1).Any()
-                        && !reactant.GetConnectedSingleElectrons(atom2).Any())
+                 && bondChecker(bondi)
+                 && atom1.IsReactiveCenter && atom2.IsReactiveCenter
+                 && (atom1.FormalCharge ?? 0) == 0
+                 && (atom2.FormalCharge ?? 0) == 0
+                 && !reactant.GetConnectedSingleElectrons(atom1).Any()
+                 && !reactant.GetConnectedSingleElectrons(atom2).Any())
                 {
                     for (int j = 0; j < 2; j++)
                     {
@@ -76,9 +76,9 @@ namespace NCDK.Reactions.Types
                             bondi
                         };
 
-                        IChemObjectSet<IAtomContainer> moleculeSet = reactant.Builder.NewAtomContainerSet();
+                        var moleculeSet = reactant.Builder.NewAtomContainerSet();
                         moleculeSet.Add(reactant);
-                        IReaction reaction = Mechanism.Initiate(moleculeSet, atomList, bondList);
+                        var reaction = Mechanism.Initiate(moleculeSet, atomList, bondList);
                         if (reaction == null)
                             continue;
                         else
@@ -93,13 +93,13 @@ namespace NCDK.Reactions.Types
         {
             foreach (var bondi in reactant.Bonds)
             {
-                IAtom atom1 = bondi.Begin;
-                IAtom atom2 = bondi.End;
+                var atom1 = bondi.Begin;
+                var atom2 = bondi.End;
                 if (bondChecker(bondi)
-                        && (atom1.FormalCharge ?? 0) == 0
-                        && (atom2.FormalCharge ?? 0) == 0
-                        && !reactant.GetConnectedSingleElectrons(atom1).Any()
-                        && !reactant.GetConnectedSingleElectrons(atom2).Any())
+                 && (atom1.FormalCharge ?? 0) == 0
+                 && (atom2.FormalCharge ?? 0) == 0
+                 && !reactant.GetConnectedSingleElectrons(atom1).Any()
+                 && !reactant.GetConnectedSingleElectrons(atom2).Any())
                 {
                     bondi.IsReactiveCenter = true;
                     atom1.IsReactiveCenter = true;

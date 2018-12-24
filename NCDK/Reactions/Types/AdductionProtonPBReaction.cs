@@ -16,6 +16,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Reactions.Mechanisms;
 using NCDK.Reactions.Types.Parameters;
 using NCDK.Tools.Manipulator;
@@ -35,7 +36,6 @@ namespace NCDK.Reactions.Types
     // @author         Miguel Rojas
     // @cdk.created    2008-02-11
     // @cdk.module     reaction
-    // @cdk.githash
     public partial class AdductionProtonPBReaction : ReactionEngine, IReactionProcess
     {
         public AdductionProtonPBReaction() { }
@@ -45,8 +45,8 @@ namespace NCDK.Reactions.Types
         /// </summary>
         /// <returns>The specification value</returns>
         public ReactionSpecification Specification => new ReactionSpecification(
-                    "http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict#AdductionProtonPB", 
-                    this.GetType().Name, "$Id$", "The Chemistry Development Kit");
+            "http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict#AdductionProtonPB", 
+            this.GetType().Name, "$Id$", "The Chemistry Development Kit");
 
         /// <summary>
         ///  Initiate process.
@@ -58,40 +58,42 @@ namespace NCDK.Reactions.Types
         /// <param name="agents">agents of the reaction (Must be in this case null)</param>
         public IReactionSet Initiate(IChemObjectSet<IAtomContainer> reactants, IChemObjectSet<IAtomContainer> agents)
         {
-            Debug.WriteLine("initiate reaction: " + GetType().Name);
+            Debug.WriteLine($"initiate reaction: {GetType().Name}");
 
             if (reactants.Count != 1)
             {
-                throw new CDKException(GetType().Name + " only expects one reactant");
+                throw new CDKException($"{GetType().Name} only expects one reactant");
             }
             if (agents != null)
             {
-                throw new CDKException(GetType().Name + " don't expects agents");
+                throw new CDKException($"{GetType().Name} don't expects agents");
             }
 
-            IReactionSet setOfReactions = reactants.Builder.NewReactionSet();
-            IAtomContainer reactant = reactants[0];
+            var setOfReactions = reactants.Builder.NewReactionSet();
+            var reactant = reactants[0];
 
             // if the parameter hasActiveCenter is not fixed yet, set the active centers
-            IParameterReaction ipr = base.GetParameterClass(typeof(SetReactionCenter));
-            if (ipr != null && !ipr.IsSetParameter) SetActiveCenters(reactant);
+            var ipr = base.GetParameterClass(typeof(SetReactionCenter));
+            if (ipr != null && !ipr.IsSetParameter)
+                SetActiveCenters(reactant);
 
-            if (AtomContainerManipulator.GetTotalCharge(reactant) != 0) return setOfReactions;
+            if (AtomContainerManipulator.GetTotalCharge(reactant) != 0)
+                return setOfReactions;
 
             foreach (var bondi in reactant.Bonds)
             {
                 if (bondi.IsReactiveCenter
-                        && ((bondi.Order == BondOrder.Double) || (bondi.Order == BondOrder.Triple))
-                        && bondi.Begin.IsReactiveCenter
-                        && bondi.End.IsReactiveCenter)
+                 && ((bondi.Order == BondOrder.Double) || (bondi.Order == BondOrder.Triple))
+                 && bondi.Begin.IsReactiveCenter
+                 && bondi.End.IsReactiveCenter)
                 {
                     int chargeAtom0 = bondi.Begin.FormalCharge ?? 0;
                     int chargeAtom1 = bondi.End.FormalCharge ?? 0;
                     if (chargeAtom0 >= 0 && chargeAtom1 >= 0
-                            && !reactant.GetConnectedSingleElectrons(bondi.Begin).Any()
-                            && !reactant.GetConnectedSingleElectrons(bondi.End).Any()
-                            && !reactant.GetConnectedLonePairs(bondi.Begin).Any()
-                            && !reactant.GetConnectedLonePairs(bondi.End).Any())
+                     && !reactant.GetConnectedSingleElectrons(bondi.Begin).Any()
+                     && !reactant.GetConnectedSingleElectrons(bondi.End).Any()
+                     && !reactant.GetConnectedLonePairs(bondi.Begin).Any()
+                     && !reactant.GetConnectedLonePairs(bondi.End).Any())
                     {
                         for (int j = 0; j < 2; j++)
                         {
@@ -106,22 +108,19 @@ namespace NCDK.Reactions.Types
                                 atomList.Add(bondi.End);
                                 atomList.Add(bondi.Begin);
                             }
-                            IAtom atomH = reactant.Builder.NewAtom("H");
+                            var atomH = reactant.Builder.NewAtom("H");
                             atomH.FormalCharge = 1;
                             atomList.Add(atomH);
 
-                            var bondList = new List<IBond>
-                            {
-                                bondi
-                            };
+                            var bondList = new List<IBond> { bondi };
 
-                            IChemObjectSet<IAtomContainer> moleculeSet = reactant.Builder.NewAtomContainerSet();
+                            var moleculeSet = reactant.Builder.NewAtomContainerSet();
                             moleculeSet.Add(reactant);
-                            IAtomContainer adduct = reactant.Builder.NewAtomContainer();
+                            var adduct = reactant.Builder.NewAtomContainer();
                             adduct.Atoms.Add(atomH);
                             moleculeSet.Add(adduct);
 
-                            IReaction reaction = Mechanism.Initiate(moleculeSet, atomList, bondList);
+                            var reaction = Mechanism.Initiate(moleculeSet, atomList, bondList);
                             if (reaction == null)
                                 continue;
                             else
@@ -141,7 +140,8 @@ namespace NCDK.Reactions.Types
         /// <param name="reactant">The molecule to set the activity</param>
         private static void SetActiveCenters(IAtomContainer reactant)
         {
-            if (AtomContainerManipulator.GetTotalCharge(reactant) != 0) return;
+            if (AtomContainerManipulator.GetTotalCharge(reactant) != 0)
+                return;
 
             foreach (var bondi in reactant.Bonds)
             {
@@ -150,10 +150,10 @@ namespace NCDK.Reactions.Types
                     int chargeAtom0 = bondi.Begin.FormalCharge ?? 0;
                     int chargeAtom1 = bondi.End.FormalCharge ?? 0;
                     if (chargeAtom0 >= 0 && chargeAtom1 >= 0
-                            && !reactant.GetConnectedSingleElectrons(bondi.Begin).Any()
-                            && !reactant.GetConnectedSingleElectrons(bondi.End).Any()
-                            && !reactant.GetConnectedLonePairs(bondi.Begin).Any()
-                            && !reactant.GetConnectedLonePairs(bondi.End).Any())
+                     && !reactant.GetConnectedSingleElectrons(bondi.Begin).Any()
+                     && !reactant.GetConnectedSingleElectrons(bondi.End).Any()
+                     && !reactant.GetConnectedLonePairs(bondi.Begin).Any()
+                     && !reactant.GetConnectedLonePairs(bondi.End).Any())
                     {
                         bondi.IsReactiveCenter = true;
                         bondi.Begin.IsReactiveCenter = true;

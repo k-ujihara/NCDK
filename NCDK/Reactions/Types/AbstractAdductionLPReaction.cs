@@ -27,7 +27,6 @@ namespace NCDK.Reactions.Types
     // @author         Miguel Rojas
     // @cdk.created    2008-02-11
     // @cdk.module     reaction
-    // @cdk.githash
     public abstract class AbstractAdductionLPReaction : ReactionEngine, IReactionProcess
     {
         /// <inheritdoc/>
@@ -43,7 +42,7 @@ namespace NCDK.Reactions.Types
             IReactionSet setOfReactions = reactants.Builder.NewReactionSet();
             IAtomContainer reactant = reactants[0];
 
-            IParameterReaction ipr = base.GetParameterClass(typeof(SetReactionCenter));
+            var ipr = base.GetParameterClass(typeof(SetReactionCenter));
             if (ipr != null && !ipr.IsSetParameter)
                 SetActiveCenters(reactant);
 
@@ -68,7 +67,7 @@ namespace NCDK.Reactions.Types
                     adduct.Atoms.Add(atomH);
                     moleculeSet.Add(adduct);
 
-                    IReaction reaction = Mechanism.Initiate(moleculeSet, atomList, null);
+                    var reaction = Mechanism.Initiate(moleculeSet, atomList, null);
                     if (reaction == null)
                         continue;
                     else

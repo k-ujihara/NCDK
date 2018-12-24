@@ -24,11 +24,11 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Sgroups;
+using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using NCDK.Sgroups;
-using NCDK.Tools.Manipulator;
 
 #pragma warning disable CA1710 // Identifiers should have correct suffix
 
@@ -499,20 +499,17 @@ namespace NCDK.Default
         /// <inheritdoc/>
         public virtual void Remove(IElectronContainer electronContainer)
         {
-            if (electronContainer is IBond bond)
+            switch (electronContainer)
             {
-                Bonds.Remove(bond);
-                return;
-            }
-            if (electronContainer is ILonePair lonePair)
-            {
-                LonePairs.Remove(lonePair);
-                return;
-            }
-            if (electronContainer is ISingleElectron singleElectron)
-            {
-                SingleElectrons.Remove(singleElectron);
-                return;
+                case IBond bond:
+                    Bonds.Remove(bond);
+                    return;
+                case ILonePair lonePair:
+                    LonePairs.Remove(lonePair);
+                    return;
+                case ISingleElectron singleElectron:
+                    SingleElectrons.Remove(singleElectron);
+                    return;
             }
         }
 
@@ -1135,20 +1132,17 @@ namespace NCDK.Silent
         /// <inheritdoc/>
         public virtual void Remove(IElectronContainer electronContainer)
         {
-            if (electronContainer is IBond bond)
+            switch (electronContainer)
             {
-                Bonds.Remove(bond);
-                return;
-            }
-            if (electronContainer is ILonePair lonePair)
-            {
-                LonePairs.Remove(lonePair);
-                return;
-            }
-            if (electronContainer is ISingleElectron singleElectron)
-            {
-                SingleElectrons.Remove(singleElectron);
-                return;
+                case IBond bond:
+                    Bonds.Remove(bond);
+                    return;
+                case ILonePair lonePair:
+                    LonePairs.Remove(lonePair);
+                    return;
+                case ISingleElectron singleElectron:
+                    SingleElectrons.Remove(singleElectron);
+                    return;
             }
         }
 

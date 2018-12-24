@@ -28,7 +28,6 @@ namespace NCDK
     /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.ISingleElectron_Example.cs"]/*' />
     /// </example>
     // @cdk.module interfaces
-    // @cdk.githash
     // @cdk.keyword radical
     // @cdk.keyword electron, unpaired
     public interface ISingleElectron 

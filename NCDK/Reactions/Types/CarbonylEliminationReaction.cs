@@ -66,7 +66,7 @@ namespace NCDK.Reactions.Types
 
             // if the parameter hasActiveCenter is not fixed yet, set the active
             // centers
-            IParameterReaction ipr = base.GetParameterClass(typeof(SetReactionCenter));
+            var ipr = base.GetParameterClass(typeof(SetReactionCenter));
             if (ipr != null && !ipr.IsSetParameter) SetActiveCenters(reactant);
             foreach (var atomi in reactant.Atoms)
             {
@@ -100,9 +100,9 @@ namespace NCDK.Reactions.Types
                                                 bondj
                                             };
 
-                                            IChemObjectSet<IAtomContainer> moleculeSet = reactant.Builder.NewChemObjectSet<IAtomContainer>();
+                                            var moleculeSet = reactant.Builder.NewChemObjectSet<IAtomContainer>();
                                             moleculeSet.Add(reactant);
-                                            IReaction reaction = Mechanism.Initiate(moleculeSet, atomList, bondList);
+                                            var reaction = Mechanism.Initiate(moleculeSet, atomList, bondList);
                                             if (reaction == null)
                                                 continue;
                                             else

@@ -10,7 +10,6 @@ namespace NCDK.Graphs
     /// </example>
     // @author John May
     // @cdk.module core
-    // @cdk.githash
     public sealed class ConnectedComponents
     {
         /// <summary>Adjacency-list representation of a graph.</summary>

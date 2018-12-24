@@ -35,7 +35,6 @@ namespace NCDK.Graphs
     /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Graphs.ConnectivityChecker_Example.cs+2"]/*' />
     /// </example>
     // @cdk.module standard
-    // @cdk.githash
     // @cdk.keyword connectivity
     public static class ConnectivityChecker
     {
@@ -61,13 +60,13 @@ namespace NCDK.Graphs
         /// <param name="container">The <see cref="IAtomContainer"/> to be partitioned into connected components, i.e. molecules</param>
         /// <returns>A MoleculeSet.</returns>
         // @cdk.dictref   blue-obelisk:graphPartitioning
-        public static IChemObjectSet<IAtomContainer> PartitionIntoMolecules(IAtomContainer container)
+        public static IReadOnlyList<IAtomContainer> PartitionIntoMolecules(IAtomContainer container)
         {
             var cc = new ConnectedComponents(GraphUtil.ToAdjList(container));
             return PartitionIntoMolecules(container, cc.GetComponents());
         }
 
-        public static IChemObjectSet<IAtomContainer> PartitionIntoMolecules(IAtomContainer container, int[] components)
+        public static IReadOnlyList<IAtomContainer> PartitionIntoMolecules(IAtomContainer container, int[] components)
         {
             int maxComponentIndex = 0;
             foreach (int component in components)
@@ -79,8 +78,6 @@ namespace NCDK.Graphs
 
             for (int i = 1; i < containers.Length; i++)
                 containers[i] = container.Builder.NewAtomContainer();
-
-            var containerSet = container.Builder.NewAtomContainerSet();
 
             for (int i = 0; i < container.Atoms.Count; i++)
             {
@@ -120,8 +117,8 @@ namespace NCDK.Graphs
                 }
             }
 
-            for (int i = 1; i < containers.Length; i++)
-                containerSet.Add(containers[i]);
+            // do not return IEnumerable, containers are modified above.
+            var containerSet = new List<IAtomContainer>(containers.Skip(1));
 
             return containerSet;
         }

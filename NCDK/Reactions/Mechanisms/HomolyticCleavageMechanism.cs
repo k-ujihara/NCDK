@@ -106,9 +106,9 @@ namespace NCDK.Reactions.Mechanisms
             else
             {
                 var moleculeSetP = ConnectivityChecker.PartitionIntoMolecules(reactantCloned);
-                for (int z = 0; z < moleculeSetP.Count; z++)
+                foreach (var moleculeP in moleculeSetP)
                 {
-                    reaction.Products.Add((IAtomContainer)moleculeSetP[z]);
+                    reaction.Products.Add(moleculeP);
                 }
             }
 

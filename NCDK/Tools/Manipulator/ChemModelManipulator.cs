@@ -38,7 +38,6 @@ namespace NCDK.Tools.Manipulator
     /// </summary>
     /// <seealso cref="IAtomContainer.RemoveAtom(IAtom)"/>
     // @cdk.module standard
-    // @cdk.githash
     public static class ChemModelManipulator
     {
         /// <summary>
@@ -49,17 +48,17 @@ namespace NCDK.Tools.Manipulator
         public static int GetAtomCount(IChemModel chemModel)
         {
             int count = 0;
-            ICrystal crystal = chemModel.Crystal;
+            var crystal = chemModel.Crystal;
             if (crystal != null)
             {
                 count += crystal.Atoms.Count;
             }
-            IChemObjectSet<IAtomContainer> moleculeSet = chemModel.MoleculeSet;
+            var moleculeSet = chemModel.MoleculeSet;
             if (moleculeSet != null)
             {
                 count += MoleculeSetManipulator.GetAtomCount(moleculeSet);
             }
-            IReactionSet reactionSet = chemModel.ReactionSet;
+            var reactionSet = chemModel.ReactionSet;
             if (reactionSet != null)
             {
                 count += ReactionSetManipulator.GetAtomCount(reactionSet);
@@ -75,17 +74,17 @@ namespace NCDK.Tools.Manipulator
         public static int GetBondCount(IChemModel chemModel)
         {
             int count = 0;
-            ICrystal crystal = chemModel.Crystal;
+            var crystal = chemModel.Crystal;
             if (crystal != null)
             {
                 count += crystal.Bonds.Count;
             }
-            IChemObjectSet<IAtomContainer> moleculeSet = chemModel.MoleculeSet;
+            var moleculeSet = chemModel.MoleculeSet;
             if (moleculeSet != null)
             {
                 count += MoleculeSetManipulator.GetBondCount(moleculeSet);
             }
-            IReactionSet reactionSet = chemModel.ReactionSet;
+            var reactionSet = chemModel.ReactionSet;
             if (reactionSet != null)
             {
                 count += ReactionSetManipulator.GetBondCount(reactionSet);
@@ -101,7 +100,7 @@ namespace NCDK.Tools.Manipulator
         /// <param name="atom">The Atom object to remove.</param>
         public static void RemoveAtomAndConnectedElectronContainers(IChemModel chemModel, IAtom atom)
         {
-            ICrystal crystal = chemModel.Crystal;
+            var crystal = chemModel.Crystal;
             if (crystal != null)
             {
                 if (crystal.Contains(atom))
@@ -110,12 +109,12 @@ namespace NCDK.Tools.Manipulator
                 }
                 return;
             }
-            IChemObjectSet<IAtomContainer> moleculeSet = chemModel.MoleculeSet;
+            var moleculeSet = chemModel.MoleculeSet;
             if (moleculeSet != null)
             {
                 MoleculeSetManipulator.RemoveAtomAndConnectedElectronContainers(moleculeSet, atom);
             }
-            IReactionSet reactionSet = chemModel.ReactionSet;
+            var reactionSet = chemModel.ReactionSet;
             if (reactionSet != null)
             {
                 ReactionSetManipulator.RemoveAtomAndConnectedElectronContainers(reactionSet, atom);
@@ -130,7 +129,7 @@ namespace NCDK.Tools.Manipulator
         /// <param name="electrons">The ElectronContainer to remove.</param>
         public static void RemoveElectronContainer(IChemModel chemModel, IElectronContainer electrons)
         {
-            ICrystal crystal = chemModel.Crystal;
+            var crystal = chemModel.Crystal;
             if (crystal != null)
             {
                 if (crystal.Contains(electrons))
@@ -139,12 +138,12 @@ namespace NCDK.Tools.Manipulator
                 }
                 return;
             }
-            IChemObjectSet<IAtomContainer> moleculeSet = chemModel.MoleculeSet;
+            var moleculeSet = chemModel.MoleculeSet;
             if (moleculeSet != null)
             {
                 MoleculeSetManipulator.RemoveElectronContainer(moleculeSet, electrons);
             }
-            IReactionSet reactionSet = chemModel.ReactionSet;
+            var reactionSet = chemModel.ReactionSet;
             if (reactionSet != null)
             {
                 ReactionSetManipulator.RemoveElectronContainer(reactionSet, electrons);
@@ -176,7 +175,7 @@ namespace NCDK.Tools.Manipulator
             }
             else
             {
-                IChemObjectSet<IAtomContainer> moleculeSet = chemModel.Builder.NewAtomContainerSet();
+                var moleculeSet = chemModel.Builder.NewAtomContainerSet();
                 moleculeSet.Add(molecule);
                 chemModel.MoleculeSet = moleculeSet;
             }
@@ -208,7 +207,7 @@ namespace NCDK.Tools.Manipulator
             IAtomContainer result = null;
             if (chemModel.MoleculeSet != null)
             {
-                IChemObjectSet<IAtomContainer> moleculeSet = chemModel.MoleculeSet;
+                var moleculeSet = chemModel.MoleculeSet;
                 result = MoleculeSetManipulator.GetRelevantAtomContainer(moleculeSet, atom);
                 if (result != null)
                 {
@@ -217,7 +216,7 @@ namespace NCDK.Tools.Manipulator
             }
             if (chemModel.ReactionSet != null)
             {
-                IReactionSet reactionSet = chemModel.ReactionSet;
+                var reactionSet = chemModel.ReactionSet;
                 return ReactionSetManipulator.GetRelevantAtomContainer(reactionSet, atom);
             }
             if (chemModel.Crystal != null && chemModel.Crystal.Contains(atom))
@@ -243,7 +242,7 @@ namespace NCDK.Tools.Manipulator
             IAtomContainer result = null;
             if (chemModel.MoleculeSet != null)
             {
-                IChemObjectSet<IAtomContainer> moleculeSet = chemModel.MoleculeSet;
+                var moleculeSet = chemModel.MoleculeSet;
                 result = MoleculeSetManipulator.GetRelevantAtomContainer(moleculeSet, bond);
                 if (result != null)
                 {
@@ -252,7 +251,7 @@ namespace NCDK.Tools.Manipulator
             }
             if (chemModel.ReactionSet != null)
             {
-                IReactionSet reactionSet = chemModel.ReactionSet;
+                var reactionSet = chemModel.ReactionSet;
                 return ReactionSetManipulator.GetRelevantAtomContainer(reactionSet, bond);
             }
             // This should never happen.
@@ -323,14 +322,14 @@ namespace NCDK.Tools.Manipulator
         /// <returns>A List of all ChemObjects inside.</returns>
         public static List<IChemObject> GetAllChemObjects(IChemModel chemModel)
         {
-            List<IChemObject> list = new List<IChemObject>();
+            var list = new List<IChemObject>();
             // list.Add(chemModel); // only add ChemObjects contained within
             ICrystal crystal = chemModel.Crystal;
             if (crystal != null)
             {
                 list.Add(crystal);
             }
-            IChemObjectSet<IAtomContainer> moleculeSet = chemModel.MoleculeSet;
+            var moleculeSet = chemModel.MoleculeSet;
             if (moleculeSet != null)
             {
                 list.Add(moleculeSet);
@@ -340,11 +339,11 @@ namespace NCDK.Tools.Manipulator
                     if (!list.Contains(chemObject)) list.Add(chemObject);
                 }
             }
-            IReactionSet reactionSet = chemModel.ReactionSet;
+            var reactionSet = chemModel.ReactionSet;
             if (reactionSet != null)
             {
                 list.Add(reactionSet);
-                List<IChemObject> current = ReactionSetManipulator.GetAllChemObjects(reactionSet);
+                var current = ReactionSetManipulator.GetAllChemObjects(reactionSet);
                 foreach (var chemObject in current)
                 {
                     if (!list.Contains(chemObject)) list.Add(chemObject);

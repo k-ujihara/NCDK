@@ -23,7 +23,6 @@
 
 using NCDK.Common.Collections;
 using NCDK.Common.Mathematics;
-using NCDK.Config;
 using NCDK.Geometries;
 using NCDK.Graphs;
 using NCDK.Isomorphisms;
@@ -36,7 +35,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using static NCDK.Config.NaturalElement;
 
 namespace NCDK.Layout
 {
@@ -62,7 +60,6 @@ namespace NCDK.Layout
     // @cdk.keyword Coordinate generation, 2D
     // @cdk.dictref blue-obelisk:layoutMolecule
     // @cdk.module sdg
-    // @cdk.githash
     // @cdk.bug 1536561
     // @cdk.bug 1788686
     public class StructureDiagramGenerator
@@ -619,10 +616,10 @@ namespace NCDK.Layout
             // intercept fragment molecules and lay them out in a grid
             if (!isConnected)
             {
-                var frags = ConnectivityChecker.PartitionIntoMolecules(molecule);
+                var frags = ConnectivityChecker.PartitionIntoMolecules(molecule).ToReadOnlyList();
                 if (frags.Count > 1)
                 {
-                    IAtomContainer rollback = molecule;
+                    var rollback = molecule;
                     GenerateFragmentCoordinates(molecule, frags);
                     // don't call set molecule as it wipes x,y coordinates!
                     // this looks like a self assignment but actually the fragment
@@ -1153,7 +1150,7 @@ namespace NCDK.Layout
             return minmax;
         }
 
-        private void GenerateFragmentCoordinates(IAtomContainer mol, IList<IAtomContainer> frags)
+        private void GenerateFragmentCoordinates(IAtomContainer mol, IReadOnlyList<IAtomContainer> frags)
         {
             var ionicBonds = MakeIonicBonds(frags);
 

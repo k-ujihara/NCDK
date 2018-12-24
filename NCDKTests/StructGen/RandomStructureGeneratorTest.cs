@@ -22,8 +22,8 @@ using NCDK.Graphs;
 using NCDK.Layout;
 using NCDK.Numerics;
 using NCDK.Templates;
-using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace NCDK.StructGen
@@ -43,24 +43,23 @@ namespace NCDK.StructGen
         [TestMethod()]
         public void TestTwentyRandomStructures()
         {
-            IAtomContainer molecule = TestMoleculeFactory.MakeAlphaPinene();
-            RandomGenerator rg = new RandomGenerator(molecule);
+            var molecule = TestMoleculeFactory.MakeAlphaPinene();
+            var rg = new RandomGenerator(molecule);
             IAtomContainer result = null;
             for (int f = 0; f < 50; f++)
             {
                 result = rg.ProposeStructure();
                 Assert.AreEqual(molecule.Atoms.Count, result.Atoms.Count);
-                Assert.AreEqual(1, ConnectivityChecker.PartitionIntoMolecules(result).Count);
+                Assert.AreEqual(1, ConnectivityChecker.PartitionIntoMolecules(result).Count());
             }
         }
 
-        private bool everythingOk(IEnumerable<IAtomContainer> structures)
+        private bool EverythingOk(IEnumerable<IAtomContainer> structures)
         {
-            StructureDiagramGenerator sdg;
-            if (debug) Console.Out.WriteLine("number of structures in vector: " + structures.Count());
+            Debug.WriteLine($"number of structures in vector: {structures.Count()}");
             foreach (var mol in structures)
             {
-                sdg = new StructureDiagramGenerator { Molecule = mol };
+                var sdg = new StructureDiagramGenerator { Molecule = mol };
                 sdg.GenerateCoordinates(new Vector2(0, 1));
             }
             return true;

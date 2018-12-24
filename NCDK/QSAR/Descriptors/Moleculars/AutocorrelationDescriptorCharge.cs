@@ -73,7 +73,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         public Result Calculate(IAtomContainer container, int count = DefaultSize)
         {
-            container = (IAtomContainer)container.Clone();
             container = AtomContainerManipulator.RemoveHydrogens(container);
 
             try

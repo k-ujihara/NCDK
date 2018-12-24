@@ -25,7 +25,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
         private readonly IAtomContainer container;
         private readonly IAtomContainer clonedContainer;
-        private IChemObjectSet<IAtomContainer> varAtomContainerSet;
+        private IEnumerable<IAtomContainer> varAtomContainerSet;
         private readonly IAtomContainer mol;
 
         public RDFProtonDescriptorG3R(IAtomContainer container, bool checkAromaticity = false)
@@ -418,7 +418,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
         private readonly IAtomContainer container;
         private readonly IAtomContainer clonedContainer;
-        private IChemObjectSet<IAtomContainer> varAtomContainerSet;
+        private IEnumerable<IAtomContainer> varAtomContainerSet;
         private readonly IAtomContainer mol;
 
         public RDFProtonDescriptorGDR(IAtomContainer container, bool checkAromaticity = false)
@@ -811,7 +811,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
         private readonly IAtomContainer container;
         private readonly IAtomContainer clonedContainer;
-        private IChemObjectSet<IAtomContainer> varAtomContainerSet;
+        private IEnumerable<IAtomContainer> varAtomContainerSet;
         private readonly IAtomContainer mol;
 
         public RDFProtonDescriptorGHR(IAtomContainer container, bool checkAromaticity = false)
@@ -1204,7 +1204,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
         private readonly IAtomContainer container;
         private readonly IAtomContainer clonedContainer;
-        private IChemObjectSet<IAtomContainer> varAtomContainerSet;
+        private IEnumerable<IAtomContainer> varAtomContainerSet;
         private readonly IAtomContainer mol;
 
         public RDFProtonDescriptorGHRTopology(IAtomContainer container, bool checkAromaticity = false)
@@ -1597,7 +1597,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
         private readonly IAtomContainer container;
         private readonly IAtomContainer clonedContainer;
-        private IChemObjectSet<IAtomContainer> varAtomContainerSet;
+        private IEnumerable<IAtomContainer> varAtomContainerSet;
         private readonly IAtomContainer mol;
 
         public RDFProtonDescriptorGSR(IAtomContainer container, bool checkAromaticity = false)

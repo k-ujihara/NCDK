@@ -146,10 +146,10 @@ namespace NCDK.Reactions.Mechanisms
             }
             else
             {
-                IChemObjectSet<IAtomContainer> moleculeSetP = ConnectivityChecker.PartitionIntoMolecules(reactantCloned);
-                for (int z = 0; z < moleculeSetP.Count(); z++)
+                var moleculeSetP = ConnectivityChecker.PartitionIntoMolecules(reactantCloned);
+                foreach (var moleculeP in moleculeSetP)
                 {
-                    reaction.Products.Add((IAtomContainer)moleculeSetP[z]);
+                    reaction.Products.Add(moleculeP);
                 }
             }
 

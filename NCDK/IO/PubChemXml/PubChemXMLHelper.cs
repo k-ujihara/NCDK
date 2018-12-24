@@ -34,7 +34,6 @@ namespace NCDK.IO.PubChemXml
     /// Helper class to parse PubChem XML documents.
     /// </summary>
     // @cdk.module io
-    // @cdk.githash
     // @author       Egon Willighagen <egonw@users.sf.net>
     // @cdk.created  2008-05-05
     internal class PubChemXMLHelper
@@ -164,7 +163,7 @@ namespace NCDK.IO.PubChemXml
                 return null;
             foreach (var elm in parser.Elements(Name_EL_PCCOMPOUND))
             {
-                IAtomContainer molecule = ParseMolecule(elm, builder);
+                var molecule = ParseMolecule(elm, builder);
                 if (molecule.Atoms.Count > 0)
                 {
                     // skip empty PC-Compound's

@@ -23,16 +23,15 @@ using System.Linq;
 namespace NCDK.Graphs.Invariant
 {
     // @author       kaihartmann
-    // @cdk.githash
     // @cdk.created  2004-09-17
     // @cdk.module   reaction
     // @cdk.todo add negatively charged atoms (e.g. O-) to the pi system
     public static class ConjugatedPiSystemsDetector
     {
         /// <summary>
-        ///  Detect all conjugated pi systems in an AtomContainer. This method returns a AtomContainerSet
-        ///  with Atom and Bond objects from the original AtomContainer. The aromaticity has to be known
-        ///  before calling this method.
+        /// Detect all conjugated pi systems in an AtomContainer. This method returns a AtomContainerSet
+        /// with Atom and Bond objects from the original AtomContainer. The aromaticity has to be known
+        /// before calling this method.
         /// </summary>
         /// <example>
         /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Graphs.InChI.ConjugatedPiSystemsDetector_Example.cs+Detect"]/*' />
@@ -41,7 +40,7 @@ namespace NCDK.Graphs.Invariant
         /// <returns>The set of AtomContainers with conjugated pi systems</returns>
         public static IChemObjectSet<IAtomContainer> Detect(IAtomContainer ac)
         {
-            var piSystemSet = ac.Builder.NewAtomContainerSet();
+            var piSystemSet = ac.Builder.NewChemObjectSet<IAtomContainer>();
 
             foreach (var atom in ac.Atoms)
                 atom.IsVisited = false;

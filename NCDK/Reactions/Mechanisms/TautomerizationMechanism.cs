@@ -31,7 +31,6 @@ namespace NCDK.Reactions.Mechanisms
     // @author         miguelrojasch
     // @cdk.created    2008-02-10
     // @cdk.module     reaction
-    // @cdk.githash
     public class TautomerizationMechanism : IReactionMechanism
     {
         /// <summary>

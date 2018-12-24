@@ -26,7 +26,7 @@ namespace NCDK
     { }
 
     public interface IEnumerableChemObject<out T>
-        : IEnumerable<T>, IChemObject where T: IChemObject
+        : IEnumerable<T>, IChemObject where T : IChemObject
     {
     }
 
@@ -109,7 +109,7 @@ namespace NCDK
         /// <summary>
         /// Returns <see langword="true"/> if this <see cref="IAtomContainerSet"/> is empty.
         /// </summary>
-        /// <returns>a boolean indicating if this ring set no atom containers</returns>
+        /// <returns>a boolean indicating if this set contains no atom containers</returns>
         bool IsEmpty();
     }
 }

@@ -115,9 +115,9 @@ namespace NCDK.SMSD.Algorithms.RGraphs
         /// <param name="shouldMatchBonds"></param>
         /// <returns>IMolecule Set</returns>
         /// <exception cref="CDKException"></exception>
-        private static IChemObjectSet<IAtomContainer> GetUncommon(IAtomContainer mol, IAtomContainer mcss, bool shouldMatchBonds)
+        private static IEnumerable<IAtomContainer> GetUncommon(IAtomContainer mol, IAtomContainer mcss, bool shouldMatchBonds)
         {
-            List<int> atomSerialsToDelete = new List<int>();
+            var atomSerialsToDelete = new List<int>();
 
             var matches = CDKMCS.GetSubgraphAtomsMaps(mol, mcss, shouldMatchBonds);
             var mapList = matches[0];
@@ -129,7 +129,7 @@ namespace NCDK.SMSD.Algorithms.RGraphs
 
             // at this point we have the serial numbers of the bonds to delete
             // we should get the actual bonds rather than delete by serial numbers
-            List<IAtom> atomsToDelete = new List<IAtom>();
+            var atomsToDelete = new List<IAtom>();
             foreach (var serial in atomSerialsToDelete)
             {
                 atomsToDelete.Add(mol.Atoms[serial]);

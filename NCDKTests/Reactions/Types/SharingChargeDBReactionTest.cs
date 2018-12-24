@@ -16,13 +16,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.AtomTypes;
 using NCDK.Isomorphisms;
 using NCDK.Isomorphisms.Matchers;
 using NCDK.Reactions.Types.Parameters;
 using NCDK.Silent;
-using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
@@ -59,10 +58,10 @@ namespace NCDK.Reactions.Types
         [TestMethod()]
         public override void TestInitiate_IAtomContainerSet_IAtomContainerSet()
         {
-            IReactionProcess type = new SharingChargeDBReaction();
+            var type = new SharingChargeDBReaction();
 
             var setOfReactants = GetExampleReactants();
-            IAtomContainer molecule = setOfReactants[0];
+            var molecule = setOfReactants[0];
 
             /* initiate */
 

@@ -16,7 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.AtomTypes;
+
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
@@ -32,7 +32,6 @@ namespace NCDK.Reactions.Mechanisms
     // @author         miguelrojasch
     // @cdk.created    2008-02-10
     // @cdk.module     reaction
-    // @cdk.githash
     public class AdductionPBMechanism : IReactionMechanism
     {
         /// <summary>

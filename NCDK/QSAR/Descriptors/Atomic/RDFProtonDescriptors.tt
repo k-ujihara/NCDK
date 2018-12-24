@@ -44,7 +44,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
         private readonly IAtomContainer container;
         private readonly IAtomContainer clonedContainer;
-        private IChemObjectSet<IAtomContainer> varAtomContainerSet;
+        private IEnumerable<IAtomContainer> varAtomContainerSet;
         private readonly IAtomContainer mol;
 
         public <#=className#>(IAtomContainer container, bool checkAromaticity = false)

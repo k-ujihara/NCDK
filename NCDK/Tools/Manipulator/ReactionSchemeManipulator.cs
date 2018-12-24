@@ -30,7 +30,6 @@ namespace NCDK.Tools.Manipulator
     /// </summary>
     /// <seealso cref="ChemModelManipulator"/>
     // @cdk.module standard
-    // @cdk.githash
     public static class ReactionSchemeManipulator
     {
         /// <summary>
@@ -55,7 +54,8 @@ namespace NCDK.Tools.Manipulator
                             break;
                         }
                     }
-                    if (!contain) molSet.Add((IAtomContainer)(ac));
+                    if (!contain)
+                        molSet.Add((IAtomContainer)(ac));
                 }
             }
             foreach (var reaction in scheme.Reactions)
@@ -72,7 +72,8 @@ namespace NCDK.Tools.Manipulator
                             break;
                         }
                     }
-                    if (!contain) molSet.Add(ac);
+                    if (!contain)
+                        molSet.Add(ac);
                 }
             }
 
@@ -97,12 +98,14 @@ namespace NCDK.Tools.Manipulator
         public static IEnumerable<string> GetAllIDs(IReactionScheme scheme)
         {
             var IDlist = new List<string>();
-            if (scheme.Id != null) IDlist.Add(scheme.Id);
+            if (scheme.Id != null)
+                IDlist.Add(scheme.Id);
             foreach (var reaction in scheme.Reactions)
             {
                 IDlist.AddRange(ReactionManipulator.GetAllIDs(reaction));
             }
-            if (scheme.Schemes.Count != 0) foreach (var rs in scheme.Schemes)
+            if (scheme.Schemes.Count != 0)
+                foreach (var rs in scheme.Schemes)
                 {
                     IDlist.AddRange(GetAllIDs(rs));
                 }
@@ -116,10 +119,11 @@ namespace NCDK.Tools.Manipulator
         /// <returns>The IReactionSet</returns>
         public static IReactionSet GetAllReactions(IReactionScheme scheme)
         {
-            IReactionSet reactionSet = scheme.Builder.NewReactionSet();
+            var reactionSet = scheme.Builder.NewReactionSet();
 
             // A ReactionScheme can contain other IRreactionSet objects
-            if (scheme.Schemes.Count != 0) foreach (var schemeInt in scheme.Schemes)
+            if (scheme.Schemes.Count != 0)
+                foreach (var schemeInt in scheme.Schemes)
                 {
                     foreach (var reaction in GetAllReactions(schemeInt))
                         reactionSet.Add(reaction);
@@ -137,10 +141,10 @@ namespace NCDK.Tools.Manipulator
         /// <returns>The IReactionScheme</returns>
         public static IReactionScheme NewReactionScheme(IReactionSet reactionSet)
         {
-            IReactionScheme reactionScheme = reactionSet.Builder.NewReactionScheme();
+            var reactionScheme = reactionSet.Builder.NewReactionScheme();
 
             // Looking for those reactants which doesn't have any precursor. They are the top.
-            List<IReaction> listTopR = new List<IReaction>();
+            var listTopR = new List<IReaction>();
             foreach (var reaction in reactionSet)
             {
                 if (ExtractPrecursorReaction(reaction, reactionSet).Count == 0) listTopR.Add(reaction);
@@ -149,7 +153,7 @@ namespace NCDK.Tools.Manipulator
             foreach (var reaction in listTopR)
             {
                 reactionScheme.Add(reaction);
-                IReactionScheme newReactionScheme = SetScheme(reaction, reactionSet);
+                var newReactionScheme = SetScheme(reaction, reactionSet);
                 if (newReactionScheme.Reactions.Count() != 0 || newReactionScheme.Schemes.Count != 0)
                     reactionScheme.Add(newReactionScheme);
             }
@@ -164,20 +168,22 @@ namespace NCDK.Tools.Manipulator
         /// <returns>The set of top reactions</returns>
         public static IReactionSet ExtractTopReactions(IReactionScheme reactionScheme)
         {
-            IReactionSet reactionSet = reactionScheme.Builder.NewReactionSet();
+            var reactionSet = reactionScheme.Builder.NewReactionSet();
 
-            IReactionSet allSet = GetAllReactions(reactionScheme);
+            var allSet = GetAllReactions(reactionScheme);
             foreach (var reaction in allSet)
             {
-                IReactionSet precuSet = ExtractPrecursorReaction(reaction, allSet);
+                var precuSet = ExtractPrecursorReaction(reaction, allSet);
                 if (precuSet.Count == 0)
                 {
                     bool found = false;
                     foreach (var reactIn in reactionSet)
                     {
-                        if (reactIn.Equals(reaction)) found = true;
+                        if (reactIn.Equals(reaction))
+                            found = true;
                     }
-                    if (!found) reactionSet.Add(reaction);
+                    if (!found)
+                        reactionSet.Add(reaction);
                 }
 
             }
@@ -193,15 +199,15 @@ namespace NCDK.Tools.Manipulator
         /// <returns>The IReactionScheme</returns>
         private static IReactionScheme SetScheme(IReaction reaction, IReactionSet reactionSet)
         {
-            IReactionScheme reactionScheme = reaction.Builder.NewReactionScheme();
+            var reactionScheme = reaction.Builder.NewReactionScheme();
 
-            IReactionSet reactConSet = ExtractSubsequentReaction(reaction, reactionSet);
+            var reactConSet = ExtractSubsequentReaction(reaction, reactionSet);
             if (reactConSet.Count != 0)
             {
                 foreach (var reactionInt in reactConSet)
                 {
                     reactionScheme.Add(reactionInt);
-                    IReactionScheme newRScheme = SetScheme(reactionInt, reactionSet);
+                    var newRScheme = SetScheme(reactionInt, reactionSet);
                     if (newRScheme.Count != 0 || newRScheme.Schemes.Count != 0)
                     {
                         reactionScheme.Add(newRScheme);
@@ -220,7 +226,7 @@ namespace NCDK.Tools.Manipulator
         /// <returns>A IReactionSet containing the reactions</returns>
         private static IReactionSet ExtractPrecursorReaction(IReaction reaction, IReactionSet reactionSet)
         {
-            IReactionSet reactConSet = reaction.Builder.NewReactionSet();
+            var reactConSet = reaction.Builder.NewReactionSet();
             foreach (var reactant in reaction.Reactants)
             {
                 foreach (var reactionInt in reactionSet)
@@ -246,7 +252,7 @@ namespace NCDK.Tools.Manipulator
         /// <returns>A IReactionSet containing the reactions</returns>
         private static IReactionSet ExtractSubsequentReaction(IReaction reaction, IReactionSet reactionSet)
         {
-            IReactionSet reactConSet = reaction.Builder.NewReactionSet();
+            var reactConSet = reaction.Builder.NewReactionSet();
             foreach (var reactant in reaction.Products)
             {
                 foreach (var reactionInt in reactionSet)
@@ -271,11 +277,10 @@ namespace NCDK.Tools.Manipulator
         /// <param name="finalMol">The end IAtomContainer</param>
         /// <param name="reactionScheme">The IReactionScheme containing the AtomContainers</param>
         /// <returns>A List of IAtomContainerSet given the path</returns>
-        public static IList<IChemObjectSet<IAtomContainer>> GetAtomContainerSet(IAtomContainer origenMol, IAtomContainer finalMol,
-                IReactionScheme reactionScheme)
+        public static IList<IChemObjectSet<IAtomContainer>> GetAtomContainerSet(IAtomContainer origenMol, IAtomContainer finalMol, IReactionScheme reactionScheme)
         {
-            List<IChemObjectSet<IAtomContainer>> listPath = new List<IChemObjectSet<IAtomContainer>>();
-            IReactionSet reactionSet = GetAllReactions(reactionScheme);
+            var listPath = new List<IChemObjectSet<IAtomContainer>>();
+            var reactionSet = GetAllReactions(reactionScheme);
 
             // down search
             // Looking for those reactants which are the origenMol
@@ -285,14 +290,16 @@ namespace NCDK.Tools.Manipulator
                 if (found) break;
                 foreach (var reactant in reaction.Reactants)
                 {
-                    if (found) break;
+                    if (found)
+                        break;
                     if (reactant.Equals(origenMol))
                     {
                         var allSet = reactionSet.Builder.NewAtomContainerSet();
                         // START
                         foreach (var product in reaction.Products)
                         {
-                            if (found) break;
+                            if (found)
+                                break;
                             if (!product.Equals(finalMol))
                             {
                                 var allSet2 = GetReactionPath(product, finalMol, reactionSet);
@@ -326,8 +333,7 @@ namespace NCDK.Tools.Manipulator
             return listPath;
         }
 
-        private static IChemObjectSet<IAtomContainer> GetReactionPath(IAtomContainer reactant, IAtomContainer finalMol,
-                IReactionSet reactionSet)
+        private static IChemObjectSet<IAtomContainer> GetReactionPath(IAtomContainer reactant, IAtomContainer finalMol, IReactionSet reactionSet)
         {
             var allSet = reactionSet.Builder.NewAtomContainerSet();
             foreach (var reaction in reactionSet)

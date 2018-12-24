@@ -22,6 +22,7 @@ using System.IO;
 using System;
 using NCDK.Numerics;
 using System.Globalization;
+using System.Collections.Generic;
 
 namespace NCDK.IO
 {
@@ -125,11 +126,8 @@ namespace NCDK.IO
         /// <exception cref="IOException">if there is a problem writing the molecule</exception>
         private void WriteAtomContainer(IEnumerableChemObject<IAtomContainer> som)
         {
-            //int na = 0;
-            //string info = "";
             string sym;
             double chrg;
-            //bool writecharge = true;
 
             int molnumber = 0;
             foreach (var mol in som)

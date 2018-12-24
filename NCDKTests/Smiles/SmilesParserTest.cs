@@ -993,16 +993,16 @@ namespace NCDK.Smiles
         [Timeout(1000)]
         public void TestNonBond()
         {
-            string sodiumPhenoxide = "c1cc([O-].[Na+])ccc1";
+            var sodiumPhenoxide = "c1cc([O-].[Na+])ccc1";
             var mol = sp.ParseSmiles(sodiumPhenoxide);
             Assert.AreEqual(8, mol.Atoms.Count);
             Assert.AreEqual(7, mol.Bonds.Count);
 
-            IChemObjectSet<IAtomContainer> fragments = ConnectivityChecker.PartitionIntoMolecules(mol);
+            var fragments = ConnectivityChecker.PartitionIntoMolecules(mol).ToReadOnlyList();
             int fragmentCount = fragments.Count();
             Assert.AreEqual(2, fragmentCount);
-            IAtomContainer mol1 = fragments[0];
-            IAtomContainer mol2 = fragments[1];
+            var mol1 = fragments[0];
+            var mol2 = fragments[1];
             // one should have one atom, the other seven atoms
             // in any order, so just test the difference
             Assert.AreEqual(6, Math.Abs(mol1.Atoms.Count - mol2.Atoms.Count));
@@ -1016,30 +1016,30 @@ namespace NCDK.Smiles
         [Timeout(1000)]
         public void TestConnectedByRingClosure()
         {
-            string sodiumPhenoxide = "C1.O2.C12";
+            var sodiumPhenoxide = "C1.O2.C12";
             var mol = sp.ParseSmiles(sodiumPhenoxide);
             Assert.AreEqual(3, mol.Atoms.Count);
             Assert.AreEqual(2, mol.Bonds.Count);
 
-            IChemObjectSet<IAtomContainer> fragments = ConnectivityChecker.PartitionIntoMolecules(mol);
+            var fragments = ConnectivityChecker.PartitionIntoMolecules(mol).ToReadOnlyList();
             int fragmentCount = fragments.Count();
             Assert.AreEqual(1, fragmentCount);
-            IAtomContainer mol1 = fragments[0];
+            var mol1 = fragments[0];
             Assert.AreEqual(3, mol1.Atoms.Count);
         }
 
         [TestMethod()]
         public void TestConnectedByRingClosure_TwoAtom()
         {
-            string methanol = "C1.O1";
+            var methanol = "C1.O1";
             var mol = sp.ParseSmiles(methanol);
             Assert.AreEqual(2, mol.Atoms.Count);
             Assert.AreEqual(1, mol.Bonds.Count);
 
-            IChemObjectSet<IAtomContainer> fragments = ConnectivityChecker.PartitionIntoMolecules(mol);
+            var fragments = ConnectivityChecker.PartitionIntoMolecules(mol).ToReadOnlyList();
             int fragmentCount = fragments.Count();
             Assert.AreEqual(1, fragmentCount);
-            IAtomContainer mol1 = fragments[0];
+            var mol1 = fragments[0];
             Assert.AreEqual(2, mol1.Atoms.Count);
         }
 

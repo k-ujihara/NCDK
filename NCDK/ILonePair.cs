@@ -31,7 +31,7 @@ namespace NCDK
         : IElectronContainer
     {
         /// <summary>
-        ///  The associated <see cref="IAtom"/>.
+        /// The associated <see cref="IAtom"/>.
         /// </summary>
         IAtom Atom { get; set; }
 

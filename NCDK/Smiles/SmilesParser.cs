@@ -149,10 +149,8 @@ namespace NCDK.Smiles
             {
                 var reactantContainer = ParseSmiles(reactants, true);
                 var reactantSet = ConnectivityChecker.PartitionIntoMolecules(reactantContainer);
-                for (int i = 0; i < reactantSet.Count; i++)
-                {
-                    reaction.Reactants.Add(reactantSet[i]);
-                }
+                foreach (var reactant in reactantSet)
+                    reaction.Reactants.Add(reactant);
             }
 
             // add agents

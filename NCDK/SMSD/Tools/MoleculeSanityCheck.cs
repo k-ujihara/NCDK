@@ -71,7 +71,7 @@ namespace NCDK.SMSD.Tools
                 // lets see if we have just two parts if so, we assume its a salt and just work
                 // on the larger part. Ideally we should have a check to ensure that the smaller
                 //  part is a metal/halogen etc.
-                var fragments = ConnectivityChecker.PartitionIntoMolecules(molecule);
+                var fragments = ConnectivityChecker.PartitionIntoMolecules(molecule).ToReadOnlyList();
                 if (fragments.Count > 2)
                 {
                     Console.Error.WriteLine("More than 2 components. Skipped");

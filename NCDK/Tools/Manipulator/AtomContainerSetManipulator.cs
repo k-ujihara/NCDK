@@ -32,7 +32,6 @@ namespace NCDK.Tools.Manipulator
     /// </summary>
     /// <seealso cref="ChemModelManipulator"/>
     // @cdk.module standard
-    // @cdk.githash
     public static class AtomContainerSetManipulator
     {
         public static int GetAtomCount(IEnumerable<IAtomContainer> set)
@@ -62,7 +61,7 @@ namespace NCDK.Tools.Manipulator
                 if (atomContainer.Contains(atom))
                 {
                     atomContainer.RemoveAtom(atom);
-                    IChemObjectSet<IAtomContainer> molecules = ConnectivityChecker.PartitionIntoMolecules(atomContainer);
+                    var molecules = ConnectivityChecker.PartitionIntoMolecules(atomContainer);
                     if (molecules.Count > 1)
                     {
                         set.Remove(atomContainer);
@@ -83,7 +82,7 @@ namespace NCDK.Tools.Manipulator
                 if (atomContainer.Contains(electrons))
                 {
                     atomContainer.Remove(electrons);
-                    IChemObjectSet<IAtomContainer> molecules = ConnectivityChecker.PartitionIntoMolecules(atomContainer);
+                    var molecules = ConnectivityChecker.PartitionIntoMolecules(atomContainer);
                     if (molecules.Count > 1)
                     {
                         set.Remove(atomContainer);

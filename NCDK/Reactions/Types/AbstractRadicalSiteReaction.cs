@@ -63,7 +63,7 @@ namespace NCDK.Reactions.Types
                 }
             }
             // if the parameter hasActiveCenter is not fixed yet, set the active centers
-            IParameterReaction ipr = base.GetParameterClass(typeof(SetReactionCenter));
+            var ipr = base.GetParameterClass(typeof(SetReactionCenter));
             if (ipr != null && !ipr.IsSetParameter) SetActiveCenters(reactant, length, checkPrev, atomCheck);
 
             HOSECodeGenerator hcg = new HOSECodeGenerator();

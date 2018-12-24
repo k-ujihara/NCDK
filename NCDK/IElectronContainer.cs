@@ -17,13 +17,12 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
  
- namespace NCDK
+namespace NCDK
 {
     /// <summary>
     /// Base class for entities containing electrons, like bonds, orbitals, lone-pairs.
     /// </summary>
     // @cdk.module interfaces
-    // @cdk.githash
     // @cdk.keyword element 
     public interface IElectronContainer
         : IChemObject

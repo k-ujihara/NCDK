@@ -34,7 +34,6 @@ namespace NCDK.Reactions
     // @author         Miguel Rojas
     // @cdk.created    2008-02-01
     // @cdk.module     reaction
-    // @cdk.githash
     public class ReactionEngine
     {
         private EntryDictionary dictionary;
@@ -42,15 +41,12 @@ namespace NCDK.Reactions
         public IReadOnlyDictionary<string, object> ParamsMap { get; set; }
         public IReactionMechanism Mechanism { get; set; }
 
-        /// <summary>
-        /// Constructor of the ReactionEngine object.
-        /// </summary>
         public ReactionEngine()
         {
             try
             {
-                IReactionProcess reaction = (IReactionProcess)this;
-                EntryReact entry = InitiateDictionary("reaction-processes", (IReactionProcess)reaction);
+                var reaction = (IReactionProcess)this;
+                var entry = InitiateDictionary("reaction-processes", reaction);
                 InitiateParameterMap2(entry);
                 reaction.ParameterList = ParameterList;
                 // extract mechanism dependence, if there is one
@@ -69,7 +65,7 @@ namespace NCDK.Reactions
         /// <param name="entry">The EntryReact object</param>
         private void ExtractMechanism(EntryReact entry)
         {
-            string mechanismName = "NCDK.Reactions.Mechanisms." + entry.Mechanism;
+            var mechanismName = $"NCDK.Reactions.Mechanisms.{entry.Mechanism}";
             try
             {
                 Mechanism = (IReactionMechanism)this.GetType().Assembly.GetType(mechanismName).GetConstructor(Type.EmptyTypes).Invoke(Array.Empty<object>());
@@ -110,9 +106,9 @@ namespace NCDK.Reactions
         /// <returns>The entry for this reaction</returns>
         private EntryReact InitiateDictionary(string nameDict, IReactionProcess reaction)
         {
-            DictionaryDatabase db = new DictionaryDatabase();
+            var db = new DictionaryDatabase();
             dictionary = db.GetDictionary(nameDict);
-            string entryString = reaction.Specification.SpecificationReference;
+            var entryString = reaction.Specification.SpecificationReference;
             entryString = entryString.Substring(entryString.IndexOf('#') + 1);
 
             return (EntryReact)dictionary[entryString.ToLowerInvariant()];
@@ -166,7 +162,8 @@ namespace NCDK.Reactions
         {
             foreach (var ipr in ParameterList)
             {
-                if (ipr.GetType().Equals(paramClass)) return ipr;
+                if (ipr.GetType().Equals(paramClass))
+                    return ipr;
             }
 
             return null;

@@ -25,7 +25,6 @@ namespace NCDK
     /// Maintains a set of Ring objects.
     /// </summary>
     // @cdk.module  interfaces
-    // @cdk.githash
     // @cdk.keyword ring, set of
     public interface IRingSet
         : IChemObjectSet<IRing>

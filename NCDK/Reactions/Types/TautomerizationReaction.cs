@@ -17,9 +17,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Config;
 using NCDK.Reactions.Types.Parameters;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -35,7 +33,6 @@ namespace NCDK.Reactions.Types
     // @author         Miguel Rojas
     // @cdk.created    2008-02-11
     // @cdk.module     reaction
-    // @cdk.githash
     public partial class TautomerizationReaction : ReactionEngine, IReactionProcess
     {
         public TautomerizationReaction() { }
@@ -51,11 +48,11 @@ namespace NCDK.Reactions.Types
         {
             CheckInitiateParams(reactants, agents);
 
-            IReactionSet setOfReactions = reactants.Builder.NewReactionSet();
-            IAtomContainer reactant = reactants[0];
+            var setOfReactions = reactants.Builder.NewReactionSet();
+            var reactant = reactants[0];
 
             // if the parameter hasActiveCenter is not fixed yet, set the active centers
-            IParameterReaction ipr = base.GetParameterClass(typeof(SetReactionCenter));
+            var ipr = base.GetParameterClass(typeof(SetReactionCenter));
             if (ipr != null && !ipr.IsSetParameter)
                 SetActiveCenters(reactant);
 
@@ -69,23 +66,23 @@ namespace NCDK.Reactions.Types
                     {
                         if (bondi.IsReactiveCenter && bondi.Order == BondOrder.Double)
                         {
-                            IAtom atomj = bondi.GetOther(atomi);
+                            var atomj = bondi.GetOther(atomi);
                             if (atomj.IsReactiveCenter
-                                    && (atomj.FormalCharge ?? 0) == 0
-                                    && !reactant.GetConnectedSingleElectrons(atomj).Any())
+                             && (atomj.FormalCharge ?? 0) == 0
+                             && !reactant.GetConnectedSingleElectrons(atomj).Any())
                             {
                                 foreach (var bondj in reactant.GetConnectedBonds(atomj))
                                 {
-                                    if (bondj.Equals(bondi)) continue;
+                                    if (bondj.Equals(bondi))
+                                        continue;
 
                                     if (bondj.IsReactiveCenter
-                                            && bondj.Order == BondOrder.Single)
+                                     && bondj.Order == BondOrder.Single)
                                     {
-                                        IAtom atomk = bondj.GetOther(atomj);
+                                        var atomk = bondj.GetOther(atomj);
                                         if (atomk.IsReactiveCenter
-                                                && (atomk.FormalCharge ?? 0) == 0
-                                                && !reactant.GetConnectedSingleElectrons(atomk).Any()
-                                        )
+                                         && (atomk.FormalCharge ?? 0) == 0
+                                         && !reactant.GetConnectedSingleElectrons(atomk).Any())
                                         {
                                             foreach (var bondk in reactant.GetConnectedBonds(atomk))
                                             {
@@ -110,9 +107,9 @@ namespace NCDK.Reactions.Types
                                                             bondk
                                                         };
 
-                                                        IChemObjectSet<IAtomContainer> moleculeSet = reactant.Builder.NewChemObjectSet<IAtomContainer>();
+                                                        var moleculeSet = reactant.Builder.NewChemObjectSet<IAtomContainer>();
                                                         moleculeSet.Add(reactant);
-                                                        IReaction reaction = Mechanism.Initiate(moleculeSet, atomList, bondList);
+                                                        var reaction = Mechanism.Initiate(moleculeSet, atomList, bondList);
                                                         if (reaction == null)
                                                             continue;
                                                         else
@@ -152,29 +149,31 @@ namespace NCDK.Reactions.Types
             foreach (var atomi in reactant.Atoms)
             {
                 if ((atomi.FormalCharge ?? 0) == 0
-                        && !reactant.GetConnectedSingleElectrons(atomi).Any())
+                 && !reactant.GetConnectedSingleElectrons(atomi).Any())
                 {
                     foreach (var bondi in reactant.GetConnectedBonds(atomi))
                     {
                         if (bondi.Order == BondOrder.Double)
                         {
-                            IAtom atomj = bondi.GetOther(atomi);
+                            var atomj = bondi.GetOther(atomi);
                             if ((atomj.FormalCharge ?? 0) == 0
-                                    && !reactant.GetConnectedSingleElectrons(atomj).Any())
+                             && !reactant.GetConnectedSingleElectrons(atomj).Any())
                             {
                                 foreach (var bondj in reactant.GetConnectedBonds(atomj))
                                 {
-                                    if (bondj.Equals(bondi)) continue;
+                                    if (bondj.Equals(bondi))
+                                        continue;
                                     if (bondj.Order == BondOrder.Single)
                                     {
-                                        IAtom atomk = bondj.GetOther(atomj);
+                                        var atomk = bondj.GetOther(atomj);
                                         if ((atomk.FormalCharge ?? 0) == 0
                                                 && !reactant.GetConnectedSingleElectrons(atomk).Any()
                                         )
                                         {
                                             foreach (var bondk in reactant.GetConnectedBonds(atomk))
                                             {
-                                                if (bondk.Equals(bondj)) continue;
+                                                if (bondk.Equals(bondj))
+                                                    continue;
                                                 if (bondk.Order == BondOrder.Single)
                                                 {
                                                     IAtom atoml = bondk.GetOther(atomk); // Atom pos 4

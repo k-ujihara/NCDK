@@ -35,7 +35,6 @@ namespace NCDK.Tools
     /// IDs for all ChemObjects, you need to delete them first.
     /// </summary>
     // @cdk.module standard
-    // @cdk.githash
     // @author   Egon Willighagen
     // @cdk.created  2003-04-01
     // @cdk.keyword  id, creation
@@ -380,7 +379,7 @@ namespace NCDK.Tools
                 CreateIDsForAtomContainer(crystal, tabuList);
             }
 
-            IChemObjectSet<IAtomContainer> moleculeSet = model.MoleculeSet;
+            var moleculeSet = model.MoleculeSet;
             if (moleculeSet != null)
             {
                 if (policy == UniquePolicy.Object)
@@ -391,7 +390,7 @@ namespace NCDK.Tools
                 CreateIDsForAtomContainerSet(moleculeSet, tabuList);
             }
 
-            IReactionSet reactionSet = model.ReactionSet;
+            var reactionSet = model.ReactionSet;
             if (reactionSet != null)
             {
                 if (policy == UniquePolicy.Object)

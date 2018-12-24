@@ -72,24 +72,22 @@ namespace NCDK.Reactions.Types
                 throw new CDKException("ElectronImpactNBEReaction don't expects agents");
             }
 
-            IReactionSet setOfReactions = reactants.Builder.NewReactionSet();
-            IAtomContainer reactant = reactants[0];
+            var setOfReactions = reactants.Builder.NewReactionSet();
+            var reactant = reactants[0];
 
             // if the parameter hasActiveCenter is not fixed yet, set the active centers
-            IParameterReaction ipr = base.GetParameterClass(typeof(SetReactionCenter));
-            if (ipr != null && !ipr.IsSetParameter) SetActiveCenters(reactant);
+            var ipr = base.GetParameterClass(typeof(SetReactionCenter));
+            if (ipr != null && !ipr.IsSetParameter)
+                SetActiveCenters(reactant);
             foreach (var atom in reactant.Atoms)
             {
                 if (atom.IsReactiveCenter && reactant.GetConnectedLonePairs(atom).Any()
                         && !reactant.GetConnectedSingleElectrons(atom).Any())
                 {
-                    var atomList = new List<IAtom>
-                    {
-                        atom
-                    };
-                    IChemObjectSet<IAtomContainer> moleculeSet = reactant.Builder.NewAtomContainerSet();
+                    var atomList = new List<IAtom> { atom };
+                    var moleculeSet = reactant.Builder.NewAtomContainerSet();
                     moleculeSet.Add(reactant);
-                    IReaction reaction = Mechanism.Initiate(moleculeSet, atomList, null);
+                    var reaction = Mechanism.Initiate(moleculeSet, atomList, null);
                     if (reaction == null)
                         continue;
                     else
