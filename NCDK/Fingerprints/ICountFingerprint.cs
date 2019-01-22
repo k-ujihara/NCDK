@@ -41,7 +41,7 @@ namespace NCDK.Fingerprints
 
         /// <summary>
         /// Returns the number of bins that are populated. This number is typically smaller
-        /// then the total number of bins.
+        /// than the total number of bins.
         /// </summary>
         /// <returns>the number of populated bins</returns>
         /// <see cref="Length"/>

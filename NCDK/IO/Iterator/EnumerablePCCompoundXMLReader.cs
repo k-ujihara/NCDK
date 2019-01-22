@@ -36,7 +36,6 @@ namespace NCDK.IO.Iterator
     /// </summary>
     /// <seealso cref="PCCompoundASNReader"/>
     // @cdk.module io
-    // @cdk.githash
     // @cdk.iooptions
     // @author       Egon Willighagen <egonw@users.sf.net>
     // @cdk.created  2008-05-05

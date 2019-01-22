@@ -255,7 +255,7 @@ namespace NCDK.Fingerprints.Model
             {
                 using (var ins = ResourceLoader.GetAsStream("NCDK.Data.CDD." + sdfile))
                 {
-                    EnumerableSDFReader rdr = new EnumerableSDFReader(ins, ChemObjectBuilder.Instance);
+                    var rdr = new EnumerableSDFReader(ins, ChemObjectBuilder.Instance);
 
                     foreach (var mol in rdr)
                     {

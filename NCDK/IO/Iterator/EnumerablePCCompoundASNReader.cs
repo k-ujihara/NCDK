@@ -36,7 +36,6 @@ namespace NCDK.IO.Iterator
     /// Iterating PubChem PCCompound ASN reader.
     /// </summary>
     // @cdk.module io
-    // @cdk.githash
     // @cdk.iooptions
     // @see org.openscience.cdk.io.PCCompoundASNReader
     // @author       Egon Willighagen <egonw@users.sf.net>
@@ -49,6 +48,14 @@ namespace NCDK.IO.Iterator
         private TextReader input;
         private IChemObjectBuilder builder;
         private int depth;
+
+        public EnumerablePCCompoundASNReader(TextReader input)
+            : this(input, CDK.Builder)
+        { }
+
+        public EnumerablePCCompoundASNReader(Stream ins)
+            : this(ins, CDK.Builder)
+        { }
 
         /// <summary>
         /// Constructs a new EnumerablePCCompoundASNReader that can read Molecule from a given Reader.

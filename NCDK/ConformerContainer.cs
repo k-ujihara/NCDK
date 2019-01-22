@@ -37,10 +37,10 @@ namespace NCDK
     /// <example>
     /// The class behaves in many ways as a <see cref="IList{T}"/> of <see cref="IAtomContainer"/> object, though a few methods are not
     /// implemented. Though it is possible to add conformers by hand, this data structure is
-    /// probably best used in combination with <see cref="IEnumerableMDLConformerReader"/> as
+    /// probably best used in combination with <see cref="EnumerableMDLConformerReader"/> as
     /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.ConformerContainer_Example.cs"]/*' />
     /// </example>
-    /// <seealso cref="IEnumerableMDLConformerReader"/>
+    /// <seealso cref="EnumerableMDLConformerReader"/>
     // @cdk.module data
     // @cdk.githash
     // @author Rajarshi Guha

@@ -30,22 +30,29 @@ namespace NCDK.IO.Iterator
     /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.IO.Iterator.EnumerableMDLConformerReader_Example.cs"]/*' />
     /// </example>
     // @cdk.module extra
-    // @cdk.githash
     // @author Rajarshi Guha
     // @see org.openscience.cdk.ConformerContainer
     // @cdk.keyword file format SDF
     // @cdk.keyword conformer conformation
-    public class IEnumerableMDLConformerReader 
+    public class EnumerableMDLConformerReader 
         : IEnumerable<ConformerContainer>, IDisposable
     {
         private EnumerableSDFReader imdlr;
 
-        public IEnumerableMDLConformerReader(TextReader ins, IChemObjectBuilder builder)
+        public EnumerableMDLConformerReader(TextReader ins)
+            : this(ins, CDK.Builder)
+        { }
+
+        public EnumerableMDLConformerReader(Stream ins)
+            : this(ins, CDK.Builder)
+        { }
+
+        public EnumerableMDLConformerReader(TextReader ins, IChemObjectBuilder builder)
         {
             imdlr = new EnumerableSDFReader(ins, builder);
         }
 
-        public IEnumerableMDLConformerReader(Stream ins, IChemObjectBuilder builder)
+        public EnumerableMDLConformerReader(Stream ins, IChemObjectBuilder builder)
         {
             imdlr = new EnumerableSDFReader(ins, builder);
         }
@@ -96,7 +103,7 @@ namespace NCDK.IO.Iterator
             }
         }
 
-        ~IEnumerableMDLConformerReader()
+        ~EnumerableMDLConformerReader()
         {
             Dispose(false);
         }

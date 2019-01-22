@@ -27,8 +27,6 @@
  */
 
 using NCDK.Common.Hash;
-using NCDK.Config;
-using NCDK.Numerics;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -38,7 +36,8 @@ using System.Linq;
 
 namespace NCDK.Fingerprints
 {
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1717:Only FlagsAttribute enums should have plural names", Justification = "Ignored")]    public enum CircularFingerprinterClass
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1717:Only FlagsAttribute enums should have plural names", Justification = "Ignored")]
+    public enum CircularFingerprinterClass
     {
         // identity by literal atom environment
         ECFP0 = 1,
@@ -302,7 +301,6 @@ namespace NCDK.Fingerprints
             return new BitSetFingerprint(bits);
         }
 
-        [Serializable]
         private class CountFingerprint : ICountFingerprint
         {
             IReadOnlyDictionary<int, int> map;
@@ -346,7 +344,8 @@ namespace NCDK.Fingerprints
                     map.Add(fp.Hash, 1);
             }
             int sz = map.Count;
-            int[] hash = new int[sz], count = new int[sz];
+            var hash = new int[sz];
+            var count = new int[sz];
             int n = 0;
             foreach (var h in map.Keys)
             {
@@ -446,7 +445,7 @@ namespace NCDK.Fingerprints
                 var i = 2 + 2 * p;
                 if (seq[i] > seq[i + 2] || (seq[i] == seq[i + 2] && seq[i + 1] > seq[i + 3]))
                 {
-                    int sw = seq[i];
+                    var sw = seq[i];
                     seq[i] = seq[i + 2];
                     seq[i + 2] = sw;
                     sw = seq[i + 1];

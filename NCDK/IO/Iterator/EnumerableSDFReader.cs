@@ -67,6 +67,22 @@ namespace NCDK.IO.Iterator
         private const string SDF_RECORD_SEPARATOR = "$$$$";
         private const string SDF_DATA_HEADER = "> ";
 
+        public EnumerableSDFReader(TextReader input)
+            : this(input, CDK.Builder, false)
+        { }
+
+        public EnumerableSDFReader(Stream input)
+            : this(input, CDK.Builder)
+        { }
+
+        public EnumerableSDFReader(Stream input, bool skip)
+            : this(input, CDK.Builder, skip)
+        { }
+
+        public EnumerableSDFReader(TextReader input, bool skip)
+            : this(input, CDK.Builder, skip)
+        { }
+
         /// <summary>
         /// Constructs a new EnumerableMDLReader that can read Molecule from a given Reader.
         /// </summary>
@@ -232,6 +248,7 @@ namespace NCDK.IO.Iterator
                     lineNum = 0;
                 }
             }
+
             yield break;
         }
 

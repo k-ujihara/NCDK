@@ -35,7 +35,6 @@ namespace NCDK.IO.Iterator
     /// Iterating PubChem PC-Substances ASN.1 XML reader.
     /// </summary>
     // @cdk.module   io
-    // @cdk.githash
     // @cdk.iooptions
     // @author       Egon Willighagen <egonw@users.sf.net>
     // @cdk.created  2008-05-05
@@ -47,6 +46,14 @@ namespace NCDK.IO.Iterator
         private TextReader primarySource;
         private XElement parser;
         private PubChemXMLHelper parserHelper;
+
+        public EnumerablePCSubstancesXMLReader(TextReader input)
+            : this(input, CDK.Builder)
+        { }
+
+        public EnumerablePCSubstancesXMLReader(Stream ins)
+            : this(ins, CDK.Builder)
+        { }
 
         /// <summary>
         /// Constructs a new EnumerablePCSubstancesXMLReader that can read 

@@ -115,7 +115,11 @@ namespace NCDK.Fingerprints.Model
         public double HighThreshold { get; private set; } = 0;
 
         private double range = 0;
-        private double invRange = 0;                            // cached to speed up scaling calibration
+
+        /// <summary>
+        /// cached to speed up scaling calibration
+        /// </summary>
+        private double invRange = 0;
 
         /// <summary>
         /// self-validation metrics: can optionally be calculated after a build
@@ -157,7 +161,8 @@ namespace NCDK.Fingerprints.Model
         /// <summary>
         /// the number of actives in the training set that was used to create the model.
         /// </summary>
-        public int TrainingActives { get; private set; } = 0;                     // this is serialised, while the actual training set is not
+        /// this is serialised, while the actual training set is not
+        public int TrainingActives { get; private set; } = 0;
 
         // optional text attributes (serialisable)
         private string noteTitle = null;
@@ -239,7 +244,8 @@ namespace NCDK.Fingerprints.Model
                 hashes[p++] = h;
 
             // record the processed information for model building purposes        
-            if (active) numActive++;
+            if (active)
+                numActive++;
             training.Add(hashes);
             activity.Add(active);
             foreach (var h in hashes)
@@ -268,16 +274,17 @@ namespace NCDK.Fingerprints.Model
             // contributing phase, and convert their ratios into "contributions", each of which is basically the log
             // value of a ratio
 
-            int sz = training.Count;
-            double invSz = 1.0 / sz;
-            double P_AT = numActive * invSz;
+            var sz = training.Count;
+            var invSz = 1.0 / sz;
+            var P_AT = numActive * invSz;
 
             foreach (var hash in inHash.Keys)
             {
                 var AT = inHash[hash];
-                int A = AT[0], T = AT[1];
-                double Pcorr = (A + 1) / (T * P_AT + 1);
-                double P = Math.Log(Pcorr);
+                var A = AT[0];
+                var T = AT[1];
+                var Pcorr = (A + 1) / (T * P_AT + 1);
+                var P = Math.Log(Pcorr);
                 contribs[hash] = P;
             }
 
@@ -331,7 +338,7 @@ namespace NCDK.Fingerprints.Model
             double val = 0;
             foreach (var h in hashset)
             {
-                double c = contribs[h];
+                var c = contribs[h];
                 val += c;
             }
             return val;
@@ -361,7 +368,7 @@ namespace NCDK.Fingerprints.Model
         /// </summary>
         public void ValidateLeaveOneOut()
         {
-            int sz = training.Count;
+            var sz = training.Count;
             estimates = new double[sz];
             for (int n = 0; n < sz; n++)
                 estimates[n] = SingleLeaveOneOut(n);
@@ -556,7 +563,7 @@ namespace NCDK.Fingerprints.Model
         {
             using (var rdr = new StringReader(str))
             {
-                Bayesian model = Deserialise(rdr);
+                var model = Deserialise(rdr);
                 return model;
             }
         }
@@ -708,12 +715,13 @@ namespace NCDK.Fingerprints.Model
         /// </summary>
         private double SingleLeaveOneOut(int N)
         {
-            bool exclActive = activity[N];
+            var exclActive = activity[N];
             var exclFP = training[N];
 
-            int sz = training.Count, szN = sz - 1;
+            var sz = training.Count;
+            var szN = sz - 1;
             var invSzN = 1.0 / szN;
-            int activeN = exclActive ? numActive - 1 : numActive;
+            var activeN = exclActive ? numActive - 1 : numActive;
             var P_AT = activeN * invSzN;
 
             double val = 0;
@@ -722,7 +730,8 @@ namespace NCDK.Fingerprints.Model
                 if (Array.BinarySearch(exclFP, hash) < 0)
                     continue;
                 var AT = inHash[hash];
-                int A = AT[0] - (exclActive ? 1 : 0), T = AT[1] - 1;
+                var A = AT[0] - (exclActive ? 1 : 0);
+                var T = AT[1] - 1;
 
                 var Pcorr = (A + 1) / (T * P_AT + 1);
                 var P = Math.Log(Pcorr);
@@ -736,13 +745,15 @@ namespace NCDK.Fingerprints.Model
         /// </summary>
         private void ValidateNfold(int nsegs)
         {
-            int sz = training.Count;
+            var sz = training.Count;
             var order = new int[sz];
             int p = 0;
             for (int n = 0; n < sz; n++)
-                if (activity[n]) order[p++] = n;
+                if (activity[n])
+                    order[p++] = n;
             for (int n = 0; n < sz; n++)
-                if (!activity[n]) order[p++] = n;
+                if (!activity[n])
+                    order[p++] = n;
 
             // build 5 separate contribution models: each one of them build from the 80% that are *not* in the segment
             var segContribs = new Dictionary<int, double>[nsegs];
@@ -762,20 +773,22 @@ namespace NCDK.Fingerprints.Model
         /// </summary>
         private Dictionary<int, double> BuildPartial(int[] order, int seg, int div)
         {
-            int sz = training.Count;
+            var sz = training.Count;
             int na = 0, nt = 0;
             var ih = new Dictionary<int, int[]>();
             for (int n = 0; n < sz; n++)
                 if (n % div != seg)
                 {
-                    bool active = activity[order[n]];
-                    if (active) na++;
+                    var active = activity[order[n]];
+                    if (active)
+                        na++;
                     nt++;
                     foreach (var h in training[order[n]])
                     {
                         if (!ih.TryGetValue(h, out int[] stash))
                             stash = new int[] { 0, 0 };
-                        if (active) stash[0]++;
+                        if (active)
+                            stash[0]++;
                         stash[1]++;
                         ih[h] = stash;
                     }
@@ -788,7 +801,8 @@ namespace NCDK.Fingerprints.Model
             foreach (var hash in ih.Keys)
             {
                 var AT = ih[hash];
-                int A = AT[0], T = AT[1];
+                var A = AT[0];
+                var T = AT[1];
                 var Pcorr = (A + 1) / (T * P_AT + 1);
                 var P = Math.Log(Pcorr);
                 segContribs[hash] = P;
@@ -833,9 +847,9 @@ namespace NCDK.Fingerprints.Model
         private void CalculateRoc()
         {
             // sort the available estimates, and take midpoints 
-            int sz = training.Count;
+            var sz = training.Count;
 
-            int[] idx = new int[sz];
+            var idx = new int[sz];
             for (int n = 0; n < sz; n++)
                 idx[n] = n;
             Array.Sort(idx, new EstimatesComparator(this));
@@ -845,7 +859,8 @@ namespace NCDK.Fingerprints.Model
             thresholds[tsz++] = LowThreshold - 0.01 * range;
             for (int n = 0; n < sz - 1; n++)
             {
-                double th1 = Estimates[idx[n]], th2 = Estimates[idx[n + 1]];
+                var th1 = Estimates[idx[n]];
+                var th2 = Estimates[idx[n + 1]];
                 if (th1 == th2)
                     continue;
                 thresholds[tsz++] = 0.5 * (th1 + th2);
@@ -859,14 +874,16 @@ namespace NCDK.Fingerprints.Model
             var rocT = new double[tsz];
 
             int posTrue = 0, posFalse = 0, ipos = 0;
-            double invPos = 1.0 / numActive, invNeg = 1.0 / (sz - numActive);
+            var invPos = 1.0 / numActive;
+            var invNeg = 1.0 / (sz - numActive);
             int rsz = 0;
             for (int n = 0; n < tsz; n++)
             {
-                double th = thresholds[n];
+                var th = thresholds[n];
                 for (; ipos < sz; ipos++)
                 {
-                    if (th < Estimates[idx[ipos]]) break;
+                    if (th < Estimates[idx[ipos]])
+                        break;
                     if (activity[idx[ipos]])
                         posTrue++;
                     else
@@ -909,7 +926,8 @@ namespace NCDK.Fingerprints.Model
             {
                 var dx = RocX[i] - gx[gsz - 1];
                 var dy = RocY[i] - gy[gsz - 1];
-                if (dx * dx + dy * dy < DSQ) continue;
+                if (dx * dx + dy * dy < DSQ)
+                    continue;
                 gx[gsz] = RocX[i];
                 gy[gsz] = RocY[i];
                 gsz++;
