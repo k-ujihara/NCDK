@@ -200,7 +200,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="dotNetRDF" Version="2.1.0" />
+    <PackageReference Include="dotNetRDF" Version="2.2.0" />
     <PackageReference Include="MathNet.Numerics.Signed" Version="4.7.0" />
   </ItemGroup>
 

@@ -12,7 +12,7 @@ namespace NCDK.IO.Iterator
                 string filename = "/Users/rguha/conf2.sdf";
                 using (var srm = new FileStream(filename, FileMode.Open))
                 {
-                    IEnumerableMDLConformerReader reader = new IEnumerableMDLConformerReader(srm, ChemObjectBuilder.Instance);
+                    var reader = new EnumerableMDLConformerReader(srm, ChemObjectBuilder.Instance);
                     foreach (var cc in reader)
                     {
                         // do something 

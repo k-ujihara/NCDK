@@ -30,10 +30,10 @@ namespace NCDK.Pharmacophore
             query.Bonds.Add(b2);
             query.Bonds.Add(b3);
 
-            string filename = "/Users/rguha/pcore1.sdf";
+            string filename = "C:/Users/rguha/pcore1.sdf";
             using (var srm = new FileStream(filename, FileMode.Open))
             {
-                foreach (var conformers in new IEnumerableMDLConformerReader(srm, ChemObjectBuilder.Instance))
+                foreach (var conformers in new EnumerableMDLConformerReader(srm, ChemObjectBuilder.Instance))
                 {
                     bool firstTime = true;
                     foreach (var conf in conformers)

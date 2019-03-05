@@ -10,7 +10,7 @@ namespace NCDK
         {
             string filename = null;
             #region
-            var reader = new IEnumerableMDLConformerReader(
+            var reader = new EnumerableMDLConformerReader(
                 new FileStream(filename, FileMode.Open),
                 ChemObjectBuilder.Instance);
             foreach (ConformerContainer cc in reader)
