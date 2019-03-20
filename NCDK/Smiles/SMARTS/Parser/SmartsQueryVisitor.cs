@@ -53,8 +53,6 @@ namespace NCDK.Smiles.SMARTS.Parser
         // query
         private IQueryAtomContainer query;
 
-        private readonly IChemObjectBuilder builder;
-
         /// <summary>
         /// Maintain order of neighboring atoms - required for atom-based
         /// stereochemistry.
@@ -77,15 +75,14 @@ namespace NCDK.Smiles.SMARTS.Parser
         /// </summary>
         private List<IBond> doubleBonds = new List<IBond>();
 
-        public SmartsQueryVisitor(IChemObjectBuilder builder)
+        public SmartsQueryVisitor()
         {
-            this.builder = builder;
         }
 
         public object Visit(ASTRingIdentifier node, object data)
         {
             IQueryAtom atom = (IQueryAtom)data;
-            RingIdentifierAtom ringIdAtom = new RingIdentifierAtom(builder)
+            RingIdentifierAtom ringIdAtom = new RingIdentifierAtom()
             {
                 Atom = atom
             };
@@ -147,11 +144,11 @@ namespace NCDK.Smiles.SMARTS.Parser
                         if (atom is AromaticSymbolAtom
                                 && ringAtoms[ringId].Atom is AromaticSymbolAtom)
                         {
-                            ringBond = new AromaticQueryBond(builder);
+                            ringBond = new AromaticQueryBond();
                         }
                         else
                         {
-                            ringBond = new RingBond(builder);
+                            ringBond = new RingBond();
                         }
                     }
                     else
@@ -194,7 +191,7 @@ namespace NCDK.Smiles.SMARTS.Parser
 
         public object Visit(ASTReaction node, object data)
         {
-            IAtomContainer query = new QueryAtomContainer(builder);
+            IAtomContainer query = new QueryAtomContainer();
             for (int grpIdx = 0; grpIdx < node.JjtGetNumChildren(); grpIdx++)
             {
 
@@ -249,7 +246,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             IAtomContainer fullQuery = (IAtomContainer)data;
 
             if (fullQuery == null)
-                fullQuery = new QueryAtomContainer(builder);
+                fullQuery = new QueryAtomContainer();
 
             // keeps track of component grouping
             var components = fullQuery.GetProperty<int[]>("COMPONENT.GROUPING", Array.Empty<int>());
@@ -265,7 +262,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             {
                 ASTSmarts smarts = (ASTSmarts)node.JjtGetChild(i);
                 ringAtoms = new RingIdentifierAtom[10];
-                query = new QueryAtomContainer(builder);
+                query = new QueryAtomContainer();
 
                 smarts.JjtAccept(this, null);
 
@@ -349,7 +346,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                 IAtom prev = (SMARTSAtom)((object[])data)[0];
                 if (bond == null)
                 { // since no bond was specified it could be aromatic or single
-                    bond = new AromaticOrSingleQueryBond(builder);
+                    bond = new AromaticOrSingleQueryBond();
                     bond.SetAtoms(new[] { prev, atom });
                 }
                 else
@@ -388,7 +385,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                     SMARTSAtom newAtom = (SMARTSAtom)child.JjtAccept(this, null);
                     if (bond == null)
                     { // since no bond was specified it could be aromatic or single
-                        bond = new AromaticOrSingleQueryBond(builder);
+                        bond = new AromaticOrSingleQueryBond();
                     }
                     bond.SetAtoms(new[] { atom, newAtom });
                     query.Bonds.Add(bond);
@@ -433,7 +430,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             object left = node.JjtGetChild(0).JjtAccept(this, data);
             if (node.Type == SMARTSParserConstants.NOT)
             {
-                LogicalOperatorBond bond = new LogicalOperatorBond(builder)
+                LogicalOperatorBond bond = new LogicalOperatorBond()
                 {
                     Operator = "not",
                     Left = (IQueryBond)left
@@ -453,7 +450,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             {
                 return left;
             }
-            LogicalOperatorBond bond = new LogicalOperatorBond(builder)
+            LogicalOperatorBond bond = new LogicalOperatorBond()
             {
                 Operator = "and",
                 Left = (IQueryBond)left
@@ -470,7 +467,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             {
                 return left;
             }
-            LogicalOperatorBond bond = new LogicalOperatorBond(builder)
+            LogicalOperatorBond bond = new LogicalOperatorBond()
             {
                 Operator = "and",
                 Left = (IQueryBond)left
@@ -487,7 +484,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             {
                 return left;
             }
-            LogicalOperatorBond bond = new LogicalOperatorBond(builder)
+            LogicalOperatorBond bond = new LogicalOperatorBond()
             {
                 Operator = "or",
                 Left = (IQueryBond)left
@@ -504,7 +501,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             {
                 return left;
             }
-            LogicalOperatorBond bond = new LogicalOperatorBond(builder)
+            LogicalOperatorBond bond = new LogicalOperatorBond()
             {
                 Operator = "and",
                 Left = (IQueryBond)left
@@ -520,45 +517,45 @@ namespace NCDK.Smiles.SMARTS.Parser
             switch (node.BondType)
             {
                 case SMARTSParserConstants.S_BOND:
-                    bond = new Smarts.OrderQueryBond(BondOrder.Single, builder);
+                    bond = new Smarts.OrderQueryBond(BondOrder.Single);
                     break;
                 case SMARTSParserConstants.D_BOND:
-                    bond = new Smarts.OrderQueryBond(BondOrder.Double, builder);
+                    bond = new Smarts.OrderQueryBond(BondOrder.Double);
                     doubleBonds.Add(bond);
                     break;
                 case SMARTSParserConstants.T_BOND:
-                    bond = new Smarts.OrderQueryBond(BondOrder.Triple, builder);
+                    bond = new Smarts.OrderQueryBond(BondOrder.Triple);
                     break;
                 case SMARTSParserConstants.DOLLAR:
-                    bond = new Smarts.OrderQueryBond(BondOrder.Quadruple, builder);
+                    bond = new Smarts.OrderQueryBond(BondOrder.Quadruple);
                     break;
                 case SMARTSParserConstants.ANY_BOND:
-                    bond = new Smarts.AnyOrderQueryBond(builder);
+                    bond = new Smarts.AnyOrderQueryBond();
                     break;
                 case SMARTSParserConstants.AR_BOND:
-                    bond = new Smarts.AromaticQueryBond(builder);
+                    bond = new Smarts.AromaticQueryBond();
                     break;
                 case SMARTSParserConstants.R_BOND:
-                    bond = new Smarts.RingBond(builder);
+                    bond = new Smarts.RingBond();
                     break;
                 case SMARTSParserConstants.UP_S_BOND:
-                    bond = new Smarts.StereoBond(builder, StereoBond.Direction.Up, false);
+                    bond = new Smarts.StereoBond(StereoBond.Direction.Up, false);
                     stereoBonds.Add(bond);
                     break;
                 case SMARTSParserConstants.DN_S_BOND:
-                    bond = new Smarts.StereoBond(builder, StereoBond.Direction.Down, false);
+                    bond = new Smarts.StereoBond(StereoBond.Direction.Down, false);
                     stereoBonds.Add(bond);
                     break;
                 case SMARTSParserConstants.UP_OR_UNSPECIFIED_S_BOND:
-                    bond = new Smarts.StereoBond(builder, StereoBond.Direction.Up, true);
+                    bond = new Smarts.StereoBond(StereoBond.Direction.Up, true);
                     stereoBonds.Add(bond);
                     break;
                 case SMARTSParserConstants.DN_OR_UNSPECIFIED_S_BOND:
-                    bond = new Smarts.StereoBond(builder, StereoBond.Direction.Down, true);
+                    bond = new Smarts.StereoBond(StereoBond.Direction.Down, true);
                     stereoBonds.Add(bond);
                     break;
                 default:
-                    Trace.TraceError("Unparsed bond: " + node.ToString());
+                    Trace.TraceError($"Unparsed bond: {node.ToString()}");
                     break;
             }
             return bond;
@@ -566,9 +563,9 @@ namespace NCDK.Smiles.SMARTS.Parser
 
         public object Visit(ASTRecursiveSmartsExpression node, object data)
         {
-            SmartsQueryVisitor recursiveVisitor = new SmartsQueryVisitor(builder)
+            SmartsQueryVisitor recursiveVisitor = new SmartsQueryVisitor()
             {
-                query = new QueryAtomContainer(builder),
+                query = new QueryAtomContainer(),
                 ringAtoms = new RingIdentifierAtom[10]
             };
             return new RecursiveSmartsAtom((IQueryAtomContainer)node.JjtGetChild(0).JjtAccept(recursiveVisitor, null));
@@ -597,10 +594,10 @@ namespace NCDK.Smiles.SMARTS.Parser
                 case "as":
                 case "se":
                     string atomSymbol = symbol.Substring(0, 1).ToUpperInvariant() + symbol.Substring(1);
-                    atom = new AromaticSymbolAtom(atomSymbol, builder);
+                    atom = new AromaticSymbolAtom(atomSymbol);
                     break;
                 default:
-                    atom = new AliphaticSymbolAtom(symbol, builder);
+                    atom = new AliphaticSymbolAtom(symbol);
                     break;
             }
             return atom;
@@ -608,99 +605,99 @@ namespace NCDK.Smiles.SMARTS.Parser
 
         public object Visit(ASTTotalHCount node, object data)
         {
-            return new TotalHCountAtom(node.Count, builder);
+            return new TotalHCountAtom(node.Count);
         }
 
         public object Visit(ASTImplicitHCount node, object data)
         {
-            return new ImplicitHCountAtom(node.Count, builder);
+            return new ImplicitHCountAtom(node.Count);
         }
 
         public object Visit(ASTExplicitConnectivity node, object data)
         {
-            return new ExplicitConnectionAtom(node.NumOfConnection, builder);
+            return new ExplicitConnectionAtom(node.NumOfConnection);
         }
 
         public object Visit(ASTAtomicNumber node, object data)
         {
-            return new AtomicNumberAtom(node.Number, builder);
+            return new AtomicNumberAtom(node.Number);
         }
 
         public object Visit(ASTHybrdizationNumber node, object data)
         {
-            return new HybridizationNumberAtom(node.HybridizationNumber, builder);
+            return new HybridizationNumberAtom(node.HybridizationNumber);
         }
 
         public object Visit(ASTCharge node, object data)
         {
             if (node.IsPositive)
             {
-                return new FormalChargeAtom(node.Charge, builder);
+                return new FormalChargeAtom(node.Charge);
             }
             else
             {
-                return new FormalChargeAtom(0 - node.Charge, builder);
+                return new FormalChargeAtom(0 - node.Charge);
             }
         }
 
         public object Visit(ASTRingConnectivity node, object data)
         {
-            return new TotalRingConnectionAtom(node.NumOfConnection, builder);
+            return new TotalRingConnectionAtom(node.NumOfConnection);
         }
 
         public object Visit(ASTPeriodicGroupNumber node, object data)
         {
-            return new PeriodicGroupNumberAtom(node.GroupNumber, builder);
+            return new PeriodicGroupNumberAtom(node.GroupNumber);
         }
 
         public object Visit(ASTTotalConnectivity node, object data)
         {
-            return new TotalConnectionAtom(node.NumOfConnection, builder);
+            return new TotalConnectionAtom(node.NumOfConnection);
         }
 
         public object Visit(ASTValence node, object data)
         {
-            return new TotalValencyAtom(node.Order, builder);
+            return new TotalValencyAtom(node.Order);
         }
 
         public object Visit(ASTRingMembership node, object data)
         {
-            return new RingMembershipAtom(node.NumOfMembership, builder);
+            return new RingMembershipAtom(node.NumOfMembership);
         }
 
         public object Visit(ASTSmallestRingSize node, object data)
         {
-            return new SmallestRingAtom(node.Size, builder);
+            return new SmallestRingAtom(node.Size);
         }
 
         public object Visit(ASTAliphatic node, object data)
         {
-            return new AliphaticAtom(builder);
+            return new AliphaticAtom();
         }
 
         public object Visit(ASTNonCHHeavyAtom node, object data)
         {
-            return new NonCHHeavyAtom(builder);
+            return new NonCHHeavyAtom();
         }
 
         public object Visit(ASTAromatic node, object data)
         {
-            return new AromaticAtom(builder);
+            return new AromaticAtom();
         }
 
         public object Visit(ASTAnyAtom node, object data)
         {
-            return new AnyAtom(builder);
+            return new AnyAtom();
         }
 
         public object Visit(ASTAtomicMass node, object data)
         {
-            return new MassAtom(node.Mass, builder);
+            return new MassAtom(node.Mass);
         }
 
         public object Visit(ASTChirality node, object data)
         {
-            var atom = new ChiralityAtom(builder)
+            var atom = new ChiralityAtom()
             {
                 IsClockwise = node.IsClockwise,
                 IsUnspecified = node.IsUnspecified
@@ -772,13 +769,13 @@ namespace NCDK.Smiles.SMARTS.Parser
             switch (symbol)
             {
                 case "*":
-                    atom = new AnyAtom(builder);
+                    atom = new AnyAtom();
                     break;
                 case "A":
-                    atom = new AliphaticAtom(builder);
+                    atom = new AliphaticAtom();
                     break;
                 case "a":
-                    atom = new AromaticAtom(builder);
+                    atom = new AromaticAtom();
                     break;
                 case "o":
                 case "n":
@@ -788,31 +785,31 @@ namespace NCDK.Smiles.SMARTS.Parser
                 case "as":
                 case "se":
                     var atomSymbol = symbol.Substring(0, 1).ToUpperInvariant() + symbol.Substring(1);
-                    atom = new AromaticSymbolAtom(atomSymbol, builder);
+                    atom = new AromaticSymbolAtom(atomSymbol);
                     break;
                 case "H":
-                    atom = new HydrogenAtom(builder)
+                    atom = new HydrogenAtom()
                     {
                         Symbol = symbol.ToUpperInvariant(),
                         MassNumber = 1
                     };
                     break;
                 case "D":
-                    atom = new HydrogenAtom(builder)
+                    atom = new HydrogenAtom()
                     {
                         Symbol = symbol.ToUpperInvariant(),
                         MassNumber = 2
                     };
                     break;
                 case "T":
-                    atom = new HydrogenAtom(builder)
+                    atom = new HydrogenAtom()
                     {
                         Symbol = symbol.ToUpperInvariant(),
                         MassNumber = 3
                     };
                     break;
                 default:
-                    atom = new AliphaticSymbolAtom(symbol, builder);
+                    atom = new AliphaticSymbolAtom(symbol);
                     break;
             }
             return atom;

@@ -22,7 +22,6 @@
  */
 
 using NCDK.Common.Collections;
-using NCDK.Config;
 using NCDK.Graphs;
 using System;
 using System.Collections.Concurrent;
@@ -934,7 +933,7 @@ namespace NCDK.Isomorphisms.Matchers
         /// value and the bond is not marked as aromatic
         /// (<see cref="IMolecularEntity.IsAromatic"/>).</summary>
         AliphaticOrder,
-        /// <summary>True if the bond order <see cref="IBond.Order"/> equals the specified
+        /// <summary>True if the bond order <see cref="BondOrder"/> equals the specified
         /// value and the bond, aromaticity is not check.</summary>
         Order,
 

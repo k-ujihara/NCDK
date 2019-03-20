@@ -30,9 +30,9 @@ namespace NCDK.Isomorphisms.Matchers
     /// does NOT contain the symbol of the Atom to match (example: add "C" to get a
     /// match for all non-"C"-Atoms).
     /// </summary>
+    /// <seealso cref="SymbolSetQueryAtom"/>
     // @author        kha
     // @cdk.created   2004-09-16
-    // @see           SymbolSetQueryAtom
     // @cdk.module    isomorphism
     [Obsolete("Use new Expr(Element, 6).And(new Expr(Element, 8)).Negate() etc")]
     public class InverseSymbolSetQueryAtom 
@@ -43,8 +43,8 @@ namespace NCDK.Isomorphisms.Matchers
         /// <summary>
         ///  Constructor for the InverseSymbolSetQueryAtom object
         /// </summary>
-        public InverseSymbolSetQueryAtom(IChemObjectBuilder builder)
-            : base(builder)
+        public InverseSymbolSetQueryAtom()
+            : base()
         { }
 
         /// <summary>

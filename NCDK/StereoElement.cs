@@ -20,7 +20,6 @@
 
 using System;
 using System.Reflection;
-using static NCDK.StereoElement;
 
 namespace NCDK
 {
@@ -39,7 +38,7 @@ namespace NCDK
     {
         Unset = 0,
 
-        /// <summary>Geometric CisTrans (e.g. but-2-ene)</summary>
+        /// <summary>Geometric cis/trans (e.g. but-2-ene)</summary>
         CisTrans = 0x21,
 
         /// <summary>Tetrahedral (T-4) (e.g. butan-2-ol)</summary>

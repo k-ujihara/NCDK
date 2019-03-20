@@ -28,7 +28,6 @@ using NCDK.SMARTS;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 
@@ -65,7 +64,6 @@ namespace NCDK.Fingerprints
     // @cdk.keyword fingerprint
     // @cdk.keyword similarity
     // @cdk.module  fingerprint
-    // @cdk.githash
     public class MACCSFingerprinter : AbstractFingerprinter, IFingerprinter
     {
         private const string KeyDefinitions = "Data.maccs.txt";
@@ -74,26 +72,10 @@ namespace NCDK.Fingerprints
 
         public MACCSFingerprinter() { }
 
-        public MACCSFingerprinter(IChemObjectBuilder builder)
-        {
-            try
-            {
-                keys = ReadKeyDef(builder);
-            }
-            catch (IOException e)
-            {
-                Debug.WriteLine(e);
-            }
-            catch (CDKException e)
-            {
-                Debug.WriteLine(e);
-            }
-        }
-
         /// <inheritdoc/>
         public override IBitFingerprint GetBitFingerprint(IAtomContainer container)
         {
-            var keys = GetKeys(container.Builder);
+            var keys = GetKeys();
             var fp = new BitArray(keys.Count);
 
             // init SMARTS invariants (connectivity, degree, etc)
@@ -247,7 +229,7 @@ namespace NCDK.Fingerprints
         /// <inheritdoc/>
         public override int Length => 166;
 
-        private List<MaccsKey> ReadKeyDef(IChemObjectBuilder builder)
+        private List<MaccsKey> ReadKeyDef()
         {
             var keys = new List<MaccsKey>(166);
             var reader = new StreamReader(ResourceLoader.GetAsStream(GetType(), KeyDefinitions));
@@ -256,11 +238,12 @@ namespace NCDK.Fingerprints
             string line;
             while ((line = reader.ReadLine()) != null)
             {
-                if (line[0] == '#') continue;
+                if (line[0] == '#')
+                    continue;
                 string data = line.Substring(0, line.IndexOf('|')).Trim();
                 var toks = Strings.Tokenize(data);
 
-                keys.Add(new MaccsKey(toks[1], CreatePattern(toks[1], builder), int.Parse(toks[2], NumberFormatInfo.InvariantInfo)));
+                keys.Add(new MaccsKey(toks[1], CreatePattern(toks[1]), int.Parse(toks[2], NumberFormatInfo.InvariantInfo)));
             }
             if (keys.Count != 166)
                 throw new CDKException($"Found {keys.Count} keys during setup. Should be 166");
@@ -295,7 +278,7 @@ namespace NCDK.Fingerprints
         /// </summary>
         /// <returns>array of MACCS keys.</returns>
         /// <exception cref="CDKException">maccs keys could not be loaded</exception>
-        private IList<MaccsKey> GetKeys(IChemObjectBuilder builder)
+        private IList<MaccsKey> GetKeys()
         {
             var result = keys;
             if (result == null)
@@ -307,7 +290,7 @@ namespace NCDK.Fingerprints
                     {
                         try
                         {
-                            keys = result = ReadKeyDef(builder);
+                            keys = result = ReadKeyDef();
                         }
                         catch (IOException e)
                         {
@@ -324,11 +307,10 @@ namespace NCDK.Fingerprints
         /// is not created.
         /// </summary>
         /// <param name="smarts">a smarts pattern</param>
-        /// <param name="builder">chem object builder</param>
         /// <returns>the pattern to match</returns>
-        private static Pattern CreatePattern(string smarts, IChemObjectBuilder builder)
+        private static Pattern CreatePattern(string smarts)
         {
-            var ptrn = SmartsPattern.Create(smarts, builder);
+            var ptrn = SmartsPattern.Create(smarts);
             ptrn.SetPrepare(false); // avoid redoing aromaticity etc
             return ptrn;
         }

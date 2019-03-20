@@ -44,12 +44,12 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
     {
         private readonly ReactionRoles role;
 
-        public readonly static ReactionRoleQueryAtom RoleReactant = new ReactionRoleQueryAtom(null, ReactionRoles.Reactant);
-        public readonly static ReactionRoleQueryAtom RoleAgent = new ReactionRoleQueryAtom(null, ReactionRoles.Agent);
-        public readonly static ReactionRoleQueryAtom RoleProduct = new ReactionRoleQueryAtom(null, ReactionRoles.Product);
+        public readonly static ReactionRoleQueryAtom RoleReactant = new ReactionRoleQueryAtom(ReactionRoles.Reactant);
+        public readonly static ReactionRoleQueryAtom RoleAgent = new ReactionRoleQueryAtom(ReactionRoles.Agent);
+        public readonly static ReactionRoleQueryAtom RoleProduct = new ReactionRoleQueryAtom(ReactionRoles.Product);
 
-        public ReactionRoleQueryAtom(IChemObjectBuilder builder, ReactionRoles role)
-            : base(builder)
+        public ReactionRoleQueryAtom(ReactionRoles role)
+            : base()
         {
             this.role = role;
         }

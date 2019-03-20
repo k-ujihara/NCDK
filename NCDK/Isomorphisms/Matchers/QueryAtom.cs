@@ -26,20 +26,13 @@ namespace NCDK.Isomorphisms.Matchers
     public class QueryAtom 
         : Silent.Atom, IQueryAtom
     {
-        public QueryAtom(string symbol, IChemObjectBuilder builder)
+        public QueryAtom(string symbol)
             : base(symbol)
         {
-            this.builder = builder;
         }
 
-        private readonly IChemObjectBuilder builder;
-
-        /// <inheritdoc/>
-        public override IChemObjectBuilder Builder => builder;
-
-        public QueryAtom(IChemObjectBuilder builder)
+        public QueryAtom()
         {
-            this.builder = builder;
         }
 
         /// <summary>
@@ -65,7 +58,7 @@ namespace NCDK.Isomorphisms.Matchers
         /// </example>
         /// <param name="expr">the expr</param>
         public QueryAtom(Expr expr)
-            : this((IChemObjectBuilder)null)
+            : this()
         { 
             this.Expression.Set(expr);
         }

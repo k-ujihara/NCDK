@@ -133,7 +133,7 @@ namespace NCDK.Isomorphisms
             /// <param name="atomMatcher">how atoms are matched</param>
             /// <param name="bondMatcher">how bonds are matched</param>
             public UllmannIterable(IAtomContainer container1, IAtomContainer container2, int[][] g1, int[][] g2,
-                    EdgeToBondMap bonds1, EdgeToBondMap bonds2, AtomMatcher atomMatcher, BondMatcher bondMatcher)
+                EdgeToBondMap bonds1, EdgeToBondMap bonds2, AtomMatcher atomMatcher, BondMatcher bondMatcher)
             {
                 this.container1 = container1;
                 this.container2 = container2;
@@ -158,4 +158,3 @@ namespace NCDK.Isomorphisms
         }
     }
 }
-

@@ -41,7 +41,6 @@ namespace NCDK.SMSD.Tools
     /// Some part of this code was taken from CDK source code and modified.</para>
     /// </summary>
     // @cdk.module smsd
-    // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
     public static class ExtAtomContainerManipulator
     {

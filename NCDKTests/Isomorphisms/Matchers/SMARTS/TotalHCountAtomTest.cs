@@ -1,7 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
-using static Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
@@ -13,9 +12,9 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         [TestMethod()]
         public void Matches()
         {
-            TotalHCountAtom matcher = new TotalHCountAtom(4, new Mock<IChemObjectBuilder>().Object);
+            var matcher = new TotalHCountAtom(4);
             var mock_atom = new Mock<IAtom>();
-            IAtom atom = mock_atom.Object;
+            var atom = mock_atom.Object;
             mock_atom.Setup(n => n.GetProperty<SMARTSAtomInvariants>(SMARTSAtomInvariants.Key)).Returns(
                         new SMARTSAtomInvariants(new Mock<IAtomContainer>().Object, 0, 0,
                         Array.Empty<int>(), 0,
@@ -26,7 +25,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         [TestMethod()]
         public void TestToString()
         {
-            TotalHCountAtom total = new TotalHCountAtom(4, new Mock<IChemObjectBuilder>().Object);
+            var total = new TotalHCountAtom(4);
             Assert.AreEqual("H4", total.ToString());
         }
     }

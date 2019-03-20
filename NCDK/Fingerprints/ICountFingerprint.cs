@@ -89,5 +89,3 @@ namespace NCDK.Fingerprints
         int GetCountForHash(int hash);
     }
 }
-
-

@@ -29,7 +29,6 @@ namespace NCDK.SMSD
     /// This class represents various algorithm type supported by SMSD.
     /// </summary>
     // @cdk.module smsd
-    // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
     [Obfuscation(ApplyToMembers = true, Exclude = true)]
     public enum Algorithm

@@ -408,7 +408,7 @@ namespace NCDK.IO
                 if (!hasQueryBonds)
                     outputContainer = molecule;
                 else
-                    outputContainer = new QueryAtomContainer(molecule.Builder);
+                    outputContainer = new QueryAtomContainer();
 
                 if (title != null)
                     outputContainer.Title = title;
@@ -2051,7 +2051,7 @@ namespace NCDK.IO
             }
             else
             {
-                newBond = new QueryBond(builder);
+                newBond = new QueryBond();
                 newBond.SetAtoms(new[] { a1, a2 });
                 switch (order)
                 {

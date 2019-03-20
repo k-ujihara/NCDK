@@ -176,6 +176,7 @@ namespace <#= ns.NS #>
         public virtual int Index => -1;
 
         /// <inheritdoc/>
+        [NotSupprted]
         public virtual IReadOnlyList<IBond> Bonds
         { 
             get { throw new NotSupportedException(); } 

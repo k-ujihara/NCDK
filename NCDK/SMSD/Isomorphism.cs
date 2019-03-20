@@ -68,7 +68,6 @@ namespace NCDK.SMSD
     /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.SMSD.Isomorphism_Example.cs+2"]/*' />
     /// </example>
     // @cdk.module smsd
-    // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
     [Obsolete("SMSD has been deprecated from the CDK with a newer, more recent version of SMSD is available at http://github.com/asad/smsd . ")]
     public sealed class Isomorphism : AbstractMCS

@@ -46,8 +46,8 @@ namespace NCDK.Isomorphisms.Matchers
         /// <summary>
         ///  Constructor for the <see cref="SymbolSetQueryAtom"/> object
         /// </summary>
-        public SymbolSetQueryAtom(IChemObjectBuilder builder)
-            : base(builder)
+        public SymbolSetQueryAtom()
+            : base()
         { }
 
         /// <summary>

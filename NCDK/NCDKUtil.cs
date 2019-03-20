@@ -15,12 +15,14 @@ namespace NCDK
         /// <param name="atom2">the second atom</param>
         /// <param name="order">bond order</param>
         /// <param name="stereo">Stereochemical orientation</param>
-        public static void AddBond(this IAtomContainer mol, IAtom atom1, IAtom atom2, BondOrder order, BondStereo stereo)
+        /// <returns>The bond added</returns>
+        public static IBond AddBond(this IAtomContainer mol, IAtom atom1, IAtom atom2, BondOrder order, BondStereo stereo)
         {
             if (!(mol.Contains(atom1) && mol.Contains(atom2)))
                 throw new InvalidOperationException();
             var bond = mol.Builder.NewBond(atom1, atom2, order, stereo);
             mol.Bonds.Add(bond);
+            return bond;
         }
 
         /// <summary>
@@ -29,12 +31,14 @@ namespace NCDK
         /// <param name="atom1">the first atom</param>
         /// <param name="atom2">the second atom</param>
         /// <param name="order">bond order</param>
-        public static void AddBond(this IAtomContainer mol, IAtom atom1, IAtom atom2, BondOrder order)
+        /// <returns>The bond added</returns>
+        public static IBond AddBond(this IAtomContainer mol, IAtom atom1, IAtom atom2, BondOrder order)
         {
             if (!(mol.Contains(atom1) && mol.Contains(atom2)))
                 throw new InvalidOperationException();
             IBond bond = mol.Builder.NewBond(atom1, atom2, order);
             mol.Bonds.Add(bond);
+            return bond;
         }
 
         /// <summary>

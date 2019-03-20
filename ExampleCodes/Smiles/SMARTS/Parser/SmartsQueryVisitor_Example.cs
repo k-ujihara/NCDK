@@ -10,7 +10,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             #region 1
             SMARTSParser parser = new SMARTSParser(new StringReader("C*C"));
             ASTStart ast = parser.Start();
-            SmartsQueryVisitor visitor = new SmartsQueryVisitor(Silent.ChemObjectBuilder.Instance);
+            SmartsQueryVisitor visitor = new SmartsQueryVisitor();
             QueryAtomContainer query = (QueryAtomContainer)visitor.Visit(ast, null);
             #endregion
         }

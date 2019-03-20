@@ -24,7 +24,6 @@ using NCDK.Common.Primitives;
 using NCDK.Fingerprints;
 using NCDK.Isomorphisms.Matchers;
 using NCDK.RingSearches;
-using NCDK.Silent;
 using NCDK.Templates;
 using NCDK.Tools.Manipulator;
 using System.Collections;
@@ -74,7 +73,7 @@ namespace NCDK.Modelings.Builder3D
             var filename = "NCDK.Data.MDL.fingerprints_from_modelbuilder3d.sdf";
             var ins = ResourceLoader.GetAsStream(filename);
             var data = TemplateExtractor.MakeFingerprintsFromSdf(true, false, new Dictionary<string, int>(), new StreamReader(ins), 10);
-            var obj = new QueryChemObject(ChemObjectBuilder.Instance);
+            var obj = new QueryChemObject();
             var dummy = obj.Builder;
             for (int i = 0; i < data.Count; i++)
             {
@@ -104,7 +103,7 @@ namespace NCDK.Modelings.Builder3D
             var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
             var data = TemplateExtractor.MakeFingerprintsFromSdf(true, true,
                 new Dictionary<string, int>(), new StreamReader(ins), 10);
-            var obj = new QueryChemObject(ChemObjectBuilder.Instance);
+            var obj = new QueryChemObject();
             var dummy = obj.Builder;
             for (int i = 0; i < data.Count; i++)
             {

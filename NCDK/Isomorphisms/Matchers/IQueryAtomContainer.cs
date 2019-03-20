@@ -25,7 +25,6 @@ namespace NCDK.Isomorphisms.Matchers
     /// <seealso cref="UniversalIsomorphismTester"/>
     // @author      egonw
     // @cdk.module  interfaces
-    // @cdk.githash
     public interface IQueryAtomContainer
         : IAtomContainer
     {

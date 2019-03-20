@@ -39,7 +39,6 @@ namespace NCDK
     /// </para>
     /// </summary>
     // @cdk.module interfaces
-    // @cdk.githash
     // @author      Egon Willighagen
     // @author      John Mayfield
     // @cdk.keyword stereochemistry

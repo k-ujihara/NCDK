@@ -29,8 +29,8 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
     [Obsolete]
     public class AnyOrderQueryBond : SMARTSBond
     {
-        public AnyOrderQueryBond(IChemObjectBuilder builder)
-            : base(builder)
+        public AnyOrderQueryBond()
+            : base()
         {
         }
 
@@ -40,9 +40,8 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         /// <param name="atom1"></param>
         /// <param name="atom2"></param>
         /// <param name="order"></param>
-        /// <param name="builder"></param>
-        public AnyOrderQueryBond(IQueryAtom atom1, IQueryAtom atom2, BondOrder order, IChemObjectBuilder builder)
-            : base(atom1, atom2, order, builder)
+        public AnyOrderQueryBond(IQueryAtom atom1, IQueryAtom atom2, BondOrder order)
+            : base(atom1, atom2, order)
         {
         }
 

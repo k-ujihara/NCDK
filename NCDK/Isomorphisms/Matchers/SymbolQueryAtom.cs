@@ -30,12 +30,12 @@ namespace NCDK.Isomorphisms.Matchers
         private string ID;
         public int HCount { get; set; } = 0;
 
-        public SymbolQueryAtom(IChemObjectBuilder builder)
-            : base(builder)
+        public SymbolQueryAtom()
+            : base()
         { }
 
         public SymbolQueryAtom(IAtom atom)
-            : base(atom.Symbol, atom.Builder)
+            : base(atom.Symbol)
         { }
 
         public override bool Matches(IAtom atom)

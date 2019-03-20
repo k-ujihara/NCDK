@@ -44,7 +44,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         /// </summary>
         /// <param name="query"></param>
         public RecursiveSmartsAtom(IQueryAtomContainer query)
-            : base(query.Builder)
+            : base()
         {
             this.query = query;
             this.cache = new Dictionary<IAtomContainer, BitArray>();

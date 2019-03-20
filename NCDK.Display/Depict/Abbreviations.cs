@@ -731,7 +731,7 @@ namespace NCDK.Depict
         private static IQueryAtomContainer MatchExact(IAtomContainer mol)
         {
             var bldr = mol.Builder;
-            var qry = new QueryAtomContainer(mol.Builder);
+            var qry = new QueryAtomContainer();
             var atmmap = new Dictionary<IAtom, IAtom>();
 
             foreach (var atom in mol.Atoms)

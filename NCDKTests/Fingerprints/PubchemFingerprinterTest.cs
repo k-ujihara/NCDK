@@ -27,9 +27,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Aromaticities;
 using NCDK.Common.Base;
 using NCDK.Common.Collections;
-using NCDK.Silent;
 using NCDK.Smiles;
-using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections;
@@ -46,7 +44,7 @@ namespace NCDK.Fingerprints
 
         public override IFingerprinter GetBitFingerprinter()
         {
-            return new PubchemFingerprinter(ChemObjectBuilder.Instance);
+            return new PubchemFingerprinter();
         }
 
         [TestInitialize()]
@@ -58,14 +56,14 @@ namespace NCDK.Fingerprints
         [TestMethod()]
         public void TestGetSize()
         {
-            IFingerprinter printer = new PubchemFingerprinter(ChemObjectBuilder.Instance);
+            IFingerprinter printer = new PubchemFingerprinter();
             Assert.AreEqual(881, printer.Length);
         }
 
         [TestMethod()]
         public void TestFingerprint()
         {
-            IFingerprinter printer = new PubchemFingerprinter(ChemObjectBuilder.Instance);
+            IFingerprinter printer = new PubchemFingerprinter();
             var adder = CDK.HydrogenAdder;
 
             var mol1 = parser.ParseSmiles("c1ccccc1CCc1ccccc1");
@@ -95,7 +93,7 @@ namespace NCDK.Fingerprints
         [TestMethod()]
         public void Testfp2()
         {
-            IFingerprinter printer = new PubchemFingerprinter(ChemObjectBuilder.Instance);
+            IFingerprinter printer = new PubchemFingerprinter();
 
             var mol1 = parser.ParseSmiles("CC(N)CCCN");
             var mol2 = parser.ParseSmiles("CC(N)CCC");
@@ -132,7 +130,7 @@ namespace NCDK.Fingerprints
             AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(mol);
             Aromaticity.CDKLegacy.Apply(mol);
 
-            IFingerprinter printer = new PubchemFingerprinter(ChemObjectBuilder.Instance);
+            IFingerprinter printer = new PubchemFingerprinter();
             BitArray fp = printer.GetBitFingerprint(mol).AsBitSet();
             BitArray ref_ = PubchemFingerprinter
                     .Decode("AAADceBwPABAAAAAAAAAAAAAAAAAAAAAAAAkSAAAAAAAAAAAAAAAGgQACAAACBS0wAOCCAAABgQAAAAAAAAAAAAAAAAAAAAAAAAREAIAAAAiQAAFAAAHAAHAYAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==");
@@ -155,7 +153,7 @@ namespace NCDK.Fingerprints
             AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(mol);
             Aromaticity.CDKLegacy.Apply(mol);
 
-            IFingerprinter printer = new PubchemFingerprinter(ChemObjectBuilder.Instance);
+            IFingerprinter printer = new PubchemFingerprinter();
             BitArray fp = printer.GetBitFingerprint(mol).AsBitSet();
             BitArray ref_ = PubchemFingerprinter
                     .Decode("AAADceB+AAAAAAAAAAAAAAAAAAAAAAAAAAA8YMGCAAAAAAAB1AAAHAAAAAAADAjBHgQwgJMMEACgAyRiRACCgCAhAiAI2CA4ZJgIIOLAkZGEIAhggADIyAcQgMAOgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==");
@@ -177,7 +175,7 @@ namespace NCDK.Fingerprints
             AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(mol);
             Aromaticity.CDKLegacy.Apply(mol);
 
-            IFingerprinter printer = new PubchemFingerprinter(ChemObjectBuilder.Instance);
+            IFingerprinter printer = new PubchemFingerprinter();
             BitArray fp = printer.GetBitFingerprint(mol).AsBitSet();
             BitArray ref_ = PubchemFingerprinter
                     .Decode("AAADccBzMAAGAAAAAAAAAAAAAAAAAAAAAAA8QAAAAAAAAAABwAAAHgIYCAAADA6BniAwzpJqEgCoAyTyTASChCAnJiIYumGmTtgKJnLD1/PEdQhkwBHY3Qe82AAOIAAAAAAAAABAAAAAAAAAAAAAAAAAAA==");
@@ -197,7 +195,7 @@ namespace NCDK.Fingerprints
             AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(mol);
             Aromaticity.CDKLegacy.Apply(mol);
 
-            PubchemFingerprinter printer = new PubchemFingerprinter(mol.Builder);
+            PubchemFingerprinter printer = new PubchemFingerprinter();
             BitArray fp = printer.GetBitFingerprint(mol).AsBitSet();
 
             byte[] actual = printer.GetFingerprintAsBytes();
@@ -251,7 +249,7 @@ namespace NCDK.Fingerprints
             AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(mol);
 
             Aromaticity.CDKLegacy.Apply(mol);
-            IFingerprinter printer = new PubchemFingerprinter(ChemObjectBuilder.Instance);
+            IFingerprinter printer = new PubchemFingerprinter();
             BitArray fp = printer.GetBitFingerprint(mol).AsBitSet();
             BitArray ref_ = PubchemFingerprinter
                     .Decode("AAADcYBgAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAABAAAAGAAAAAAACACAEAAwAIAAAACAACBCAAACAAAgAAAIiAAAAIgIICKAERCAIAAggAAIiAcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==");
@@ -273,7 +271,7 @@ namespace NCDK.Fingerprints
             public void Call()
             {
                 BitArray fp = null;
-                IFingerprinter fpr = new PubchemFingerprinter(ChemObjectBuilder.Instance);
+                IFingerprinter fpr = new PubchemFingerprinter();
                 try
                 {
                     fp = fpr.GetBitFingerprint(mol).AsBitSet();
@@ -306,7 +304,7 @@ namespace NCDK.Fingerprints
             AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(mol2);
             Aromaticity.CDKLegacy.Apply(mol2);
 
-            IFingerprinter fp = new PubchemFingerprinter(ChemObjectBuilder.Instance);
+            IFingerprinter fp = new PubchemFingerprinter();
             BitArray bs1 = fp.GetBitFingerprint(mol1).AsBitSet();
             BitArray bs2 = fp.GetBitFingerprint(mol2).AsBitSet();
 
@@ -346,7 +344,7 @@ namespace NCDK.Fingerprints
             AddImplicitHydrogens(superStructure);
             AddImplicitHydrogens(subStructure);
 
-            IFingerprinter fpr = new PubchemFingerprinter(CDK.Builder);
+            IFingerprinter fpr = new PubchemFingerprinter();
             IBitFingerprint superBits = fpr.GetBitFingerprint(superStructure);
             IBitFingerprint subBits = fpr.GetBitFingerprint(subStructure);
 

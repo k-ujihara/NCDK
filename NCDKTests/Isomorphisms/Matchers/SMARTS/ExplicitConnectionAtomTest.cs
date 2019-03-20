@@ -36,7 +36,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         [TestMethod()]
         public void Matches()
         {
-            ExplicitConnectionAtom matcher = new ExplicitConnectionAtom(2, new Mock<IChemObjectBuilder>().Object);
+            ExplicitConnectionAtom matcher = new ExplicitConnectionAtom(2);
             var mock_atom = new Mock<IAtom>();
             IAtom atom = mock_atom.Object;
             mock_atom.Setup(n => n.GetProperty<SMARTSAtomInvariants>(SMARTSAtomInvariants.Key)).Returns(

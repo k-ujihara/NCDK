@@ -70,7 +70,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                 {
                     var parser = new SMARTSParser(reader);
                     var start = parser.Start();
-                    var visitor = new SmartsQueryVisitor(builder);
+                    var visitor = new SmartsQueryVisitor();
                     container = (QueryAtomContainer)start.JjtAccept(visitor, null);
                 }
             }

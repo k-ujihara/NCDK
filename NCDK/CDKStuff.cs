@@ -29,6 +29,15 @@ using System.Text;
 
 namespace NCDK
 {
+    [System.AttributeUsage(AttributeTargets.Property | AttributeTargets.Method, Inherited = false, AllowMultiple = false)]
+    sealed class AlwaysErrorAttribute : Attribute
+    {
+        // This is a positional argument
+        public AlwaysErrorAttribute()
+        {
+        }
+    }
+
     internal static class CDKStuff
     {
         public static IReadOnlyList<TSource> ToReadOnlyList<TSource>(this IEnumerable<TSource> source)
@@ -212,7 +221,17 @@ namespace NCDK
                 }
 
                 public string Name => p.Name;
-                public object Value => p.GetValue(obj);
+                public object Value
+                {
+                    get
+                    {
+                        var a = p.GetCustomAttribute<AlwaysErrorAttribute>();
+                        if (a != null)
+                            return null;
+                        return p.GetValue(obj);
+                    }
+                }
+
                 public Type PropertyType => p.PropertyType;
             }
 

@@ -34,7 +34,6 @@ namespace NCDK.Isomorphisms.Matchers
     /// <seealso cref="RGroupList"/>
     /// <seealso cref="RGroupQuery"/>
     // @cdk.module  isomorphism
-    // @cdk.githash
     // @cdk.keyword Rgroup
     // @cdk.keyword R group
     // @cdk.keyword R-group

@@ -29,7 +29,6 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
     /// This class matches an atom based on the atomic mass.
     /// </summary>
     // @cdk.module  smarts
-    // @cdk.githash
     // @cdk.keyword SMARTS
     [Obsolete]
     public class MassAtom : SMARTSAtom
@@ -40,8 +39,8 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         /// Creates a new instance
         /// </summary>
         /// <param name="mass"></param>
-        public MassAtom(int mass, IChemObjectBuilder builder)
-            : base(builder)
+        public MassAtom(int mass)
+            : base()
         {
             this.MassNumber = mass;
             this.mass = mass;

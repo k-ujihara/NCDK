@@ -48,19 +48,10 @@ namespace NCDK.Isomorphisms
     /// </list>
     /// </remarks>
     /// <example>
-    /// <code>
-    /// DfState state = new DfState(query);
-    /// state.SetMol(mol);
-    /// int count = 0;
-    /// while (state.MatchNext()) 
-    /// {
-    ///     state.amap; // permutation of query to molecule
-    ///     ++count;
-    /// }
-    /// </code>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Isomorphisms.DfState_Example.cs"]/*' />
     /// </example>
+    /// <seealso cref="DfState"/>
     // @author John Mayfield
-    // @see DfPattern
     sealed class DfState : IEnumerable<int[]>
     {
         private const int UNMAPPED = -1;
@@ -98,13 +89,7 @@ namespace NCDK.Isomorphisms
 
         internal DfState(IQueryAtomContainer query)
         {
-            var builder = query.Builder;
-            if (builder == null)
-            {
-                builder = FindBuilder();
-                if (builder == null)
-                    throw new ArgumentException("Please ensure query molecule has a IChemObjectBuilder set!");
-            }
+            var builder = Silent.ChemObjectBuilder.Instance;
 
             var tmp = builder.NewAtomContainer();
             tmp.Add(query);
@@ -154,17 +139,6 @@ namespace NCDK.Isomorphisms
             for (int i = 0; i < stack.Length; i++)
                 this.stack[i] = new StackFrame(state.stack[i]);
             this.sptr = state.sptr;
-        }
-
-        private static IChemObjectBuilder Builder { get; set; }
-
-        // we find a IChemObjectBuilder using reflection if one wasn't provided
-        // with the query
-        private static IChemObjectBuilder FindBuilder()
-        {
-            if (Builder != null)
-                return Builder;
-            return Silent.ChemObjectBuilder.Instance;
         }
 
         // prepare the query, the required stack size is returned
@@ -364,7 +338,7 @@ namespace NCDK.Isomorphisms
                 // both atoms matched, there must be a bond between them
                 if (begIdx != UNMAPPED && endIdx != UNMAPPED)
                 {
-                    IBond bond = mol.Atoms[begIdx].GetBond(mol.Atoms[endIdx]);
+                    var bond = mol.Atoms[begIdx].GetBond(mol.Atoms[endIdx]);
                     if (Feasible(qbond, bond))
                         continue;
                 }

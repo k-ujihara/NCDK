@@ -180,7 +180,7 @@ namespace NCDK.Modelings.Builder3D
                 }
 
                 var mappings = patterns[i].MatchAll(mol);
-                foreach (var map in mappings.ToAtomBondMap())
+                foreach (var map in mappings.ToAtomBondMaps())
                 {
                     if (IsExactMatch(query, map))
                     {

@@ -27,7 +27,6 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
     /// </summary>
     // @cdk.module  smarts
     // @cdk.keyword SMARTS
-    // @cdk.githash
     [Obsolete]
     public sealed class TotalValencyAtom : SMARTSAtom
     {
@@ -40,9 +39,8 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         /// Match the valence of atom.
         /// </summary>
         /// <param name="valence">valence value</param>
-        /// <param name="builder">chem object builder (required for ChemObject.getBuilder)</param>
-        public TotalValencyAtom(int valence, IChemObjectBuilder builder)
-            : base(builder)
+        public TotalValencyAtom(int valence)
+            : base()
         {
             this.valence = valence;
         }

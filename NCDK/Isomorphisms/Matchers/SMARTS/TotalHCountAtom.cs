@@ -35,8 +35,8 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         /// <summary>The total hydrogen count to match.</summary>
         private readonly int totalHCount;
 
-        public TotalHCountAtom(int totalHCount, IChemObjectBuilder builder)
-            : base(builder)
+        public TotalHCountAtom(int totalHCount)
+            : base()
         {
             this.totalHCount = totalHCount;
         }

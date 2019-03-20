@@ -25,7 +25,6 @@
  *
  */
 
-using NCDK.Config;
 using NCDK.Isomorphisms.Matchers;
 using NCDK.Isomorphisms.MCSS;
 using NCDK.Tools.Manipulator;
@@ -92,7 +91,6 @@ namespace NCDK.Isomorphisms
     // @cdk.created 2002-07-17
     // @cdk.require java1.4+
     // @cdk.module  standard
-    // @cdk.githash
     [Obsolete("Use the Pattern APIs from the " + nameof(Isomorphisms) + " namespace")]
     public class UniversalIsomorphismTester
     {

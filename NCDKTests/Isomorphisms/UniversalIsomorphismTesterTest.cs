@@ -62,7 +62,6 @@ namespace NCDK.Isomorphisms
             {
                 Assert.IsTrue(uiTester.IsSubgraph(mol, frag1));
             }
-
         }
 
         // @cdk.bug 1708336
@@ -75,7 +74,7 @@ namespace NCDK.Isomorphisms
             atomContainer.Atoms.Add(builder.NewAtom("N"));
             atomContainer.AddBond(atomContainer.Atoms[0], atomContainer.Atoms[1], BondOrder.Single);
             atomContainer.AddBond(atomContainer.Atoms[1], atomContainer.Atoms[2], BondOrder.Single);
-            var query = new QueryAtomContainer(builder);
+            var query = new QueryAtomContainer();
             if (!Smarts.Parse(query, "C*C"))
                 Assert.Fail(Smarts.GetLastErrorMessage());
 
@@ -572,7 +571,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void TestUITSymmetricMatch()
         {
-            var q = new QueryAtomContainer(builder);
+            var q = new QueryAtomContainer();
             if (!Smarts.Parse(q, "C**C"))
                 Assert.Fail(Smarts.GetLastErrorMessage());
 

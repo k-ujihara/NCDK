@@ -22,7 +22,6 @@
  */
 
 using NCDK.Common.Collections;
-using NCDK.Config;
 using NCDK.Isomorphisms.Matchers;
 using NCDK.Stereo;
 using System;
@@ -1233,7 +1232,7 @@ namespace NCDK.SMARTS
                             }
                             if (end == str.Length)
                                 return false;
-                            IAtomContainer submol = new QueryAtomContainer(mol.Builder);
+                            IAtomContainer submol = new QueryAtomContainer();
                             if (!new Parser(submol, str.Substring(beg, end - beg - 1), flav).Parse())
                                 return false;
                             if (submol.Atoms.Count == 1)
@@ -1421,7 +1420,7 @@ namespace NCDK.SMARTS
 
             private bool ParseAtomExpr()
             {
-                QueryAtom atom = new QueryAtom(mol.Builder);
+                QueryAtom atom = new QueryAtom();
                 var expr = new Expr(ExprType.None);
                 atom.Expression = expr;
                 if (!ParseExplicitHydrogen(atom, expr)
@@ -1436,7 +1435,7 @@ namespace NCDK.SMARTS
 
             bool ParseBondExpr()
             {
-                bond = new QueryBond(mol.Builder) { Expression = new Expr(ExprType.None) };
+                bond = new QueryBond() { Expression = new Expr(ExprType.None) };
                 while (bond.Atoms.Count < 2)
                     bond.Atoms.Add(null);
 
@@ -1502,7 +1501,7 @@ namespace NCDK.SMARTS
                 }
                 if (bond == null)
                 {
-                    bond = new QueryBond(null) { Expression = null };
+                    bond = new QueryBond() { Expression = null };
                     while (bond.Atoms.Count < 2)
                         bond.Atoms.Add(null);
                 }
@@ -1792,7 +1791,7 @@ namespace NCDK.SMARTS
                 {
                     if (bond == null)
                     {
-                        bond = new QueryBond(mol.Builder) { Expression = new Expr(ExprType.SingleOrAromatic) };
+                        bond = new QueryBond() { Expression = new Expr(ExprType.SingleOrAromatic) };
                         while (bond.Atoms.Count < 2)
                             bond.Atoms.Add(null);
                     }
@@ -1809,7 +1808,7 @@ namespace NCDK.SMARTS
 
             void Append(Expr expr)
             {
-                var atom = new QueryAtom(mol.Builder) { Expression = expr };
+                var atom = new QueryAtom() { Expression = expr };
                 Append(atom);
             }
 

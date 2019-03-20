@@ -21,7 +21,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Config;
 using NCDK.Graphs;
 using NCDK.SMARTS;
 using NCDK.Tools;
@@ -88,11 +87,6 @@ namespace NCDK.Fingerprints
         private Dictionary<string, SmartsPattern> cache = new Dictionary<string, SmartsPattern>();
 
         public PubchemFingerprinter()
-            : this(Silent.ChemObjectBuilder.Instance)
-        {
-        }
-
-        public PubchemFingerprinter(IChemObjectBuilder builder)
         {
             m_bits = new byte[(FPSize + 7) >> 3];
         }
@@ -113,7 +107,8 @@ namespace NCDK.Fingerprints
             BitArray fp = new BitArray(FPSize);
             for (int i = 0; i < FPSize; i++)
             {
-                if (IsBitOn(i)) fp.Set(i, true);
+                if (IsBitOn(i))
+                    fp.Set(i, true);
             }
             return new BitSetFingerprint(fp);
         }
@@ -183,8 +178,10 @@ namespace NCDK.Fingerprints
             {
                 foreach (var ringBond in ring.Bonds)
                 {
-                    if (ringBond.Order != BondOrder.Single || ringBond.IsAromatic
-                            || ringBond.IsSingleOrDouble) return false;
+                    if (ringBond.Order != BondOrder.Single
+                     || ringBond.IsAromatic
+                     || ringBond.IsSingleOrDouble)
+                        return false;
                 }
                 return true;
             }
@@ -199,7 +196,8 @@ namespace NCDK.Fingerprints
                 int c = 0;
                 foreach (var ringAtom in ring.Atoms)
                 {
-                    if (ringAtom.AtomicNumber.Equals(AtomicNumbers.N)) c++;
+                    if (ringAtom.AtomicNumber.Equals(AtomicNumbers.N))
+                        c++;
                 }
                 return c;
             }
@@ -403,16 +401,17 @@ namespace NCDK.Fingerprints
 
             // note the IChemObjectBuilder is passed as null because the SMARTSQueryTool
             // isn't needed when decoding
-            PubchemFingerprinter pc = new PubchemFingerprinter(null);
+            var pc = new PubchemFingerprinter();
             for (int i = 0; i < pc.m_bits.Length; ++i)
             {
                 pc.m_bits[i] = fp[i + 4];
             }
 
-            BitArray ret = new BitArray(FPSize);
+            var ret = new BitArray(FPSize);
             for (int i = 0; i < FPSize; i++)
             {
-                if (pc.IsBitOn(i)) ret.Set(i, true);
+                if (pc.IsBitOn(i))
+                    ret.Set(i, true);
             }
             return ret;
         }
@@ -715,321 +714,467 @@ namespace NCDK.Fingerprints
             int b;
 
             b = 115;
-            if (cr.CountAnyRing(3) >= 1) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountAnyRing(3) >= 1)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 116;
-            if (cr.CountSaturatedOrAromaticCarbonOnlyRing(3) >= 1) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountSaturatedOrAromaticCarbonOnlyRing(3) >= 1)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 117;
-            if (cr.CountSaturatedOrAromaticNitrogenContainingRing(3) >= 1) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountSaturatedOrAromaticNitrogenContainingRing(3) >= 1)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 118;
-            if (cr.CountSaturatedOrAromaticHeteroContainingRing(3) >= 1) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountSaturatedOrAromaticHeteroContainingRing(3) >= 1)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 119;
-            if (cr.CountUnsaturatedCarbonOnlyRing(3) >= 1) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountUnsaturatedCarbonOnlyRing(3) >= 1)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 120;
-            if (cr.CountUnsaturatedNitrogenContainingRing(3) >= 1) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountUnsaturatedNitrogenContainingRing(3) >= 1)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 121;
-            if (cr.CountUnsaturatedHeteroContainingRing(3) >= 1) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountUnsaturatedHeteroContainingRing(3) >= 1)
+                fp[b >> 3] |= (byte)Mask[b % 8];
 
             b = 122;
-            if (cr.CountAnyRing(3) >= 2) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountAnyRing(3) >= 2)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 123;
-            if (cr.CountSaturatedOrAromaticCarbonOnlyRing(3) >= 2) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountSaturatedOrAromaticCarbonOnlyRing(3) >= 2)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 124;
-            if (cr.CountSaturatedOrAromaticNitrogenContainingRing(3) >= 2) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountSaturatedOrAromaticNitrogenContainingRing(3) >= 2)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 125;
-            if (cr.CountSaturatedOrAromaticHeteroContainingRing(3) >= 2) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountSaturatedOrAromaticHeteroContainingRing(3) >= 2)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 126;
-            if (cr.CountUnsaturatedCarbonOnlyRing(3) >= 2) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountUnsaturatedCarbonOnlyRing(3) >= 2)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 127;
-            if (cr.CountUnsaturatedNitrogenContainingRing(3) >= 2) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountUnsaturatedNitrogenContainingRing(3) >= 2)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 128;
-            if (cr.CountUnsaturatedHeteroContainingRing(3) >= 2) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountUnsaturatedHeteroContainingRing(3) >= 2)
+                fp[b >> 3] |= (byte)Mask[b % 8];
 
             b = 129;
-            if (cr.CountAnyRing(4) >= 1) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountAnyRing(4) >= 1)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 130;
-            if (cr.CountSaturatedOrAromaticCarbonOnlyRing(4) >= 1) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountSaturatedOrAromaticCarbonOnlyRing(4) >= 1)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 131;
-            if (cr.CountSaturatedOrAromaticNitrogenContainingRing(4) >= 1) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountSaturatedOrAromaticNitrogenContainingRing(4) >= 1)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 132;
-            if (cr.CountSaturatedOrAromaticHeteroContainingRing(4) >= 1) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountSaturatedOrAromaticHeteroContainingRing(4) >= 1)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 133;
-            if (cr.CountUnsaturatedCarbonOnlyRing(4) >= 1) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountUnsaturatedCarbonOnlyRing(4) >= 1)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 134;
-            if (cr.CountUnsaturatedNitrogenContainingRing(4) >= 1) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountUnsaturatedNitrogenContainingRing(4) >= 1)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 135;
-            if (cr.CountUnsaturatedHeteroContainingRing(4) >= 1) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountUnsaturatedHeteroContainingRing(4) >= 1)
+                fp[b >> 3] |= (byte)Mask[b % 8];
 
             b = 136;
-            if (cr.CountAnyRing(4) >= 2) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountAnyRing(4) >= 2)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 137;
-            if (cr.CountSaturatedOrAromaticCarbonOnlyRing(4) >= 2) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountSaturatedOrAromaticCarbonOnlyRing(4) >= 2)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 138;
-            if (cr.CountSaturatedOrAromaticNitrogenContainingRing(4) >= 2) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountSaturatedOrAromaticNitrogenContainingRing(4) >= 2)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 139;
-            if (cr.CountSaturatedOrAromaticHeteroContainingRing(4) >= 2) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountSaturatedOrAromaticHeteroContainingRing(4) >= 2)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 140;
             if (cr.CountUnsaturatedCarbonOnlyRing(4) >= 2) fp[b >> 3] |= (byte)Mask[b % 8];
             b = 141;
-            if (cr.CountUnsaturatedNitrogenContainingRing(4) >= 2) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountUnsaturatedNitrogenContainingRing(4) >= 2)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 142;
-            if (cr.CountUnsaturatedHeteroContainingRing(4) >= 2) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountUnsaturatedHeteroContainingRing(4) >= 2)
+                fp[b >> 3] |= (byte)Mask[b % 8];
 
             b = 143;
-            if (cr.CountAnyRing(5) >= 1) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountAnyRing(5) >= 1)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 144;
-            if (cr.CountSaturatedOrAromaticCarbonOnlyRing(5) >= 1) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountSaturatedOrAromaticCarbonOnlyRing(5) >= 1)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 145;
-            if (cr.CountSaturatedOrAromaticNitrogenContainingRing(5) >= 1) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountSaturatedOrAromaticNitrogenContainingRing(5) >= 1)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 146;
-            if (cr.CountSaturatedOrAromaticHeteroContainingRing(5) >= 1) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountSaturatedOrAromaticHeteroContainingRing(5) >= 1)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 147;
-            if (cr.CountUnsaturatedCarbonOnlyRing(5) >= 1) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountUnsaturatedCarbonOnlyRing(5) >= 1)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 148;
-            if (cr.CountUnsaturatedNitrogenContainingRing(5) >= 1) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountUnsaturatedNitrogenContainingRing(5) >= 1)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 149;
-            if (cr.CountUnsaturatedHeteroContainingRing(5) >= 1) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountUnsaturatedHeteroContainingRing(5) >= 1)
+                fp[b >> 3] |= (byte)Mask[b % 8];
 
             b = 150;
-            if (cr.CountAnyRing(5) >= 2) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountAnyRing(5) >= 2)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 151;
-            if (cr.CountSaturatedOrAromaticCarbonOnlyRing(5) >= 2) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountSaturatedOrAromaticCarbonOnlyRing(5) >= 2)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 152;
-            if (cr.CountSaturatedOrAromaticNitrogenContainingRing(5) >= 2) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountSaturatedOrAromaticNitrogenContainingRing(5) >= 2)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 153;
-            if (cr.CountSaturatedOrAromaticHeteroContainingRing(5) >= 2) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountSaturatedOrAromaticHeteroContainingRing(5) >= 2)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 154;
-            if (cr.CountUnsaturatedCarbonOnlyRing(5) >= 2) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountUnsaturatedCarbonOnlyRing(5) >= 2)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 155;
-            if (cr.CountUnsaturatedNitrogenContainingRing(5) >= 2) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountUnsaturatedNitrogenContainingRing(5) >= 2)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 156;
-            if (cr.CountUnsaturatedHeteroContainingRing(5) >= 2) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountUnsaturatedHeteroContainingRing(5) >= 2)
+                fp[b >> 3] |= (byte)Mask[b % 8];
 
             b = 157;
-            if (cr.CountAnyRing(5) >= 3) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountAnyRing(5) >= 3)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 158;
-            if (cr.CountSaturatedOrAromaticCarbonOnlyRing(5) >= 3) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountSaturatedOrAromaticCarbonOnlyRing(5) >= 3)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 159;
-            if (cr.CountSaturatedOrAromaticNitrogenContainingRing(5) >= 3) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountSaturatedOrAromaticNitrogenContainingRing(5) >= 3)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 160;
-            if (cr.CountSaturatedOrAromaticHeteroContainingRing(5) >= 3) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountSaturatedOrAromaticHeteroContainingRing(5) >= 3)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 161;
-            if (cr.CountUnsaturatedCarbonOnlyRing(5) >= 3) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountUnsaturatedCarbonOnlyRing(5) >= 3)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 162;
-            if (cr.CountUnsaturatedNitrogenContainingRing(5) >= 3) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountUnsaturatedNitrogenContainingRing(5) >= 3)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 163;
-            if (cr.CountUnsaturatedHeteroContainingRing(5) >= 3) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountUnsaturatedHeteroContainingRing(5) >= 3)
+                fp[b >> 3] |= (byte)Mask[b % 8];
 
             b = 164;
-            if (cr.CountAnyRing(5) >= 4) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountAnyRing(5) >= 4)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 165;
-            if (cr.CountSaturatedOrAromaticCarbonOnlyRing(5) >= 4) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountSaturatedOrAromaticCarbonOnlyRing(5) >= 4)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 166;
-            if (cr.CountSaturatedOrAromaticNitrogenContainingRing(5) >= 4) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountSaturatedOrAromaticNitrogenContainingRing(5) >= 4)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 167;
-            if (cr.CountSaturatedOrAromaticHeteroContainingRing(5) >= 4) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountSaturatedOrAromaticHeteroContainingRing(5) >= 4)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 168;
-            if (cr.CountUnsaturatedCarbonOnlyRing(5) >= 4) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountUnsaturatedCarbonOnlyRing(5) >= 4)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 169;
-            if (cr.CountUnsaturatedNitrogenContainingRing(5) >= 4) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountUnsaturatedNitrogenContainingRing(5) >= 4)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 170;
-            if (cr.CountUnsaturatedHeteroContainingRing(5) >= 4) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountUnsaturatedHeteroContainingRing(5) >= 4)
+                fp[b >> 3] |= (byte)Mask[b % 8];
 
             b = 171;
-            if (cr.CountAnyRing(5) >= 5) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountAnyRing(5) >= 5)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 172;
-            if (cr.CountSaturatedOrAromaticCarbonOnlyRing(5) >= 5) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountSaturatedOrAromaticCarbonOnlyRing(5) >= 5)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 173;
-            if (cr.CountSaturatedOrAromaticNitrogenContainingRing(5) >= 5) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountSaturatedOrAromaticNitrogenContainingRing(5) >= 5)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 174;
-            if (cr.CountSaturatedOrAromaticHeteroContainingRing(5) >= 5) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountSaturatedOrAromaticHeteroContainingRing(5) >= 5)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 175;
-            if (cr.CountUnsaturatedCarbonOnlyRing(5) >= 5) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountUnsaturatedCarbonOnlyRing(5) >= 5)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 176;
-            if (cr.CountUnsaturatedNitrogenContainingRing(5) >= 5) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountUnsaturatedNitrogenContainingRing(5) >= 5)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 177;
-            if (cr.CountUnsaturatedHeteroContainingRing(5) >= 5) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountUnsaturatedHeteroContainingRing(5) >= 5)
+                fp[b >> 3] |= (byte)Mask[b % 8];
 
             b = 178;
-            if (cr.CountAnyRing(6) >= 1) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountAnyRing(6) >= 1)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 179;
-            if (cr.CountSaturatedOrAromaticCarbonOnlyRing(6) >= 1) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountSaturatedOrAromaticCarbonOnlyRing(6) >= 1)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 180;
-            if (cr.CountSaturatedOrAromaticNitrogenContainingRing(6) >= 1) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountSaturatedOrAromaticNitrogenContainingRing(6) >= 1)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 181;
-            if (cr.CountSaturatedOrAromaticHeteroContainingRing(6) >= 1) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountSaturatedOrAromaticHeteroContainingRing(6) >= 1)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 182;
-            if (cr.CountUnsaturatedCarbonOnlyRing(6) >= 1) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountUnsaturatedCarbonOnlyRing(6) >= 1)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 183;
-            if (cr.CountUnsaturatedNitrogenContainingRing(6) >= 1) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountUnsaturatedNitrogenContainingRing(6) >= 1)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 184;
-            if (cr.CountUnsaturatedHeteroContainingRing(6) >= 1) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountUnsaturatedHeteroContainingRing(6) >= 1)
+                fp[b >> 3] |= (byte)Mask[b % 8];
 
             b = 185;
-            if (cr.CountAnyRing(6) >= 2) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountAnyRing(6) >= 2)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 186;
-            if (cr.CountSaturatedOrAromaticCarbonOnlyRing(6) >= 2) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountSaturatedOrAromaticCarbonOnlyRing(6) >= 2)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 187;
-            if (cr.CountSaturatedOrAromaticNitrogenContainingRing(6) >= 2) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountSaturatedOrAromaticNitrogenContainingRing(6) >= 2)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 188;
-            if (cr.CountSaturatedOrAromaticHeteroContainingRing(6) >= 2) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountSaturatedOrAromaticHeteroContainingRing(6) >= 2)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 189;
-            if (cr.CountUnsaturatedCarbonOnlyRing(6) >= 2) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountUnsaturatedCarbonOnlyRing(6) >= 2)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 190;
-            if (cr.CountUnsaturatedNitrogenContainingRing(6) >= 2) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountUnsaturatedNitrogenContainingRing(6) >= 2)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 191;
-            if (cr.CountUnsaturatedHeteroContainingRing(6) >= 2) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountUnsaturatedHeteroContainingRing(6) >= 2)
+                fp[b >> 3] |= (byte)Mask[b % 8];
 
             b = 192;
-            if (cr.CountAnyRing(6) >= 3) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountAnyRing(6) >= 3)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 193;
-            if (cr.CountSaturatedOrAromaticCarbonOnlyRing(6) >= 3) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountSaturatedOrAromaticCarbonOnlyRing(6) >= 3)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 194;
-            if (cr.CountSaturatedOrAromaticNitrogenContainingRing(6) >= 3) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountSaturatedOrAromaticNitrogenContainingRing(6) >= 3)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 195;
-            if (cr.CountSaturatedOrAromaticHeteroContainingRing(6) >= 3) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountSaturatedOrAromaticHeteroContainingRing(6) >= 3)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 196;
-            if (cr.CountUnsaturatedCarbonOnlyRing(6) >= 3) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountUnsaturatedCarbonOnlyRing(6) >= 3)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 197;
-            if (cr.CountUnsaturatedNitrogenContainingRing(6) >= 3) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountUnsaturatedNitrogenContainingRing(6) >= 3)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 198;
-            if (cr.CountUnsaturatedHeteroContainingRing(6) >= 3) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountUnsaturatedHeteroContainingRing(6) >= 3)
+                fp[b >> 3] |= (byte)Mask[b % 8];
 
             b = 199;
             if (cr.CountAnyRing(6) >= 4) fp[b >> 3] |= (byte)Mask[b % 8];
             b = 200;
-            if (cr.CountSaturatedOrAromaticCarbonOnlyRing(6) >= 4) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountSaturatedOrAromaticCarbonOnlyRing(6) >= 4)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 201;
-            if (cr.CountSaturatedOrAromaticNitrogenContainingRing(6) >= 4) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountSaturatedOrAromaticNitrogenContainingRing(6) >= 4)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 202;
-            if (cr.CountSaturatedOrAromaticHeteroContainingRing(6) >= 4) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountSaturatedOrAromaticHeteroContainingRing(6) >= 4)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 203;
-            if (cr.CountUnsaturatedCarbonOnlyRing(6) >= 4) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountUnsaturatedCarbonOnlyRing(6) >= 4)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 204;
-            if (cr.CountUnsaturatedNitrogenContainingRing(6) >= 4) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountUnsaturatedNitrogenContainingRing(6) >= 4)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 205;
-            if (cr.CountUnsaturatedHeteroContainingRing(6) >= 4) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountUnsaturatedHeteroContainingRing(6) >= 4)
+                fp[b >> 3] |= (byte)Mask[b % 8];
 
             b = 206;
-            if (cr.CountAnyRing(6) >= 5) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountAnyRing(6) >= 5)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 207;
-            if (cr.CountSaturatedOrAromaticCarbonOnlyRing(6) >= 5) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountSaturatedOrAromaticCarbonOnlyRing(6) >= 5)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 208;
-            if (cr.CountSaturatedOrAromaticNitrogenContainingRing(6) >= 5) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountSaturatedOrAromaticNitrogenContainingRing(6) >= 5)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 209;
-            if (cr.CountSaturatedOrAromaticHeteroContainingRing(6) >= 5) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountSaturatedOrAromaticHeteroContainingRing(6) >= 5)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 210;
-            if (cr.CountUnsaturatedCarbonOnlyRing(6) >= 5) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountUnsaturatedCarbonOnlyRing(6) >= 5)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 211;
-            if (cr.CountUnsaturatedNitrogenContainingRing(6) >= 5) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountUnsaturatedNitrogenContainingRing(6) >= 5)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 212;
-            if (cr.CountUnsaturatedHeteroContainingRing(6) >= 5) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountUnsaturatedHeteroContainingRing(6) >= 5)
+                fp[b >> 3] |= (byte)Mask[b % 8];
 
             b = 213;
-            if (cr.CountAnyRing(7) >= 1) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountAnyRing(7) >= 1)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 214;
-            if (cr.CountSaturatedOrAromaticCarbonOnlyRing(7) >= 1) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountSaturatedOrAromaticCarbonOnlyRing(7) >= 1)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 215;
-            if (cr.CountSaturatedOrAromaticNitrogenContainingRing(7) >= 1) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountSaturatedOrAromaticNitrogenContainingRing(7) >= 1)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 216;
-            if (cr.CountSaturatedOrAromaticHeteroContainingRing(7) >= 1) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountSaturatedOrAromaticHeteroContainingRing(7) >= 1)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 217;
-            if (cr.CountUnsaturatedCarbonOnlyRing(7) >= 1) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountUnsaturatedCarbonOnlyRing(7) >= 1)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 218;
-            if (cr.CountUnsaturatedNitrogenContainingRing(7) >= 1) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountUnsaturatedNitrogenContainingRing(7) >= 1)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 219;
-            if (cr.CountUnsaturatedHeteroContainingRing(7) >= 1) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountUnsaturatedHeteroContainingRing(7) >= 1)
+                fp[b >> 3] |= (byte)Mask[b % 8];
 
             b = 220;
-            if (cr.CountAnyRing(7) >= 2) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountAnyRing(7) >= 2)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 221;
-            if (cr.CountSaturatedOrAromaticCarbonOnlyRing(7) >= 2) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountSaturatedOrAromaticCarbonOnlyRing(7) >= 2)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 222;
-            if (cr.CountSaturatedOrAromaticNitrogenContainingRing(7) >= 2) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountSaturatedOrAromaticNitrogenContainingRing(7) >= 2)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 223;
-            if (cr.CountSaturatedOrAromaticHeteroContainingRing(7) >= 2) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountSaturatedOrAromaticHeteroContainingRing(7) >= 2)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 224;
-            if (cr.CountUnsaturatedCarbonOnlyRing(7) >= 2) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountUnsaturatedCarbonOnlyRing(7) >= 2)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 225;
-            if (cr.CountUnsaturatedNitrogenContainingRing(7) >= 2) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountUnsaturatedNitrogenContainingRing(7) >= 2)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 226;
-            if (cr.CountUnsaturatedHeteroContainingRing(7) >= 2) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountUnsaturatedHeteroContainingRing(7) >= 2)
+                fp[b >> 3] |= (byte)Mask[b % 8];
 
             b = 227;
-            if (cr.CountAnyRing(8) >= 1) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountAnyRing(8) >= 1)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 228;
-            if (cr.CountSaturatedOrAromaticCarbonOnlyRing(8) >= 1) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountSaturatedOrAromaticCarbonOnlyRing(8) >= 1)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 229;
-            if (cr.CountSaturatedOrAromaticNitrogenContainingRing(8) >= 1) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountSaturatedOrAromaticNitrogenContainingRing(8) >= 1)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 230;
-            if (cr.CountSaturatedOrAromaticHeteroContainingRing(8) >= 1) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountSaturatedOrAromaticHeteroContainingRing(8) >= 1)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 231;
-            if (cr.CountUnsaturatedCarbonOnlyRing(8) >= 1) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountUnsaturatedCarbonOnlyRing(8) >= 1)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 232;
-            if (cr.CountUnsaturatedNitrogenContainingRing(8) >= 1) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountUnsaturatedNitrogenContainingRing(8) >= 1)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 233;
-            if (cr.CountUnsaturatedHeteroContainingRing(8) >= 1) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountUnsaturatedHeteroContainingRing(8) >= 1)
+                fp[b >> 3] |= (byte)Mask[b % 8];
 
             b = 234;
-            if (cr.CountAnyRing(8) >= 2) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountAnyRing(8) >= 2)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 235;
-            if (cr.CountSaturatedOrAromaticCarbonOnlyRing(8) >= 2) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountSaturatedOrAromaticCarbonOnlyRing(8) >= 2)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 236;
-            if (cr.CountSaturatedOrAromaticNitrogenContainingRing(8) >= 2) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountSaturatedOrAromaticNitrogenContainingRing(8) >= 2)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 237;
-            if (cr.CountSaturatedOrAromaticHeteroContainingRing(8) >= 2) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountSaturatedOrAromaticHeteroContainingRing(8) >= 2)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 238;
-            if (cr.CountUnsaturatedCarbonOnlyRing(8) >= 2) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountUnsaturatedCarbonOnlyRing(8) >= 2)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 239;
-            if (cr.CountUnsaturatedNitrogenContainingRing(8) >= 2) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountUnsaturatedNitrogenContainingRing(8) >= 2)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 240;
-            if (cr.CountUnsaturatedHeteroContainingRing(8) >= 2) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountUnsaturatedHeteroContainingRing(8) >= 2)
+                fp[b >> 3] |= (byte)Mask[b % 8];
 
             b = 241;
-            if (cr.CountAnyRing(9) >= 1) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountAnyRing(9) >= 1)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 242;
-            if (cr.CountSaturatedOrAromaticCarbonOnlyRing(9) >= 1) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountSaturatedOrAromaticCarbonOnlyRing(9) >= 1)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 243;
-            if (cr.CountSaturatedOrAromaticNitrogenContainingRing(9) >= 1) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountSaturatedOrAromaticNitrogenContainingRing(9) >= 1)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 244;
-            if (cr.CountSaturatedOrAromaticHeteroContainingRing(9) >= 1) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountSaturatedOrAromaticHeteroContainingRing(9) >= 1)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 245;
-            if (cr.CountUnsaturatedCarbonOnlyRing(9) >= 1) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountUnsaturatedCarbonOnlyRing(9) >= 1)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 246;
-            if (cr.CountUnsaturatedNitrogenContainingRing(9) >= 1) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountUnsaturatedNitrogenContainingRing(9) >= 1)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 247;
-            if (cr.CountUnsaturatedHeteroContainingRing(9) >= 1) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountUnsaturatedHeteroContainingRing(9) >= 1)
+                fp[b >> 3] |= (byte)Mask[b % 8];
 
             b = 248;
-            if (cr.CountAnyRing(10) >= 1) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountAnyRing(10) >= 1)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 249;
-            if (cr.CountSaturatedOrAromaticCarbonOnlyRing(10) >= 1) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountSaturatedOrAromaticCarbonOnlyRing(10) >= 1)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 250;
-            if (cr.CountSaturatedOrAromaticNitrogenContainingRing(10) >= 1) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountSaturatedOrAromaticNitrogenContainingRing(10) >= 1)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 251;
-            if (cr.CountSaturatedOrAromaticHeteroContainingRing(10) >= 1) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountSaturatedOrAromaticHeteroContainingRing(10) >= 1)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 252;
-            if (cr.CountUnsaturatedCarbonOnlyRing(10) >= 1) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountUnsaturatedCarbonOnlyRing(10) >= 1)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 253;
-            if (cr.CountUnsaturatedNitrogenContainingRing(10) >= 1) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountUnsaturatedNitrogenContainingRing(10) >= 1)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 254;
-            if (cr.CountUnsaturatedHeteroContainingRing(10) >= 1) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountUnsaturatedHeteroContainingRing(10) >= 1)
+                fp[b >> 3] |= (byte)Mask[b % 8];
 
             b = 255;
-            if (cr.CountAromaticRing() >= 1) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountAromaticRing() >= 1)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 256;
-            if (cr.CountHeteroAromaticRing() >= 1) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountHeteroAromaticRing() >= 1)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 257;
-            if (cr.CountAromaticRing() >= 2) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountAromaticRing() >= 2)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 258;
-            if (cr.CountHeteroAromaticRing() >= 2) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountHeteroAromaticRing() >= 2)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 259;
-            if (cr.CountAromaticRing() >= 3) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountAromaticRing() >= 3)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 260;
-            if (cr.CountHeteroAromaticRing() >= 3) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountHeteroAromaticRing() >= 3)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 261;
-            if (cr.CountAromaticRing() >= 4) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountAromaticRing() >= 4)
+                fp[b >> 3] |= (byte)Mask[b % 8];
             b = 262;
-            if (cr.CountHeteroAromaticRing() >= 4) fp[b >> 3] |= (byte)Mask[b % 8];
+            if (cr.CountHeteroAromaticRing() >= 4)
+                fp[b >> 3] |= (byte)Mask[b % 8];
         }
 
         private void CountSubstructures(byte[] fp, IAtomContainer mol)

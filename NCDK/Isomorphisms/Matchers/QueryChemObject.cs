@@ -22,15 +22,9 @@ namespace NCDK.Isomorphisms.Matchers
 {
     public class QueryChemObject : Silent.ChemObject, IChemObject
     {
-        private readonly IChemObjectBuilder builder;
-
-        /// <inheritdoc/>
-        public override IChemObjectBuilder Builder => builder;
-
-        public QueryChemObject(IChemObjectBuilder builder)
+        public QueryChemObject()
         {
             Id = null;
-            this.builder = builder;
         }
     }
 }

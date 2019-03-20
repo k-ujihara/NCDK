@@ -25,7 +25,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
-using static Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
@@ -37,13 +36,12 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         [TestMethod()]
         public void Matches()
         {
-            TotalValencyAtom matcher = new TotalValencyAtom(4, new Mock<IChemObjectBuilder>().Object);
+            var matcher = new TotalValencyAtom(4);
             var mock_atom = new Mock<IAtom>();
             IAtom atom = mock_atom.Object;
             mock_atom.Setup(n => n.GetProperty<SMARTSAtomInvariants>(SMARTSAtomInvariants.Key)).Returns(
                         new SMARTSAtomInvariants(new Mock<IAtomContainer>().Object, 4, 0,
-                        Array.Empty<int>(), 0,
-                                0, 0, 0));
+                        Array.Empty<int>(), 0, 0, 0, 0));
             Assert.IsTrue(matcher.Matches(atom));
         }
     }

@@ -22,14 +22,13 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Common.Primitives;
+using NCDK.Numerics;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using NCDK.Numerics;
-using System.Text.RegularExpressions;
-using NCDK.Common.Primitives;
 using System.Globalization;
-using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace NCDK.Isomorphisms.Matchers
 {
@@ -62,7 +61,6 @@ namespace NCDK.Isomorphisms.Matchers
     /// </para>
     /// </remarks>
     // @cdk.module  isomorphism
-    // @cdk.githash
     // @cdk.keyword Rgroup
     // @cdk.keyword R group
     // @cdk.keyword R-group
@@ -86,8 +84,8 @@ namespace NCDK.Isomorphisms.Matchers
         /// </summary>
         public IReadOnlyDictionary<IAtom, IReadOnlyDictionary<int, IBond>> RootAttachmentPoints { get; set; }
 
-        public RGroupQuery(IChemObjectBuilder builder)
-            : base(builder)
+        public RGroupQuery()
+            : base()
         {
         }
 
@@ -512,7 +510,7 @@ namespace NCDK.Isomorphisms.Matchers
         {
             if (listOffset == distribution.Length)
             {
-                List<RGroup> mapped = new List<RGroup>();
+                var mapped = new List<RGroup>();
                 foreach (var rgrp in mapping)
                     mapped.Add(rgrp);
                 result.Add(mapped);

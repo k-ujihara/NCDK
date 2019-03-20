@@ -30,7 +30,6 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.IO.Iterator;
-using NCDK.Silent;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -178,7 +177,7 @@ namespace NCDK.Fingerprints.Model
             var strType = classType == CircularFingerprinterClass.ECFP6 ? "ECFP6" : "FCFP6";
             WriteLine($"Comparing hash codes for {strType}/folding={folding}");
 
-            var mol = new EnumerableSDFReader(new StringReader(molstr), ChemObjectBuilder.Instance).First();
+            var mol = new EnumerableSDFReader(new StringReader(molstr)).First();
             var model = new Bayesian(classType, folding);
             model.AddMolecule(mol, false);
 
@@ -255,7 +254,7 @@ namespace NCDK.Fingerprints.Model
             {
                 using (var ins = ResourceLoader.GetAsStream("NCDK.Data.CDD." + sdfile))
                 {
-                    var rdr = new EnumerableSDFReader(ins, ChemObjectBuilder.Instance);
+                    var rdr = new EnumerableSDFReader(ins);
 
                     foreach (var mol in rdr)
                     {
@@ -316,7 +315,7 @@ namespace NCDK.Fingerprints.Model
 
             using (var ins = ResourceLoader.GetAsStream($"NCDK.Data.CDD.{sdfile}"))
             {
-                var rdr = new EnumerableSDFReader(ins, ChemObjectBuilder.Instance);
+                var rdr = new EnumerableSDFReader(ins);
 
                 int row = 0;
                 foreach (var mol in rdr)
@@ -349,7 +348,7 @@ namespace NCDK.Fingerprints.Model
                 var model = new Bayesian(classType, folding) { PerceiveStereo = perceiveStereo };
 
                 int row = 0, numActives = 0;
-                using (var rdr = new EnumerableSDFReader(ResourceLoader.GetAsStream($"NCDK.Data.CDD.{sdfile}"), ChemObjectBuilder.Instance))
+                using (var rdr = new EnumerableSDFReader(ResourceLoader.GetAsStream($"NCDK.Data.CDD.{sdfile}")))
                 {
                     foreach (var mol in rdr)
                     {

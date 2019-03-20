@@ -38,8 +38,8 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         /// Creates a new instance
         /// </summary>
         /// <param name="order">the order of bond</param>
-        public OrderQueryBond(BondOrder order, IChemObjectBuilder builder)
-            : base(builder)
+        public OrderQueryBond(BondOrder order)
+            : base()
         {
             this.Order = order;
         }

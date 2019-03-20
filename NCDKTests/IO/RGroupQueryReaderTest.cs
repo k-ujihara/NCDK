@@ -23,11 +23,10 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
 using NCDK.IO.Formats;
 using NCDK.Isomorphisms.Matchers;
+using NCDK.Silent;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -87,7 +86,7 @@ namespace NCDK.IO
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
             RGroupQueryReader reader = new RGroupQueryReader(ins);
-            RGroupQuery rGroupQuery = (RGroupQuery)reader.Read(new RGroupQuery(ChemObjectBuilder.Instance));
+            RGroupQuery rGroupQuery = (RGroupQuery)reader.Read(new RGroupQuery());
             reader.Close();
             Assert.IsNotNull(rGroupQuery);
             Assert.AreEqual(rGroupQuery.RGroupDefinitions.Count, 1);
@@ -164,7 +163,7 @@ namespace NCDK.IO
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
             var reader = new RGroupQueryReader(ins);
-            var rGroupQuery = (RGroupQuery)reader.Read(new RGroupQuery(ChemObjectBuilder.Instance));
+            var rGroupQuery = reader.Read(new RGroupQuery());
             reader.Close();
             Assert.IsNotNull(rGroupQuery);
             Assert.AreEqual(rGroupQuery.RGroupDefinitions.Count, 3);
@@ -264,7 +263,7 @@ namespace NCDK.IO
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
             RGroupQueryReader reader = new RGroupQueryReader(ins);
-            RGroupQuery rGroupQuery = (RGroupQuery)reader.Read(new RGroupQuery(ChemObjectBuilder.Instance));
+            RGroupQuery rGroupQuery = reader.Read(new RGroupQuery());
             reader.Close();
             Assert.IsNotNull(rGroupQuery);
             Assert.AreEqual(rGroupQuery.RGroupDefinitions.Count, 1);
@@ -309,7 +308,7 @@ namespace NCDK.IO
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
             var reader = new RGroupQueryReader(ins);
-            var rGroupQuery = (RGroupQuery)reader.Read(new RGroupQuery(ChemObjectBuilder.Instance));
+            var rGroupQuery = reader.Read(new RGroupQuery());
             reader.Close();
             Assert.IsNotNull(rGroupQuery);
             Assert.AreEqual(rGroupQuery.RGroupDefinitions.Count, 1);
@@ -347,7 +346,7 @@ namespace NCDK.IO
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
             var reader = new RGroupQueryReader(ins);
-            var rGroupQuery = reader.Read(new RGroupQuery(ChemObjectBuilder.Instance));
+            var rGroupQuery = reader.Read(new RGroupQuery());
             reader.Close();
             Assert.IsNotNull(rGroupQuery);
             Assert.AreEqual(rGroupQuery.RGroupDefinitions.Count, 4);
@@ -369,7 +368,7 @@ namespace NCDK.IO
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
             var reader = new RGroupQueryReader(ins);
-            var rGroupQuery = (RGroupQuery)reader.Read(new RGroupQuery(ChemObjectBuilder.Instance));
+            var rGroupQuery = reader.Read(new RGroupQuery());
             reader.Close();
             Assert.IsNotNull(rGroupQuery);
             Assert.AreEqual(rGroupQuery.RGroupDefinitions.Count, 3);
@@ -398,7 +397,7 @@ namespace NCDK.IO
             Trace.TraceInformation("Testing: " + filename);
             var ins = ResourceLoader.GetAsStream(filename);
             var reader = new RGroupQueryReader(ins);
-            var rGroupQuery = reader.Read(new RGroupQuery(ChemObjectBuilder.Instance));
+            var rGroupQuery = reader.Read(new RGroupQuery());
             reader.Close();
             Assert.IsNotNull(rGroupQuery);
             Assert.AreEqual(rGroupQuery.RGroupDefinitions.Count, 1);

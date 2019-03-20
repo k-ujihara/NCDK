@@ -47,7 +47,6 @@ namespace NCDK.Tools.Manipulator
     /// it participates too.
     /// </example>
     // @cdk.module standard
-    // @cdk.githash
     // @author  Egon Willighagen
     // @cdk.created 2003-08-07
     public static class AtomContainerManipulator
@@ -129,7 +128,7 @@ namespace NCDK.Tools.Manipulator
                     {
                         updated = true;
                         var cpy = new Sgroup();
-                        foreach (IAtom atom in org.Atoms)
+                        foreach (var atom in org.Atoms)
                         {
                             if (!oldAtom.Equals(atom))
                                 cpy.Atoms.Add(atom);

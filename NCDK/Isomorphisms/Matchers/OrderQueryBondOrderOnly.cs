@@ -29,12 +29,12 @@ namespace NCDK.Isomorphisms.Matchers
     [Obsolete("Use new QueryBond(beg, end, ORDER, bord)")]
     public class OrderQueryBondOrderOnly : QueryBond, IQueryBond
     {
-        public OrderQueryBondOrderOnly(IChemObjectBuilder builder)
-            : base(builder)
+        public OrderQueryBondOrderOnly()
+            : base()
         { }
 
-        public OrderQueryBondOrderOnly(IQueryAtom atom1, IQueryAtom atom2, BondOrder order, IChemObjectBuilder builder)
-            : base(atom1, atom2, order, builder)
+        public OrderQueryBondOrderOnly(IQueryAtom atom1, IQueryAtom atom2, BondOrder order)
+            : base(atom1, atom2, order)
         { }
 
         public override bool Matches(IBond bond)

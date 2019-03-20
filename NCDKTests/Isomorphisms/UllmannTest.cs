@@ -21,11 +21,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
-using NCDK.Common.Base;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NCDK.Common.Base;
 using NCDK.Templates;
-using System.Linq;
 using System;
+using System.Linq;
 
 namespace NCDK.Isomorphisms
 {
@@ -46,7 +47,7 @@ namespace NCDK.Isomorphisms
             Assert.IsTrue(Compares.AreDeepEqual(new int[] { 2, 7, 6, 5, 4, 3 }, match));
             int count = Ullmann.FindSubstructure(
                 TestMoleculeFactory.MakeBenzene()).MatchAll(
-                TestMoleculeFactory.MakeNaphthalene()).ToReadOnlyList().Count;
+                TestMoleculeFactory.MakeNaphthalene()).Count();
             Assert.AreEqual(6, count); // note: aromatic one would be 24
         }
 
@@ -59,7 +60,7 @@ namespace NCDK.Isomorphisms
             Assert.IsTrue(Compares.AreDeepEqual(Array.Empty<int>(), match));
             int count = Ullmann.FindSubstructure(
                 TestMoleculeFactory.MakeNaphthalene()).MatchAll(
-                TestMoleculeFactory.MakeBenzene()).ToReadOnlyList().Count;
+                TestMoleculeFactory.MakeBenzene()).Count();
             Assert.AreEqual(0, count);
         }
     }

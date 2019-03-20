@@ -174,6 +174,7 @@ namespace NCDK.Default
         public virtual int Index => -1;
 
         /// <inheritdoc/>
+        [AlwaysError]
         public virtual IReadOnlyList<IBond> Bonds
         { 
             get { throw new NotSupportedException(); } 
@@ -601,6 +602,7 @@ namespace NCDK.Silent
         public virtual int Index => -1;
 
         /// <inheritdoc/>
+        [AlwaysError]
         public virtual IReadOnlyList<IBond> Bonds
         { 
             get { throw new NotSupportedException(); } 

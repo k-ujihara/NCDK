@@ -37,7 +37,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         [TestMethod()]
         public void Matches()
         {
-            RingMembershipAtom matcher = new RingMembershipAtom(2, new Mock<IChemObjectBuilder>().Object);
+            RingMembershipAtom matcher = new RingMembershipAtom(2);
             var mock_atom = new Mock<IAtom>();
             IAtom atom = mock_atom.Object;
             mock_atom.Setup(n => n.GetProperty<SMARTSAtomInvariants>(SMARTSAtomInvariants.Key)).Returns(
@@ -50,7 +50,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         [TestMethod()]
         public void Mismatches()
         {
-            RingMembershipAtom matcher = new RingMembershipAtom(2, new Mock<IChemObjectBuilder>().Object);
+            RingMembershipAtom matcher = new RingMembershipAtom(2);
             var mock_atom = new Mock<IAtom>();
             IAtom atom = mock_atom.Object;
             mock_atom.Setup(n => n.GetProperty<SMARTSAtomInvariants>(SMARTSAtomInvariants.Key)).Returns(
@@ -63,7 +63,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         [TestMethod()]
         public void None()
         {
-            RingMembershipAtom matcher = new RingMembershipAtom(0, new Mock<IChemObjectBuilder>().Object);
+            RingMembershipAtom matcher = new RingMembershipAtom(0);
             var mock_atom = new Mock<IAtom>();
             IAtom atom = mock_atom.Object;
             mock_atom.Setup(n => n.GetProperty<SMARTSAtomInvariants>(SMARTSAtomInvariants.Key)).Returns(
@@ -75,7 +75,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         [TestMethod()]
         public void Any()
         {
-            RingMembershipAtom matcher = new RingMembershipAtom(-1, new Mock<IChemObjectBuilder>().Object);
+            RingMembershipAtom matcher = new RingMembershipAtom(-1);
             var mock_atom = new Mock<IAtom>();
             IAtom atom = mock_atom.Object;
             mock_atom.Setup(n => n.GetProperty<SMARTSAtomInvariants>(SMARTSAtomInvariants.Key)).Returns(

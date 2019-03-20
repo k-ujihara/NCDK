@@ -33,8 +33,8 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         /// <summary>
         /// Creates a new instance.
         /// </summary>
-        public AromaticOrSingleQueryBond(IChemObjectBuilder builder)
-            : base(builder)
+        public AromaticOrSingleQueryBond()
+            : base()
         {
             IsAromatic = true;
         }
@@ -42,8 +42,8 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         /// <summary>
         /// Creates a new instance
         /// </summary>
-        public AromaticOrSingleQueryBond(IQueryAtom atom1, IQueryAtom atom2, BondOrder order, IChemObjectBuilder builder)
-           : base(atom1, atom2, order, builder)
+        public AromaticOrSingleQueryBond(IQueryAtom atom1, IQueryAtom atom2, BondOrder order)
+           : base(atom1, atom2, order)
         {
             IsAromatic = true;
         }

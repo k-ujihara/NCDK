@@ -66,7 +66,7 @@ namespace NCDK.Fingerprints
         public override IBitFingerprint GetBitFingerprint(IAtomContainer atomContainer)
         {
             int bitsetLength = PATTERNS.Count;
-            BitArray fingerPrint = new BitArray(bitsetLength);
+            var fingerPrint = new BitArray(bitsetLength);
 
             SmartsPattern.Prepare(atomContainer);
             for (int i = 0; i < PATTERNS.Count; i++)

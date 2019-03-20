@@ -16,9 +16,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
-using NCDK.Silent;
 
 namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
@@ -34,15 +33,15 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         public void TestMatches()
         {
             IBond testBond = null;
-            AnyOrderQueryBond matcher = new AnyOrderQueryBond(new Mock<IChemObjectBuilder>().Object);
+            var matcher = new AnyOrderQueryBond();
             Assert.IsFalse(matcher.Matches(testBond));
         }
 
         [TestMethod()]
         public void TestAnyOrder()
         {
-            AnyOrderQueryBond matcher = new AnyOrderQueryBond(new Mock<IChemObjectBuilder>().Object);
-            IBond testBond = new Bond();
+            var matcher = new AnyOrderQueryBond();
+            var testBond = Silent.ChemObjectBuilder.Instance.NewBond();
             foreach (var order in BondOrderTools.Values)
             {
                 testBond.Order = order;

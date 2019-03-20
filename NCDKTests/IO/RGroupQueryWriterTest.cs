@@ -144,7 +144,7 @@ namespace NCDK.IO
             RGroupQueryWriter rgw = new RGroupQueryWriter(sw);
             var ins = ResourceLoader.GetAsStream(file);
             RGroupQueryReader reader = new RGroupQueryReader(ins);
-            RGroupQuery rGroupQuery = (RGroupQuery)reader.Read(new RGroupQuery(ChemObjectBuilder.Instance));
+            RGroupQuery rGroupQuery = (RGroupQuery)reader.Read(new RGroupQuery());
             rgw.Write(rGroupQuery);
             string output = sw.ToString();
             return output;

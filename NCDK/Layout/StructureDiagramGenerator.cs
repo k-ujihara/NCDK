@@ -2357,7 +2357,7 @@ namespace NCDK.Layout
                 // no crossing bonds is easy just map the repeat part and transfer coordinates
                 foreach (var patom in patoms)
                     visit.Remove(patom); // don't need to map parent
-                foreach (var atoms in ptrn.MatchAll(mol).GetUniqueAtoms().ToAtomMap())
+                foreach (var atoms in ptrn.MatchAll(mol).GetUniqueAtoms().ToAtomMaps())
                 {
                     foreach (var e in atoms)
                     {

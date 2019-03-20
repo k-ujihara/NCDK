@@ -25,7 +25,6 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
     /// This matcher any heavy atom that is not C or H.
     /// </summary>
     // @cdk.module  smarts
-    // @cdk.githash
     // @cdk.keyword SMARTS
     [Obsolete]
     public class NonCHHeavyAtom : SMARTSAtom
@@ -33,8 +32,8 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         /// <summary>
         /// Creates a new instance
         /// </summary>
-        public NonCHHeavyAtom(IChemObjectBuilder builder)
-            : base(builder)
+        public NonCHHeavyAtom()
+            : base()
         {
         }
 

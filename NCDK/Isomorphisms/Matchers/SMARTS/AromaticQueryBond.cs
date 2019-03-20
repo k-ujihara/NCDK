@@ -30,14 +30,14 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
     [Obsolete]
     public class AromaticQueryBond : SMARTSBond
     {
-        public AromaticQueryBond(IChemObjectBuilder builder)
-            : base(builder)
+        public AromaticQueryBond()
+            : base()
         {
             IsAromatic = true;
         }
 
-        public AromaticQueryBond(IQueryAtom atom1, IQueryAtom atom2, BondOrder order, IChemObjectBuilder builder)
-            : base(atom1, atom2, order, builder)
+        public AromaticQueryBond(IQueryAtom atom1, IQueryAtom atom2, BondOrder order)
+            : base(atom1, atom2, order)
         {
             IsAromatic = true;
         }

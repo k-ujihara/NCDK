@@ -28,7 +28,6 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
     /// </summary>
     // @cdk.module smarts
     // @cdk.keyword SMARTS
-    // @cdk.githash
     [Obsolete]
     public sealed class ExplicitConnectionAtom : SMARTSAtom
     {
@@ -39,8 +38,8 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         /// Create a query atom for matching the degree of an atom. The degree is the
         /// number connected atoms.
         /// </summary>
-        public ExplicitConnectionAtom(int degree, IChemObjectBuilder builder)
-            : base(builder)
+        public ExplicitConnectionAtom(int degree)
+            : base()
         {
             this.degree = degree;
         }

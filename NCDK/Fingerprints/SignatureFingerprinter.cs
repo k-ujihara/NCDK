@@ -32,7 +32,6 @@ namespace NCDK.Fingerprints
     /// </summary>
     // @cdk.module  signature
     // @cdk.keyword fingerprint
-    // @cdk.githash
     public class SignatureFingerprinter : AbstractFingerprinter, IFingerprinter
     {
         private int signatureDepth;

@@ -204,7 +204,7 @@ namespace NCDK.Pharmacophore
 
             // XXX: re-subsearching the query
             var bonds = new List<IReadOnlyList<IBond>>();
-            foreach (var map in mappings.ToBondMap())
+            foreach (var map in mappings.ToBondMaps())
             {
                 bonds.Add(new List<IBond>(map.Values));
             }
@@ -231,7 +231,7 @@ namespace NCDK.Pharmacophore
 
             // query -> target so need to inverse the mapping
             // XXX: re-subsearching the query
-            foreach (var map in mappings.ToBondMap())
+            foreach (var map in mappings.ToBondMaps())
             {
                 var inv = new Dictionary<IBond, IBond>();
                 foreach (var e in map)
@@ -287,7 +287,7 @@ namespace NCDK.Pharmacophore
         {
             var atoms = new List<IReadOnlyList<PharmacophoreAtom>>();
             // XXX: re-subsearching the query
-            foreach (var map in mappings.ToAtomMap())
+            foreach (var map in mappings.ToAtomMaps())
             {
                 var pcoreatoms = new List<PharmacophoreAtom>();
                 foreach (var atom in map.Values)

@@ -183,7 +183,7 @@ namespace NCDK.Layout
             foreach (var template in templates)
             {
                 var mappings = VentoFoggia.FindIdentical(template, anonAtomMatcher, anonBondMatcher).MatchAll(molecule);
-                foreach (var atoms in mappings.ToAtomMap())
+                foreach (var atoms in mappings.ToAtomMaps())
                 {
                     foreach (var e in atoms)
                     {
@@ -209,7 +209,7 @@ namespace NCDK.Layout
             // match element patterns first so hetero atoms are oriented correctly
             foreach (var anonPattern in elemPatterns)
             {
-                foreach (var atoms in anonPattern.MatchAll(molecule).ToAtomMap())
+                foreach (var atoms in anonPattern.MatchAll(molecule).ToAtomMaps())
                 {
                     foreach (var e in atoms)
                     {
@@ -223,7 +223,7 @@ namespace NCDK.Layout
             // no element pattern matched, try anonymous patterns
             foreach (var anonPattern in anonPatterns)
             {
-                foreach (var atoms in anonPattern.MatchAll(molecule).ToAtomMap())
+                foreach (var atoms in anonPattern.MatchAll(molecule).ToAtomMaps())
                 {
                     foreach (var e in atoms)
                     {
@@ -267,7 +267,7 @@ namespace NCDK.Layout
 
             foreach (var anonPattern in anonPatterns)
             {
-                foreach (var map in anonPattern.MatchAll(molecule).GetUniqueAtoms().ToAtomBondMap())
+                foreach (var map in anonPattern.MatchAll(molecule).GetUniqueAtoms().ToAtomBondMaps())
                 {
                     bool overlaps = false;
                     var matched = molecule.Builder.NewAtomContainer();

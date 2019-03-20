@@ -84,7 +84,7 @@ namespace NCDK.Isomorphisms.Matchers
 
         public static QueryAtomContainer CreateSymbolChargeIDQueryContainer(IAtomContainer container)
         {
-            var queryContainer = new QueryAtomContainer(container.Builder);
+            var queryContainer = new QueryAtomContainer();
             for (int i = 0; i < container.Atoms.Count; i++)
             {
                 queryContainer.Atoms.Add(new SymbolChargeIDQueryAtom(container.Atoms[i]));
@@ -95,17 +95,17 @@ namespace NCDK.Isomorphisms.Matchers
                 int index2 = container.Atoms.IndexOf(bond.End);
                 if (bond.IsAromatic)
                 {
-                    QueryBond qbond = new QueryBond(queryContainer.Atoms[index1],
-                                                queryContainer.Atoms[index2],
-                                                ExprType.IsAromatic);
+                    var qbond = new QueryBond(queryContainer.Atoms[index1],
+                                              queryContainer.Atoms[index2],
+                                              ExprType.IsAromatic);
                     queryContainer.Bonds.Add(qbond);
                 }
                 else
                 {
                     QueryBond qbond = new QueryBond(queryContainer.Atoms[index1],
-                                                 queryContainer.Atoms[index2],
-                                                 ExprType.Order,
-                                                 bond.Order.Numeric())
+                                                    queryContainer.Atoms[index2],
+                                                    ExprType.Order,
+                                                    bond.Order.Numeric())
                     {
                         Order = bond.Order // backwards compatibility
                     };

@@ -29,7 +29,6 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
     /// </summary>
     // @cdk.module smarts
     // @cdk.keyword SMARTS
-    // @cdk.githash
     [Obsolete]
     public class RingMembershipAtom : SMARTSAtom
     {
@@ -47,9 +46,8 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         /// this atoms belongs to 0 rings.
         /// </summary>
         /// <param name="num">number of rings which this atom belongs to, &lt; 0 any ring.</param>
-        /// <param name="builder"></param>
-        public RingMembershipAtom(int num, IChemObjectBuilder builder)
-            : base(builder)
+        public RingMembershipAtom(int num)
+            : base()
         {
             this.ringNumber = num;
         }

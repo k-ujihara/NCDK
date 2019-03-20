@@ -31,8 +31,8 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
     public abstract class SMARTSAtom 
         : QueryAtom, IQueryAtom
     {
-        protected SMARTSAtom(IChemObjectBuilder builder)
-            : base(builder)
+        protected SMARTSAtom()
+            : base()
         { }
 
         /// <summary>

@@ -25,13 +25,12 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
     /// bond specified. For example, "C=1CCCCC1".
     /// </summary>
     // @cdk.module  smarts
-    // @cdk.githash
     // @cdk.keyword SMARTS
     [Obsolete]
     public class RingIdentifierAtom : SMARTSAtom
     {
-        public RingIdentifierAtom(IChemObjectBuilder builder)
-            : base(builder)
+        public RingIdentifierAtom()
+            : base()
         { }
 
         public override bool Matches(IAtom atom)

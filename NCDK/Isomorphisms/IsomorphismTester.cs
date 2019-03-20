@@ -26,14 +26,12 @@ namespace NCDK.Isomorphisms
     /// A too simplistic implementation of an isomorphism test for chemical graphs.
     /// </summary>
     /// <remarks>
-    /// <b>Important:</b> as it uses the MorganNumbersTools it does not take bond
-    /// order into account.
-    /// <para>Alternatively, you can use the <see cref="UniversalIsomorphismTester"/>.</para>
+    /// <note type="important">As it uses the <see cref="MorganNumbersTools"/> it does not take bond order 
+    /// into account. Alternatively, you can use the <see cref="UniversalIsomorphismTester"/>.</note>
     /// </remarks>
     /// <seealso cref="MorganNumbersTools"/>
     /// <seealso cref="UniversalIsomorphismTester"/>
     // @cdk.module standard
-    // @cdk.githash
     // @author     steinbeck
     // @cdk.created    2001-09-10
     // @cdk.keyword    isomorphism
@@ -46,22 +44,16 @@ namespace NCDK.Isomorphisms
         IAtomContainer base_ = null;
         IAtomContainer compare = null;
 
-        /// <summary>
-        ///  Constructor for the IsomorphismTester object
-        /// </summary>
         public IsomorphismTester() { }
 
-        /// <summary>
-        ///  Constructor for the IsomorphismTester object
-        /// </summary>
         public IsomorphismTester(IAtomContainer mol)
         {
             SetBaseTable(mol);
         }
 
         /// <summary>
-        ///  Checks whether a given molecule is isomorphic with the one
-        ///  that has been assigned to this IsomorphismTester at construction time.
+        /// Checks whether a given molecule is isomorphic with the one
+        /// that has been assigned to this IsomorphismTester at construction time.
         /// </summary>
         /// <param name="mol1">A first molecule to check against the second one</param>
         /// <param name="mol2">A second molecule to check against the first</param>
@@ -73,8 +65,8 @@ namespace NCDK.Isomorphisms
         }
 
         /// <summary>
-        ///  Checks whether a given molecule is isomorphic with the one
-        ///  that has been assigned to this IsomorphismTester at construction time.
+        /// Checks whether a given molecule is isomorphic with the one
+        /// that has been assigned to this IsomorphismTester at construction time.
         /// </summary>
         /// <param name="mol2">A molecule to check</param>
         /// <returns>True, if the two molecules are isomorphic</returns>
@@ -101,8 +93,8 @@ namespace NCDK.Isomorphisms
                     {
                         atom1 = base_.Atoms[f];
                         atom2 = compare.Atoms[g];
-                        if (!(atom1.Symbol.Equals(atom2.Symbol, StringComparison.Ordinal))
-                                && atom1.ImplicitHydrogenCount == atom2.ImplicitHydrogenCount)
+                        if (atom1.AtomicNumber != atom2.AtomicNumber
+                         && atom1.ImplicitHydrogenCount == atom2.ImplicitHydrogenCount)
                         {
                             return false;
                         }
@@ -117,10 +109,6 @@ namespace NCDK.Isomorphisms
             return true;
         }
 
-        /// <summary>
-        ///  Sets the BaseTable attribute of the IsomorphismTester object
-        /// </summary>
-        /// <param name="mol">The new BaseTable value</param>
         private void SetBaseTable(IAtomContainer mol)
         {
             this.base_ = mol;
@@ -130,10 +118,6 @@ namespace NCDK.Isomorphisms
             Array.Sort(sortedBaseTable);
         }
 
-        /// <summary>
-        ///  Sets the CompareTable attribute of the IsomorphismTester object
-        /// </summary>
-        /// <param name="mol">The new CompareTable value</param>
         private void SetCompareTable(IAtomContainer mol)
         {
             this.compare = mol;

@@ -50,13 +50,8 @@ namespace NCDK.Isomorphisms.Matchers
             Any = 8,
         }
 
-        private readonly IChemObjectBuilder builder;
-        /// <inheritdoc/>
-        public override IChemObjectBuilder Builder => builder;
-
-        public CTFileQueryBond(IChemObjectBuilder builder)
+        public CTFileQueryBond()
         {
-            this.builder = builder;
         }
 
         /// <summary>
@@ -79,7 +74,7 @@ namespace NCDK.Isomorphisms.Matchers
         /// <returns>a new CTFileQueryBond</returns>
         public static CTFileQueryBond OfType(IBond bond, int type)
         {
-            CTFileQueryBond queryBond = new CTFileQueryBond(bond.Builder)
+            var queryBond = new CTFileQueryBond()
             {
                 Order = BondOrder.Unset
             };

@@ -26,7 +26,6 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
     /// <see cref="Not(IQueryAtom)"/> and <see cref="Or(IQueryAtom, IQueryAtom)"/>.
     /// </summary>
     // @cdk.module  smarts
-    // @cdk.githash
     // @cdk.keyword SMARTS
     [Obsolete]
     public class LogicalOperatorAtom : SMARTSAtom
@@ -40,8 +39,8 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         /// <summary>Right child</summary>
         private IQueryAtom right;
 
-        public LogicalOperatorAtom(IChemObjectBuilder builder)
-            : base(builder)
+        public LogicalOperatorAtom()
+            : base()
         {
         }
 
@@ -118,7 +117,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         /// <returns>conjunction of the left and right expressions</returns>
         public static SMARTSAtom And(IQueryAtom left, IQueryAtom right)
         {
-            return new Conjunction(left.Builder, left, right);
+            return new Conjunction(left, right);
         }
 
         /// <summary>
@@ -129,7 +128,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         /// <returns>disjunction of the left and right expressions</returns>
         public static SMARTSAtom Or(IQueryAtom left, IQueryAtom right)
         {
-            return new Disjunction(left.Builder, left, right);
+            return new Disjunction(left, right);
         }
 
         /// <summary>
@@ -139,7 +138,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         /// <returns>a SMARTS atom which is the negation of the expression</returns>
         public static SMARTSAtom Not(IQueryAtom expr)
         {
-            return new Negation(expr.Builder, expr);
+            return new Negation(expr);
         }
 
         /// <summary>Defines a conjunction (AND) between two query atoms.</summary>
@@ -151,11 +150,10 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
             /// <summary>
             /// Create a disjunction of <see cref="Left"/> or <see cref="right"/>.
             /// </summary>
-            /// <param name="builder">chem object builder</param>
             /// <param name="left">the expression to negate</param>
             /// <param name="right">the expression to negate</param>
-            public Conjunction(IChemObjectBuilder builder, IQueryAtom left, IQueryAtom right)
-                : base(builder)
+            public Conjunction(IQueryAtom left, IQueryAtom right)
+                : base()
             {
                 this.left = (SMARTSAtom)left;
                 this.right = (SMARTSAtom)right;
@@ -213,11 +211,10 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
             /// <summary>
             /// Create a disjunction of <see cref="Left"/> or <see cref="right"/>.
             /// </summary>
-            /// <param name="builder">chem object builder</param>
             /// <param name="left">the expression to negate</param>
             /// <param name="right">the expression to negate</param>
-            public Disjunction(IChemObjectBuilder builder, IQueryAtom left, IQueryAtom right)
-                : base(builder)
+            public Disjunction(IQueryAtom left, IQueryAtom right)
+                : base()
             {
                 this.left = (SMARTSAtom)left;
                 this.right = (SMARTSAtom)right;
@@ -275,10 +272,9 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
             /// <summary>
             /// Create a negation of <paramref name="expression"/>.
             /// </summary>
-            /// <param name="builder">chem object builder</param>
             /// <param name="expression">the expression to negate</param>
-            public Negation(IChemObjectBuilder builder, IQueryAtom expression)
-                : base(builder)
+            public Negation(IQueryAtom expression)
+                : base()
             {
                 this.expression = (SMARTSAtom)expression;
                 this.chiral = expression.GetType().Equals(typeof(ChiralityAtom));

@@ -31,7 +31,6 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
     /// The ring connectivity is encoded in smarts using "x&lt;NUMBER&gt;".
     /// </summary>
     // @cdk.module smarts
-    // @cdk.githash
     // @cdk.keyword SMARTS
     [Obsolete]
     public sealed class TotalRingConnectionAtom : SMARTSAtom
@@ -43,9 +42,8 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         /// Create a matcher for the number of rings an atom belongs to.
         /// </summary>
         /// <param name="ringConnectivity">number of ring bonds this atom is adjacent to</param>
-        /// <param name="builder"></param>
-        public TotalRingConnectionAtom(int ringConnectivity, IChemObjectBuilder builder)
-            : base(builder)
+        public TotalRingConnectionAtom(int ringConnectivity)
+            : base()
         {
             this.ringConnectivity = ringConnectivity;
         }

@@ -173,9 +173,9 @@ namespace NCDK.Isomorphisms
             {
                 Mappings mappings = null;
                 #region ToAtomMap
-                foreach (IDictionary<IAtom, IAtom> map in mappings.ToAtomMap())
+                foreach (var map in mappings.ToAtomMaps())
                 {
-                    foreach (KeyValuePair<IAtom, IAtom> e in map)
+                    foreach (var e in map)
                     {
                         IAtom queryAtom = e.Key;
                         IAtom targetAtom = e.Value;
@@ -187,9 +187,9 @@ namespace NCDK.Isomorphisms
             {
                 Mappings mappings = null;
                 #region ToBondMap
-                foreach (IDictionary<IBond, IBond> map in mappings.ToBondMap())
+                foreach (var map in mappings.ToBondMaps())
                 {
-                    foreach (KeyValuePair<IBond, IBond> e in map)
+                    foreach (var e in map)
                     {
                         IBond queryBond = e.Key;
                         IBond targetBond = e.Value;
@@ -203,7 +203,7 @@ namespace NCDK.Isomorphisms
                 Mappings mappings = null;
                 int i = 0;
                 #region ToAtomBondMap
-                foreach (var map in mappings.ToAtomBondMap())
+                foreach (var map in mappings.ToAtomBondMaps())
                 {
                     foreach (var e in map)
                     {

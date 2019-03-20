@@ -39,23 +39,26 @@ namespace NCDK.Isomorphisms
         /// <summary>
         /// Additional filters on results.
         /// </summary>
-        private bool hasStereo, hasQueryStereo, hasCompGrp, hasRxnMap;
+        private bool hasStereo;
+        private bool hasQueryStereo;
+        private bool hasComponentGrouping;
+        private bool hasReactionMap;
 
         internal void DetermineFilters(IAtomContainer query)
         {
             hasStereo = query.StereoElements.Any();
-            hasCompGrp = query.GetProperty<int[]>(ComponentFilter.Key) != null;
+            hasComponentGrouping = query.GetProperty<int[]>(ComponentFilter.Key) != null;
             foreach (var atom in query.Atoms)
             {
                 var compId = atom.GetProperty<int?>(CDKPropertyName.ReactionGroup);
                 var mapIdx = atom.GetProperty<int?>(CDKPropertyName.AtomAtomMapping);
                 if (mapIdx != null && mapIdx != 0)
-                    hasRxnMap = true;
+                    hasReactionMap = true;
                 if (compId != null && compId != 0)
-                    hasCompGrp = true;
+                    hasComponentGrouping = true;
                 if (atom is IQueryAtom)
                     hasQueryStereo = true;
-                if (hasRxnMap && hasCompGrp && hasQueryStereo)
+                if (hasReactionMap && hasComponentGrouping && hasQueryStereo)
                     break;
             }
         }
@@ -66,12 +69,12 @@ namespace NCDK.Isomorphisms
             if (hasStereo)
             {
                 mappings = hasQueryStereo
-                        ? mappings.Filter(n => new QueryStereoFilter(query, target).Apply(n))
-                        : mappings.Filter(n => new StereoMatch(query, target).Apply(n));
+                    ? mappings.Filter(n => new QueryStereoFilter(query, target).Apply(n))
+                    : mappings.Filter(n => new StereoMatch(query, target).Apply(n));
             }
-            if (hasCompGrp)
+            if (hasComponentGrouping)
                 mappings = mappings.Filter(n => new ComponentFilter(query, target).Apply(n));
-            if (hasRxnMap)
+            if (hasReactionMap)
                 mappings = mappings.Filter(n => new AtomMapFilter(query, target).Apply(n));
             return mappings;
         }

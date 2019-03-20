@@ -24,7 +24,6 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
     /// This smarts bond matches any bond that is in a ring.
     /// </summary>
     // @cdk.module  smarts
-    // @cdk.githash
     // @cdk.keyword SMARTS
     [Obsolete]
     public class RingBond : SMARTSBond
@@ -32,8 +31,8 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         /// <summary>
         /// Creates a new instance
         /// </summary>
-        public RingBond(IChemObjectBuilder builder)
-            : base(builder)
+        public RingBond()
+            : base()
         {
             this.IsInRing = true;
         }

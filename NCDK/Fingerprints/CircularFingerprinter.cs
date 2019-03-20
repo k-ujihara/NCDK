@@ -881,9 +881,11 @@ namespace NCDK.Fingerprints
             rings.Add(path);
         }
 
+        /// <summary>
         /// aromaticity detection: uses a very narrowly defined algorithm, which detects 6-membered rings with alternating double bonds;
         /// rings that are chained together (e.g. anthracene) will also be detected by the extended followup; note that this will NOT mark
         /// rings such as thiophene, imidazolium, porphyrins, etc.: these systems will be left in their original single/double bond form
+        /// </summary>
         private void DetectStrictAromaticity()
         {
             var na = mol.Atoms.Count;
@@ -1264,10 +1266,12 @@ namespace NCDK.Fingerprints
                 }
         }
 
+        /// <summary>
         /// if the given ring is aromatic, mark the atoms accordingly: note that this "biotype" definition of aromaticity is
         /// different to the one used in the rest of this class: any ring of size 5 to 7 that has a lone pair or pi bond on every
         /// atom is labelled as aromatic, because the concept required is physical behaviour, i.e. ring current and effect on
         /// neighbouring functional groups, rather than disambiguating conjugational equivalence
+        /// </summary>
         private void ConsiderBioTypeAromaticity(int[] ring)
         {
             var rsz = ring.Length;

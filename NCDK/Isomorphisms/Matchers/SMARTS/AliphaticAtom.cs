@@ -33,8 +33,8 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         /// <summary>
         /// Creates a new instance
         /// </summary>
-        public AliphaticAtom(IChemObjectBuilder builder)
-            : base(builder)
+        public AliphaticAtom()
+            : base()
         {
             IsAliphatic = true;
         }

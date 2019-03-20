@@ -30,11 +30,6 @@ namespace NCDK.Isomorphisms.Matchers
     public class QueryBond
         : Silent.Bond, IQueryBond
     {
-        private readonly IChemObjectBuilder builder;
-
-        /// <inheritdoc/>
-        public override IChemObjectBuilder Builder => builder;
-
         /// <summary>
         /// The bond expression for this query bond.
         /// </summary>
@@ -53,7 +48,7 @@ namespace NCDK.Isomorphisms.Matchers
         /// </example>
         /// <param name="expr">the expression</param>
         public QueryBond(IAtom beg, IAtom end, Expr expr)
-            : this(beg, end, BondOrder.Unset, BondStereo.None, beg.Builder)
+            : this(beg, end, BondOrder.Unset, BondStereo.None)
         {
             this.Expression.Set(expr);
             while (Atoms.Count < 2)
@@ -70,7 +65,7 @@ namespace NCDK.Isomorphisms.Matchers
         /// </example>
         /// <param name="type">the expression type</param>
         public QueryBond(IAtom beg, IAtom end, ExprType type)
-            : this(beg, end, BondOrder.Unset, BondStereo.None, beg.Builder)
+            : this(beg, end, BondOrder.Unset, BondStereo.None)
         {
             this.Expression.SetPrimitive(type);
             while (Atoms.Count < 2)
@@ -86,7 +81,7 @@ namespace NCDK.Isomorphisms.Matchers
         /// <param name="type">the expression type</param>
         /// <param name="val">the expression value</param>
         public QueryBond(IAtom beg, IAtom end, ExprType type, int val)
-            : this(beg, end, BondOrder.Unset, BondStereo.None, beg.Builder)
+            : this(beg, end, BondOrder.Unset, BondStereo.None)
         {
             this.Expression.SetPrimitive(type, val);
             while (Atoms.Count < 2)
@@ -96,9 +91,8 @@ namespace NCDK.Isomorphisms.Matchers
         /// <summary>
         /// Constructs an empty query bond.
         /// </summary>
-        public QueryBond(IChemObjectBuilder builder)
+        public QueryBond()
         {
-            this.builder = builder;
         }
 
         /// <summary>
@@ -107,20 +101,17 @@ namespace NCDK.Isomorphisms.Matchers
         /// <param name="atom1">the first Atom in the query bond</param>
         /// <param name="atom2">the second Atom in the query bond</param>
         /// <param name="order"></param>
-        /// <param name="builder"></param>
-        public QueryBond(IAtom atom1, IAtom atom2, BondOrder order, IChemObjectBuilder builder)
+        public QueryBond(IAtom atom1, IAtom atom2, BondOrder order)
             : base(atom1, atom2, order)
         {
-            this.builder = builder;
         }
 
          /// <summary>
          /// Constructs a multi-center query bond, with undefined order and no stereo information.
          /// </summary>
          /// <param name="atoms">An array of IAtom containing the atoms constituting the query bond</param>
-        public QueryBond(IAtom[] atoms, IChemObjectBuilder builder)
+        public QueryBond(IAtom[] atoms)
         {
-            this.builder = builder;
             SetAtoms(atoms);
         }
 
@@ -129,9 +120,8 @@ namespace NCDK.Isomorphisms.Matchers
          /// </summary>
          /// <param name="atoms">An array of IAtom containing the atoms constituting the query bond</param>
          /// <param name="order">The order of the query bond</param>
-        public QueryBond(IAtom[] atoms, BondOrder order, IChemObjectBuilder builder)
+        public QueryBond(IAtom[] atoms, BondOrder order)
         {
-            this.builder = builder;
             SetAtoms(atoms);
             this.order = order;
         }
@@ -143,9 +133,8 @@ namespace NCDK.Isomorphisms.Matchers
         /// <param name="atom2">the second Atom in the query bond</param>
         /// <param name="order">the query bond order</param>
         /// <param name="stereo">a descriptor the stereochemical orientation of this query bond</param>
-        public QueryBond(IAtom atom1, IAtom atom2, BondOrder order, BondStereo stereo, IChemObjectBuilder builder)
+        public QueryBond(IAtom atom1, IAtom atom2, BondOrder order, BondStereo stereo)
         {
-            this.builder = builder;
             SetAtoms(new[] { atom1, atom2 });
             this.order = order;
             this.stereo = stereo;

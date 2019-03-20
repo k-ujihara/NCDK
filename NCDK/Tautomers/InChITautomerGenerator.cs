@@ -340,7 +340,7 @@ namespace NCDK.Tautomers
                 AtomMatcher.CreateElementMatcher(), BondMatcher.CreateAnyMatcher())
                     .MatchAll(mol)
                     .Limit(1)
-                    .ToAtomMap();
+                    .ToAtomMaps();
             var i = iter.FirstOrDefault();
             if (i != null)
             {

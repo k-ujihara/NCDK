@@ -423,7 +423,7 @@ namespace NCDK.SMARTS
         // currently be initialised. avoid aromaticity, rings etc.
         protected static IAtomContainer Sma(string sma)
         {
-            var query = new QueryAtomContainer(CDK.Builder);
+            var query = new QueryAtomContainer();
             if (!Smarts.Parse(query, sma))
             {
                 throw new IOException(Smarts.GetLastErrorMessage());

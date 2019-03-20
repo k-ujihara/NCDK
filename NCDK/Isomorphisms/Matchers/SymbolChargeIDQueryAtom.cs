@@ -26,12 +26,12 @@ namespace NCDK.Isomorphisms.Matchers
     public class SymbolChargeIDQueryAtom 
         : QueryAtom, IQueryAtom
     {
-        public SymbolChargeIDQueryAtom(IChemObjectBuilder builder)
-            : base(builder)
+        public SymbolChargeIDQueryAtom()
+            : base()
         { }
 
         public SymbolChargeIDQueryAtom(IAtom atom)
-            : base(atom.Symbol, atom.Builder)
+            : base(atom.Symbol)
         {
             FormalCharge = atom.FormalCharge;
             Id = atom.Id;

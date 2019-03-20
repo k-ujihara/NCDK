@@ -46,27 +46,8 @@ namespace NCDK.Isomorphisms
     /// </list>
     /// </remarks>
     /// <example>
-    /// <code>
-    /// DfPattern ptrn = DfPattern.FindSubstructure(query);
-    /// // has match?
-    /// if (ptrn.Matches(mol)) 
-    /// {
-    /// }
-    /// // get lazy mapping iterator
-    /// Mappings mappings = ptrn.MatchAll(mol);
-    /// foreach (var amap in mappings) 
-    /// {
-    /// }
-    /// // test if pattern matches at a given atom
-    /// foreach (var atom in mol.Atoms) 
-    /// {
-    ///     if (ptrn.MatchesRoot(atom)) 
-    ///     {
-    ///     }
-    /// }
-    /// </code>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Isomorphisms.DfPattern_Example.cs"]/*' />
     /// </example>
-    /// <seealso cref="DfPattern"/>
     /// <seealso cref="Mappings"/>
     // @author John Mayfield
     public class DfPattern : Pattern
@@ -159,13 +140,14 @@ namespace NCDK.Isomorphisms
         /// </summary>
         /// <param name="query">the substructure to find</param>
         /// <returns>a pattern for finding the <paramref name="query"/></returns>
-        /// <see cref="QueryAtomContainer.Create(IAtomContainer, ExprType[])"/>
+        /// <seealso cref="QueryAtomContainer.Create(IAtomContainer, ExprType[])"/>
         public static new DfPattern FindSubstructure(IAtomContainer query)
         {
             if (query is IQueryAtomContainer)
                 return new DfPattern((IQueryAtomContainer)query);
             else
-                return new DfPattern(QueryAtomContainer.Create(query,
+                return new DfPattern(QueryAtomContainer.Create(
+                    query,
                     ExprType.AliphaticElement,
                     ExprType.AromaticElement,
                     ExprType.SingleOrAromatic,

@@ -10,7 +10,7 @@ namespace NCDK.Fingerprints
             {
                 #region 
                 var molecule = new AtomContainer();
-                IFingerprinter fingerprinter = new PubchemFingerprinter(Silent.ChemObjectBuilder.Instance);
+                IFingerprinter fingerprinter = new PubchemFingerprinter();
                 IBitFingerprint fingerprint = fingerprinter.GetBitFingerprint(molecule);
                 Console.WriteLine(fingerprint.Length); // returns 881
                 #endregion

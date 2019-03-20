@@ -32,8 +32,8 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         /// <summary>
         /// Creates a new instance
         /// </summary>
-        public AnyAtom(IChemObjectBuilder builder)
-            : base(builder)
+        public AnyAtom()
+            : base()
         {
         }
 

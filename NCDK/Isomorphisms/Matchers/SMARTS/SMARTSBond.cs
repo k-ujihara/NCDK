@@ -30,12 +30,12 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
     public class SMARTSBond 
         : QueryBond, IQueryBond
     {
-        public SMARTSBond(IChemObjectBuilder builder)
-            : base(builder)
+        public SMARTSBond()
+            : base()
         { }
 
-        public SMARTSBond(IQueryAtom atom1, IQueryAtom atom2, BondOrder order, IChemObjectBuilder builder)
-            : base(atom1, atom2, order, builder)
+        public SMARTSBond(IQueryAtom atom1, IQueryAtom atom2, BondOrder order)
+            : base(atom1, atom2, order)
         { }
 
         public override bool Matches(IBond bond)

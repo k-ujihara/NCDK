@@ -66,11 +66,10 @@ namespace NCDK.SMARTS
         /// Internal constructor.
         /// </summary>
         /// <param name="smarts">pattern</param>
-        /// <param name="builder">the builder</param>
         /// <exception cref="System.IO.IOException">the pattern could not be parsed</exception>
-        private SmartsPattern(string smarts, IChemObjectBuilder builder)
+        private SmartsPattern(string smarts)
         {
-            this.query = new QueryAtomContainer(null);
+            this.query = new QueryAtomContainer();
             if (!Smarts.Parse(query, smarts))
                 throw new IOException($"Could not parse SMARTS: {smarts}");
             this.pattern = Pattern.FindSubstructure(query);
@@ -93,7 +92,7 @@ namespace NCDK.SMARTS
         /// <summary>
         /// Sets whether the molecule should be "prepared" for a SMARTS match,
         /// including set ring flags and perceiving aromaticity. The main reason
-        /// to skip preparation (via {@link #Prepare(IAtomContainer)}) is if it has
+        /// to skip preparation (via <see cref="Prepare(IAtomContainer)"/>) is if it has
         /// already been done, for example when matching multiple SMARTS patterns.
         /// </summary>
         /// <param name="doPrep">whether preparation should be done</param>
@@ -136,23 +135,11 @@ namespace NCDK.SMARTS
         /// Create a <see cref="Pattern"/> that will match the given <paramref name="smarts"/> query.
         /// </summary>
         /// <param name="smarts">SMARTS pattern string</param>
-        /// <param name="builder">chem object builder used to create objects</param>
         /// <returns>a new pattern</returns>
         /// <exception cref="System.IO.IOException">the smarts could not be parsed</exception> 
-        public static SmartsPattern Create(string smarts, IChemObjectBuilder builder)
-        {
-            return new SmartsPattern(smarts, builder);
-        }
-
-        /// <summary>
-        /// Default SMARTS pattern constructor, passes in a null chem object builder.
-        /// </summary>
-        /// <param name="smarts">SMARTS pattern string</param>
-        /// <returns>a SMARTS pattern</returns>
-        /// <exception cref="System.IO.IOException">problem with SMARTS string syntax/semantics</exception>
         public static SmartsPattern Create(string smarts)
         {
-            return new SmartsPattern(smarts, null);
+            return new SmartsPattern(smarts);
         }
     }
 }

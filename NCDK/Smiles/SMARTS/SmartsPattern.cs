@@ -73,7 +73,7 @@ namespace NCDK.Smiles.SMARTS
         /// <exception cref="System.IO.IOException">the pattern could not be parsed</exception>
         private SmartsPattern(string smarts, IChemObjectBuilder builder)
         {
-            this.query = new QueryAtomContainer(null);
+            this.query = new QueryAtomContainer();
             if (!Smarts.Parse(query, smarts))
                 throw new IOException($"Could not parse SMARTS: {smarts}");
             this.pattern = Pattern.FindSubstructure(query);

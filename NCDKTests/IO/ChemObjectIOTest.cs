@@ -22,7 +22,6 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
 using NCDK.IO.Formats;
 using NCDK.IO.Listener;
 using NCDK.IO.Setting;
@@ -39,6 +38,8 @@ namespace NCDK.IO
     public abstract class ChemObjectIOTest 
         : CDKTestCase
     {
+        static IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
+
         protected abstract Type ChemObjectIOToTestType { get; }
 
         protected IChemObjectIO CreateChemObjectIO(Stream stream)
@@ -72,8 +73,8 @@ namespace NCDK.IO
             Assert.IsNotNull(format, "The IChemObjectIO.Format method returned null.");
         }
 
-        private static IChemObject[] AcceptableNNChemObjects =
-            { new ChemFile(), new ChemModel(), new Silent.AtomContainer(), new Reaction() };
+        private static readonly IChemObject[] AcceptableNNChemObjects =
+            { builder.NewChemFile(), builder.NewChemModel(), builder.NewAtomContainer(), builder.NewReaction() };
 
         [TestMethod()]
         public virtual void TestAcceptsAtLeastOneNonotifyObject()
@@ -93,16 +94,16 @@ namespace NCDK.IO
         [Obsolete]
         protected static IChemObject[] acceptableChemObjects =
         {
-            new ChemFile(),
-            new ChemModel(),
-            new Silent.AtomContainer(),
-            new Reaction(),
-            new RGroupQuery(ChemObjectBuilder.Instance)
+            builder.NewChemFile(),
+            builder.NewChemModel(),
+            builder.NewAtomContainer(),
+            builder.NewReaction(),
+            new RGroupQuery()
         };
 
         protected static IChemObject[] AcceptableChemObjects()
         {
-            return new IChemObject[]{new ChemFile(), new ChemModel(), new Silent.AtomContainer(), new Reaction(), new RGroupQuery(ChemObjectBuilder.Instance)};
+            return new IChemObject[]{ builder.NewChemFile(), builder.NewChemModel(), builder.NewAtomContainer(), builder.NewReaction(), new RGroupQuery()};
         }
 
         [TestMethod()]

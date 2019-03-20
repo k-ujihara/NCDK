@@ -1,6 +1,5 @@
 ﻿using NCDK.IO.Iterator;
 using NCDK.Isomorphisms.Matchers;
-using NCDK.Silent;
 using System.IO;
 
 namespace NCDK.Pharmacophore
@@ -12,7 +11,7 @@ namespace NCDK.Pharmacophore
             var matcher = new PharmacophoreMatcher();
 
             #region
-            QueryAtomContainer query = new QueryAtomContainer(ChemObjectBuilder.Instance);
+            QueryAtomContainer query = new QueryAtomContainer();
 
             PharmacophoreQueryAtom o = new PharmacophoreQueryAtom("D", "[OX1]");
             PharmacophoreQueryAtom n1 = new PharmacophoreQueryAtom("A", "[N]");
@@ -33,7 +32,7 @@ namespace NCDK.Pharmacophore
             string filename = "C:/Users/rguha/pcore1.sdf";
             using (var srm = new FileStream(filename, FileMode.Open))
             {
-                foreach (var conformers in new EnumerableMDLConformerReader(srm, ChemObjectBuilder.Instance))
+                foreach (var conformers in new EnumerableMDLConformerReader(srm))
                 {
                     bool firstTime = true;
                     foreach (var conf in conformers)

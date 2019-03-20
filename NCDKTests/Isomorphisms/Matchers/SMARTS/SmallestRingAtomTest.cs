@@ -24,7 +24,6 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using static Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
@@ -36,13 +35,12 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         [TestMethod()]
         public void Matches()
         {
-            SmallestRingAtom matcher = new SmallestRingAtom(5, new Mock<IChemObjectBuilder>().Object);
+            SmallestRingAtom matcher = new SmallestRingAtom(5);
             var mock_atom = new Mock<IAtom>();
             IAtom atom = mock_atom.Object;
             mock_atom.Setup(n => n.GetProperty<SMARTSAtomInvariants>(SMARTSAtomInvariants.Key)).Returns(
-                    new SMARTSAtomInvariants(new Mock<IAtomContainer>().Object, 0, 0,
-                  new int[] { 5 }, 0, 0, 0,
-                            0));
+                new SMARTSAtomInvariants(new Mock<IAtomContainer>().Object, 0, 0,
+                new int[] { 5 }, 0, 0, 0, 0));
             Assert.IsTrue(matcher.Matches(atom));
         }
     }

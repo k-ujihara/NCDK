@@ -32,7 +32,6 @@ namespace NCDK.Pharmacophore
     /// <seealso cref="QueryAtomContainer"/>
     // @author Rajarshi Guha
     // @cdk.module pcore
-    // @cdk.githash
     // @cdk.keyword pharmacophore
     // @cdk.keyword 3D isomorphism
     public class PharmacophoreQueryBond : Silent.Bond, IQueryBond

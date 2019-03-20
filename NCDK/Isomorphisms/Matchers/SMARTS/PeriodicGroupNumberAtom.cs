@@ -41,8 +41,8 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         /// Creates a new instance
         /// </summary>
         /// <param name="groupNumber">the periodic group number</param>
-        public PeriodicGroupNumberAtom(int groupNumber, IChemObjectBuilder builder)
-            : base(builder)
+        public PeriodicGroupNumberAtom(int groupNumber)
+            : base()
         {
             this.groupNumber = groupNumber;
         }

@@ -89,7 +89,8 @@ namespace NCDK.IO
 
         public override bool Accepts(Type type)
         {
-            if (typeof(IRGroupQuery).IsAssignableFrom(type)) return true;
+            if (typeof(IRGroupQuery).IsAssignableFrom(type))
+                return true;
             return false;
         }
 

@@ -37,8 +37,8 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
             Up, Down
         }
 
-        public StereoBond(IChemObjectBuilder builder, Direction direction, bool unspecified)
-            : base(builder)
+        public StereoBond(Direction direction, bool unspecified)
+            : base()
         {
             this.unspecified = unspecified;
             this.direction = direction;

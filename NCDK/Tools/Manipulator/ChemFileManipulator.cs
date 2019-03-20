@@ -128,4 +128,3 @@ namespace NCDK.Tools.Manipulator
         }
     }
 }
-

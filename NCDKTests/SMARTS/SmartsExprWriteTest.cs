@@ -261,7 +261,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void IndoleRoundTrip()
         {
-            var mol = new QueryAtomContainer(null);
+            var mol = new QueryAtomContainer();
             Assert.IsTrue(Smarts.Parse(mol, "n1cnc2c1cccc2"));
             // CDK choice of data structures lose local arrangement but
             // output is still indole
@@ -271,7 +271,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void IndoleWithExprRoundTrip()
         {
-            var mol = new QueryAtomContainer(null);
+            var mol = new QueryAtomContainer();
             Assert.IsTrue(Smarts.Parse(mol, "[n;$(*C),$(*OC)]1ccc2c1cccc2"));
             // CDK choice of data structures lose local arrangement but
             // output is still indole
@@ -281,7 +281,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void BondTrue()
         {
-            var mol = new QueryAtomContainer(null);
+            var mol = new QueryAtomContainer();
             Assert.IsTrue(Smarts.Parse(mol, "C~C~N(~O)~O"));
             Assert.AreEqual("C~C~N(~O)~O", Smarts.Generate(mol));
         }
@@ -289,7 +289,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void BondFalse()
         {
-            var mol = new QueryAtomContainer(null);
+            var mol = new QueryAtomContainer();
             Assert.IsTrue(Smarts.Parse(mol, "C!~C"));
             Assert.AreEqual("C!~C", Smarts.Generate(mol));
         }
@@ -297,7 +297,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void BondInChain()
         {
-            var mol = new QueryAtomContainer(null);
+            var mol = new QueryAtomContainer();
             Assert.IsTrue(Smarts.Parse(mol, "C!@C"));
             Assert.AreEqual("C!@C", Smarts.Generate(mol));
         }
@@ -305,7 +305,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void BondInRing()
         {
-            var mol = new QueryAtomContainer(null);
+            var mol = new QueryAtomContainer();
             Assert.IsTrue(Smarts.Parse(mol, "C@C"));
             Assert.AreEqual("C@C", Smarts.Generate(mol));
         }
@@ -313,7 +313,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void TripleBond()
         {
-            var mol = new QueryAtomContainer(null);
+            var mol = new QueryAtomContainer();
             Assert.IsTrue(Smarts.Parse(mol, "C#C"));
             Assert.AreEqual("C#C", Smarts.Generate(mol));
         }
@@ -321,7 +321,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void NotTripleBond()
         {
-            var mol = new QueryAtomContainer(null);
+            var mol = new QueryAtomContainer();
             Assert.IsTrue(Smarts.Parse(mol, "C!#C"));
             Assert.AreEqual("C!#C", Smarts.Generate(mol));
         }
@@ -329,7 +329,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void AromaticBond()
         {
-            var mol = new QueryAtomContainer(null);
+            var mol = new QueryAtomContainer();
             Assert.IsTrue(Smarts.Parse(mol, "[#6]:[#6]"));
             Assert.AreEqual("[#6]:[#6]", Smarts.Generate(mol));
         }
@@ -337,7 +337,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void RingClosureExprs()
         {
-            var mol = new QueryAtomContainer(null);
+            var mol = new QueryAtomContainer();
             Assert.IsTrue(Smarts.Parse(mol, "C1CCCC-,=1"));
             Assert.AreEqual("C1-,=CCCC1", Smarts.Generate(mol));
         }
@@ -345,7 +345,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void RingClosureExprs2()
         {
-            var mol = new QueryAtomContainer(null);
+            var mol = new QueryAtomContainer();
             Assert.IsTrue(Smarts.Parse(mol, "C-,=1CCCC1"));
             Assert.AreEqual("C1-,=CCCC1", Smarts.Generate(mol));
         }
@@ -353,7 +353,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void RingClosureExprs3()
         {
-            var mol = new QueryAtomContainer(null);
+            var mol = new QueryAtomContainer();
             Assert.IsTrue(Smarts.Parse(mol, "C1-,=CCCC1"));
             Assert.AreEqual("C1CCCC-,=1", Smarts.Generate(mol));
         }
@@ -361,7 +361,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void Reaction()
         {
-            var mol = new QueryAtomContainer(null);
+            var mol = new QueryAtomContainer();
             Assert.IsTrue(Smarts.Parse(mol, "c1ccccc1[NH2]>>c1ccccc1N(~O)~O"));
             Assert.AreEqual("c1c(cccc1)[NH2]>>c1c(cccc1)N(~O)~O", Smarts.Generate(mol));
         }
@@ -369,7 +369,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void ReactionWithMaps()
         {
-            var mol = new QueryAtomContainer(null);
+            var mol = new QueryAtomContainer();
             Assert.IsTrue(Smarts.Parse(mol, "c1cccc[c:1]1[NH2:2]>>c1cccc[c:1]1[N:2](~O)~O"));
             Assert.AreEqual("c1[c:1](cccc1)[NH2:2]>>c1[c:1](cccc1)[N:2](~O)~O", Smarts.Generate(mol));
         }
@@ -377,7 +377,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void CompGrouping()
         {
-            var mol = new QueryAtomContainer(null);
+            var mol = new QueryAtomContainer();
             Assert.IsTrue(Smarts.Parse(mol, "([Na+].[Cl-]).c1ccccc1"));
             Assert.AreEqual("c1ccccc1.([Na+].[Cl-])", Smarts.Generate(mol));
         }
@@ -385,7 +385,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void CompGroupingOnAgent()
         {
-            var mol = new QueryAtomContainer(null);
+            var mol = new QueryAtomContainer();
             Assert.IsTrue(Smarts.Parse(mol, ">(c1ccccc1[O-].[Na+])>"));
             Assert.AreEqual(">(c1c(cccc1)[O-].[Na+])>", Smarts.Generate(mol));
         }
@@ -393,7 +393,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void AtomStereo()
         {
-            var mol = new QueryAtomContainer(null);
+            var mol = new QueryAtomContainer();
             Assert.IsTrue(Smarts.Parse(mol, "C[C@H](O)CC"));
             Assert.AreEqual("C[C@H1](O)CC", Smarts.Generate(mol));
         }
@@ -408,7 +408,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void AtomStereoReordered()
         {
-            var mol = new QueryAtomContainer(null);
+            var mol = new QueryAtomContainer();
             Assert.IsTrue(Smarts.Parse(mol, "C[C@H](O)CC"));
             var bonds = mol.Bonds.ToArray();
             Swap(bonds, 1, 2);
@@ -419,7 +419,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void AtomStereoReordered2()
         {
-            var mol = new QueryAtomContainer(null);
+            var mol = new QueryAtomContainer();
             Assert.IsTrue(Smarts.Parse(mol, "C[C@H](O)CC"));
             var atoms = mol.Atoms.ToArray();
             Swap(atoms, 0, 1);
@@ -430,7 +430,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void AtomStereoReordered3()
         {
-            var mol = new QueryAtomContainer(null);
+            var mol = new QueryAtomContainer();
             Assert.IsTrue(Smarts.Parse(mol, "[C@H](C)(O)CC"));
             var atoms = mol.Atoms.ToArray();
             Swap(atoms, 0, 1);
@@ -441,7 +441,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void AtomStereoOrUnspec()
         {
-            var mol = new QueryAtomContainer(null);
+            var mol = new QueryAtomContainer();
             Assert.IsTrue(Smarts.Parse(mol, "C[C@?H](O)CC"));
             Assert.AreEqual("C[CH1@?](O)CC", Smarts.Generate(mol));
         }
@@ -449,7 +449,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void BondStereoTrans()
         {
-            var mol = new QueryAtomContainer(null);
+            var mol = new QueryAtomContainer();
             Assert.IsTrue(Smarts.Parse(mol, "C/C=C/C"));
             Assert.AreEqual("C/C=C/C", Smarts.Generate(mol));
             var atoms = mol.Atoms.ToArray();
@@ -461,7 +461,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void BondStereoCisTrans()
         {
-            var mol = new QueryAtomContainer(null);
+            var mol = new QueryAtomContainer();
             Assert.IsTrue(Smarts.Parse(mol, "C/C=C/,\\C"));
             Assert.AreEqual("C/C=C/,\\C", Smarts.Generate(mol));
         }
@@ -469,7 +469,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void BondStereoCisUnspec()
         {
-            var mol = new QueryAtomContainer(null);
+            var mol = new QueryAtomContainer();
             Assert.IsTrue(Smarts.Parse(mol, "C/C=C\\?C"));
             Assert.AreEqual("C/C=C\\?C", Smarts.Generate(mol));
             // not trans same as cis/unspec
@@ -481,7 +481,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void BondStereoTransUnspec()
         {
-            var mol = new QueryAtomContainer(null);
+            var mol = new QueryAtomContainer();
             Assert.IsTrue(Smarts.Parse(mol, "C/?C=C/C"));
             Assert.AreEqual("C/C=C/?C", Smarts.Generate(mol));
             // not cis same as trans/unspec
@@ -494,7 +494,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void BondStereoUnspec()
         {
-            var mol = new QueryAtomContainer(null);
+            var mol = new QueryAtomContainer();
             Assert.IsTrue(Smarts.Parse(mol, "C/C=C/?\\?C"));
             Assert.AreEqual("C/C=C!/!\\C", Smarts.Generate(mol));
         }
@@ -504,7 +504,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void BondStereoCisThenTrans()
         {
-            var mol = new QueryAtomContainer(null);
+            var mol = new QueryAtomContainer();
             Assert.IsTrue(Smarts.Parse(mol, "C/C=C\\C=C\\C"));
             Assert.AreEqual("C/C=C\\C=C\\C", Smarts.Generate(mol));
         }
@@ -513,7 +513,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void BondStereoCisThenTransWithNbr()
         {
-            var mol = new QueryAtomContainer(null);
+            var mol = new QueryAtomContainer();
             Assert.IsTrue(Smarts.Parse(mol, "C/C=C(C)\\C=C\\C"));
             Assert.AreEqual("C/C=C(C)\\C=C\\C", Smarts.Generate(mol));
         }
@@ -521,7 +521,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void BondStereoCisThenTransUnspecWithNbr()
         {
-            var mol = new QueryAtomContainer(null);
+            var mol = new QueryAtomContainer();
             Assert.IsTrue(Smarts.Parse(mol, "C/C=C(C)\\C=C\\?O"));
             Assert.AreEqual("C/C=C(C)\\C=C\\?O", Smarts.Generate(mol));
             var atoms = mol.Atoms.ToArray();
@@ -536,7 +536,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void BondStereoCisThenTransUnspecWithNbrComplex()
         {
-            var mol = new QueryAtomContainer(null);
+            var mol = new QueryAtomContainer();
             Assert.IsTrue(Smarts.Parse(mol, "C/?C=C(C)\\C=C\\O"));
             Assert.AreEqual("C/?C=C(C)/C=C/O", Smarts.Generate(mol));
         }
@@ -546,7 +546,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void MultipleReads()
         {
-            var mol = new QueryAtomContainer(null);
+            var mol = new QueryAtomContainer();
             Assert.IsTrue(Smarts.Parse(mol, "C/C=C/C"));
             Assert.IsTrue(Smarts.Parse(mol, "C/C=C\\C"));
             Assert.AreEqual("C/C=C/C.C/C=C\\C", Smarts.Generate(mol));
@@ -555,7 +555,7 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void RoundTripStereo()
         {
-            var mol = new QueryAtomContainer(null);
+            var mol = new QueryAtomContainer();
             Smarts.Parse(mol, "O1.[S@]=1(C)CC");
             Assert.AreEqual("O=[S@@](C)CC", Smarts.Generate(mol));
         }

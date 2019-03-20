@@ -32,9 +32,8 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         /// Creates a new instance.
         /// </summary>
         /// <param name="symbol">the atom symbol</param>
-        /// <param name="builder"></param>
-        public AliphaticSymbolAtom(string symbol, IChemObjectBuilder builder)
-            : base(builder)
+        public AliphaticSymbolAtom(string symbol)
+            : base()
         {
             IsAromatic = true;
             Symbol = symbol;

@@ -34,8 +34,8 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         /// <summary>
         /// Creates a new instance
         /// </summary>
-        public AromaticAtom(IChemObjectBuilder builder)
-            : base(builder)
+        public AromaticAtom()
+            : base()
         {
             IsAromatic = true;
         }

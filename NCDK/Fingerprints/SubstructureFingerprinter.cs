@@ -408,7 +408,7 @@ namespace NCDK.Fingerprints
             keys.Clear();
             foreach (var key in smarts)
             {
-                var qmol = new QueryAtomContainer(null);
+                var qmol = new QueryAtomContainer();
                 var ptrn = SmartsPattern.Create(key);
                 ptrn.SetPrepare(false); // prepare is done once
                 keys.Add(new Key(key, ptrn));

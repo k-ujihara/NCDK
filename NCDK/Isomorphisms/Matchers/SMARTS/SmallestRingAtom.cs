@@ -35,7 +35,6 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
     /// </summary>
     // @cdk.module smarts
     // @cdk.keyword SMARTS
-    // @cdk.githash
     [Obsolete]
     public sealed class SmallestRingAtom : SMARTSAtom
     {
@@ -46,9 +45,8 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         /// Creates a matcher for specified ring size.
         /// </summary>
         /// <param name="ringSize">size of the ring to check.</param>
-        /// <param name="builder"></param>
-        public SmallestRingAtom(int ringSize, IChemObjectBuilder builder)
-            : base(builder)
+        public SmallestRingAtom(int ringSize)
+            : base()
         {
             this.ringSize = ringSize;
         }

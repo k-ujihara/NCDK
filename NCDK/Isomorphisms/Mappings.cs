@@ -199,7 +199,7 @@ namespace NCDK.Isomorphisms
         /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Isomorphisms.Mappings_Example.cs+ToAtomMap"]/*' />
         /// </example>
         /// <returns>iterable of atom-atom mappings</returns>
-        public IEnumerable<IReadOnlyDictionary<IAtom, IAtom>> ToAtomMap()
+        public IEnumerable<IReadOnlyDictionary<IAtom, IAtom>> ToAtomMaps()
         {
             var mapper = new AtomMaper(query, target);
             return GetMapping(n => mapper.Apply(n));
@@ -212,7 +212,7 @@ namespace NCDK.Isomorphisms
         /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Isomorphisms.Mappings_Example.cs+ToBondMap"]/*' />
         /// </example>
         /// <returns>iterable of bond-bond mappings</returns>
-        public IEnumerable<IReadOnlyDictionary<IBond, IBond>> ToBondMap()
+        public IEnumerable<IReadOnlyDictionary<IBond, IBond>> ToBondMaps()
         {
             var mapper = new BondMaper(query, target);
             return GetMapping(n => mapper.Apply(n));
@@ -225,7 +225,7 @@ namespace NCDK.Isomorphisms
         /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Isomorphisms.Mappings_Example.cs+ToAtomBondMap"]/*' />
         /// </example>
         /// <returns>iterable of atom-atom and bond-bond mappings</returns>
-        public IEnumerable<IReadOnlyDictionary<IChemObject, IChemObject>> ToAtomBondMap()
+        public IEnumerable<IReadOnlyDictionary<IChemObject, IChemObject>> ToAtomBondMaps()
         {
             var map = new AtomBondMaper(query, target);
             return GetMapping(n => map.Apply(n));

@@ -627,7 +627,7 @@ namespace NCDK.SMARTS
         [TestMethod()]
         public void RingBondCount1()
         {
-            Assert.IsFalse(Smarts.Parse(new QueryAtomContainer(null), "[x1]"));
+            Assert.IsFalse(Smarts.Parse(new QueryAtomContainer(), "[x1]"));
         }
 
         [TestMethod()]
@@ -673,7 +673,7 @@ namespace NCDK.SMARTS
         [TestMethod()]
         public void AtomMaps()
         {
-            var mol = new QueryAtomContainer(null);
+            var mol = new QueryAtomContainer();
             Assert.IsFalse(Smarts.Parse(mol, "[:10]"));
             Assert.IsTrue(Smarts.Parse(mol, "[*:10]"));
             Assert.AreEqual(10, mol.Atoms[0].GetProperty<int>(CDKPropertyName.AtomAtomMapping));
@@ -728,7 +728,7 @@ namespace NCDK.SMARTS
         [TestMethod()]
         public void HybridisationNumberDaylight()
         {
-            Assert.IsFalse(Smarts.Parse(new QueryAtomContainer(null), "[^2]", SmartsFlaver.Daylight));
+            Assert.IsFalse(Smarts.Parse(new QueryAtomContainer(), "[^2]", SmartsFlaver.Daylight));
         }
 
         [TestMethod()]
@@ -909,7 +909,7 @@ namespace NCDK.SMARTS
                         if (len == 1 || len == 2)
                         {
                             string smarts = $"[{e.Symbol}]";
-                            var mol = new QueryAtomContainer(null);
+                            var mol = new QueryAtomContainer();
                             Assert.IsTrue(Smarts.Parse(mol, smarts), smarts);
                             var expr = GetAtomExpr(mol.Atoms[0]);
                             var ee = new Expr(ExprType.Element, e.AtomicNumber);
@@ -941,25 +941,25 @@ namespace NCDK.SMARTS
         [TestMethod()]
         public void TestBadSymbols()
         {
-            Assert.IsFalse(Smarts.Parse(new QueryAtomContainer(null), "[L]"));
-            Assert.IsFalse(Smarts.Parse(new QueryAtomContainer(null), "[J]"));
-            Assert.IsFalse(Smarts.Parse(new QueryAtomContainer(null), "[Q]"));
-            Assert.IsFalse(Smarts.Parse(new QueryAtomContainer(null), "[G]"));
-            Assert.IsFalse(Smarts.Parse(new QueryAtomContainer(null), "[T]"));
-            Assert.IsFalse(Smarts.Parse(new QueryAtomContainer(null), "[M]"));
-            Assert.IsFalse(Smarts.Parse(new QueryAtomContainer(null), "[E]"));
-            Assert.IsFalse(Smarts.Parse(new QueryAtomContainer(null), "[t]"));
-            Assert.IsFalse(Smarts.Parse(new QueryAtomContainer(null), "[?]"));
+            Assert.IsFalse(Smarts.Parse(new QueryAtomContainer(), "[L]"));
+            Assert.IsFalse(Smarts.Parse(new QueryAtomContainer(), "[J]"));
+            Assert.IsFalse(Smarts.Parse(new QueryAtomContainer(), "[Q]"));
+            Assert.IsFalse(Smarts.Parse(new QueryAtomContainer(), "[G]"));
+            Assert.IsFalse(Smarts.Parse(new QueryAtomContainer(), "[T]"));
+            Assert.IsFalse(Smarts.Parse(new QueryAtomContainer(), "[M]"));
+            Assert.IsFalse(Smarts.Parse(new QueryAtomContainer(), "[E]"));
+            Assert.IsFalse(Smarts.Parse(new QueryAtomContainer(), "[t]"));
+            Assert.IsFalse(Smarts.Parse(new QueryAtomContainer(), "[?]"));
         }
 
         [TestMethod()]
         public void TestRecursive()
         {
-            Assert.IsTrue(Smarts.Parse(new QueryAtomContainer(null), "[$(*OC)]"));
-            Assert.IsFalse(Smarts.Parse(new QueryAtomContainer(null), "[$*OC)]"));
-            Assert.IsFalse(Smarts.Parse(new QueryAtomContainer(null), "[$(*OC]"));
-            Assert.IsTrue(Smarts.Parse(new QueryAtomContainer(null), "[$((*[O-].[Na+]))]"));
-            Assert.IsFalse(Smarts.Parse(new QueryAtomContainer(null), "[$([J])]"));
+            Assert.IsTrue(Smarts.Parse(new QueryAtomContainer(), "[$(*OC)]"));
+            Assert.IsFalse(Smarts.Parse(new QueryAtomContainer(), "[$*OC)]"));
+            Assert.IsFalse(Smarts.Parse(new QueryAtomContainer(), "[$(*OC]"));
+            Assert.IsTrue(Smarts.Parse(new QueryAtomContainer(), "[$((*[O-].[Na+]))]"));
+            Assert.IsFalse(Smarts.Parse(new QueryAtomContainer(), "[$([J])]"));
         }
 
         // recursive SMARTS with single atoms should be 'lifted' up to a single
@@ -983,15 +983,15 @@ namespace NCDK.SMARTS
         [TestMethod()]
         public void RingOpenCloseInconsistency()
         {
-            Assert.IsFalse(Smarts.Parse(new QueryAtomContainer(null), "C=1CC-,=1"));
-            Assert.IsFalse(Smarts.Parse(new QueryAtomContainer(null), "C=1CC-1")); ;
+            Assert.IsFalse(Smarts.Parse(new QueryAtomContainer(), "C=1CC-,=1"));
+            Assert.IsFalse(Smarts.Parse(new QueryAtomContainer(), "C=1CC-1")); ;
         }
 
         [TestMethod()]
         public void RingOpenCloseConsistency()
         {
-            Assert.IsTrue(Smarts.Parse(new QueryAtomContainer(null), "C-,=1CC-,=1"));
-            Assert.IsTrue(Smarts.Parse(new QueryAtomContainer(null), "C!~1CC!~1"));
+            Assert.IsTrue(Smarts.Parse(new QueryAtomContainer(), "C-,=1CC-,=1"));
+            Assert.IsTrue(Smarts.Parse(new QueryAtomContainer(), "C!~1CC!~1"));
         }
 
         [TestMethod()]

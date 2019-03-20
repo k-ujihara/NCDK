@@ -15,10 +15,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
 
 namespace NCDK.Isomorphisms.Matchers
 {
@@ -33,7 +32,7 @@ namespace NCDK.Isomorphisms.Matchers
 
         static SymbolSetQueryAtomTest()
         {
-            symbolSet = new SymbolSetQueryAtom(ChemObjectBuilder.Instance);
+            symbolSet = new SymbolSetQueryAtom();
             symbolSet.Symbols.Add("C");
             symbolSet.Symbols.Add("Fe");
         }
@@ -41,8 +40,9 @@ namespace NCDK.Isomorphisms.Matchers
         [TestMethod()]
         public void TestMatches()
         {
-            Atom c = new Atom("C");
-            Atom n = new Atom("N");
+            var builder = Silent.ChemObjectBuilder.Instance;
+            var c = builder.NewAtom("C");
+            var n = builder.NewAtom("N");
             Assert.IsTrue(symbolSet.Matches(c));
             Assert.IsFalse(symbolSet.Matches(n));
         }

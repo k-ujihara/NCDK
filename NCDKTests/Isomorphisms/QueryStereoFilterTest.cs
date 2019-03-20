@@ -401,7 +401,7 @@ namespace NCDK.Isomorphisms
 
         static IAtomContainer Sma(string smarts)
         {
-            var query = new QueryAtomContainer(null);
+            var query = new QueryAtomContainer();
             Smarts.Parse(query, smarts);
             return query;
         }

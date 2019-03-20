@@ -29,8 +29,8 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
     [Obsolete]
     public class AromaticSymbolAtom : SMARTSAtom
     {
-        public AromaticSymbolAtom(string symbol, IChemObjectBuilder builder)
-           : base(builder)
+        public AromaticSymbolAtom(string symbol)
+           : base()
         {
             IsAromatic = true;
             Symbol = symbol;

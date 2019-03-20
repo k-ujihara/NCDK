@@ -30,7 +30,6 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
     /// SMARTS as the connectivity. The connectivity is specified using the "X&lt;NUMBER&gt;" pattern.
     /// </summary>
     // @cdk.module smarts
-    // @cdk.githash
     // @cdk.keyword SMARTS
     [Obsolete]
     public sealed class TotalConnectionAtom : SMARTSAtom
@@ -39,8 +38,8 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         private readonly int connectivity;
 
         /// <summary>Creates a new instance.</summary>
-        public TotalConnectionAtom(int connectivity, IChemObjectBuilder builder)
-            : base(builder)
+        public TotalConnectionAtom(int connectivity)
+            : base()
         {
             this.connectivity = connectivity;
         }

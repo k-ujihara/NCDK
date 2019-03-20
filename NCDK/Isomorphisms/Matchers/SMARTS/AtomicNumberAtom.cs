@@ -39,8 +39,8 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         /// Creates a new instance.
         /// </summary>
         /// <param name="atomicNumber"></param>
-        public AtomicNumberAtom(int atomicNumber, IChemObjectBuilder builder)
-            : base(builder)
+        public AtomicNumberAtom(int atomicNumber)
+            : base()
         {
             this.AtomicNumber = atomicNumber;
         }

@@ -25,7 +25,6 @@ namespace NCDK.Isomorphisms.Matchers
     /// </summary>
     /// <seealso cref="UniversalIsomorphismTester"/>
     // @cdk.module  interfaces
-    // @cdk.githash 
     public interface IQueryBond
         : IBond
     {

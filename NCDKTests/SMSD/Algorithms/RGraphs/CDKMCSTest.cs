@@ -77,18 +77,18 @@ namespace NCDK.SMSD.Algorithms.RGraphs
             atomContainer.Atoms.Add(builder.NewAtom("N"));
             atomContainer.AddBond(atomContainer.Atoms[0], atomContainer.Atoms[1], BondOrder.Single);
             atomContainer.AddBond(atomContainer.Atoms[1], atomContainer.Atoms[2], BondOrder.Single);
-            var query = new QueryAtomContainer(builder);
-            var a1 = new SymbolQueryAtom(builder)
+            var query = new QueryAtomContainer();
+            var a1 = new SymbolQueryAtom()
             {
                 Symbol = "C"
             };
 
-            var a2 = new Isomorphisms.Matchers.SMARTS.AnyAtom(builder);
-            var b1 = new OrderQueryBond(a1, a2, BondOrder.Single, builder);
+            var a2 = new Isomorphisms.Matchers.SMARTS.AnyAtom();
+            var b1 = new OrderQueryBond(a1, a2, BondOrder.Single);
 
-            var a3 = new SymbolQueryAtom(builder) { Symbol = "C" };
+            var a3 = new SymbolQueryAtom() { Symbol = "C" };
 
-            var b2 = new OrderQueryBond(a2, a3, BondOrder.Single, builder);
+            var b2 = new OrderQueryBond(a2, a3, BondOrder.Single);
             query.Atoms.Add(a1);
             query.Atoms.Add(a2);
             query.Atoms.Add(a3);

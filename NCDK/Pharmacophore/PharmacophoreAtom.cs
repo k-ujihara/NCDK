@@ -73,7 +73,7 @@ namespace NCDK.Pharmacophore
             Point3D = pharmacophoreAtom.Point3D;
             if (pharmacophoreAtom.GetMatchingAtoms() != null)
             {
-                int[] indices = pharmacophoreAtom.GetMatchingAtoms();
+                var indices = pharmacophoreAtom.GetMatchingAtoms();
                 matchingAtoms = new int[indices.Length];
                 Array.Copy(indices, 0, matchingAtoms, 0, indices.Length);
             }

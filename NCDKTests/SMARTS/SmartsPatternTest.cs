@@ -38,139 +38,139 @@ namespace NCDK.SMARTS
         {
             // FIXME SMARTS Grammar needs fixing/replacing [12] is not considered valid
 
-            Assert.IsFalse(SmartsPattern.Create("[12*]", bldr).Matches(Smi("C")));
-            Assert.IsFalse(SmartsPattern.Create("[12*]", bldr).Matches(Smi("[CH4]")));
-            Assert.IsTrue(SmartsPattern.Create("[12*]", bldr).Matches(Smi("[12CH4]")));
-            Assert.IsFalse(SmartsPattern.Create("[12*]", bldr).Matches(Smi("[13CH4]")));
+            Assert.IsFalse(SmartsPattern.Create("[12*]").Matches(Smi("C")));
+            Assert.IsFalse(SmartsPattern.Create("[12*]").Matches(Smi("[CH4]")));
+            Assert.IsTrue(SmartsPattern.Create("[12*]").Matches(Smi("[12CH4]")));
+            Assert.IsFalse(SmartsPattern.Create("[12*]").Matches(Smi("[13CH4]")));
 
-            Assert.IsFalse(SmartsPattern.Create("[13*]", bldr).Matches(Smi("C")));
-            Assert.IsFalse(SmartsPattern.Create("[13*]", bldr).Matches(Smi("[CH4]")));
-            Assert.IsFalse(SmartsPattern.Create("[13*]", bldr).Matches(Smi("[12CH4]")));
-            Assert.IsTrue(SmartsPattern.Create("[13*]", bldr).Matches(Smi("[13CH4]")));
+            Assert.IsFalse(SmartsPattern.Create("[13*]").Matches(Smi("C")));
+            Assert.IsFalse(SmartsPattern.Create("[13*]").Matches(Smi("[CH4]")));
+            Assert.IsFalse(SmartsPattern.Create("[13*]").Matches(Smi("[12CH4]")));
+            Assert.IsTrue(SmartsPattern.Create("[13*]").Matches(Smi("[13CH4]")));
 
-            Assert.IsTrue(SmartsPattern.Create("[0*]", bldr).Matches(Smi("C")));
-            Assert.IsTrue(SmartsPattern.Create("[0*]", bldr).Matches(Smi("[CH4]")));
-            Assert.IsFalse(SmartsPattern.Create("[0*]", bldr).Matches(Smi("[12CH4]")));
-            Assert.IsFalse(SmartsPattern.Create("[0*]", bldr).Matches(Smi("[13CH4]")));
+            Assert.IsTrue(SmartsPattern.Create("[0*]").Matches(Smi("C")));
+            Assert.IsTrue(SmartsPattern.Create("[0*]").Matches(Smi("[CH4]")));
+            Assert.IsFalse(SmartsPattern.Create("[0*]").Matches(Smi("[12CH4]")));
+            Assert.IsFalse(SmartsPattern.Create("[0*]").Matches(Smi("[13CH4]")));
 
             //      Not possible with current grammar
-            //        assertFalse(SmartsPattern.create("[!0*]", bldr).matches(smi("C")));
-            //        assertFalse(SmartsPattern.create("[!0*]", bldr).matches(smi("[CH4]")));
-            //        assertTrue(SmartsPattern.create("[!0*]", bldr).matches(smi("[12CH4]")));
-            //        assertTrue(SmartsPattern.create("[!0*]", bldr).matches(smi("[13CH4]")));
+            //        assertFalse(SmartsPattern.create("[!0*]").matches(smi("C")));
+            //        assertFalse(SmartsPattern.create("[!0*]").matches(smi("[CH4]")));
+            //        assertTrue(SmartsPattern.create("[!0*]").matches(smi("[12CH4]")));
+            //        assertTrue(SmartsPattern.create("[!0*]").matches(smi("[13CH4]")));
         }
 
         [TestMethod()]
         public void Components()
         {
-            Assert.IsTrue(SmartsPattern.Create("(O).(O)", bldr).Matches(Smi("O.O")));
-            Assert.IsFalse(SmartsPattern.Create("(O).(O)", bldr).Matches(Smi("OO")));
+            Assert.IsTrue(SmartsPattern.Create("(O).(O)").Matches(Smi("O.O")));
+            Assert.IsFalse(SmartsPattern.Create("(O).(O)").Matches(Smi("OO")));
         }
 
         [TestMethod()]
         public void Stereochemistry()
         {
-            Assert.IsTrue(SmartsPattern.Create("C[C@H](O)CC", bldr).Matches(Smi("C[C@H](O)CC")));
-            Assert.IsFalse(SmartsPattern.Create("C[C@H](O)CC", bldr).Matches(Smi("C[C@@H](O)CC")));
-            Assert.IsFalse(SmartsPattern.Create("C[C@H](O)CC", bldr).Matches(Smi("CC(O)CC")));
+            Assert.IsTrue(SmartsPattern.Create("C[C@H](O)CC").Matches(Smi("C[C@H](O)CC")));
+            Assert.IsFalse(SmartsPattern.Create("C[C@H](O)CC").Matches(Smi("C[C@@H](O)CC")));
+            Assert.IsFalse(SmartsPattern.Create("C[C@H](O)CC").Matches(Smi("CC(O)CC")));
         }
 
         [TestMethod()]
         public void SmartsMatchingReaction()
         {
-            Assert.IsTrue(SmartsPattern.Create("CC", bldr).Matches(Rsmi("CC>>")));
-            Assert.IsTrue(SmartsPattern.Create("CC", bldr).Matches(Rsmi(">>CC")));
-            Assert.IsTrue(SmartsPattern.Create("CC", bldr).Matches(Rsmi(">CC>")));
-            Assert.IsFalse(SmartsPattern.Create("CO", bldr).Matches(Rsmi(">>CC")));
+            Assert.IsTrue(SmartsPattern.Create("CC").Matches(Rsmi("CC>>")));
+            Assert.IsTrue(SmartsPattern.Create("CC").Matches(Rsmi(">>CC")));
+            Assert.IsTrue(SmartsPattern.Create("CC").Matches(Rsmi(">CC>")));
+            Assert.IsFalse(SmartsPattern.Create("CO").Matches(Rsmi(">>CC")));
         }
 
         [TestMethod()]
         public void ReactionSmartsMatchingReaction()
         {
-            Assert.IsTrue(SmartsPattern.Create("CC>>", bldr).Matches(Rsmi("CC>>")));
-            Assert.IsFalse(SmartsPattern.Create("CC>>", bldr).Matches(Rsmi(">>CC")));
-            Assert.IsFalse(SmartsPattern.Create("CC>>", bldr).Matches(Rsmi(">CC>")));
+            Assert.IsTrue(SmartsPattern.Create("CC>>").Matches(Rsmi("CC>>")));
+            Assert.IsFalse(SmartsPattern.Create("CC>>").Matches(Rsmi(">>CC")));
+            Assert.IsFalse(SmartsPattern.Create("CC>>").Matches(Rsmi(">CC>")));
         }
 
         [TestMethod()]
         public void ReactionGrouping()
         {
-            Assert.IsTrue(SmartsPattern.Create("[Na+].[OH-]>>", bldr).Matches(Rsmi("[Na+].[OH-]>>")));
-            Assert.IsTrue(SmartsPattern.Create("[Na+].[OH-]>>", bldr).Matches(Rsmi("[Na+].[OH-]>> |f:0.1|")));
-            Assert.IsTrue(SmartsPattern.Create("([Na+].[OH-])>>", bldr).Matches(Rsmi("[Na+].[OH-]>> |f:0.1|")));
+            Assert.IsTrue(SmartsPattern.Create("[Na+].[OH-]>>").Matches(Rsmi("[Na+].[OH-]>>")));
+            Assert.IsTrue(SmartsPattern.Create("[Na+].[OH-]>>").Matches(Rsmi("[Na+].[OH-]>> |f:0.1|")));
+            Assert.IsTrue(SmartsPattern.Create("([Na+].[OH-])>>").Matches(Rsmi("[Na+].[OH-]>> |f:0.1|")));
             // this one can't match because we don't know if NaOH is one component from the input smiles
-            Assert.IsFalse(SmartsPattern.Create("([Na+].[OH-])>>", bldr).Matches(Rsmi("[Na+].[OH-]>>")));
+            Assert.IsFalse(SmartsPattern.Create("([Na+].[OH-])>>").Matches(Rsmi("[Na+].[OH-]>>")));
         }
 
         [TestMethod()]
         public void NoMaps()
         {
-            Assert.AreEqual(4, SmartsPattern.Create("C>>C", null).MatchAll(Rsmi("CC>>CC")).Count());
+            Assert.AreEqual(4, SmartsPattern.Create("C>>C").MatchAll(Rsmi("CC>>CC")).Count());
         }
 
         [TestMethod()]
         public void NoMapsInQueryMapsInTargetIgnored()
         {
-            Assert.AreEqual(4, SmartsPattern.Create("C>>C", null).MatchAll(Rsmi("[C:7][C:8]>>[C:7][C:8]")).Count());
+            Assert.AreEqual(4, SmartsPattern.Create("C>>C").MatchAll(Rsmi("[C:7][C:8]>>[C:7][C:8]")).Count());
         }
 
         [TestMethod()]
         public void UnpairedMapIsQueryIsIgnored()
         {
-            Assert.AreEqual(4, SmartsPattern.Create("[C:1]>>C", null).MatchAll(Rsmi("[CH3:7][CH3:8]>>[CH3:7][CH3:8]")).Count());
-            Assert.AreEqual(4, SmartsPattern.Create("C>>[C:1]", null).MatchAll(Rsmi("[CH3:7][CH3:8]>>[CH3:7][CH3:8]")).Count());
+            Assert.AreEqual(4, SmartsPattern.Create("[C:1]>>C").MatchAll(Rsmi("[CH3:7][CH3:8]>>[CH3:7][CH3:8]")).Count());
+            Assert.AreEqual(4, SmartsPattern.Create("C>>[C:1]").MatchAll(Rsmi("[CH3:7][CH3:8]>>[CH3:7][CH3:8]")).Count());
         }
 
         [TestMethod()]
         public void NoMapsInTarget()
         {
-            Assert.AreEqual(0, SmartsPattern.Create("[C:1]>>[C:1]", null).MatchAll(Rsmi("C>>C")).Count());
+            Assert.AreEqual(0, SmartsPattern.Create("[C:1]>>[C:1]").MatchAll(Rsmi("C>>C")).Count());
         }
 
         [TestMethod(), Ignore()] // Not supported yet
         public void OptionalMapping()
         {
-            Assert.AreEqual(2, SmartsPattern.Create("[C:?1]>>[C:?1]", null).MatchAll(Rsmi("[CH3:7][CH3:8]>>[CH3:7][CH3:8]")).Count());
-            Assert.AreEqual(4, SmartsPattern.Create("[C:?1]>>[C:?1]", null).MatchAll(Rsmi("CC>>CC")).Count());
+            Assert.AreEqual(2, SmartsPattern.Create("[C:?1]>>[C:?1]").MatchAll(Rsmi("[CH3:7][CH3:8]>>[CH3:7][CH3:8]")).Count());
+            Assert.AreEqual(4, SmartsPattern.Create("[C:?1]>>[C:?1]").MatchAll(Rsmi("CC>>CC")).Count());
         }
 
         [TestMethod()]
         public void MappedMatch()
         {
-            Assert.AreEqual(2, SmartsPattern.Create("[C:1]>>[C:1]", null).MatchAll(Rsmi("[CH3:7][CH3:8]>>[CH3:7][CH3:8]")).Count());
+            Assert.AreEqual(2, SmartsPattern.Create("[C:1]>>[C:1]").MatchAll(Rsmi("[CH3:7][CH3:8]>>[CH3:7][CH3:8]")).Count());
         }
 
         [TestMethod()]
         public void MismatchedQueryMapsIgnored()
         {
-            Assert.AreEqual(4, SmartsPattern.Create("[C:1]>>[C:2]", null).MatchAll(Rsmi("[CH3:7][CH3:8]>>[CH3:7][CH3:8]")).Count());
+            Assert.AreEqual(4, SmartsPattern.Create("[C:1]>>[C:2]").MatchAll(Rsmi("[CH3:7][CH3:8]>>[CH3:7][CH3:8]")).Count());
         }
 
         // map :1 in query binds only to :7 in target
         [TestMethod()]
         public void AtomMapsWithOrLogic1()
         {
-            Assert.AreEqual(4, SmartsPattern.Create("[C:1][C:1]>>[C:1]", null).MatchAll(Rsmi("[CH3:7][CH3:7]>>[CH3:7][CH3:7]")).Count());
+            Assert.AreEqual(4, SmartsPattern.Create("[C:1][C:1]>>[C:1]").MatchAll(Rsmi("[CH3:7][CH3:7]>>[CH3:7][CH3:7]")).Count());
         }
 
         // map :1 in query binds to :7 or :8 in target
         [TestMethod()]
         public void AtomMapsWithOrLogic2()
         {
-            Assert.AreEqual(4, SmartsPattern.Create("[C:1][C:1]>>[C:1]", null).MatchAll(Rsmi("[CH3:7][CH3:8]>>[CH3:7][CH3:8]")).Count());
+            Assert.AreEqual(4, SmartsPattern.Create("[C:1][C:1]>>[C:1]").MatchAll(Rsmi("[CH3:7][CH3:8]>>[CH3:7][CH3:8]")).Count());
         }
 
         // map :1 in query binds only to :7 in target
         [TestMethod()]
         public void AtomMapsWithOrLogic3()
         {
-            Assert.AreEqual(2, SmartsPattern.Create("[C:1][C:1]>>[C:1]", null).MatchAll(Rsmi("[CH3:7][CH3:7]>>[CH3:7][CH3:8]")).Count());
+            Assert.AreEqual(2, SmartsPattern.Create("[C:1][C:1]>>[C:1]").MatchAll(Rsmi("[CH3:7][CH3:7]>>[CH3:7][CH3:8]")).Count());
         }
 
         [TestMethod()]
         public void CCBondForming()
         {
-            Assert.AreEqual(2, SmartsPattern.Create("([C:1]).([C:2])>>[C:1][C:2]", null).MatchAll(Rsmi("[C-:13]#[N:14].[K+].[CH:3]1=[CH:4][C:5](=[CH:11][CH:12]=[C:2]1[CH2:1]Br)[C:6](=[O:10])[CH:7]2[CH2:8][CH2:9]2>>[CH:3]1=[CH:4][C:5](=[CH:11][CH:12]=[C:2]1[CH2:1][C:13]#[N:14])[C:6](=[O:10])[CH:7]2[CH2:8][CH2:9]2 |f:0.1|")).Count());
+            Assert.AreEqual(2, SmartsPattern.Create("([C:1]).([C:2])>>[C:1][C:2]").MatchAll(Rsmi("[C-:13]#[N:14].[K+].[CH:3]1=[CH:4][C:5](=[CH:11][CH:12]=[C:2]1[CH2:1]Br)[C:6](=[O:10])[CH:7]2[CH2:8][CH2:9]2>>[CH:3]1=[CH:4][C:5](=[CH:11][CH:12]=[C:2]1[CH2:1][C:13]#[N:14])[C:6](=[O:10])[CH:7]2[CH2:8][CH2:9]2 |f:0.1|")).Count());
         }
 
         [TestMethod()]

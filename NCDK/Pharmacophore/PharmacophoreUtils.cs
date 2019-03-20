@@ -32,7 +32,6 @@ namespace NCDK.Pharmacophore
     /// </summary>
     // @author Rajarshi Guha
     // @cdk.module pcore
-    // @cdk.githash
     // @cdk.keyword pharmacophore
     // @cdk.keyword 3D isomorphism
     public static class PharmacophoreUtils

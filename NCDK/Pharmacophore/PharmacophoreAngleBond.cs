@@ -28,7 +28,6 @@ namespace NCDK.Pharmacophore
     /// <seealso cref="PharmacophoreAtom"/>
     // @author Rajarshi Guha
     // @cdk.module pcore
-    // @cdk.githash
     // @cdk.keyword pharmacophore
     // @cdk.keyword 3D isomorphism
     public class PharmacophoreAngleBond : Silent.Bond
@@ -61,8 +60,10 @@ namespace NCDK.Pharmacophore
                 double c2 = Vector3.DistanceSquared(atom2.Point3D.Value, atom1.Point3D.Value);
 
                 double cosangle = (b2 + c2 - a2) / (2 * Math.Sqrt(b2) * Math.Sqrt(c2));
-                if (-1.0 - epsilon < cosangle && -1.0 + epsilon > cosangle) return 180.0;
-                if (1.0 - epsilon < cosangle && 1.0 + epsilon > cosangle) return 0.0;
+                if (-1.0 - epsilon < cosangle && -1.0 + epsilon > cosangle)
+                    return 180.0;
+                if (1.0 - epsilon < cosangle && 1.0 + epsilon > cosangle)
+                    return 0.0;
 
                 return Math.Acos(cosangle) * 180.0 / Math.PI;
             }

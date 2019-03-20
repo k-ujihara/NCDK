@@ -1844,7 +1844,7 @@ namespace NCDK
             acetone.SingleElectrons.Add(single);
 
             Assert.AreEqual(1, acetone.GetConnectedSingleElectrons(c).Count());
-            Assert.AreEqual(single, (ISingleElectron)acetone.GetConnectedSingleElectrons(c).First());
+            Assert.AreEqual(single, acetone.GetConnectedSingleElectrons(c).First());
         }
 
         [TestMethod()]
@@ -2407,9 +2407,9 @@ namespace NCDK
 
             Assert.AreEqual(2, acetone.GetConnectedSingleElectrons(c).Count());
             Assert.AreEqual(1, acetone.GetConnectedSingleElectrons(o).Count());
-            Assert.AreEqual(single1, (ISingleElectron)acetone.GetConnectedSingleElectrons(c).ElementAt(0));
-            Assert.AreEqual(single2, (ISingleElectron)acetone.GetConnectedSingleElectrons(c).ElementAt(1));
-            Assert.AreEqual(single3, (ISingleElectron)acetone.GetConnectedSingleElectrons(o).ElementAt(0));
+            Assert.AreEqual(single1, acetone.GetConnectedSingleElectrons(c).ElementAt(0));
+            Assert.AreEqual(single2, acetone.GetConnectedSingleElectrons(c).ElementAt(1));
+            Assert.AreEqual(single3, acetone.GetConnectedSingleElectrons(o).ElementAt(0));
 
             Assert.AreEqual(2, acetone.GetConnectedSingleElectrons(c).Count());
             Assert.AreEqual(1, acetone.GetConnectedSingleElectrons(o).Count());
@@ -2449,9 +2449,9 @@ namespace NCDK
             acetone.SingleElectrons.Add(single1);
             acetone.SingleElectrons.Add(single2);
             acetone.SingleElectrons.Add(single3);
-            Assert.AreEqual(single1, (ISingleElectron)acetone.GetConnectedSingleElectrons(c).ElementAt(0));
-            Assert.AreEqual(single2, (ISingleElectron)acetone.GetConnectedSingleElectrons(c).ElementAt(1));
-            Assert.AreEqual(single3, (ISingleElectron)acetone.GetConnectedSingleElectrons(o).ElementAt(0));
+            Assert.AreEqual(single1, acetone.GetConnectedSingleElectrons(c).ElementAt(0));
+            Assert.AreEqual(single2, acetone.GetConnectedSingleElectrons(c).ElementAt(1));
+            Assert.AreEqual(single3, acetone.GetConnectedSingleElectrons(o).ElementAt(0));
         }
 
         [TestMethod()]

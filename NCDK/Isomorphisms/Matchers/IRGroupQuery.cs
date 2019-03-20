@@ -31,7 +31,6 @@ namespace NCDK.Isomorphisms.Matchers
     /// structure, root attachment points and Rgroup definitions.
     /// </summary>
     // @cdk.module  isomorphism
-    // @cdk.githash
     // @cdk.keyword Rgroup
     // @cdk.keyword R group
     // @cdk.keyword R-group

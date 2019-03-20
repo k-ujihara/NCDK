@@ -26,7 +26,6 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
     /// It'll match any atom right now.
     /// </summary>
     // @cdk.module  smarts
-    // @cdk.githash
     // @cdk.keyword SMARTS
     [Obsolete]
     public class ChiralityAtom : SMARTSAtom
@@ -49,8 +48,8 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         /// <summary>
         /// Creates a new instance
         /// </summary>
-        public ChiralityAtom(IChemObjectBuilder builder)
-            : base(builder)
+        public ChiralityAtom()
+            : base()
         {
         }
 
