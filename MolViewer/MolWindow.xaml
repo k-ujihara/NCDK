@@ -17,6 +17,7 @@
             </MenuItem>
             <MenuItem Header="_Edit">
                 <MenuItem x:Name="paste_as_InChI" Header="Paste as InChI" Command="{Binding PasteAsInChICommand}"/>
+                <MenuItem x:Name="sanitize" Header="Sanitize" Command="{Binding SanitizeCommand}"/>
             </MenuItem>
             <MenuItem Header="_View">
                 <MenuItem x:Name="toggle_appearance" Header="_Appearance" Click="Toggle_appearance_Click"/>

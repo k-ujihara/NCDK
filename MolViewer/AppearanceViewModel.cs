@@ -20,17 +20,22 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Aromaticities;
 using NCDK.Geometries;
 using NCDK.Graphs.InChI;
+using NCDK.Isomorphisms;
+using NCDK.Isomorphisms.Matchers;
 using NCDK.Layout;
 using NCDK.Renderers;
 using NCDK.Renderers.Colors;
 using NCDK.Smiles;
+using NCDK.Tools.Manipulator;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
 using System.Diagnostics;
 using System.Globalization;
+using System.Linq;
 using System.Windows;
 using System.Windows.Data;
 using WPF = System.Windows;
@@ -50,6 +55,7 @@ namespace NCDK.MolViewer
         private ColoringStyle _Coloring = ColoringStyle.COW;
         private DelegateCommand _CleanStructureCommand;
         private DelegateCommand _PasteAsInChICommand;
+        private DelegateCommand _SanitizeCommand;
 
         public string Smiles
         {
@@ -223,6 +229,127 @@ namespace NCDK.MolViewer
         public DelegateCommand PasteAsInChICommand
         {
             get { return _PasteAsInChICommand = _PasteAsInChICommand ?? new DelegateCommand(PasteAsInChI); }
+        }
+
+        public DelegateCommand SanitizeCommand
+        {
+            get { return _SanitizeCommand = _SanitizeCommand ?? new DelegateCommand(Sanitize); }
+        }
+
+        static class AmideSanitizer
+        {
+            static QueryAtom c1 = new QueryAtom(ExprType.AliphaticElement, AtomicNumbers.C);
+            static QueryAtom n1 = new QueryAtom(ExprType.AliphaticElement, AtomicNumbers.N);
+            static QueryAtom c2 = new QueryAtom(ExprType.AliphaticElement, AtomicNumbers.C);
+            static QueryAtom a1 = new QueryAtom(
+                    new Expr(ExprType.AliphaticElement, AtomicNumbers.C)
+                .Or(new Expr(ExprType.AliphaticElement, AtomicNumbers.N)));
+            static QueryAtom o1 = new QueryAtom(ExprType.AliphaticElement, AtomicNumbers.O);
+            static QueryBond b1 = new QueryBond(c1, n1, ExprType.AliphaticOrder, 1);
+            static QueryBond bcn = new QueryBond(n1, c2, new Expr(ExprType.AliphaticOrder, 2));
+            static QueryBond bco = new QueryBond(c2, o1, ExprType.AliphaticOrder, 1);
+            static QueryBond bca = new QueryBond(c2, a1, new Expr(ExprType.AliphaticOrder, 1));
+            static QueryAtomContainer query = new QueryAtomContainer(CDK.Builder.NewAtomContainer(new[] { c1, n1, c2, o1, a1 }, new[] { b1, bcn, bco, bca }));
+            static Pattern finder = Pattern.FindSubstructure(query);
+
+            public static void Sanitize(IAtomContainer mol)
+            {
+                var arm = (IAtomContainer)mol.Clone();
+                AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(arm);
+                Aromaticity.CDKLegacy.Apply(arm);
+
+                for (int i = 0; i < mol.Atoms.Count; i++)
+                {
+                    mol.Atoms[i].IsVisited = false;
+
+                    if (arm.Atoms[i].IsAromatic)
+                        mol.Atoms[i].IsVisited = true;
+                }
+
+                var ma = finder.MatchAll(mol);
+                var atomMaps = ma.ToAtomMaps().ToList();
+                var bondMaps = ma.ToBondMaps().ToList();
+
+                for (int i = 0; i < atomMaps.Count; i++)
+                {
+                    var atomMap = atomMaps[i];
+                    var bondMap = bondMaps[i];
+
+                    if (!atomMap[n1].IsVisited && !atomMap[o1].IsVisited
+                     && !bondMap[bcn].IsVisited && !bondMap[bco].IsVisited)
+                    {
+                        IAtom hydrogenAtomToRemove = null;
+                        var to1 = atomMap[o1];
+                        if (to1.ImplicitHydrogenCount != null && to1.ImplicitHydrogenCount > 0)
+                        {
+                            to1.ImplicitHydrogenCount = to1.ImplicitHydrogenCount.Value - 1;
+                        }
+                        else
+                        {
+                            foreach (var bond in to1.Bonds)
+                            {
+                                foreach (var atom in bond.Atoms)
+                                {
+                                    if (atom == to1)
+                                        continue;
+                                    if (atom.AtomicNumber == 1)
+                                    {
+                                        // found H
+                                        hydrogenAtomToRemove = atom;
+                                        goto HFound;
+                                    }
+                                }
+                            }
+                        HFound:
+                            ;
+                        }
+                        if (hydrogenAtomToRemove != null)
+                            mol.RemoveAtom(hydrogenAtomToRemove);
+
+                        mol.RemoveBond(atomMap[c2], atomMap[n1]);
+                        mol.RemoveBond(atomMap[c2], atomMap[o1]);
+                        mol.AddBond(atomMap[c2], atomMap[n1], BondOrder.Single);
+                        mol.AddBond(atomMap[c2], atomMap[o1], BondOrder.Double);
+                        var bnc = mol.GetBond(atomMap[n1], atomMap[c1]);
+                        bnc.Order = BondOrder.Single;
+                        bnc.Stereo = BondStereo.None;
+                        var bca = mol.GetBond(atomMap[c2], atomMap[a1]);
+                        bca.Order = BondOrder.Single;
+                        bca.Stereo = BondStereo.None;
+                        atomMap[n1].ImplicitHydrogenCount = (atomMap[n1].ImplicitHydrogenCount ?? 0) + 1;
+                        atomMap[n1].IsVisited = atomMap[o1].IsVisited = bondMap[bcn].IsVisited = bondMap[bco].IsVisited = true;
+                    }
+                }
+            }
+        }
+
+        private void Sanitize()
+        {
+            try
+            {
+                switch (ChemObject)
+                {
+                    case IAtomContainer mol:
+                        mol = (IAtomContainer)mol.Clone();
+                        AmideSanitizer.Sanitize(mol);
+                        ChemObject = mol;
+                        break;
+                    case IReaction rxn:
+                        rxn = (IReaction)rxn.Clone();
+                        foreach (var mol in rxn.Reactants)
+                        {
+                            AmideSanitizer.Sanitize(mol);
+                        }
+                        ChemObject = rxn;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch (Exception e)
+            {
+                Trace.TraceInformation(e.Message);
+            }
         }
 
         private void PasteAsInChI()
