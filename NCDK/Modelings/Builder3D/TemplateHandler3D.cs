@@ -69,7 +69,7 @@ namespace NCDK.Modelings.Builder3D
             {
                 query.Atoms[i].Point3D = mol.Atoms[i].Point3D;
             }
-            patterns.Add(Pattern.FindSubstructure(query));
+            patterns.Add(Pattern.CreateSubstructureFinder(query));
         }
 
         /// <summary>

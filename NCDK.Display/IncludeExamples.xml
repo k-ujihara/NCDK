@@ -1160,7 +1160,7 @@ namespace NCDK.Graphs
     <code>                IAtomContainer query = queryStructure;
                 IAtomContainer target = targetStructure;
 
-                Mappings mappings = Pattern.FindSubstructure(query).MatchAll(target);
+                Mappings mappings = Pattern.CreateSubstructureFinder(query).MatchAll(target);
 </code>
   </Codes>
   <Codes id="NCDK.Isomorphisms.Mappings_Example.cs+enum_mappings">
@@ -1240,7 +1240,7 @@ namespace NCDK.Graphs
 
                 // obtain only the mappings where the first atom in the query is
                 // mapped to the first atom in the target
-                Mappings mappings = Pattern.FindSubstructure(query)
+                Mappings mappings = Pattern.CreateSubstructureFinder(query)
                     .MatchAll(target)
                     .Filter(input =&gt; input[0] == 0);
 </code>
@@ -1249,7 +1249,7 @@ namespace NCDK.Graphs
     <code>                IAtomContainer query = queryStructure;
                 IAtomContainer target = targetStructure;
 
-                Mappings mappings = Pattern.FindSubstructure(query).MatchAll(target);
+                Mappings mappings = Pattern.CreateSubstructureFinder(query).MatchAll(target);
                 // a string that indicates the mapping of atom elements and numbers
                 IEnumerable&lt;string&gt; strs = mappings.GetMapping(
                     input =&gt;
@@ -1272,7 +1272,7 @@ namespace NCDK.Graphs
     <code>                IAtomContainer query = queryStructure;
                 IAtomContainer target = targetStructure;
 
-                Pattern pat = Pattern.FindSubstructure(query);
+                Pattern pat = Pattern.CreateSubstructureFinder(query);
 
                 // lazily iterator
                 foreach (int[] mapping in pat.MatchAll(target))
@@ -1294,7 +1294,7 @@ namespace NCDK.Graphs
     <code>                IAtomContainer query = queryStructure;
                 IAtomContainer target = targetStructure;
 
-                Pattern pat = Pattern.FindSubstructure(query);
+                Pattern pat = Pattern.CreateSubstructureFinder(query);
 
                 // array of the first 5 unique atom mappings
                 int[][] mappings = pat.MatchAll(target)
@@ -1399,7 +1399,7 @@ namespace NCDK.Graphs
 </code>
   </Codes>
   <Codes id="NCDK.Isomorphisms.Pattern_Example.cs+MatchAll1">
-    <code>                Pattern pattern = Pattern.FindSubstructure(query);
+    <code>                Pattern pattern = Pattern.CreateSubstructureFinder(query);
                 foreach (var m in ms)
                 {
                     foreach (int[] mapping in pattern.MatchAll(m))
@@ -1411,7 +1411,7 @@ namespace NCDK.Graphs
   </Codes>
   <Codes id="NCDK.Isomorphisms.Pattern_Example.cs+MatchAll2">
     <code>                // find only the first 5 mappings and store them in an array
-                Pattern pattern = Pattern.FindSubstructure(query);
+                Pattern pattern = Pattern.CreateSubstructureFinder(query);
                 int[][] mappings = pattern.MatchAll(target)
                                           .Limit(5)
                                           .ToArray();
@@ -1419,7 +1419,7 @@ namespace NCDK.Graphs
   </Codes>
   <Codes id="NCDK.Isomorphisms.Ullmann_Example.cs+1">
     <code>                IAtomContainer query = queryStructure;
-                Pattern pattern = Ullmann.FindSubstructure(query);
+                Pattern pattern = Ullmann.CreateSubstructureFinder(query);
 
                 int hits = 0;
                 foreach (var m in ms)
@@ -1429,7 +1429,7 @@ namespace NCDK.Graphs
   </Codes>
   <Codes id="NCDK.Isomorphisms.Ullmann_Example.cs+2">
     <code>                IAtomContainer query = queryStructure;
-                Pattern pattern = Ullmann.FindSubstructure(query);
+                Pattern pattern = Ullmann.CreateSubstructureFinder(query);
 
                 int hits = 0;
                 foreach (var m in ms)
@@ -1450,7 +1450,7 @@ namespace NCDK.Graphs
   </Codes>
   <Codes id="NCDK.Isomorphisms.VentoFoggia_Example.cs+1">
     <code>                IAtomContainer query = queryStructure;
-                Pattern pattern = VentoFoggia.FindSubstructure(query);
+                Pattern pattern = VentoFoggia.CreateSubstructureFinder(query);
 
                 int hits = 0;
                 foreach (var m in ms)
@@ -1460,7 +1460,7 @@ namespace NCDK.Graphs
   </Codes>
   <Codes id="NCDK.Isomorphisms.VentoFoggia_Example.cs+2">
     <code>                IAtomContainer query = queryStructure;
-                Pattern pattern = VentoFoggia.FindSubstructure(query);
+                Pattern pattern = VentoFoggia.CreateSubstructureFinder(query);
 
                 int hits = 0;
                 foreach (var m in ms)

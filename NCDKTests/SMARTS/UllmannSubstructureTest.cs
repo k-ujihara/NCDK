@@ -34,7 +34,7 @@ namespace NCDK.SMARTS
     {
         public override Pattern Create(IAtomContainer container)
         {
-            return Ullmann.FindSubstructure(container);
+            return Ullmann.CreateSubstructureFinder(container);
         }
     }
 }

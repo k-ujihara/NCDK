@@ -9,7 +9,7 @@
             {
                 #region 1
                 IAtomContainer query = queryStructure;
-                Pattern pattern = VentoFoggia.FindSubstructure(query);
+                Pattern pattern = VentoFoggia.CreateSubstructureFinder(query);
 
                 int hits = 0;
                 foreach (var m in ms)
@@ -20,7 +20,7 @@
             {
                 #region 2
                 IAtomContainer query = queryStructure;
-                Pattern pattern = VentoFoggia.FindSubstructure(query);
+                Pattern pattern = VentoFoggia.CreateSubstructureFinder(query);
 
                 int hits = 0;
                 foreach (var m in ms)

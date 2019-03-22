@@ -34,7 +34,7 @@ namespace NCDK.SMARTS
     {
         public override Pattern Create(IAtomContainer container)
         {
-            return VentoFoggia.FindSubstructure(container);
+            return VentoFoggia.CreateSubstructureFinder(container);
         }
     }
 }

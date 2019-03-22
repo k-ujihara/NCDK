@@ -9,7 +9,7 @@ namespace NCDK.Isomorphisms
             IQueryAtomContainer query = null;
             IAtomContainer mol = null;
             #region
-            var pattern = DfPattern.FindSubstructure(query);
+            var pattern = DfPattern.CreateSubstructureFinder(query);
             // has match?
             if (pattern.Matches(mol))
             {

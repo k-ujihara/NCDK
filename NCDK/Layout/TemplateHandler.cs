@@ -147,10 +147,10 @@ namespace NCDK.Layout
             GeometryUtil.ScaleMolecule(molecule, GeometryUtil.GetScaleFactor(molecule, StructureDiagramGenerator.DefaultBondLength));
 
             templates.Add(molecule);
-            anonPatterns.Add(VentoFoggia.FindSubstructure(molecule,
+            anonPatterns.Add(VentoFoggia.CreateSubstructureFinder(molecule,
                                                           anonAtomMatcher,
                                                           anonBondMatcher));
-            elemPatterns.Add(VentoFoggia.FindSubstructure(molecule,
+            elemPatterns.Add(VentoFoggia.CreateSubstructureFinder(molecule,
                                                           elemAtomMatcher,
                                                           anonBondMatcher));
         }
@@ -159,7 +159,7 @@ namespace NCDK.Layout
         {
             for (int i = 0; i < templates.Count; i++)
             {
-                if (VentoFoggia.FindIdentical(templates[i], anonAtomMatcher, anonBondMatcher).Matches(molecule))
+                if (VentoFoggia.CreateIdenticalFinder(templates[i], anonAtomMatcher, anonBondMatcher).Matches(molecule))
                 {
                     elemPatterns.RemoveAt(i);
                     anonPatterns.RemoveAt(i);
@@ -182,7 +182,7 @@ namespace NCDK.Layout
         {
             foreach (var template in templates)
             {
-                var mappings = VentoFoggia.FindIdentical(template, anonAtomMatcher, anonBondMatcher).MatchAll(molecule);
+                var mappings = VentoFoggia.CreateIdenticalFinder(template, anonAtomMatcher, anonBondMatcher).MatchAll(molecule);
                 foreach (var atoms in mappings.ToAtomMaps())
                 {
                     foreach (var e in atoms)

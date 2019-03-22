@@ -43,13 +43,7 @@ namespace NCDK.SMARTS
     /// to the connection table. Each query atom/bond contains an <see cref="Expr"/> that
     /// describes the predicate to check when matching. This <see cref="Expr"/> is also
     /// used for generating SMARTS.
-    /// <code>
-    /// IAtomContainer mol = ...;
-    /// if (Smarts.Parse(mol, "[aD3]a-a([aD3])[aD3]")) 
-    /// {
-    ///     String smarts = Smarts.Generate(mol);
-    /// }
-    /// </code>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.SMARTS.Smarts_Example.cs+1"]/*' />
     /// When parsing SMARTS several flavors are available. The flavors affect how
     /// queries are interpreted. The following flavors are available:
     /// <list type="table">
@@ -115,7 +109,7 @@ namespace NCDK.SMARTS
 
         public static ThreadLocal<SmartsError> lastError = new ThreadLocal<SmartsError>();
 
-        private static void SetErrorMesg(string sma, int pos, string str)
+        private static void SetErrorMessage(string sma, int pos, string str)
         {
             lastError.Value = new SmartsError(sma, pos, str);
         }
@@ -1619,9 +1613,9 @@ namespace NCDK.SMARTS
             ///  C/C=C\/C   => cis and trans (always false)
             /// </pre>
             /// </remarks>
-            /// @param left left directional bond
-            /// @param right right directional bond
-            /// @return the bond stereo or null if could not be determined
+            /// <param name="left">left directional bond</param>
+            /// <param name="right">right directional bond</param>
+            /// <returns>the bond stereo or null if could not be determined</returns>
             Expr DetermineBondStereo(Expr left, Expr right)
             {
                 switch (left.GetExprType())
@@ -2209,10 +2203,10 @@ namespace NCDK.SMARTS
         /// <see cref="IQueryBond"/>
         public static bool Parse(IAtomContainer mol, string smarts, SmartsFlaver flavor)
         {
-            Parser state = new Parser(mol, smarts, flavor);
+            var state = new Parser(mol, smarts, flavor);
             if (!state.Parse())
             {
-                SetErrorMesg(smarts, state.pos, state.error);
+                SetErrorMessage(smarts, state.pos, state.error);
                 return false;
             }
             return true;
@@ -2225,9 +2219,9 @@ namespace NCDK.SMARTS
         /// <param name="mol">the molecule to store the query in</param>
         /// <param name="smarts">the SMARTS string</param>
         /// <returns>whether the SMARTS was valid</returns>
-        /// <see cref="Expr"/>
-        /// <see cref="IQueryAtom"/>
-        /// <see cref="IQueryBond"/>
+        /// <seealso cref="Expr"/>
+        /// <seealso cref="IQueryAtom"/>
+        /// <seealso cref="IQueryBond"/>
         public static bool Parse(IAtomContainer mol, string smarts)
         {
             return Parse(mol, smarts, SmartsFlaver.Loose);
@@ -2235,16 +2229,13 @@ namespace NCDK.SMARTS
 
         /// <summary>
         /// Utility to generate an atom expression.
-        /// <pre>{@code
-        /// Expr   expr  = new Expr(TypeOfExpression.DEGREE, 4).And(
-        ///                  new Expr(TypeOfExpression.IS_AROMATIC));
-        /// String aExpr = Smarts.GenerateAtom(expr);
-        /// // aExpr='[D4a]'
-        /// }</pre>
-        /// @see Expr
-        /// @param expr the expression
-        /// @return the SMARTS atom expression
         /// </summary>
+        /// <example>
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.SMARTS.Smarts_Example.cs+GenerateAtom"]/*' />
+        /// </example>
+        /// <param name="expr">the expression</param>
+        /// <returns>the SMARTS atom expression</returns>
+        /// <seealso cref="Expr"/>
         public static string GenerateAtom(Expr expr)
         {
             return new Generator(null).GenerateAtom(null, expr);
@@ -2252,15 +2243,13 @@ namespace NCDK.SMARTS
 
         /// <summary>
         /// Utility to generate a bond expression.
-        /// <pre>{@code
-        /// Expr   expr  = new Expr(TypeOfExpression.TRUE);
-        /// String bExpr = Smarts.GenerateBond(expr);
-        /// // bExpr='~'
-        /// }</pre>
-        /// @see Expr
-        /// @param expr the expression
-        /// @return the SMARTS atom expression
         /// </summary>
+        /// <example>
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.SMARTS.Smarts_Example.cs+GenerateBond"]/*' />
+        /// </example>
+        /// <param name="expr">the expression</param>
+        /// <returns>the SMARTS atom expression</returns>
+        /// <seealso cref="Expr"/>
         public static string GenerateBond(Expr expr)
         {
             // default bond type
@@ -2273,31 +2262,17 @@ namespace NCDK.SMARTS
 
         /// <summary>
         /// Generate a SMARTS string from the provided molecule. The generator uses
-        /// <see cref="Expr"/>s stored on the {@link QueryAtom} and {@link QueryBond}
+        /// <see cref="Expr"/>s stored on the <see cref="QueryAtom"/> and <see cref="QueryBond"/>
         /// instances.
-        /// <pre>
-        /// {@code
-        /// IAtomContainer mol = ...;
-        /// QueryAtom qatom1 = new QueryAtom(mol.Builder);
-        /// QueryAtom qatom2 = new QueryAtom(mol.Builder);
-        /// QueryBond qbond  = new QueryBond(mol.Builder);
-        /// qatom1.setExpression(new Expr(TypeOfExpression.IS_AROMATIC));
-        /// qatom2.setExpression(new Expr(TypeOfExpression.IS_AROMATIC));
-        /// qbond.setExpression(new Expr(TypeOfExpression.IS_ALIPHATIC));
-        /// qbond.setAtoms(new IAtom[]{qatom1, qatom2});
-        /// mol.addAtom(qatom1);
-        /// mol.addAtom(qatom2);
-        /// mol.AddBond(qbond);
-        /// String smartsStr = Smarts.Generate(mol);
-        /// // smartsStr = 'a!:a'
-        /// }
-        /// </pre>
-        /// @param mol the query molecule
-        /// @return the SMARTS
-        /// @see Expr
-        /// @see org.openscience.cdk.isomorphism.matchers.IQueryAtom
-        /// @see org.openscience.cdk.isomorphism.matchers.IQueryBond
         /// </summary>
+        /// <example>
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.SMARTS.Smarts_Example.cs+Generate"]/*' />
+        /// </example>
+        /// <param name="mol">the query molecule</param>
+        /// <returns>the SMARTS</returns>
+        /// <seealso cref="Expr"/>
+        /// <seealso cref="IQueryAtom"/>
+        /// <seealso cref="IQueryBond"/>
         public static string Generate(IAtomContainer mol)
         {
             return new Generator(mol).Generate();

@@ -114,10 +114,10 @@ namespace NCDK.Isomorphisms
         /// </summary>
         /// <param name="query">the substructure to find</param>
         /// <returns>a pattern for finding the <paramref name="query"/></returns>
-        public static new Pattern FindSubstructure(IAtomContainer query)
+        public static new Pattern CreateSubstructureFinder(IAtomContainer query)
         {
             bool isQuery = query is IQueryAtomContainer;
-            return FindSubstructure(query,
+            return CreateSubstructureFinder(query,
                 isQuery ? AtomMatcher.CreateQueryMatcher() : AtomMatcher.CreateElementMatcher(),
                 isQuery ? BondMatcher.CreateQueryMatcher() : BondMatcher.CreateOrderMatcher());
         }
@@ -128,10 +128,10 @@ namespace NCDK.Isomorphisms
         /// </summary>
         /// <param name="query">the substructure to find</param>
         /// <returns>a pattern for finding the <paramref name="query"/></returns>
-        public static new Pattern FindIdentical(IAtomContainer query)
+        public static new Pattern CreateIdenticalFinder(IAtomContainer query)
         {
             bool isQuery = query is IQueryAtomContainer;
-            return FindIdentical(query,
+            return CreateIdenticalFinder(query,
                                  isQuery ? AtomMatcher.CreateQueryMatcher() : AtomMatcher.CreateElementMatcher(),
                                  isQuery ? BondMatcher.CreateQueryMatcher() : BondMatcher.CreateOrderMatcher());
         }
@@ -144,7 +144,7 @@ namespace NCDK.Isomorphisms
         /// <param name="atomMatcher">how atoms are matched</param>
         /// <param name="bondMatcher">how bonds are matched</param>
         /// <returns>a pattern for finding the <paramref name="query"/></returns>
-        public static Pattern FindSubstructure(IAtomContainer query, AtomMatcher atomMatcher, BondMatcher bondMatcher)
+        public static Pattern CreateSubstructureFinder(IAtomContainer query, AtomMatcher atomMatcher, BondMatcher bondMatcher)
         {
             return new VentoFoggia(query, atomMatcher, bondMatcher, true);
         }
@@ -157,7 +157,7 @@ namespace NCDK.Isomorphisms
         /// <param name="atomMatcher">how atoms are matched</param>
         /// <param name="bondMatcher">how bonds are matched</param>
         /// <returns>a pattern for finding the <paramref name="query"/></returns>
-        public static Pattern FindIdentical(IAtomContainer query, AtomMatcher atomMatcher, BondMatcher bondMatcher)
+        public static Pattern CreateIdenticalFinder(IAtomContainer query, AtomMatcher atomMatcher, BondMatcher bondMatcher)
         {
             return new VentoFoggia(query, atomMatcher, bondMatcher, false);
         }

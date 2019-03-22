@@ -50,7 +50,7 @@ namespace NCDK.Isomorphisms
             IAtomContainer query = Smi("C1CCC1");
             IAtomContainer target = Smi("C12C3C1C23");
 
-            var mappings = VentoFoggia.FindSubstructure(query).MatchAll(target);
+            var mappings = VentoFoggia.CreateSubstructureFinder(query).MatchAll(target);
 
             // using unique atoms we may think we only found 1 mapping
             {
@@ -70,7 +70,7 @@ namespace NCDK.Isomorphisms
         {
             IAtomContainer ethane = Smi("CC");
             IAtomContainer ethanol = Smi("CCO");
-            Mappings mappings = Pattern.FindSubstructure(ethane).MatchAll(ethanol);
+            Mappings mappings = Pattern.CreateSubstructureFinder(ethane).MatchAll(ethanol);
             Assert.AreEqual(1, mappings.CountUnique());
             Assert.AreEqual(1, mappings.CountUnique()); // re-iteration
         }
@@ -80,7 +80,7 @@ namespace NCDK.Isomorphisms
         {
             IAtomContainer ethane = Smi("CC");
             IAtomContainer ethanol = Smi("CCO");
-            Mappings mappings = Pattern.FindSubstructure(ethane).MatchAll(ethanol);
+            Mappings mappings = Pattern.CreateSubstructureFinder(ethane).MatchAll(ethanol);
             Assert.AreEqual(1, mappings.GetUniqueBonds().Count());
             Assert.AreEqual(1, mappings.GetUniqueBonds().Count()); // re-iteration
         }

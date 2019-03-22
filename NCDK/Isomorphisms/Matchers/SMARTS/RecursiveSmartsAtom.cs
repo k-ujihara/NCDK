@@ -63,7 +63,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
             if (!cache.TryGetValue(target, out BitArray v))
             {
                 BitArray hits = new BitArray(0);
-                foreach (var mapping in Pattern.FindSubstructure(query).MatchAll(target))
+                foreach (var mapping in Pattern.CreateSubstructureFinder(query).MatchAll(target))
                 {
                     BitArrays.SetValue(hits, mapping[0], true);
                 }

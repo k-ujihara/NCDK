@@ -151,7 +151,7 @@ namespace NCDK.Isomorphisms
         /// </summary>
         /// <example>
         /// <code>
-        /// Pattern pattern = Pattern.FindSubstructure(query);
+        /// Pattern pattern = Pattern.CreateSubstructureFinder(query);
         /// foreach (IReaction r in rs) 
         /// {
         ///     foreach (var mapping in pattern.MatchAll(r))
@@ -181,9 +181,9 @@ namespace NCDK.Isomorphisms
         /// <param name="query">the substructure to find</param>
         /// <returns>a pattern for finding the <paramref name="query"/></returns>
         /// <seealso cref="VentoFoggia"/>
-        public static Pattern FindSubstructure(IAtomContainer query)
+        public static Pattern CreateSubstructureFinder(IAtomContainer query)
         {
-            return VentoFoggia.FindSubstructure(query);
+            return VentoFoggia.CreateSubstructureFinder(query);
         }
 
         /// <summary>
@@ -194,9 +194,9 @@ namespace NCDK.Isomorphisms
         /// <param name="query">the substructure to find</param>
         /// <returns>a pattern for finding the <paramref name="query"/></returns>
         /// <seealso cref="VentoFoggia"/>
-        public static Pattern FindIdentical(IAtomContainer query)
+        public static Pattern CreateIdenticalFinder(IAtomContainer query)
         {
-            return VentoFoggia.FindIdentical(query);
+            return VentoFoggia.CreateIdenticalFinder(query);
         }
     }
 }

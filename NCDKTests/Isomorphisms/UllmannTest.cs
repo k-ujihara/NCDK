@@ -41,11 +41,11 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void BenzeneSubsearch()
         {
-            int[] match = Ullmann.FindSubstructure(
+            int[] match = Ullmann.CreateSubstructureFinder(
                 TestMoleculeFactory.MakeBenzene()).Match(
                 TestMoleculeFactory.MakeNaphthalene());
             Assert.IsTrue(Compares.AreDeepEqual(new int[] { 2, 7, 6, 5, 4, 3 }, match));
-            int count = Ullmann.FindSubstructure(
+            int count = Ullmann.CreateSubstructureFinder(
                 TestMoleculeFactory.MakeBenzene()).MatchAll(
                 TestMoleculeFactory.MakeNaphthalene()).Count();
             Assert.AreEqual(6, count); // note: aromatic one would be 24
@@ -54,11 +54,11 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void NapthaleneSubsearch()
         {
-            int[] match = Ullmann.FindSubstructure(
+            int[] match = Ullmann.CreateSubstructureFinder(
                 TestMoleculeFactory.MakeNaphthalene()).Match(
                 TestMoleculeFactory.MakeBenzene());
             Assert.IsTrue(Compares.AreDeepEqual(Array.Empty<int>(), match));
-            int count = Ullmann.FindSubstructure(
+            int count = Ullmann.CreateSubstructureFinder(
                 TestMoleculeFactory.MakeNaphthalene()).MatchAll(
                 TestMoleculeFactory.MakeBenzene()).Count();
             Assert.AreEqual(0, count);

@@ -41,7 +41,7 @@ namespace NCDK.Isomorphisms
             IAtomContainer query = null;
             {
                 #region MatchAll1
-                Pattern pattern = Pattern.FindSubstructure(query);
+                Pattern pattern = Pattern.CreateSubstructureFinder(query);
                 foreach (var m in ms)
                 {
                     foreach (int[] mapping in pattern.MatchAll(m))
@@ -54,7 +54,7 @@ namespace NCDK.Isomorphisms
             {
                 #region MatchAll2
                 // find only the first 5 mappings and store them in an array
-                Pattern pattern = Pattern.FindSubstructure(query);
+                Pattern pattern = Pattern.CreateSubstructureFinder(query);
                 int[][] mappings = pattern.MatchAll(target)
                                           .Limit(5)
                                           .ToArray();

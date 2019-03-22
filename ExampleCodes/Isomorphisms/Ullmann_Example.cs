@@ -9,7 +9,7 @@
             {
                 #region 1
                 IAtomContainer query = queryStructure;
-                Pattern pattern = Ullmann.FindSubstructure(query);
+                Pattern pattern = Ullmann.CreateSubstructureFinder(query);
 
                 int hits = 0;
                 foreach (var m in ms)
@@ -20,7 +20,7 @@
             {
                 #region 2
                 IAtomContainer query = queryStructure;
-                Pattern pattern = Ullmann.FindSubstructure(query);
+                Pattern pattern = Ullmann.CreateSubstructureFinder(query);
 
                 int hits = 0;
                 foreach (var m in ms)

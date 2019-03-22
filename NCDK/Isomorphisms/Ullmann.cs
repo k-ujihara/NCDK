@@ -96,7 +96,7 @@ namespace NCDK.Isomorphisms
         /// </summary>
         /// <param name="query">the substructure to find</param>
         /// <returns>a pattern for finding the <paramref name="query"/></returns>
-        public static new Pattern FindSubstructure(IAtomContainer query)
+        public static new Pattern CreateSubstructureFinder(IAtomContainer query)
         {
             bool isQuery = query is IQueryAtomContainer;
             return new Ullmann(query, isQuery ? AtomMatcher.CreateQueryMatcher() : AtomMatcher.CreateElementMatcher(),

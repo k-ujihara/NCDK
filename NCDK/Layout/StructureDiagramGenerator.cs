@@ -2301,7 +2301,7 @@ namespace NCDK.Layout
                 foreach (var atom in sgroup.Atoms)
                     visit.Add(atom);
 
-                var ptrn = VentoFoggia.FindSubstructure(substructure, new AtomicNumberAtomMatcher(visit), BondMatcher.CreateOrderMatcher());
+                var ptrn = VentoFoggia.CreateSubstructureFinder(substructure, new AtomicNumberAtomMatcher(visit), BondMatcher.CreateOrderMatcher());
 
                 var sgroupAtoms = sgroup.Atoms;
 

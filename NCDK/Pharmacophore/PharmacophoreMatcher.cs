@@ -178,7 +178,7 @@ namespace NCDK.Pharmacophore
                 return false;
             }
 
-            mappings = Pattern.FindSubstructure(pharmacophoreQuery).MatchAll(pharmacophoreMolecule);
+            mappings = Pattern.CreateSubstructureFinder(pharmacophoreQuery).MatchAll(pharmacophoreMolecule);
 
             // XXX: doing one search then discarding
             return mappings.AtLeast(1);

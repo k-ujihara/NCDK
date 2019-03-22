@@ -167,7 +167,7 @@ namespace NCDK.Isomorphisms
             IAtomContainer query = Smi("CC");
             IAtomContainer target = Smi("CC");
 
-            var iterable = Pattern.FindIdentical(query).MatchAll(target).ToAtomMaps();
+            var iterable = Pattern.CreateIdenticalFinder(query).MatchAll(target).ToAtomMaps();
             var iterator = iterable.GetEnumerator();
 
             Assert.IsTrue(iterator.MoveNext());
@@ -187,7 +187,7 @@ namespace NCDK.Isomorphisms
             IAtomContainer query = Smi("CCC");
             IAtomContainer target = Smi("CCC");
 
-            var iterable = Pattern.FindIdentical(query).MatchAll(target).ToBondMaps();
+            var iterable = Pattern.CreateIdenticalFinder(query).MatchAll(target).ToBondMaps();
             var iterator = iterable.GetEnumerator();
 
             Assert.IsTrue(iterator.MoveNext());
@@ -207,7 +207,7 @@ namespace NCDK.Isomorphisms
             IAtomContainer query = Smi("CCC");
             IAtomContainer target = Smi("CCC");
 
-            var iterable = Pattern.FindIdentical(query).MatchAll(target).ToAtomBondMaps();
+            var iterable = Pattern.CreateIdenticalFinder(query).MatchAll(target).ToAtomBondMaps();
             var iterator = iterable.GetEnumerator();
 
             Assert.IsTrue(iterator.MoveNext());
@@ -233,7 +233,7 @@ namespace NCDK.Isomorphisms
             IAtomContainer query = Smi("O1CC1");
             IAtomContainer target = Smi("C1OC1CCC");
 
-            var iterable = Pattern.FindSubstructure(query)
+            var iterable = Pattern.CreateSubstructureFinder(query)
                                                        .MatchAll(target)
                                                        .GetUniqueAtoms()
                                                        .ToSubstructures();

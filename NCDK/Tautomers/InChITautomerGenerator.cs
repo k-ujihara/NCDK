@@ -336,7 +336,7 @@ namespace NCDK.Tautomers
         /// <exception cref="CDKException"></exception>
         private static void MapInputMoleculeToInChIMolgraph(IAtomContainer inchiMolGraph, IAtomContainer mol)
         {
-            var iter = VentoFoggia.FindIdentical(inchiMolGraph,
+            var iter = VentoFoggia.CreateIdenticalFinder(inchiMolGraph,
                 AtomMatcher.CreateElementMatcher(), BondMatcher.CreateAnyMatcher())
                     .MatchAll(mol)
                     .Limit(1)

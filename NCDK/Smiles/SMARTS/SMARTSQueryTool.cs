@@ -380,7 +380,7 @@ namespace NCDK.Smiles.SMARTS
             }
             else
             {
-                mappings = Ullmann.FindSubstructure(query).MatchAll(atomContainer)
+                mappings = Ullmann.CreateSubstructureFinder(query).MatchAll(atomContainer)
                         .Where(n => new SmartsStereoMatch(query, atomContainer).Apply(n))
                         .ToList();
             }

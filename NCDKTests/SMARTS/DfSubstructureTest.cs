@@ -31,7 +31,7 @@ namespace NCDK.SMARTS
     {
         public override Pattern Create(IAtomContainer container)
         {
-            return DfPattern.FindSubstructure(container);
+            return DfPattern.CreateSubstructureFinder(container);
         }
 
         [TestMethod()]
@@ -39,7 +39,7 @@ namespace NCDK.SMARTS
         {
             var mol = Smi("OC(=O)C(=O)O");
             var qry = Sma("O=*");
-            var ptrn = DfPattern.FindSubstructure(qry);
+            var ptrn = DfPattern.CreateSubstructureFinder(qry);
             Assert.IsFalse(ptrn.MatchesRoot(mol.Atoms[0]));
             Assert.IsTrue(ptrn.MatchesRoot(mol.Atoms[2]));
             Assert.IsTrue(ptrn.MatchesRoot(mol.Atoms[4]));

@@ -141,7 +141,7 @@ namespace NCDK.Isomorphisms
         /// <param name="query">the substructure to find</param>
         /// <returns>a pattern for finding the <paramref name="query"/></returns>
         /// <seealso cref="QueryAtomContainer.Create(IAtomContainer, ExprType[])"/>
-        public static new DfPattern FindSubstructure(IAtomContainer query)
+        public static new DfPattern CreateSubstructureFinder(IAtomContainer query)
         {
             if (query is IQueryAtomContainer)
                 return new DfPattern((IQueryAtomContainer)query);

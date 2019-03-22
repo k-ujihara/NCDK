@@ -14,7 +14,7 @@ namespace NCDK.Isomorphisms
                 IAtomContainer query = queryStructure;
                 IAtomContainer target = targetStructure;
 
-                Mappings mappings = Pattern.FindSubstructure(query).MatchAll(target);
+                Mappings mappings = Pattern.CreateSubstructureFinder(query).MatchAll(target);
                 #endregion
 
                 #region enum_mappings
@@ -100,7 +100,7 @@ namespace NCDK.Isomorphisms
 
                 // obtain only the mappings where the first atom in the query is
                 // mapped to the first atom in the target
-                Mappings mappings = Pattern.FindSubstructure(query)
+                Mappings mappings = Pattern.CreateSubstructureFinder(query)
                     .MatchAll(target)
                     .Filter(input => input[0] == 0);
                 #endregion
@@ -111,7 +111,7 @@ namespace NCDK.Isomorphisms
                 IAtomContainer query = queryStructure;
                 IAtomContainer target = targetStructure;
 
-                Mappings mappings = Pattern.FindSubstructure(query).MatchAll(target);
+                Mappings mappings = Pattern.CreateSubstructureFinder(query).MatchAll(target);
                 // a string that indicates the mapping of atom elements and numbers
                 IEnumerable<string> strs = mappings.GetMapping(
                     input =>
@@ -136,7 +136,7 @@ namespace NCDK.Isomorphisms
                 IAtomContainer query = queryStructure;
                 IAtomContainer target = targetStructure;
 
-                Pattern pat = Pattern.FindSubstructure(query);
+                Pattern pat = Pattern.CreateSubstructureFinder(query);
 
                 // lazily iterator
                 foreach (int[] mapping in pat.MatchAll(target))
@@ -160,7 +160,7 @@ namespace NCDK.Isomorphisms
                 IAtomContainer query = queryStructure;
                 IAtomContainer target = targetStructure;
 
-                Pattern pat = Pattern.FindSubstructure(query);
+                Pattern pat = Pattern.CreateSubstructureFinder(query);
 
                 // array of the first 5 unique atom mappings
                 int[][] mappings = pat.MatchAll(target)

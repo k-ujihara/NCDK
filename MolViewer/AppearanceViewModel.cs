@@ -250,7 +250,7 @@ namespace NCDK.MolViewer
             static QueryBond bco = new QueryBond(c2, o1, ExprType.AliphaticOrder, 1);
             static QueryBond bca = new QueryBond(c2, a1, new Expr(ExprType.AliphaticOrder, 1));
             static QueryAtomContainer query = new QueryAtomContainer(CDK.Builder.NewAtomContainer(new[] { c1, n1, c2, o1, a1 }, new[] { b1, bcn, bco, bca }));
-            static Pattern finder = Pattern.FindSubstructure(query);
+            static Pattern finder = Pattern.CreateSubstructureFinder(query);
 
             public static void Sanitize(IAtomContainer mol)
             {

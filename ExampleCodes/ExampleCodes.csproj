@@ -151,6 +151,7 @@
     <Compile Include="RingSearches\RingSearch_Example.cs" />
     <Compile Include="Signatures\MoleculeSignature_Example.cs" />
     <Compile Include="Similarity\Tanimoto_Example.cs" />
+    <Compile Include="SMARTS\Smarts_Example.cs" />
     <Compile Include="SMARTS\SmartsFragmentExtractor_Example.cs" />
     <Compile Include="Smiles\CDKToBeam_Example.cs" />
     <Compile Include="Smiles\SMARTS\Parser\SMARTSParser_Example.cs" />

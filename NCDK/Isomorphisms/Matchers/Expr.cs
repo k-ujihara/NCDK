@@ -387,7 +387,7 @@ namespace NCDK.Isomorphisms.Matchers
                           && left.left.type == ExprType.Stereochemistry));
                 case ExprType.Recursive:
                     if (ptrn == null)
-                        ptrn = DfPattern.FindSubstructure(query);
+                        ptrn = DfPattern.CreateSubstructureFinder(query);
                     return ptrn.MatchesRoot(atom);
                 default:
                     throw new ArgumentException($"Cannot match AtomExpr, type={type}", nameof(type));

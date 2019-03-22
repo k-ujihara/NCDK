@@ -72,7 +72,7 @@ namespace NCDK.SMARTS
             this.query = new QueryAtomContainer();
             if (!Smarts.Parse(query, smarts))
                 throw new IOException($"Could not parse SMARTS: {smarts}");
-            this.pattern = Pattern.FindSubstructure(query);
+            this.pattern = Pattern.CreateSubstructureFinder(query);
         }
 
         public static void Prepare(IAtomContainer target)
