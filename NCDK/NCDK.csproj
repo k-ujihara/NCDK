@@ -6,7 +6,7 @@
     <AssemblyVersion>1.5.2.0</AssemblyVersion>
     <FileVersion>1.5.2.0</FileVersion>
     <Version>1.5.2</Version>
-    <Copyright>Copyright © 2016-2018 Kazuya Ujihara</Copyright>
+    <Copyright>Copyright © 2016-2019 Kazuya Ujihara</Copyright>
 
     <PackageId>NCDK</PackageId>
     <Product>NCDK: Chemistry Development Kit for .NET Framework</Product>

@@ -26,7 +26,6 @@ using NCDK.Tools;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -39,7 +38,6 @@ namespace NCDK.Graphs.Invariant
     /// stable and runs in n Log(n).
     /// </summary>
     // @cdk.module standard
-    // @cdk.githash
     // @author   Oliver Horlacher <oliver.horlacher@therastrat.com>
     // @cdk.created  2002-02-26
     // @cdk.keyword canonicalization

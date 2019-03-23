@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Version>1.5.2</Version>
+    <Authors>Kazuya Ujihara</Authors>
+    <Product>NCDK</Product>
+    <Description>The legacy classes of NCDK.</Description>
+    <Copyright>Copyright © 2019 Kazuya Ujihara</Copyright>
+    <PackageLicenseUrl>https://github.com/kazuyaujihara/NCDK/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/kazuyaujihara/NCDK</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/kazuyaujihara/NCDK</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>ncdk.snk</AssemblyOriginatorKeyFile>
+    <RootNamespace>NCDK</RootNamespace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <NoWarn>1701;1702;0612</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <NoWarn>1701;1702;0612</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\NCDK\Properties\InternalVisibles..cs" Link="Properties\InternalVisibles..cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NCDK\NCDK.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Properties\" />
+    <Folder Include="SMARTS\" />
+  </ItemGroup>
+
+</Project>

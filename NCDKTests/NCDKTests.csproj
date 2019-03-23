@@ -18,11 +18,11 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <NoWarn>1701;1702;0162,0164,0219,0612,0618,0672,0809,1591,3021,1573</NoWarn>
+    <NoWarn>1701;1702;0612;0618</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <NoWarn>1701;1702;0162,0164,0219,0612,0618,0672,0809,1591,3021,1573</NoWarn>
+    <NoWarn>1701;1702;0612;0618</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -545,8 +545,6 @@
     <None Remove="IO\CML\cmlTestFramework_jumbo4.6.xml" />
     <None Remove="Smiles\CHEBI_53695.mol" />
     <None Remove="Smiles\CHEMBL367774.mol" />
-    <None Remove="Smiles\SMARTS\Parser\cnssmarts.sdf" />
-    <None Remove="Smiles\SMARTS\Parser\drugs.smi" />
   </ItemGroup>
 
   <ItemGroup>
@@ -1069,8 +1067,6 @@
     <EmbeddedResource Include="IO\CML\cmlTestFramework_jumbo4.6.xml" />
     <EmbeddedResource Include="Smiles\CHEBI_53695.mol" />
     <EmbeddedResource Include="Smiles\CHEMBL367774.mol" />
-    <EmbeddedResource Include="Smiles\SMARTS\Parser\cnssmarts.sdf" />
-    <EmbeddedResource Include="Smiles\SMARTS\Parser\drugs.smi" />
   </ItemGroup>
 
   <ItemGroup>

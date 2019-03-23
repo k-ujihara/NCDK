@@ -18,7 +18,7 @@
  */
 
 using NCDK.Aromaticities;
-using NCDK.Smiles.SMARTS;
+using NCDK.SMARTS;
 using NCDK.Tools.Manipulator;
 using System.Linq;
 

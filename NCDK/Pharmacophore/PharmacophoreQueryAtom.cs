@@ -19,7 +19,7 @@
 
 using NCDK.Common.Primitives;
 using NCDK.Isomorphisms.Matchers;
-using NCDK.Smiles.SMARTS;
+using NCDK.SMARTS;
 using System;
 using System.Text;
 

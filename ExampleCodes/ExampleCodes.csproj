@@ -209,6 +209,10 @@
       <Project>{60b8bebc-9968-44a7-ab0b-11c03116579d}</Project>
       <Name>NCDK.Display</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NCDK.Legacy\NCDK.Legacy.csproj">
+      <Project>{d69ed942-9971-4f54-884d-4d795f74c6a4}</Project>
+      <Name>NCDK.Legacy</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NCDK\NCDK.csproj">
       <Project>{b0b5eacf-5f39-42d0-bacd-1ff559ccc8b2}</Project>
       <Name>NCDK</Name>
