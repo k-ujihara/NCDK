@@ -161,9 +161,11 @@ namespace NCDK.Isomorphisms
         /// }
         /// </code>
         /// </example>
+        /// <remarks>
         /// The reaction is inlined into a molecule and vs mapped id's correspond
         /// to the absolute atom index in the reaction when considered as reactants, agents,
         /// products <see cref="ReactionManipulator.ToMolecule(IReaction)"/>.
+        /// </remarks>
         /// <param name="target">the reaction to search for the pattern in</param>
         /// <returns>the mapping from the pattern to the target</returns>
         /// <seealso cref="Mappings"/>

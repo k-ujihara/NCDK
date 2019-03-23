@@ -312,30 +312,30 @@ namespace NCDK.Tools.Manipulator
         /// </summary>
         /// <param name="mol">molecule</param>
         /// <param name="role">role to assign</param>
-        /// <param name="grpId">group id</param>
-        private static void AssignRoleAndGrp(IAtomContainer mol, ReactionRole role, int grpId)
+        /// <param name="groupId">group id</param>
+        private static void AssignRoleAndGroup(IAtomContainer mol, ReactionRole role, int groupId)
         {
             foreach (IAtom atom in mol.Atoms)
             {
                 atom.SetProperty(CDKPropertyName.ReactionRole, role);
-                atom.SetProperty(CDKPropertyName.ReactionGroup, grpId);
+                atom.SetProperty(CDKPropertyName.ReactionGroup, groupId);
             }
         }
 
         /// <summary>
-        /// <p>Converts a reaction to an 'inlined' reaction stored as a molecule. All
+        /// Converts a reaction to an 'inlined' reaction stored as a molecule. All
         /// reactants, agents, products are added to the molecule as disconnected
         /// components with atoms flagged as to their role <see cref="ReactionRole"/> and
-        /// component group.</p>
-        /// <p>
-        /// The inlined reaction, stored in a molecule can be converted back to an explicit
-        /// reaction with <see cref="ToReaction"/>. Data stored on the individual components (e.g.
-        /// titles is lost in the conversion).
-        /// </p>
+        /// component group.
         /// </summary>
+        /// <remarks>
+        /// The inlined reaction, stored in a molecule can be converted back to an explicit
+        /// reaction with <see cref="ToReaction(IAtomContainer)"/>. Data stored on the individual components (e.g.
+        /// titles is lost in the conversion).
+        /// </remarks>
         /// <param name="rxn">reaction to convert</param>
         /// <returns>inlined reaction stored in a molecule</returns>
-        /// <seealso cref="ToReaction"/>
+        /// <seealso cref="ToReaction(IAtomContainer)"/>
         public static IAtomContainer ToMolecule(IReaction rxn)
         {
             if (rxn == null)
@@ -347,24 +347,24 @@ namespace NCDK.Tools.Manipulator
             int grpId = 0;
             foreach (IAtomContainer comp in rxn.Reactants)
             {
-                AssignRoleAndGrp(comp, ReactionRole.Reactant, ++grpId);
+                AssignRoleAndGroup(comp, ReactionRole.Reactant, ++grpId);
                 mol.Add(comp);
             }
             foreach (IAtomContainer comp in rxn.Agents)
             {
-                AssignRoleAndGrp(comp, ReactionRole.Agent, ++grpId);
+                AssignRoleAndGroup(comp, ReactionRole.Agent, ++grpId);
                 mol.Add(comp);
             }
             foreach (IAtomContainer comp in rxn.Products)
             {
-                AssignRoleAndGrp(comp, ReactionRole.Product, ++grpId);
+                AssignRoleAndGroup(comp, ReactionRole.Product, ++grpId);
                 mol.Add(comp);
             }
             return mol;
         }
 
         /// <summary>
-        /// <p>Converts an 'inlined' reaction stored in a molecule back to a reaction.</p>
+        /// Converts an 'inlined' reaction stored in a molecule back to a reaction.
         /// </summary>
         /// <param name="mol">molecule to convert</param>
         /// <returns>reaction</returns>
@@ -430,17 +430,17 @@ namespace NCDK.Tools.Manipulator
             foreach (var se in mol.StereoElements)
             {
                 IAtom focus = null;
-                if (se is ITetrahedralChirality)
+                switch (se)
                 {
-                    focus = ((ITetrahedralChirality)se).ChiralAtom;
-                }
-                else if (se is IDoubleBondStereochemistry)
-                {
-                    focus = ((IDoubleBondStereochemistry)se).StereoBond.Begin;
-                }
-                else if (se is ExtendedTetrahedral)
-                {
-                    focus = ((ExtendedTetrahedral)se).Focus;
+                    case ITetrahedralChirality tc:
+                        focus = tc.ChiralAtom;
+                        break;
+                    case IDoubleBondStereochemistry ds:
+                        focus = ds.StereoBond.Begin;
+                        break;
+                    case ExtendedTetrahedral et:
+                        focus = et.Focus;
+                        break;
                 }
                 if (focus == null)
                     throw new ArgumentException("Stereochemistry had no focus");
@@ -476,7 +476,7 @@ namespace NCDK.Tools.Manipulator
                 this.end = end;
             }
 
-            public override bool Equals(Object o)
+            public override bool Equals(object o)
             {
                 if (this == o)
                     return true;
