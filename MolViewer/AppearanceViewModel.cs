@@ -238,22 +238,28 @@ namespace NCDK.MolViewer
 
         static class AmideSanitizer
         {
-            static QueryAtom c1 = new QueryAtom(ExprType.AliphaticElement, AtomicNumbers.C);
-            static QueryAtom n1 = new QueryAtom(ExprType.AliphaticElement, AtomicNumbers.N);
-            static QueryAtom c2 = new QueryAtom(ExprType.AliphaticElement, AtomicNumbers.C);
-            static QueryAtom a1 = new QueryAtom(
+            static readonly QueryAtom c1 = new QueryAtom(ExprType.AliphaticElement, AtomicNumbers.C);
+            static readonly QueryAtom n1 = new QueryAtom(ExprType.AliphaticElement, AtomicNumbers.N);
+            static readonly QueryAtom c2 = new QueryAtom(ExprType.AliphaticElement, AtomicNumbers.C);
+            static readonly QueryAtom a1 = new QueryAtom(
                     new Expr(ExprType.AliphaticElement, AtomicNumbers.C)
                 .Or(new Expr(ExprType.AliphaticElement, AtomicNumbers.N)));
-            static QueryAtom o1 = new QueryAtom(ExprType.AliphaticElement, AtomicNumbers.O);
-            static QueryBond b1 = new QueryBond(c1, n1, ExprType.AliphaticOrder, 1);
-            static QueryBond bcn = new QueryBond(n1, c2, new Expr(ExprType.AliphaticOrder, 2));
-            static QueryBond bco = new QueryBond(c2, o1, ExprType.AliphaticOrder, 1);
-            static QueryBond bca = new QueryBond(c2, a1, new Expr(ExprType.AliphaticOrder, 1));
-            static QueryAtomContainer query = new QueryAtomContainer(CDK.Builder.NewAtomContainer(new[] { c1, n1, c2, o1, a1 }, new[] { b1, bcn, bco, bca }));
-            static Pattern finder = Pattern.CreateSubstructureFinder(query);
+            static readonly QueryAtom o1 = new QueryAtom(ExprType.AliphaticElement, AtomicNumbers.O);
+            static readonly QueryBond b1 = new QueryBond(c1, n1, ExprType.AliphaticOrder, 1);
+            static readonly QueryBond bcn = new QueryBond(n1, c2, new Expr(ExprType.AliphaticOrder, 2));
+            static readonly QueryBond bco = new QueryBond(c2, o1, ExprType.AliphaticOrder, 1);
+            static readonly QueryBond bca = new QueryBond(c2, a1, new Expr(ExprType.AliphaticOrder, 1));
+            static readonly QueryAtomContainer query = new QueryAtomContainer(CDK.Builder.NewAtomContainer(new[] { c1, n1, c2, o1, a1 }, new[] { b1, bcn, bco, bca }));
+            static readonly Pattern finder = Pattern.CreateSubstructureFinder(query);
 
-            public static void Sanitize(IAtomContainer mol)
+            /// <summary>
+            /// Sanitize amide bonds in <paramref name="mol"/>.
+            /// </summary>
+            /// <param name="mol">The molecule to sanitize.</param>
+            /// <returns>The sanitized molecule </returns>
+            public static IAtomContainer Sanitize(IAtomContainer mol)
             {
+                mol = (IAtomContainer)mol.Clone();
                 var arm = (IAtomContainer)mol.Clone();
                 AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(arm);
                 Aromaticity.CDKLegacy.Apply(arm);
@@ -265,6 +271,9 @@ namespace NCDK.MolViewer
                     if (arm.Atoms[i].IsAromatic)
                         mol.Atoms[i].IsVisited = true;
                 }
+
+                for (int i = 0; i < mol.Bonds.Count; i++)
+                    mol.Bonds[i].IsVisited = false;
 
                 var ma = finder.MatchAll(mol);
                 var atomMaps = ma.ToAtomMaps().ToList();
@@ -320,6 +329,14 @@ namespace NCDK.MolViewer
                         atomMap[n1].IsVisited = atomMap[o1].IsVisited = bondMap[bcn].IsVisited = bondMap[bco].IsVisited = true;
                     }
                 }
+                return mol;
+            }
+
+            public static IReaction Sanitize(IReaction reaction)
+            {
+                var rxnmol = ReactionManipulator.ToMolecule(reaction);
+                rxnmol = Sanitize(rxnmol);
+                return ReactionManipulator.ToReaction(rxnmol);
             }
         }
 
@@ -330,17 +347,10 @@ namespace NCDK.MolViewer
                 switch (ChemObject)
                 {
                     case IAtomContainer mol:
-                        mol = (IAtomContainer)mol.Clone();
-                        AmideSanitizer.Sanitize(mol);
-                        ChemObject = mol;
+                        ChemObject = AmideSanitizer.Sanitize(mol);
                         break;
                     case IReaction rxn:
-                        rxn = (IReaction)rxn.Clone();
-                        foreach (var mol in rxn.Reactants)
-                        {
-                            AmideSanitizer.Sanitize(mol);
-                        }
-                        ChemObject = rxn;
+                        ChemObject = AmideSanitizer.Sanitize(rxn);
                         break;
                     default:
                         break;
