@@ -1,8 +1,6 @@
 ﻿using NCDK.Aromaticities;
 using NCDK.Graphs;
-using NCDK.Silent;
 using NCDK.Tools.Manipulator;
-using System.Collections.Generic;
 
 namespace NCDK.Smiles.SMARTS
 {
@@ -14,7 +12,7 @@ namespace NCDK.Smiles.SMARTS
                 #region
                 SmilesParser sp = new SmilesParser();
                 IAtomContainer atomContainer = sp.ParseSmiles("CC(=O)OC(=O)C");
-                SMARTSQueryTool querytool = new SMARTSQueryTool("O=CO", ChemObjectBuilder.Instance);
+                SMARTSQueryTool querytool = new SMARTSQueryTool("O=CO");
                 bool status = querytool.Matches(atomContainer);
                 if (status)
                 {
@@ -31,7 +29,7 @@ namespace NCDK.Smiles.SMARTS
                 string someSmartsPattern = null;
                 IChemObjectSet<IAtomContainer> molecules = null;
                 #region SetAromaticity
-                SMARTSQueryTool sqt = new SMARTSQueryTool(someSmartsPattern, ChemObjectBuilder.Instance);
+                SMARTSQueryTool sqt = new SMARTSQueryTool(someSmartsPattern);
                 sqt.SetAromaticity(new Aromaticity(ElectronDonation.CDKModel, Cycles.CDKAromaticSetFinder));
                 foreach (var molecule in molecules)
                 {

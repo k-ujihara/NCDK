@@ -69,9 +69,8 @@ namespace NCDK.Smiles.SMARTS
         /// Internal constructor.
         /// </summary>
         /// <param name="smarts">pattern</param>
-        /// <param name="builder">the builder</param>
         /// <exception cref="System.IO.IOException">the pattern could not be parsed</exception>
-        private SmartsPattern(string smarts, IChemObjectBuilder builder)
+        private SmartsPattern(string smarts)
         {
             this.query = new QueryAtomContainer();
             if (!Smarts.Parse(query, smarts))
@@ -137,23 +136,11 @@ namespace NCDK.Smiles.SMARTS
         /// Create a <see cref="Pattern"/> that will match the given <paramref name="smarts"/> query.
         /// </summary>
         /// <param name="smarts">SMARTS pattern string</param>
-        /// <param name="builder">chem object builder used to create objects</param>
         /// <returns>a new pattern</returns>
         /// <exception cref="System.IO.IOException">the smarts could not be parsed</exception> 
-        public static SmartsPattern Create(string smarts, IChemObjectBuilder builder)
-        {
-            return new SmartsPattern(smarts, builder);
-        }
-
-        /// <summary>
-        /// Default SMARTS pattern constructor, passes in a null chem object builder.
-        /// </summary>
-        /// <param name="smarts">SMARTS pattern string</param>
-        /// <returns>a SMARTS pattern</returns>
-        /// <exception cref="System.IO.IOException">problem with SMARTS string syntax/semantics</exception>
         public static SmartsPattern Create(string smarts)
         {
-            return new SmartsPattern(smarts, null);
+            return new SmartsPattern(smarts);
         }
     }
 }

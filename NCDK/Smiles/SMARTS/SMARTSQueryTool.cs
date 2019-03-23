@@ -188,8 +188,6 @@ namespace NCDK.Smiles.SMARTS
         /// <summary>Which short cyclic set should be used.</summary>
         private RingSet ringSet = RingSet.EssentialRings;
 
-        private readonly IChemObjectBuilder builder;
-
         /// <summary>
         /// Aromaticity perception - dealing with SMARTS we should use the Daylight
         /// model. This can be set to a different model using <see cref="SetAromaticity(Aromaticity)"/>.
@@ -216,9 +214,8 @@ namespace NCDK.Smiles.SMARTS
         /// </summary>
         /// <param name="smarts">SMARTS query string</param>
         /// <exception cref="ArgumentException">if the SMARTS string can not be handled</exception>
-        public SMARTSQueryTool(string smarts, IChemObjectBuilder builder)
+        public SMARTSQueryTool(string smarts)
         {
-            this.builder = builder;
             this.smarts = smarts;
             try
             {
@@ -468,7 +465,7 @@ namespace NCDK.Smiles.SMARTS
             mappings = null;
             if (!cache.TryGetValue(smarts, out query))
             {
-                query = SMARTSParser.Parse(smarts, builder);
+                query = SMARTSParser.Parse(smarts);
                 cache[smarts] = query;
             }
         }

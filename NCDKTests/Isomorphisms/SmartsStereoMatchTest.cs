@@ -23,11 +23,8 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
 using NCDK.Smiles.SMARTS.Parser;
 using NCDK.Stereo;
-using System.Collections.Generic;
-using static Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace NCDK.Isomorphisms
 {
@@ -372,7 +369,7 @@ namespace NCDK.Isomorphisms
 
         static IAtomContainer Dimethylpropane()
         {
-            IAtomContainer container = new AtomContainer();
+            IAtomContainer container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(Atom("C", 0));
             container.Atoms.Add(Atom("C", 3));
             container.Atoms.Add(Atom("C", 3));
@@ -387,7 +384,7 @@ namespace NCDK.Isomorphisms
 
         static IAtomContainer But2ene()
         {
-            IAtomContainer container = new AtomContainer();
+            IAtomContainer container = CDK.Builder.NewAtomContainer();
             container.Atoms.Add(Atom("C", 1));
             container.Atoms.Add(Atom("C", 1));
             container.Atoms.Add(Atom("C", 3));
@@ -400,14 +397,14 @@ namespace NCDK.Isomorphisms
 
         static IAtom Atom(string symbol, int hCount)
         {
-            IAtom atom = new Atom(symbol);
+            IAtom atom = CDK.Builder.NewAtom(symbol);
             atom.ImplicitHydrogenCount = hCount;
             return atom;
         }
 
         static IAtomContainer Sma(string smarts)
         {
-            return SMARTSParser.Parse(smarts, CDK.Builder);
+            return SMARTSParser.Parse(smarts);
         }
     }
 }

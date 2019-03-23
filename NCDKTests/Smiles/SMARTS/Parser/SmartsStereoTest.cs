@@ -21,8 +21,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
 using System.Linq;
 
 namespace NCDK.Smiles.SMARTS.Parser
@@ -161,7 +161,7 @@ namespace NCDK.Smiles.SMARTS.Parser
 
         static SMARTSQueryTool CreateFromSmarts(string smarts)
         {
-            return new SMARTSQueryTool(smarts, ChemObjectBuilder.Instance);
+            return new SMARTSQueryTool(smarts);
         }
 
         private static readonly SmilesParser sp = CDK.SmilesParser;
