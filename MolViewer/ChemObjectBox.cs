@@ -21,6 +21,7 @@
  */
 
 using NCDK.Depict;
+using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -91,15 +92,10 @@ namespace NCDK.MolViewer
             switch (_ChemObject)
             {
                 case IAtomContainer mol:
-                    var sss = new Dictionary<IChemObject, Color>();
-                    foreach (var o in SplitHighlightinhObjects(mol, this.HighlightingObjects))
-                    {
-                        sss.Add(o, Colors.Aqua);
-                    }
-                    depiction = Generator.Depict(mol, sss);
+                    depiction = Generator.Depict(mol, MakeHighlightDictionary(mol));
                     break;
                 case IReaction rxn:
-                    depiction = Generator.Depict(rxn);
+                    depiction = Generator.Depict(rxn, MakeHighlightDictionary(ReactionManipulator.ToMolecule(rxn)));
                     break;
                 default:
                     depiction = null;
@@ -107,6 +103,17 @@ namespace NCDK.MolViewer
             }
 
             this.InvalidateVisual();
+        }
+
+        private Dictionary<IChemObject, Color> MakeHighlightDictionary(IAtomContainer mol)
+        {
+            var highlightDic = new Dictionary<IChemObject, Color>();
+            foreach (var o in SplitHighlightinhObjects(mol, this.HighlightingObjects))
+            {
+                highlightDic.Add(o, Colors.Aqua);
+            }
+
+            return highlightDic;
         }
     }
 }
