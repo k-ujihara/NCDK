@@ -171,7 +171,7 @@ namespace NCDK.Renderers.Generators
             {
                 var bondElement = this.Generate(bond, model);
                 if (bondElement != null)
-                    group.Add(MarkedElement.MarkupBond(bondElement, bond));
+                    group.Add(MarkedElement.Markup(bondElement, bond));
             }
             return group;
         }

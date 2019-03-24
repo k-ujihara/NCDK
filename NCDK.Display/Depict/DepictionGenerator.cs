@@ -561,8 +561,7 @@ namespace NCDK.Depict
                 {
                     if (atom.GetProperty<string>(StandardGenerator.AnnotationLabelKey) != null)
                         throw new NotSupportedException("Multiple annotation labels are not supported.");
-                    atom.SetProperty(StandardGenerator.AnnotationLabelKey,
-                                     atom.GetProperty<string>(CDKPropertyName.Comment));
+                    atom.SetProperty(StandardGenerator.AnnotationLabelKey, atom.GetProperty<string>(CDKPropertyName.Comment));
                 }
             }
             else if (annotateAtomMapNumbers)

@@ -161,11 +161,11 @@ namespace NCDK.Renderers.Generators.Standards
                 }
                 if (highlight != null && style == HighlightStyle.Colored)
                 {
-                    frontLayer.Add(MarkedElement.MarkupBond(Recolor(bondElements[i], highlight.Value), bond));
+                    frontLayer.Add(MarkedElement.Markup(Recolor(bondElements[i], highlight.Value), bond));
                 }
                 else
                 {
-                    middleLayer.Add(MarkedElement.MarkupBond(bondElements[i], bond));
+                    middleLayer.Add(MarkedElement.Markup(bondElements[i], bond));
                 }
             }
 
@@ -210,11 +210,11 @@ namespace NCDK.Renderers.Generators.Standards
 
                 if (highlight != null && style == HighlightStyle.Colored)
                 {
-                    frontLayer.Add(MarkedElement.MarkupAtom(symbolElements, atom));
+                    frontLayer.Add(MarkedElement.Markup(symbolElements, atom));
                 }
                 else
                 {
-                    middleLayer.Add(MarkedElement.MarkupAtom(symbolElements, atom));
+                    middleLayer.Add(MarkedElement.Markup(symbolElements, atom));
                 }
             }
 
@@ -232,7 +232,7 @@ namespace NCDK.Renderers.Generators.Standards
                 frontLayer
             };
 
-            return MarkedElement.MarkupMol(group, container);
+            return MarkedElement.Markup(group, container);
         }
 
         private Color GetColorOfAtom(IDictionary<IAtom, string> symbolRemap, IAtomColorer coloring, Color foreground,

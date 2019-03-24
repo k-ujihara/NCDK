@@ -45,7 +45,7 @@ namespace NCDK.Renderers.Generators
             ElementGroup elementGroup = new ElementGroup();
             foreach (var atom in container.Atoms)
             {
-                elementGroup.Add(MarkedElement.MarkupAtom(this.Generate(container, atom, model), atom));
+                elementGroup.Add(MarkedElement.Markup(this.Generate(container, atom, model), atom));
             }
             return elementGroup;
         }

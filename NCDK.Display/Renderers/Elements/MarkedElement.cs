@@ -23,7 +23,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Windows.Media;
 
@@ -46,7 +45,6 @@ namespace NCDK.Renderers.Elements
         public const string ClassKey = nameof(MarkedElement) + "_CLS";
 
         readonly IRenderingElement elem;
-        private readonly List<string> classes = new List<string>(5);
 
         private MarkedElement(IRenderingElement elem)
         {
@@ -54,28 +52,21 @@ namespace NCDK.Renderers.Elements
         }
 
         /// <summary>
+        /// The origin of the element.
+        /// </summary>
+        public IChemObject Origin { get; private set; }
+
+        /// <summary>
         /// The identifier of the tagged element.
         /// </summary>
         public string Id { get; private set; }
 
-        /// <summary>
-        /// Add a <paramref name="cls"/> to the element.
-        /// </summary>
-        /// <param name="cls">a class</param>
-        private void AddClass(string cls)
-        {
-            if (cls != null)
-                this.classes.Add(cls);
-        }
+        private readonly List<string> classes = new List<string>(5);
 
         /// <summary>
-        /// Access the classes of the element.
+        /// The classes of the element.
         /// </summary>
-        /// <returns>id, empty if none</returns>
-        public IReadOnlyCollection<string> GetClasses()
-        {
-            return new ReadOnlyCollection<string>(classes);
-        }
+        public IReadOnlyCollection<string> Classes => classes;
 
         public void Accept(IRenderingVisitor visitor, Transform transform)
         {
@@ -107,18 +98,19 @@ namespace NCDK.Renderers.Elements
             Debug.Assert(elem != null);
             var tagElem = new MarkedElement(elem);
             foreach (var cls in classes)
-                tagElem.AddClass(cls);
+                tagElem.classes.Add(cls);
             return tagElem;
         }
 
-        private static MarkedElement MarkupChemObj(IRenderingElement elem, IChemObject chemObj)
+        private static MarkedElement MarkupFinal(IRenderingElement elem, IChemObject chemObj)
         {
             Debug.Assert(elem != null);
             var tagElem = new MarkedElement(elem);
             if (chemObj != null)
             {
+                tagElem.Origin = chemObj;
                 tagElem.Id = chemObj.GetProperty<string>(IdKey);
-                tagElem.AddClass(chemObj.GetProperty<string>(ClassKey));
+                tagElem.classes.Add(chemObj.GetProperty<string>(ClassKey));
             }
             return tagElem;
         }
@@ -130,11 +122,11 @@ namespace NCDK.Renderers.Elements
         /// <param name="elem">rendering element</param>
         /// <param name="mol">molecule</param>
         /// <returns>the marked element</returns>
-        public static MarkedElement MarkupMol(IRenderingElement elem, IAtomContainer mol)
+        public static MarkedElement Markup(IRenderingElement elem, IAtomContainer mol)
         {
             Debug.Assert(elem != null);
-            var tagElem = MarkupChemObj(elem, mol);
-            tagElem.AddClass("mol");
+            var tagElem = MarkupFinal(elem, mol);
+            tagElem.classes.Add("mol");
             return tagElem;
         }
 
@@ -145,12 +137,12 @@ namespace NCDK.Renderers.Elements
         /// <param name="elem">rendering element</param>
         /// <param name="atom">atom</param>
         /// <returns>the marked element</returns>
-        public static MarkedElement MarkupAtom(IRenderingElement elem, IAtom atom)
+        public static MarkedElement Markup(IRenderingElement elem, IAtom atom)
         {
             if (elem == null)
                 return null;
-            var tagElem = MarkupChemObj(elem, atom);
-            tagElem.AddClass("atom");
+            var tagElem = MarkupFinal(elem, atom);
+            tagElem.classes.Add("atom");
             return tagElem;
         }
 
@@ -161,12 +153,12 @@ namespace NCDK.Renderers.Elements
         /// <param name="elem">rendering element</param>
         /// <param name="bond">bond</param>
         /// <returns>the marked element</returns>
-        public static MarkedElement MarkupBond(IRenderingElement elem, IBond bond)
+        public static MarkedElement Markup(IRenderingElement elem, IBond bond)
         {
             if (elem == null)
                 throw new ArgumentNullException(nameof(elem));
-            var tagElem = MarkupChemObj(elem, bond);
-            tagElem.AddClass("bond");
+            var tagElem = MarkupFinal(elem, bond);
+            tagElem.classes.Add("bond");
             return tagElem;
         }
     }

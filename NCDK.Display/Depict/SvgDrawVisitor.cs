@@ -453,7 +453,7 @@ namespace NCDK.Depict
         private void Visit(MarkedElement elem)
         {
             var id = elem.Id;
-            var classes = elem.GetClasses();
+            var classes = elem.Classes;
             var cls = !classes.Any() ? null : string.Join(" ", classes);
 
             var marked = elem.Element();

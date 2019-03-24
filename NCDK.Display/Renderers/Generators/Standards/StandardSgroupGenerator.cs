@@ -383,7 +383,7 @@ namespace NCDK.Renderers.Generators.Standards
             }
             else
             {
-                return MarkedElement.MarkupAtom(labelgroup, null);
+                return MarkedElement.Markup(labelgroup, (IAtom)null);
             }
         }
 
