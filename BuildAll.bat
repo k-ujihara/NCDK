@@ -10,6 +10,10 @@ pushd NCDK.Display
 call :BuildProject NCDK.Display yes
 popd
 
+pushd NCDK.Legacy
+call :BuildProject NCDK.Legacy
+popd
+
 pushd NCDK.Tests
 call :BuildProject NCDKTests
 popd

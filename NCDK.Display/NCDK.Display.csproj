@@ -5,7 +5,7 @@
 
     <AssemblyVersion>1.5.1.0</AssemblyVersion>
     <FileVersion>1.5.1.0</FileVersion>
-    <Version>1.5.2</Version>
+    <Version>1.5.3</Version>
     <Copyright>Copyright © 2016-2018 Kazuya Ujihara</Copyright>
 
     <PackageId>NCDK.Display</PackageId>
