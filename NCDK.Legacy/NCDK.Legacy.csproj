@@ -37,4 +37,20 @@
     <Folder Include="SMARTS\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="IncludeExamples.tt">
+      <LastGenOutput>IncludeExamples.xml</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+    <None Update="IncludeExamples.xml">
+      <DependentUpon>IncludeExamples.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
 </Project>
