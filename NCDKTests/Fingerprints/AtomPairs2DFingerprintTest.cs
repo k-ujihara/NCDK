@@ -40,6 +40,14 @@ namespace NCDK.Fingerprints
         }
 
         [TestMethod()]
+        public void TestChlorobenzene()
+        {
+            var printer = new AtomPairs2DFingerprinter();
+            var mol1 = parser.ParseSmiles("Clc1ccccc1");
+            var bsfp = (BitSetFingerprint)printer.GetBitFingerprint(mol1);
+        }
+
+        [TestMethod()]
         public void TestHalogen()
         {
             var printer = new AtomPairs2DFingerprinter();
