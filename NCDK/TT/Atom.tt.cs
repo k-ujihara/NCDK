@@ -181,6 +181,7 @@ namespace NCDK.Default
         }
 
         /// <inheritdoc/>
+        [AlwaysError]
         public IBond GetBond(IAtom atom) 
         {
             throw new InvalidOperationException();
@@ -609,6 +610,7 @@ namespace NCDK.Silent
         }
 
         /// <inheritdoc/>
+        [AlwaysError]
         public IBond GetBond(IAtom atom) 
         {
             throw new InvalidOperationException();

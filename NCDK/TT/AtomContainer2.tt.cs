@@ -1125,7 +1125,21 @@ namespace NCDK.Default
         {
             var bond = GetBond(beg, end);
             if (bond != null)
+            {
+                var stereoToRemove = new List<IStereoElement<IChemObject, IChemObject>>();
+                foreach (var stereoBond in stereo)
+                {
+                    if (stereoBond.Focus == bond
+                     || stereoBond.Carriers.Contains(bond))
+                    {
+                        stereoToRemove.Add(stereoBond);
+                        continue;
+                    }
+                }
+                foreach (var remove in stereoToRemove)
+                    stereo.Remove(remove);
                 Bonds.Remove(bond);
+            }
             return bond;
         }
 

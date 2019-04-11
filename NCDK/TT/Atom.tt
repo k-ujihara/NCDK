@@ -176,13 +176,14 @@ namespace <#= ns.NS #>
         public virtual int Index => -1;
 
         /// <inheritdoc/>
-        [NotSupprted]
+        [AlwaysError]
         public virtual IReadOnlyList<IBond> Bonds
         { 
             get { throw new NotSupportedException(); } 
         }
 
         /// <inheritdoc/>
+        [AlwaysError]
         public IBond GetBond(IAtom atom) 
         {
             throw new InvalidOperationException();
