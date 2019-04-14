@@ -263,6 +263,13 @@ namespace NCDK
         IBond RemoveBond(IAtom atom1, IAtom atom2);
 
         /// <summary>
+        /// Removes the bond.
+        /// </summary>
+        /// <param name="bond">The bond to remove.</param>
+        /// <returns></returns>
+        void RemoveBond(IBond bond);
+
+        /// <summary>
         /// <see langword="true"/>, if the <see cref="IAtomContainer"/> contains the given atom object.
         /// </summary>
         /// <param name="atom">the atom this <see cref="IAtomContainer"/> is searched for</param>

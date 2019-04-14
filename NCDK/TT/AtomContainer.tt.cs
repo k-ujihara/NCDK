@@ -76,7 +76,7 @@ namespace NCDK.Default
         /// <summary>
         /// Stereo elements contained by this object.
         /// </summary>
-        internal List<IStereoElement<IChemObject, IChemObject>> stereoElements;
+        internal List<IStereoElement<IChemObject, IChemObject>> stereo;
 
         /// <inheritdoc/>
         public override IChemObjectBuilder Builder => builder;
@@ -139,7 +139,7 @@ namespace NCDK.Default
                     List<IStereoElement<IChemObject, IChemObject>> oldStereo = null;
                     List<IStereoElement<IChemObject, IChemObject>> newStereo = null;
 
-                    foreach (var se in parent.stereoElements)
+                    foreach (var se in parent.stereo)
                     {
                         if (se.Contains(oldAtom))
                         {
@@ -159,9 +159,9 @@ namespace NCDK.Default
                     if (oldStereo != null)
                     {
                         foreach (var stereo in oldStereo)
-                            parent.stereoElements.Remove(stereo);
+                            parent.stereo.Remove(stereo);
                         foreach (var stereo in newStereo)
-                            parent.stereoElements.Add(stereo);
+                            parent.stereo.Add(stereo);
                     }
 
          
@@ -176,13 +176,13 @@ namespace NCDK.Default
             ObservableChemObjectCollection<IBond> bonds,
             ObservableChemObjectCollection<ILonePair> lonePairs,
             ObservableChemObjectCollection<ISingleElectron> singleElectrons,
-            List<IStereoElement<IChemObject, IChemObject>> stereoElements)
+            List<IStereoElement<IChemObject, IChemObject>> stereo)
         {
             this.atoms = atoms;
             this.bonds = bonds;
             this.lonePairs = lonePairs;
             this.singleElectrons = singleElectrons;
-            this.stereoElements = stereoElements;
+            this.stereo = stereo;
         }
 
         public AtomContainer(
@@ -190,14 +190,14 @@ namespace NCDK.Default
             IEnumerable<IBond> bonds,
             IEnumerable<ILonePair> lonePairs,
             IEnumerable<ISingleElectron> singleElectrons,
-            IEnumerable<IStereoElement<IChemObject, IChemObject>> stereoElements)
+            IEnumerable<IStereoElement<IChemObject, IChemObject>> stereo)
         {
             Init(
                 new ObservableChemObjectCollection_IAtom(this, atoms ?? Array.Empty<IAtom>()),
                 CreateObservableChemObjectCollection(bonds ?? Array.Empty<IBond>(), true),
                 CreateObservableChemObjectCollection(lonePairs ?? Array.Empty<ILonePair>(), true),
                 CreateObservableChemObjectCollection(singleElectrons ?? Array.Empty<ISingleElectron>(), true),
-                new List<IStereoElement<IChemObject, IChemObject>>(stereoElements ?? Array.Empty<IStereoElement<IChemObject, IChemObject>>())
+                new List<IStereoElement<IChemObject, IChemObject>>(stereo ?? Array.Empty<IStereoElement<IChemObject, IChemObject>>())
             );
         }
 
@@ -313,7 +313,7 @@ namespace NCDK.Default
         public virtual IList<ISingleElectron> SingleElectrons => singleElectrons;
 
         /// <inheritdoc/>
-        public virtual ICollection<IStereoElement<IChemObject, IChemObject>> StereoElements => stereoElements;
+        public virtual ICollection<IStereoElement<IChemObject, IChemObject>> StereoElements => stereo;
 
         /// <summary>
         /// Returns the bond that connects the two given atoms.
@@ -456,7 +456,7 @@ namespace NCDK.Default
             foreach (var singleElectron in that.SingleElectrons.Where(singleElectron => !Contains(singleElectron)))
                 SingleElectrons.Add(singleElectron);
             foreach (var se in that.StereoElements)
-                stereoElements.Add(se);
+                stereo.Add(se);
 
              NotifyChanged();         }
 
@@ -539,9 +539,9 @@ namespace NCDK.Default
                     singleElectrons.Remove(singleElectron);
             }
             {
-                var toRemove = stereoElements.Where(stereoElement => stereoElement.Contains(atom)).ToList();
+                var toRemove = stereo.Where(stereoElement => stereoElement.Contains(atom)).ToList();
                 foreach (var stereoElement in toRemove)
-                    stereoElements.Remove(stereoElement);
+                    stereo.Remove(stereoElement);
             }
 
             Atoms.Remove(atom);
@@ -561,7 +561,7 @@ namespace NCDK.Default
             foreach (var atom in atoms)
                 atom.Listeners?.Remove(this);
             atoms.Clear();
-            stereoElements.Clear();
+            stereo.Clear();
 
              NotifyChanged();         }
 
@@ -587,9 +587,29 @@ namespace NCDK.Default
         public virtual IBond RemoveBond(IAtom atom1, IAtom atom2)
         {
             var bond = GetBond(atom1, atom2);
-            if (bond != null)
-                Bonds.Remove(bond);
+            RemoveBond(bond);
             return bond;
+        }
+
+        public virtual void RemoveBond(IBond bond)
+        {
+            if (bond != null)
+            {
+                var stereoToRemove = new List<IStereoElement<IChemObject, IChemObject>>();
+                foreach (var stereoBond in stereo)
+                {
+                    if (stereoBond.Focus == bond
+                     || stereoBond.Carriers.Contains(bond))
+                    {
+                        stereoToRemove.Add(stereoBond);
+                        continue;
+                    }
+                }
+                foreach (var remove in stereoToRemove)
+                    stereo.Remove(remove);
+
+                Bonds.Remove(bond);
+            }
         }
 
         /// <inheritdoc/>
@@ -624,7 +644,7 @@ namespace NCDK.Default
             clone.bonds = CreateObservableChemObjectCollection(bonds.Where(n => n != null).Select(n => (IBond)n.Clone(map)), true);
             clone.lonePairs = CreateObservableChemObjectCollection(lonePairs.Where(n => n != null).Select(n => (ILonePair)n.Clone(map)), true);
             clone.singleElectrons = CreateObservableChemObjectCollection(singleElectrons.Where(n => n != null).Select(n => (ISingleElectron)n.Clone(map)), true);
-            clone.stereoElements = new List<IStereoElement<IChemObject, IChemObject>>(stereoElements.Select(n => (IStereoElement<IChemObject, IChemObject>)n.Clone(map)));
+            clone.stereo = new List<IStereoElement<IChemObject, IChemObject>>(stereo.Select(n => (IStereoElement<IChemObject, IChemObject>)n.Clone(map)));
 
             // update sgroups
             var sgroups = this.GetCtabSgroups();
@@ -716,7 +736,7 @@ namespace NCDK.Silent
         /// <summary>
         /// Stereo elements contained by this object.
         /// </summary>
-        internal List<IStereoElement<IChemObject, IChemObject>> stereoElements;
+        internal List<IStereoElement<IChemObject, IChemObject>> stereo;
 
         /// <inheritdoc/>
         public override IChemObjectBuilder Builder => builder;
@@ -776,7 +796,7 @@ namespace NCDK.Silent
                     List<IStereoElement<IChemObject, IChemObject>> oldStereo = null;
                     List<IStereoElement<IChemObject, IChemObject>> newStereo = null;
 
-                    foreach (var se in parent.stereoElements)
+                    foreach (var se in parent.stereo)
                     {
                         if (se.Contains(oldAtom))
                         {
@@ -796,9 +816,9 @@ namespace NCDK.Silent
                     if (oldStereo != null)
                     {
                         foreach (var stereo in oldStereo)
-                            parent.stereoElements.Remove(stereo);
+                            parent.stereo.Remove(stereo);
                         foreach (var stereo in newStereo)
-                            parent.stereoElements.Add(stereo);
+                            parent.stereo.Add(stereo);
                     }
 
          
@@ -811,13 +831,13 @@ namespace NCDK.Silent
             ObservableChemObjectCollection<IBond> bonds,
             ObservableChemObjectCollection<ILonePair> lonePairs,
             ObservableChemObjectCollection<ISingleElectron> singleElectrons,
-            List<IStereoElement<IChemObject, IChemObject>> stereoElements)
+            List<IStereoElement<IChemObject, IChemObject>> stereo)
         {
             this.atoms = atoms;
             this.bonds = bonds;
             this.lonePairs = lonePairs;
             this.singleElectrons = singleElectrons;
-            this.stereoElements = stereoElements;
+            this.stereo = stereo;
         }
 
         public AtomContainer(
@@ -825,14 +845,14 @@ namespace NCDK.Silent
             IEnumerable<IBond> bonds,
             IEnumerable<ILonePair> lonePairs,
             IEnumerable<ISingleElectron> singleElectrons,
-            IEnumerable<IStereoElement<IChemObject, IChemObject>> stereoElements)
+            IEnumerable<IStereoElement<IChemObject, IChemObject>> stereo)
         {
             Init(
                 new ObservableChemObjectCollection_IAtom(this, atoms ?? Array.Empty<IAtom>()),
                 CreateObservableChemObjectCollection(bonds ?? Array.Empty<IBond>(), true),
                 CreateObservableChemObjectCollection(lonePairs ?? Array.Empty<ILonePair>(), true),
                 CreateObservableChemObjectCollection(singleElectrons ?? Array.Empty<ISingleElectron>(), true),
-                new List<IStereoElement<IChemObject, IChemObject>>(stereoElements ?? Array.Empty<IStereoElement<IChemObject, IChemObject>>())
+                new List<IStereoElement<IChemObject, IChemObject>>(stereo ?? Array.Empty<IStereoElement<IChemObject, IChemObject>>())
             );
         }
 
@@ -946,7 +966,7 @@ namespace NCDK.Silent
         public virtual IList<ISingleElectron> SingleElectrons => singleElectrons;
 
         /// <inheritdoc/>
-        public virtual ICollection<IStereoElement<IChemObject, IChemObject>> StereoElements => stereoElements;
+        public virtual ICollection<IStereoElement<IChemObject, IChemObject>> StereoElements => stereo;
 
         /// <summary>
         /// Returns the bond that connects the two given atoms.
@@ -1089,7 +1109,7 @@ namespace NCDK.Silent
             foreach (var singleElectron in that.SingleElectrons.Where(singleElectron => !Contains(singleElectron)))
                 SingleElectrons.Add(singleElectron);
             foreach (var se in that.StereoElements)
-                stereoElements.Add(se);
+                stereo.Add(se);
 
                     }
 
@@ -1172,9 +1192,9 @@ namespace NCDK.Silent
                     singleElectrons.Remove(singleElectron);
             }
             {
-                var toRemove = stereoElements.Where(stereoElement => stereoElement.Contains(atom)).ToList();
+                var toRemove = stereo.Where(stereoElement => stereoElement.Contains(atom)).ToList();
                 foreach (var stereoElement in toRemove)
-                    stereoElements.Remove(stereoElement);
+                    stereo.Remove(stereoElement);
             }
 
             Atoms.Remove(atom);
@@ -1194,7 +1214,7 @@ namespace NCDK.Silent
             foreach (var atom in atoms)
                 atom.Listeners?.Remove(this);
             atoms.Clear();
-            stereoElements.Clear();
+            stereo.Clear();
 
                     }
 
@@ -1220,9 +1240,29 @@ namespace NCDK.Silent
         public virtual IBond RemoveBond(IAtom atom1, IAtom atom2)
         {
             var bond = GetBond(atom1, atom2);
-            if (bond != null)
-                Bonds.Remove(bond);
+            RemoveBond(bond);
             return bond;
+        }
+
+        public virtual void RemoveBond(IBond bond)
+        {
+            if (bond != null)
+            {
+                var stereoToRemove = new List<IStereoElement<IChemObject, IChemObject>>();
+                foreach (var stereoBond in stereo)
+                {
+                    if (stereoBond.Focus == bond
+                     || stereoBond.Carriers.Contains(bond))
+                    {
+                        stereoToRemove.Add(stereoBond);
+                        continue;
+                    }
+                }
+                foreach (var remove in stereoToRemove)
+                    stereo.Remove(remove);
+
+                Bonds.Remove(bond);
+            }
         }
 
         /// <inheritdoc/>
@@ -1257,7 +1297,7 @@ namespace NCDK.Silent
             clone.bonds = CreateObservableChemObjectCollection(bonds.Where(n => n != null).Select(n => (IBond)n.Clone(map)), true);
             clone.lonePairs = CreateObservableChemObjectCollection(lonePairs.Where(n => n != null).Select(n => (ILonePair)n.Clone(map)), true);
             clone.singleElectrons = CreateObservableChemObjectCollection(singleElectrons.Where(n => n != null).Select(n => (ISingleElectron)n.Clone(map)), true);
-            clone.stereoElements = new List<IStereoElement<IChemObject, IChemObject>>(stereoElements.Select(n => (IStereoElement<IChemObject, IChemObject>)n.Clone(map)));
+            clone.stereo = new List<IStereoElement<IChemObject, IChemObject>>(stereo.Select(n => (IStereoElement<IChemObject, IChemObject>)n.Clone(map)));
 
             // update sgroups
             var sgroups = this.GetCtabSgroups();

@@ -112,5 +112,12 @@ namespace NCDK
             mol.Add(atom);
             return atom;
         }
+
+        public static IAtom AddAtom(this IAtomContainer mol, string elementSymbol)
+        {
+            var atom = mol.Builder.NewAtom(elementSymbol);
+            mol.Add(atom);
+            return atom;
+        }
     }
 }

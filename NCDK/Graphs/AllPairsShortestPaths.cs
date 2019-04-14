@@ -217,6 +217,9 @@ namespace NCDK.Graphs
             public void Remove(IElectronContainer electronContainer)
             { }
 
+            public void RemoveBond(IBond bond)
+            { }
+
             public IBond RemoveBond(IAtom atom0, IAtom atom1)
             {
                 return null;

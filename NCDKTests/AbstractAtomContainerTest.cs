@@ -3105,5 +3105,27 @@ namespace NCDK
             mol.Bonds.Add(b2);
             Assert.IsNull(mol.GetBond(a1, a1));
         }
+
+        [TestMethod()]
+        public void RemoveStereoBondFromBiphenyl()
+        {
+            var b1 = CDK.SmilesParser.ParseSmiles("c1ccccc1");
+            var b2 = CDK.SmilesParser.ParseSmiles("c1ccccc1");
+            var b = CDK.Builder.NewBond(b1.Atoms[0], b2.Atoms[0]);
+            var mol = CDK.Builder.NewAtomContainer();
+            mol.Add(b1);
+            mol.Add(b2);
+            mol.Bonds.Add(b);
+            var focus = b;
+            var carriers = new List<IAtom>();
+            carriers.AddRange(mol.GetConnectedAtoms(focus.Begin));
+            carriers.AddRange(mol.GetConnectedAtoms(focus.End));
+            carriers.Remove(focus.Begin);
+            carriers.Remove(focus.End);
+            mol.StereoElements.Add(new Atropisomeric(focus, carriers, StereoConfigurations.Left));
+            Assert.IsTrue(mol.StereoElements.Any());
+            mol.RemoveBond(b);
+            Assert.IsFalse(mol.StereoElements.Any());
+        }
     }
 }

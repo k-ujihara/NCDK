@@ -102,7 +102,7 @@ namespace NCDK.Default
             Assert.AreEqual(mol.Atoms[0].GetBond(mol.Atoms[1]), mol.Bonds[0]);
             Assert.AreEqual(mol.Atoms[1].GetBond(mol.Atoms[2]), mol.Bonds[1]);
             Assert.IsNull(mol.Atoms[0].GetBond(mol.Atoms[2]));
-    }
+        }
 
     }
 }
@@ -181,7 +181,7 @@ namespace NCDK.Silent
             Assert.AreEqual(mol.Atoms[0].GetBond(mol.Atoms[1]), mol.Bonds[0]);
             Assert.AreEqual(mol.Atoms[1].GetBond(mol.Atoms[2]), mol.Bonds[1]);
             Assert.IsNull(mol.Atoms[0].GetBond(mol.Atoms[2]));
-    }
+        }
 
  
                 [TestMethod()]

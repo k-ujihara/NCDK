@@ -207,10 +207,12 @@ namespace NCDK.Stereo
             mol.AddBond(mol.Atoms[3], mol.Atoms[4], BondOrder.Single);
             mol.AddBond(mol.Atoms[0], mol.Atoms[5], BondOrder.Single);
             StereoElementFactory factory = StereoElementFactory.Using2DCoordinates(mol);
-            var dbs = new List<IBond>();
-            dbs.Add(mol.Bonds[0]);
-            dbs.Add(mol.Bonds[1]);
-            dbs.Add(mol.Bonds[2]);
+            var dbs = new List<IBond>
+            {
+                mol.Bonds[0],
+                mol.Bonds[1],
+                mol.Bonds[2],
+            };
             ExtendedCisTrans element = factory.CreateExtendedCisTrans(dbs, Stereocenters.Of(mol));
             Assert.IsNotNull(element);
             Assert.AreEqual(StereoConfigurations.Opposite, element.Configure);
@@ -221,7 +223,7 @@ namespace NCDK.Stereo
         /// </summary>
         // @cdk.smiles C/C=C=C=C\C
         [TestMethod()]
-        public void z_hexa234triene()
+        public void Z_hexa234triene()
         {
             var mol = builder.NewAtomContainer();
             mol.Atoms.Add(Atom("C", 1, 2.48d, 0.00d));
@@ -236,10 +238,12 @@ namespace NCDK.Stereo
             mol.AddBond(mol.Atoms[3], mol.Atoms[4], BondOrder.Single);
             mol.AddBond(mol.Atoms[0], mol.Atoms[5], BondOrder.Single);
             StereoElementFactory factory = StereoElementFactory.Using2DCoordinates(mol);
-            var dbs = new List<IBond>();
-            dbs.Add(mol.Bonds[0]);
-            dbs.Add(mol.Bonds[1]);
-            dbs.Add(mol.Bonds[2]);
+            var dbs = new List<IBond>
+            {
+                mol.Bonds[0],
+                mol.Bonds[1],
+                mol.Bonds[2],
+            };
             ExtendedCisTrans element = factory.CreateExtendedCisTrans(dbs, Stereocenters.Of(mol));
             Assert.IsNotNull(element);
             Assert.AreEqual(StereoConfigurations.Together, element.Configure);
@@ -265,10 +269,12 @@ namespace NCDK.Stereo
             mol.AddBond(mol.Atoms[3], mol.Atoms[4], BondOrder.Single);
             mol.AddBond(mol.Atoms[0], mol.Atoms[5], BondOrder.Single);
             StereoElementFactory factory = StereoElementFactory.Using3DCoordinates(mol);
-            var dbs = new List<IBond>();
-            dbs.Add(mol.Bonds[0]);
-            dbs.Add(mol.Bonds[1]);
-            dbs.Add(mol.Bonds[2]);
+            var dbs = new List<IBond>
+            {
+                mol.Bonds[0],
+                mol.Bonds[1],
+                mol.Bonds[2]
+            };
             ExtendedCisTrans element = factory.CreateExtendedCisTrans(dbs, Stereocenters.Of(mol));
             Assert.IsNotNull(element);
             Assert.AreEqual(StereoConfigurations.Opposite, element.Configure);
@@ -1538,6 +1544,34 @@ namespace NCDK.Stereo
             m.AddBond(m.Atoms[13], m.Atoms[14], BondOrder.Single);
             var stereo = StereoElementFactory.Using3DCoordinates(m).CreateAll();
             Assert.AreEqual(1, stereo.Count());
+        }
+
+        [TestMethod()]
+        public void SamePositionWithStereocenter()
+        {
+            IAtomContainer m = builder.NewAtomContainer();
+            m.Atoms.Add(Atom("F", 0, -1, -1));
+            m.Atoms.Add(Atom("Cl", 0, 1, -1));
+            m.Atoms.Add(Atom("C", 0, 0, 0));
+            m.Atoms.Add(Atom("Br", 0, 1, 1));
+            m.Atoms.Add(Atom("H", 0, 0, 0));
+            m.AddBond(m.Atoms[2], m.Atoms[0], BondOrder.Single);
+            m.AddBond(m.Atoms[2], m.Atoms[1], BondOrder.Single);
+            m.AddBond(m.Atoms[2], m.Atoms[3], BondOrder.Single);
+            m.AddBond(m.Atoms[2], m.Atoms[4], BondOrder.Single);
+            m.Bonds[2].Stereo = BondStereo.Down;
+
+            var ses = StereoElementFactory.Using2DCoordinates(m).CreateAll();
+            bool flag = false;
+            foreach (var se in ses)
+            {
+                if (se != null)
+                {
+                    flag = true;
+                    break;
+                }
+            }
+            Assert.IsTrue(flag);
         }
 
         static IAtom Atom(string symbol, int h, double x, double y)

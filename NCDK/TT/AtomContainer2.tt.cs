@@ -1126,6 +1126,15 @@ namespace NCDK.Default
             var bond = GetBond(beg, end);
             if (bond != null)
             {
+                RemoveBond(bond);
+            }
+            return bond;
+        }
+
+        public void RemoveBond(IBond bond)
+        {
+            if (bond != null)
+            {
                 var stereoToRemove = new List<IStereoElement<IChemObject, IChemObject>>();
                 foreach (var stereoBond in stereo)
                 {
@@ -1138,9 +1147,9 @@ namespace NCDK.Default
                 }
                 foreach (var remove in stereoToRemove)
                     stereo.Remove(remove);
+
                 Bonds.Remove(bond);
             }
-            return bond;
         }
 
         /// <inheritdoc/>
@@ -2482,6 +2491,15 @@ namespace NCDK.Silent
             var bond = GetBond(beg, end);
             if (bond != null)
             {
+                RemoveBond(bond);
+            }
+            return bond;
+        }
+
+        public void RemoveBond(IBond bond)
+        {
+            if (bond != null)
+            {
                 var stereoToRemove = new List<IStereoElement<IChemObject, IChemObject>>();
                 foreach (var stereoBond in stereo)
                 {
@@ -2494,9 +2512,9 @@ namespace NCDK.Silent
                 }
                 foreach (var remove in stereoToRemove)
                     stereo.Remove(remove);
+
                 Bonds.Remove(bond);
             }
-            return bond;
         }
 
         /// <inheritdoc/>

@@ -41,8 +41,8 @@ namespace NCDK.Isomorphisms.Matchers
         /// <example>
         /// <code>
         /// // pi-bond in a ring
-        /// Expr e = new Expr(IS_IN_RING);
-        /// e.And(new Expr(ALIPHATIC_ORDER, 2));
+        /// Expr e = new Expr(ExprType.IsInRing);
+        /// e.And(new Expr(ExprType.AliphaticOrder, 2));
         /// new QueryBond(beg, end, e);
         /// </code>
         /// </example>
@@ -60,7 +60,7 @@ namespace NCDK.Isomorphisms.Matchers
         /// </summary>
         /// <example>
         /// <code>
-        /// new QueryBond(beg, end, IS_IN_RING);
+        /// new QueryBond(beg, end, ExprType.IsInRing);
         /// </code>
         /// </example>
         /// <param name="type">the expression type</param>
@@ -71,18 +71,19 @@ namespace NCDK.Isomorphisms.Matchers
             while (Atoms.Count < 2)
                 Atoms.Add(null);
         }
+
         /// <summary>
         /// Constructs an query bond from an expression type and value.
         /// </summary>
         /// <example>
         /// <code>
-        /// new QueryBond(beg, end, ALIPHATIC_ORDER, 8);
+        /// new QueryBond(beg, end, ExprType.AliphaticOrder, 8);
         /// </code></example>
         /// <param name="type">the expression type</param>
         /// <param name="val">the expression value</param>
         public QueryBond(IAtom beg, IAtom end, ExprType type, int val)
             : this(beg, end, BondOrder.Unset, BondStereo.None)
-        {
+        { 
             this.Expression.SetPrimitive(type, val);
             while (Atoms.Count < 2)
                 Atoms.Add(null);
