@@ -91,4 +91,4 @@ NuGet Packages
 * [NCDK](https://www.nuget.org/packages/NCDK/) -- for .NET Standard 2.0 and .NET Framework 4.6.1. InChI features work only on Intel-based Windows or Intel-based Linux system.
 * [NCDK.Display](https://www.nuget.org/packages/NCDK.Display/) -- for .NET Framework 4.6.1.
 
-Copyright (c) 2016-2018 Kazuya Ujihara
+Copyright (c) 2016-2019 Kazuya Ujihara

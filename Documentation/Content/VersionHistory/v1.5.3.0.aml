@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="FFF65979-1994-4568-B591-02812B45B180" revisionNumber="1">
+  <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <introduction>
+      <para>
+        Version 1.5.3 was released on 2019-04-29.
+      </para>
+    </introduction>
+
+    <section>
+      <title>Changes in This Release</title>
+      <content>
+        <list class="bullet">
+          <listItem>
+            <para>
+              This release is based on This release is based on
+              <externalLink>
+                <linkText>cdk 2018-12-08 snapshot</linkText>
+                <linkUri>https://github.com/cdk/cdk/tree/a75ec0065e39525a86f7f613ce6a6b0fe24b2d35</linkUri>
+              </externalLink>.
+            </para>
+          </listItem>
+          <listItem>
+            <para>Move several legacy classes to Legacy assembly.</para>
+          </listItem>
+          <listItem>
+            <para>Remove builder info from Query* classes.</para>
+          </listItem>
+          <listItem>
+            <para>Rename Pattern.Find* methods to Create*Finder.</para>
+          </listItem>
+          <listItem>
+            <para>Fixed BondCountDescriptor and AtomPairs2DFingerprinter class.</para>
+          </listItem>
+        </list>
+      </content>
+    </section>
+
+    <relatedTopics>
+      <link xlink:href="38e429c1-4197-40a9-a1ee-8b5f4c592a1c" />
+    </relatedTopics>
+
+  </developerConceptualDocument>
+</topic>
