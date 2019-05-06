@@ -22,7 +22,6 @@
  */
 
 using NCDK.Common.Collections;
-using NCDK.Config;
 using NCDK.Graphs;
 using System;
 using System.Collections.Generic;
@@ -60,7 +59,6 @@ namespace NCDK.ForceFields
     /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.ForceFields.Mmff.cs"]/*' />
     /// </example>
     // @author John May
-    // @cdk.githash
     public class Mmff
     {
         private const string MMFF_ADJLIST_CACHE = "mmff.adjlist.cache";
@@ -169,8 +167,8 @@ namespace NCDK.ForceFields
 
             for (int v = 0; v < mol.Atoms.Count; v++)
             {
-                IAtom atom = mol.Atoms[v];
-                string symbType = atom.AtomTypeName;
+                var atom = mol.Atoms[v];
+                var symbType = atom.AtomTypeName;
                 int thisType = mmffParamSet.IntType(symbType);
 
                 // unknown
@@ -187,7 +185,7 @@ namespace NCDK.ForceFields
                     if (otherType == 0)
                         continue;
 
-                    IBond bond = edgeMap[v, w];
+                    var bond = edgeMap[v, w];
                     int bondCls = mmffParamSet.GetBondCls(thisType, otherType, bond.Order.Numeric(), bond.GetProperty(MMFF_AROM, false));
                     var bci = mmffParamSet.GetBondChargeIncrement(bondCls, thisType, otherType);
                     if (bci != null)
@@ -318,7 +316,7 @@ namespace NCDK.ForceFields
 
                                     foreach (var u in adjList[w])
                                     {
-                                        IBond bond = edgeMap[w, u];
+                                        var bond = edgeMap[w, u];
                                         if (bond.GetProperty(MMFF_AROM, false) && !visit.Contains(u))
                                         {
                                             queue.Add(u);

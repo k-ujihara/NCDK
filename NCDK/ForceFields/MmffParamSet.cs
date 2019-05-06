@@ -162,8 +162,8 @@ namespace NCDK.ForceFields
         /// </summary>
         public int GetBondCls(int type1, int type2, int bord, bool barom)
         {
-            MmffProp prop1 = properties[CheckType(type1)];
-            MmffProp prop2 = properties[CheckType(type2)];
+            var prop1 = properties[CheckType(type1)];
+            var prop2 = properties[CheckType(type2)];
             // non-arom atoms with sbmb (single-bond-multi-bond)
             if (bord == 1 && !prop1.arom && prop1.sbmb && !prop2.arom && prop2.sbmb)
                 return 1;
@@ -192,9 +192,9 @@ namespace NCDK.ForceFields
                     var cols = Strings.Tokenize(line);
                     if (cols.Count != 5)
                         throw new IOException("Malformed MMFFBOND.PAR file.");
-                    BondKey key = new BondKey(int.Parse(cols[0], NumberFormatInfo.InvariantInfo),
-                                              int.Parse(cols[1], NumberFormatInfo.InvariantInfo),
-                                              int.Parse(cols[2], NumberFormatInfo.InvariantInfo));
+                    var key = new BondKey(int.Parse(cols[0], NumberFormatInfo.InvariantInfo),
+                                          int.Parse(cols[1], NumberFormatInfo.InvariantInfo),
+                                          int.Parse(cols[2], NumberFormatInfo.InvariantInfo));
                     decimal bci = decimal.Parse(cols[3], NumberFormatInfo.InvariantInfo);
                     map[key] = bci;
                     map[key.Inv()] = -bci;
@@ -305,13 +305,17 @@ namespace NCDK.ForceFields
 
             public override bool Equals(object o)
             {
-                if (this == o) return true;
-                if (o == null || GetType() != o.GetType()) return false;
+                if (this == o)
+                    return true;
+                if (o == null || GetType() != o.GetType())
+                    return false;
 
-                BondKey bondKey = (BondKey)o;
+                var bondKey = (BondKey)o;
 
-                if (cls != bondKey.cls) return false;
-                if (type1 != bondKey.type1) return false;
+                if (cls != bondKey.cls)
+                    return false;
+                if (type1 != bondKey.type1)
+                    return false;
                 return type2 == bondKey.type2;
 
             }

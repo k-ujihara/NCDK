@@ -23,7 +23,6 @@
  */
 
 using NCDK.Common.Primitives;
-using NCDK.Config;
 using NCDK.Graphs;
 using NCDK.Isomorphisms;
 using NCDK.SMARTS;

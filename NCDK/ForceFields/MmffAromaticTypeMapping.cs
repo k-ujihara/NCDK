@@ -456,13 +456,22 @@ namespace NCDK.ForceFields
         /// Mapping of preliminary atom MMFF symbolic types to aromatic types for atoms that contribute a
         /// lone pair.
         /// </summary>
-        private readonly Dictionary<string, string> hetroTypes = new Dictionary<string, string>()
+        private readonly Dictionary<string, string> hetroTypes = 
+            new Dictionary<string, string>()
             {
                 { "S", STHI },
-                { "-O-", OFUR }, { "OC=C", OFUR }, { "OC=N", OFUR },
-                { NCN_PLUS, NIM_PLUS }, { NGD_PLUS, NIM_PLUS },
-                { "NM", N5M }, { "NC=C", NPYL }, { "NC=N", NPYL }, { "NN=N", NPYL },
-                { "NC=O", NPYL }, { "NC=S", NPYL }, { "NSO2", NPYL },
+                { "-O-", OFUR },
+                { "OC=C", OFUR },
+                { "OC=N", OFUR },
+                { NCN_PLUS, NIM_PLUS },
+                { NGD_PLUS, NIM_PLUS },
+                { "NM", N5M },
+                { "NC=C", NPYL },
+                { "NC=N", NPYL },
+                { "NN=N", NPYL },
+                { "NC=O", NPYL },
+                { "NC=S", NPYL },
+                { "NSO2", NPYL },
                 { "NR", NPYL },
             };
 
@@ -474,11 +483,20 @@ namespace NCDK.ForceFields
             new Dictionary<string, string>()
             {
                 { "CNN+", CIM_PLUS },
-                { "CGD+", CIM_PLUS }, { "C=C", C5A }, { "C=N", C5A },
-                { "CGD", C5A }, { "CB", C5A }, { C5B, C5 }, { "N2OX", N5AX },
-                { NCN_PLUS, NIM_PLUS }, { NGD_PLUS, NIM_PLUS },
-                { "N+=C", N5A_PLUS }, { "N+=N", N5A_PLUS },
-                { "NPD+", N5A_PLUS }, { "N=C", N5A }, { "N=N", N5A },
+                { "CGD+", CIM_PLUS },
+                { "C=C", C5A },
+                { "C=N", C5A },
+                { "CGD", C5A },
+                { "CB", C5A },
+                { C5B, C5 },
+                { "N2OX", N5AX },
+                { NCN_PLUS, NIM_PLUS },
+                { NGD_PLUS, NIM_PLUS },
+                { "N+=C", N5A_PLUS },
+                { "N+=N", N5A_PLUS },
+                { "NPD+", N5A_PLUS },
+                { "N=C", N5A },
+                { "N=N", N5A },
             };
 
         /// <summary>
@@ -489,11 +507,20 @@ namespace NCDK.ForceFields
             new Dictionary<string, string>()
             {
                 { "CNN+", CIM_PLUS },
-                { "CGD+", CIM_PLUS }, { "C=C", C5B }, { "C=N", C5B },
-                { "CGD", C5B }, { "CB", C5B }, { C5A, C5 }, { "N2OX", N5BX },
-                { NCN_PLUS, NIM_PLUS }, { NGD_PLUS, NIM_PLUS },
-                { "N+=C", N5B_PLUS }, { "N+=N", N5B_PLUS },
-                { "NPD+", N5B_PLUS }, { "N=C", N5B }, { "N=N", N5B },
+                { "CGD+", CIM_PLUS },
+                { "C=C", C5B },
+                { "C=N", C5B },
+                { "CGD", C5B },
+                { "CB", C5B },
+                { C5A, C5 },
+                { "N2OX", N5BX },
+                { NCN_PLUS, NIM_PLUS },
+                { NGD_PLUS, NIM_PLUS },
+                { "N+=C", N5B_PLUS },
+                { "N+=N", N5B_PLUS },
+                { "NPD+", N5B_PLUS },
+                { "N=C", N5B },
+                { "N=N", N5B },
             };
 
         // C5 is intended

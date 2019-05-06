@@ -5,7 +5,7 @@
 
     <AssemblyVersion>1.5.3.0</AssemblyVersion>
     <FileVersion>1.5.3.0</FileVersion>
-    <Version>1.5.3</Version>
+    <Version>1.5.4-alpha</Version>
     <Copyright>Copyright © 2016-2019 Kazuya Ujihara</Copyright>
 
     <PackageId>NCDK</PackageId>
@@ -279,10 +279,6 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>RDFProtonDescriptors.tt.cs</LastGenOutput>
     </None>
-    <None Update="QSAR\Descriptors\AtomPair\%24ProtonDescriptor.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>$ProtonDescriptor.tt.cs</LastGenOutput>
-    </None>
     <None Update="QSAR\Descriptors\Moleculars\AminoAcidCountDescriptor.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AminoAcidCountDescriptor.tt.cs</LastGenOutput>
@@ -533,11 +529,6 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>RDFProtonDescriptors.tt</DependentUpon>
-    </Compile>
-    <Compile Update="QSAR\Descriptors\AtomPair\%24ProtonDescriptor.tt.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>$ProtonDescriptor.tt</DependentUpon>
     </Compile>
     <Compile Update="QSAR\Descriptors\Moleculars\AminoAcidCountDescriptor.tt.cs">
       <DesignTime>True</DesignTime>

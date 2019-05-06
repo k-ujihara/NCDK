@@ -16,34 +16,33 @@ namespace NCDK.Default
         private IAtomContainer base_;
         private IAtomContainer[] confs;
 
-        private static int natom = 10;
-        private static int nconfs = 20;
-
-        private static Random rnd = new Random();
+        private const int natom = 10;
+        private const int nconfs = 20;
 
         private static IAtomContainer GetBaseAtomContainer(int natom, string title)
         {
-            IAtomContainer container = new AtomContainer();
+            var rnd = new Random(1);
+
+            var container = new AtomContainer();
             container.Title = title;
             for (int i = 0; i < natom; i++)
             {
-                Vector3 coord = new Vector3
+                var coord = new Vector3
                 {
                     X = rnd.NextDouble(),
                     Y = rnd.NextDouble(),
                     Z = rnd.NextDouble()
                 };
 
-                IAtom atom = ChemObjectBuilder.Instance.NewAtom("C", coord);
+                var atom = ChemObjectBuilder.Instance.NewAtom("C", coord);
                 container.Atoms.Add(atom);
             }
 
             for (int i = 0; i < natom - 1; i++)
             {
-                IAtom atom1 = container.Atoms[i];
-                IAtom atom2 = container.Atoms[i + 1];
-                IBond bond = ChemObjectBuilder.Instance.NewBond(atom1, atom2,
-                        BondOrder.Single);
+                var atom1 = container.Atoms[i];
+                var atom2 = container.Atoms[i + 1];
+                var bond = ChemObjectBuilder.Instance.NewBond(atom1, atom2, BondOrder.Single);
                 container.Bonds.Add(bond);
             }
             return container;
@@ -51,12 +50,14 @@ namespace NCDK.Default
 
         private static IAtomContainer[] GetConformers(IAtomContainer base_, int nconf)
         {
-            IAtomContainer[] ret = new IAtomContainer[nconf];
+            var rnd = new Random(1);
+
+            var ret = new IAtomContainer[nconf];
             for (int i = 0; i < nconf; i++)
             {
                 for (int j = 0; j < base_.Atoms.Count; j++)
                 {
-                    Vector3 p = base_.Atoms[j].Point3D.Value;
+                    var p = base_.Atoms[j].Point3D.Value;
                     p.X = rnd.NextDouble();
                     p.Y = rnd.NextDouble();
                     p.Z = rnd.NextDouble();
@@ -77,7 +78,7 @@ namespace NCDK.Default
         [TestMethod()]
         public virtual void TestConformerContainer()
         {
-            ConformerContainer container = new ConformerContainer();
+            var container = new ConformerContainer();
             Assert.IsNotNull(container);
             base_.Title = "myMolecule";
             container.Add(base_);
@@ -91,7 +92,7 @@ namespace NCDK.Default
         [TestMethod()]
         public virtual void TestConformerContainer_arrayIAtomContainer()
         {
-            ConformerContainer container = new ConformerContainer(confs);
+            var container = new ConformerContainer(confs);
             Assert.IsNotNull(container);
             Assert.AreEqual(nconfs, container.Count());
         }
@@ -99,37 +100,37 @@ namespace NCDK.Default
         [TestMethod()]
         public virtual void TestGetTitle()
         {
-            ConformerContainer container = new ConformerContainer(confs);
+            var container = new ConformerContainer(confs);
             Assert.AreEqual("myMolecule", container.Title);
         }
 
         [TestMethod()]
         public virtual void TestIsEmpty()
         {
-            ConformerContainer container = new ConformerContainer(confs);
+            var container = new ConformerContainer(confs);
             Assert.IsTrue(!container.IsEmpty());
         }
 
         [TestMethod()]
         public virtual void TestContains()
         {
-            ConformerContainer container = new ConformerContainer(confs);
-            IAtomContainer o = container[0];
+            var container = new ConformerContainer(confs);
+            var o = container[0];
             Assert.IsTrue(container.Contains(o));
         }
 
         [TestMethod()]
         public virtual void TestToArray()
         {
-            ConformerContainer container = new ConformerContainer(confs);
-            IAtomContainer[] array = (IAtomContainer[])container.ToArray();
+            var container = new ConformerContainer(confs);
+            var array = (IAtomContainer[])container.ToArray();
             Assert.AreEqual(nconfs, array.Length);
         }
 
         [TestMethod()]
         public virtual void TestIterator()
         {
-            ConformerContainer container = new ConformerContainer(confs);
+            var container = new ConformerContainer(confs);
             int nmol = 0;
             foreach (var atomContainer in container)
             {
@@ -141,7 +142,7 @@ namespace NCDK.Default
         [TestMethod()]
         public virtual void TestIterator2()
         {
-            ConformerContainer container = new ConformerContainer(confs);
+            var container = new ConformerContainer(confs);
             int nmol = 0;
             foreach (var conf in container)
             {
@@ -153,7 +154,7 @@ namespace NCDK.Default
         [TestMethod()]
         public virtual void TestRemove_int()
         {
-            ConformerContainer container = new ConformerContainer(confs);
+            var container = new ConformerContainer(confs);
             container.Clear();
             Assert.AreEqual(0, container.Count());
 
@@ -168,9 +169,9 @@ namespace NCDK.Default
         [TestMethod()]
         public virtual void TestIndexOf_IAtomContainer()
         {
-            ConformerContainer container = new ConformerContainer(confs);
-            IAtomContainer ac = container[2];
-            int index = container.IndexOf(ac);
+            var container = new ConformerContainer(confs);
+            var ac = container[2];
+            var index = container.IndexOf(ac);
             Assert.AreEqual(2, index);
         }
 
@@ -178,7 +179,7 @@ namespace NCDK.Default
         [ExpectedException(typeof(ArgumentException))]
         public virtual void TestAdd_IAtomContainer()
         {
-            ConformerContainer container = new ConformerContainer(confs);
+            var container = new ConformerContainer(confs);
             base_.Title = "junk";
             container.Add(base_);
         }
@@ -187,7 +188,7 @@ namespace NCDK.Default
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public virtual void TestGet_int()
         {
-            ConformerContainer container = new ConformerContainer(confs);
+            var container = new ConformerContainer(confs);
             var dummy = container[100];
         }
 
@@ -195,7 +196,7 @@ namespace NCDK.Default
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public virtual void TestGet2()
         {
-            ConformerContainer container = new ConformerContainer(confs);
+            var container = new ConformerContainer(confs);
             for (var i = 0; i < container.Count + 1; i++)
             {
                 var dummy = container[i];
@@ -205,21 +206,21 @@ namespace NCDK.Default
         [TestMethod()]
         public virtual void TestAdd_int_IAtomContainer()
         {
-            ConformerContainer container = new ConformerContainer(confs);
+            var container = new ConformerContainer(confs);
             container.Insert(5, confs[5]);
         }
 
         [TestMethod()]
         public virtual void TestAdd_int_Object()
         {
-            ConformerContainer container = new ConformerContainer(confs);
+            var container = new ConformerContainer(confs);
             container.Insert(5, confs[5]);
         }
 
         [TestMethod()]
         public virtual void TestAdd_Object()
         {
-            ConformerContainer container = new ConformerContainer();
+            var container = new ConformerContainer();
             Assert.IsNotNull(container);
             foreach (var conf in confs)
                 container.Add(conf);
@@ -229,7 +230,7 @@ namespace NCDK.Default
         [TestMethod()]
         public virtual void TestIndexOf_Object()
         {
-            ConformerContainer container = new ConformerContainer(confs);
+            var container = new ConformerContainer(confs);
             Assert.IsNotNull(container);
 
             int counter = 0;
@@ -243,7 +244,7 @@ namespace NCDK.Default
         [TestMethod()]
         public virtual void TestClear()
         {
-            ConformerContainer container = new ConformerContainer(confs);
+            var container = new ConformerContainer(confs);
             Assert.AreEqual(nconfs, container.Count());
             container.Clear();
             Assert.AreEqual(0, container.Count());
@@ -252,23 +253,25 @@ namespace NCDK.Default
         [TestMethod()]
         public virtual void TestSize()
         {
-            ConformerContainer container = new ConformerContainer(confs);
+            var container = new ConformerContainer(confs);
             Assert.AreEqual(nconfs, container.Count());
         }
 
         [TestMethod()]
         public virtual void TestLastIndexOf_Object()
         {
-            ConformerContainer container = new ConformerContainer(confs);
+            var container = new ConformerContainer(confs);
             Assert.AreEqual(nconfs, container.Count());
-            int x = container.LastIndexOf(container[3]);
+            int x;
+            x = container.LastIndexOf(container[3]);
+            Assert.AreEqual(3, container.LastIndexOf(container[3]));
             Assert.AreEqual(3, container.LastIndexOf(container[3]));
         }
 
         [TestMethod()]
         public virtual void TestContains_Object()
         {
-            ConformerContainer container = new ConformerContainer(confs);
+            var container = new ConformerContainer(confs);
             Assert.AreEqual(nconfs, container.Count());
             Assert.IsTrue(container.Contains(container[3]));
         }
@@ -276,14 +279,14 @@ namespace NCDK.Default
         [TestMethod()]
         public virtual void TestAddAll_Collection()
         {
-            ConformerContainer container = new ConformerContainer(confs);
+            var container = new ConformerContainer(confs);
             Assert.AreEqual(nconfs, container.Count());
             Assert.IsTrue(container.Contains(container[3]));
         }
 
         //[TestMethod()][ExpectedException(typeof(InvalidOperationException))]
         //public virtual void TestAddAll_int_Collection() {
-        //    ConformerContainer container = new ConformerContainer(confs);
+        //    var container = new ConformerContainer(confs);
         //    container.AddAll(5, null);
         //}
 
@@ -291,7 +294,7 @@ namespace NCDK.Default
         //[ExpectedException(typeof(InvalidOperationException))]
         //public virtual void TestToArray_arrayObject()
         //{
-        //    ConformerContainer container = new ConformerContainer(confs);
+        //    var container = new ConformerContainer(confs);
         //    container.ToArray();
         //}
 
@@ -310,7 +313,7 @@ namespace NCDK.Default
         [TestMethod()]
         public virtual void TestSet_int_IAtomContainer()
         {
-            ConformerContainer container = new ConformerContainer(confs);
+            var container = new ConformerContainer(confs);
             int location = 5;
             container.Set(location, container[location + 1]);
             Assert.AreEqual(location, container.IndexOf(container[location + 1]));
@@ -333,7 +336,7 @@ namespace NCDK.Default
         [TestMethod()]
         public virtual void TestSet_int_Object()
         {
-            ConformerContainer container = new ConformerContainer(confs);
+            var container = new ConformerContainer(confs);
             int location = 5;
             container.Set(location, container[location + 1]);
             Assert.AreEqual(location, container.IndexOf(container[location + 1]));
@@ -342,7 +345,7 @@ namespace NCDK.Default
         [TestMethod()]
         public virtual void TestContainsAll_Collection()
         {
-            ConformerContainer container = new ConformerContainer(confs);
+            var container = new ConformerContainer(confs);
             Assert.IsNotNull(container);
             Assert.AreEqual(nconfs, container.Count());
             foreach (var e in container)
@@ -353,7 +356,7 @@ namespace NCDK.Default
         [ExpectedException(typeof(InvalidOperationException))]
         public virtual void TestRemoveAll_Collection()
         {
-            ConformerContainer container = new ConformerContainer(confs);
+            var container = new ConformerContainer(confs);
             Assert.IsNotNull(container);
             Assert.AreEqual(nconfs, container.Count());
 
@@ -365,7 +368,7 @@ namespace NCDK.Default
         [TestMethod()]
         public virtual void TestConformerContainer_IAtomContainer()
         {
-            ConformerContainer container = new ConformerContainer(base_);
+            var container = new ConformerContainer(base_);
             Assert.IsNotNull(container);
             Assert.AreEqual(1, container.Count());
         }
@@ -380,34 +383,33 @@ namespace NCDK.Silent
         private IAtomContainer base_;
         private IAtomContainer[] confs;
 
-        private static int natom = 10;
-        private static int nconfs = 20;
-
-        private static Random rnd = new Random();
+        private const int natom = 10;
+        private const int nconfs = 20;
 
         private static IAtomContainer GetBaseAtomContainer(int natom, string title)
         {
-            IAtomContainer container = new AtomContainer();
+            var rnd = new Random(1);
+
+            var container = new AtomContainer();
             container.Title = title;
             for (int i = 0; i < natom; i++)
             {
-                Vector3 coord = new Vector3
+                var coord = new Vector3
                 {
                     X = rnd.NextDouble(),
                     Y = rnd.NextDouble(),
                     Z = rnd.NextDouble()
                 };
 
-                IAtom atom = ChemObjectBuilder.Instance.NewAtom("C", coord);
+                var atom = ChemObjectBuilder.Instance.NewAtom("C", coord);
                 container.Atoms.Add(atom);
             }
 
             for (int i = 0; i < natom - 1; i++)
             {
-                IAtom atom1 = container.Atoms[i];
-                IAtom atom2 = container.Atoms[i + 1];
-                IBond bond = ChemObjectBuilder.Instance.NewBond(atom1, atom2,
-                        BondOrder.Single);
+                var atom1 = container.Atoms[i];
+                var atom2 = container.Atoms[i + 1];
+                var bond = ChemObjectBuilder.Instance.NewBond(atom1, atom2, BondOrder.Single);
                 container.Bonds.Add(bond);
             }
             return container;
@@ -415,12 +417,14 @@ namespace NCDK.Silent
 
         private static IAtomContainer[] GetConformers(IAtomContainer base_, int nconf)
         {
-            IAtomContainer[] ret = new IAtomContainer[nconf];
+            var rnd = new Random(1);
+
+            var ret = new IAtomContainer[nconf];
             for (int i = 0; i < nconf; i++)
             {
                 for (int j = 0; j < base_.Atoms.Count; j++)
                 {
-                    Vector3 p = base_.Atoms[j].Point3D.Value;
+                    var p = base_.Atoms[j].Point3D.Value;
                     p.X = rnd.NextDouble();
                     p.Y = rnd.NextDouble();
                     p.Z = rnd.NextDouble();
@@ -441,7 +445,7 @@ namespace NCDK.Silent
         [TestMethod()]
         public virtual void TestConformerContainer()
         {
-            ConformerContainer container = new ConformerContainer();
+            var container = new ConformerContainer();
             Assert.IsNotNull(container);
             base_.Title = "myMolecule";
             container.Add(base_);
@@ -455,7 +459,7 @@ namespace NCDK.Silent
         [TestMethod()]
         public virtual void TestConformerContainer_arrayIAtomContainer()
         {
-            ConformerContainer container = new ConformerContainer(confs);
+            var container = new ConformerContainer(confs);
             Assert.IsNotNull(container);
             Assert.AreEqual(nconfs, container.Count());
         }
@@ -463,37 +467,37 @@ namespace NCDK.Silent
         [TestMethod()]
         public virtual void TestGetTitle()
         {
-            ConformerContainer container = new ConformerContainer(confs);
+            var container = new ConformerContainer(confs);
             Assert.AreEqual("myMolecule", container.Title);
         }
 
         [TestMethod()]
         public virtual void TestIsEmpty()
         {
-            ConformerContainer container = new ConformerContainer(confs);
+            var container = new ConformerContainer(confs);
             Assert.IsTrue(!container.IsEmpty());
         }
 
         [TestMethod()]
         public virtual void TestContains()
         {
-            ConformerContainer container = new ConformerContainer(confs);
-            IAtomContainer o = container[0];
+            var container = new ConformerContainer(confs);
+            var o = container[0];
             Assert.IsTrue(container.Contains(o));
         }
 
         [TestMethod()]
         public virtual void TestToArray()
         {
-            ConformerContainer container = new ConformerContainer(confs);
-            IAtomContainer[] array = (IAtomContainer[])container.ToArray();
+            var container = new ConformerContainer(confs);
+            var array = (IAtomContainer[])container.ToArray();
             Assert.AreEqual(nconfs, array.Length);
         }
 
         [TestMethod()]
         public virtual void TestIterator()
         {
-            ConformerContainer container = new ConformerContainer(confs);
+            var container = new ConformerContainer(confs);
             int nmol = 0;
             foreach (var atomContainer in container)
             {
@@ -505,7 +509,7 @@ namespace NCDK.Silent
         [TestMethod()]
         public virtual void TestIterator2()
         {
-            ConformerContainer container = new ConformerContainer(confs);
+            var container = new ConformerContainer(confs);
             int nmol = 0;
             foreach (var conf in container)
             {
@@ -517,7 +521,7 @@ namespace NCDK.Silent
         [TestMethod()]
         public virtual void TestRemove_int()
         {
-            ConformerContainer container = new ConformerContainer(confs);
+            var container = new ConformerContainer(confs);
             container.Clear();
             Assert.AreEqual(0, container.Count());
 
@@ -532,9 +536,9 @@ namespace NCDK.Silent
         [TestMethod()]
         public virtual void TestIndexOf_IAtomContainer()
         {
-            ConformerContainer container = new ConformerContainer(confs);
-            IAtomContainer ac = container[2];
-            int index = container.IndexOf(ac);
+            var container = new ConformerContainer(confs);
+            var ac = container[2];
+            var index = container.IndexOf(ac);
             Assert.AreEqual(2, index);
         }
 
@@ -542,7 +546,7 @@ namespace NCDK.Silent
         [ExpectedException(typeof(ArgumentException))]
         public virtual void TestAdd_IAtomContainer()
         {
-            ConformerContainer container = new ConformerContainer(confs);
+            var container = new ConformerContainer(confs);
             base_.Title = "junk";
             container.Add(base_);
         }
@@ -551,7 +555,7 @@ namespace NCDK.Silent
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public virtual void TestGet_int()
         {
-            ConformerContainer container = new ConformerContainer(confs);
+            var container = new ConformerContainer(confs);
             var dummy = container[100];
         }
 
@@ -559,7 +563,7 @@ namespace NCDK.Silent
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public virtual void TestGet2()
         {
-            ConformerContainer container = new ConformerContainer(confs);
+            var container = new ConformerContainer(confs);
             for (var i = 0; i < container.Count + 1; i++)
             {
                 var dummy = container[i];
@@ -569,21 +573,21 @@ namespace NCDK.Silent
         [TestMethod()]
         public virtual void TestAdd_int_IAtomContainer()
         {
-            ConformerContainer container = new ConformerContainer(confs);
+            var container = new ConformerContainer(confs);
             container.Insert(5, confs[5]);
         }
 
         [TestMethod()]
         public virtual void TestAdd_int_Object()
         {
-            ConformerContainer container = new ConformerContainer(confs);
+            var container = new ConformerContainer(confs);
             container.Insert(5, confs[5]);
         }
 
         [TestMethod()]
         public virtual void TestAdd_Object()
         {
-            ConformerContainer container = new ConformerContainer();
+            var container = new ConformerContainer();
             Assert.IsNotNull(container);
             foreach (var conf in confs)
                 container.Add(conf);
@@ -593,7 +597,7 @@ namespace NCDK.Silent
         [TestMethod()]
         public virtual void TestIndexOf_Object()
         {
-            ConformerContainer container = new ConformerContainer(confs);
+            var container = new ConformerContainer(confs);
             Assert.IsNotNull(container);
 
             int counter = 0;
@@ -607,7 +611,7 @@ namespace NCDK.Silent
         [TestMethod()]
         public virtual void TestClear()
         {
-            ConformerContainer container = new ConformerContainer(confs);
+            var container = new ConformerContainer(confs);
             Assert.AreEqual(nconfs, container.Count());
             container.Clear();
             Assert.AreEqual(0, container.Count());
@@ -616,14 +620,14 @@ namespace NCDK.Silent
         [TestMethod()]
         public virtual void TestSize()
         {
-            ConformerContainer container = new ConformerContainer(confs);
+            var container = new ConformerContainer(confs);
             Assert.AreEqual(nconfs, container.Count());
         }
 
         [TestMethod()]
         public virtual void TestLastIndexOf_Object()
         {
-            ConformerContainer container = new ConformerContainer(confs);
+            var container = new ConformerContainer(confs);
             Assert.AreEqual(nconfs, container.Count());
             int x = container.LastIndexOf(container[3]);
             Assert.AreEqual(3, container.LastIndexOf(container[3]));
@@ -632,7 +636,7 @@ namespace NCDK.Silent
         [TestMethod()]
         public virtual void TestContains_Object()
         {
-            ConformerContainer container = new ConformerContainer(confs);
+            var container = new ConformerContainer(confs);
             Assert.AreEqual(nconfs, container.Count());
             Assert.IsTrue(container.Contains(container[3]));
         }
@@ -640,14 +644,14 @@ namespace NCDK.Silent
         [TestMethod()]
         public virtual void TestAddAll_Collection()
         {
-            ConformerContainer container = new ConformerContainer(confs);
+            var container = new ConformerContainer(confs);
             Assert.AreEqual(nconfs, container.Count());
             Assert.IsTrue(container.Contains(container[3]));
         }
 
         //[TestMethod()][ExpectedException(typeof(InvalidOperationException))]
         //public virtual void TestAddAll_int_Collection() {
-        //    ConformerContainer container = new ConformerContainer(confs);
+        //    var container = new ConformerContainer(confs);
         //    container.AddAll(5, null);
         //}
 
@@ -655,7 +659,7 @@ namespace NCDK.Silent
         //[ExpectedException(typeof(InvalidOperationException))]
         //public virtual void TestToArray_arrayObject()
         //{
-        //    ConformerContainer container = new ConformerContainer(confs);
+        //    var container = new ConformerContainer(confs);
         //    container.ToArray();
         //}
 
@@ -674,7 +678,7 @@ namespace NCDK.Silent
         [TestMethod()]
         public virtual void TestSet_int_IAtomContainer()
         {
-            ConformerContainer container = new ConformerContainer(confs);
+            var container = new ConformerContainer(confs);
             int location = 5;
             container.Set(location, container[location + 1]);
             Assert.AreEqual(location, container.IndexOf(container[location + 1]));
@@ -697,7 +701,7 @@ namespace NCDK.Silent
         [TestMethod()]
         public virtual void TestSet_int_Object()
         {
-            ConformerContainer container = new ConformerContainer(confs);
+            var container = new ConformerContainer(confs);
             int location = 5;
             container.Set(location, container[location + 1]);
             Assert.AreEqual(location, container.IndexOf(container[location + 1]));
@@ -706,7 +710,7 @@ namespace NCDK.Silent
         [TestMethod()]
         public virtual void TestContainsAll_Collection()
         {
-            ConformerContainer container = new ConformerContainer(confs);
+            var container = new ConformerContainer(confs);
             Assert.IsNotNull(container);
             Assert.AreEqual(nconfs, container.Count());
             foreach (var e in container)
@@ -717,7 +721,7 @@ namespace NCDK.Silent
         [ExpectedException(typeof(InvalidOperationException))]
         public virtual void TestRemoveAll_Collection()
         {
-            ConformerContainer container = new ConformerContainer(confs);
+            var container = new ConformerContainer(confs);
             Assert.IsNotNull(container);
             Assert.AreEqual(nconfs, container.Count());
 
@@ -729,7 +733,7 @@ namespace NCDK.Silent
         [TestMethod()]
         public virtual void TestConformerContainer_IAtomContainer()
         {
-            ConformerContainer container = new ConformerContainer(base_);
+            var container = new ConformerContainer(base_);
             Assert.IsNotNull(container);
             Assert.AreEqual(1, container.Count());
         }

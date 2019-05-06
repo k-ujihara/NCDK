@@ -29,9 +29,9 @@ namespace NCDK.IO.Iterator
     /// <example>
     /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.IO.Iterator.EnumerableMDLConformerReader_Example.cs"]/*' />
     /// </example>
+    /// <seealso cref="ConformerContainer"/>
     // @cdk.module extra
     // @author Rajarshi Guha
-    // @see org.openscience.cdk.ConformerContainer
     // @cdk.keyword file format SDF
     // @cdk.keyword conformer conformation
     public class EnumerableMDLConformerReader 
