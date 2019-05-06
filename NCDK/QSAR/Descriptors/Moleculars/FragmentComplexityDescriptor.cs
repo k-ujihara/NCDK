@@ -39,7 +39,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.created 2006-8-22
     // @cdk.module  qsarmolecular
     // @cdk.dictref qsar-descriptors:NilaComplexity
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#NilaComplexity")]
+    [DescriptorSpecification(DescriptorTargets.AtomContainer, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#NilaComplexity")]
     public class FragmentComplexityDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
         public FragmentComplexityDescriptor()

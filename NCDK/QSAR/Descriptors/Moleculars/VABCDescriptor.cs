@@ -29,7 +29,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.dictref qsar-descriptors:vabc
     // @cdk.keyword volume
     // @cdk.keyword descriptor
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#vabc")]
+    [DescriptorSpecification(DescriptorTargets.AtomContainer, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#vabc")]
     public class VABCDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
         public VABCDescriptor()

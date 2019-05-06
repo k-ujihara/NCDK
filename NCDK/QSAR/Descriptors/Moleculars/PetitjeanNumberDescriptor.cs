@@ -39,7 +39,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.module     qsarmolecular
     // @cdk.dictref    qsar-descriptors:petitjeanNumber
     // @cdk.keyword    Petit-Jean, number
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#petitjeanNumber")]
+    [DescriptorSpecification(DescriptorTargets.AtomContainer, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#petitjeanNumber")]
     public class PetitjeanNumberDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
         public PetitjeanNumberDescriptor()

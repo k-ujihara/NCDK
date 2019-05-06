@@ -43,7 +43,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.created 2005-22-07
     // @cdk.module  qsarmolecular
     // @cdk.dictref qsar-descriptors:hBondacceptors
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#hBondacceptors")]
+    [DescriptorSpecification(DescriptorTargets.AtomContainer, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#hBondacceptors")]
     public class HBondAcceptorCountDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
         private readonly bool checkAromaticity;

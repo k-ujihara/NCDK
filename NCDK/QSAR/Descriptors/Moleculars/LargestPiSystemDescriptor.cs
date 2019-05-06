@@ -32,7 +32,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.created 2006-1-03
     // @cdk.module qsarmolecular
     // @cdk.dictref qsar-descriptors:largestPiSystem
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#largestPiSystem")]
+    [DescriptorSpecification(DescriptorTargets.AtomContainer, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#largestPiSystem")]
     public class LargestPiSystemDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
         private readonly bool checkAromaticity;

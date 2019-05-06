@@ -33,7 +33,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @author Federico
     // @cdk.created 2007-03-01
     // @cdk.module qsarmolecular
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#autoCorrelationPolarizability")]
+    [DescriptorSpecification(DescriptorTargets.AtomContainer, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#autoCorrelationPolarizability")]
     public class AutocorrelationDescriptorPolarizability : AbstractDescriptor, IMolecularDescriptor
     {
         private const int DefaultSize = 5;

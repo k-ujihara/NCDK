@@ -26,7 +26,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
     // @cdk.created    2004-11-13
     // @cdk.module     qsaratomic
     // @cdk.dictref    qsar-descriptors:atomHybridization
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomHybridization")]
+    [DescriptorSpecification(DescriptorTargets.Atom, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomHybridization")]
     public partial class AtomHybridizationDescriptor : AbstractDescriptor, IAtomicDescriptor
     {
         private IAtomContainer container;

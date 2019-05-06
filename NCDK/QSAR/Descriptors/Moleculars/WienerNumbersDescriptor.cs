@@ -46,7 +46,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.module     qsarmolecular
     // @cdk.dictref    qsar-descriptors:wienerNumbers
     // @cdk.keyword    Wiener number
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#wienerNumbers")]
+    [DescriptorSpecification(DescriptorTargets.AtomContainer, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#wienerNumbers")]
     public class WienerNumbersDescriptor : AbstractDescriptor, IMolecularDescriptor
     {        
         public WienerNumbersDescriptor()

@@ -30,7 +30,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
     // @cdk.created    2004-11-03
     // @cdk.module     qsaratomic
     // @cdk.dictref   qsar-descriptors:atomicHardness
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomicHardness")]
+    [DescriptorSpecification(DescriptorTargets.Atom, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomicHardness")]
     public partial class InductiveAtomicHardnessDescriptor : AbstractDescriptor, IAtomicDescriptor
     {
         IAtomContainer container;

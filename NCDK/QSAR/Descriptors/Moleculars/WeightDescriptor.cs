@@ -29,7 +29,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.created 2004-11-13
     // @cdk.module  qsarmolecular
     // @cdk.dictref qsar-descriptors:weight
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#weight")]
+    [DescriptorSpecification(DescriptorTargets.AtomContainer, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#weight")]
     public class WeightDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
         public WeightDescriptor()

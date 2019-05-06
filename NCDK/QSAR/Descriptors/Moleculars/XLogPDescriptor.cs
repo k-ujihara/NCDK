@@ -82,7 +82,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.dictref qsar-descriptors:xlogP
     // @cdk.keyword XLogP
     // @cdk.keyword descriptor
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#xlogP")]
+    [DescriptorSpecification(DescriptorTargets.AtomContainer, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#xlogP")]
     public class XLogPDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
         private readonly bool checkAromaticity;

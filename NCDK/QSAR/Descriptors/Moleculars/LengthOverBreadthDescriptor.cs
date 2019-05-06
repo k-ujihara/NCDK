@@ -43,12 +43,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.created 2006-09-26
     // @cdk.module  qsarmolecular
     // @cdk.dictref qsar-descriptors:lengthOverBreadth
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#lengthOverBreadth")]
+    [DescriptorSpecification(DescriptorTargets.AtomContainer, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#lengthOverBreadth", Requirements = DescriptorRequirements.Geometry3D)]
     public class LengthOverBreadthDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
         public LengthOverBreadthDescriptor()
-        {
-            
+        {            
         }
 
         [DescriptorResult]

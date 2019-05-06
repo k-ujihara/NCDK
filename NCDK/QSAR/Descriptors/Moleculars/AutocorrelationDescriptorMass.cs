@@ -30,7 +30,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @author      Federico
     // @cdk.created 2007-02-08
     // @cdk.module  qsarmolecular
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#autoCorrelationMass")]
+    [DescriptorSpecification(DescriptorTargets.AtomContainer, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#autoCorrelationMass")]
     public class AutocorrelationDescriptorMass : AbstractDescriptor, IMolecularDescriptor
     {
         private const int DefaultSize = 5;

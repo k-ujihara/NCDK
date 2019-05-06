@@ -32,7 +32,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
     // @cdk.created 2004-11-13
     // @cdk.module  qsaratomic
     // @cdk.dictref qsar-descriptors:atomDegree
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomDegree")]
+    [DescriptorSpecification(DescriptorTargets.Atom, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomDegree")]
     public partial class AtomDegreeDescriptor : AbstractDescriptor, IAtomicDescriptor
     {
         private IAtomContainer container;

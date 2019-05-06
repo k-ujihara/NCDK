@@ -46,7 +46,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.dictref qsar-descriptors:kierValues
     // @cdk.keyword Kappe shape index
     // @cdk.keyword descriptor
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#kierValues")]
+    [DescriptorSpecification(DescriptorTargets.AtomContainer, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#kierValues")]
     public class KappaShapeIndicesDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
         public KappaShapeIndicesDescriptor()

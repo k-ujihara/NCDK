@@ -61,7 +61,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.keyword logP
     // @cdk.keyword lipophilicity
     // @cdk.keyword refractivity
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#ALOGP")]
+    [DescriptorSpecification(DescriptorTargets.AtomContainer, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#ALOGP")]
     public class ALogPDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
         /// <summary>

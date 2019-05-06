@@ -37,7 +37,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.dictref qsar-descriptors:rotatableBondsCount
     // @cdk.keyword bond count, rotatable
     // @cdk.keyword descriptor
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#rotatableBondsCount")]
+    [DescriptorSpecification(DescriptorTargets.AtomContainer, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#rotatableBondsCount")]
     public class RotatableBondsCountDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
         public RotatableBondsCountDescriptor()

@@ -51,7 +51,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.dictref qsar-descriptors:WHIM
     // @cdk.keyword WHIM
     // @cdk.keyword descriptor
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#WHIM")]
+    [DescriptorSpecification(DescriptorTargets.AtomContainer, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#WHIM", Requirements = DescriptorRequirements.Geometry3D)]
     public class WHIMDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
         private static readonly IReadOnlyDictionary<int, double> hashatwt = new Dictionary<int, double>

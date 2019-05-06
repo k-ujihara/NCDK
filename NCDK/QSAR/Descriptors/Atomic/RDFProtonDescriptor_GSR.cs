@@ -36,7 +36,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
     // @cdk.module  qsaratomic
     // @cdk.dictref qsar-descriptors:rdfProtonCalculatedValues
     // @cdk.bug     1632419
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#rdfProtonCalculatedValues")]
+    [DescriptorSpecification(DescriptorTargets.Atom, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#rdfProtonCalculatedValues")]
     public partial class RDFProtonDescriptorGSR : AbstractDescriptor, IAtomicDescriptor
     {
         private const string prefix = "gSr_";

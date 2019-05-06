@@ -42,7 +42,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.dictref qsar-descriptors:fractionalPSA
     // @cdk.keyword volume
     // @cdk.keyword descriptor
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#fractionalPSA")]
+    [DescriptorSpecification(DescriptorTargets.AtomContainer, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#fractionalPSA")]
     public class FractionalPSADescriptor : AbstractDescriptor, IMolecularDescriptor
     {
         public FractionalPSADescriptor()

@@ -35,7 +35,7 @@ namespace NCDK.QSAR.Descriptors.AtomPair
     // @cdk.created    2004-11-03
     // @cdk.module     qsarmolecular
     // @cdk.dictref    qsar-descriptors:piContact
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#piContact")]
+    [DescriptorSpecification(DescriptorTargets.AtomPair, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#piContact")]
     public class PiContactDetectionDescriptor : AbstractDescriptor, IAtomPairDescriptor
     {
         private IAtomContainer container;

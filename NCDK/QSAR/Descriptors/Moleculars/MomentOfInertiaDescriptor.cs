@@ -47,7 +47,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.module       qsarmolecular
     // @cdk.dictref      qsar-descriptors:momentOfInertia
     // @cdk.keyword      moment of inertia
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#momentOfInertia")]
+    [DescriptorSpecification(DescriptorTargets.AtomContainer, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#momentOfInertia", Requirements = DescriptorRequirements.Geometry3D)]
     public class MomentOfInertiaDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
         public MomentOfInertiaDescriptor()

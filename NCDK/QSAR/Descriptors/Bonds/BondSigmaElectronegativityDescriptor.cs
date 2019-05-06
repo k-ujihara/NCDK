@@ -32,7 +32,7 @@ namespace NCDK.QSAR.Descriptors.Bonds
     // @cdk.created 2006-05-08
     // @cdk.module  qsarbond
     // @cdk.dictref qsar-descriptors:bondSigmaElectronegativity
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondSigmaElectronegativity")]
+    [DescriptorSpecification(DescriptorTargets.Bond, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondSigmaElectronegativity")]
     public partial class BondSigmaElectronegativityDescriptor : AbstractDescriptor, IBondDescriptor
     {
         private readonly IAtomContainer container;

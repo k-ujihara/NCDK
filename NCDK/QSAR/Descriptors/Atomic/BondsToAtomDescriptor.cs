@@ -28,7 +28,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
     // @cdk.created    2004-11-13
     // @cdk.module     qsaratomic
     // @cdk.dictref    qsar-descriptors:bondsToAtom
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondsToAtom")]
+    [DescriptorSpecification(DescriptorTargets.Atom, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondsToAtom")]
     public partial class BondsToAtomDescriptor : AbstractDescriptor, IAtomicDescriptor
     {
         IAtomContainer container;

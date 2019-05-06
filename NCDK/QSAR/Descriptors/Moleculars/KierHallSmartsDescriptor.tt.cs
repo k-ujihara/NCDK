@@ -52,7 +52,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @author Rajarshi Guha
     // @cdk.module qsarmolecular
     // @cdk.dictref qsar-descriptors:kierHallSmarts
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#kierHallSmarts")]
+    [DescriptorSpecification(DescriptorTargets.AtomContainer, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#kierHallSmarts")]
     public class KierHallSmartsDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
         public KierHallSmartsDescriptor()

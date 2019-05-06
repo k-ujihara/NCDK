@@ -37,7 +37,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.created 2006-01-15
     // @cdk.module  qsarprotein
     // @cdk.dictref qsar-descriptors:aminoAcidsCount
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#aminoAcidsCount")]
+    [DescriptorSpecification(DescriptorTargets.AtomContainer, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#aminoAcidsCount")]
     public class AminoAcidCountDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
         private readonly IChemObjectSet<IAtomContainer> substructureSet = MakeSubstructureSet();

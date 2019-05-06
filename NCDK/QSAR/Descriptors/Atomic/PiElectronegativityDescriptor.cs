@@ -30,7 +30,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
     // @cdk.created 2006-05-17
     // @cdk.module  qsaratomic
     // @cdk.dictref qsar-descriptors:piElectronegativity
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#piElectronegativity")]
+    [DescriptorSpecification(DescriptorTargets.Atom, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#piElectronegativity")]
     public partial class PiElectronegativityDescriptor : AbstractDescriptor, IAtomicDescriptor
     {
         IAtomContainer container;

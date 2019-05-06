@@ -33,7 +33,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.created 2004-11-03
     // @cdk.module  qsarmolecular
     // @cdk.dictref qsar-descriptors:aromaticBondsCount
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#aromaticBondsCount")]
+    [DescriptorSpecification(DescriptorTargets.AtomContainer, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#aromaticBondsCount")]
     public class AromaticBondsCountDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
         private readonly bool checkAromaticity;

@@ -62,7 +62,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.created     2005-03-19
     // @cdk.module  qsarmolecular
     // @cdk.dictref qsar-descriptors:eccentricConnectivityIndex
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#eccentricConnectivityIndex")]
+    [DescriptorSpecification(DescriptorTargets.AtomContainer, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#eccentricConnectivityIndex")]
     public class EccentricConnectivityIndexDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
         public EccentricConnectivityIndexDescriptor()

@@ -35,7 +35,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
     // @cdk.created 2006-04-11
     // @cdk.module  qsaratomic
     // @cdk.dictref qsar-descriptors:PartialTChargePEOE
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#PartialTChargePEOE")]
+    [DescriptorSpecification(DescriptorTargets.Atom, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#PartialTChargePEOE")]
     public partial class PartialTChargePEOEDescriptor : AbstractDescriptor, IAtomicDescriptor
     {
         IAtomContainer container;

@@ -36,7 +36,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
     // @cdk.created 2004-11-03
     // @cdk.module qsaratomic
     // @cdk.dictref qsar-descriptors:protonPartialCharge
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#protonPartialCharge")]
+    [DescriptorSpecification(DescriptorTargets.Atom, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#protonPartialCharge")]
     public partial class ProtonTotalPartialChargeDescriptor : AbstractDescriptor, IAtomicDescriptor
     {
         IAtomContainer container;

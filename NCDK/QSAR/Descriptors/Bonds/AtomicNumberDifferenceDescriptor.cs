@@ -30,7 +30,7 @@ namespace NCDK.QSAR.Descriptors.Bonds
     // @cdk.created 2007-12-29
     // @cdk.module  qsarbond
     // @cdk.dictref qsar-descriptors:bondAtomicNumberImbalance
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondAtomicNumberImbalance")]
+    [DescriptorSpecification(DescriptorTargets.Bond, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondAtomicNumberImbalance")]
     public class AtomicNumberDifferenceDescriptor : AbstractDescriptor, IBondDescriptor
     {
         public AtomicNumberDifferenceDescriptor()

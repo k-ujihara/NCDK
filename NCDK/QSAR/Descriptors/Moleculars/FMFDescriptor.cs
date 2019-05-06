@@ -45,7 +45,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.module qsarmolecular
     // @cdk.dictref qsar-descriptors:FMF
     // @see org.openscience.cdk.fragment.MurckoFragmenter
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#fmf")]
+    [DescriptorSpecification(DescriptorTargets.AtomContainer, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#fmf")]
     public class FMFDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
         public FMFDescriptor()

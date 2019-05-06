@@ -30,7 +30,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.created 2006-1-03
     // @cdk.module qsarmolecular
     // @cdk.dictref qsar-descriptors:largestChain
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#largestChain")]
+    [DescriptorSpecification(DescriptorTargets.AtomContainer, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#largestChain")]
     public class LargestChainDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
         private readonly bool checkAromaticity;

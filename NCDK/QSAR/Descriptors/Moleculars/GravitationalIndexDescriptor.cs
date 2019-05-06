@@ -38,7 +38,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.dictref qsar-descriptors:gravitationalIndex
     // @cdk.keyword gravitational index
     // @cdk.keyword descriptor
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#gravitationalIndex")]
+    [DescriptorSpecification(DescriptorTargets.AtomContainer, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#gravitationalIndex", Requirements = DescriptorRequirements.Geometry3D)]
     public class GravitationalIndexDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
         public GravitationalIndexDescriptor()

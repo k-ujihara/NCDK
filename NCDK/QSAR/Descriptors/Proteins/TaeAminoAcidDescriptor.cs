@@ -82,7 +82,7 @@ namespace NCDK.QSAR.Descriptors.Proteins
     // @cdk.created 2006-08-23
     // @cdk.module  qsarprotein
     // @cdk.dictref qsar-descriptors:taeAminoAcid
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#taeAminoAcid")]
+    [DescriptorSpecification(DescriptorTargets.BioPolymer, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#taeAminoAcid")]
     public partial class TaeAminoAcidDescriptor : AbstractDescriptor, IBioPolymerDescriptor
     {
         private static List<IMonomer> GetMonomers(IBioPolymer iBioPolymer)

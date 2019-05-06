@@ -28,7 +28,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
     // @cdk.created    2004-11-13
     // @cdk.module     qsaratomic
     // @cdk.dictref qsar-descriptors:distanceToAtom
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#distanceToAtom")]
+    [DescriptorSpecification(DescriptorTargets.Atom, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#distanceToAtom")]
     public partial class DistanceToAtomDescriptor : AbstractDescriptor, IAtomicDescriptor
     {
         IAtomContainer container;

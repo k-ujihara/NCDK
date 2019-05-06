@@ -39,7 +39,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.module  qsarmolecular
     // @cdk.dictref qsar-descriptors:petitjeanShapeIndex
     // @cdk.keyword Petit-Jean, shape index
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#petitjeanShapeIndex")]
+    [DescriptorSpecification(DescriptorTargets.AtomContainer, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#petitjeanShapeIndex", Requirements = DescriptorRequirements.Geometry3D)]
     public class PetitjeanShapeIndexDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
         public PetitjeanShapeIndexDescriptor()

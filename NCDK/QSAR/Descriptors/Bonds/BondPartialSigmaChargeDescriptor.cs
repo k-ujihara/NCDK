@@ -41,7 +41,7 @@ namespace NCDK.QSAR.Descriptors.Bonds
     // @cdk.created 2006-05-08
     // @cdk.module  qsarbond
     // @cdk.dictref qsar-descriptors:bondPartialSigmaCharge
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondPartialSigmaCharge")]
+    [DescriptorSpecification(DescriptorTargets.Bond, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondPartialSigmaCharge")]
     public partial class BondPartialSigmaChargeDescriptor : AbstractDescriptor, IBondDescriptor
     {
         private readonly IAtomContainer container;

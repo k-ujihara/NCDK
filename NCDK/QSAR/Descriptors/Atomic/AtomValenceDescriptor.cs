@@ -32,7 +32,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
     // @cdk.created 2004-11-13
     // @cdk.module  qsaratomic
     // @cdk.dictref qsar-descriptors:atomValence
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomValence")]
+    [DescriptorSpecification(DescriptorTargets.Atom, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomValence")]
     public partial class AtomValenceDescriptor : AbstractDescriptor, IAtomicDescriptor
     {
         IAtomContainer container;

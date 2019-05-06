@@ -32,7 +32,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.created 2004-11-13
     // @cdk.module  qsarmolecular
     // @cdk.dictref qsar-descriptors:bondCount
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondCount")]
+    [DescriptorSpecification(DescriptorTargets.AtomContainer, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondCount")]
     public class BondCountDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
         public BondCountDescriptor()

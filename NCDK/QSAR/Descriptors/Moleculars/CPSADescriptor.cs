@@ -112,7 +112,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.created 2005-05-16
     // @cdk.module qsarmolecular
     // @cdk.dictref qsar-descriptors:CPSA
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#CPSA")]
+    [DescriptorSpecification(DescriptorTargets.AtomContainer, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#CPSA", Requirements = DescriptorRequirements.Geometry3D)]
     public class CPSADescriptor : AbstractDescriptor, IMolecularDescriptor
     {
         public CPSADescriptor()

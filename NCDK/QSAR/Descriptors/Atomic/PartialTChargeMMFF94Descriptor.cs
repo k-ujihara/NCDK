@@ -31,7 +31,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
     // @cdk.module qsaratomic
     // @cdk.dictref qsar-descriptors:partialTChargeMMFF94
     // @cdk.bug 1628461
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#partialTChargeMMFF94")]
+    [DescriptorSpecification(DescriptorTargets.Atom, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#partialTChargeMMFF94")]
     public partial class PartialTChargeMMFF94Descriptor : AbstractDescriptor, IAtomicDescriptor
     {
         IAtomContainer container;

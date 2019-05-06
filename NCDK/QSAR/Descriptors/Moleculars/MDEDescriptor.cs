@@ -41,7 +41,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.created 2006-09-18
     // @cdk.module qsarmolecular
     // @cdk.dictref qsar-descriptors:mde
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#mde")]
+    [DescriptorSpecification(DescriptorTargets.AtomContainer, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#mde")]
     public class MDEDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
         public MDEDescriptor()

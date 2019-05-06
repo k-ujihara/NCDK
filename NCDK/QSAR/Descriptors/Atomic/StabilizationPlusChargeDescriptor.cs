@@ -33,7 +33,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
     // @author         Miguel Rojas Cherto
     // @cdk.created    2008-104-31
     // @cdk.module     qsaratomic
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#stabilizationPlusCharge")]
+    [DescriptorSpecification(DescriptorTargets.Atom, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#stabilizationPlusCharge")]
     public partial class StabilizationPlusChargeDescriptor : AbstractDescriptor, IAtomicDescriptor
     {
         IAtomContainer container;

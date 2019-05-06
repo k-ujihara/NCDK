@@ -31,7 +31,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.created 2004-11-03
     // @cdk.module  qsarmolecular
     // @cdk.dictref qsar-descriptors:vAdjMa
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#vAdjMa")]
+    [DescriptorSpecification(DescriptorTargets.AtomContainer, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#vAdjMa")]
     public class VAdjMaDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
         public VAdjMaDescriptor()

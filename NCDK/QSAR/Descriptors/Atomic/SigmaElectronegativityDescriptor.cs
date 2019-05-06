@@ -33,7 +33,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
     // @cdk.created 2004-11-03
     // @cdk.module  qsaratomic
     // @cdk.dictref qsar-descriptors:sigmaElectronegativity
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#sigmaElectronegativity")]
+    [DescriptorSpecification(DescriptorTargets.Atom, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#sigmaElectronegativity")]
     public partial class SigmaElectronegativityDescriptor : AbstractDescriptor, IAtomicDescriptor
     {
         private readonly IAtomContainer container;

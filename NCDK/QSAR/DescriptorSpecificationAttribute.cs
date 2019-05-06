@@ -51,17 +51,17 @@ namespace NCDK.QSAR
         /// </summary>
         public string Vendor { get; set; }
 
-        public DescriptorSpecificationAttribute()
-            : this(null)
+        public DescriptorSpecificationAttribute(DescriptorTargets target)
+            : this(target, null)
         {
         }
 
-        public DescriptorSpecificationAttribute(string reference)
-            : this(reference, CDK.Version, "The Chemistry Development Kit")
+        public DescriptorSpecificationAttribute(DescriptorTargets target, string reference)
+            : this(target, reference, CDK.Version, "The Chemistry Development Kit")
         {
         }
 
-        public DescriptorSpecificationAttribute(string reference, string identifier, string vendor)
+        public DescriptorSpecificationAttribute(DescriptorTargets target, string reference, string identifier, string vendor)
         {
             this.Reference = reference;
             this.Identifier = identifier;
@@ -75,5 +75,32 @@ namespace NCDK.QSAR
                 + "Identifier=" + (this.Identifier == null ? "null" : $"\"{this.Identifier}\"") + ", "
                 + "Vendor=" + (this.Vendor == null ? "null" : $"\"{this.Vendor}\"") + "}";
         }
+
+        public DescriptorTargets Target { get; set; }
+
+        public DescriptorRequirements Requirements { get; set; }
+
+    }
+
+    [Flags]
+    public enum DescriptorTargets
+    {
+        Atom = 1,
+        Bond = 2,
+        AtomContainer = 4,
+        BioPolymer = 8,
+
+        Enumerable = 0x10000,
+        Pair = 0x20000,
+
+        Substance = AtomContainer | Enumerable,
+        AtomPair = Atom | Pair,
+    }
+
+    [Flags]
+    public enum DescriptorRequirements
+    {
+        Geometry2D = 1,
+        Geometry3D = 2,
     }
 }

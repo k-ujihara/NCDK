@@ -32,7 +32,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
     // @cdk.module  qsaratomic
     // @cdk.dictref qsar-descriptors:partialPiCharge
     // @see         GasteigerPEPEPartialCharges
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#partialPiCharge")]
+    [DescriptorSpecification(DescriptorTargets.Atom, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#partialPiCharge")]
     public partial class PartialPiChargeDescriptor : AbstractDescriptor, IAtomicDescriptor
     {
         private readonly IAtomContainer container;

@@ -61,7 +61,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.dictref qsar-descriptors:chiChain
     // @cdk.keyword chi chain index
     // @cdk.keyword descriptor
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#chiChain")]
+    [DescriptorSpecification(DescriptorTargets.AtomContainer, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#chiChain")]
     public class ChiChainDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
         public ChiChainDescriptor()

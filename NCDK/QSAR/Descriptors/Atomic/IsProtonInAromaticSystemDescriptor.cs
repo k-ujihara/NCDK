@@ -33,7 +33,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
     // @cdk.created 2004-11-03
     // @cdk.module  qsaratomic
     // @cdk.dictref qsar-descriptors:isProtonInAromaticSystem
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#isProtonInAromaticSystem")]
+    [DescriptorSpecification(DescriptorTargets.Atom, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#isProtonInAromaticSystem")]
     public partial class IsProtonInAromaticSystemDescriptor : AbstractDescriptor, IAtomicDescriptor
     {
         IAtomContainer container;

@@ -35,7 +35,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @author Rajarshi Guha
     // @cdk.module qsarmolecular
     // @cdk.dictref qsar-descriptors:hybratio
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#hybratio")]
+    [DescriptorSpecification(DescriptorTargets.AtomContainer, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#hybratio")]
     public class HybridizationRatioDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
         public HybridizationRatioDescriptor()

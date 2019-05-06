@@ -30,7 +30,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.dictref qsar-descriptors:zagrebIndex
     // @cdk.keyword Zagreb index
     // @cdk.keyword descriptor
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#zagrebIndex")]
+    [DescriptorSpecification(DescriptorTargets.AtomContainer, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#zagrebIndex")]
     public class ZagrebIndexDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
         public ZagrebIndexDescriptor()

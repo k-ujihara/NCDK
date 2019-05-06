@@ -29,7 +29,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.created 2004-11-13
     // @cdk.module  qsarmolecular
     // @cdk.dictref qsar-descriptors:atomCount
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomCount")]
+    [DescriptorSpecification(DescriptorTargets.AtomContainer, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomCount")]
     public class AtomCountDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
         public AtomCountDescriptor()

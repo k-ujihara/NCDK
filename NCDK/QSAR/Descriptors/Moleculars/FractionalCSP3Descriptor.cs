@@ -24,7 +24,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// <summary>
     /// Calculates F<sub>sp</sub><sup>3</sup> (number of sp<sup>3</sup> hybridized carbons/total carbon count) <token>cdk-cite-Lovering2009</token>.
     /// </summary>
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#Fsp3")]
+    [DescriptorSpecification(DescriptorTargets.AtomContainer, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#Fsp3")]
     public class FractionalCSP3Descriptor : AbstractDescriptor, IMolecularDescriptor
     {
         public FractionalCSP3Descriptor()

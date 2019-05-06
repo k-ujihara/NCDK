@@ -41,7 +41,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.dictref qsar-descriptors:smallrings
     // @cdk.keyword smallrings
     // @cdk.keyword descriptor
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#smallRings")]
+    [DescriptorSpecification(DescriptorTargets.AtomContainer, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#smallRings")]
     public class SmallRingDescriptor : AbstractDescriptor, IMolecularDescriptor
     { 
         public SmallRingDescriptor()

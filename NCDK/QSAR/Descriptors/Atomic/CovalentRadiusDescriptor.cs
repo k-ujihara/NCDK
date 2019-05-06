@@ -28,7 +28,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
     // @cdk.created    2006-05-17
     // @cdk.module     qsaratomic
     // @cdk.dictref qsar-descriptors:covalentradius
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#covalentradius")]
+    [DescriptorSpecification(DescriptorTargets.Atom, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#covalentradius")]
     public partial class CovalentRadiusDescriptor : AbstractDescriptor, IAtomicDescriptor
     {
         IAtomContainer container;

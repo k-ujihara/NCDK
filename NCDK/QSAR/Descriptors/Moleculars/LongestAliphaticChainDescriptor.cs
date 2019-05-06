@@ -29,7 +29,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.created 2006-1-03
     // @cdk.module  qsarmolecular
     // @cdk.dictref qsar-descriptors:largestAliphaticChain
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#longestAliphaticChain")]
+    [DescriptorSpecification(DescriptorTargets.AtomContainer, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#longestAliphaticChain")]
     public class LongestAliphaticChainDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
         private readonly bool checkRingSystem;

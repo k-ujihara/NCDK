@@ -56,7 +56,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.dictref qsar-descriptors:chiPathCluster
     // @cdk.keyword chi path cluster index
     // @cdk.keyword descriptor
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#chiPathCluster")]
+    [DescriptorSpecification(DescriptorTargets.AtomContainer, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#chiPathCluster")]
     public class ChiPathClusterDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
         public ChiPathClusterDescriptor()

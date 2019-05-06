@@ -27,7 +27,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.dictref    qsar-descriptors:mannholdLogP
     // @cdk.keyword LogP
     // @cdk.keyword descriptor
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#mannholdLogP")]
+    [DescriptorSpecification(DescriptorTargets.AtomContainer, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#mannholdLogP")]
     public class MannholdLogPDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
         public MannholdLogPDescriptor()

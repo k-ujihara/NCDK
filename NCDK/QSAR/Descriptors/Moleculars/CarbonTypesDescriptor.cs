@@ -45,7 +45,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.dictref qsar-descriptors:carbonTypes
     // @cdk.keyword topological bond order ctypes
     // @cdk.keyword descriptor
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#carbonTypes")]
+    [DescriptorSpecification(DescriptorTargets.AtomContainer, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#carbonTypes")]
     public class CarbonTypesDescriptor : AbstractDescriptor, IMolecularDescriptor
     { 
         public CarbonTypesDescriptor()

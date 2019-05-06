@@ -31,7 +31,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
     // @cdk.created 2006-04-15
     // @cdk.module  qsaratomic
     // @cdk.dictref qsar-descriptors:partialSigmaCharge
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#partialSigmaCharge")]
+    [DescriptorSpecification(DescriptorTargets.Atom, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#partialSigmaCharge")]
     public partial class PartialSigmaChargeDescriptor : AbstractDescriptor, IAtomicDescriptor
     {
         IAtomContainer container;

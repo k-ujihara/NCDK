@@ -35,7 +35,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.created 2004-11-13
     // @cdk.module  qsarmolecular
     // @cdk.dictref qsar-descriptors:bpol
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bpol")]
+    [DescriptorSpecification(DescriptorTargets.AtomContainer, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bpol")]
     public class BPolDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
         internal static readonly double[] polarizabilities = APolDescriptor.polarizabilities;        

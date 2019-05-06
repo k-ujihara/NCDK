@@ -45,7 +45,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.created 2005-22-07
     // @cdk.module  qsarmolecular
     // @cdk.dictref qsar-descriptors:hBondDonors
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#hBondDonors")]
+    [DescriptorSpecification(DescriptorTargets.AtomContainer, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#hBondDonors")]
     public class HBondDonorCountDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
         public HBondDonorCountDescriptor()

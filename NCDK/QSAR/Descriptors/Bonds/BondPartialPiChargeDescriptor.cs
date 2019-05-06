@@ -33,7 +33,7 @@ namespace NCDK.QSAR.Descriptors.Bonds
     // @cdk.created 2006-05-18
     // @cdk.module  qsarbond
     // @cdk.dictref qsar-descriptors:bondPartialPiCharge
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondPartialPiCharge")]
+    [DescriptorSpecification(DescriptorTargets.Bond, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondPartialPiCharge")]
     public class BondPartialPiChargeDescriptor : AbstractDescriptor, IBondDescriptor
     {
         private readonly IAtomContainer container;

@@ -15,6 +15,8 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using System.Collections.Generic;
+
 namespace NCDK.QSAR.Descriptors.Substances
 {
     /// <summary>
@@ -22,7 +24,7 @@ namespace NCDK.QSAR.Descriptors.Substances
     /// formula. Originally aimed at metal oxide nanoparticles <token>cdk-cite-Liu2011</token>.
     /// </summary>
     // @author      egonw
-    [DescriptorSpecification("http://egonw.github.com/resource/NM_001002")]
+    [DescriptorSpecification(DescriptorTargets.Substance, "http://egonw.github.com/resource/NM_001002")]
     public class OxygenAtomCountDescriptor : AbstractDescriptor, ISubstanceDescriptor
     {
         [DescriptorResult]
@@ -40,7 +42,7 @@ namespace NCDK.QSAR.Descriptors.Substances
         }
 
         /// <inheritdoc/>
-        public Result Calculate(ISubstance substance)
+        public Result Calculate(IEnumerable<IAtomContainer> substance)
         {
             int count = 0;
             if (substance != null)
@@ -53,6 +55,6 @@ namespace NCDK.QSAR.Descriptors.Substances
         }
 
         /// <inheritdoc/>
-        IDescriptorResult ISubstanceDescriptor.Calculate(ISubstance substance) => Calculate(substance);
+        IDescriptorResult ISubstanceDescriptor.Calculate(IEnumerable<IAtomContainer> substance) => Calculate(substance);
     }
 }

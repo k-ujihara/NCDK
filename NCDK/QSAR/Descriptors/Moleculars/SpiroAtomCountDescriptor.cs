@@ -27,7 +27,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// </summary>
     // @author rguha
     // @cdk.dictref qsar-descriptors:nSpiroAtom
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#nSpiroAtom")]
+    [DescriptorSpecification(DescriptorTargets.AtomContainer, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#nSpiroAtom")]
     public class SpiroAtomCountDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
         public SpiroAtomCountDescriptor()

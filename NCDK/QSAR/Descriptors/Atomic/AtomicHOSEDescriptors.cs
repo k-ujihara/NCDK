@@ -247,7 +247,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
     // @cdk.created  2006-05-26
     // @cdk.module   qsaratomic
     // @cdk.dictref  qsar-descriptors:ionizationPotential
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#ionizationPotential")]
+    [DescriptorSpecification(DescriptorTargets.Atom, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#ionizationPotential")]
     public partial class IPAtomicHOSEDescriptor : AbstractDescriptor, IAtomicDescriptor
     {
         IAtomContainer container;
@@ -303,7 +303,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
     // @cdk.created  2006-05-26
     // @cdk.module   qsaratomic
     // @cdk.dictref  qsar-descriptors:protonaffinity
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#ionizationPotential")]
+    [DescriptorSpecification(DescriptorTargets.Atom, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#ionizationPotential")]
     public partial class ProtonAffinityHOSEDescriptor : AbstractDescriptor, IAtomicDescriptor
     {
         private IAtomContainer container;

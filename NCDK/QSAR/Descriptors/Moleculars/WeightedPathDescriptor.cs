@@ -39,7 +39,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.created 2006-01-15
     // @cdk.module qsarmolecular
     // @cdk.dictref qsar-descriptors:weightedPath
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#weightedPath")]
+    [DescriptorSpecification(DescriptorTargets.AtomContainer, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#weightedPath")]
     public class WeightedPathDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
         public WeightedPathDescriptor()

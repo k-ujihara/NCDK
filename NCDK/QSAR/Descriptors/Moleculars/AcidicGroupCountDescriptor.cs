@@ -36,7 +36,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @author      egonw
     // @cdk.module  qsarmolecular
     // @cdk.dictref qsar-descriptors:acidicGroupCount  
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#acidicGroupCount")]
+    [DescriptorSpecification(DescriptorTargets.AtomContainer, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#acidicGroupCount")]
     public class AcidicGroupCountDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
         private static readonly SmartsPattern[] tools = new string[]

@@ -60,7 +60,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.keyword TPSA
     // @cdk.keyword total polar surface area
     // @cdk.keyword descriptor
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#tpsa")]
+    [DescriptorSpecification(DescriptorTargets.AtomContainer, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#tpsa")]
     public class TPSADescriptor : AbstractDescriptor, IMolecularDescriptor
     {
         private static readonly IReadOnlyDictionary<string, double> map = new Dictionary<string, double>

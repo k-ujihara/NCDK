@@ -31,7 +31,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
     // @cdk.created 2004-11-03
     // @cdk.module  qsaratomic
     // @cdk.dictref qsar-descriptors:isProtonInConjugatedPiSystem
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#isProtonInConjugatedPiSystem")]
+    [DescriptorSpecification(DescriptorTargets.Atom, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#isProtonInConjugatedPiSystem")]
     public partial class IsProtonInConjugatedPiSystemDescriptor : AbstractDescriptor, IAtomicDescriptor
     {
         IAtomContainer container;

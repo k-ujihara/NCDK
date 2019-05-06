@@ -35,7 +35,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.keyword Lipinski
     // @cdk.keyword rule-of-five
     // @cdk.keyword descriptor
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#lipinskifailures")]
+    [DescriptorSpecification(DescriptorTargets.AtomContainer, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#lipinskifailures")]
     public class RuleOfFiveDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
         private readonly bool checkAromaticity;

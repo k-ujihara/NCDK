@@ -26,7 +26,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
     // @cdk.created    2004-11-13
     // @cdk.module     qsaratomic
     // @cdk.dictref qsar-descriptors:period
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#period")]
+    [DescriptorSpecification(DescriptorTargets.Atom, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#period")]
     public partial class PeriodicTablePositionDescriptor : AbstractDescriptor, IAtomicDescriptor
     {
         public PeriodicTablePositionDescriptor()

@@ -29,7 +29,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
     // @cdk.created 2006-05-03
     // @cdk.module  qsaratomic
     // @cdk.dictref qsar-descriptors:effectivePolarizability
-    [DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#effectivePolarizability")]
+    [DescriptorSpecification(DescriptorTargets.Atom, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#effectivePolarizability")]
     public partial class EffectiveAtomPolarizabilityDescriptor : AbstractDescriptor, IAtomicDescriptor
     {
         IAtomContainer container;
