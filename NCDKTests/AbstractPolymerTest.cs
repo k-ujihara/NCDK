@@ -181,11 +181,6 @@ namespace NCDK
             IAtom oAtom3 = polymer.Builder.NewAtom("C");
             polymer.AddAtom(oAtom2, oMono1);
             polymer.AddAtom(oAtom3, oMono2);
-            IDictionary<string, IMonomer> monomers = new Dictionary<string, IMonomer>
-            {
-                { "TRP279", oMono1 },
-                { "HOH", oMono2 }
-            };
             string description = polymer.ToString();
             for (int i = 0; i < description.Length; i++)
             {

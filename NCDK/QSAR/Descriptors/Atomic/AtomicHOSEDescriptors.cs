@@ -18,7 +18,6 @@
  */
 
 using NCDK.Common.Primitives;
-using NCDK.Config;
 using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 using System.Collections.Generic;
@@ -173,50 +172,20 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <returns>List with string = HOSECode and string = energy</returns>
         private static List<string> ExtractInfo(string str)
         {
-            var idEdited = new StringBuilder();
-            var valEdited = new StringBuilder();
-
-            int strlen = str.Length;
-
-            bool foundSpace = false;
-            int countSpace = 0;
-            bool foundDigit = false;
-            for (int i = 0; i < strlen; i++)
-            {
-                if (!foundDigit)
-                    if (char.IsLetter(str[i]))
-                        foundDigit = true;
-
-                if (foundDigit)
-                {
-                    if (char.IsWhiteSpace(str[i]))
-                    {
-                        if (countSpace == 0)
-                        {
-                            foundSpace = true;
-                        }
-                        else
-                            break;
-                    }
-                    else
-                    {
-                        if (foundSpace)
-                        {
-                            valEdited.Append(str[i]);
-                        }
-                        else
-                        {
-                            idEdited.Append(str[i]);
-                        }
-                    }
-                }
-            }
-            List<string> objec = new List<string>
-            {
-                idEdited.ToString(),
-                valEdited.ToString()
-            };
-            return objec;
+            int beg = 0;
+            int end = 0;
+            int len = str.Length;
+            var parts = new List<string>();
+            while (end < len && !char.IsWhiteSpace(str[end]))
+                end++;
+            parts.Add(str.Substring(beg, end - beg));
+            while (end < len && char.IsWhiteSpace(str[end]))
+                end++;
+            beg = end;
+            while (end < len && !char.IsWhiteSpace(str[end]))
+                end++;
+            parts.Add(str.Substring(beg, end - beg));
+            return parts;
         }
     }
 
@@ -248,7 +217,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
     // @cdk.module   qsaratomic
     // @cdk.dictref  qsar-descriptors:ionizationPotential
     [DescriptorSpecification(DescriptorTargets.Atom, "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#ionizationPotential")]
-    public partial class IPAtomicHOSEDescriptor : AbstractDescriptor, IAtomicDescriptor
+    public class IPAtomicHOSEDescriptor : AbstractDescriptor, IAtomicDescriptor
     {
         IAtomContainer container;
         IAtomContainer clonedContainer;

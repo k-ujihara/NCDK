@@ -40,11 +40,13 @@ namespace NCDK.IO
     /// complemented by properties.
     /// </summary>
     // @cdk.module  io
-    // @cdk.githash
     // @cdk.iooptions
     // @cdk.keyword file format, MDL SD file
     public class SDFWriter : DefaultChemObjectWriter
     {
+        public const string OptAlwaysV3000 = "writeV3000";
+        public const string OptWriteData = "writeProperties";
+
         private TextWriter writer;
         private BooleanIOSetting paramWriteData;
         private BooleanIOSetting paramWriteV3000;
@@ -314,9 +316,9 @@ namespace NCDK.IO
         
         private void InitIOSettings()
         {
-            paramWriteData = Add(new BooleanIOSetting("writeProperties", Importance.Low,
+            paramWriteData = Add(new BooleanIOSetting(OptWriteData, Importance.Low,
                 "Should molecule properties be written as non-structural data", "true"));
-            paramWriteV3000 = Add(new BooleanIOSetting("writeV3000", Importance.Low, 
+            paramWriteV3000 = Add(new BooleanIOSetting(OptAlwaysV3000, Importance.Low, 
                 "Write all records as V3000", "false"));
             AddSettings(new MDLV2000Writer().IOSettings.Settings);
             AddSettings(new MDLV3000Writer().IOSettings.Settings);

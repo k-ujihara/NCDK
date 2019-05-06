@@ -187,6 +187,9 @@ namespace NCDK.Tools.Manipulator
         {
             Assert.IsNotNull(MolecularFormulaManipulator.GetMolecularFormula("C10H16", new MolecularFormula()));
             Assert.IsNotNull(MolecularFormulaManipulator.GetMolecularFormula("C10H16", builder));
+            var formula = MolecularFormulaManipulator.GetMolecularFormula("O3(Fe(O2))3", builder);
+            Assert.AreEqual(formula.GetCount(builder.NewAtom("Fe")), 3);
+            Assert.AreEqual(formula.GetCount(builder.NewAtom("O")), 9);
         }
 
         /// <summary>Test if formula-order is independent of isotope-insertion order</summary>
@@ -1380,6 +1383,75 @@ namespace NCDK.Tools.Manipulator
             var f = "[C3H7]+";
             var m = MolecularFormulaManipulator.GetMolecularFormula(f, CDK.Builder);
             Assert.AreEqual("[C3H7]+", MolecularFormulaManipulator.GetString(m));
+        }
+
+        [TestMethod()]
+        public void GetMostAbundant()
+        {
+            IMolecularFormula mf = new MolecularFormula();
+            mf.Add(builder.NewAtom("C"), 6);
+            mf.Add(builder.NewAtom("Br"), 6);
+            IMolecularFormula mamf = MolecularFormulaManipulator.GetMostAbundant(mf);
+            Assert.AreEqual("[12]C6[79]Br3[81]Br3", MolecularFormulaManipulator.GetString(mamf, false, true));
+        }
+
+        private static void AssertMass(string str, double expMass, MolecularWeightTypes flav)
+        {
+            var mf = MolecularFormulaManipulator.GetMolecularFormula(str);
+            var act = MolecularFormulaManipulator.GetMass(mf, flav);
+            Assert.AreEqual(expMass, act, 0.01);
+        }
+
+        [TestMethod()]
+        public void C6Br6()
+        {
+            AssertMass("C6Br6", 551.485, MolecularWeightTypes.MolWeight);
+            AssertMass("C6Br6", 545.510, MolecularWeightTypes.MonoIsotopic);
+            AssertMass("C6Br6", 551.503, MolecularWeightTypes.MostAbundant);
+            AssertMass("[12]C4[13]C2Br6", 553.427, MolecularWeightTypes.MolWeight);
+            AssertMass("[12]C4[13]C2Br6", 547.516, MolecularWeightTypes.MonoIsotopic);
+            AssertMass("[12]C4[13]C2Br6", 553.510, MolecularWeightTypes.MostAbundant);
+        }
+
+        // Iron has 4 stable isotopes, 54 @ 5.85%, 56 @ 91.57%, 57 @ 2.12%, and
+        // 58 @ 0.28%. Given 100 iron's we expected ~6 @ 54, ~92 @ 56 and 2 @ 57
+        [TestMethod()]
+        public void GetMostAbundantFe100()
+        {
+            var mf = new MolecularFormula();
+            mf.Add(builder.NewAtom("Fe"), 100);
+            IMolecularFormula mamf = MolecularFormulaManipulator.GetMostAbundant(mf);
+            Assert.AreEqual("[54]Fe6[56]Fe92[57]Fe2", MolecularFormulaManipulator.GetString(mamf, false, true));
+        }
+
+        [TestMethod()]
+        public void GetMassCranbin()
+        {
+            var mf = MolecularFormulaManipulator.GetMolecularFormula("C202H315N55O64S6");
+            Assert.AreEqual(4730.397, MolecularFormulaManipulator.GetMass(mf, MolecularWeightTypes.MolWeight), 0.001);
+            Assert.AreEqual(4730.397, MolecularFormulaManipulator.GetMass(mf, MolecularWeightTypes.MolWeightIgnoreSpecified), 0.001);
+            Assert.AreEqual(4727.140, MolecularFormulaManipulator.GetMass(mf, MolecularWeightTypes.MonoIsotopic), 0.001);
+            Assert.AreEqual(4729.147, MolecularFormulaManipulator.GetMass(mf, MolecularWeightTypes.MostAbundant), 0.001);
+        }
+
+        [TestMethod()]
+        public void GetMassCranbinSpecIsotopes()
+        {
+            var mf = MolecularFormulaManipulator.GetMolecularFormula("[12]C200[13]C2[1]H315[14]N55[16]O64[32]S6");
+            Assert.AreEqual(4729.147, MolecularFormulaManipulator.GetMass(mf, MolecularWeightTypes.MolWeight), 0.001);
+            Assert.AreEqual(4730.397, MolecularFormulaManipulator.GetMass(mf, MolecularWeightTypes.MolWeightIgnoreSpecified), 0.001);
+            Assert.AreEqual(4729.147, MolecularFormulaManipulator.GetMass(mf, MolecularWeightTypes.MonoIsotopic), 0.001);
+            Assert.AreEqual(4729.147, MolecularFormulaManipulator.GetMass(mf, MolecularWeightTypes.MostAbundant), 0.001);
+        }
+
+        [TestMethod()]
+        public void GetMassCranbinMixedSpecIsotopes()
+        {
+            var mf = MolecularFormulaManipulator.GetMolecularFormula("C200[13]C2H315N55O64S6");
+            Assert.AreEqual(4732.382, MolecularFormulaManipulator.GetMass(mf, MolecularWeightTypes.MolWeight), 0.001);
+            Assert.AreEqual(4730.397, MolecularFormulaManipulator.GetMass(mf, MolecularWeightTypes.MolWeightIgnoreSpecified), 0.001);
+            Assert.AreEqual(4729.147, MolecularFormulaManipulator.GetMass(mf, MolecularWeightTypes.MonoIsotopic), 0.001);
+            Assert.AreEqual(4731.154, MolecularFormulaManipulator.GetMass(mf, MolecularWeightTypes.MostAbundant), 0.001);
         }
     }
 }

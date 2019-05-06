@@ -208,15 +208,15 @@ namespace NCDK.Fingerprints
         [TestMethod()]
         public void TestAtomPermutation()
         {
-            IAtomContainer pamine = MakePropylAmine();
-            Fingerprinter fp = new Fingerprinter();
-            IBitFingerprint bs1 = fp.GetBitFingerprint(pamine);
+            var pamine = MakePropylAmine();
+            var fp = new Fingerprinter();
+            var bs1 = fp.GetBitFingerprint(pamine);
 
-            AtomContainerAtomPermutor acp = new AtomContainerAtomPermutor(pamine);
+            var acp = new AtomContainerAtomPermutor(pamine);
             while (acp.MoveNext())
             {
-                IAtomContainer container = acp.Current;
-                IBitFingerprint bs2 = fp.GetBitFingerprint(container);
+                var container = acp.Current;
+                var bs2 = fp.GetBitFingerprint(container);
                 Assert.IsTrue(bs1.Equals(bs2));
             }
         }

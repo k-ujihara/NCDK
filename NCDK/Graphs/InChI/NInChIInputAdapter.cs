@@ -62,11 +62,16 @@ namespace NCDK.Graphs.InChI
                 pos++;
             while (pos < len && char.IsDigit(op[pos]))
                 pos++;
-            if (pos < len && op[pos] == '.')
+            if (pos < len && (op[pos] == '.' || op[pos] == ','))
                 pos++;
             while (pos < len && char.IsDigit(op[pos]))
                 pos++;
             return pos == len;
+        }
+
+        private static bool IsSubSecondTimeout(string op)
+        {
+            return op.IndexOf('.') >= 0 || op.IndexOf(',') >= 0;
         }
 
         private static string CheckOptions(string ops)
@@ -88,7 +93,7 @@ namespace NCDK.Graphs.InChI
                         op = op.Substring(1);
                     }
 
-                    InChIOption option = InChIOption.ValueOfIgnoreCase(op);
+                    var option = InChIOption.ValueOfIgnoreCase(op);
                     if (option != null)
                     {
                         return FLAG_CHAR + option.Name;
@@ -96,7 +101,17 @@ namespace NCDK.Graphs.InChI
                     else if (IsTimeoutOptions(op))
                     {
                         hasUserSpecifiedTimeout = true;
-                        return FLAG_CHAR + op;
+                        // only reformat if we actually have a decimal
+                        if (IsSubSecondTimeout(op))
+                        {
+                            // because the JNI-InChI library is expecting an platform number, format it as such
+                            var time = double.Parse(op.Substring(1));
+                            return $"{FLAG_CHAR}W{time.ToString("F2")}";
+                        }
+                        else
+                        {
+                            return $"{FLAG_CHAR}{op}";
+                        }
                     }
                     // 1,5 tautomer option
                     else if (string.Equals("15T", op, StringComparison.Ordinal))

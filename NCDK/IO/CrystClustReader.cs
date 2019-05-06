@@ -29,7 +29,6 @@ using System.IO;
 namespace NCDK.IO
 {
     // @cdk.module extra
-    // @cdk.githash
     // @cdk.iooptions
     public class CrystClustReader : DefaultChemObjectReader
     {

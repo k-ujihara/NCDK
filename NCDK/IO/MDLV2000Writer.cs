@@ -54,7 +54,6 @@ namespace NCDK.IO
     /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.IO.MDLV2000Writer_Example.cs+listener"]/*' />
     /// </example>
     // @cdk.module io
-    // @cdk.githash
     // @cdk.iooptions
     // @cdk.keyword file format, MDL molfile
     public class MDLV2000Writer : DefaultChemObjectWriter
@@ -64,6 +63,7 @@ namespace NCDK.IO
         public const string OptWriteAromaticBondTypes = "WriteAromaticBondTypes";
         public const string OptWriteQueryFormatValencies = "WriteQueryFormatValencies";
         public const string OptWriteDefaultProperties = "WriteDefaultProperties";
+        public const string OptProgramName = "PorgramName";
 
         // regular expression to capture R groups with attached numbers
         private static readonly Regex NUMERED_R_GROUP = new Regex("R(\\d+)", RegexOptions.Compiled);
@@ -141,6 +141,8 @@ namespace NCDK.IO
         private BooleanIOSetting WriteQueryFormatValencies;
 
         private BooleanIOSetting writeDefaultProps;
+
+        private StringIOSetting programNameOpt;
 
         private TextWriter writer;
 
@@ -267,6 +269,19 @@ namespace NCDK.IO
             WriteMolecule(bigPile);
         }
 
+        private string GetProgName()
+        {
+            var progname = programNameOpt.Setting;
+            if (progname == null)
+                return "        ";
+            else if (progname.Length > 8)
+                return progname.Substring(0, 8);
+            else if (progname.Length < 8)
+                return new string(' ', 8 - progname.Length) + progname;
+            else
+                return progname;
+        }
+
         /// <summary>
         /// Writes a Molecule to an Stream in MDL sdf format.
         /// </summary>
@@ -294,7 +309,8 @@ namespace NCDK.IO
             // dimensional codes (d), scaling factors (S, s), energy (E) if modeling
             // program input, internal registry number (R) if input through MDL
             // form. A blank line can be substituted for line 2.
-            writer.Write("  CDK     ");
+            writer.Write("  ");
+            writer.Write(GetProgName());
             writer.Write(DateTime.Now.ToUniversalTime().ToString("MMddyyHHmm", DateTimeFormatInfo.InvariantInfo));
             if (dim != 0)
             {
@@ -442,7 +458,7 @@ namespace NCDK.IO
                         last--;
                     }
                     // matches BIOVIA syntax
-                    if (last >= 2 && last < atomprops.Length)
+                    if (last >= 2 && last < 5)
                         last = 5;
                 }
                 for (int i = 2; i <= last; i++)
@@ -1165,6 +1181,9 @@ namespace NCDK.IO
             writeDefaultProps = IOSettings.Add(
                 new BooleanIOSetting(OptWriteDefaultProperties, Importance.Low,
                 "Write trailing zero's on atom/bond property blocks even if they're not used.", "true"));
+            programNameOpt = IOSettings.Add(
+                new StringIOSetting(OptProgramName, Importance.Low,
+                "Program name to write at the top of the molfile header, should be exactly 8 characters long", "CDK"));
         }
 
         /// <summary>

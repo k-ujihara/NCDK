@@ -16,8 +16,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.AtomTypes;
 using NCDK.Isomorphisms;
 using NCDK.Isomorphisms.Matchers;
 using NCDK.Reactions.Types.Parameters;
@@ -52,7 +52,7 @@ namespace NCDK.Reactions.Types
         }
 
         /// <summary>
-        /// A unit test suite for JUnit with benzene.
+        /// A unit test with benzene.
         /// Reaction:  C1=CC=CC=C1 -> C1(C)=C(C)-C=C-C=C1
         /// Automatic search of the center active.
         ///
@@ -61,9 +61,9 @@ namespace NCDK.Reactions.Types
         [TestMethod()]
         public override void TestInitiate_IAtomContainerSet_IAtomContainerSet()
         {
-            IReactionProcess type = new PiBondingMovementReaction();
+            var type = new PiBondingMovementReaction();
             // C1=C(C)-C(C)=C-C=C1
-            IAtomContainer molecule = builder.NewAtomContainer();
+            var molecule = builder.NewAtomContainer();
             molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Double);
@@ -95,15 +95,14 @@ namespace NCDK.Reactions.Types
             Assert.AreEqual(1, setOfReactions.Count);
             Assert.AreEqual(1, setOfReactions[0].Products.Count);
 
-            IAtomContainer product2 = setOfReactions[0].Products[0];
+            var product2 = setOfReactions[0].Products[0];
 
-            IQueryAtomContainer queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(product2);
+            var queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(product2);
             Assert.IsTrue(new UniversalIsomorphismTester().IsIsomorph(molecule, queryAtom));
-
         }
 
         /// <summary>
-        /// A unit test suite for JUnit with 1,2-dimethylbenzene.
+        /// A unit test with 1,2-dimethylbenzene.
         /// Reaction: C1=C(C)-C(C)=C-C=C1 -> C1(C)=C(C)-C=C-C=C1
         /// Automatic search of the center active.
         ///
@@ -112,9 +111,9 @@ namespace NCDK.Reactions.Types
         [TestMethod()]
         public void TestAutomaticSearchCentreActiveExample1()
         {
-            IReactionProcess type = new PiBondingMovementReaction();
+            var type = new PiBondingMovementReaction();
             // C1=C(C)-C(C)=C-C=C1
-            IAtomContainer molecule = builder.NewAtomContainer();
+            var molecule = builder.NewAtomContainer();
             molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Double);
@@ -144,15 +143,16 @@ namespace NCDK.Reactions.Types
             var param = new SetReactionCenter();
             param.IsSetParameter = false;
             paramList.Add(param);
+            type.ParameterList = paramList;
             var setOfReactions = type.Initiate(setOfReactants, null);
 
             Assert.AreEqual(1, setOfReactions.Count);
             Assert.AreEqual(1, setOfReactions[0].Products.Count);
 
-            IAtomContainer product2 = setOfReactions[0].Products[0];
+            var product2 = setOfReactions[0].Products[0];
 
             //C1(C)=C(C)-C=C-C=C1
-            IAtomContainer molecule2 = builder.NewAtomContainer();
+            var molecule2 = builder.NewAtomContainer();
             molecule2.Atoms.Add(builder.NewAtom("C"));
             molecule2.Atoms.Add(builder.NewAtom("C"));
             molecule2.AddBond(molecule2.Atoms[0], molecule2.Atoms[1], BondOrder.Single);
@@ -185,7 +185,7 @@ namespace NCDK.Reactions.Types
         }
 
         /// <summary>
-        /// A unit test suite for JUnit with 2-methylnaphthalene.
+        /// A unit test with 2-methylnaphthalene.
         /// Reaction: C1=CC(=CC2=C1C=CC=C2)C
         /// -> C1=CC(=CC2=CC=CC=C12)C + C1=C2C(=CC(=C1)C)C=CC=C2
         /// Automatic search of the center active.
@@ -195,7 +195,7 @@ namespace NCDK.Reactions.Types
         [TestMethod()]
         public void TestDoubleRingConjugated()
         {
-            IReactionProcess type = new PiBondingMovementReaction();
+            var type = new PiBondingMovementReaction();
             // C1=CC(=CC2=C1C=CC=C2)C
             var setOfReactants = GetExampleReactants();
 
@@ -204,19 +204,20 @@ namespace NCDK.Reactions.Types
             var param = new SetReactionCenter();
             param.IsSetParameter = false;
             paramList.Add(param);
+            type.ParameterList = paramList;
             var setOfReactions = type.Initiate(setOfReactants, null);
 
             Assert.AreEqual(2, setOfReactions.Count);
             Assert.AreEqual(1, setOfReactions[0].Products.Count);
 
-            IAtomContainer product1 = setOfReactions[0].Products[0];
-            IAtomContainer molecule1 = GetExpectedProducts()[0];
+            var product1 = setOfReactions[0].Products[0];
+            var molecule1 = GetExpectedProducts()[0];
 
             Assert.AreEqual(1, setOfReactions[1].Products.Count);
 
-            IAtomContainer product2 = setOfReactions[1].Products[0];
+            var product2 = setOfReactions[1].Products[0];
             //C1=CC(=CC2=CC=CC=C12)C
-            IAtomContainer molecule2 = builder.NewAtomContainer();
+            var molecule2 = builder.NewAtomContainer();
             molecule2.Atoms.Add(builder.NewAtom("C"));
             molecule2.Atoms.Add(builder.NewAtom("C"));
             molecule2.AddBond(molecule2.Atoms[0], molecule2.Atoms[1], BondOrder.Single);
@@ -249,11 +250,10 @@ namespace NCDK.Reactions.Types
             // combinations just in case
             Assert.IsTrue((Matches(molecule2, product1) && Matches(molecule1, product2))
                     || (Matches(molecule1, product1) && Matches(molecule2, product2)));
-
         }
 
         /// <summary>
-        /// A unit test suite for JUnit with 2-methylnaphthalene.
+        /// A unit test with 2-methylnaphthalene.
         /// Reaction: C1=CC(=CC2=C1C=CC=C2)C
         /// -> C1=CC(=CC2=CC=CC=C12)C + {NO => C1=C2C(=CC(=C1)C)C=CC=C2}
         ///
@@ -264,11 +264,11 @@ namespace NCDK.Reactions.Types
         [TestMethod()]
         public void TestDoubleRingConjugated2()
         {
-            IReactionProcess type = new PiBondingMovementReaction();
+            var type = new PiBondingMovementReaction();
             // C1=CC(=CC2=C1C=CC=C2)C
 
             var setOfReactants = GetExampleReactants();
-            IAtomContainer molecule = setOfReactants[0];
+            var molecule = setOfReactants[0];
 
             /* manually putting the reaction center */
             molecule.Bonds[1].IsReactiveCenter = true;
@@ -289,11 +289,11 @@ namespace NCDK.Reactions.Types
             Assert.AreEqual(1, setOfReactions.Count);
             Assert.AreEqual(1, setOfReactions[0].Products.Count);
 
-            IAtomContainer product2 = setOfReactions[0].Products[0];
+            var product2 = setOfReactions[0].Products[0];
 
-            IAtomContainer molecule2 = GetExpectedProducts()[0];
+            var molecule2 = GetExpectedProducts()[0];
 
-            IQueryAtomContainer queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(product2);
+            var queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(product2);
             Assert.IsTrue(new UniversalIsomorphismTester().IsIsomorph(molecule2, queryAtom));
         }
 
@@ -306,7 +306,7 @@ namespace NCDK.Reactions.Types
             var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet();
             // C{0}1=C{1}C{2}(=C{3}C{4}2=C{5}1C{6}=C{7}C{8}=C{9}2)C{10}
             // C1=CC(=CC2=C1C=CC=C2)C
-            IAtomContainer molecule = builder.NewAtomContainer();
+            var molecule = builder.NewAtomContainer();
             molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
@@ -355,7 +355,7 @@ namespace NCDK.Reactions.Types
             var setOfProducts = builder.NewAtomContainerSet();
 
             //C=1C=CC2=CC(=CC=C2(C=1))C
-            IAtomContainer molecule = builder.NewAtomContainer();
+            var molecule = builder.NewAtomContainer();
             molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);

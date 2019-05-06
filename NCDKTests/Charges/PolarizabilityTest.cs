@@ -35,9 +35,9 @@ namespace NCDK.Charges
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("NCCN(C)(C)");
             double result = Polarizability.GetPolarizabilitiyFactorForAtom(mol, mol.Atoms[0]);
-            Assert.IsNotNull(result);
+            Assert.IsFalse(double.IsNaN(result));
             result = Polarizability.GetPolarizabilitiyFactorForAtom(mol, mol.Atoms[3]);
-            Assert.IsNotNull(result);
+            Assert.IsFalse(double.IsNaN(result));
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace NCDK.Charges
             var sp = CDK.SmilesParser;
             var mol = sp.ParseSmiles("NCCN(C)(C)");
             double result = Polarizability.CalculateBondPolarizability((IAtomContainer)mol, mol.Bonds[0]);
-            Assert.IsNotNull(result);
+            Assert.IsFalse(double.IsNaN(result));
         }
 
         /// <summary>

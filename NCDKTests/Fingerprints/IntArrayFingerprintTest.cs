@@ -22,6 +22,7 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NCDK.Common.Base;
 
 namespace NCDK.Fingerprints
 {
@@ -30,6 +31,23 @@ namespace NCDK.Fingerprints
     {
         public IntArrayFingerprintTest()
             : base(typeof(IntArrayFingerprint))
-        { }
+        {
+        }
+
+        [TestMethod()]
+        public void TestSetBit()
+        {
+            var fp = new IntArrayFingerprint();
+            fp[1] = true;
+            fp[55] = true;
+            fp[219] = true;
+            fp[3] = true;
+            fp[24] = true;
+            Assert.IsTrue(Compares.AreOrderLessDeepEqual(new int[] { 1, 3, 24, 55, 219 }, fp.GetSetBits()));
+            fp[24] = false;
+            Assert.IsTrue(Compares.AreOrderLessDeepEqual(new int[] { 1, 3, 55, 219 }, fp.GetSetBits()));
+            fp[26] = false;
+            Assert.IsTrue(Compares.AreOrderLessDeepEqual(new int[] { 1, 3, 26, 55, 219 }, fp.GetSetBits()));
+        }
     }
 }

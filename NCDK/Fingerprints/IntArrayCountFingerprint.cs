@@ -69,8 +69,8 @@ namespace NCDK.Fingerprints
         /// and if <paramref name="behaveAsBitFingerprint"/> make it only return 0 or 1
         /// as count thus behaving like a bit finger print.
         /// </summary>
-        /// <param name="rawFingerprint"></param>
-        /// <param name="behaveAsBitFingerprint"></param>
+        /// <param name="rawFingerprint">the raw fp</param>
+        /// <param name="behaveAsBitFingerprint">whether to behave as binary fp or not</param>
         public IntArrayCountFingerprint(IReadOnlyDictionary<string, int> rawFingerprint, bool behaveAsBitFingerprint)
             : this(rawFingerprint)
         {

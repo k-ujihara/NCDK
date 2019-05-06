@@ -124,6 +124,18 @@
     </bibtex:article>
   </bibtex:entry>
 
+  <bibtex:entry id="Clark2014">
+    <bibtex:article>
+      <bibtex:author>Clark, A. and Sarker, M. and Ekins, S.</bibtex:author>
+      <bibtex:title>New target prediction and visualization tools incorporating open source molecular fingerprints for TB Mobile 2.0</bibtex:title>
+      <bibtex:journal>J. Cheminformatics</bibtex:journal>
+      <bibtex:year>2014</bibtex:year>
+      <bibtex:volume>6</bibtex:volume>
+      <bibtex:pages>28</bibtex:pages>
+      <bibtex:crossref>DOI:10.1186/s13321-014-0038-2</bibtex:crossref>
+    </bibtex:article>
+  </bibtex:entry>
+
   <bibtex:entry id="Downs89">
     <bibtex:article>
       <bibtex:author>Downs, G and Gillet, V and Holliday, J, and Lynch, M</bibtex:author>

@@ -20,6 +20,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Common.Base;
 using NCDK.Dict;
+using NCDK.Graphs;
 using NCDK.Templates;
 using NCDK.Tools.Diff;
 using NCDK.Tools.Manipulator;
@@ -151,6 +152,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             var mol = TestMoleculeFactory.MakeBenzene();
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
+            Cycles.MarkRingAtomsAndBonds(mol);
             var mflags = FlagsToInt(mol);
             var aflags = GetAtomFlags(mol);
             var bflags = GetBondFlags(mol);

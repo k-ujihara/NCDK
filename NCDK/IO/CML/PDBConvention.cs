@@ -55,7 +55,6 @@ namespace NCDK.IO.CML
     /// </para>
     /// </remarks>
     // @cdk.module io
-    // @cdk.githash
     // @author Egon Willighagen <egonw@sci.kun.nl>
     public class PDBConvention : CMLCoreModule
     {
@@ -245,25 +244,23 @@ namespace NCDK.IO.CML
                         Debug.WriteLine("End Connection Table");
                         connectionTable = false;
                         // OLD +++++++++++++++++++++++++++++++++++++++++++++
-
                     }
                     break;
                 case "molecule":
                     StoreData();
                     if (xpath.Count == 1)
                     {
-                        //                cdo.EndObject("Molecule");
-                        if (CurrentMolecule is IAtomContainer)
-                        {
-                            Debug.WriteLine("Adding molecule to set");
-                            CurrentMoleculeSet.Add(CurrentMolecule);
-                            Debug.WriteLine($"#mols in set: {CurrentMoleculeSet.Count}");
-                        }
-                        else if (CurrentMolecule is ICrystal)
+                        if (CurrentMolecule is ICrystal)
                         {
                             Debug.WriteLine("Adding crystal to chemModel");
                             CurrentChemModel.Crystal = (ICrystal)CurrentMolecule;
                             CurrentChemSequence.Add(CurrentChemModel);
+                        }
+                        else
+                        { 
+                            Debug.WriteLine("Adding molecule to set");
+                            CurrentMoleculeSet.Add(CurrentMolecule);
+                            Debug.WriteLine($"#mols in set: {CurrentMoleculeSet.Count}");
                         }
                     }
                     break;

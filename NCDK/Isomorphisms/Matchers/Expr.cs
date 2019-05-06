@@ -491,6 +491,8 @@ namespace NCDK.Isomorphisms.Matchers
                 {
                     if (type == ExprType.And)
                         right.And(expr);
+                    else if (type != ExprType.Not)
+                        SetLogical(ExprType.And, expr, new Expr(this));
                     else
                         SetLogical(ExprType.And, expr, new Expr(this));
                 }
@@ -524,8 +526,10 @@ namespace NCDK.Isomorphisms.Matchers
                 {
                     if (type == ExprType.Or)
                         right.Or(expr);
-                    else
+                    else if (type != ExprType.Not)
                         SetLogical(ExprType.Or, expr, new Expr(this));
+                    else
+                        SetLogical(ExprType.Or, new Expr(this), expr);
                 }
                 else
                     SetLogical(ExprType.Or, new Expr(this), expr);

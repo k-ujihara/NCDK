@@ -52,7 +52,6 @@ namespace NCDK.Geometries.Surface
     // @author      Rajarshi Guha
     // @cdk.created 2005-05-08
     // @cdk.module  qsarmolecular
-    // @cdk.githash
     // @cdk.bug     1846421
     public class NumericalSurface
     {
@@ -72,6 +71,7 @@ namespace NCDK.Geometries.Surface
         public NumericalSurface(IAtomContainer atomContainer)
         {
             this.atoms = atomContainer.Atoms.ToArray();
+            Init();
         }
 
         /// <summary>
@@ -88,6 +88,7 @@ namespace NCDK.Geometries.Surface
             this.solventRadius = solventRadius;
             this.atoms = atomContainer.Atoms.ToArray();
             this.tesslevel = tesslevel;
+            Init();
         }
 
         /// <summary>
@@ -97,7 +98,17 @@ namespace NCDK.Geometries.Surface
         /// This method generates the points on the accessible surface area of each atom
         /// as well as calculating the surface area of each atom
         /// </remarks>
+        [Obsolete]
         public void CalculateSurface()
+        {
+            // NO-OP
+        }
+
+        /// <summary>
+        /// Initialize the surface, generating the points on the accessible surface
+        /// area of each atom as well as calculating the surface area of each atom.
+        /// </summary>
+        private void Init()
         {
             // invariants
             foreach (var atom in atoms)

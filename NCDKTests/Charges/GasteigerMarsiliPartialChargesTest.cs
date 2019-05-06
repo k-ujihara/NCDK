@@ -20,9 +20,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Aromaticities;
 using NCDK.IO;
-using NCDK.Tools;
 using NCDK.Tools.Manipulator;
-using System.IO;
 using System.Linq;
 
 namespace NCDK.Charges
@@ -44,9 +42,9 @@ namespace NCDK.Charges
         {
             double[] testResult = { 0.07915, -0.25264, 0.05783, 0.05783, 0.05783 };
 
-            GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();
+            var peoe = new GasteigerMarsiliPartialCharges();
 
-            IAtomContainer molecule = builder.NewAtomContainer();
+            var molecule = builder.NewAtomContainer();
             molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.Atoms.Add(builder.NewAtom("F"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
@@ -58,7 +56,6 @@ namespace NCDK.Charges
             peoe.CalculateCharges(molecule);
             for (int i = 0; i < molecule.Atoms.Count; i++)
             {
-                //Debug.WriteLine("Charge for atom:"+i+" S:"+mol.GetAtomAt(i).Symbol+" Charge:"+mol.GetAtomAt(i).Charge);
                 Assert.AreEqual(testResult[i], molecule.Atoms[i].Charge.Value, 0.01);
             }
         }
@@ -68,9 +65,9 @@ namespace NCDK.Charges
         {
             double[] testResult = { 0.07915, -0.25264, 0.05783, 0.05783, 0.05783 };
 
-            GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();
+            var peoe = new GasteigerMarsiliPartialCharges();
 
-            IAtomContainer molecule = builder.NewAtomContainer();
+            var molecule = builder.NewAtomContainer();
             molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.Atoms.Add(builder.NewAtom("F"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
@@ -90,9 +87,9 @@ namespace NCDK.Charges
         [TestMethod()]
         public void TestAssignGasteigerSigmaMarsiliFactors_IAtomContainer()
         {
-            GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();
+            var peoe = new GasteigerMarsiliPartialCharges();
 
-            IAtomContainer molecule = builder.NewAtomContainer();
+            var molecule = builder.NewAtomContainer();
             molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.Atoms[0].Charge = 0.0;
             molecule.Atoms.Add(builder.NewAtom("F"));
@@ -105,41 +102,41 @@ namespace NCDK.Charges
             foreach (var atom in molecule.Atoms)
                 atom.Charge = 0.0;
 
-            Assert.IsNotNull(peoe.AssignGasteigerSigmaMarsiliFactors(molecule).Length);
+            Assert.AreNotEqual(0, peoe.AssignGasteigerSigmaMarsiliFactors(molecule).Length);
         }
 
         [TestMethod()]
         public void TestGetMaxGasteigerIters()
         {
-            GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();
+            var peoe = new GasteigerMarsiliPartialCharges();
             Assert.AreEqual(20, peoe.MaxGasteigerIterations, 0.01);
         }
 
         [TestMethod()]
         public void TestGetMaxGasteigerDamp()
         {
-            GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();
+            var peoe = new GasteigerMarsiliPartialCharges();
             Assert.AreEqual(20, peoe.MaxGasteigerIterations, 0.01);
         }
 
         [TestMethod()]
         public void TestGetChiCatHydrogen()
         {
-            GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();
+            var peoe = new GasteigerMarsiliPartialCharges();
             Assert.AreEqual(20, peoe.MaxGasteigerIterations, 0.01);
         }
 
         [TestMethod()]
         public void TestGetStepSize()
         {
-            GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();
+            var peoe = new GasteigerMarsiliPartialCharges();
             Assert.AreEqual(5, peoe.StepSize);
         }
 
         [TestMethod()]
         public void TestSetMaxGasteigerIters_Double()
         {
-            GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();
+            var peoe = new GasteigerMarsiliPartialCharges();
             double MX_ITERATIONS = 10;
             peoe.MaxGasteigerIterations = MX_ITERATIONS;
             Assert.AreEqual(MX_ITERATIONS, peoe.MaxGasteigerIterations, 0.01);
@@ -148,7 +145,7 @@ namespace NCDK.Charges
         [TestMethod()]
         public void TestSetMaxGasteigerDamp_Double()
         {
-            GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();
+            var peoe = new GasteigerMarsiliPartialCharges();
             double MX_DAMP = 1;
             peoe.MaxGasteigerDamp = MX_DAMP;
             Assert.AreEqual(MX_DAMP, peoe.MaxGasteigerDamp, 0.01);
@@ -157,7 +154,7 @@ namespace NCDK.Charges
         [TestMethod()]
         public void TestSetChiCatHydrogen_Double()
         {
-            GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();
+            var peoe = new GasteigerMarsiliPartialCharges();
             double DEOC_HYDROGEN = 22;
             peoe.ChiCatHydrogen = DEOC_HYDROGEN;
             Assert.AreEqual(DEOC_HYDROGEN, peoe.ChiCatHydrogen, 0.01);
@@ -166,7 +163,7 @@ namespace NCDK.Charges
         [TestMethod()]
         public void TestSetStepSize()
         {
-            GasteigerMarsiliPartialCharges peoe = new GasteigerMarsiliPartialCharges();
+            var peoe = new GasteigerMarsiliPartialCharges();
             int StepSize = 22;
             peoe.StepSize = StepSize;
             Assert.AreEqual(StepSize, peoe.StepSize);

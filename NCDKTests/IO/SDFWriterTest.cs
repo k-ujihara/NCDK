@@ -331,5 +331,32 @@ namespace NCDK.IO
             Assert.IsFalse(output.Contains("> <two>"));
             Assert.IsFalse(output.Contains("> <one>"));
         }
+
+        [TestMethod()]
+        public void SetProgramName()
+        {
+            var sw = new StringWriter();
+            using (var sdfw = new SDFWriter(sw))
+            {
+                try
+                {
+                    sdfw.IOSettings[MDLV2000Writer.OptWriteDefaultProperties].Setting = "false";
+                    sdfw.IOSettings[MDLV2000Writer.OptProgramName].Setting = "Bioclipse";
+                    sdfw.Write(TestMoleculeFactory.Make123Triazole());
+                    sdfw.IOSettings[SDFWriter.OptAlwaysV3000].Setting = "true";
+                    sdfw.Write(TestMoleculeFactory.Make123Triazole());
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.StackTrace);
+                }
+            }
+
+            var sdf = sw.ToString();
+            foreach (var mol in sdf.Split("\\$\\$\\$\\$", 2))
+            {
+                Assert.IsTrue(mol.Contains("Bioclip"));
+            }
+        }
     }
 }

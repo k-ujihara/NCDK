@@ -46,9 +46,6 @@ namespace NCDK.Fingerprints
         /* set of encoded atom paths */
         private readonly List<string> paths;
 
-        /* list of encoded pseudo atoms */
-        private readonly List<string> pseudoAtoms;
-
         /* maximum number of shortest paths, when there is more then one path */
         private const int MAX_SHORTEST_PATHS = 5;
 
@@ -59,7 +56,6 @@ namespace NCDK.Fingerprints
         public ShortestPathWalker(IAtomContainer container)
         {
             this.container = container;
-            this.pseudoAtoms = new List<string>(5);
             this.paths = Traverse();
         }
 
@@ -138,29 +134,18 @@ namespace NCDK.Fingerprints
         private string Encode(int[] path)
         {
             var sb = new StringBuilder(path.Length * 3);
-
             for (int i = 0, n = path.Length - 1; i <= n; i++)
             {
                 var atom = container.Atoms[path[i]];
-
                 sb.Append(ToAtomPattern(atom));
-
-                if (atom is IPseudoAtom)
-                {
-                    pseudoAtoms.Add(atom.Symbol);
-                    // potential bug, although the atoms are canonical we cannot guarantee the order we will visit them.
-                    // sb.Append(PeriodicTable.GetElementCount() + pseudoAtoms.Count());
-                }
 
                 // if we are not at the last index, add the connecting bond
                 if (i < n)
                 {
-                    IBond bond = container.GetBond(container.Atoms[path[i]], container.Atoms[path[i + 1]]);
+                    var bond = container.GetBond(container.Atoms[path[i]], container.Atoms[path[i + 1]]);
                     sb.Append(GetBondSymbol(bond));
                 }
-
             }
-
             return sb.ToString();
         }
 

@@ -21,10 +21,8 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Config;
 using NCDK.Numerics;
 using System;
-using System.Linq;
 
 namespace NCDK.Geometries
 {
@@ -32,7 +30,6 @@ namespace NCDK.Geometries
     /// A set of static utility classes for geometric calculations on Atoms.
     /// </summary>
     // @author Peter Murray-Rust
-    // @cdk.githash
     // @cdk.created 2003-06-14
     public static class AtomTools
     {
@@ -46,14 +43,14 @@ namespace NCDK.Geometries
         /// if available. Angles are tetrahedral or trigonal
         /// </summary>
         /// <param name="atomContainer">the set of atoms involved</param>
-       // @cdk.keyword coordinate calculation
-       // @cdk.keyword 3D model
+        // @cdk.keyword coordinate calculation
+        // @cdk.keyword 3D model
         public static void Add3DCoordinates1(IAtomContainer atomContainer)
         {
             // atoms without coordinates
-            IAtomContainer noCoords = atomContainer.Builder.NewAtomContainer();
+            var noCoords = atomContainer.Builder.NewAtomContainer();
             // get vector of possible referenceAtoms?
-            IAtomContainer refAtoms = atomContainer.Builder.NewAtomContainer();
+            var refAtoms = atomContainer.Builder.NewAtomContainer();
             foreach (var atom in atomContainer.Atoms)
             {
                 // is this atom without 3D coords, and has only one ligand?
@@ -62,7 +59,7 @@ namespace NCDK.Geometries
                     var connectedAtoms = atomContainer.GetConnectedAtoms(atom).ToReadOnlyList();
                     if (connectedAtoms.Count == 1)
                     {
-                        IAtom refAtom = (IAtom)connectedAtoms[0];
+                        var refAtom = connectedAtoms[0];
                         if (refAtom.Point3D != null)
                         {
                             refAtoms.Atoms.Add(refAtom);
@@ -78,13 +75,13 @@ namespace NCDK.Geometries
             }
             // now add coordinates to ligands of reference atoms
             // use default length of 1.0, which can be adjusted later
-            double length = 1.0;
-            double angle = TypicalTetrahedralAngle;
+            double length = 1;
+            var angle = TypicalTetrahedralAngle;
             foreach (var refAtom in refAtoms.Atoms)
             {
                 var noCoordLigands = noCoords.GetConnectedAtoms(refAtom).ToReadOnlyList();
-                int nLigands = noCoordLigands.Count;
-                int nwanted = nLigands;
+                var nLigands = noCoordLigands.Count;
+                var nwanted = nLigands;
                 var elementType = refAtom.Symbol;
                 // try to deal with lone pairs on small hetero
                 switch (refAtom.AtomicNumber)
@@ -115,13 +112,13 @@ namespace NCDK.Geometries
         /// <returns>new coords for atom 2</returns>
         public static Vector3 RescaleBondLength(IAtom atom1, IAtom atom2, Vector3 point2)
         {
-            Vector3 point1 = atom1.Point3D.Value;
-            double d1 = atom1.CovalentRadius.Value;
-            double d2 = atom2.CovalentRadius.Value;
+            var point1 = atom1.Point3D.Value;
+            var d1 = atom1.CovalentRadius.Value;
+            var d2 = atom2.CovalentRadius.Value;
             // in case we have no covalent radii, set to 1.0
-            double distance = (d1 < 0.1 || d2 < 0.1) ? 1.0 : atom1.CovalentRadius.Value + atom2.CovalentRadius.Value;
-            Vector3 vect = Vector3.Normalize(point2 - point1) * distance;
-            Vector3 newPoint = point1 + vect;
+            var distance = (d1 < 0.1 || d2 < 0.1) ? 1.0 : atom1.CovalentRadius.Value + atom2.CovalentRadius.Value;
+            var vect = Vector3.Normalize(point2 - point1) * distance;
+            var newPoint = point1 + vect;
             return newPoint;
         }
 
@@ -166,7 +163,7 @@ namespace NCDK.Geometries
         /// <param name="angle">B-A-X angle (used in certain cases)</param>
         /// <param name="nwanted"></param>
         /// <returns>Point3D[] points calculated. If request could not be fulfilled (e.g. too many atoms, or strange geometry, returns empty array (zero length, not null)</returns>
-       // @cdk.keyword coordinate generation
+        // @cdk.keyword coordinate generation
         public static Vector3?[] Calculate3DCoordinatesForLigands(IAtomContainer atomContainer, IAtom refAtom, int nwanted, double length, double angle)
         {
             var newPoints = Array.Empty<Vector3?>();
@@ -177,7 +174,7 @@ namespace NCDK.Geometries
             {
                 return newPoints;
             }
-            IAtomContainer ligandsWithCoords = atomContainer.Builder.NewAtomContainer();
+            var ligandsWithCoords = atomContainer.Builder.NewAtomContainer();
             foreach (var ligand in connectedAtoms)
             {
                 if (ligand.Point3D != null)
@@ -198,7 +195,7 @@ namespace NCDK.Geometries
             else if (nwithCoords == 1)
             {
                 // ligand on A
-                IAtom bAtom = ligandsWithCoords.Atoms[0];
+                var bAtom = ligandsWithCoords.Atoms[0];
                 connectedAtoms = ligandsWithCoords.GetConnectedAtoms(bAtom);
                 // does B have a ligand (other than A)
                 IAtom jAtom = null;
@@ -223,8 +220,10 @@ namespace NCDK.Geometries
                 var bPoint = ligandsWithCoords.Atoms[0].Point3D;
                 var cPoint = ligandsWithCoords.Atoms[1].Point3D;
                 var dPoint = ligandsWithCoords.Atoms[2].Point3D;
-                newPoints = new Vector3?[1];
-                newPoints[0] = Calculate3DCoordinates3(aPoint.Value, bPoint.Value, cPoint.Value, dPoint.Value, length);
+                newPoints = new Vector3?[]
+                {
+                    Calculate3DCoordinates3(aPoint.Value, bPoint.Value, cPoint.Value, dPoint.Value, length),
+                };
             }
             return newPoints;
         }
@@ -246,30 +245,43 @@ namespace NCDK.Geometries
         /// <returns>Vector3[] nwanted points (or zero if failed)</returns>
         public static Vector3?[] Calculate3DCoordinates0(Vector3 aPoint, int nwanted, double length)
         {
-            var points = Array.Empty<Vector3?>();
-            if (nwanted == 1)
+            Vector3?[] points;
+            switch (nwanted)
             {
-                points = new Vector3?[1];
-                points[0] = aPoint + new Vector3(length, 0.0, 0.0);
-            }
-            else if (nwanted == 2)
-            {
-                points[0] = aPoint + new Vector3(length, 0.0, 0.0);
-                points[1] = aPoint + new Vector3(-length, 0.0, 0.0);
-            }
-            else if (nwanted == 3)
-            {
-                points[0] = aPoint + new Vector3(length, 0.0, 0.0);
-                points[1] = aPoint + new Vector3(-length * 0.5, -length * 0.5 * Math.Sqrt(3.0), 0);
-                points[2] = aPoint + new Vector3(-length * 0.5, length * 0.5 * Math.Sqrt(3.0), 0);
-            }
-            else if (nwanted == 4)
-            {
-                double dx = length / Math.Sqrt(3.0);
-                points[0] = aPoint + new Vector3(dx, dx, dx);
-                points[1] = aPoint + new Vector3(dx, -dx, -dx);
-                points[2] = aPoint + new Vector3(-dx, -dx, dx);
-                points[3] = aPoint + new Vector3(-dx, dx, -dx);
+                case 1:
+                    points = new Vector3?[]
+                    {
+                        aPoint + new Vector3(length, 0.0, 0.0),
+                    };
+                    break;
+                case 2:
+                    points = new Vector3?[]
+                    {
+                        aPoint + new Vector3(length, 0.0, 0.0),
+                        aPoint + new Vector3(-length, 0.0, 0.0),
+                    };
+                    break;
+                case 3:
+                    points = new Vector3?[]
+                    {
+                        aPoint + new Vector3(length, 0.0, 0.0),
+                        aPoint + new Vector3(-length * 0.5, -length * 0.5 * Math.Sqrt(3.0), 0),
+                        aPoint + new Vector3(-length * 0.5, length * 0.5 * Math.Sqrt(3.0), 0),
+                    };
+                    break;
+                case 4:
+                    double dx = length / Math.Sqrt(3.0);
+                    points = new Vector3?[]
+                    {
+                        aPoint + new Vector3(dx, dx, dx),
+                        aPoint + new Vector3(dx, -dx, -dx),
+                        aPoint + new Vector3(-dx, -dx, dx),
+                        aPoint + new Vector3(-dx, dx, -dx),
+                    };
+                    break;
+                default:
+                    points = Array.Empty<Vector3?>();
+                    break;
             }
             return points;
         }
@@ -296,35 +308,35 @@ namespace NCDK.Geometries
         {
             var points = new Vector3?[nwanted];
             // BA vector
-            Vector3 ba = Vector3.Normalize(aPoint.Value - bPoint.Value);
+            var ba = Vector3.Normalize(aPoint.Value - bPoint.Value);
             // if no cPoint, generate a random reference
             if (cPoint == null)
             {
-                Vector3 cVector = GetNonColinearVector(ba);
+                var cVector = GetNonColinearVector(ba);
                 cPoint = cVector;
             }
             // CB vector
-            Vector3 cb = Vector3.Normalize(bPoint.Value - cPoint.Value);
+            var cb = Vector3.Normalize(bPoint.Value - cPoint.Value);
             // if A, B, C colinear, replace C by random point
-            double cbdotba = Vector3.Dot(cb, ba);
+            var cbdotba = Vector3.Dot(cb, ba);
             if (cbdotba > 0.999999)
             {
-                Vector3 cVector = GetNonColinearVector(ba);
+                var cVector = GetNonColinearVector(ba);
                 cPoint = cVector;
                 cb = bPoint.Value - cPoint.Value;
             }
             // cbxba = c x b
-            Vector3 cbxba = Vector3.Normalize(Vector3.Cross(cb, ba));
+            var cbxba = Vector3.Normalize(Vector3.Cross(cb, ba));
             // create three perp axes ba, cbxba, and ax
-            Vector3 ax = Vector3.Normalize(Vector3.Cross(cbxba, ba));
-            double drot = Math.PI * 2.0 / (double)nwanted;
+            var ax = Vector3.Normalize(Vector3.Cross(cbxba, ba));
+            var drot = Math.PI * 2.0 / nwanted;
             for (int i = 0; i < nwanted; i++)
             {
-                double rot = (double)i * drot;
+                var rot = i * drot;
                 points[i] = aPoint.Value;
-                Vector3 vx = ba * (-Math.Cos(angle) * length); ;
-                Vector3 vy = ax * (Math.Cos(rot) * length);
-                Vector3 vz = cbxba * (Math.Sin(rot) * length);
+                var vx = ba * (-Math.Cos(angle) * length); ;
+                var vy = ax * (Math.Cos(rot) * length);
+                var vz = cbxba * (Math.Sin(rot) * length);
                 points[i] += vx;
                 points[i] += vy;
                 points[i] += vz;
@@ -348,15 +360,14 @@ namespace NCDK.Geometries
         /// <param name="length">A-X length</param>
         /// <param name="angle">B-A-X angle</param>
         /// <returns>Vector3[] nwanted points (or zero if failed)</returns>
-        public static Vector3?[] Calculate3DCoordinates2(Vector3? aPoint, Vector3? bPoint, Vector3? cPoint, int nwanted,
-                double length, double angle)
+        public static Vector3?[] Calculate3DCoordinates2(Vector3? aPoint, Vector3? bPoint, Vector3? cPoint, int nwanted, double length, double angle)
         {
             var newPoints = Array.Empty<Vector3?>();
-            double ang2 = angle / 2.0;
+            var ang2 = angle / 2.0;
 
-            Vector3 ba = aPoint.Value - bPoint.Value;
-            Vector3 ca = aPoint.Value - cPoint.Value;
-            Vector3 baxca = Vector3.Cross(ba, ca);
+            var ba = aPoint.Value - bPoint.Value;
+            var ca = aPoint.Value - cPoint.Value;
+            var baxca = Vector3.Cross(ba, ca);
             if (baxca.Length() < 0.00000001)
             {
                 ; // linear
@@ -364,13 +375,13 @@ namespace NCDK.Geometries
             else if (nwanted == 1)
             {
                 newPoints = new Vector3?[1];
-                Vector3 ax = Vector3.Normalize(ba - ca) * length;
+                var ax = Vector3.Normalize(ba - ca) * length;
                 newPoints[0] = aPoint.Value + ax;
             }
             else if (nwanted == 2)
             {
                 newPoints = new Vector3?[2];
-                Vector3 ax = Vector3.Normalize(ba + ca) * (Math.Cos(ang2) * length);
+                var ax = Vector3.Normalize(ba + ca) * (Math.Cos(ang2) * length);
                 baxca = Vector3.Normalize(baxca) * (Math.Sin(ang2) * length);
                 newPoints[0] = aPoint.Value + ax + baxca;
                 newPoints[1] = aPoint.Value + ax - baxca;
@@ -394,23 +405,23 @@ namespace NCDK.Geometries
         /// <returns>Vector3 nwanted points (or null if failed (coplanar))</returns>
         public static Vector3? Calculate3DCoordinates3(Vector3 aPoint, Vector3 bPoint, Vector3 cPoint, Vector3 dPoint, double length)
         {
-            Vector3 v1 = aPoint - bPoint;
-            Vector3 v2 = aPoint - cPoint;
-            Vector3 v3 = aPoint - dPoint;
-            Vector3 v = bPoint + cPoint + dPoint;
+            var v1 = aPoint - bPoint;
+            var v2 = aPoint - cPoint;
+            var v3 = aPoint - dPoint;
+            var v = bPoint + cPoint + dPoint;
             if (v.Length() < 0.00001)
             {
                 return null;
             }
             v = Vector3.Normalize(v) * length;
-            Vector3 point = aPoint + v;
+            var point = aPoint + v;
             return point;
         }
 
         /// gets a point not on vector a...b; this can be used to define a plan or cross products
         private static Vector3 GetNonColinearVector(Vector3 ab)
         {
-            Vector3 cr = Vector3.Cross(ab, Vector3.UnitX);
+            var cr = Vector3.Cross(ab, Vector3.UnitX);
             if (cr.Length() > 0.00001)
             {
                 return Vector3.UnitX;

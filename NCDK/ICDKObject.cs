@@ -18,6 +18,7 @@
  */
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace NCDK
@@ -86,6 +87,21 @@ namespace NCDK
             bool ret = Map.TryGetValue(key, out IChemObject v);
             value = ret ? (T)v : default(T);
             return ret;
+        }
+
+        public bool ContainsKey<T>(T key) where T : IChemObject
+        {
+            return Map.ContainsKey(key);
+        }
+
+        public bool ContainsValue<T>(T key) where T : IChemObject
+        {
+            return Map.ContainsValue(key);
+        }
+
+        public bool Any()
+        {
+            return Map.Count > 0;
         }
     }
 }

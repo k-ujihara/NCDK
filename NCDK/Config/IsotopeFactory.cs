@@ -69,20 +69,26 @@ namespace NCDK.Config
         }
 
         /// <summary>
+        /// Gets an array of all isotopes known to the IsotopeFactory for the given
+        /// element symbol.
+        /// </summary>
+        /// <param name="elem">atomic number</param>
+        /// <returns>An array of isotopes that matches the given element symbol</returns>
+        public virtual IEnumerable<IIsotope> GetIsotopes(int elem)
+        {
+            if (isotopes[elem] == null)
+                return Array.Empty<IIsotope>();
+            return isotopes[elem];
+        }
+
+        /// <summary>
         /// Gets all isotopes known to the IsotopeFactory for the given element symbol.
         /// </summary>
         /// <param name="symbol">An element symbol to search for</param>
         /// <returns><see cref="IIsotope"/>s that matches the given element symbol</returns>
         public virtual IEnumerable<IIsotope> GetIsotopes(string symbol)
         {
-            int elem = ChemicalElement.OfSymbol(symbol).AtomicNumber;
-            if (isotopes[elem] == null)
-                yield break;
-            foreach (IIsotope isotope in isotopes[elem])
-            {
-                yield return Clone(isotope);
-            }
-            yield break;
+            return GetIsotopes(ChemicalElement.OfSymbol(symbol).AtomicNumber);
         }
 
         /// <summary>
@@ -214,6 +220,36 @@ namespace NCDK.Config
             return Clone(major);
         }
 
+        /// <summary>
+        /// Get the mass of the most abundant (major) isotope, if there is no
+        /// major isotopes 0 is returned.
+        /// </summary>
+        /// <param name="elem">the atomic number</param>
+        /// <returns>the major isotope mass</returns>
+        public double GetMajorIsotopeMass(int elem)
+        {
+            if (this.majorIsotope[elem] != null)
+                return this.majorIsotope[elem].ExactMass.Value;
+            var major = GetMajorIsotope(elem);
+            return major != null ? major.ExactMass.Value : 0;
+        }
+
+         /// <summary>
+         /// Get the exact mass of a specified isotope for an atom.
+         /// </summary>
+         /// <param name="atomicNumber">atomic number</param>
+         /// <param name="massNumber">the mass number</param>
+         /// <returns>the exact mass</returns>
+        public double GetExactMass(int atomicNumber, int massNumber)
+        {
+            foreach (var isotope in this.isotopes[atomicNumber])
+            {
+                if (isotope.MassNumber.Equals(massNumber))
+                    return isotope.ExactMass.Value;
+            }
+            return 0;
+        }
+
         private static IIsotope Clone(IIsotope isotope)
         {
             if (isotope == null)
@@ -320,25 +356,33 @@ namespace NCDK.Config
         /// <summary>
         /// Gets the natural mass of this element, defined as average of masses of isotopes, weighted by abundance.
         /// </summary>
-        /// <param name="element">the element in question</param>
+        /// <param name="atomicNum">the element in question</param>
         /// <returns>The natural mass value</returns>
-        public virtual double GetNaturalMass(ChemicalElement element)
+        public double GetNaturalMass(int atomicNum)
         {
-            var isotopes = GetIsotopes(element.Symbol);
+            var isotopes = this.isotopes[atomicNum];
+            if (isotopes == null)
+                return 0;
             double summedAbundances = 0;
             double summedWeightedAbundances = 0;
             double getNaturalMass = 0;
             foreach (var isotope in isotopes)
             {
-                if (isotope.Abundance.HasValue
-                 && isotope.ExactMass.HasValue)
-                {
-                    summedAbundances += isotope.Abundance.Value;
-                    summedWeightedAbundances += isotope.Abundance.Value * isotope.ExactMass.Value;
-                    getNaturalMass = summedWeightedAbundances / summedAbundances;
-                }
+                summedAbundances += isotope.Abundance.Value;
+                summedWeightedAbundances += isotope.Abundance.Value * isotope.ExactMass.Value;
+                getNaturalMass = summedWeightedAbundances / summedAbundances;
             }
             return getNaturalMass;
+        }
+
+        /// <summary>
+        /// Gets the natural mass of this element, defined as average of masses of isotopes, weighted by abundance.
+        /// </summary>
+        /// <param name="element">the element in question</param>
+        /// <returns>The natural mass value</returns>
+        public virtual double GetNaturalMass(ChemicalElement element)
+        {
+            return GetNaturalMass(element.AtomicNumber);
         }
     }
 }

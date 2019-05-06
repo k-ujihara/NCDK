@@ -87,7 +87,16 @@ namespace NCDK.Fingerprints
         {
             var printer = new AtomPairs2DFingerprinter();
         }
+
+        [TestMethod()]
+        public void TestNullPointerExceptionInGetBitFingerprint()
+        {
+            var printer = new AtomPairs2DFingerprinter();
+            IAtomContainer chlorobenzene;
+            chlorobenzene = parser.ParseSmiles("Clc1ccccc1");
+            var bsfp1 = (BitSetFingerprint)printer.GetBitFingerprint(chlorobenzene);
+            chlorobenzene = parser.ParseSmiles("c1ccccc1Cl");
+            var bsfp2 = (BitSetFingerprint)printer.GetBitFingerprint(chlorobenzene);
+        }
     }
 }
-
-

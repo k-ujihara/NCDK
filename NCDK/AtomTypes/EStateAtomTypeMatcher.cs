@@ -60,8 +60,8 @@ namespace NCDK.AtomTypes
             try
             {
                 string fragment = "";
-                int NumHAtoms = 0;
-                int NumSingleBonds2 = 0;
+                int NumHAtoms = atom.ImplicitHydrogenCount ?? 0;
+                int NumSingleBonds2 = NumHAtoms;
                 int NumDoubleBonds2 = 0;
                 int NumTripleBonds2 = 0;
                 int NumAromaticBonds2 = 0;

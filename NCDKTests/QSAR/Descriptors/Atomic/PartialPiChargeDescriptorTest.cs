@@ -54,15 +54,6 @@ namespace NCDK.QSAR.Descriptors.Atomic
             for (int i = 0; i < mol.Atoms.Count; i++)
             {
                 var result = descriptor.Calculate(mol.Atoms[i]).Value;
-                Assert.IsNotNull(result);
-
-                if (testResult[i] == 0.0)
-                    Assert.IsTrue(result == 0.0);
-                else
-                {
-                    Assert.IsTrue(result != 0.0);
-                    Assert.AreEqual(GetSign(testResult[i]), GetSign(result), 0.00001);
-                }
                 Assert.AreEqual(testResult[i], result, 0.0001);
             }
         }
@@ -94,7 +85,6 @@ namespace NCDK.QSAR.Descriptors.Atomic
             for (int i = 0; i < mol.Atoms.Count; i++)
             {
                 var result = descriptor.Calculate(mol.Atoms[i]).Value;
-                Assert.IsNotNull(result);
                 Assert.AreEqual(testResult[i], result, 0.05);
             }
         }
@@ -125,16 +115,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             for (int i = 0; i < mol.Atoms.Count; i++)
             {
                 var result = descriptor.Calculate(mol.Atoms[i]).Value;
-                Assert.IsNotNull(result);
-
-                if (testResult[i] == 0.0)
-                    Assert.IsTrue(result == 0.0);
-                else
-                {
-                    Assert.IsTrue(result != 0.0);
-                    Assert.AreEqual(GetSign(testResult[i]), GetSign(result), 0.00001);
-                }
-                Assert.AreEqual(testResult[i], result, 0.04);
+                Assert.AreEqual(testResult[i], result, 0.05);
             }
         }
 
@@ -173,16 +154,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             for (int i = 0; i < mol.Atoms.Count; i++)
             {
                 var result = descriptor.Calculate(mol.Atoms[i]).Value;
-                Assert.IsNotNull(result);
-
-                if (testResult[i] == 0.0)
-                    Assert.IsTrue(result == 0.0);
-                else
-                {
-                    Assert.IsTrue(result != 0.0);
-                    Assert.AreEqual(GetSign(testResult[i]), GetSign(result), 0.00001);
-                }
-                Assert.AreEqual(testResult[i], result, 0.01);
+                Assert.AreEqual(testResult[i], result, 0.05);
             }
         }
 
@@ -215,7 +187,6 @@ namespace NCDK.QSAR.Descriptors.Atomic
             for (int i = 0; i < 4/* mol.Atoms.Count */; i++)
             {
                 var result = descriptor.Calculate(mol.Atoms[i]).Value;
-                Assert.IsNotNull(result);
                 Assert.AreEqual(testResult[i], result, 0.05);
             }
         }
@@ -253,7 +224,6 @@ namespace NCDK.QSAR.Descriptors.Atomic
             for (int i = 0; i < mol.Atoms.Count; i++)
             {
                 var result = descriptor.Calculate(mol.Atoms[i]).Value;
-                Assert.IsNotNull(result);
                 Assert.AreEqual(testResult[i], result, 0.3);
             }
         }
@@ -289,7 +259,6 @@ namespace NCDK.QSAR.Descriptors.Atomic
             for (int i = 0; i < 6; i++)
             {
                 var result = descriptor.Calculate(mol.Atoms[i]).Value;
-                Assert.IsNotNull(result);
                 Assert.AreEqual(testResult[i], result, 0.2);
             }
         }
@@ -328,8 +297,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             for (int i = 0; i < mol.Atoms.Count; i++)
             {
                 var result = descriptor.Calculate(mol.Atoms[i]).Value;
-                Assert.IsNotNull(result);
-                Assert.AreEqual(testResult[i], result, 0.08);
+                Assert.AreEqual(testResult[i], result, 0.05);
             }
         }
 
@@ -351,8 +319,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             for (int i = 0; i < mol.Atoms.Count; i++)
             {
                 var result = descriptor.Calculate(mol.Atoms[i]).Value;
-                Assert.IsNotNull(result);
-                Assert.AreEqual(testResult[i], result, 0.1);
+                Assert.AreEqual(testResult[i], result, 0.5);
             }
         }
 
@@ -398,16 +365,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             for (int i = 0; i < mol.Atoms.Count; i++)
             {
                 var result = descriptor.Calculate(mol.Atoms[i]).Value;
-                Assert.IsNotNull(result);
-
-                if (testResult[i] == 0.0)
-                    Assert.IsTrue(result == 0.0);
-                else
-                {
-                    Assert.IsTrue(result != 0.0);
-                    Assert.AreEqual(GetSign(testResult[i]), GetSign(result), 0.00001);
-                }
-                Assert.AreEqual(testResult[i], result, 0.1);
+                Assert.AreEqual(testResult[i], result, 0.05);
             }
         }
 
@@ -460,7 +418,6 @@ namespace NCDK.QSAR.Descriptors.Atomic
             for (int i = 0; i < mol.Atoms.Count; i++)
             {
                 var result = descriptor.Calculate(mol.Atoms[i]).Value;
-                Assert.IsNotNull(result);
                 Assert.AreEqual(testResult[i], result, 0.15);
             }
         }
@@ -485,8 +442,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             for (int i = 0; i < mol.Atoms.Count; i++)
             {
                 var result = descriptor.Calculate(mol.Atoms[i]).Value;
-                Assert.IsNotNull(result);
-                Assert.AreEqual(testResult[i], result, 0.03);
+                Assert.AreEqual(testResult[i], result, 0.05);
             }
         }
 
@@ -516,8 +472,8 @@ namespace NCDK.QSAR.Descriptors.Atomic
             {
                 var result1 = descriptor1.Calculate(mol1.Atoms[i]).Value;
                 var result2 = descriptor2.Calculate(mol2.Atoms[i]).Value;
-                Assert.IsNotNull(result1);
-                Assert.IsNotNull(result2);
+                Assert.IsFalse(double.IsNaN(result1));
+                Assert.IsFalse(double.IsNaN(result2));
                 Assert.AreEqual(result1, result2, 0.0001);
             }
         }
@@ -541,7 +497,6 @@ namespace NCDK.QSAR.Descriptors.Atomic
             for (int i = 0; i < mol.Atoms.Count; i++)
             {
                 var result = descriptor.Calculate(mol.Atoms[i]).Value;
-                Assert.IsNotNull(result);
                 Assert.AreEqual(testResult[i], result, 0.02);
             }
         }
@@ -565,7 +520,6 @@ namespace NCDK.QSAR.Descriptors.Atomic
             for (int i = 0; i < mol.Atoms.Count; i++)
             {
                 var result = descriptor.Calculate(mol.Atoms[i]).Value;
-                Assert.IsNotNull(result);
                 Assert.AreEqual(testResult[i], result, 0.29);
             }
         }
@@ -589,7 +543,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             for (int i = 0; i < mol.Atoms.Count; i++)
             {
                 var result = descriptor.Calculate(mol.Atoms[i]).Value;
-                Assert.IsNotNull(result);
+                Assert.IsFalse(double.IsNaN(result));
             }
         }
     }

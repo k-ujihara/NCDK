@@ -17,7 +17,6 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Silent;
 using System;
 using System.Collections.Generic;
 
@@ -38,7 +37,6 @@ namespace NCDK.Formula
     // @author      miguelrojasch
     // @cdk.created 2007-11-20
     // @cdk.keyword molecular formula
-    // @cdk.githash
     public partial class MolecularFormula : IMolecularFormula
     {
         private Dictionary<IIsotope, int?> isotopes;
@@ -104,6 +102,8 @@ namespace NCDK.Formula
         /// <param name="count">The number of occurrences to add</param>
         public IMolecularFormula Add(IIsotope isotope, int count)
         {
+            if (count == 0)
+                return this;
             foreach (var thisIsotope in isotopes)
             {
                 if (IsTheSame(thisIsotope.Key, isotope))
@@ -213,6 +213,6 @@ namespace NCDK.Formula
             return exactMass1.Value == exactMass2;
         }
 
-        public virtual IChemObjectBuilder Builder => ChemObjectBuilder.Instance;
+        public virtual IChemObjectBuilder Builder => CDK.Builder;
     }
 }

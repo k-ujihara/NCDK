@@ -39,7 +39,6 @@ namespace NCDK.Tools.Manipulator
     // @cdk.module  formula
     // @author      miguelrojasch
     // @cdk.created 2007-11-20
-    // @cdk.githash
     public static class MolecularFormulaManipulator
     {
         /// <summary>
@@ -171,7 +170,7 @@ namespace NCDK.Tools.Manipulator
         }
 
         /// <summary>
-        /// Returns the string representation of the molecule formula.
+        /// Returns the string representation of the molecular formula.
         /// </summary>
         /// <param name="formula">The IMolecularFormula Object</param>
         /// <param name="orderElements">The order of Elements</param>
@@ -187,7 +186,7 @@ namespace NCDK.Tools.Manipulator
         }
 
         /// <summary>
-        /// Returns the string representation of the molecule formula.
+        /// Returns the string representation of the molecular formula.
         /// Based on Hill System. The Hill system is a system of writing
         /// chemical formulas such that the number of carbon atoms in a
         /// molecule is indicated first, the number of hydrogen atoms next,
@@ -217,7 +216,7 @@ namespace NCDK.Tools.Manipulator
         }
 
         /// <summary>
-        /// Returns the string representation of the molecule formula.
+        /// Returns the string representation of the molecular formula.
         /// </summary>
         /// <param name="formula">The IMolecularFormula Object</param>
         /// <param name="orderElements">The order of Elements</param>
@@ -295,7 +294,7 @@ namespace NCDK.Tools.Manipulator
         }
 
         /// <summary>
-        /// Returns the string representation of the molecule formula.
+        /// Returns the string representation of the molecular formula.
         /// Based on Hill System. The Hill system is a system of writing
         /// chemical formulas such that the number of carbon atoms in a
         /// molecule is indicated first, the number of hydrogen atoms next,
@@ -316,7 +315,7 @@ namespace NCDK.Tools.Manipulator
         }
 
         /// <summary>
-        /// Returns the string representation of the molecule formula.
+        /// Returns the string representation of the molecular formula.
         /// Based on Hill System. The Hill system is a system of writing
         /// chemical formulas such that the number of carbon atoms in a
         /// molecule is indicated first, the number of hydrogen atoms next,
@@ -411,7 +410,7 @@ namespace NCDK.Tools.Manipulator
         }
 
         /// <summary>
-        /// Returns the string representation of the molecule formula based on Hill
+        /// Returns the string representation of the molecular formula based on Hill
         /// System with numbers wrapped in &lt;sub&gt;&lt;/sub&gt; tags. Useful for
         /// displaying formulae in Swing components or on the web.
         /// </summary>
@@ -424,7 +423,7 @@ namespace NCDK.Tools.Manipulator
         }
 
         /// <summary>
-        /// Returns the string representation of the molecule formula based on Hill
+        /// Returns the string representation of the molecular formula based on Hill
         /// System with numbers wrapped in &lt;sub&gt;&lt;/sub&gt; tags and the
         /// isotope of each Element in &lt;sup&gt;&lt;/sup&gt; tags and the total
         /// charge of IMolecularFormula in &lt;sup&gt;&lt;/sup&gt; tags. Useful for
@@ -445,7 +444,7 @@ namespace NCDK.Tools.Manipulator
         }
 
         /// <summary>
-        /// Returns the string representation of the molecule formula with numbers
+        /// Returns the string representation of the molecular formula with numbers
         /// wrapped in &lt;sub&gt;&lt;/sub&gt; tags and the isotope of each Element
         /// in &lt;sup&gt;&lt;/sup&gt; tags and the total showCharge of IMolecularFormula
         /// in &lt;sup&gt;&lt;/sup&gt; tags. Useful for displaying formulae in Swing
@@ -524,9 +523,9 @@ namespace NCDK.Tools.Manipulator
         /// <param name="builder">a IChemObjectBuilder which is used to construct atoms</param>
         /// <returns>The filled IMolecularFormula</returns>
         /// <seealso cref="GetMolecularFormula(string, IMolecularFormula)"/>
-        public static IMolecularFormula GetMolecularFormula(string stringMF, IChemObjectBuilder builder)
+        public static IMolecularFormula GetMolecularFormula(string stringMF, IChemObjectBuilder builder = null)
         {
-            return GetMolecularFormula(stringMF, false, builder);
+            return GetMolecularFormula(stringMF, false, builder ?? CDK.Builder);
         }
 
         /// <summary>
@@ -539,14 +538,14 @@ namespace NCDK.Tools.Manipulator
         /// <param name="builder">a IChemObjectBuilder which is used to construct atoms</param>
         /// <returns>The filled IMolecularFormula</returns>
         /// <seealso cref="GetMolecularFormula(string, IMolecularFormula)"/>
-        public static IMolecularFormula GetMajorIsotopeMolecularFormula(string stringMF, IChemObjectBuilder builder)
+        public static IMolecularFormula GetMajorIsotopeMolecularFormula(string stringMF, IChemObjectBuilder builder = null)
         {
-            return GetMolecularFormula(stringMF, true, builder);
+            return GetMolecularFormula(stringMF, true, builder ?? CDK.Builder);
         }
 
-        private static IMolecularFormula GetMolecularFormula(string stringMF, bool assumeMajorIsotope, IChemObjectBuilder builder)
+        private static IMolecularFormula GetMolecularFormula(string stringMF, bool assumeMajorIsotope, IChemObjectBuilder builder = null)
         {
-            var formula = builder.NewMolecularFormula();
+            var formula = (builder ?? CDK.Builder).NewMolecularFormula();
             return GetMolecularFormula(stringMF, formula, assumeMajorIsotope);
         }
 
@@ -676,7 +675,7 @@ namespace NCDK.Tools.Manipulator
                         break;
                 }
             }
-            Exit_For:
+        Exit_For:
             switch (multiple)
             {
                 case "":
@@ -688,47 +687,10 @@ namespace NCDK.Tools.Manipulator
             return int.Parse(multiple, NumberFormatInfo.InvariantInfo);
         }
 
-        /// <summary>
-        /// Get the summed exact mass of all isotopes from an MolecularFormula. It
-        /// assumes isotope masses to be preset, and returns 0.0 if not.
-        /// </summary>
-        /// <param name="formula">The IMolecularFormula to calculate</param>
-        /// <returns>The summed exact mass of all atoms in this MolecularFormula</returns>
+        [Obsolete("Call GetMass(IMolecularFormula, MolecularWeightTypes.MonoIsotopic) and adjusts for charge with CorrectMass(double, Integer). These functions should be used directly.")]
         public static double GetTotalExactMass(IMolecularFormula formula)
         {
-            double mass = 0.0;
-            foreach (var isotope in formula.Isotopes)
-            {
-                try
-                {
-                    var massNum = isotope.MassNumber;
-                    var exactMass = isotope.ExactMass;
-                    if (massNum == null || massNum == 0)
-                    {
-                        var majorIsotope = CDK.IsotopeFactory.GetMajorIsotope(isotope.Symbol);
-                        if (majorIsotope != null)
-                            exactMass = majorIsotope.ExactMass;
-                    }
-                    else
-                    {
-                        if (exactMass == null)
-                        {
-                            var temp = CDK.IsotopeFactory.GetIsotope(isotope.Symbol, massNum.Value);
-                            if (temp != null)
-                                exactMass = temp.ExactMass;
-                        }
-                    }
-                    if (exactMass != null)
-                        mass += exactMass.Value * formula.GetCount(isotope);
-                }
-                catch (IOException)
-                {
-                    throw new ApplicationException("Could not instantiate the IsotopeFactory.");
-                }
-            }
-            if (formula.Charge != null)
-                mass = CorrectMass(mass, formula.Charge.Value);
-            return mass;
+            return CorrectMass(GetMass(formula, MolecularWeightTypes.MonoIsotopic), formula.Charge);
         }
 
         /// <summary>
@@ -738,13 +700,15 @@ namespace NCDK.Tools.Manipulator
         /// <param name="mass">The mass to correct</param>
         /// <param name="charge">The charge</param>
         /// <returns>The mass with the correction</returns>
-        private static double CorrectMass(double mass, int charge)
+        private static double CorrectMass(double mass, int? charge)
         {
+            if (charge == null)
+                return mass;
             const double massE = 0.00054857990927;
             if (charge > 0)
-                mass -= massE * charge;
+                mass -= massE * charge.Value;
             else if (charge < 0)
-                mass += massE * Math.Abs(charge);
+                mass += massE * Math.Abs(charge.Value);
             return mass;
         }
 
@@ -775,41 +739,136 @@ namespace NCDK.Tools.Manipulator
             return mass;
         }
 
-        /// <summary>
-        /// Get the summed natural mass of all elements from an MolecularFormula.
-        /// </summary>
-        /// <param name="formula">The IMolecularFormula to calculate</param>
-        /// <returns>The summed exact mass of all atoms in this MolecularFormula</returns>
-        public static double GetNaturalExactMass(IMolecularFormula formula)
+        private static double GetExactMass(IsotopeFactory isofact, IIsotope atom)
         {
-            double mass = 0.0;
-            var factory = CDK.IsotopeFactory;
-            foreach (var isotope in formula.Isotopes)
+            if (atom.ExactMass != null)
+                return atom.ExactMass.Value;
+            else if (atom.MassNumber != null)
+                return isofact.GetExactMass(atom.AtomicNumber,
+                                            atom.MassNumber.Value);
+            else
+                return isofact.GetMajorIsotopeMass(atom.AtomicNumber);
+        }
+
+        private static double GetMassOrAvg(IsotopeFactory isofact, IIsotope atom)
+        {
+            if (atom.MassNumber == null
+             || atom.MassNumber == 0)
+                return isofact.GetNaturalMass(atom.AtomicNumber);
+            else
+                return GetExactMass(isofact, atom);
+        }
+
+        /// <summary>
+        /// Calculate the mass of a formula, this function takes an optional
+        /// 'mass flavour' that switches the computation type. The key distinction
+        /// is how specified/unspecified isotopes are handled. A specified isotope
+        /// is an atom that has either <see cref="IIsotope.MassNumber"/>
+        /// or <see cref="IIsotope.ExactMass"/> set to non-null and non-zero.
+        /// </summary>
+        /// <remarks>
+        /// The flavours are:
+        /// <ul>
+        ///     <li><see cref="MolecularWeightTypes.MolWeight"/> (default) - uses the exact mass of each
+        /// atom when an isotope is specified, if not specified the average mass
+        /// of the element is used.</li>
+        ///     <li><see cref="MolecularWeightTypes.MolWeightIgnoreSpecified"/> - uses the average mass of each
+        /// element, ignoring any isotopic/exact mass specification</li>
+        ///     <li><see cref="MolecularWeightTypes.MonoIsotopic"/> - uses the exact mass of each
+        /// atom when an isotope is specified, if not specified the major isotope
+        /// mass for that element is used.</li>
+        ///     <li><see cref="MolecularWeightTypes.MostAbundant"/> - uses the exact mass of each atom when
+        /// specified, if not specified a distribution is calculated and the
+        /// most abundant isotope pattern is used.</li>
+        /// </ul>
+        /// </remarks>
+        /// <param name="mf">molecular formula</param>
+        /// <param name="flav">flavor</param>
+        /// <returns>the mass of the molecule</returns>
+        /// <seealso cref="GetMass(IAtomContainer, MolecularWeightTypes)"/>
+        /// <seealso cref="MolecularWeightTypes.MolWeight"/>
+        /// <seealso cref="MolecularWeightTypes.MolWeightIgnoreSpecified"/>
+        /// <seealso cref="MolecularWeightTypes.MonoIsotopic"/>
+        /// <seealso cref="MolecularWeightTypes.MostAbundant"/>
+        public static double GetMass(IMolecularFormula mf, MolecularWeightTypes flav)
+        {
+            var isofact = CDK.IsotopeFactory;
+
+            double mass = 0;
+            switch (flav)
             {
-                var isotopesElement = isotope.Element;
-                mass += factory.GetNaturalMass(isotopesElement) * formula.GetCount(isotope);
+                case MolecularWeightTypes.MolWeight:
+                    foreach (var iso in mf.Isotopes)
+                    {
+                        mass += mf.GetCount(iso) * GetMassOrAvg(isofact, iso);
+                    }
+                    break;
+                case MolecularWeightTypes.MolWeightIgnoreSpecified:
+                    foreach (var iso in mf.Isotopes)
+                    {
+                        mass += mf.GetCount(iso) * isofact.GetNaturalMass(iso.AtomicNumber);
+                    }
+                    break;
+                case MolecularWeightTypes.MonoIsotopic:
+                    foreach (var iso in mf.Isotopes)
+                    {
+                        mass += mf.GetCount(iso) * GetExactMass(isofact, iso);
+                    }
+                    break;
+                case MolecularWeightTypes.MostAbundant:
+                    var mamf = GetMostAbundant(mf);
+                    if (mamf != null)
+                        mass = GetMass(mamf, MolecularWeightTypes.MonoIsotopic);
+                    break;
             }
             return mass;
         }
 
         /// <summary>
-        /// Get the summed major isotopic mass of all elements from an MolecularFormula.
+        /// Calculate the mass of a formula, this function takes an optional
+        /// 'mass flavour' that switches the computation type. The key distinction
+        /// is how specified/unspecified isotopes are handled. A specified isotope
+        /// is an atom that has either <see cref="IIsotope.MassNumber"/>
+        /// or <see cref="IIsotope.ExactMass"/> set to non-null and non-zero.
         /// </summary>
-        /// <param name="formula">The IMolecularFormula to calculate</param>
-        /// <returns>The summed exact major isotope masses of all atoms in this MolecularFormula</returns>
+        /// <remarks>
+        /// The flavours are:
+        /// <ul>
+        ///     <li><see cref="MolecularWeightTypes.MolWeight"/> (default) - uses the exact mass of each
+        /// atom when an isotope is specified, if not specified the average mass
+        /// of the element is used.</li>
+        ///     <li><see cref="MolecularWeightTypes.MolWeightIgnoreSpecified"/> - uses the average mass of each
+        /// element, ignoring any isotopic/exact mass specification</li>
+        ///     <li><see cref="MolecularWeightTypes.MonoIsotopic"/> - uses the exact mass of each
+        /// atom when an isotope is specified, if not specified the major isotope
+        /// mass for that element is used.</li>
+        ///     <li><see cref="MolecularWeightTypes.MostAbundant"/> - uses the exact mass of each atom when
+        /// specified, if not specified a distribution is calculated and the
+        /// most abundant isotope pattern is used.</li>
+        /// </ul>
+        /// </remarks>
+        /// <param name="mf">molecular formula</param>
+        /// <returns>the mass of the molecule</returns>
+        /// <seealso cref="GetMass(IAtomContainer, MolecularWeightTypes)"/>
+        /// <seealso cref="MolecularWeightTypes.MolWeight"/>
+        /// <seealso cref="MolecularWeightTypes.MolWeightIgnoreSpecified"/>
+        /// <seealso cref="MolecularWeightTypes.MonoIsotopic"/>
+        /// <seealso cref="MolecularWeightTypes.MostAbundant"/>
+        public static double GetMass(IMolecularFormula mf)
+        {
+            return GetMass(mf, MolecularWeightTypes.MolWeight);
+        }
+
+        [Obsolete("Use {@link GetMass(IMolecularFormula, MolecularWeightTypes.MolWeightIgnoreSpecified).")]
+        public static double GetNaturalExactMass(IMolecularFormula formula)
+        {
+            return GetMass(formula, MolecularWeightTypes.MolWeightIgnoreSpecified);
+        }
+
+        [Obsolete("Use {@link GetMass(IMolecularFormula, MolecularWeightTypes.MonoIsotopic).")]
         public static double GetMajorIsotopeMass(IMolecularFormula formula)
         {
-            double mass = 0.0;
-            var factory = CDK.IsotopeFactory;
-            foreach (var isotope in formula.Isotopes)
-            {
-                var major = factory.GetMajorIsotope(isotope.Symbol);
-                if (major != null)
-                {
-                    mass += major.ExactMass.Value * formula.GetCount(isotope);
-                }
-            }
-            return mass;
+            return GetMass(formula, MolecularWeightTypes.MonoIsotopic);
         }
 
         /// <summary>
@@ -881,19 +940,17 @@ namespace NCDK.Tools.Manipulator
         public static IMolecularFormula GetMolecularFormula(IAtomContainer atomContainer, IMolecularFormula formula)
         {
             int charge = 0;
-            IAtom hAtom = null;
+            int hcnt = 0;
             foreach (var iAtom in atomContainer.Atoms)
             {
                 formula.Add(iAtom);
-                if (iAtom.FormalCharge != null)
-                    charge += iAtom.FormalCharge.Value;
-
-                if (iAtom.ImplicitHydrogenCount != null && (iAtom.ImplicitHydrogenCount.Value > 0))
-                {
-                    if (hAtom == null)
-                        hAtom = atomContainer.Builder.NewAtom("H");
-                    formula.Add(hAtom, iAtom.ImplicitHydrogenCount.Value);
-                }
+                charge += iAtom.FormalCharge ?? 0;
+                hcnt += iAtom.ImplicitHydrogenCount ?? 0;
+            }
+            if (hcnt != 0)
+            {
+                var hAtom = atomContainer.Builder.NewAtom("H");
+                formula.Add(hAtom, hcnt);
             }
             formula.Charge = charge;
             return formula;
@@ -1034,7 +1091,8 @@ namespace NCDK.Tools.Manipulator
                 var occur = formula.GetCount(isotope);
                 for (int i = 0; i < occur; i++)
                 {
-                    var atom = formula.Builder.NewAtom(isotope.Element);
+                    var atom = formula.Builder.NewAtom(isotope);
+                    atom.ImplicitHydrogenCount = 0;
                     atomContainer.Atoms.Add(atom);
                 }
             }
@@ -1048,9 +1106,9 @@ namespace NCDK.Tools.Manipulator
         /// <param name="formulaString">the formula to convert</param>
         /// <param name="builder">a chem object builder</param>
         /// <returns>atoms wrapped in an atom container</returns>
-        public static IAtomContainer GetAtomContainer(string formulaString, IChemObjectBuilder builder)
+        public static IAtomContainer GetAtomContainer(string formulaString, IChemObjectBuilder builder = null)
         {
-            return MolecularFormulaManipulator.GetAtomContainer(MolecularFormulaManipulator.GetMolecularFormula(formulaString, builder));
+            return GetAtomContainer(GetMolecularFormula(formulaString, builder ?? CDK.Builder));
         }
 
         /// <summary>
@@ -1292,32 +1350,48 @@ namespace NCDK.Tools.Manipulator
         private static string BreakExtractor(string formula)
         {
             bool finalBreak = false;
-            string recentformula = "";
-            string multiple = "0";
-            for (int f = 0; f < formula.Length; f++)
+            int innerMostBracket = formula.LastIndexOf("(");
+
+            if (innerMostBracket < 0)
+                return formula;
+
+            var finalformula = formula.Substring(0, innerMostBracket);
+            var multipliedformula = "";
+            var formulaEnd = "";
+            var multiple = "";
+
+            for (int f = innerMostBracket + 1; f < formula.Length; f++)
             {
-                var thisChar = formula[f];
-                if (thisChar == '(')
+                char thisChar = formula[f];
+
+                if (finalBreak)
                 {
-                    // start
-                }
-                else if (thisChar == ')')
-                {
-                    // final
-                    finalBreak = true;
-                }
-                else if (!finalBreak)
-                {
-                    recentformula += thisChar;
+                    if (IsDigit(thisChar))
+                    {
+                        multiple += thisChar;
+                    }
+                    else
+                    {
+                        formulaEnd = formula.Substring(f, formula.Length - f);
+                        break;
+                    }
                 }
                 else
                 {
-                    multiple += thisChar;
+                    if (thisChar == ')')
+                    {
+                        finalBreak = true;
+                    }
+                    else
+                        multipliedformula += thisChar;
                 }
             }
+            finalformula += Muliplier(multipliedformula, multiple == "" ? 1 : int.Parse(multiple)) + formulaEnd;
 
-            var finalformula = Muliplier(recentformula, int.Parse(multiple, NumberFormatInfo.InvariantInfo));
-            return finalformula;
+            if (finalformula.Contains("("))
+                return BreakExtractor(finalformula);
+            else
+                return finalformula;
         }
 
         /// <summary>
@@ -1441,7 +1515,7 @@ namespace NCDK.Tools.Manipulator
                     if (count < hcnt)
                         continue;
                     // acceptable
-                    if (proton == null 
+                    if (proton == null
                      && (iso.MassNumber == null || iso.MassNumber == 1))
                     {
                         proton = iso;
@@ -1449,8 +1523,8 @@ namespace NCDK.Tools.Manipulator
                     }
                     // better
                     else if (proton != null
-                          && iso.MassNumber != null 
-                          && iso.MassNumber == 1 
+                          && iso.MassNumber != null
+                          && iso.MassNumber == 1
                           && proton.MassNumber == null)
                     {
                         proton = iso;
@@ -1475,6 +1549,90 @@ namespace NCDK.Tools.Manipulator
             mf.Charge = chg + hcnt;
 
             return true;
+        }
+
+        /// <summary>
+        /// Helper method for adding isotope distributions to a MF. The method adds
+        /// a distribution of isotopes by splitting the set of isotopes in two,
+        /// the one under consideration (specified by 'idx') and the remaining to be
+        /// considered ('&gt;idx'). The inflection point is calculate as 'k'
+        /// &le 'count' isotopes added. If there are remaining isotopes the method
+        /// calls it's self with 'idx+1' and 'count := k'.
+        /// </summary>
+        /// <param name="mf">the molecular formula to update</param>
+        /// <param name="isotopes">the isotopes, sorted most abundance to least</param>
+        /// <param name="idx">which isotope we're currently considering</param>
+        /// <param name="count">the number of isotopes remaining to select from</param>
+        /// <returns>the distribution is unique (or not)</returns>
+        private static bool AddIsotopeDist(IMolecularFormula mf,
+                                           IIsotope[] isotopes,
+                                           int idx, int count)
+        {
+            if (count == 0)
+                return true;
+            double frac = 100d;
+            for (int i = 0; i < idx; i++)
+                frac -= isotopes[i].Abundance.Value;
+            double p = isotopes[idx].Abundance.Value / frac;
+
+            if (p >= 1.0)
+            {
+                mf.Add(isotopes[idx], count);
+                return true;
+            }
+
+            double kMin = (count + 1) * (1 - p) - 1;
+            double kMax = (count + 1) * (1 - p);
+            if ((int)Math.Ceiling(kMin) == (int)Math.Floor(kMax))
+            {
+                int k = (int)kMax;
+                mf.Add(isotopes[idx], count - k);
+                // recurse with remaining
+                return AddIsotopeDist(mf, isotopes, idx + 1, k);
+            }
+            return false; // multiple are most abundant
+        }
+
+        /// <summary>
+        /// Compute the most abundant MF. Given the MF C<sub>6</sub>Br<sub>6</sub>
+        /// this function rapidly computes the most abundant MF as
+        /// <sup>12</sup>C<sub>6</sub><sup>79</sup>Br<sub>3</sub><sup>81
+        /// </sup>Br<sub>3</sub>.
+        /// </summary>
+        /// <param name="mf">a molecular formula with unspecified isotopes</param>
+        /// <returns>the most abundant MF, or null if it could not be computed</returns>
+        public static IMolecularFormula GetMostAbundant(IMolecularFormula mf)
+        {
+            var isofact = CDK.IsotopeFactory;
+            var res = mf.Builder.NewMolecularFormula();
+            foreach (var iso in mf.Isotopes)
+            {
+                int count = mf.GetCount(iso);
+                if (iso.MassNumber == null || iso.MassNumber == 0)
+                {
+                    var isotopes = isofact.GetIsotopes(iso.Symbol).ToArray();
+                    Array.Sort(isotopes, AtomContainerManipulator.NAT_ABUN_COMP);
+                    if (!AddIsotopeDist(res, isotopes, 0, count))
+                        return null;
+                }
+                else
+                    res.Add(iso, count);
+            }
+            return res;
+        }
+
+        /// <summary>
+        /// Compute the most abundant MF. Given the a molecule
+        /// C<sub>6</sub>Br<sub>6</sub> this function rapidly computes the most
+        /// abundant MF as
+        /// <sup>12</sup>C<sub>6</sub><sup>79</sup>Br<sub>3</sub><sup>81
+        /// </sup>Br<sub>3</sub>.
+        /// </summary>
+        /// <param name="mol">a molecule with unspecified isotopes</param>
+        /// <returns>the most abundant MF, or null if it could not be computed</returns>
+        public static IMolecularFormula GetMostAbundant(IAtomContainer mol)
+        {
+            return GetMostAbundant(GetMolecularFormula(mol));
         }
     }
 }

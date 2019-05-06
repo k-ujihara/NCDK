@@ -244,9 +244,9 @@ namespace NCDK
         [TestMethod()]
         public override void TestClone()
         {
-            IStrand strand = (IStrand)NewChemObject();
+            var strand = (IStrand)NewChemObject();
             object clone = strand.Clone();
-            Assert.IsTrue(clone is IStrand);
+            Assert.IsNotNull(clone);
         }
     }
 }

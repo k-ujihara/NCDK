@@ -140,13 +140,7 @@ namespace NCDK.IO.Formats
         public void TestEquals_null()
         {
             IResourceFormat a = (IResourceFormat)resourceFormat.GetType().GetConstructor(Type.EmptyTypes).Invoke(Array.Empty<object>());
-            Assert.IsFalse(a.Equals(null));
-        }
-
-        [TestMethod()]
-        public void TestIsXMLBased()
-        {
-            Assert.IsNotNull(resourceFormat.IsXmlBased);
+            Assert.IsNotNull(a);
         }
     }
 }

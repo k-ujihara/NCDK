@@ -36,6 +36,41 @@ using System.Linq;
 
 namespace NCDK.Tools.Manipulator
 {
+    public enum MolecularWeightTypes
+    {
+        /// <summary>
+        /// For use with {@link #getMass(IAtomContainer)}. This option uses the mass
+        /// stored on atoms ({@link IAtom#getExactMass()}) or the average mass of the
+        /// element when unspecified. 
+        /// </summary>
+        MolWeight = 0x1,
+
+        /// <summary>
+        /// For use with {@link #getMass(IAtomContainer)}. This option ignores the
+        /// mass stored on atoms ({@link IAtom#getExactMass()}) and uses the average
+        /// mass of each element. This option is primarily provided for backwards
+        /// compatibility.
+        /// </summary>
+        MolWeightIgnoreSpecified = 0x2,
+
+        /// <summary>
+        /// For use with {@link #getMass(IAtomContainer)}. This option uses the mass
+        /// stored on atoms {@link IAtom#getExactMass()} or the mass of the major
+        /// isotope when this is not specified.
+        /// </summary>
+        MonoIsotopic = 0x3,
+
+        /// <summary>
+        /// For use with {@link #getMass(IAtomContainer)}. This option uses the mass
+        /// stored on atoms {@link IAtom#getExactMass()} and then calculates a
+        /// distribution for any unspecified atoms and uses the most abundant
+        /// distribution. For example C<sub>6</sub>Br<sub>6</sub> would have three
+        /// <sup>79</sup>Br and <sup>81</sup>Br because their abundance is 51 and
+        /// 49%.
+        /// </summary>
+        MostAbundant = 0x4,
+    }
+
     /// <summary>
     /// Class with convenience methods that provide methods to manipulate
     /// AtomContainer's. 
@@ -169,113 +204,216 @@ namespace NCDK.Tools.Manipulator
             {
                 // we assume CDKConstant.Unset is equal to 0
                 var thisCharge = atom.Charge;
-                if (thisCharge.HasValue) charge += thisCharge.Value;
+                if (thisCharge.HasValue)
+                    charge += thisCharge.Value;
             }
             return charge;
         }
 
-        /// <summary>
-        /// Get the summed exact mass of all atoms in an AtomContainer. It
-        /// requires isotope information for all atoms to be set. Either set
-        /// this information using the <see cref="IsotopeFactory"/>, or use the
-        /// <see cref="MolecularFormulaManipulator.GetMajorIsotopeMass(IMolecularFormula)"/> 
-        /// method, after converting the <see cref="IAtomContainer"/> to a
-        /// <see cref="IMolecularFormula"/> with the <see cref="MolecularFormulaManipulator"/>.
-        /// </summary>
-        /// <param name="atomContainer">The IAtomContainer to manipulate</param>
-        /// <returns>The summed exact mass of all atoms in this AtomContainer.</returns>
-        /// <seealso cref="GetMolecularWeight(IAtomContainer)"/>
-        public static double GetTotalExactMass(IAtomContainer atomContainer)
+        private static bool HasIsotopeSpecified(IIsotope atom)
         {
-            try
+            return (atom.MassNumber ?? 0) != 0;
+        }
+
+        private static double GetExactMass(IsotopeFactory isofact, IIsotope atom)
+        {
+            if (atom.ExactMass != null)
+                return atom.ExactMass.Value;
+            else if (atom.MassNumber != null)
+                return isofact.GetExactMass(atom.AtomicNumber, atom.MassNumber.Value);
+            else
+                return isofact.GetMajorIsotopeMass(atom.AtomicNumber);
+        }
+
+        private static double GetMassOrAvg(IsotopeFactory isofact, IIsotope atom)
+        {
+            if (!HasIsotopeSpecified(atom))
+                return isofact.GetNaturalMass(atom.AtomicNumber);
+            return GetExactMass(isofact, atom);
+        }
+
+        internal static readonly IComparer<IIsotope> NAT_ABUN_COMP = new NAT_ABUN_COMP_Comparator();
+
+        class NAT_ABUN_COMP_Comparator : IComparer<IIsotope>
+        {
+            public int Compare(IIsotope o1, IIsotope o2)
             {
-                var isotopes = CDK.IsotopeFactory;
-                double mass = 0.0;
-                var hExactMass = isotopes.GetMajorIsotope(1).ExactMass.Value;
-                foreach (var atom in atomContainer.Atoms)
-                {
-                    if (!atom.ImplicitHydrogenCount.HasValue)
-                        throw new ArgumentException("an atom had with unknown (null) implicit hydrogens");
-                    mass += atom.ExactMass.Value;
-                    mass += atom.ImplicitHydrogenCount.Value * hExactMass;
-                }
-                return mass;
-            }
-            catch (IOException e)
-            {
-                throw new IOException("Isotopes definitions could not be loaded", e);
+                var a1 = o1.Abundance ?? 0;
+                var a2 = o2.Abundance ?? 0;
+                return -a1.CompareTo(a2);
             }
         }
 
+        private static double GetDistMass(IsotopeFactory isofact,
+                                          IIsotope[] isos, int idx, int count)
+        {
+            if (count == 0)
+                return 0;
+            double frac = 100d;
+            double res = 0;
+            for (int i = 0; i < idx; i++)
+                frac -= isos[i].Abundance.Value;
+            double p = isos[idx].Abundance.Value / frac;
+            if (p >= 1.0)
+                return count * isos[idx].ExactMass.Value;
+            double kMin = (count + 1) * (1 - p) - 1;
+            double kMax = (count + 1) * (1 - p);
+            if ((int)Math.Ceiling(kMin) == (int)Math.Floor(kMax))
+            {
+                int k = (int)kMax;
+                res = (count - k) * GetExactMass(isofact, isos[idx]);
+                res += GetDistMass(isofact, isos, idx + 1, k);
+            }
+            return res;
+        }
+
+        private static int GetImplHCount(IAtom atom)
+        {
+            var implh = atom.ImplicitHydrogenCount;
+            if (implh == null)
+                throw new ArgumentException("An atom had 'null' implicit hydrogens!");
+            return implh.Value;
+        }
+
         /// <summary>
-        /// Calculate the molecular weight of a molecule.
+        /// Calculate the mass of a molecule, this function takes an optional
+        /// 'mass flavour' that switches the computation type.The key distinction
+        /// is how specified/unspecified isotopes are handled. A specified isotope
+        /// is an atom that has either <see cref="IIsotope.MassNumber"/>
+        /// or <see cref="IIsotope.ExactMass"/> set to non-null and non-zero.
         /// </summary>
-        /// <param name="mol">the molecule</param>
-        /// <returns>the molecular weight</returns>
+        /// <remarks>
+        /// The flavours are:
+        /// <ul>
+        ///     <li><see cref="MolecularWeightTypes.MolWeight"/> (default) - uses the exact mass of each
+        /// atom when an isotope is specified, if not specified the average mass
+        /// of the element is used.</li>
+        ///     <li><see cref="MolecularWeightTypes.MolWeightIgnoreSpecified"/> - uses the average mass of each
+        /// element, ignoring any isotopic/exact mass specification</li>
+        ///     <li><see cref="MolecularWeightTypes.MonoIsotopic"/> - uses the exact mass of each
+        /// atom when an isotope is specified, if not specified the major isotope
+        /// mass for that element is used.</li>
+        ///     <li><see cref="MolecularWeightTypes.MostAbundant"/> - uses the exact mass of each atom when
+        /// specified, if not specified a distribution is calculated and the
+        /// most abundant isotope pattern is used.</li>
+        /// </ul>
+        /// </remarks>
+        /// <param name="mol">molecule to compute mass for</param>
+        /// <param name="flav">flavor</param>
+        /// <returns>the mass of the molecule</returns>
+        /// <seealso cref="GetMass(IAtomContainer, MolecularWeightTypes)"/>
+        /// <seealso cref="MolecularWeightTypes.MolWeight"/>
+        /// <seealso cref="MolecularWeightTypes.MolWeightIgnoreSpecified"/>
+        /// <seealso cref="MolecularWeightTypes.MonoIsotopic"/>
+        /// <seealso cref="MolecularWeightTypes.MostAbundant"/>
+        public static double GetMass(IAtomContainer mol, MolecularWeightTypes flav)
+        {
+            var isofact = CDK.IsotopeFactory;
+
+            double mass = 0;
+            int hcnt = 0;
+
+            switch (flav)
+            {
+                case MolecularWeightTypes.MolWeight:
+                    foreach (var atom in mol.Atoms)
+                    {
+                        mass += GetMassOrAvg(isofact, atom);
+                        hcnt += GetImplHCount(atom);
+                    }
+                    mass += hcnt * isofact.GetNaturalMass(1);
+                    break;
+                case MolecularWeightTypes.MolWeightIgnoreSpecified:
+                    foreach (var atom in mol.Atoms)
+                    {
+                        mass += isofact.GetNaturalMass(atom.AtomicNumber);
+                        hcnt += GetImplHCount(atom);
+                    }
+                    mass += hcnt * isofact.GetNaturalMass(1);
+                    break;
+                case MolecularWeightTypes.MonoIsotopic:
+                    foreach (var atom in mol.Atoms)
+                    {
+                        mass += GetExactMass(isofact, atom);
+                        hcnt += GetImplHCount(atom);
+                    }
+                    mass += hcnt * isofact.GetMajorIsotopeMass(1);
+                    break;
+                case MolecularWeightTypes.MostAbundant:
+                    var mf = new int[128];
+                    foreach (var atom in mol.Atoms)
+                    {
+                        if (HasIsotopeSpecified(atom))
+                            mass += GetExactMass(isofact, atom);
+                        else
+                            mf[atom.AtomicNumber]++;
+                        mf[1] += atom.ImplicitHydrogenCount.Value;
+                    }
+
+                    for (int atno = 0; atno < mf.Length; atno++)
+                    {
+                        if (mf[atno] == 0)
+                            continue;
+                        var isotopes = isofact.GetIsotopes(atno).ToArray();
+                        Array.Sort(isotopes, NAT_ABUN_COMP);
+                        mass += GetDistMass(isofact, isotopes, 0, mf[atno]);
+                    }
+                    break;
+            }
+            return mass;
+        }
+
+        /// <summary>
+        /// Calculate the mass of a molecule, this function takes an optional
+        /// 'mass flavour' that switches the computation type. The key distinction
+        /// is how specified/unspecified isotopes are handled. A specified isotope
+        /// is an atom that has either {@link IAtom#setMassNumber(Integer)}
+        /// or {@link IAtom#setExactMass(Double)} set to non-null and non-zero.
+        /// <br>
+        /// The flavours are:
+        /// <br>
+        /// <ul>
+        ///     <li><see cref="MolecularWeightTypes.MolWeight"/> (default) - uses the exact mass of each
+        ///     atom when an isotope is specified, if not specified the average mass
+        ///     of the element is used.</li>
+        ///     <li><see cref="MolecularWeightTypes.MolWeightIgnoreSpecified"/> - uses the average mass of each
+        ///     element, ignoring any isotopic/exact mass specification</li>
+        ///     <li><see cref="MolecularWeightTypes.MonoIsotopic"/> - uses the exact mass of each
+        ///     atom when an isotope is specified, if not specified the major isotope
+        ///     mass for that element is used.</li>
+        ///     <li><see cref="MolecularWeightTypes.MostAbundant"/> - uses the exact mass of each atom when
+        ///     specified, if not specified a distribution is calculated and the
+        ///     most abundant isotope pattern is used.</li>
+        /// </ul>
+        /// </summary>
+        /// <param name="mol">molecule to compute mass for</param>
+        /// <returns>the mass of the molecule</returns>
+        /// <seealso cref="GetMass(IAtomContainer, MolecularWeightTypes)"/>
+        /// <seealso cref="MolecularWeightTypes.MolWeight"/>
+        /// <seealso cref="MolecularWeightTypes.MolWeightIgnoreSpecified"/>
+        /// <seealso cref="MolecularWeightTypes.MonoIsotopic"/>
+        /// <seealso cref="MolecularWeightTypes.MostAbundant"/>
+        public static double GetMass(IAtomContainer mol)
+        {
+            return GetMass(mol, MolecularWeightTypes.MolWeight);
+        }
+
+        [Obsolete("Use " + nameof(GetMass) + "(" + nameof(IAtomContainer) + ", int) and " + nameof(MolecularWeightTypes.MonoIsotopic) + ".")]
+        public static double GetTotalExactMass(IAtomContainer mol)
+        {
+            return GetMass(mol, MolecularWeightTypes.MonoIsotopic);
+        }
+
+        [Obsolete("Use " + nameof(GetMass) + "(" + nameof(IAtomContainer) + ", int) and " + nameof(MolecularWeightTypes.MolWeightIgnoreSpecified) + ". You probably want " + nameof(MolecularWeightTypes.MolWeight))]
+        public static double GetNaturalExactMass(IAtomContainer mol)
+        {
+            return GetMass(mol, MolecularWeightTypes.MolWeightIgnoreSpecified);
+        }
+
+        [Obsolete("Use " + nameof(GetMass) + "(" + nameof(IAtomContainer) + ", int) and " + nameof(MolecularWeightTypes.MolWeight) + ".")]
         public static double GetMolecularWeight(IAtomContainer mol)
         {
-            try
-            {
-                var isotopes = CDK.IsotopeFactory;
-                var hmass = isotopes.GetNaturalMass(ChemicalElement.H);
-                double mw = 0.0;
-                foreach (var atom in mol.Atoms)
-                {
-                    if (atom.AtomicNumber == 0)
-                        throw new ArgumentException("An atom had with unknown (null) atomic number");
-                    if (atom.ImplicitHydrogenCount == null)
-                        throw new ArgumentException("An atom had with unknown (null) implicit hydrogens");
-                    mw += hmass * atom.ImplicitHydrogenCount.Value;
-                    if (atom.MassNumber == null)
-                        mw += isotopes.GetNaturalMass(atom.Element);
-                    else if (atom.ExactMass != null)
-                        mw += atom.ExactMass.Value;
-                    else
-                    {
-                        var isotope = isotopes.GetIsotope(atom.Symbol, atom.MassNumber.Value);
-                        if (isotope == null)
-                            mw += isotopes.GetNaturalMass(atom.Element);
-                        else
-                            mw += isotope.ExactMass.Value;
-                    }
-                }
-                return mw;
-            }
-            catch (IOException e)
-            {
-                throw new ApplicationException("Isotopes definitions could not be loaded", e);
-            }
-        }
-
-        /// <summary>
-        /// Returns the molecular mass of the IAtomContainer. For the calculation it
-        /// uses the masses of the isotope mixture using natural abundances.
-        /// </summary>
-        /// <param name="atomContainer"></param>
-        /// <seealso cref="GetMolecularWeight(IAtomContainer)"/>
-        // @cdk.keyword mass, molecular
-        public static double GetNaturalExactMass(IAtomContainer atomContainer)
-        {
-            try
-            {
-                var isotopes = CDK.IsotopeFactory;
-                var hydgrogenMass = isotopes.GetNaturalMass(ChemicalElement.H);
-
-                double mass = 0.0;
-                foreach (var atom in atomContainer.Atoms)
-                {
-                    if (atom.ImplicitHydrogenCount == null)
-                        throw new ArgumentException("an atom had with unknown (null) implicit hydrogens");
-
-                    mass += isotopes.GetNaturalMass(ChemicalElement.Of(atom.AtomicNumber));
-                    mass += hydgrogenMass * atom.ImplicitHydrogenCount.Value;
-                }
-                return mass;
-            }
-            catch (IOException e)
-            {
-                throw new IOException("Isotopes definitions could not be loaded", e);
-            }
+            return GetMass(mol, MolecularWeightTypes.MolWeight);
         }
 
         /// <summary>
@@ -775,6 +913,7 @@ namespace NCDK.Tools.Manipulator
             {
                 if (remaining > 0 && (hydrogens.Contains(bond.Begin) || hydrogens.Contains(bond.End)))
                 {
+                    bondsToHydrogens.Add(bond);
                     remaining--;
                     continue;
                 }
@@ -1567,3 +1706,4 @@ namespace NCDK.Tools.Manipulator
         }
     }
 }
+

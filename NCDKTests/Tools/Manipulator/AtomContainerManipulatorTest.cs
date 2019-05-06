@@ -33,7 +33,7 @@ namespace NCDK.Tools.Manipulator
 {
     // @cdk.module test-standard
     [TestClass()]
-    public class AtomContainerManipulatorTest 
+    public class AtomContainerManipulatorTest
         : CDKTestCase
     {
         private static readonly IChemObjectBuilder builder = CDK.Builder;
@@ -1354,6 +1354,47 @@ namespace NCDK.Tools.Manipulator
             string smiAct = new SmilesGenerator().Create(AtomContainerManipulator.RemoveHydrogens(m));
 
             Assert.AreEqual(smiExp, smiAct);
+        }
+
+        [TestMethod()]
+        public void GetMassC6Br6()
+        {
+            var mol = CDK.SmilesParser.ParseSmiles("Brc1c(Br)c(Br)c(Br)c(Br)c1Br");
+            Assert.AreEqual(551.485, AtomContainerManipulator.GetMass(mol, MolecularWeightTypes.MolWeight), 0.001);
+            Assert.AreEqual(551.485, AtomContainerManipulator.GetMass(mol, MolecularWeightTypes.MolWeightIgnoreSpecified), 0.001);
+            Assert.AreEqual(545.510, AtomContainerManipulator.GetMass(mol, MolecularWeightTypes.MonoIsotopic), 0.001);
+            Assert.AreEqual(551.503, AtomContainerManipulator.GetMass(mol, MolecularWeightTypes.MostAbundant), 0.001);
+        }
+
+        [TestMethod()]
+        public void GetMassCranbin()
+        {
+            var mol = MolecularFormulaManipulator.GetAtomContainer("C202H315N55O64S6");
+            Assert.AreEqual(4730.397, AtomContainerManipulator.GetMass(mol, MolecularWeightTypes.MolWeight), 0.001);
+            Assert.AreEqual(4730.397, AtomContainerManipulator.GetMass(mol, MolecularWeightTypes.MolWeightIgnoreSpecified), 0.001);
+            Assert.AreEqual(4727.140, AtomContainerManipulator.GetMass(mol, MolecularWeightTypes.MonoIsotopic), 0.001);
+            Assert.AreEqual(4729.147, AtomContainerManipulator.GetMass(mol, MolecularWeightTypes.MostAbundant), 0.001);
+        }
+
+        [TestMethod()]
+        public void GetMassCranbinSpecIsotopes()
+        {
+            var mol = MolecularFormulaManipulator.GetAtomContainer("[12]C200[13]C2[1]H315[14]N55[16]O64[32]S6");
+            Assert.AreEqual(4729.147, AtomContainerManipulator.GetMass(mol, MolecularWeightTypes.MolWeight), 0.001);
+            Assert.AreEqual(4730.397, AtomContainerManipulator.GetMass(mol, MolecularWeightTypes.MolWeightIgnoreSpecified), 0.001);
+            Assert.AreEqual(4729.147, AtomContainerManipulator.GetMass(mol, MolecularWeightTypes.MonoIsotopic), 0.001);
+            Assert.AreEqual(4729.147, AtomContainerManipulator.GetMass(mol, MolecularWeightTypes.MostAbundant), 0.001);
+        }
+
+        [TestMethod()]
+        public void GetMassCranbinMixedSpecIsotopes()
+        {
+            var aa = MolecularFormulaManipulator.GetAtomContainer("[13]C");
+            var mol = MolecularFormulaManipulator.GetAtomContainer("C200[13]C2H315N55O64S6");
+            Assert.AreEqual(4732.382, AtomContainerManipulator.GetMass(mol, MolecularWeightTypes.MolWeight), 0.001);
+            Assert.AreEqual(4730.397, AtomContainerManipulator.GetMass(mol, MolecularWeightTypes.MolWeightIgnoreSpecified), 0.001);
+            Assert.AreEqual(4729.147, AtomContainerManipulator.GetMass(mol, MolecularWeightTypes.MonoIsotopic), 0.001);
+            Assert.AreEqual(4731.154, AtomContainerManipulator.GetMass(mol, MolecularWeightTypes.MostAbundant), 0.001);
         }
     }
 }

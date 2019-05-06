@@ -22,8 +22,8 @@
  */
 
 using NCDK.Common.Primitives;
-using NCDK.Config;
 using NCDK.IO.Formats;
+using NCDK.IO.Setting;
 using NCDK.Numerics;
 using NCDK.Sgroups;
 using System;
@@ -33,6 +33,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using static NCDK.IO.MDLV2000Writer;
 
 namespace NCDK.IO
 {
@@ -57,18 +58,19 @@ namespace NCDK.IO
     {
         private static readonly Regex R_GRP_NUM = new Regex("R(\\d+)", RegexOptions.Compiled);
         private V30LineWriter writer;
+        private StringIOSetting programNameOpt;
 
-        /// <summary>
-        /// Used only for InitIOSettings
-        /// </summary>
         internal MDLV3000Writer()
-        { }
+        {
+            InitIOSettings();
+        }
 
         /// <summary>
         /// Create a new V3000 writer, output to the provided JDK writer.
         /// </summary>
         /// <param name="writer">output location</param>
         public MDLV3000Writer(TextWriter writer)
+            : this()
         {
             this.writer = new V30LineWriter(writer);
         }
@@ -105,6 +107,19 @@ namespace NCDK.IO
             return idx;
         }
 
+        private string GetProgName()
+        {
+            var progname = programNameOpt.Setting;
+            if (progname == null)
+                return "        ";
+            else if (progname.Length > 8)
+                return progname.Substring(0, 8);
+            else if (progname.Length < 8)
+                return new string(' ', 8 - progname.Length) + progname;
+            else
+                return progname;
+        }
+
         /// <summary>
         /// Write the three line header of the MDL format: title, version/timestamp, remark.
         /// </summary>
@@ -124,7 +139,8 @@ namespace NCDK.IO
             //  dimensional codes (d), scaling factors (S, s), energy (E) if modeling
             //  program input, internal registry number (R) if input through MDL
             //  form. A blank line can be substituted for line 2.
-            writer.WriteDirect("  CDK     ");
+            writer.Write("  ");
+            writer.Write(GetProgName());
             writer.WriteDirect(DateTime.UtcNow.ToString("MMddyyHHmm", DateTimeFormatInfo.InvariantInfo));
             var dim = GetNumberOfDimensions(mol);
             if (dim != 0)
@@ -914,6 +930,20 @@ namespace NCDK.IO
             {
                 Close();
             }
+        }
+
+        /// <summary>
+        /// Initializes IO settings.
+        /// </summary>
+        /// <remarks>
+        /// Please note with regards to "writeAromaticBondTypes": bond type values 4 through 8 are for SSS queries only,
+        /// so a 'query file' is created if the container has aromatic bonds and this settings is true.
+        /// </remarks>
+        private void InitIOSettings()
+        {
+            programNameOpt = IOSettings.Add(
+                new StringIOSetting(OptProgramName, Importance.Low,
+                "Program name to write at the top of the molfile header, should be exactly 8 characters long", "CDK"));
         }
     }
 }

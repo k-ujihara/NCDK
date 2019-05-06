@@ -164,11 +164,7 @@ namespace NCDK.Charges
             {
                 acH = atomContainer;
             }
-
-            List<IAtom> startAtom = new List<IAtom>(1);
-            startAtom.Insert(0, atom);
             double bond;
-
             polarizabilitiy += GetKJPolarizabilityFactor(acH, atom);
             for (int i = 0; i < acH.Atoms.Count; i++)
             {
@@ -286,7 +282,7 @@ namespace NCDK.Charges
                     break;
                 case AtomicNumbers.P:
                     if (atomContainer.GetConnectedBonds(atom).Count() == 4
-                            && atomContainer.GetMaximumBondOrder(atom) == BondOrder.Double)
+                     && atomContainer.GetMaximumBondOrder(atom) == BondOrder.Double)
                     {
                         polarizabilitiyFactor = 0;
                     }
@@ -346,7 +342,7 @@ namespace NCDK.Charges
             foreach (var bond in bonds)
             {
                 connectedAtom = bond.GetOther(atom);
-                if (connectedAtom.AtomicNumber.Equals(AtomicNumbers.H))
+                if (connectedAtom.AtomicNumber == AtomicNumbers.H)
                 {
                     hCounter += 1;
                 }

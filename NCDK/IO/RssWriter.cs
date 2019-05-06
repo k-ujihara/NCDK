@@ -248,14 +248,14 @@ namespace NCDK.IO
                     }
                     CMLElement root = null;
                     var convertor = new Convertor(true, null);
-                    obj = (IChemObject)list[i];
-                    if (obj is IAtomContainer)
-                    {
-                        root = convertor.CDKAtomContainerToCMLMolecule((IAtomContainer)obj);
-                    }
-                    else if (obj is ICrystal)
+                    obj = list[i];
+                    if (obj is ICrystal)
                     {
                         root = convertor.CDKCrystalToCMLMolecule((ICrystal)obj);
+                    }
+                    else if (obj is IAtomContainer)
+                    {
+                        root = convertor.CDKAtomContainerToCMLMolecule((IAtomContainer)obj);
                     }
                     else if (obj is IAtom)
                     {

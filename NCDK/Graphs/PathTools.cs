@@ -489,7 +489,6 @@ namespace NCDK.Graphs
             }
             dist[atomContainer.Atoms.IndexOf(start)] = 0;
 
-            List<IAtom> sList = new List<IAtom>();
             List<int> qList = new List<int>();
             for (int i = 0; i < natom; i++)
                 qList.Add(i);
@@ -510,7 +509,7 @@ namespace NCDK.Graphs
                     }
                 }
                 qList.Remove(index); // it means 'qList.RemoveAt(qList.IndexOf(index))'
-                sList.Add(atomContainer.Atoms[index]);
+               
                 if (index == endNumber) break;
 
                 // relaxation

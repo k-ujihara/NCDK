@@ -139,18 +139,17 @@ namespace NCDK.Fingerprints
             else
             {
                 //TODO add support for this?
-                throw new NotSupportedException("OR on IntArrayFingerPrint only supported for other "
-                        + "IntArrayFingerPrints for the moment");
+                throw new NotSupportedException("OR on IntArrayFingerPrint only supported for other IntArrayFingerPrints for the moment");
             }
         }
 
         public void Or(IntArrayFingerprint fingerprint)
         {
-            ICollection<int> tmp = new HashSet<int>();
+            var tmp = new HashSet<int>();
             {
-                for (int i = 0; i < trueBits.Length; i++)
+                foreach (var trueBit in trueBits)
                 {
-                    tmp.Add(trueBits[i]);
+                    tmp.Add(trueBit);
                 }
             }
             {
@@ -199,9 +198,8 @@ namespace NCDK.Fingerprints
                     Array.Copy(trueBits, 0, tmp, 0, trueBits.Length);
                     tmp[tmp.Length - 1] = index;
                     trueBits = tmp;
+                    Array.Sort(trueBits);
                 }
-                //rest of possible ops are no-ops
-                Array.Sort(trueBits);
             }
         }
 

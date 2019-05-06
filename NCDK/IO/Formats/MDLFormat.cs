@@ -66,28 +66,25 @@ namespace NCDK.IO.Formats
         /// <inheritdoc/>
         public override bool Matches(int lineNumber, string line)
         {
-            if (lineNumber == 4 && line.Length > 7 
-                && !line.Contains("2000") // MDL Mol V2000 format
-                && !line.Contains("3000")) // MDL Mol V3000 format
+            if (lineNumber == 4 
+             && line.Length > 7 
+             && !line.Contains("2000") // MDL Mol V2000 format
+             && !line.Contains("3000")) // MDL Mol V3000 format
             {
                 // possibly a MDL mol file
                 try
                 {
                     string atomCountString = Strings.Substring(line, 0, 3).Trim();
                     string bondCountString = Strings.Substring(line, 3, 3).Trim();
-
                     int.Parse(atomCountString, NumberFormatInfo.InvariantInfo);
                     int.Parse(bondCountString, NumberFormatInfo.InvariantInfo);
-                    if (line.Length > 6)
+                    var remainder = line.Substring(6).Trim();
+                    for (int i = 0; i < remainder.Length; ++i)
                     {
-                        string remainder = Strings.Substring(line, 6).Trim();
-                        for (int i = 0; i < remainder.Length; ++i)
+                        char c = remainder[i];
+                        if (!(char.IsDigit(c) || char.IsWhiteSpace(c)))
                         {
-                            char c = remainder[i];
-                            if (!(char.IsDigit(c) || char.IsWhiteSpace(c)))
-                            {
-                                return false;
-                            }
+                            return false;
                         }
                     }
                 }

@@ -44,7 +44,6 @@ namespace NCDK.IO
     /// in the PDB database.</para>
     /// </summary>
     // @cdk.module io
-    // @cdk.githash
     // @cdk.keyword file format, CIF
     // @cdk.keyword file format, mmCIF
     // @author  E.L. Willighagen
@@ -207,20 +206,19 @@ namespace NCDK.IO
                     else
                     {
                         // skip command
-                        Trace.TraceWarning("Skipping command: " + command);
+                        Trace.TraceWarning($"Skipping command: {command}");
                         line = input.ReadLine();
-                        if (line.StartsWithChar(';'))
+                        if (line != null && line.StartsWithChar(';'))
                         {
                             Debug.WriteLine("Skipping block content");
                             line = input.ReadLine();
-                            if (line != null) line = line.Trim();
-                            while (!string.Equals(line, ";", StringComparison.Ordinal))
+                            if (line != null)
+                                line = line.Trim();
+                            while ((line = input.ReadLine()) != null
+                                && !line.StartsWith(";"))
                             {
-                                line = input.ReadLine();
-                                if (line != null) line = line.Trim();
                                 Debug.WriteLine($"Skipping block line: {line}");
                             }
-                            line = input.ReadLine();
                         }
                     }
                 }
@@ -403,7 +401,7 @@ namespace NCDK.IO
                 }
                 line = input.ReadLine().Trim();
             }
-            if (hasParsableInformation == false)
+            if (!hasParsableInformation)
             {
                 Trace.TraceInformation("No parsable info found");
                 return SkipLoopBody(line);

@@ -53,9 +53,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         /// <summary>
-        /// Calculate the weight of specified element type in the supplied <see cref="IAtomContainer"/>.
+        /// Calculate the natural weight of specified elements type in the supplied <see cref="IAtomContainer"/>.
         /// </summary>
-        /// <returns>The total weight of atoms of the specified element type</returns>
+        /// <returns>The total natural weight of atoms of the specified element type</returns>
         /// <param name="container">
         /// The AtomContainer for which this descriptor is to be calculated. If 'H'
         /// is specified as the element symbol make sure that the AtomContainer has hydrogens.
@@ -63,29 +63,39 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <param name="symbol">If *, returns the molecular weight, otherwise the weight for the given element</param>
         public Result Calculate(IAtomContainer container, string symbol = "*")
         {
-            var iso = CDK.IsotopeFactory;
-            var h = iso.GetMajorIsotope(AtomicNumbers.H);
+            var hydrogenNaturalMass = CDK.IsotopeFactory.GetNaturalMass(AtomicNumbers.H);
 
-            double weight;
+            double weight = 0;
             switch (symbol)
             {
                 case "*":
-                    weight = container.Atoms
-                        .Select(atom => iso.GetMajorIsotope(atom.AtomicNumber).ExactMass.Value
-                                      + (atom.ImplicitHydrogenCount ?? 0) * h.ExactMass.Value)
-                        .Sum();
+                    foreach (var atom in container.Atoms)
+                    {
+                        weight += CDK.IsotopeFactory.GetNaturalMass(atom.AtomicNumber);
+                        weight += (atom.ImplicitHydrogenCount ?? 0) * hydrogenNaturalMass;
+                    }
                     break;
                 case "H":
-                    weight = container.Atoms
-                        .Select(atom =>
-                           (atom.AtomicNumber == AtomicNumbers.H
-                            ? 1
-                            : (atom.ImplicitHydrogenCount ?? 0)) * h.ExactMass.Value)
-                        .Sum();
+                    foreach (var atom in container.Atoms)
+                    {
+                        if (atom.Symbol.Equals(symbol, StringComparison.Ordinal))
+                        {
+                            weight += hydrogenNaturalMass;
+                        }
+                        else
+                        {
+                            weight += (atom.ImplicitHydrogenCount ?? 0) * hydrogenNaturalMass;
+                        }
+                    }
                     break;
                 default:
-                    var number = ChemicalElement.OfSymbol(symbol).AtomicNumber;
-                    weight = container.Atoms.Count(atom => atom.AtomicNumber == number) * iso.GetMajorIsotope(number).ExactMass.Value;
+                    foreach (var atom in container.Atoms)
+                    {
+                        if (atom.Symbol.Equals(symbol, StringComparison.Ordinal))
+                        {
+                            weight += CDK.IsotopeFactory.GetNaturalMass(atom.AtomicNumber);
+                        }
+                    }
                     break;
             }
 

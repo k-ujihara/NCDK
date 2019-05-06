@@ -39,7 +39,6 @@ namespace NCDK.IO
     /// Both compilation and use of this class requires Java 1.4.
     /// </summary>
     // @cdk.module  io
-    // @cdk.githash
     // @cdk.iooptions
     // @cdk.keyword file format, Polymorph Predictor (tm)
     // @author E.L. Willighagen
@@ -57,7 +56,6 @@ namespace NCDK.IO
         /* Keep an index of PMP id -> AtomCountainer id */
         private readonly Dictionary<int, int> atomids = new Dictionary<int, int>();
         private readonly Dictionary<int, int> atomGivenIds = new Dictionary<int, int>();
-        private readonly Dictionary<int, int> atomZOrders = new Dictionary<int, int>();
         private Dictionary<int, int> bondids = new Dictionary<int, int>();
         private Dictionary<int, int> bondAtomOnes = new Dictionary<int, int>();
         private Dictionary<int, int> bondAtomTwos = new Dictionary<int, int>();
@@ -68,7 +66,7 @@ namespace NCDK.IO
         Regex objCommand;
         Regex atomTypePattern;
 
-        int lineNumber = 0;
+        int lineNumber;
         int bondCounter = 0;
         private RebondTool rebonder;
 
@@ -83,7 +81,7 @@ namespace NCDK.IO
 
             /* compile patterns */
             objHeader = new Regex(".*\\((\\d+)\\s(\\w+)$", RegexOptions.Compiled);
-            objCommand = new Regex(".*\\(A\\s(C|F|D|I|O)\\s(\\w+)\\s+\"?(.*?)\"?\\)$", RegexOptions.Compiled);
+            objCommand = new Regex(".*\\(A\\s([CFDIO])\\s(\\w+)\\s+\"?(.*?)\"?\\)$", RegexOptions.Compiled);
             atomTypePattern = new Regex("^(\\d+)\\s+(\\w+)$", RegexOptions.Compiled);
 
             rebonder = new RebondTool(2.0, 0.5, 0.5);
@@ -97,7 +95,8 @@ namespace NCDK.IO
 
         public override bool Accepts(Type type)
         {
-            if (typeof(IChemFile).IsAssignableFrom(type)) return true;
+            if (typeof(IChemFile).IsAssignableFrom(type))
+                return true;
             return false;
         }
 
@@ -139,9 +138,9 @@ namespace NCDK.IO
         /// <returns>A ChemFile containing the data parsed from input.</returns>
         private IChemFile ReadChemFile(IChemFile chemFile)
         {
-            IChemSequence chemSequence = chemFile.Builder.NewChemSequence();
-            IChemModel chemModel = chemFile.Builder.NewChemModel();
-            ICrystal crystal = chemFile.Builder.NewCrystal();
+            IChemSequence chemSequence;
+            IChemModel chemModel;
+            ICrystal crystal;
 
             try
             {
@@ -174,9 +173,9 @@ namespace NCDK.IO
                             var objHeaderMatcher = objHeader.Match(line);
                             if (objHeaderMatcher.Success)
                             {
-                                string obj = objHeaderMatcher.Groups[2].Value;
+                                var obj = objHeaderMatcher.Groups[2].Value;
                                 ConstructObject(chemFile.Builder, obj);
-                                int id = int.Parse(objHeaderMatcher.Groups[1].Value, NumberFormatInfo.InvariantInfo);
+                                var id = int.Parse(objHeaderMatcher.Groups[1].Value, NumberFormatInfo.InvariantInfo);
                                 // Debug.WriteLine(object + " id: " + id);
                                 line = ReadLine();
                                 while (line != null && !(string.Equals(line.Trim(), ")", StringComparison.Ordinal)))
@@ -193,9 +192,9 @@ namespace NCDK.IO
                                     }
                                     else if (objCommandMatcher.Success)
                                     {
-                                        string format = objCommandMatcher.Groups[1].Value;
-                                        string command = objCommandMatcher.Groups[2].Value;
-                                        string field = objCommandMatcher.Groups[3].Value;
+                                        var format = objCommandMatcher.Groups[1].Value;
+                                        var command = objCommandMatcher.Groups[2].Value;
+                                        var field = objCommandMatcher.Groups[3].Value;
 
                                         ProcessModelCommand(obj, command, format, field);
                                     }
@@ -208,7 +207,6 @@ namespace NCDK.IO
                                 if (chemObject is IAtom)
                                 {
                                     atomids[id] = modelStructure.Atoms.Count;
-                                    atomZOrders[int.Parse(chemObject.GetProperty<string>(PMP_ZORDER), NumberFormatInfo.InvariantInfo)] = id;
                                     atomGivenIds[int.Parse(chemObject.GetProperty<string>(PMP_ID), NumberFormatInfo.InvariantInfo)] = id;
                                     modelStructure.Atoms.Add((IAtom)chemObject);
                                 }
@@ -224,6 +222,7 @@ namespace NCDK.IO
                             }
                             line = ReadLine();
                         }
+                        Trace.Assert(line != null);
                         if (line.StartsWith("%%Model End", StringComparison.Ordinal))
                         {
                             // during the Model Start, all bonds are cached as PMP files might
@@ -241,9 +240,9 @@ namespace NCDK.IO
                                     order = 1;
                                 Debug.WriteLine($"index: {index}");
                                 Debug.WriteLine($"ones: {bondAtomOnes[index]}");
-                                IAtom atom1 = modelStructure.Atoms[atomids[bondAtomOnes[index]]];
-                                IAtom atom2 = modelStructure.Atoms[atomids[bondAtomTwos[index]]];
-                                IBond bond = modelStructure.Builder.NewBond(atom1, atom2);
+                                var atom1 = modelStructure.Atoms[atomids[bondAtomOnes[index]]];
+                                var atom2 = modelStructure.Atoms[atomids[bondAtomTwos[index]]];
+                                var bond = modelStructure.Builder.NewBond(atom1, atom2);
                                 if (order == 1.0)
                                 {
                                     bond.Order = BondOrder.Single;
@@ -345,9 +344,6 @@ namespace NCDK.IO
                                             crystal.SpaceGroup = "P1";
                                         }
                                     }
-                                    else
-                                    {
-                                    }
                                     line = ReadLine();
                                 }
                                 chemModel.Crystal = crystal;
@@ -357,10 +353,8 @@ namespace NCDK.IO
                         }
                         chemFile.Add(chemSequence);
                     }
-                    else
-                    {
-                        // disregard line
-                    }
+                    // else disregard line
+
                     // read next line
                     line = ReadLine();
                 }

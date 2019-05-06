@@ -18,6 +18,7 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NCDK.Common.Base;
 using NCDK.Config;
 using NCDK.Tools.Manipulator;
 using System;
@@ -30,10 +31,9 @@ namespace NCDK.AtomTypes
     /// Helper class that all atom type matcher test classes must implement.
     /// It keeps track of the atom types which have been tested, to ensure
     /// that all atom types are tested.
-    ///
+    /// </summary>
     // @cdk.module test-core
     // @cdk.bug    1890702
-    /// </summary>
     [TestClass()]
     abstract public class AbstractAtomTypeTest : CDKTestCase, IAtomTypeTest
     {
@@ -160,14 +160,12 @@ namespace NCDK.AtomTypes
 
             try
             {
-                IAtomType type = GetFactory().GetAtomType(expectedID);
-                Assert.IsNotNull(type, "Attempt to test atom type which is not defined in the " + AtomTypeListName
-                        + ": " + expectedID);
+                var type = GetFactory().GetAtomType(expectedID);
+                Assert.IsNotNull(type, $"Attempt to test atom type which is not defined in the {AtomTypeListName}: {expectedID}");
             }
             catch (NoSuchAtomTypeException exception)
             {
-                Assert.IsNotNull("Attempt to test atom type which is not defined in the " + AtomTypeListName
-                        + ": " + exception.Message);
+                Console.Error.WriteLine($"Attempt to test atom type which is not defined in the {AtomTypeListName}: {exception.Message}");
             }
             if (testedAtomTypes.ContainsKey(expectedID))
             {
@@ -183,7 +181,7 @@ namespace NCDK.AtomTypes
         public virtual void TestForDuplicateDefinitions()
         {
             var expectedTypesArray = GetFactory().GetAllAtomTypes();
-            ICollection<string> alreadyDefinedTypes = new HashSet<string>();
+            var alreadyDefinedTypes = new HashSet<string>();
             foreach (var ee in expectedTypesArray)
             {
                 string definedType = ee.AtomTypeName;
@@ -197,11 +195,11 @@ namespace NCDK.AtomTypes
 
         //public static void CountTestedAtomTypes(IDictionary<string, int> testedAtomTypesMap, AtomTypeFactory factory)
         //{
-        //    ICollection<string> testedAtomTypes = new HashSet<string>();
+        //    var testedAtomTypes = new HashSet<string>();
         //    foreach (var key in testedAtomTypesMap.Keys)
         //        testedAtomTypes.Add(key);
 
-        //    ICollection<string> definedTypes = new HashSet<string>();
+        //    var definedTypes = new HashSet<string>();
         //    var expectedTypesArray = factory.GetAllAtomTypes();
         //    foreach (var ee in expectedTypesArray)
         //    {

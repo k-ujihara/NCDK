@@ -296,7 +296,7 @@ namespace NCDK.IO
                 line = input.ReadLine();
                 linecount++;
 
-                // if the line is empty we hav a problem - either a malformed
+                // if the line is empty we have a problem - either a malformed
                 // molecule entry or just extra new lines at the end of the file
                 if (line.Length == 0)
                 {
@@ -1406,8 +1406,7 @@ namespace NCDK.IO
                 case "D":
                     if (interpretHydrogenIsotopes.IsSet)
                     {
-                        if (ReaderMode == ChemObjectReaderMode.Strict)
-                            throw new CDKException("invalid symbol: " + symbol);
+                        HandleError($"invalid symbol: {symbol}", lineNum, 31, 33);
                         var atom = builder.NewAtom("H");
                         atom.MassNumber = 2;
                         return atom;
@@ -1416,8 +1415,7 @@ namespace NCDK.IO
                 case "T":
                     if (interpretHydrogenIsotopes.IsSet)
                     {
-                        if (ReaderMode == ChemObjectReaderMode.Strict)
-                            throw new CDKException("invalid symbol: " + symbol);
+                        HandleError($"invalid symbol: {symbol}", lineNum, 31, 33);
                         var atom = builder.NewAtom("H");
                         atom.MassNumber = 3;
                         return atom;

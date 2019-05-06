@@ -246,7 +246,6 @@ namespace NCDK.Graphs.InChI
 
                 // Create InChI bond
                 var ibond = new NInchiBond(at0, at1, order);
-                bondMap[bond] = ibond;
                 Input.Add(ibond);
 
                 // Check for bond stereo definitions

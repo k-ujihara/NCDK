@@ -16,6 +16,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Reactions.Types.Parameters;
 using NCDK.RingSearches;
 using NCDK.Tools.Manipulator;
@@ -34,7 +35,6 @@ namespace NCDK.Reactions.Types
     // @author         Miguel Rojas
     // @cdk.created    2007-02-02
     // @cdk.module     reaction
-    // @cdk.githash
     public partial class PiBondingMovementReaction : ReactionEngine, IReactionProcess
     {
         /// <summary>
@@ -72,7 +72,7 @@ namespace NCDK.Reactions.Types
             if (ipr != null && !ipr.IsSetParameter) SetActiveCenters(reactant);
 
             var arf = new AllRingsFinder();
-            var ringSet = arf.FindAllRings((IAtomContainer)reactant);
+            var ringSet = arf.FindAllRings(reactant);
             for (int ir = 0; ir < ringSet.Count; ir++)
             {
                 var ring = ringSet[ir];
@@ -83,12 +83,16 @@ namespace NCDK.Reactions.Types
                 {
                     int nrSingleBonds = 0;
                     foreach (var bond in ring.Bonds)
-                        if (bond.Order == BondOrder.Single) nrSingleBonds++;
+                    {
+                        if (bond.Order == BondOrder.Single)
+                            nrSingleBonds++;
+                    }
                     //if exactly half (nrAtoms/2==nrSingleBonds)
                     if (nrSingleBonds != 0 && nrAtoms / 2 == nrSingleBonds)
                     {
                         bool ringCompletActive = false;
                         foreach (var bond in ring.Bonds)
+                        {
                             if (bond.IsReactiveCenter)
                                 ringCompletActive = true;
                             else
@@ -96,13 +100,14 @@ namespace NCDK.Reactions.Types
                                 ringCompletActive = false;
                                 break;
                             }
-                        if (!ringCompletActive) continue;
+                        }
+                        if (!ringCompletActive)
+                            continue;
 
-                        IReaction reaction = reactants.Builder.NewReaction();
+                        var reaction = reactants.Builder.NewReaction();
                         reaction.Reactants.Add(reactant);
 
-                        IAtomContainer reactantCloned;
-                        reactantCloned = (IAtomContainer)reactant.Clone();
+                        var reactantCloned = (IAtomContainer)reactant.Clone();
 
                         foreach (var bondi in ring.Bonds)
                         {
@@ -111,13 +116,11 @@ namespace NCDK.Reactions.Types
                                 BondManipulator.IncreaseBondOrder(reactantCloned.Bonds[bondiP]);
                             else
                                 BondManipulator.DecreaseBondOrder(reactantCloned.Bonds[bondiP]);
-
                         }
 
                         reaction.Products.Add(reactantCloned);
                         setOfReactions.Add(reaction);
                     }
-
                 }
             }
 
@@ -145,7 +148,8 @@ namespace NCDK.Reactions.Types
                     int nrSingleBonds = 0;
                     foreach (var bond in ring.Bonds)
                     {
-                        if (bond.Order == BondOrder.Single) nrSingleBonds++;
+                        if (bond.Order == BondOrder.Single)
+                            nrSingleBonds++;
                     }
                     //if exactly half (nrAtoms/2==nrSingleBonds)
                     if (nrSingleBonds != 0 && nrAtoms / 2 == nrSingleBonds)

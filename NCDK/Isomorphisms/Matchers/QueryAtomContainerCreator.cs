@@ -17,6 +17,10 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
 namespace NCDK.Isomorphisms.Matchers
 {
     /// <summary>
@@ -181,5 +185,80 @@ namespace NCDK.Isomorphisms.Matchers
                 ExprType.IsAromatic,
                 ExprType.AliphaticOrder);
         }
+
+        static bool IsSimpleHydrogen(Expr expr)
+        {
+            switch (expr.GetExprType())
+            {
+                case ExprType.Element:
+                case ExprType.AliphaticElement:
+                    return expr.Value == 1;
+                default:
+                    return false;
+            }
+        }
+
+        public static IAtomContainer SuppressQueryHydrogens(IAtomContainer mol)
+        {
+            // pre-checks
+            foreach (var atom in mol.Atoms)
+            {
+                if (!(AtomRef.Deref(atom) is QueryAtom))
+                    throw new ArgumentException("Non-query atoms found!", nameof(mol));
+            }
+            foreach (var bond in mol.Bonds)
+            {
+                if (!(BondRef.Deref(bond) is QueryBond))
+                    throw new ArgumentException("Non-query bonds found!", nameof(mol));
+            }
+
+            var plainHydrogens = new CDKObjectMap();
+            foreach (var atom in mol.Atoms)
+            {
+                int hcnt = 0;
+                foreach (var nbor in mol.GetConnectedAtoms(atom))
+                {
+                    var qnbor = (QueryAtom)AtomRef.Deref(nbor);
+                    if (mol.GetConnectedBonds(nbor).Count() == 1 &&
+                        IsSimpleHydrogen(qnbor.Expression))
+                    {
+                        hcnt++;
+                        plainHydrogens.Set(nbor, atom);
+                    }
+                }
+                if (hcnt > 0) {
+                    var qatom = (QueryAtom)AtomRef.Deref(atom);
+                    var e = qatom.Expression;
+                    var hexpr = new Expr();
+                    for (int i = 0; i < hcnt; i++)
+                        hexpr.And(new Expr(ExprType.TotalHCount, i).Negate());
+                    e.And(hexpr);
+                }
+            }
+
+            // nothing to do
+            if (!plainHydrogens.Any())
+                return mol;
+
+            var res = new QueryAtomContainer();
+            foreach (var atom in mol.Atoms)
+            {
+                if (!plainHydrogens.ContainsKey(atom))
+                    res.Atoms.Add(atom);
+            }
+            foreach (var bond in mol.Bonds)
+            {
+                if (!plainHydrogens.ContainsKey(bond.Begin)
+                 && !plainHydrogens.ContainsKey(bond.End))
+                    res.Bonds.Add(bond);
+            }
+            foreach (var se in mol.StereoElements)
+            {
+                res.StereoElements.Add((IStereoElement<IChemObject, IChemObject>)se.Clone(plainHydrogens));
+            }
+
+            return res;
+        }
     }
 }
+

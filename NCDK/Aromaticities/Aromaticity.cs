@@ -51,7 +51,7 @@ namespace NCDK.Aromaticities
     /// Although there is not a single universally accepted model there are models
     /// which may better suited for a specific use (<see href="http://www.slideshare.net/NextMoveSoftware/cheminformatics-toolkits-a-personal-perspective">Cheminformatics Toolkits: A Personal Perspective, Roger Sayle</see>).
     /// The different models are often ill-defined or unpublished but it is important
-    /// to acknowledge that there are differences (see. <see href="http://blueobelisk.shapado.com/questions/aromaticity-perception-differences">Aromaticity Perception Differences, Blue Obelisk</see>).
+    /// to acknowledge that there are differences.
     /// </para>
     /// <para>
     /// Although models may get more complicated (e.g. considering tautomers)

@@ -159,22 +159,16 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
 
             private int[][] atomAdj, bondAdj; // precalculated adjacencies
-            private int[] ringBlock;       // ring block identifier; 0=not in a ring
-            private int[][] smallRings;      // all rings of size 3 through 7
-            private int[] bondOrder;       // numeric bond order for easy reference
-            private bool[] atomArom, bondArom; // aromaticity precalculated
+            private int[] ringBlock;          // ring block identifier; 0=not in a ring
+            private int[][] smallRings;       // all rings of size 3 through 7
+            private int[] bondOrder;          // numeric bond order for easy reference
+            private bool[] bondArom;          // aromaticity precalculated
             private bool[] piAtom;            // true for all atoms involved in a double bond
-            private int[] implicitH;         // hydrogens in addition to those encoded
+            private int[] implicitH;          // hydrogens in addition to those encoded
 
             public Result Calculate()
             {
-                try
-                {
-                    ExcavateMolecule();
-                }
-                catch (CDKException)
-                {
-                }
+                ExcavateMolecule();
 
                 int nSmallRings = smallRings.Length;
                 int nAromRings = 0;
@@ -410,8 +404,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                         if (!fnd)
                         {
                             var newPath = new int[capacity];
-                            for (int i = 0; i < psize; i++)
-                                newPath[i] = path[i];
+                            if (psize >= 0)
+                                Array.Copy(path, 0, newPath, 0, psize);
                             newPath[psize] = adj;
                             RecursiveRingFind(newPath, psize + 1, capacity, rblk, rings);
                         }
@@ -435,12 +429,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
                 // make sure every element in the path has exactly 2 neighbours within the path; otherwise it is spanning a bridge, which
                 // is an undesirable ring definition
-                for (int n = 0; n < path.Length; n++)
+                foreach (var aPath in path)
                 {
-                    int count = 0, p = path[n];
-                    for (int i = 0; i < atomAdj[p].Length; i++)
-                        for (int j = 0; j < path.Length; j++)
-                            if (atomAdj[p][i] == path[j])
+                    int count = 0;
+                    for (int i = 0; i < atomAdj[aPath].Length; i++)
+                        foreach (var aPath1 in path)
+                            if (atomAdj[aPath][i] == aPath1)
                             {
                                 count++;
                                 break;
@@ -465,9 +459,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     path = newPath;
                 }
 
-                for (int n = 0; n < rings.Count; n++)
+                foreach (var look in rings)
                 {
-                    var look = rings[n];
                     bool same = true;
                     for (int i = 0; i < psize; i++)
                         if (look[i] != path[i])
@@ -489,7 +482,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             {
                 var na = container.Atoms.Count;
                 var nb = container.Bonds.Count;
-                atomArom = new bool[na];
                 bondArom = new bool[nb];
 
                 if (smallRings.Length == 0)
@@ -552,7 +544,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                         // the ring is deemed aromatic: mark the flags and remove from the maybe list
                         for (int i = 0; i < r.Length; i++)
                         {
-                            atomArom[r[i]] = true;
                             bondArom[FindBond(r[i], r[i == 5 ? 0 : i + 1])] = true;
                         }
                         maybe.RemoveAt(n);
@@ -660,7 +651,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                             {
                                 var a = r[i];
                                 var b = FindBond(r[i], r[i < r.Length - 1 ? i + 1 : 0]);
-                                atomArom[a] = true;
                                 bondArom[b] = true;
                             }
                             rings.RemoveAt(n);
@@ -734,8 +724,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 if (a == null || a.Length == 0)
                     return new int[] { v };
                 var b = new int[a.Length + 1];
-                for (int n = a.Length - 1; n >= 0; n--)
-                    b[n] = a[n];
+                Array.Copy(a, 0, b, 0, a.Length);
                 b[a.Length] = v;
                 return b;
             }
