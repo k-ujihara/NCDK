@@ -30,6 +30,7 @@ using NCDK.Sgroups;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -113,11 +114,12 @@ namespace NCDK.Smiles
         {
         }
 
-        public SmilesParser(IChemObjectBuilder builder, bool kekulise)
+        public SmilesParser(IChemObjectBuilder builder, bool kekulise = true, bool strict = false)
         {
             this.builder = builder;
             this.beamToCDK = new BeamToCDK(builder);
             this.Kekulise = kekulise;
+            this.Strict = strict;
         }
 
         /// <summary>
@@ -203,8 +205,11 @@ namespace NCDK.Smiles
         {
             try
             {
-                // create the Beam object from the SMILES
-                Beam.Graph g = Beam.Graph.FromSmiles(smiles);
+                // create the Beam object from parsing the SMILES
+                var warnings = new HashSet<string>();
+                var g = Beam.Graph.Parse(smiles, Strict, warnings);
+                foreach (var warning in warnings)
+                    Trace.TraceWarning(warning);
 
                 // convert the Beam object model to the CDK - note exception thrown
                 // if a kekule structure could not be assigned.
@@ -220,18 +225,18 @@ namespace NCDK.Smiles
                     catch (Exception e)
                     {
                         // e.StackTrace
-                        throw new InvalidSmilesException($"Error parsing CXSMILES: {e.Message}");
+                        throw new InvalidSmilesException($"Error parsing CXSMILES: {e.Message}", e);
                     }
                 }
                 return mol;
             }
             catch (IOException e)
             {
-                throw new InvalidSmilesException($"could not parse '{smiles}', {e.Message}");
+                throw new InvalidSmilesException($"could not parse '{smiles}', {e.Message}", e);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw new InvalidSmilesException($"could not parse '{smiles}'");
+                throw new InvalidSmilesException($"could not parse '{smiles}'", e);
             }
         }
 
@@ -670,5 +675,10 @@ namespace NCDK.Smiles
         /// assigned bond orders (not recommended).
         /// </summary>
         public bool Kekulise { get; private set; } = true;
+
+        /// <summary>
+        /// Whether the parser is in strict mode or not.
+        /// </summary>
+        public bool Strict { get; private set; } = false;
     }
 }

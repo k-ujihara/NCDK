@@ -378,8 +378,8 @@ namespace NCDK.Fingerprints
         public void PseudoAtomFingerprintArom()
         {
             SmilesParser smipar = CDK.SmilesParser;
-            string query = "*1cccc1";
-            string indole = "o1cccc1";
+            string query = "*1cnccc1";
+            string indole = "n1cnccc1";
             var queryMol = smipar.ParseSmiles(query);
             var indoleMol = smipar.ParseSmiles(indole);
             Fingerprinter fpr = new Fingerprinter();

@@ -516,6 +516,12 @@ namespace NCDK.Beam
             Assert.IsFalse(Localise.InSmallRing(g, g.CreateEdge(3, 6)));
         }
 
+        [TestMethod()]
+        public void Anyatom()
+        {
+            Test("*1ccccc1", "*1=CC=CC=C1");
+        }
+
         static void Test(string delocalised, string localised)
         {
             Graph g = Graph.FromSmiles(delocalised);

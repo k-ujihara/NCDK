@@ -414,12 +414,19 @@ namespace NCDK.Smiles
             var edges = g.GetEdges(u);
             if (edges.Count == 1)
                 return null;
+            Edge first = null;
             foreach (var e in g.GetEdges(u))
             {
                 var b = e.Bond;
-                if (b == Bond.Up || b == Bond.Down) return e;
+                if (b == Bond.Up || b == Bond.Down)
+                {
+                    if (first == null)
+                        first = e;
+                    else if (((first.Either() == e.Either()) == (first.Bond == b)))
+                        return null;
+                }
             }
-            return null;
+            return first;
         }
 
         /// <summary>

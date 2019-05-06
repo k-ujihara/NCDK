@@ -35,18 +35,6 @@ namespace NCDK.Beam
             {
                 Assert.AreEqual(AtomImpl.AromaticSubset.OfElement(a.Element), a);
             }
-        }
-
-        [TestMethod()]
-        public void IsAromaticSubsetInvalidElement()
-        {
-            try
-            {
-                AtomImpl.AromaticSubset.OfElement(Element.Unknown);
-                Assert.Fail();
-            }
-            catch (ArgumentException)
-            { }
-        }
+        } 
     }
 }

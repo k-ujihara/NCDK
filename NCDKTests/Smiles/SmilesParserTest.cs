@@ -2660,6 +2660,29 @@ namespace NCDK.Smiles
         }
 
         [TestMethod()]
+        public void WarnOnDirectionalBonds() 
+        {
+            var smipar = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+            var mol = smipar.ParseSmiles("C/C=C/1.C/1");
+    }
+
+        [TestMethod()]
+        [ExpectedException(typeof(InvalidSmilesException))]
+        public void FailOnDirectionalBondsWhenStrict()
+        {
+            var smipar = new SmilesParser(Silent.ChemObjectBuilder.Instance, strict: true);
+            var mol = smipar.ParseSmiles("C/C=C/1.C/1");
+        }
+
+        [TestMethod()]
+        public void IgnoreDoubleBond()
+        {
+            var smipar = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+            var mol = smipar.ParseSmiles("C/C=C(/F)/C");
+            Assert.IsTrue(mol.StereoElements.Count == 0);
+        }
+
+        [TestMethod()]
         public void ExtendedTetrahedral7()
         {
             var mol = Load("CC=C=C=[C@]=C=C=CC");

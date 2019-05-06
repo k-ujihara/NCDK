@@ -443,7 +443,23 @@ namespace NCDK.Beam
         {
             if (smi == null)
                 throw new ArgumentNullException(nameof(smi), "no SMILES provided");
-            return Parser.Parse(smi);
+            var parser = new Parser(CharBuffer.FromString(smi), false);
+            foreach (var warn in parser.Warnings())
+            {
+                foreach (var line in warn.Split('\n'))
+                    Console.Error.WriteLine($"SMILES Warning: {line}");
+            }
+            return parser.Molecule();
+        }
+
+        public static Graph Parse(string smi, bool strict, ISet<string> warnings)
+        {
+            if (smi == null)
+                throw new ArgumentNullException("no SMILES provided");
+            var parser = new Parser(CharBuffer.FromString(smi), strict);
+            foreach (var warning in parser.Warnings())
+                warnings.Add(warning);
+            return parser.Molecule();
         }
 
         /// <summary>
@@ -451,7 +467,7 @@ namespace NCDK.Beam
         /// of the molecule.
         /// </summary>
         /// <returns>the SMILES string for the molecule</returns>.
-        // @ a SMILES string could not be generated
+        /// <exception cref="System.IO.IOException">a SMILES string could not be generated</exception>
         public string ToSmiles()
         {
             return Generator.Generate(this);

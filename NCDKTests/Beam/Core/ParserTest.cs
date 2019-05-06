@@ -41,15 +41,15 @@ namespace NCDK.Beam
         [ExpectedException(typeof(InvalidSmilesException))]
         public void RingBondMismatch()
         {
-            Parser.DecideBond(Bond.Single, Bond.Double, CharBuffer.FromString(""));
+            new Parser("").DecideBond(Bond.Single, Bond.Double, -1, CharBuffer.FromString(""));
         }
 
         [TestMethod()]
         public void RingBondDecision()
         {
-            Assert.AreEqual(Parser.DecideBond(Bond.Double, Bond.Double, CharBuffer.FromString("")), Bond.Double);
-            Assert.AreEqual(Parser.DecideBond(Bond.Double, Bond.Implicit, CharBuffer.FromString("")), Bond.Double);
-            Assert.AreEqual(Parser.DecideBond(Bond.Implicit, Bond.Double, CharBuffer.FromString("")), Bond.Double);
+            Assert.AreEqual(new Parser("").DecideBond(Bond.Double, Bond.Double, -1, CharBuffer.FromString("")), Bond.Double);
+            Assert.AreEqual(new Parser("").DecideBond(Bond.Double, Bond.Implicit, -1, CharBuffer.FromString("")), Bond.Double);
+            Assert.AreEqual(new Parser("").DecideBond(Bond.Implicit, Bond.Double, -1, CharBuffer.FromString("")), Bond.Double);
         }
 
         [TestMethod()]
@@ -271,7 +271,7 @@ namespace NCDK.Beam
         [ExpectedException(typeof(InvalidSmilesException))]
         public void RejectMultipleUpBonds()
         {
-            Parser.Parse("C/C=C(/C)/C");
+            Parser.GetStrict("C/C=C(/C)/C");
         }
 
         [TestMethod()]
@@ -361,6 +361,47 @@ namespace NCDK.Beam
         public void OutOfOrderTetrahedral2()
         {
             Assert.AreEqual("[C@@](Cl)(F)(I)Br", Graph.FromSmiles("[C@](Cl)(F)1I.Br1").ToSmiles());
+        }
+
+        [TestMethod()]
+        public void AcceptableDoubleBondLabels()
+        {
+            Assert.AreEqual("CC=C(/C=C/C)/C=C/C",
+                     Graph.FromSmiles("CC=C(/C=C/C)/C=C/C").ToSmiles());
+        }
+
+        [TestMethod()]
+        public void IgnoreMismatchRingBonds()
+        {
+            Assert.AreEqual("C/C=CC",
+                     Graph.FromSmiles("C/C=C/1.C/1").ToSmiles());
+        }
+
+        [TestMethod()]
+        public void BadBonds()
+        {
+            Assert.AreEqual("C/C=C(/C)/F",
+                     Graph.FromSmiles("C/C=C(/C)/F").ToSmiles());
+        }
+
+        /// <summary>
+        /// Testing warning mesgs
+        /// </summary>
+        [TestMethod()]
+        public void BadBonds2()
+        {
+            Graph.FromSmiles("C/C=C(/1)/F.C\\1");
+            Graph.FromSmiles("C/C=C(/1)/F.C1");
+            Graph.FromSmiles("C/C=C(1)/F.CCCCC\\1CCC");
+            Graph.FromSmiles("C/C=C(/%12).C/%12");
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(InvalidSmilesException))]
+        public void MismatchRingBonds()
+        {
+            Assert.AreEqual("CC=CC",
+                     Graph.FromSmiles("CC=C-1.C=1").ToSmiles());
         }
     }
 }

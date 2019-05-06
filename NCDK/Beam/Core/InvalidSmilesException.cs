@@ -72,7 +72,7 @@ namespace NCDK.Beam
         /// <param name="buffer">a character buffer</param>
         /// <param name="offset"></param>
         /// <returns>a * 3 line string showing the buffer and it's current position</returns>
-        static string Display(CharBuffer buffer, int offset)
+        internal static string Display(CharBuffer buffer, int offset)
         {
             var sb = new StringBuilder();
             sb.Append('\n');
@@ -81,6 +81,22 @@ namespace NCDK.Beam
             for (int i = 1; i < (buffer.Position + offset); i++)
                 sb.Append(' ');
             sb.Append('^');
+            return sb.ToString();
+        }
+
+        internal static string Display(CharBuffer buffer, int offset, int offset2)
+        {
+            var sb = new StringBuilder();
+            sb.Append('\n');
+            sb.Append(buffer);
+            sb.Append('\n');
+            for (int i = 1; i < buffer.Length; i++)
+            {
+                if (i == buffer.Position + offset || i == buffer.Position + offset2)
+                    sb.Append('^');
+                else
+                    sb.Append(' ');
+            }
             return sb.ToString();
         }
 

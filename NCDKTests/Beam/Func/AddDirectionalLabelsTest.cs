@@ -229,9 +229,7 @@ namespace NCDK.Beam
         {
             Assert.AreEqual(
                 exp,
-                Generator.Generate(new AddDirectionalLabels()
-                                                         .Apply(Parser.Parse(smi))));
-
+                Generator.Generate(new AddDirectionalLabels().Apply(Parser.GetStrict(smi))));
         }
     }
 }

@@ -41,7 +41,7 @@ namespace NCDK.Beam
     {
         public sealed class AliphaticSubset : IAtom
         {
-            public static readonly AliphaticSubset Unknown = new AliphaticSubset(Element.Unknown);
+            public static readonly AliphaticSubset Any = new AliphaticSubset(Element.Unknown);
             public static readonly AliphaticSubset Boron = new AliphaticSubset(Element.Boron);
             public static readonly AliphaticSubset Carbon = new AliphaticSubset(Element.Carbon);
             public static readonly AliphaticSubset Nitrogen = new AliphaticSubset(Element.Nitrogen);
@@ -55,7 +55,7 @@ namespace NCDK.Beam
 
             public static IReadOnlyList<AliphaticSubset> Values = new[]
             {
-                Unknown,
+                Any,
                 Boron,
                 Carbon,
                 Nitrogen,
@@ -126,6 +126,7 @@ namespace NCDK.Beam
 
         public sealed class AromaticSubset : IAtom
         {
+            public static readonly AromaticSubset Any = new AromaticSubset(Element.Unknown);
             public static readonly AromaticSubset Boron = new AromaticSubset(Element.Boron);
             public static readonly AromaticSubset Carbon = new AromaticSubset(Element.Carbon);
             public static readonly AromaticSubset Nitrogen = new AromaticSubset(Element.Nitrogen);
