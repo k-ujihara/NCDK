@@ -435,9 +435,6 @@ namespace NCDK.Renderers.Generators.Standards
         /// <returns>normalised character</returns>
         private static char Norm(char c)
         {
-            // if character is out of scope don't
-            if (c > 128)
-                return (char)0;
             switch (c)
             {
                 case '\u002d': // hyphen
@@ -468,7 +465,9 @@ namespace NCDK.Renderers.Generators.Standards
                 best = i;
             if (i == str.Length)
                 return best;
-            char c = Norm(str[i]);
+            var c = Norm(str[i]);
+            if (c > 128)
+                return best;
             return FindPrefix(trie.Children[c], str, i + 1, best);
         }
 

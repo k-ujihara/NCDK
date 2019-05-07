@@ -400,14 +400,10 @@ namespace NCDK.Renderers.Visitors
             {
                 chargeString = "-";
             }
-            else if (atomSymbol.FormalCharge < -1)
+            else
             {
                 int absCharge = Math.Abs(atomSymbol.FormalCharge);
                 chargeString = absCharge + "-";
-            }
-            else
-            {
-                return;
             }
 
             var xCoord = bounds.CenterX();
