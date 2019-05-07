@@ -5313,7 +5313,6 @@
             Clone and Sort the mappings based on the order of the first object
             in the mapping (which is assumed to be the reactant).
             </summary>
-            <param name="reaction"></param>
         </member>
         <member name="M:NCDK.SMSD.Labelling.ICanonicalReactionLabeller.GetCanonicalReaction(NCDK.IReaction)">
             <summary>

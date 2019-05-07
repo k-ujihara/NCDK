@@ -108,7 +108,6 @@ namespace NCDK.SMSD.Labelling
         /// Clone and Sort the mappings based on the order of the first object
         /// in the mapping (which is assumed to be the reactant).
         /// </summary>
-        /// <param name="reaction"></param>
         private static void CloneAndSortMappings(IReaction reaction, IReaction copyOfReaction,
             IReadOnlyDictionary<IAtomContainer, int[]> permutationMap)
         {

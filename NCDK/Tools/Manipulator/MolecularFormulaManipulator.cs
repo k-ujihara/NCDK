@@ -785,7 +785,6 @@ namespace NCDK.Tools.Manipulator
         /// <param name="mf">molecular formula</param>
         /// <param name="flav">flavor</param>
         /// <returns>the mass of the molecule</returns>
-        /// <seealso cref="GetMass(IAtomContainer, MolecularWeightTypes)"/>
         /// <seealso cref="MolecularWeightTypes.MolWeight"/>
         /// <seealso cref="MolecularWeightTypes.MolWeightIgnoreSpecified"/>
         /// <seealso cref="MolecularWeightTypes.MonoIsotopic"/>
@@ -849,7 +848,6 @@ namespace NCDK.Tools.Manipulator
         /// </remarks>
         /// <param name="mf">molecular formula</param>
         /// <returns>the mass of the molecule</returns>
-        /// <seealso cref="GetMass(IAtomContainer, MolecularWeightTypes)"/>
         /// <seealso cref="MolecularWeightTypes.MolWeight"/>
         /// <seealso cref="MolecularWeightTypes.MolWeightIgnoreSpecified"/>
         /// <seealso cref="MolecularWeightTypes.MonoIsotopic"/>
@@ -1556,7 +1554,7 @@ namespace NCDK.Tools.Manipulator
         /// a distribution of isotopes by splitting the set of isotopes in two,
         /// the one under consideration (specified by 'idx') and the remaining to be
         /// considered ('&gt;idx'). The inflection point is calculate as 'k'
-        /// &le 'count' isotopes added. If there are remaining isotopes the method
+        /// ≦ 'count' isotopes added. If there are remaining isotopes the method
         /// calls it's self with 'idx+1' and 'count := k'.
         /// </summary>
         /// <param name="mf">the molecular formula to update</param>

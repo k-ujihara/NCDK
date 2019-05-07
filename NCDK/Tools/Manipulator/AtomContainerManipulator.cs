@@ -367,11 +367,11 @@ namespace NCDK.Tools.Manipulator
         /// Calculate the mass of a molecule, this function takes an optional
         /// 'mass flavour' that switches the computation type. The key distinction
         /// is how specified/unspecified isotopes are handled. A specified isotope
-        /// is an atom that has either {@link IAtom#setMassNumber(Integer)}
-        /// or {@link IAtom#setExactMass(Double)} set to non-null and non-zero.
-        /// <br>
+        /// is an atom that has either <see cref="IIsotope.MassNumber"/>
+        /// or <see cref="IIsotope.ExactMass"/> set to non-null and non-zero.
+        /// </summary>
+        /// <remarks>
         /// The flavours are:
-        /// <br>
         /// <ul>
         ///     <li><see cref="MolecularWeightTypes.MolWeight"/> (default) - uses the exact mass of each
         ///     atom when an isotope is specified, if not specified the average mass
@@ -385,7 +385,7 @@ namespace NCDK.Tools.Manipulator
         ///     specified, if not specified a distribution is calculated and the
         ///     most abundant isotope pattern is used.</li>
         /// </ul>
-        /// </summary>
+        /// </remarks>
         /// <param name="mol">molecule to compute mass for</param>
         /// <returns>the mass of the molecule</returns>
         /// <seealso cref="GetMass(IAtomContainer, MolecularWeightTypes)"/>
