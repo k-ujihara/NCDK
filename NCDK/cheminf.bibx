@@ -888,6 +888,18 @@
     </bibtex:article>
   </bibtex:entry>
 
+  <bibtex:entry id="Plante2018">
+    <bibtex:article>
+      <bibtex:author>Plante, J. and Werner, S.</bibtex:author>
+      <bibtex:title>JPlogP: an improved logP predictor trained using predicted data</bibtex:title>
+      <bibtex:journal>J. Cheminform.</bibtex:journal>
+      <bibtex:year>2018</bibtex:year>
+      <bibtex:volume>10</bibtex:volume>
+      <bibtex:pages>61</bibtex:pages>
+      <bibtex:crossref>DOI:10.1186/s13321-018-0316-5</bibtex:crossref>
+    </bibtex:article>
+  </bibtex:entry>
+
   <bibtex:entry id="PMR99">
     <bibtex:article>
       <bibtex:author>Murray-Rust, P. and Rzepa, H.S.</bibtex:author>
