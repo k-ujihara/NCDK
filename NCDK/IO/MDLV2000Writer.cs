@@ -63,7 +63,7 @@ namespace NCDK.IO
         public const string OptWriteAromaticBondTypes = "WriteAromaticBondTypes";
         public const string OptWriteQueryFormatValencies = "WriteQueryFormatValencies";
         public const string OptWriteDefaultProperties = "WriteDefaultProperties";
-        public const string OptProgramName = "PorgramName";
+        public const string OptProgramName = "ProgramName";
 
         // regular expression to capture R groups with attached numbers
         private static readonly Regex NUMERED_R_GROUP = new Regex("R(\\d+)", RegexOptions.Compiled);
@@ -93,12 +93,13 @@ namespace NCDK.IO
                 Value = value;
                 SingleElectrons = singleElectrons;
             }
+
             /// <summary>
             /// Create a SpinMultiplicity instance for the specified value.
             /// </summary>
             /// <param name="value">input value (in the property block)</param>
             /// <returns>instance</returns>
-            // @ unknown spin multiplicity value
+            /// <exception cref="unknown spin multiplicity value">unknown spin multiplicity value</exception>
             public static SpinMultiplicity OfValue(int value)
             {
                 switch (value)
@@ -119,6 +120,7 @@ namespace NCDK.IO
 
         // number of entries on line; value = 1 to 8
         private const int NN8 = 8;
+
         // spacing between entries on line
         private const int WIDTH = 3;
 
