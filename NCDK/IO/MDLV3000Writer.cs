@@ -240,7 +240,7 @@ namespace NCDK.IO
                 foreach (var bond in mol.GetConnectedBonds(atom))
                 {
                     if (bond.Order == BondOrder.Unset)
-                        throw new CDKException("Unsupported bond order: " + bond.Order);
+                        throw new CDKException($"Unsupported bond order: {bond.Order}");
                     expVal += bond.Order.Numeric();
                 }
 
@@ -407,7 +407,7 @@ namespace NCDK.IO
                 var order = bond.Order.Numeric();
 
                 if (order < 1 || order > 3)
-                    throw new CDKException("Bond order " + bond.Order + " cannot be written to V3000");
+                    throw new CDKException($"Bond order {bond.Order} cannot be written to V3000");
 
                 writer.Write(++bondIdx)
                       .Write(' ')
@@ -714,7 +714,7 @@ namespace NCDK.IO
                 if (obj is IAtomContainer)
                     WriteMol((IAtomContainer)obj);
                 else
-                    throw new CDKException("Unsupported ChemObject " + obj.GetType());
+                    throw new CDKException($"Unsupported ChemObject {obj.GetType()}");
             }
             catch (IOException ex)
             {

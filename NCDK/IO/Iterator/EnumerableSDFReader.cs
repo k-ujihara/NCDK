@@ -148,14 +148,20 @@ namespace NCDK.IO.Iterator
         private ISimpleChemObjectReader GetReader(IChemFormat format, TextReader input)
         {
             ISimpleChemObjectReader reader;
-            if (format is MDLV2000Format)
-                reader = new MDLV2000Reader(input);
-            else if (format is MDLV3000Format)
-                reader = new MDLV3000Reader(input);
-            else if (format is MDLFormat)
-                reader = new MDLReader(input);
-            else
-                throw new ArgumentException("Unexpected format: " + format);
+            switch (format)
+            {
+                case MDLV2000Format _:
+                    reader = new MDLV2000Reader(input);
+                    break;
+                case MDLV3000Format _:
+                    reader = new MDLV3000Reader(input);
+                    break;
+                case MDLFormat _:
+                    reader = new MDLReader(input);
+                    break;
+                default:
+                    throw new ArgumentException($"Unexpected format: {format}");
+            }
             reader.ErrorHandler = this.ErrorHandler;
             reader.ReaderMode = this.ReaderMode;
             if (currentFormat is MDLV2000Format)
@@ -202,7 +208,7 @@ namespace NCDK.IO.Iterator
 
                     try
                     {
-                        ISimpleChemObjectReader reader = GetReader(currentFormat, new StringReader(buffer.ToString()));
+                        var reader = GetReader(currentFormat, new StringReader(buffer.ToString()));
                         molecule = reader.Read(builder.NewAtomContainer());
                     }
                     catch (Exception exception)
@@ -267,7 +273,7 @@ namespace NCDK.IO.Iterator
                 {
                     dataHeader = ExtractFieldName(str);
                     SkipOtherFieldHeaderLines(str);
-                    string data = ExtractFieldData(sb);
+                    var data = ExtractFieldData(sb);
                     if (dataHeader != null)
                     {
                         Trace.TraceInformation($"fieldName, data: {dataHeader}, {data}");
@@ -283,7 +289,7 @@ namespace NCDK.IO.Iterator
 
         /// <summary>
         /// Indicate whether the reader should skip over SDF records
-        /// that cause problems. If true the reader will fetch the next
+        /// that cause problems. If <see langword="true"/> the reader will fetch the next
         /// molecule
         /// </summary>
         public bool Skip { get; set; }

@@ -19,7 +19,7 @@ Most of codes are written in C\#. You can learn NCDK from CDK documents, NCDKTes
 * MolViewer -- MOL file viewer, which can depict SMILES. It includes WPF control to show molecular/reaction.
 * Documentation -- Sandcastle Help File Builder project
 
-Chem object contains utility methods for quick access to frequently used functions. The methods' name are called after RDKit. They should be work within C# interactive.
+Chem object contains utility methods for quick access to frequently used functions. The methods' name are called after RDKit. They should work within C# interactive.
 
 ```
     using System;

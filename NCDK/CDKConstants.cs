@@ -172,7 +172,7 @@ namespace NCDK
         /// <summary>A List of annotation remarks.</summary>
         public const string Annotations = "cdk:Annotations";
 
-        /// <summary>A description for a IChemObject.</summary>
+        /// <summary>A description for a <see cref="IChemObject"/>.</summary>
         public const string Description = "cdk:Description";
 
         // **************************************
@@ -308,7 +308,7 @@ namespace NCDK
         public const string SingleElectronCount = "cdk:Single Electron Count";
 
         /// <summary>pack the RGB color space components into a single int.</summary>
-        public const string Color = "org.openscience.cdk.renderer." + "color";
+        public const string Color = "org.openscience.cdk.renderer.color";
 
         internal static int RGB2Int(int r, int g, int b) => (((r << 16) & 0xff0000) | ((g << 8) & 0x00ff00) | (b & 0x0000ff));
     }

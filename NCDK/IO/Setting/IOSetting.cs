@@ -26,7 +26,6 @@ namespace NCDK.IO.Setting
     /// one for each type of field, e.g. IntReaderSetting.
     /// </summary>
     // @cdk.module io
-    // @cdk.githash
     // @author Egon Willighagen <egonw@sci.kun.nl>
     public abstract class IOSetting : ISetting
     {
