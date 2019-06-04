@@ -16,12 +16,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.AtomTypes;
 using NCDK.Isomorphisms;
 using NCDK.Isomorphisms.Matchers;
 using NCDK.Reactions.Types.Parameters;
-using NCDK.Silent;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
@@ -49,22 +48,22 @@ namespace NCDK.Reactions.Types
         [TestMethod()]
         public void TestHyperconjugationReaction()
         {
-            IReactionProcess type = new HyperconjugationReaction();
+            var type = new HyperconjugationReaction();
             Assert.IsNotNull(type);
         }
 
         /// <summary>
-        /// A unit test suite for JUnit. Reaction: [C+]-CC => C=CC + [H+]
+        /// A unit test suite. Reaction: [C+]-CC => C=CC + [H+]
         /// Automatic search for the active center.
         /// </summary>
         [TestMethod()]
         public override void TestInitiate_IAtomContainerSet_IAtomContainerSet()
         {
-            IReactionProcess type = new HyperconjugationReaction();
-            var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet();
+            var type = new HyperconjugationReaction();
+            var setOfReactants = CDK.Builder.NewAtomContainerSet();
 
             /* [C+]CC */
-            IAtomContainer molecule = builder.NewAtomContainer();
+            var molecule = builder.NewAtomContainer();
             molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.Atoms[0].FormalCharge = 1;
             molecule.Atoms.Add(builder.NewAtom("C"));
@@ -90,9 +89,9 @@ namespace NCDK.Reactions.Types
             Assert.AreEqual(2, setOfReactions.Count);
             Assert.AreEqual(2, setOfReactions[0].Products.Count);
 
-            IAtomContainer product = setOfReactions[0].Products[0];
+            var product = setOfReactions[0].Products[0];
             /* C=CC */
-            IAtomContainer molecule2 = builder.NewAtomContainer();
+            var molecule2 = builder.NewAtomContainer();
             molecule2.Atoms.Add(builder.NewAtom("C"));
             molecule2.Atoms.Add(builder.NewAtom("C"));
             molecule2.AddBond(molecule2.Atoms[0], molecule2.Atoms[1], BondOrder.Double);
@@ -125,16 +124,16 @@ namespace NCDK.Reactions.Types
         }
 
         /// <summary>
-        /// A unit test suite for JUnit. Reaction: [C-][C+]-C => [C-]C=C + [H+]
+        /// A unit test suite. Reaction: [C-][C+]-C => [C-]C=C + [H+]
         /// Manually put of the center active.
         /// </summary>
         [TestMethod()]
         public void TestManuallyCentreActive()
         {
-            IReactionProcess type = new HyperconjugationReaction();
+            var type = new HyperconjugationReaction();
 
             var setOfReactants = GetExampleReactants();
-            IAtomContainer molecule = setOfReactants[0];
+            var molecule = setOfReactants[0];
 
             /* manually put the center active */
             molecule.Atoms[1].IsReactiveCenter = true;
@@ -156,22 +155,22 @@ namespace NCDK.Reactions.Types
             Assert.AreEqual(1, setOfReactions.Count);
             Assert.AreEqual(2, setOfReactions[0].Products.Count);
 
-            IAtomContainer product = setOfReactions[0].Products[0];
+            var product = setOfReactions[0].Products[0];
 
-            IAtomContainer molecule2 = GetExpectedProducts()[0];
+            var molecule2 = GetExpectedProducts()[0];
 
-            IQueryAtomContainer queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(product);
+            var queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(product);
             Assert.IsTrue(new UniversalIsomorphismTester().IsIsomorph(molecule2, queryAtom));
         }
 
         /// <summary>
-        /// A unit test suite for JUnit. Reaction: [C-][C+]-C => [C-]C=C + [H+]
+        /// A unit test suite. Reaction: [C-][C+]-C => [C-]C=C + [H+]
         /// Automatic search for the active center.
         /// </summary>
         [TestMethod()]
         public void TestWithNegativeCharge()
         {
-            IReactionProcess type = new HyperconjugationReaction();
+            var type = new HyperconjugationReaction();
 
             var setOfReactants = GetExampleReactants();
 
@@ -188,11 +187,11 @@ namespace NCDK.Reactions.Types
             Assert.AreEqual(3, setOfReactions.Count);
             Assert.AreEqual(2, setOfReactions[0].Products.Count);
 
-            IAtomContainer product = setOfReactions[0].Products[0];
+            var product = setOfReactions[0].Products[0];
 
-            IAtomContainer molecule2 = GetExpectedProducts()[0];
+            var molecule2 = GetExpectedProducts()[0];
 
-            IQueryAtomContainer queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(molecule2);
+            var queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(molecule2);
             Assert.IsTrue(new UniversalIsomorphismTester().IsIsomorph(product, queryAtom));
 
             product = setOfReactions[0].Products[1];
@@ -208,10 +207,10 @@ namespace NCDK.Reactions.Types
         [TestMethod()]
         public void TestCDKConstants_REACTIVE_CENTER()
         {
-            IReactionProcess type = new HyperconjugationReaction();
+            var type = new HyperconjugationReaction();
 
             var setOfReactants = GetExampleReactants();
-            IAtomContainer molecule = setOfReactants[0];
+            var molecule = setOfReactants[0];
 
             /* manually put the reactive center */
             molecule.Atoms[1].IsReactiveCenter = true;
@@ -246,10 +245,10 @@ namespace NCDK.Reactions.Types
         [TestMethod()]
         public void TestMapping()
         {
-            IReactionProcess type = new HyperconjugationReaction();
+            var type = new HyperconjugationReaction();
 
             var setOfReactants = GetExampleReactants();
-            IAtomContainer molecule = setOfReactants[0];
+            var molecule = setOfReactants[0];
 
             /* automatic search of the center active */
             var paramList = new List<IParameterReaction>();
@@ -261,21 +260,18 @@ namespace NCDK.Reactions.Types
             /* initiate */
             var setOfReactions = type.Initiate(setOfReactants, null);
 
-            IAtomContainer product1 = setOfReactions[0].Products[0];
-            IAtomContainer product2 = setOfReactions[0].Products[1];
+            var product1 = setOfReactions[0].Products[0];
+            var product2 = setOfReactions[0].Products[1];
 
             Assert.AreEqual(3, setOfReactions.Count);
             Assert.AreEqual(2, setOfReactions[0].Products.Count);
 
             // if these assertions fail the atom order may have changed
-            IAtom mappedProductA1 = (IAtom)ReactionManipulator.GetMappedChemObject(setOfReactions[0],
-                    molecule.Atoms[1]);
+            var mappedProductA1 = (IAtom)ReactionManipulator.GetMappedChemObject(setOfReactions[0], molecule.Atoms[1]);
             Assert.AreEqual(mappedProductA1, product1.Atoms[1]);
-            mappedProductA1 = (IAtom)ReactionManipulator.GetMappedChemObject(setOfReactions[0],
-                    molecule.Atoms[2]);
+            mappedProductA1 = (IAtom)ReactionManipulator.GetMappedChemObject(setOfReactions[0], molecule.Atoms[2]);
             Assert.AreEqual(mappedProductA1, product1.Atoms[2]);
-            mappedProductA1 = (IAtom)ReactionManipulator.GetMappedChemObject(setOfReactions[0],
-                    molecule.Atoms[6]);
+            mappedProductA1 = (IAtom)ReactionManipulator.GetMappedChemObject(setOfReactions[0], molecule.Atoms[6]);
             Assert.AreEqual(mappedProductA1, product2.Atoms[0]);
         }
 
@@ -284,9 +280,9 @@ namespace NCDK.Reactions.Types
         /// </summary>
         private IChemObjectSet<IAtomContainer> GetExampleReactants()
         {
-            var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet();
+            var setOfReactants = CDK.Builder.NewAtomContainerSet();
 
-            IAtomContainer molecule = builder.NewAtomContainer();
+            var molecule = builder.NewAtomContainer();
             molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.Atoms[0].FormalCharge = -1;
             molecule.Atoms.Add(builder.NewAtom("C"));
@@ -316,7 +312,7 @@ namespace NCDK.Reactions.Types
         {
             var setOfProducts = builder.NewAtomContainerSet();
 
-            IAtomContainer molecule = builder.NewAtomContainer();
+            var molecule = builder.NewAtomContainer();
             molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.Atoms[0].FormalCharge = -1;
             molecule.Atoms.Add(builder.NewAtom("C"));

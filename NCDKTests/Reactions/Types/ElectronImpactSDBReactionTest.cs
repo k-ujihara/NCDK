@@ -18,9 +18,7 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.AtomTypes;
 using NCDK.Reactions.Types.Parameters;
-using NCDK.Silent;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,7 +32,7 @@ namespace NCDK.Reactions.Types
     [TestClass()]
     public class ElectronImpactSDBReactionTest : ReactionProcessTest
     {
-        private IChemObjectBuilder builder = ChemObjectBuilder.Instance;
+        private IChemObjectBuilder builder = CDK.Builder;
 
         public ElectronImpactSDBReactionTest()
         {
@@ -44,7 +42,7 @@ namespace NCDK.Reactions.Types
         [TestMethod()]
         public void TestElectronImpactSDBReaction()
         {
-            IReactionProcess type = new ElectronImpactSDBReaction();
+            var type = new ElectronImpactSDBReaction();
             Assert.IsNotNull(type);
         }
 
@@ -57,12 +55,12 @@ namespace NCDK.Reactions.Types
             /* Ionize(>C-C<): C=CCC -> C=C* + C+ , set the reactive center */
 
             var setOfReactants = GetExampleReactants();
-            IAtomContainer reactant = setOfReactants[0];
+            var reactant = setOfReactants[0];
 
             foreach (var bond in reactant.Bonds)
             {
-                IAtom atom1 = bond.Atoms[0];
-                IAtom atom2 = bond.Atoms[1];
+                var atom1 = bond.Atoms[0];
+                var atom2 = bond.Atoms[1];
                 if (bond.Order == BondOrder.Single && atom1.Symbol.Equals("C") && atom2.Symbol.Equals("C"))
                 {
                     bond.IsReactiveCenter = true;
@@ -87,12 +85,12 @@ namespace NCDK.Reactions.Types
             Assert.AreEqual(2, setOfReactions.Count);
             Assert.AreEqual(2, setOfReactions[0].Products.Count);
 
-            IAtomContainer molecule1 = setOfReactions[0].Products[0];//[H][C+]=C([H])[H]
+            var molecule1 = setOfReactions[0].Products[0];//[H][C+]=C([H])[H]
 
             Assert.AreEqual(1, molecule1.Atoms[1].FormalCharge.Value);
             Assert.AreEqual(0, molecule1.SingleElectrons.Count);
 
-            IAtomContainer molecule2 = setOfReactions[0].Products[1];//[H][C*]([H])[H]
+            var molecule2 = setOfReactions[0].Products[1];//[H][C*]([H])[H]
 
             Assert.AreEqual(1, molecule2.SingleElectrons.Count);
             Assert.AreEqual(1, molecule2.GetConnectedSingleElectrons(molecule2.Atoms[0]).Count());
@@ -108,7 +106,6 @@ namespace NCDK.Reactions.Types
 
             Assert.AreEqual(0, molecule2.SingleElectrons.Count);
             Assert.AreEqual(1, molecule2.Atoms[0].FormalCharge.Value);
-
         }
 
         /// <summary>
@@ -129,9 +126,9 @@ namespace NCDK.Reactions.Types
         /// </summary>
         private IChemObjectSet<IAtomContainer> GetExampleReactants()
         {
-            var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet();
+            var setOfReactants = CDK.Builder.NewAtomContainerSet();
 
-            IAtomContainer reactant = builder.NewAtomContainer();//CreateFromSmiles("C=CC")
+            var reactant = builder.NewAtomContainer();//CreateFromSmiles("C=CC")
             reactant.Atoms.Add(builder.NewAtom("C"));
             reactant.Atoms.Add(builder.NewAtom("C"));
             reactant.Atoms.Add(builder.NewAtom("C"));

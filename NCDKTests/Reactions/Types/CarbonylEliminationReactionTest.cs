@@ -16,12 +16,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.AtomTypes;
-using NCDK.Silent;
 using NCDK.Isomorphisms;
 using NCDK.Reactions.Types.Parameters;
-using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
@@ -49,24 +47,24 @@ namespace NCDK.Reactions.Types
         [TestMethod()]
         public void TestCarbonylEliminationReaction()
         {
-            IReactionProcess type = new CarbonylEliminationReaction();
+            var type = new CarbonylEliminationReaction();
             Assert.IsNotNull(type);
         }
 
         /// <summary>
-        /// A unit test suite for JUnit. Reaction: C-C#[O+] => [C+] + [|C-]#[O+]
+        /// A unit test suite. Reaction: C-C#[O+] => [C+] + [|C-]#[O+]
         /// Automatically looks for active centre.
         /// </summary>
         [TestMethod()]
         public override void TestInitiate_IAtomContainerSet_IAtomContainerSet()
         {
-            IReactionProcess type = new CarbonylEliminationReaction();
+            var type = new CarbonylEliminationReaction();
             /* [C*]-C-C */
             var setOfReactants = GetExampleReactants();
 
             /* initiate */
             var paramList = new List<IParameterReaction>();
-            IParameterReaction param = new SetReactionCenter
+            var param = new SetReactionCenter
             {
                 IsSetParameter = false
             };
@@ -77,27 +75,26 @@ namespace NCDK.Reactions.Types
             Assert.AreEqual(1, setOfReactions.Count);
             Assert.AreEqual(2, setOfReactions[0].Products.Count);
 
-            IAtomContainer product1 = setOfReactions[0].Products[0];
-            IAtomContainer molecule1 = GetExpectedProducts()[0];//CreateFromSmiles("[C+]");
+            var product1 = setOfReactions[0].Products[0];
+            var molecule1 = GetExpectedProducts()[0];//CreateFromSmiles("[C+]");
             Assert.IsTrue(new UniversalIsomorphismTester().IsIsomorph(molecule1, product1));
 
-            IAtomContainer product2 = setOfReactions[0].Products[1];
-            IAtomContainer molecule2 = GetExpectedProducts()[1];//CreateFromSmiles("[C-]#[O+]");
+            var product2 = setOfReactions[0].Products[1];
+            var molecule2 = GetExpectedProducts()[1];//CreateFromSmiles("[C-]#[O+]");
             Assert.IsTrue(new UniversalIsomorphismTester().IsIsomorph(molecule2, product2));
         }
 
         /// <summary>
-        /// A unit test suite for JUnit. Reaction: C-C#[O+] => [C+] + [|C-]#[O+]
+        /// A unit test suite. Reaction: C-C#[O+] => [C+] + [|C-]#[O+]
         /// Automatically looks for active centre.
         /// </summary>
         [TestMethod()]
         public void TestManuallyPCentreActiveExample1()
         {
-
-            IReactionProcess type = new CarbonylEliminationReaction();
+            var type = new CarbonylEliminationReaction();
 
             var setOfReactants = GetExampleReactants();
-            IAtomContainer molecule = setOfReactants[0];
+            var molecule = setOfReactants[0];
 
             /* initiate */
             /* manually put the reactive center */
@@ -108,10 +105,8 @@ namespace NCDK.Reactions.Types
             molecule.Bonds[4].IsReactiveCenter = true;
 
             var paramList = new List<IParameterReaction>();
-            IParameterReaction param = new SetReactionCenter
-            {
-                IsSetParameter = true
-            };
+            var param = new SetReactionCenter();
+            param.IsSetParameter = true;
             paramList.Add(param);
             type.ParameterList = paramList;
             var setOfReactions = type.Initiate(setOfReactants, null);
@@ -119,48 +114,42 @@ namespace NCDK.Reactions.Types
             Assert.AreEqual(1, setOfReactions.Count);
             Assert.AreEqual(2, setOfReactions[0].Products.Count);
 
-            IAtomContainer product1 = setOfReactions[0].Products[0];
-            IAtomContainer molecule1 = GetExpectedProducts()[0];//CreateFromSmiles("[C+]");
+            var product1 = setOfReactions[0].Products[0];
+            var molecule1 = GetExpectedProducts()[0];//CreateFromSmiles("[C+]");
             Assert.IsTrue(new UniversalIsomorphismTester().IsIsomorph(molecule1, product1));
 
-            IAtomContainer product2 = setOfReactions[0].Products[1];
-            IAtomContainer molecule2 = GetExpectedProducts()[1];//CreateFromSmiles("[C-]#[O+]");
+            var product2 = setOfReactions[0].Products[1];
+            var molecule2 = GetExpectedProducts()[1];//CreateFromSmiles("[C-]#[O+]");
             Assert.IsTrue(new UniversalIsomorphismTester().IsIsomorph(molecule2, product2));
-
         }
 
         /// <summary>
-        /// A unit test suite for JUnit. Reaction: C-C#[O+] => [C+] + [|C-]#[O+]
+        /// A unit test suite. Reaction: C-C#[O+] => [C+] + [|C-]#[O+]
         /// Automatically looks for active centre.
         /// </summary>
         [TestMethod()]
         public void TestMappingExample1()
         {
-
-            IReactionProcess type = new CarbonylEliminationReaction();
+            var type = new CarbonylEliminationReaction();
 
             var setOfReactants = GetExampleReactants();
-            IAtomContainer molecule = setOfReactants[0];
+            var molecule = setOfReactants[0];
 
             /* initiate */
             var paramList = new List<IParameterReaction>();
-            IParameterReaction param = new SetReactionCenter
-            {
-                IsSetParameter = false
-            };
+            var param = new SetReactionCenter();
+            param.IsSetParameter = false;
             paramList.Add(param);
             type.ParameterList = paramList;
             var setOfReactions = type.Initiate(setOfReactants, null);
 
-            IAtomContainer product1 = setOfReactions[0].Products[0];
-            IAtomContainer product2 = setOfReactions[0].Products[1];
+            var product1 = setOfReactions[0].Products[0];
+            var product2 = setOfReactions[0].Products[1];
 
             Assert.AreEqual(6, setOfReactions[0].Mappings.Count);
-            IAtom mappedProductA1 = (IAtom)ReactionManipulator.GetMappedChemObject(setOfReactions[0],
-                    molecule.Atoms[0]);
+            var mappedProductA1 = (IAtom)ReactionManipulator.GetMappedChemObject(setOfReactions[0], molecule.Atoms[0]);
             Assert.AreEqual(mappedProductA1, product1.Atoms[0]);
-            IAtom mappedProductA2 = (IAtom)ReactionManipulator.GetMappedChemObject(setOfReactions[0],
-                    molecule.Atoms[4]);
+            var mappedProductA2 = (IAtom)ReactionManipulator.GetMappedChemObject(setOfReactions[0], molecule.Atoms[4]);
             Assert.AreEqual(mappedProductA2, product2.Atoms[0]);
         }
 
@@ -182,8 +171,8 @@ namespace NCDK.Reactions.Types
         /// </summary>
         private IChemObjectSet<IAtomContainer> GetExampleReactants()
         {
-            var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet();
-            IAtomContainer molecule = builder.NewAtomContainer();//CreateFromSmiles("C-C#[O+]")
+            var setOfReactants = CDK.Builder.NewAtomContainerSet();
+            var molecule = builder.NewAtomContainer();//CreateFromSmiles("C-C#[O+]")
             molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.Atoms.Add(builder.NewAtom("H"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
@@ -193,7 +182,7 @@ namespace NCDK.Reactions.Types
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[3], BondOrder.Single);
             molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[4], BondOrder.Single);
-            IAtom oxy = builder.NewAtom("O");
+            var oxy = builder.NewAtom("O");
             oxy.FormalCharge = 1;
             molecule.Atoms.Add(oxy);
             molecule.AddBond(molecule.Atoms[4], molecule.Atoms[5], BondOrder.Triple);
@@ -221,8 +210,8 @@ namespace NCDK.Reactions.Types
         {
             var setOfProducts = builder.NewAtomContainerSet();
 
-            IAtomContainer molecule1 = builder.NewAtomContainer();//CreateFromSmiles("[C+]");
-            IAtom carb = builder.NewAtom("C");
+            var molecule1 = builder.NewAtomContainer();//CreateFromSmiles("[C+]");
+            var carb = builder.NewAtom("C");
             carb.FormalCharge = 1;
             molecule1.Atoms.Add(carb);
             molecule1.Atoms.Add(builder.NewAtom("H"));
@@ -232,12 +221,12 @@ namespace NCDK.Reactions.Types
             molecule1.Atoms.Add(builder.NewAtom("H"));
             molecule1.AddBond(molecule1.Atoms[0], molecule1.Atoms[3], BondOrder.Single);
 
-            IAtomContainer molecule2 = builder.NewAtomContainer();//CreateFromSmiles("[C-]#[O+]");
+            var molecule2 = builder.NewAtomContainer();//CreateFromSmiles("[C-]#[O+]");
             carb = builder.NewAtom("C");
             carb.FormalCharge = -1;
-            molecule2.LonePairs.Add(new LonePair(carb));
+            molecule2.LonePairs.Add(CDK.Builder.NewLonePair(carb));
             molecule2.Atoms.Add(carb);
-            IAtom oxy = builder.NewAtom("O");
+            var oxy = builder.NewAtom("O");
             oxy.FormalCharge = 1;
             molecule2.Atoms.Add(oxy);
             molecule2.AddBond(molecule2.Atoms[0], molecule2.Atoms[1], BondOrder.Triple);

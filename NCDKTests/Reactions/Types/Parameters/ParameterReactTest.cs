@@ -16,6 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Reactions.Types.Parameters;
 
@@ -35,31 +36,30 @@ namespace NCDK.Types.Parameters
         [TestMethod()]
         public void TestParameterReact()
         {
-            IParameterReaction paramSet = new ParameterReaction();
+            var paramSet = new ParameterReaction();
             Assert.IsNotNull(paramSet);
         }
 
         [TestMethod()]
         public void TestSetParameter_boolean()
         {
-            IParameterReaction paramSet = new ParameterReaction();
+            var paramSet = new ParameterReaction();
 
             paramSet.IsSetParameter = true;
             Assert.IsTrue(paramSet.IsSetParameter);
-
         }
 
         [TestMethod()]
         public void TestIsSetParameter()
         {
-            IParameterReaction paramSet = new ParameterReaction();
+            var paramSet = new ParameterReaction();
             Assert.IsFalse(paramSet.IsSetParameter);
         }
 
         [TestMethod()]
         public void TestSetValue_object()
         {
-            IParameterReaction paramSet = new ParameterReaction();
+            var paramSet = new ParameterReaction();
             paramSet.Value = null;
             Assert.IsNull(paramSet.Value);
 
@@ -68,7 +68,7 @@ namespace NCDK.Types.Parameters
         [TestMethod()]
         public void TestGetValue()
         {
-            IParameterReaction paramSet = new ParameterReaction();
+            var paramSet = new ParameterReaction();
             paramSet.Value = new object();
             Assert.IsNotNull(paramSet.Value);
         }

@@ -16,13 +16,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.AtomTypes;
-using NCDK.Silent;
 using NCDK.Isomorphisms;
 using NCDK.Isomorphisms.Matchers;
 using NCDK.Reactions.Types.Parameters;
-using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
@@ -49,12 +47,12 @@ namespace NCDK.Reactions.Types
         [TestMethod()]
         public void TestHeterolyticCleavagePBReaction()
         {
-            IReactionProcess type = new HeterolyticCleavagePBReaction();
+            var type = new HeterolyticCleavagePBReaction();
             Assert.IsNotNull(type);
         }
 
         /// <summary>
-        /// A unit test suite for JUnit. Reaction: Propene.
+        /// A unit test suite. Reaction: Propene.
         /// CC!=!C => C[C+][C-]
         ///           C[C-][C+]
         /// </summary>
@@ -63,7 +61,7 @@ namespace NCDK.Reactions.Types
         public override void TestInitiate_IAtomContainerSet_IAtomContainerSet()
         {
             //CreateFromSmiles("CC=C")
-            IAtomContainer molecule = builder.NewAtomContainer();
+            var molecule = builder.NewAtomContainer();
             molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.Atoms.Add(builder.NewAtom("C"));
@@ -87,10 +85,10 @@ namespace NCDK.Reactions.Types
             molecule.Atoms[2].IsReactiveCenter = true;
             molecule.Bonds[1].IsReactiveCenter = true;
 
-            var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet();
+            var setOfReactants = CDK.Builder.NewAtomContainerSet();
             setOfReactants.Add(molecule);
 
-            IReactionProcess type = new HeterolyticCleavagePBReaction();
+            var type = new HeterolyticCleavagePBReaction();
             var paramList = new List<IParameterReaction>();
             var param = new SetReactionCenter();
             param.IsSetParameter = true;
@@ -105,7 +103,7 @@ namespace NCDK.Reactions.Types
             // expected products
 
             //CreateFromSmiles("C[C+][C-]")
-            IAtomContainer expected1 = builder.NewAtomContainer();
+            var expected1 = builder.NewAtomContainer();
             expected1.Atoms.Add(builder.NewAtom("C"));
             expected1.Atoms.Add(builder.NewAtom("C"));
             expected1.Atoms[1].FormalCharge = +1;
@@ -127,8 +125,8 @@ namespace NCDK.Reactions.Types
             expected1.AddBond(expected1.Atoms[2], expected1.Atoms[8], BondOrder.Single);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(expected1);
             CDK.LonePairElectronChecker.Saturate(expected1);
-            IAtomContainer product1 = setOfReactions[0].Products[0];
-            QueryAtomContainer queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(expected1);
+            var product1 = setOfReactions[0].Products[0];
+            var queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(expected1);
             Assert.IsTrue(uiTester.IsIsomorph(product1, queryAtom));
 
             //CreateFromSmiles("C[C-][C+]")
@@ -143,7 +141,7 @@ namespace NCDK.Reactions.Types
         }
 
         /// <summary>
-        /// A unit test suite for JUnit. Reaction:.
+        /// A unit test suite. Reaction:.
         /// C[C+]!=!C => C[C+][C-]
         ///           C[C-][C+]
         /// </summary>
@@ -154,7 +152,7 @@ namespace NCDK.Reactions.Types
         }
 
         /// <summary>
-        /// A unit test suite for JUnit. Reaction: Allene.
+        /// A unit test suite. Reaction: Allene.
         /// C=C!=!C => C=[C+][C-]
         ///            C=[C-][C+]
         /// </summary>
@@ -163,7 +161,7 @@ namespace NCDK.Reactions.Types
         public void TestCspDoubleB()
         {
             //CreateFromSmiles("C=C=C")
-            IAtomContainer molecule = builder.NewAtomContainer();
+            var molecule = builder.NewAtomContainer();
             molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.Atoms.Add(builder.NewAtom("C"));
@@ -183,10 +181,10 @@ namespace NCDK.Reactions.Types
             molecule.Atoms[2].IsReactiveCenter = true;
             molecule.Bonds[1].IsReactiveCenter = true;
 
-            var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet();
+            var setOfReactants = CDK.Builder.NewAtomContainerSet();
             setOfReactants.Add(molecule);
 
-            IReactionProcess type = new HeterolyticCleavagePBReaction();
+            var type = new HeterolyticCleavagePBReaction();
             var paramList = new List<IParameterReaction>();
             var param = new SetReactionCenter();
             param.IsSetParameter = true;
@@ -201,7 +199,7 @@ namespace NCDK.Reactions.Types
             // expected products
 
             //CreateFromSmiles("C=[C+][C-]")
-            IAtomContainer expected1 = builder.NewAtomContainer();
+            var expected1 = builder.NewAtomContainer();
             expected1.Atoms.Add(builder.NewAtom("C"));
             expected1.Atoms.Add(builder.NewAtom("C"));
             expected1.Atoms[1].FormalCharge = +1;
@@ -219,8 +217,8 @@ namespace NCDK.Reactions.Types
             expected1.AddBond(expected1.Atoms[2], expected1.Atoms[6], BondOrder.Single);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(expected1);
             CDK.LonePairElectronChecker.Saturate(expected1);
-            IAtomContainer product1 = setOfReactions[0].Products[0];
-            QueryAtomContainer queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(expected1);
+            var product1 = setOfReactions[0].Products[0];
+            var queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(expected1);
             Assert.IsTrue(uiTester.IsIsomorph(product1, queryAtom));
 
             //CreateFromSmiles("C=[C-][C+]")
@@ -234,7 +232,7 @@ namespace NCDK.Reactions.Types
         }
 
         /// <summary>
-        /// A unit test suite for JUnit. Reaction: Propyne.
+        /// A unit test suite. Reaction: Propyne.
         /// CC#C => C[C+]=[C-]
         ///         C[C-]=[C+]
         /// </summary>
@@ -243,7 +241,7 @@ namespace NCDK.Reactions.Types
         public void TestCspTripleB()
         {
             //CreateFromSmiles("CC#C")
-            IAtomContainer molecule = builder.NewAtomContainer();
+            var molecule = builder.NewAtomContainer();
             molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.Atoms.Add(builder.NewAtom("C"));
@@ -263,10 +261,10 @@ namespace NCDK.Reactions.Types
             molecule.Atoms[2].IsReactiveCenter = true;
             molecule.Bonds[1].IsReactiveCenter = true;
 
-            var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet();
+            var setOfReactants = CDK.Builder.NewAtomContainerSet();
             setOfReactants.Add(molecule);
 
-            IReactionProcess type = new HeterolyticCleavagePBReaction();
+            var type = new HeterolyticCleavagePBReaction();
             var paramList = new List<IParameterReaction>();
             var param = new SetReactionCenter();
             param.IsSetParameter = true;
@@ -281,7 +279,7 @@ namespace NCDK.Reactions.Types
             // expected products
 
             //CreateFromSmiles("C[C+]=[C-]")
-            IAtomContainer expected1 = builder.NewAtomContainer();
+            var expected1 = builder.NewAtomContainer();
             expected1.Atoms.Add(builder.NewAtom("C"));
             expected1.Atoms.Add(builder.NewAtom("C"));
             expected1.Atoms[1].FormalCharge = +1;
@@ -298,8 +296,8 @@ namespace NCDK.Reactions.Types
             expected1.AddBond(expected1.Atoms[0], expected1.Atoms[5], BondOrder.Single);
             expected1.AddBond(expected1.Atoms[2], expected1.Atoms[6], BondOrder.Single);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(expected1);
-            IAtomContainer product1 = setOfReactions[0].Products[0];
-            QueryAtomContainer queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(expected1);
+            var product1 = setOfReactions[0].Products[0];
+            var queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(expected1);
             Assert.IsTrue(uiTester.IsIsomorph(product1, queryAtom));
 
             //CreateFromSmiles("C[C-]=[C+]")
@@ -313,7 +311,7 @@ namespace NCDK.Reactions.Types
         }
 
         /// <summary>
-        /// A unit test suite for JUnit. Reaction: N-methylmethanimine.
+        /// A unit test suite. Reaction: N-methylmethanimine.
         /// CN!=!C => C[N-]-[C+]
         /// </summary>
         // @cdk.inchi InChI=1/C2H5N/c1-3-2/h1H2,2H3
@@ -321,7 +319,7 @@ namespace NCDK.Reactions.Types
         public void TestNsp2DoubleB()
         {
             //CreateFromSmiles("CN=C")
-            IAtomContainer molecule = builder.NewAtomContainer();
+            var molecule = builder.NewAtomContainer();
             molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.Atoms.Add(builder.NewAtom("N"));
             molecule.Atoms.Add(builder.NewAtom("C"));
@@ -344,10 +342,10 @@ namespace NCDK.Reactions.Types
             molecule.Atoms[2].IsReactiveCenter = true;
             molecule.Bonds[1].IsReactiveCenter = true;
 
-            var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet();
+            var setOfReactants = CDK.Builder.NewAtomContainerSet();
             setOfReactants.Add(molecule);
 
-            IReactionProcess type = new HeterolyticCleavagePBReaction();
+            var type = new HeterolyticCleavagePBReaction();
             var paramList = new List<IParameterReaction>();
             var param = new SetReactionCenter();
             param.IsSetParameter = true;
@@ -362,7 +360,7 @@ namespace NCDK.Reactions.Types
             // expected products
 
             //CreateFromSmiles("C[N-]-[C+]")
-            IAtomContainer expected1 = builder.NewAtomContainer();
+            var expected1 = builder.NewAtomContainer();
             expected1.Atoms.Add(builder.NewAtom("C"));
             expected1.Atoms.Add(builder.NewAtom("N"));
             expected1.Atoms[1].FormalCharge = -1;
@@ -382,13 +380,13 @@ namespace NCDK.Reactions.Types
             expected1.AddBond(expected1.Atoms[2], expected1.Atoms[7], BondOrder.Single);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(expected1);
             CDK.LonePairElectronChecker.Saturate(expected1);
-            IAtomContainer product1 = setOfReactions[0].Products[0];
-            QueryAtomContainer queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(expected1);
+            var product1 = setOfReactions[0].Products[0];
+            var queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(expected1);
             Assert.IsTrue(uiTester.IsIsomorph(product1, queryAtom));
         }
 
         /// <summary>
-        /// A unit test suite for JUnit. Reaction: formonitrile.
+        /// A unit test suite. Reaction: formonitrile.
         /// N!#!C => [N-]=[C+]
         /// </summary>
         // @cdk.inchi InChI=1/CHN/c1-2/h1H
@@ -396,7 +394,7 @@ namespace NCDK.Reactions.Types
         public void TestNspTripleB()
         {
             //CreateFromSmiles("N#C")
-            IAtomContainer molecule = builder.NewAtomContainer();
+            var molecule = builder.NewAtomContainer();
             molecule.Atoms.Add(builder.NewAtom("N"));
             molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Triple);
@@ -409,10 +407,10 @@ namespace NCDK.Reactions.Types
             molecule.Atoms[1].IsReactiveCenter = true;
             molecule.Bonds[0].IsReactiveCenter = true;
 
-            var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet();
+            var setOfReactants = CDK.Builder.NewAtomContainerSet();
             setOfReactants.Add(molecule);
 
-            IReactionProcess type = new HeterolyticCleavagePBReaction();
+            var type = new HeterolyticCleavagePBReaction();
             var paramList = new List<IParameterReaction>();
             var param = new SetReactionCenter();
             param.IsSetParameter = true;
@@ -427,7 +425,7 @@ namespace NCDK.Reactions.Types
             // expected products
 
             //CreateFromSmiles("[N-]=[C+]")
-            IAtomContainer expected1 = builder.NewAtomContainer();
+            var expected1 = builder.NewAtomContainer();
             expected1.Atoms.Add(builder.NewAtom("N"));
             expected1.Atoms[0].FormalCharge = -1;
             expected1.Atoms.Add(builder.NewAtom("C"));
@@ -437,13 +435,13 @@ namespace NCDK.Reactions.Types
             expected1.AddBond(expected1.Atoms[1], expected1.Atoms[2], BondOrder.Single);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(expected1);
             CDK.LonePairElectronChecker.Saturate(expected1);
-            IAtomContainer product1 = setOfReactions[0].Products[0];
-            QueryAtomContainer queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(expected1);
+            var product1 = setOfReactions[0].Products[0];
+            var queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(expected1);
             Assert.IsTrue(uiTester.IsIsomorph(product1, queryAtom));
         }
 
         /// <summary>
-        /// A unit test suite for JUnit. Reaction: formaldehyde.
+        /// A unit test suite. Reaction: formaldehyde.
         /// O!=!C => [O-][C+]
         /// </summary>
         // @cdk.inchi  InChI=1/CH2O/c1-2/h1H2
@@ -451,7 +449,7 @@ namespace NCDK.Reactions.Types
         public void TestOspDoubleB()
         {
             //CreateFromSmiles("O=C")
-            IAtomContainer molecule = builder.NewAtomContainer();
+            var molecule = builder.NewAtomContainer();
             molecule.Atoms.Add(builder.NewAtom("O"));
             molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Double);
@@ -466,10 +464,10 @@ namespace NCDK.Reactions.Types
             molecule.Atoms[1].IsReactiveCenter = true;
             molecule.Bonds[0].IsReactiveCenter = true;
 
-            var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet();
+            var setOfReactants = CDK.Builder.NewAtomContainerSet();
             setOfReactants.Add(molecule);
 
-            IReactionProcess type = new HeterolyticCleavagePBReaction();
+            var type = new HeterolyticCleavagePBReaction();
             var paramList = new List<IParameterReaction>();
             var param = new SetReactionCenter();
             param.IsSetParameter = true;
@@ -484,7 +482,7 @@ namespace NCDK.Reactions.Types
             // expected products
 
             //CreateFromSmiles("[O-][C+]")
-            IAtomContainer expected1 = builder.NewAtomContainer();
+            var expected1 = builder.NewAtomContainer();
             expected1.Atoms.Add(builder.NewAtom("O"));
             expected1.Atoms[0].FormalCharge = -1;
             expected1.Atoms.Add(builder.NewAtom("C"));
@@ -496,24 +494,24 @@ namespace NCDK.Reactions.Types
             expected1.AddBond(expected1.Atoms[1], expected1.Atoms[3], BondOrder.Single);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(expected1);
             CDK.LonePairElectronChecker.Saturate(expected1);
-            IAtomContainer product1 = setOfReactions[0].Products[0];
-            QueryAtomContainer queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(expected1);
+            var product1 = setOfReactions[0].Products[0];
+            var queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(expected1);
             Assert.IsTrue(uiTester.IsIsomorph(product1, queryAtom));
         }
 
         /// <summary>
-        /// A unit test suite for JUnit. Reaction: C=O => [C+]-[O-]
+        /// A unit test suite. Reaction: C=O => [C+]-[O-]
         /// Manually put of the reactive center.
         /// </summary>
         // @cdk.inchi InChI=1/CH2O/c1-2/h1H2
         [TestMethod()]
         public void TestCDKConstants_REACTIVE_CENTER()
         {
-            IReactionProcess type = new HeterolyticCleavagePBReaction();
-            var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet();
+            var type = new HeterolyticCleavagePBReaction();
+            var setOfReactants = CDK.Builder.NewAtomContainerSet();
 
             /* C=O */
-            IAtomContainer molecule = builder.NewAtomContainer();//CreateFromSmiles("C=O")
+            var molecule = builder.NewAtomContainer();//CreateFromSmiles("C=O")
             molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.Atoms.Add(builder.NewAtom("O"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Double);
@@ -542,7 +540,7 @@ namespace NCDK.Reactions.Types
             Assert.AreEqual(1, setOfReactions.Count);
             Assert.AreEqual(1, setOfReactions[0].Products.Count);
 
-            IAtomContainer reactant = setOfReactions[0].Reactants[0];
+            var reactant = setOfReactions[0].Reactants[0];
             Assert.IsTrue(molecule.Atoms[0].IsReactiveCenter);
             Assert.IsTrue(reactant.Atoms[0].IsReactiveCenter);
             Assert.IsTrue(molecule.Atoms[1].IsReactiveCenter);
@@ -552,16 +550,16 @@ namespace NCDK.Reactions.Types
         }
 
         /// <summary>
-        /// A unit test suite for JUnit. Reaction: C=O => [C+]-[O-] + [C-]-[O+]
+        /// A unit test suite. Reaction: C=O => [C+]-[O-] + [C-]-[O+]
         /// Test of mapped between the reactant and product. Only is mapped the reactive center.
         /// </summary>
         // @cdk.inchi InChI=1/CH2O/c1-2/h1H2
         [TestMethod()]
         public void TestMapping()
         {
-            IReactionProcess type = new HeterolyticCleavagePBReaction();
+            var type = new HeterolyticCleavagePBReaction();
             var setOfReactants = GetExampleReactants();
-            IAtomContainer molecule = setOfReactants[0];
+            var molecule = setOfReactants[0];
 
             /* automatic search of the center active */
             var paramList = new List<IParameterReaction>();
@@ -573,14 +571,12 @@ namespace NCDK.Reactions.Types
             /* initiate */
             var setOfReactions = type.Initiate(setOfReactants, null);
 
-            IAtomContainer product = setOfReactions[0].Products[0];
+            var product = setOfReactions[0].Products[0];
 
             Assert.AreEqual(4, setOfReactions[0].Mappings.Count);
-            IAtom mappedProductA1 = (IAtom)ReactionManipulator.GetMappedChemObject(setOfReactions[0],
-                    molecule.Atoms[0]);
+            var mappedProductA1 = (IAtom)ReactionManipulator.GetMappedChemObject(setOfReactions[0], molecule.Atoms[0]);
             Assert.AreEqual(mappedProductA1, product.Atoms[0]);
-            IAtom mappedProductA2 = (IAtom)ReactionManipulator.GetMappedChemObject(setOfReactions[0],
-                    molecule.Atoms[1]);
+            var mappedProductA2 = (IAtom)ReactionManipulator.GetMappedChemObject(setOfReactions[0], molecule.Atoms[1]);
             Assert.AreEqual(mappedProductA2, product.Atoms[1]);
         }
 
@@ -599,7 +595,7 @@ namespace NCDK.Reactions.Types
         }
 
         /// <summary>
-        /// A unit test suite for JUnit. Reaction:
+        /// A unit test suite. Reaction:
         /// C(H)(H)=O => [C+](H)(H)-[O-] + [C+](H)=O +
         /// Automatic search of the reactive atoms and bonds.
         /// </summary>
@@ -607,9 +603,9 @@ namespace NCDK.Reactions.Types
         [TestMethod()]
         public void TestBB_AutomaticSearchCentreActiveFormaldehyde()
         {
-            IReactionProcess type = new HeterolyticCleavagePBReaction();
+            var type = new HeterolyticCleavagePBReaction();
             var setOfReactants = GetExampleReactants();
-            IAtomContainer molecule = setOfReactants[0];
+            var molecule = setOfReactants[0];
 
             /* automatic search of the reactive atoms and bonds */
             var paramList = new List<IParameterReaction>();
@@ -627,10 +623,9 @@ namespace NCDK.Reactions.Types
 
             Assert.AreEqual(1, setOfReactions[0].Products.Count);
 
-            IAtomContainer product = setOfReactions[0].Products[0];
+            var product = setOfReactions[0].Products[0];
 
             Assert.IsTrue(uiTester.IsIsomorph(GetExpectedProducts()[0], product));
-
         }
 
         /// <summary>
@@ -639,9 +634,9 @@ namespace NCDK.Reactions.Types
         /// <returns>The IAtomContainerSet</returns>
         private IChemObjectSet<IAtomContainer> GetExampleReactants()
         {
-            var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet();
+            var setOfReactants = CDK.Builder.NewAtomContainerSet();
 
-            IAtomContainer molecule = builder.NewAtomContainer();
+            var molecule = builder.NewAtomContainer();
             molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.Atoms.Add(builder.NewAtom("O"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Double);
@@ -668,16 +663,16 @@ namespace NCDK.Reactions.Types
         {
             var setOfProducts = builder.NewAtomContainerSet();
             //CreateFromSmiles("[C+](H)(H)-[O-]");
-            IAtomContainer molecule = builder.NewAtomContainer();
+            var molecule = builder.NewAtomContainer();
             IAtom carbon = builder.NewAtom("C");
             carbon.FormalCharge = 1;
             molecule.Atoms.Add(carbon);
-            IAtom oxyg = builder.NewAtom("O");
+            var oxyg = builder.NewAtom("O");
             oxyg.FormalCharge = -1;
             molecule.Atoms.Add(oxyg);
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
-            molecule.Atoms.Add(new Atom("H"));
-            molecule.Atoms.Add(new Atom("H"));
+            molecule.Atoms.Add(CDK.Builder.NewAtom("H"));
+            molecule.Atoms.Add(CDK.Builder.NewAtom("H"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[2], BondOrder.Single);
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[3], BondOrder.Single);
 

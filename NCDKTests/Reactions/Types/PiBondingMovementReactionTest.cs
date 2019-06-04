@@ -21,7 +21,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Isomorphisms;
 using NCDK.Isomorphisms.Matchers;
 using NCDK.Reactions.Types.Parameters;
-using NCDK.Silent;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
@@ -47,7 +46,7 @@ namespace NCDK.Reactions.Types
         [TestMethod()]
         public void TestPiBondingMovementReaction()
         {
-            IReactionProcess type = new PiBondingMovementReaction();
+            var type = new PiBondingMovementReaction();
             Assert.IsNotNull(type);
         }
 
@@ -81,7 +80,7 @@ namespace NCDK.Reactions.Types
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
             MakeSureAtomTypesAreRecognized(molecule);
 
-            var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet();
+            var setOfReactants = CDK.Builder.NewAtomContainerSet();
             setOfReactants.Add(molecule);
 
             /* initiate */
@@ -135,7 +134,7 @@ namespace NCDK.Reactions.Types
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
             MakeSureAtomTypesAreRecognized(molecule);
 
-            var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet();
+            var setOfReactants = CDK.Builder.NewAtomContainerSet();
             setOfReactants.Add(molecule);
 
             /* initiate */
@@ -174,7 +173,7 @@ namespace NCDK.Reactions.Types
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule2);
             MakeSureAtomTypesAreRecognized(molecule2);
 
-            IQueryAtomContainer queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(product2);
+            var queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(product2);
             Assert.IsTrue(new UniversalIsomorphismTester().IsIsomorph(molecule2, queryAtom));
         }
 
@@ -303,7 +302,7 @@ namespace NCDK.Reactions.Types
         /// </summary>
         private IChemObjectSet<IAtomContainer> GetExampleReactants()
         {
-            var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet();
+            var setOfReactants = CDK.Builder.NewAtomContainerSet();
             // C{0}1=C{1}C{2}(=C{3}C{4}2=C{5}1C{6}=C{7}C{8}=C{9}2)C{10}
             // C1=CC(=CC2=C1C=CC=C2)C
             var molecule = builder.NewAtomContainer();

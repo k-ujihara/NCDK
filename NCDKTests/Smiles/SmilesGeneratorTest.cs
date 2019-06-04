@@ -690,7 +690,7 @@ namespace NCDK.Smiles
         }
 
         /// <summary>
-        ///  A unit test for JUnit
+        ///  A unit test
         /// </summary>
         [TestMethod()]
         public void TestCycloOctadien()

@@ -16,11 +16,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.AtomTypes;
 using NCDK.Reactions.Types.Parameters;
-using NCDK.Silent;
-using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
@@ -45,19 +43,19 @@ namespace NCDK.Reactions.Types
         [TestMethod()]
         public void TestElectronImpactPDBReaction()
         {
-            IReactionProcess type = new ElectronImpactPDBReaction();
+            var type = new ElectronImpactPDBReaction();
             Assert.IsNotNull(type);
         }
 
         /// <summary>
-        ///  A unit test for JUnit with the compound 2_5_Hexen_3_one.
+        /// A unit test with the compound 2_5_Hexen_3_one.
         /// </summary>
         // @cdk.inchi InChI=1/C6H10O/c1-3-5-6(7)4-2/h3H,1,4-5H2,2H3
         [TestMethod()]
         public override void TestInitiate_IAtomContainerSet_IAtomContainerSet()
         {
             /* ionize >C=C< , set the reactive center */
-            IAtomContainer reactant = builder.NewAtomContainer();//CreateFromSmiles("C=CCC(=O)CC")
+            var reactant = builder.NewAtomContainer();//CreateFromSmiles("C=CCC(=O)CC")
             reactant.Atoms.Add(builder.NewAtom("C"));
             reactant.Atoms.Add(builder.NewAtom("C"));
             reactant.Atoms.Add(builder.NewAtom("C"));
@@ -75,8 +73,8 @@ namespace NCDK.Reactions.Types
 
             foreach (var bond in reactant.Bonds)
             {
-                IAtom atom1 = bond.Atoms[0];
-                IAtom atom2 = bond.Atoms[1];
+                var atom1 = bond.Atoms[0];
+                var atom2 = bond.Atoms[1];
                 if (bond.Order == BondOrder.Double && atom1.Symbol.Equals("C") && atom2.Symbol.Equals("C"))
                 {
                     bond.IsReactiveCenter = true;
@@ -85,7 +83,7 @@ namespace NCDK.Reactions.Types
                 }
             }
 
-            var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet();
+            var setOfReactants = CDK.Builder.NewAtomContainerSet();
             setOfReactants.Add(reactant);
 
             /* initiate */
@@ -104,7 +102,7 @@ namespace NCDK.Reactions.Types
 
             Assert.AreEqual(2, setOfReactions.Count);
 
-            IAtomContainer molecule = setOfReactions[0].Products[0];
+            var molecule = setOfReactions[0].Products[0];
 
             Assert.AreEqual(1, molecule.Atoms[0].FormalCharge.Value);
             Assert.AreEqual(1, molecule.GetConnectedSingleElectrons(molecule.Atoms[1]).Count());
@@ -116,18 +114,17 @@ namespace NCDK.Reactions.Types
             Assert.AreEqual(1, molecule.SingleElectrons.Count);
 
             Assert.AreEqual(17, setOfReactions[0].Mappings.Count);
-
         }
 
         /// <summary>
-        ///  A unit test for JUnit with the compound propene.
+        ///  A unit test with the compound propene.
         /// </summary>
         // @cdk.inchi InChI=1/C3H6/c1-3-2/h3H,1H2,2H3
         [TestMethod()]
         public void TestAutomatic_Set_Active_Bond()
         {
             /* ionize all possible double bonds */
-            IAtomContainer reactant = builder.NewAtomContainer();//Miles("C=CC")
+            var reactant = builder.NewAtomContainer();//Miles("C=CC")
             reactant.Atoms.Add(builder.NewAtom("C"));
             reactant.Atoms.Add(builder.NewAtom("C"));
             reactant.Atoms.Add(builder.NewAtom("C"));
@@ -135,37 +132,36 @@ namespace NCDK.Reactions.Types
             reactant.AddBond(reactant.Atoms[1], reactant.Atoms[2], BondOrder.Single);
             AddExplicitHydrogens(reactant);
 
-            var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet();
+            var setOfReactants = CDK.Builder.NewAtomContainerSet();
             setOfReactants.Add(reactant);
 
             /* initiate */
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(reactant);
             MakeSureAtomTypesAreRecognized(reactant);
 
-            IReactionProcess type = new ElectronImpactPDBReaction();
+            var type = new ElectronImpactPDBReaction();
             var setOfReactions = type.Initiate(setOfReactants, null);
 
             Assert.AreEqual(2, setOfReactions.Count);
 
-            IAtomContainer molecule = setOfReactions[0].Products[0];
+            var molecule = setOfReactions[0].Products[0];
             Assert.AreEqual(1, molecule.Atoms[0].FormalCharge.Value);
             Assert.AreEqual(1, molecule.GetConnectedSingleElectrons(molecule.Atoms[1]).Count());
 
             molecule = setOfReactions[1].Products[0];
             Assert.AreEqual(1, molecule.Atoms[1].FormalCharge.Value);
             Assert.AreEqual(1, molecule.GetConnectedSingleElectrons(molecule.Atoms[0]).Count());
-
         }
 
         /// <summary>
-        ///  A unit test for JUnit with the compound 2_5_Hexen_3_one.
+        /// A unit test with the compound 2_5_Hexen_3_one.
         /// </summary>
         // @cdk.inchi InChI=1/C6H10O/c1-3-5-6(7)4-2/h3H,1,4-5H2,2H3
         [TestMethod()]
         public void TestAutomatic_Set_Active_Bond2()
         {
             /* ionize >C=C< , set the reactive center */
-            IAtomContainer reactant = builder.NewAtomContainer();//CreateFromSmiles("C=CCC(=O)CC")
+            var reactant = builder.NewAtomContainer();//CreateFromSmiles("C=CCC(=O)CC")
             reactant.Atoms.Add(builder.NewAtom("C"));
             reactant.Atoms.Add(builder.NewAtom("C"));
             reactant.Atoms.Add(builder.NewAtom("C"));
@@ -181,7 +177,7 @@ namespace NCDK.Reactions.Types
             reactant.AddBond(reactant.Atoms[5], reactant.Atoms[6], BondOrder.Single);
             AddExplicitHydrogens(reactant);
 
-            var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet();
+            var setOfReactants = CDK.Builder.NewAtomContainerSet();
             setOfReactants.Add(reactant);
 
             /* initiate */
@@ -200,7 +196,7 @@ namespace NCDK.Reactions.Types
 
             Assert.AreEqual(3, setOfReactions.Count);
 
-            IAtomContainer molecule = setOfReactions[0].Products[0];
+            var molecule = setOfReactions[0].Products[0];
             Assert.AreEqual(1, molecule.Atoms[0].FormalCharge.Value);
             Assert.AreEqual(1, molecule.GetConnectedSingleElectrons(molecule.Atoms[1]).Count());
 
@@ -213,16 +209,16 @@ namespace NCDK.Reactions.Types
         }
 
         /// <summary>
-        /// A unit test suite for JUnit. Reaction:propene
+        /// A unit test suite. Reaction:propene
         /// Manually put of the reactive center.
         /// </summary>
         // @cdk.inchi InChI=1/C3H6/c1-3-2/h3H,1H2,2H3
         [TestMethod()]
         public void TestCDKConstants_REACTIVE_CENTER()
         {
-            IReactionProcess type = new ElectronImpactPDBReaction();
+            var type = new ElectronImpactPDBReaction();
             var setOfReactants = GetExampleReactants();
-            IAtomContainer molecule = setOfReactants[0];
+            var molecule = setOfReactants[0];
 
             /* manually put the reactive center */
             molecule.Atoms[0].IsReactiveCenter = true;
@@ -245,7 +241,7 @@ namespace NCDK.Reactions.Types
             Assert.AreEqual(2, setOfReactions.Count);
             Assert.AreEqual(1, setOfReactions[0].Products.Count);
 
-            IAtomContainer reactant = setOfReactions[0].Reactants[0];
+            var reactant = setOfReactions[0].Reactants[0];
             Assert.IsTrue(molecule.Atoms[0].IsReactiveCenter);
             Assert.IsTrue(reactant.Atoms[0].IsReactiveCenter);
             Assert.IsTrue(molecule.Atoms[1].IsReactiveCenter);
@@ -255,7 +251,7 @@ namespace NCDK.Reactions.Types
         }
 
         /// <summary>
-        /// A unit test suite for JUnit. Reaction: propene
+        /// A unit test suite. Reaction: propene
         /// Manually put of the reactive center.
         /// </summary>
         // @cdk.inchi InChI=1/C3H6/c1-3-2/h3H,1H2,2H3
@@ -293,7 +289,6 @@ namespace NCDK.Reactions.Types
         /// <param name="molecule">The IAtomContainer to analyze</param>
         private void MakeSureAtomTypesAreRecognized(IAtomContainer molecule)
         {
-
             var matcher = CDK.AtomTypeMatcher;
             foreach (var nextAtom in molecule.Atoms)
             {
@@ -306,9 +301,9 @@ namespace NCDK.Reactions.Types
         /// </summary>
         private IChemObjectSet<IAtomContainer> GetExampleReactants()
         {
-            var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet();
+            var setOfReactants = CDK.Builder.NewAtomContainerSet();
 
-            IAtomContainer molecule = builder.NewAtomContainer();//Miles("C=CC")
+            var molecule = builder.NewAtomContainer();//Miles("C=CC")
             molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.Atoms.Add(builder.NewAtom("C"));

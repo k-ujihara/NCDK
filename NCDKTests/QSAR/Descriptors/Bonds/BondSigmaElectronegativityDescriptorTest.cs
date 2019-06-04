@@ -151,7 +151,7 @@ namespace NCDK.QSAR.Descriptors.Bonds
         }
 
         /// <summary>
-        /// A unit test for JUnit with Allyl mercaptan
+        /// A unit test with Allyl mercaptan
         /// </summary>
         [TestMethod()]
         public void TestBondSigmaElectronegativityDescriptor_Allyl_mercaptan()

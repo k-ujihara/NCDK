@@ -16,9 +16,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.AtomTypes;
-using NCDK.Silent;
 using NCDK.Isomorphisms;
 using NCDK.Isomorphisms.Matchers;
 using NCDK.Reactions.Types.Parameters;
@@ -45,14 +44,14 @@ namespace NCDK.Reactions.Types
         [TestMethod()]
         public void TestRadicalSiteHrBetaReaction()
         {
-            IReactionProcess type = new RadicalSiteHrBetaReaction();
+            var type = new RadicalSiteHrBetaReaction();
             Assert.IsNotNull(type);
         }
 
         [TestMethod()]
         public override void TestInitiate_IAtomContainerSet_IAtomContainerSet()
         {
-            IReactionProcess type = new RadicalSiteHrBetaReaction();
+            var type = new RadicalSiteHrBetaReaction();
 
             var setOfReactants = GetExampleReactants();
 
@@ -68,10 +67,10 @@ namespace NCDK.Reactions.Types
             Assert.AreEqual(3, setOfReactions.Count);
             Assert.AreEqual(1, setOfReactions[0].Products.Count);
 
-            IAtomContainer product = setOfReactions[0].Products[0];
-            IAtomContainer molecule2 = GetExpectedProducts()[0];
+            var product = setOfReactions[0].Products[0];
+            var molecule2 = GetExpectedProducts()[0];
 
-            IQueryAtomContainer queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(product);
+            var queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(product);
             Assert.IsTrue(new UniversalIsomorphismTester().IsIsomorph(molecule2, queryAtom));
         }
 
@@ -80,9 +79,9 @@ namespace NCDK.Reactions.Types
         /// </summary>
         private IChemObjectSet<IAtomContainer> GetExampleReactants()
         {
-            var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet();
+            var setOfReactants = CDK.Builder.NewAtomContainerSet();
 
-            IAtomContainer molecule = builder.NewAtomContainer();
+            var molecule = builder.NewAtomContainer();
             molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
@@ -105,7 +104,7 @@ namespace NCDK.Reactions.Types
             }
 
             molecule.Atoms[3].FormalCharge = 0;
-            molecule.SingleElectrons.Add(new SingleElectron(molecule.Atoms[3]));
+            molecule.SingleElectrons.Add(CDK.Builder.NewSingleElectron(molecule.Atoms[3]));
 
             try
             {
@@ -127,7 +126,7 @@ namespace NCDK.Reactions.Types
         {
             var setOfProducts = builder.NewAtomContainerSet();
 
-            IAtomContainer molecule = builder.NewAtomContainer();
+            var molecule = builder.NewAtomContainer();
             molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.Atoms[0].FormalCharge = 1;
             molecule.Atoms.Add(builder.NewAtom("C"));
@@ -150,7 +149,7 @@ namespace NCDK.Reactions.Types
             }
 
             molecule.Atoms[0].FormalCharge = 0;
-            molecule.SingleElectrons.Add(new SingleElectron(molecule.Atoms[0]));
+            molecule.SingleElectrons.Add(CDK.Builder.NewSingleElectron(molecule.Atoms[0]));
 
             try
             {
@@ -168,10 +167,10 @@ namespace NCDK.Reactions.Types
         [TestMethod()]
         public void TestCDKConstants_REACTIVE_CENTER()
         {
-            IReactionProcess type = new RadicalSiteHrBetaReaction();
+            var type = new RadicalSiteHrBetaReaction();
 
             var setOfReactants = GetExampleReactants();
-            IAtomContainer molecule = setOfReactants[0];
+            var molecule = setOfReactants[0];
 
             /* manually put the reactive center */
             molecule.Atoms[3].IsReactiveCenter = true;
@@ -188,7 +187,7 @@ namespace NCDK.Reactions.Types
             /* initiate */
             var setOfReactions = type.Initiate(setOfReactants, null);
 
-            IAtomContainer reactant = setOfReactions[0].Reactants[0];
+            var reactant = setOfReactions[0].Reactants[0];
             Assert.IsTrue(molecule.Atoms[6].IsReactiveCenter);
             Assert.IsTrue(reactant.Atoms[6].IsReactiveCenter);
             Assert.IsTrue(molecule.Atoms[0].IsReactiveCenter);
@@ -202,10 +201,10 @@ namespace NCDK.Reactions.Types
         [TestMethod()]
         public void TestMapping()
         {
-            IReactionProcess type = new RadicalSiteHrBetaReaction();
+            var type = new RadicalSiteHrBetaReaction();
 
             var setOfReactants = GetExampleReactants();
-            IAtomContainer molecule = setOfReactants[0];
+            var molecule = setOfReactants[0];
 
             /* automatic search of the center active */
             var paramList = new List<IParameterReaction>();
@@ -217,17 +216,14 @@ namespace NCDK.Reactions.Types
             /* initiate */
             var setOfReactions = type.Initiate(setOfReactants, null);
 
-            IAtomContainer product = setOfReactions[0].Products[0];
+            var product = setOfReactions[0].Products[0];
 
             Assert.AreEqual(19, setOfReactions[0].Mappings.Count);
-            IAtom mappedProductA1 = (IAtom)ReactionManipulator.GetMappedChemObject(setOfReactions[0],
-                    molecule.Atoms[0]);
+            var mappedProductA1 = (IAtom)ReactionManipulator.GetMappedChemObject(setOfReactions[0], molecule.Atoms[0]);
             Assert.AreEqual(mappedProductA1, product.Atoms[0]);
-            IAtom mappedProductA2 = (IAtom)ReactionManipulator.GetMappedChemObject(setOfReactions[0],
-                    molecule.Atoms[6]);
+            var mappedProductA2 = (IAtom)ReactionManipulator.GetMappedChemObject(setOfReactions[0], molecule.Atoms[6]);
             Assert.AreEqual(mappedProductA2, product.Atoms[6]);
-            IAtom mappedProductA3 = (IAtom)ReactionManipulator.GetMappedChemObject(setOfReactions[0],
-                    molecule.Atoms[3]);
+            var mappedProductA3 = (IAtom)ReactionManipulator.GetMappedChemObject(setOfReactions[0], molecule.Atoms[3]);
             Assert.AreEqual(mappedProductA3, product.Atoms[3]);
         }
 

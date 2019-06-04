@@ -241,7 +241,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         }
 
         /// <summary>
-        /// A unit test for JUnit
+        /// A unit test
         /// </summary>
         // @cdk.bug   1959099
         [TestMethod()]

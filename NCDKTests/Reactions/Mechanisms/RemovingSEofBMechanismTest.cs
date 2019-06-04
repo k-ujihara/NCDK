@@ -16,6 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Reactions.Mechanisms
@@ -36,14 +37,14 @@ namespace NCDK.Reactions.Mechanisms
         [TestMethod()]
         public void TestRemovingSEofBMechanism()
         {
-            IReactionMechanism mechanism = new RemovingSEofBMechanism();
+            var mechanism = new RemovingSEofBMechanism();
             Assert.IsNotNull(mechanism);
         }
 
         [TestMethod()]
         public void TestInitiate_IAtomContainerSet_ArrayList_ArrayList()
         {
-            IReactionMechanism mechanism = new RemovingSEofBMechanism();
+            var mechanism = new RemovingSEofBMechanism();
 
             Assert.IsNotNull(mechanism);
         }

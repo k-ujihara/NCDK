@@ -55,7 +55,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         }
 
          /// <summary>
-         /// A unit test for JUnit with [O+]=C-C
+         /// A unit test with [O+]=C-C
          /// </summary>
         [TestMethod()]
         public void TestAtomHybridizationVSEPRDescriptorTest_2()
@@ -166,7 +166,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         }
 
         /// <summary>
-        /// A unit test for JUnit with F-[I-]-F.
+        /// A unit test with F-[I-]-F.
         /// </summary>
         // @cdk.bug 2323126
         [TestMethod()]

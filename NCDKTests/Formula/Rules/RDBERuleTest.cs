@@ -81,7 +81,7 @@ namespace NCDK.Formula.Rules
         }
 
         /// <summary>
-        /// A unit test suite for JUnit.C2H11N4O4
+        /// A unit test suite.C2H11N4O4
         /// </summary>
         [TestMethod()]
         public void TestDefaultValidFalse_SetParam()
@@ -134,7 +134,7 @@ namespace NCDK.Formula.Rules
         }
 
         /// <summary>
-        /// A unit test suite for JUnit.C3H8O3S2
+        /// A unit test suite.C3H8O3S2
         /// </summary>
         [TestMethod()]
         public void Test1()
@@ -150,7 +150,7 @@ namespace NCDK.Formula.Rules
         }
 
         /// <summary>
-        /// A unit test suite for JUnit.C4H8O3S1
+        /// A unit test suite.C4H8O3S1
         /// </summary>
         [TestMethod()]
         public void Test2()
@@ -163,7 +163,7 @@ namespace NCDK.Formula.Rules
         }
 
         /// <summary>
-        /// A unit test suite for JUnit.NH4+
+        /// A unit test suite.NH4+
         /// </summary>
         [TestMethod()]
         public void TestAnticipatedIonState_1()
@@ -177,7 +177,7 @@ namespace NCDK.Formula.Rules
         }
 
         /// <summary>
-        /// A unit test suite for JUnit.NH4+
+        /// A unit test suite.NH4+
         /// </summary>
         [TestMethod()]
         public void TestAnticipatedIonState_2()
@@ -190,7 +190,7 @@ namespace NCDK.Formula.Rules
         }
 
         /// <summary>
-        /// A unit test suite for JUnit for lipid PC.
+        /// A unit test suite for lipid PC.
         /// </summary>
         // @cdk.bug 2322906
         [TestMethod()]
@@ -205,7 +205,7 @@ namespace NCDK.Formula.Rules
         }
 
         /// <summary>
-        /// A unit test suite for JUnit for B.
+        /// A unit test suite for B.
         /// </summary>
         [TestMethod()]
         public void TestB()

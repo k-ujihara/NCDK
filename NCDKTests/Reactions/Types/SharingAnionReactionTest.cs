@@ -16,17 +16,14 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.AtomTypes;
 using NCDK.Isomorphisms;
 using NCDK.Isomorphisms.Matchers;
 using NCDK.Reactions.Types.Parameters;
-using NCDK.Silent;
-using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace NCDK.Reactions.Types
 {
@@ -48,18 +45,18 @@ namespace NCDK.Reactions.Types
         [TestMethod()]
         public void TestSharingAnionReaction()
         {
-            IReactionProcess type = new SharingAnionReaction();
+            var type = new SharingAnionReaction();
             Assert.IsNotNull(type);
         }
 
         /// <summary>
-        /// A unit test suite for JUnit. Reaction: [C+]-[O-] => C=O
+        /// A unit test suite. Reaction: [C+]-[O-] => C=O
         /// Automatic search of the center active.
         /// </summary>
         [TestMethod()]
         public override void TestInitiate_IAtomContainerSet_IAtomContainerSet()
         {
-            IReactionProcess type = new SharingAnionReaction();
+            var type = new SharingAnionReaction();
             var setOfReactants = GetExampleReactants();
 
             /* initiate */
@@ -74,26 +71,25 @@ namespace NCDK.Reactions.Types
             Assert.AreEqual(1, setOfReactions.Count);
             Assert.AreEqual(1, setOfReactions[0].Products.Count);
 
-            IAtomContainer product = setOfReactions[0].Products[0];
+            var product = setOfReactions[0].Products[0];
             /* C=[O+] */
-            IAtomContainer molecule2 = GetExpectedProducts()[0];
+            var molecule2 = GetExpectedProducts()[0];
 
-            IQueryAtomContainer queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(product);
+            var queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(product);
             Assert.IsTrue(new UniversalIsomorphismTester().IsIsomorph(molecule2, queryAtom));
-
         }
 
         /// <summary>
-        /// A unit test suite for JUnit. Reaction: [C+]-[O-] => C=O
+        /// A unit test suite. Reaction: [C+]-[O-] => C=O
         /// Manually put of the center active.
         /// </summary>
         [TestMethod()]
         public void TestManuallyCentreActive()
         {
-            IReactionProcess type = new SharingAnionReaction();
+            var type = new SharingAnionReaction();
 
             var setOfReactants = GetExampleReactants();
-            IAtomContainer molecule = setOfReactants[0];
+            var molecule = setOfReactants[0];
 
             /* manually put the center active */
             molecule.Atoms[0].IsReactiveCenter = true;
@@ -113,24 +109,24 @@ namespace NCDK.Reactions.Types
             Assert.AreEqual(1, setOfReactions.Count);
             Assert.AreEqual(1, setOfReactions[0].Products.Count);
 
-            IAtomContainer product = setOfReactions[0].Products[0];
+            var product = setOfReactions[0].Products[0];
 
             /* C=[O+] */
-            IAtomContainer molecule2 = GetExpectedProducts()[0];
+            var molecule2 = GetExpectedProducts()[0];
 
-            IQueryAtomContainer queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(product);
+            var queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(product);
             Assert.IsTrue(new UniversalIsomorphismTester().IsIsomorph(molecule2, queryAtom));
         }
 
         /// <summary>
-        /// A unit test suite for JUnit. Reaction: [C+]-[C-] => C=C
+        /// A unit test suite. Reaction: [C+]-[C-] => C=C
         /// Automatic search of the center active.
         /// </summary>
         [TestMethod()]
         public void TestCarbons()
         {
-            IReactionProcess type = new SharingAnionReaction();
-            IAtomContainer molecule = builder.NewAtomContainer();
+            var type = new SharingAnionReaction();
+            var molecule = builder.NewAtomContainer();
             molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.Atoms[0].FormalCharge = 1;
             molecule.Atoms.Add(builder.NewAtom("C"));
@@ -142,7 +138,7 @@ namespace NCDK.Reactions.Types
 
             CDK.LonePairElectronChecker.Saturate(molecule);
 
-            var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet();
+            var setOfReactants = CDK.Builder.NewAtomContainerSet();
             setOfReactants.Add(molecule);
 
             /* initiate */
@@ -157,8 +153,8 @@ namespace NCDK.Reactions.Types
             Assert.AreEqual(1, setOfReactions.Count);
             Assert.AreEqual(1, setOfReactions[0].Products.Count);
 
-            IAtomContainer product = setOfReactions[0].Products[0];
-            IAtomContainer molecule2 = builder.NewAtomContainer();
+            var product = setOfReactions[0].Products[0];
+            var molecule2 = builder.NewAtomContainer();
             molecule2.Atoms.Add(builder.NewAtom("C"));
             molecule2.Atoms.Add(builder.NewAtom("C"));
             molecule2.AddBond(molecule2.Atoms[0], molecule2.Atoms[1], BondOrder.Double);
@@ -167,17 +163,17 @@ namespace NCDK.Reactions.Types
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule2);
             CDK.LonePairElectronChecker.Saturate(molecule2);
 
-            IQueryAtomContainer queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(product);
+            var queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(product);
             Assert.IsTrue(new UniversalIsomorphismTester().IsIsomorph(molecule2, queryAtom));
         }
 
         [TestMethod()]
         public void TestCDKConstants_REACTIVE_CENTER()
         {
-            IReactionProcess type = new SharingAnionReaction();
+            var type = new SharingAnionReaction();
 
             var setOfReactants = GetExampleReactants();
-            IAtomContainer molecule = setOfReactants[0];
+            var molecule = setOfReactants[0];
 
             /* manually put the reactive center */
             molecule.Atoms[0].IsReactiveCenter = true;
@@ -193,7 +189,7 @@ namespace NCDK.Reactions.Types
             /* initiate */
             var setOfReactions = type.Initiate(setOfReactants, null);
 
-            IAtomContainer reactant = setOfReactions[0].Reactants[0];
+            var reactant = setOfReactions[0].Reactants[0];
             Assert.IsTrue(molecule.Atoms[0].IsReactiveCenter);
             Assert.IsTrue(reactant.Atoms[0].IsReactiveCenter);
             Assert.IsTrue(molecule.Atoms[1].IsReactiveCenter);
@@ -205,10 +201,10 @@ namespace NCDK.Reactions.Types
         [TestMethod()]
         public void TestMapping()
         {
-            IReactionProcess type = new SharingAnionReaction();
+            var type = new SharingAnionReaction();
 
             var setOfReactants = GetExampleReactants();
-            IAtomContainer molecule = setOfReactants[0];
+            var molecule = setOfReactants[0];
 
             /* automatic search of the center active */
             var paramList = new List<IParameterReaction>();
@@ -220,17 +216,14 @@ namespace NCDK.Reactions.Types
 
             var setOfReactions = type.Initiate(setOfReactants, null);
 
-            IAtomContainer product = setOfReactions[0].Products[0];
+            var product = setOfReactions[0].Products[0];
 
             Assert.AreEqual(4, setOfReactions[0].Mappings.Count);
 
-            IAtom mappedProductA1 = (IAtom)ReactionManipulator.GetMappedChemObject(setOfReactions[0],
-                    molecule.Atoms[0]);
+            var mappedProductA1 = (IAtom)ReactionManipulator.GetMappedChemObject(setOfReactions[0], molecule.Atoms[0]);
             Assert.AreEqual(mappedProductA1, product.Atoms[0]);
-            IAtom mappedProductA2 = (IAtom)ReactionManipulator.GetMappedChemObject(setOfReactions[0],
-                    molecule.Atoms[1]);
+            var mappedProductA2 = (IAtom)ReactionManipulator.GetMappedChemObject(setOfReactions[0], molecule.Atoms[1]);
             Assert.AreEqual(mappedProductA2, product.Atoms[1]);
-
         }
 
         /// <summary>
@@ -239,7 +232,7 @@ namespace NCDK.Reactions.Types
         [TestMethod()]
         public void TestAtomTypesAtomContainer1()
         {
-            IAtomContainer moleculeTest = GetExampleReactants()[0];
+            var moleculeTest = GetExampleReactants()[0];
             MakeSureAtomTypesAreRecognized(moleculeTest);
         }
 
@@ -249,19 +242,18 @@ namespace NCDK.Reactions.Types
         [TestMethod()]
         public void TestAtomTypesAtomContainer2()
         {
-            IAtomContainer moleculeTest = GetExpectedProducts()[0];
+            var moleculeTest = GetExpectedProducts()[0];
             MakeSureAtomTypesAreRecognized(moleculeTest);
         }
 
         /// <summary>
         /// get the molecule 1: [C+]-[O-]
         /// </summary>
-        /// <returns>The IAtomContainerSet</returns>
         private IChemObjectSet<IAtomContainer> GetExampleReactants()
         {
-            var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet();
+            var setOfReactants = CDK.Builder.NewAtomContainerSet();
 
-            IAtomContainer molecule = builder.NewAtomContainer();
+            var molecule = builder.NewAtomContainer();
             molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.Atoms[0].FormalCharge = 1;
             molecule.Atoms.Add(builder.NewAtom("O"));
@@ -286,13 +278,12 @@ namespace NCDK.Reactions.Types
         /// <summary>
         /// Get the expected set of molecules.
         /// </summary>
-        /// <returns>The IAtomContainerSet</returns>
         private IChemObjectSet<IAtomContainer> GetExpectedProducts()
         {
             var setOfProducts = builder.NewAtomContainerSet();
             //C=[O]
 
-            IAtomContainer molecule = builder.NewAtomContainer();
+            var molecule = builder.NewAtomContainer();
             molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.Atoms.Add(builder.NewAtom("O"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Double);
@@ -317,7 +308,6 @@ namespace NCDK.Reactions.Types
         /// Test to recognize if a IAtomContainer matcher correctly identifies the CDKAtomTypes.
         /// </summary>
         /// <param name="molecule">The IAtomContainer to analyze</param>
-        /// <exception cref="CDKException"></exception>
         private void MakeSureAtomTypesAreRecognized(IAtomContainer molecule)
         {
             var matcher = CDK.AtomTypeMatcher;

@@ -67,7 +67,7 @@ namespace NCDK.Charges
         }
 
         /// <summary>
-        ///  A unit test for JUnit with beta-amino-acetic-acid
+        ///  A unit test with beta-amino-acetic-acid
         ///
         /// </summary>
         [TestMethod()]
@@ -117,7 +117,7 @@ namespace NCDK.Charges
         }
 
         /// <summary>
-        ///  A unit test for JUnit with beta-amino-acetic-acid
+        ///  A unit test with beta-amino-acetic-acid
         /// </summary>
         [TestMethod()]
         public void TestInductivePartialCharges()

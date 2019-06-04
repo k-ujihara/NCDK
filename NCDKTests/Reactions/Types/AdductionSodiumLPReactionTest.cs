@@ -16,12 +16,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Isomorphisms;
 using NCDK.Isomorphisms.Matchers;
 using NCDK.Reactions.Types.Parameters;
-using NCDK.Silent;
-using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
@@ -46,12 +45,12 @@ namespace NCDK.Reactions.Types
         [TestMethod()]
         public void TestAdductionSodiumLPReaction()
         {
-            IReactionProcess type = new AdductionSodiumLPReaction();
+            var type = new AdductionSodiumLPReaction();
             Assert.IsNotNull(type);
         }
 
         /// <summary>
-        /// A unit test suite for JUnit for acetaldehyde.
+        /// A unit test suite for acetaldehyde.
         /// Reaction: O=C-C-H => O(H)-C=C.
         /// Automatically looks for active centre.
         /// </summary>
@@ -59,7 +58,7 @@ namespace NCDK.Reactions.Types
         [TestMethod()]
         public override void TestInitiate_IAtomContainerSet_IAtomContainerSet()
         {
-            IReactionProcess type = new AdductionSodiumLPReaction();
+            var type = new AdductionSodiumLPReaction();
 
             var setOfReactants = GetExampleReactants();
 
@@ -74,17 +73,16 @@ namespace NCDK.Reactions.Types
             Assert.AreEqual(1, setOfReactions.Count);
             Assert.AreEqual(1, setOfReactions[0].Products.Count);
 
-            IAtomContainer product = setOfReactions[0].Products[0];
+            var product = setOfReactions[0].Products[0];
 
-            IAtomContainer molecule2 = GetExpectedProducts()[0];
+            var molecule2 = GetExpectedProducts()[0];
 
-            IQueryAtomContainer queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(product);
+            var queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(product);
             Assert.IsTrue(new UniversalIsomorphismTester().IsIsomorph(molecule2, queryAtom));
-
         }
 
         /// <summary>
-        /// A unit test suite for JUnit for acetaldehyde.
+        /// A unit test suite for acetaldehyde.
         /// Reaction: O=C-C-H => O(H)-C=C.
         /// Manually tests for active centre..
         /// </summary>
@@ -92,10 +90,10 @@ namespace NCDK.Reactions.Types
         [TestMethod()]
         public void TestManuallyCentreActive()
         {
-            IReactionProcess type = new AdductionSodiumLPReaction();
+            var type = new AdductionSodiumLPReaction();
 
             var setOfReactants = GetExampleReactants();
-            IAtomContainer molecule = setOfReactants[0];
+            var molecule = setOfReactants[0];
 
             /* manually putting the active center */
             molecule.Atoms[0].IsReactiveCenter = true;
@@ -111,11 +109,11 @@ namespace NCDK.Reactions.Types
             Assert.AreEqual(1, setOfReactions.Count);
             Assert.AreEqual(1, setOfReactions[0].Products.Count);
 
-            IAtomContainer product = setOfReactions[0].Products[0];
+            var product = setOfReactions[0].Products[0];
 
-            IAtomContainer molecule2 = GetExpectedProducts()[0];
+            var molecule2 = GetExpectedProducts()[0];
 
-            IQueryAtomContainer queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(product);
+            var queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(product);
             Assert.IsTrue(new UniversalIsomorphismTester().IsIsomorph(molecule2, queryAtom));
         }
 
@@ -123,10 +121,10 @@ namespace NCDK.Reactions.Types
         [TestMethod()]
         public void TestCDKConstants_REACTIVE_CENTER()
         {
-            IReactionProcess type = new AdductionSodiumLPReaction();
+            var type = new AdductionSodiumLPReaction();
 
             var setOfReactants = GetExampleReactants();
-            IAtomContainer molecule = setOfReactants[0];
+            var molecule = setOfReactants[0];
 
             /* manually putting the active center */
             molecule.Atoms[0].IsReactiveCenter = true;
@@ -146,7 +144,7 @@ namespace NCDK.Reactions.Types
             /* initiate */
             var setOfReactions = type.Initiate(setOfReactants, null);
 
-            IAtomContainer reactant = setOfReactions[0].Reactants[0];
+            var reactant = setOfReactions[0].Reactants[0];
             Assert.IsTrue(molecule.Atoms[0].IsReactiveCenter);
             Assert.IsTrue(reactant.Atoms[0].IsReactiveCenter);
             Assert.IsTrue(molecule.Atoms[1].IsReactiveCenter);
@@ -167,10 +165,10 @@ namespace NCDK.Reactions.Types
         [TestMethod()]
         public void TestMapping()
         {
-            IReactionProcess type = new AdductionSodiumLPReaction();
+            var type = new AdductionSodiumLPReaction();
 
             var setOfReactants = GetExampleReactants();
-            IAtomContainer molecule = setOfReactants[0];
+            var molecule = setOfReactants[0];
 
             /* automatic looking for active center */
             var paramList = new List<IParameterReaction>();
@@ -182,14 +180,13 @@ namespace NCDK.Reactions.Types
 
             var setOfReactions = type.Initiate(setOfReactants, null);
 
-            IAtomContainer product = setOfReactions[0].Products[0];
+            var product = setOfReactions[0].Products[0];
 
             Assert.AreEqual(8, setOfReactions[0].Mappings.Count);
 
-            IAtom mappedProductA0 = (IAtom)ReactionManipulator.GetMappedChemObject(setOfReactions[0],
+            var mappedProductA0 = (IAtom)ReactionManipulator.GetMappedChemObject(setOfReactions[0],
                     molecule.Atoms[0]);
             Assert.AreEqual(mappedProductA0, product.Atoms[0]);
-
         }
 
         /// <summary>
@@ -198,8 +195,8 @@ namespace NCDK.Reactions.Types
         // @cdk.inchi InChI=1/C2H4O/c1-2-3/h2H,1H3
         private IChemObjectSet<IAtomContainer> GetExampleReactants()
         {
-            var setOfReactants = ChemObjectBuilder.Instance.NewAtomContainerSet();
-            IAtomContainer molecule = builder.NewAtomContainer();
+            var setOfReactants = CDK.Builder.NewAtomContainerSet();
+            var molecule = builder.NewAtomContainer();
             molecule.Atoms.Add(builder.NewAtom("O"));
             molecule.Atoms.Add(builder.NewAtom("C"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Double);
@@ -233,7 +230,7 @@ namespace NCDK.Reactions.Types
         private IChemObjectSet<IAtomContainer> GetExpectedProducts()
         {
             var setOfProducts = builder.NewAtomContainerSet();
-            IAtomContainer molecule = builder.NewAtomContainer();
+            var molecule = builder.NewAtomContainer();
             molecule.Atoms.Add(builder.NewAtom("O"));
             molecule.Atoms[0].FormalCharge = 1;
             molecule.Atoms.Add(builder.NewAtom("C"));

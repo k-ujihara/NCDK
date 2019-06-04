@@ -16,13 +16,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Reactions
 {
-    /// <summary>
     // @cdk.module test-reaction
-    /// </summary>
     [TestClass()]
     public class ReactionSpecificationTest : CDKTestCase
     {
@@ -38,40 +37,35 @@ namespace NCDK.Reactions
         [TestMethod()]
         public void TestReactionSpecification_String_String_String_String()
         {
-            ReactionSpecification spec = new ReactionSpecification(REAC_REF, REAC_IMPL_TITLE, REAC_IMPL_ID,
-                    REAC_IMPL_VENDOR);
+            var spec = new ReactionSpecification(REAC_REF, REAC_IMPL_TITLE, REAC_IMPL_ID, REAC_IMPL_VENDOR);
             Assert.IsNotNull(spec);
         }
 
         [TestMethod()]
         public void TestImplementationVendor()
         {
-            ReactionSpecification spec = new ReactionSpecification(REAC_REF, REAC_IMPL_TITLE, REAC_IMPL_ID,
-                    REAC_IMPL_VENDOR);
+            var spec = new ReactionSpecification(REAC_REF, REAC_IMPL_TITLE, REAC_IMPL_ID, REAC_IMPL_VENDOR);
             Assert.AreEqual(REAC_IMPL_VENDOR, spec.ImplementationVendor);
         }
 
         [TestMethod()]
         public void TestSpecificationReference()
         {
-            ReactionSpecification spec = new ReactionSpecification(REAC_REF, REAC_IMPL_TITLE, REAC_IMPL_ID,
-                    REAC_IMPL_VENDOR);
+            var spec = new ReactionSpecification(REAC_REF, REAC_IMPL_TITLE, REAC_IMPL_ID, REAC_IMPL_VENDOR);
             Assert.AreEqual(REAC_REF, spec.SpecificationReference);
         }
 
         [TestMethod()]
         public void TestImplementationIdentifier()
         {
-            ReactionSpecification spec = new ReactionSpecification(REAC_REF, REAC_IMPL_TITLE, REAC_IMPL_ID,
-                    REAC_IMPL_VENDOR);
+            var spec = new ReactionSpecification(REAC_REF, REAC_IMPL_TITLE, REAC_IMPL_ID, REAC_IMPL_VENDOR);
             Assert.AreEqual(REAC_IMPL_ID, spec.ImplementationIdentifier);
         }
 
         [TestMethod()]
         public void TestImplementationTitle()
         {
-            ReactionSpecification spec = new ReactionSpecification(REAC_REF, REAC_IMPL_TITLE, REAC_IMPL_ID,
-                    REAC_IMPL_VENDOR);
+            var spec = new ReactionSpecification(REAC_REF, REAC_IMPL_TITLE, REAC_IMPL_ID, REAC_IMPL_VENDOR);
             Assert.AreEqual(REAC_IMPL_TITLE, spec.ImplementationTitle);
         }
     }

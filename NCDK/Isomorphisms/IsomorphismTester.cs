@@ -57,7 +57,7 @@ namespace NCDK.Isomorphisms
         /// </summary>
         /// <param name="mol1">A first molecule to check against the second one</param>
         /// <param name="mol2">A second molecule to check against the first</param>
-        /// <returns>True, if the two molecules are isomorphic</returns>
+        /// <returns><see langword="true"/>, if the two molecules are isomorphic</returns>
         public bool IsIsomorphic(IAtomContainer mol1, IAtomContainer mol2)
         {
             SetBaseTable(mol1);
@@ -69,12 +69,9 @@ namespace NCDK.Isomorphisms
         /// that has been assigned to this IsomorphismTester at construction time.
         /// </summary>
         /// <param name="mol2">A molecule to check</param>
-        /// <returns>True, if the two molecules are isomorphic</returns>
+        /// <returns><see langword="true"/>, if the two molecules are isomorphic</returns>
         public bool IsIsomorphic(IAtomContainer mol2)
         {
-            bool found;
-            IAtom atom1 = null;
-            IAtom atom2 = null;
             SetCompareTable(mol2);
             for (int f = 0; f < sortedBaseTable.Length; f++)
             {
@@ -86,13 +83,13 @@ namespace NCDK.Isomorphisms
 
             for (int f = 0; f < baseTable.Length; f++)
             {
-                found = false;
+                var found = false;
                 for (int g = 0; g < compareTable.Length; g++)
                 {
                     if (baseTable[f] == compareTable[g])
                     {
-                        atom1 = base_.Atoms[f];
-                        atom2 = compare.Atoms[g];
+                        var atom1 = base_.Atoms[f];
+                        var atom2 = compare.Atoms[g];
                         if (atom1.AtomicNumber != atom2.AtomicNumber
                          && atom1.ImplicitHydrogenCount == atom2.ImplicitHydrogenCount)
                         {

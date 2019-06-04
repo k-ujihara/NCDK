@@ -36,7 +36,7 @@ namespace NCDK.Charges
         private IChemObjectBuilder builder = CDK.Builder;
         
         /// <summary>
-        /// A unit test for JUnit with methylenfluoride
+        /// A unit test with methylenfluoride
         /// </summary>
         // @cdk.inchi InChI=1/CH3F/c1-2/h1H3
         [TestMethod()]

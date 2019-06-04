@@ -39,7 +39,7 @@ namespace NCDK.Similarity
                 9.234152f, -0.49032924f, 6.6067924f, 8.89391f, -0.048539735f};
             var actual = DistanceMoment.GenerateMoments(ac);
 
-            // no assertArrayEquals for junit 4.5
+            // no assertArrayEquals 4.5
             for (int i = 0; i < expected.Length; i++)
             {
                 Assert.AreEqual(expected[i], actual[i], 0.000001);

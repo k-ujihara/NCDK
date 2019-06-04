@@ -16,6 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Reactions.Types.Parameters;
 
@@ -35,7 +36,7 @@ namespace NCDK.Types.Parameters
         [TestMethod()]
         public void TestSetReactionCenter()
         {
-            SetReactionCenter react = new SetReactionCenter();
+            var react = new SetReactionCenter();
             Assert.IsNotNull(react);
         }
     }

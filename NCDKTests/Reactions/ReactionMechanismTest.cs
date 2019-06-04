@@ -16,6 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
@@ -23,9 +24,8 @@ namespace NCDK.Reactions
 {
     /// <summary>
     /// Tests for IReactionProcess implementations.
-    ///
-    // @cdk.module test-reaction
     /// </summary>
+    // @cdk.module test-reaction
     [TestClass()]
     public abstract class ReactionMechanismTest : CDKTestCase
     {
@@ -51,18 +51,18 @@ namespace NCDK.Reactions
 
         /// <summary>
         /// Makes sure that the extending class has set the super.descriptor.
-        /// Each extending class should have this bit of code (JUnit3 formalism):
-        /// <pre>
+        /// </summary>
+        /// <example>
+        /// Each extending class should have this bit of code:
+        /// <code>
         /// public void SetUp() {
         ///   // Pass a Class, not an Object!
         ///   SetDescriptor(typeof(SomeDescriptor));
         /// }
-        ///
-        /// <p>The unit tests in the extending class may use this instance, but
+        /// </code>
+        /// The unit tests in the extending class may use this instance, but
         /// are not required.
-        ///
-        /// </pre>
-        /// </summary>
+        /// </example>
         [TestMethod()]
         public void TestHasSetSuperDotDescriptor()
         {

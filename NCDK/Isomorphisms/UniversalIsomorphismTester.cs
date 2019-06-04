@@ -22,7 +22,6 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
 
 using NCDK.Isomorphisms.Matchers;
@@ -36,37 +35,37 @@ using System.Linq;
 namespace NCDK.Isomorphisms
 {
     /// <summary>
-    ///  This class implements a multipurpose structure comparison tool.
-    ///  It allows to find maximal common substructure, find the
-    ///  mapping of a substructure in another structure, and the mapping of
-    ///  two isomorphic structures.
+    /// This class implements a multipurpose structure comparison tool.
+    /// It allows to find maximal common substructure, find the
+    /// mapping of a substructure in another structure, and the mapping of
+    /// two isomorphic structures.
     /// </summary>
     /// <remarks>
-    ///  Structure comparison may be associated to bond constraints
-    ///  (mandatory bonds, e.g. scaffolds, reaction cores,...) on each source graph.
-    ///  The constraint flexibility allows a number of interesting queries.
-    ///  The substructure analysis relies on the RGraph generic class (see: RGraph)
-    ///  This class implements the link between the RGraph model and the
-    ///  the CDK model in this way the <see cref="RGraph"/> remains independent and may be used
-    ///  in other contexts.
-    ///  <para>
-    ///  This algorithm derives from the algorithm described in
-    ///  <token>cdk-cite-HAN90</token> and modified in the thesis of T. Hanser <token>cdk-cite-HAN93</token>.
-    ///  </para>
+    /// Structure comparison may be associated to bond constraints
+    /// (mandatory bonds, e.g. scaffolds, reaction cores,...) on each source graph.
+    /// The constraint flexibility allows a number of interesting queries.
+    /// The substructure analysis relies on the RGraph generic class (see: RGraph)
+    /// This class implements the link between the RGraph model and the
+    /// the CDK model in this way the <see cref="RGraph"/> remains independent and may be used
+    /// in other contexts.
+    /// <para>
+    /// This algorithm derives from the algorithm described in
+    /// <token>cdk-cite-HAN90</token> and modified in the thesis of T. Hanser <token>cdk-cite-HAN93</token>.
+    /// </para>
     /// <note type="warning">
-    ///    As a result of the adjacency perception used in this algorithm
-    ///    there is a single limitation: cyclopropane and isobutane are seen as isomorph.
-    ///    This is due to the fact that these two compounds are the only ones where
-    ///    each bond is connected two each other bond (bonds are fully connected)
-    ///    with the same number of bonds and still they have different structures
-    ///    The algorithm could be easily enhanced with a simple atom mapping manager
-    ///    to provide an atom level overlap definition that would reveal this case.
-    ///    We decided not to penalize the whole procedure because of one single
-    ///    exception query. Furthermore isomorphism may be discarded since the number of atoms are
-    ///    not the same (3 != 4) and in most case this will be already
-    ///    screened out by a fingerprint based filtering.
-    ///    It is possible to add a special treatment for this special query.
-    ///    Be reminded that this algorithm matches bonds only.
+    /// As a result of the adjacency perception used in this algorithm
+    /// there is a single limitation: cyclopropane and isobutane are seen as isomorph.
+    /// This is due to the fact that these two compounds are the only ones where
+    /// each bond is connected two each other bond (bonds are fully connected)
+    /// with the same number of bonds and still they have different structures
+    /// The algorithm could be easily enhanced with a simple atom mapping manager
+    /// to provide an atom level overlap definition that would reveal this case.
+    /// We decided not to penalize the whole procedure because of one single
+    /// exception query. Furthermore isomorphism may be discarded since the number of atoms are
+    /// not the same (3 != 4) and in most case this will be already
+    /// screened out by a fingerprint based filtering.
+    /// It is possible to add a special treatment for this special query.
+    /// Be reminded that this algorithm matches bonds only.
     /// </note>
     /// <para>
     /// <note type="note">
@@ -80,16 +79,15 @@ namespace NCDK.Isomorphisms
     /// </para>
     /// </remarks>
     /// <example>
-    ///  With the <see cref="IsSubgraph(IAtomContainer, IAtomContainer)"/> method,
-    ///  the second, and only the second argument <b>may</b> be a <see cref="IQueryAtomContainer"/>,
-    ///  which allows one to do SMARTS or MQL like queries.
-    ///  The first <see cref="IAtomContainer"/> must never be an <see cref="IQueryAtomContainer"/>.
-    ///  An example:
+    /// With the <see cref="IsSubgraph(IAtomContainer, IAtomContainer)"/> method,
+    /// the second, and only the second argument <b>may</b> be a <see cref="IQueryAtomContainer"/>,
+    /// which allows one to do SMARTS or MQL like queries.
+    /// The first <see cref="IAtomContainer"/> must never be an <see cref="IQueryAtomContainer"/>.
+    /// An example:
     /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Isomorphisms.UniversalIsomorphismTester_Example.cs"]/*' />
     /// </example>
     // @author      Stephane Werner from IXELIS mail@ixelis.net
     // @cdk.created 2002-07-17
-    // @cdk.require java1.4+
     // @cdk.module  standard
     [Obsolete("Use the Pattern APIs from the " + nameof(Isomorphisms) + " namespace")]
     public class UniversalIsomorphismTester

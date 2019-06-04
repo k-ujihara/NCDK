@@ -16,6 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Reactions.Types;
 using NCDK.Reactions.Types.Parameters;
@@ -24,10 +25,9 @@ namespace NCDK.Reactions
 {
     /// <summary>
     /// Tests for ReactionEngine implementations.
-    ///
-    // @cdk.module test-reaction
     /// </summary>
-     [TestClass()]
+    // @cdk.module test-reaction
+    [TestClass()]
     public class ReactionEngineTest : CDKTestCase
     {
         public ReactionEngineTest()
@@ -37,21 +37,21 @@ namespace NCDK.Reactions
         [TestMethod()]
         public void TestReactionEngine()
         {
-            ReactionEngine engine = new AdductionProtonLPReaction();
+            var engine = new AdductionProtonLPReaction();
             Assert.IsNotNull(engine);
         }
 
         [TestMethod()]
         public void TestGetParameterList()
         {
-            ReactionEngine engine = new AdductionProtonLPReaction();
+            var engine = new AdductionProtonLPReaction();
             Assert.IsNotNull(engine.ParameterList);
         }
 
         [TestMethod()]
         public void TestSetParameterList_List()
         {
-            ReactionEngine engine = new AdductionProtonLPReaction();
+            var engine = new AdductionProtonLPReaction();
             engine.ParameterList = engine.ParameterList;
             Assert.IsNotNull(engine.ParameterList);
         }
@@ -59,7 +59,7 @@ namespace NCDK.Reactions
         [TestMethod()]
         public void TestGetParameterClass_Class()
         {
-            ReactionEngine engine = new AdductionProtonLPReaction();
+            var engine = new AdductionProtonLPReaction();
             Assert.IsNotNull(engine.GetParameterClass(typeof(SetReactionCenter)));
         }
     }

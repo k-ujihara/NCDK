@@ -80,7 +80,7 @@ namespace NCDK.Tools.Manipulator
         }
 
         /// <summary>
-        /// A unit test suite for JUnit. Test of mapped IAtoms
+        /// A unit test suite. Test of mapped IAtoms
         /// </summary>
         [TestMethod()]
         public void TestGetMappedChemObject_IReaction_IAtom()
@@ -109,7 +109,7 @@ namespace NCDK.Tools.Manipulator
         }
 
         /// <summary>
-        /// A unit test suite for JUnit. Test of mapped IBond
+        /// A unit test suite. Test of mapped IBond
         /// </summary>
         [TestMethod()]
         public void TestGetMappedChemObject_IReaction_IBond()
