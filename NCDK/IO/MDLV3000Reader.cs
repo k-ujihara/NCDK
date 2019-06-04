@@ -39,12 +39,10 @@ namespace NCDK.IO
     /// element symbol and 2D or 3D coordinates from the ATOM block.
     /// </summary>
     // @cdk.module io
-    // @cdk.githash
     // @cdk.iooptions
     // @author      Egon Willighagen <egonw@users.sf.net>
     // @cdk.created 2006
     // @cdk.keyword MDL molfile V3000
-    // @cdk.require java1.4+
     public class MDLV3000Reader : DefaultChemObjectReader
     {
         TextReader input = null;

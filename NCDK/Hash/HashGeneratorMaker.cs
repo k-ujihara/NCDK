@@ -42,7 +42,6 @@ namespace NCDK.Hash
     /// </example>
     // @author John May
     // @cdk.module hash
-    // @cdk.githash
     public sealed class HashGeneratorMaker
     {
         /* no default depth */

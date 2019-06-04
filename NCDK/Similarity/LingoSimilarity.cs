@@ -35,7 +35,6 @@ namespace NCDK.Similarity
     /// value ranges from 0 to 1
     /// </remarks>
     // @author Rajarshi Guha
-    // @cdk.githash
     // @cdk.keyword lingo
     // @cdk.keyword similarity, tanimoto
     // @cdk.module fingerprint

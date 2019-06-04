@@ -19,11 +19,10 @@
  */
 
 using NCDK.Geometries;
+using NCDK.Numerics;
 using System;
 using System.Collections.Generic;
-using NCDK.Numerics;
 using System.Diagnostics;
-using NCDK.Config;
 
 namespace NCDK.Modelings.Builder3D
 {
@@ -36,7 +35,6 @@ namespace NCDK.Modelings.Builder3D
     // @cdk.keyword    AtomPlacer3D
     // @cdk.created    2004-10-8
     // @cdk.module     builder3d
-    // @cdk.githash
     public class AtomPlacer3D
     {
         private IReadOnlyDictionary<string, object> pSet = null;
@@ -69,7 +67,7 @@ namespace NCDK.Modelings.Builder3D
         /// <param name="molecule">the reference molecule for searching the chain</param>
         /// <param name="chain">chain to be searched</param>
         /// <returns>the atom number of the first heavy atom the number of heavy atoms in the chain</returns>
-        public virtual int[] FindHeavyAtomsInChain(IAtomContainer molecule, IAtomContainer chain)
+        public int[] FindHeavyAtomsInChain(IAtomContainer molecule, IAtomContainer chain)
         {
             int[] heavy = { -1, -1 };
             int hc = 0;
@@ -94,7 +92,7 @@ namespace NCDK.Modelings.Builder3D
         /// <param name="molecule">the reference molecule for the chain</param>
         /// <param name="chain">the atoms to be assigned, must be connected</param>
         /// <exception cref="CDKException">the 'chain' was not a chain</exception>
-        public virtual void PlaceAliphaticHeavyChain(IAtomContainer molecule, IAtomContainer chain)
+        public void PlaceAliphaticHeavyChain(IAtomContainer molecule, IAtomContainer chain)
         {
             //Debug.WriteLine("******** Place aliphatic Chain *********");
             int[] first = new int[2];
@@ -204,7 +202,7 @@ namespace NCDK.Modelings.Builder3D
         /// <param name="molecule">the molecule to be placed in 3D</param>
         /// <param name="flagBranched">marks branched chain</param>
         // @author: egonw,cho
-        public virtual void ZMatrixChainToCartesian(IAtomContainer molecule, bool flagBranched)
+        public void ZMatrixChainToCartesian(IAtomContainer molecule, bool flagBranched)
         {
             Vector3? result = null;
             for (int index = 0; index < distances.Length; index++)
@@ -341,7 +339,7 @@ namespace NCDK.Modelings.Builder3D
         /// <param name="id1">atom1 id</param>
         /// <param name="id2">atom2 id</param>
         /// <returns>The distanceValue value from the force field parameter set</returns>
-        public virtual double GetBondLengthValue(string id1, string id2)
+        public double GetBondLengthValue(string id1, string id2)
         {
             string dkey = "";
             if (pSet.ContainsKey(("bond" + id1 + ";" + id2)))
@@ -367,7 +365,7 @@ namespace NCDK.Modelings.Builder3D
         /// <param name="id2">Description of the Parameter</param>
         /// <param name="id3">Description of the Parameter</param>
         /// <returns>The angleKey value</returns>
-        public virtual double GetAngleValue(string id1, string id2, string id3)
+        public double GetAngleValue(string id1, string id2, string id3)
         {
             string akey = "";
             if (pSet.ContainsKey(("angle" + id1 + ";" + id2 + ";" + id3)))
@@ -509,7 +507,7 @@ namespace NCDK.Modelings.Builder3D
         /// </summary>
         /// <param name="refAtomPoint">Description of the Parameter</param>
         /// <returns>The farthestAtom value</returns>
-        public virtual IAtom GetFarthestAtom(Vector3 refAtomPoint, IAtomContainer ac)
+        public IAtom GetFarthestAtom(Vector3 refAtomPoint, IAtomContainer ac)
         {
             double distance = 0;
             IAtom atom = null;
@@ -553,7 +551,7 @@ namespace NCDK.Modelings.Builder3D
         /// </summary>
         /// <param name="molecule"></param>
         /// <returns><see cref="Vector3"/>the geometric center</returns>
-        public virtual Vector3 GeometricCenterAllPlacedAtoms(IAtomContainer molecule)
+        public Vector3 GeometricCenterAllPlacedAtoms(IAtomContainer molecule)
         {
             IAtomContainer allPlacedAtoms = GetAllPlacedAtoms(molecule);
             return GeometryUtil.Get3DCenter(allPlacedAtoms);

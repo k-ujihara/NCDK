@@ -30,7 +30,6 @@ namespace NCDK
     /// in case something changes within them.
     /// </summary>
     // @cdk.module data
-    // @cdk.githash
     public class ChemObjectChangeEventArgs
         : EventArgs
     {
@@ -48,4 +47,3 @@ namespace NCDK
         }
     }
 }
-

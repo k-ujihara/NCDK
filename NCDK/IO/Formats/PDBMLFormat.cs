@@ -28,7 +28,6 @@ namespace NCDK.IO.Formats
     /// See <see href="http://pdbml.rcsb.org/">here</see>.
     /// </summary>
     // @cdk.module ioformats
-    // @cdk.githash
     public class PDBMLFormat : AbstractResourceFormat, IChemFormat
     {
         private static IResourceFormat myself = null;

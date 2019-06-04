@@ -67,7 +67,6 @@ namespace NCDK.Hash
     /// <seealso cref="HashGeneratorMaker"/>
     // @author John May
     // @cdk.module hash
-    // @cdk.githash
     internal sealed class MinimumEquivalentCyclicSet : EquivalentSetFinder
     {
         public override ISet<int> Find(long[] invariants, IAtomContainer container, int[][] graph)

@@ -33,7 +33,6 @@ namespace NCDK.Isomorphisms.MCSS
     // @author      Stephane Werner, IXELIS <mail@ixelis.net>
     // @cdk.created 2002-07-24
     // @cdk.module  standard
-    // @cdk.githash
     public class RMap
     {
         public int Id1 { get; set; } = 0;

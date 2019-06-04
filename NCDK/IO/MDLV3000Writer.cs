@@ -945,5 +945,13 @@ namespace NCDK.IO
                 new StringIOSetting(OptProgramName, Importance.Low,
                 "Program name to write at the top of the molfile header, should be exactly 8 characters long", "CDK"));
         }
+
+        public void CustomizeJob()
+        {
+            foreach (var setting in IOSettings.Settings)
+            {
+                ProcessIOSettingQuestion(setting);
+            }
+        }
     }
 }

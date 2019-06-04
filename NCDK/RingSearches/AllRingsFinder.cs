@@ -48,7 +48,6 @@ namespace NCDK.RingSearches
     // @author steinbeck
     // @author johnmay
     // @cdk.module standard
-    // @cdk.githash
     // @cdk.keyword rings
     // @cdk.keyword all rings
     public sealed class AllRingsFinder

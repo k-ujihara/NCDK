@@ -19,7 +19,6 @@
 
 using NCDK.Dict;
 using NCDK.IO;
-using NCDK.Silent;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
@@ -33,7 +32,6 @@ namespace NCDK.Templates
     /// </summary>
     // @author      Martin Eklund <martin.eklund@farmbio.uu.se>
     // @cdk.module  pdb
-    // @cdk.githash
     // @cdk.keyword templates
     // @cdk.keyword amino acids, stuctures
     // @cdk.created 2005-02-08
@@ -45,7 +43,7 @@ namespace NCDK.Templates
         public const string NoBoundsKey = "noOfBonds";
         public const string IdKey = "id";
 
-        private static readonly AminoAcid[] proteinogenics;
+        private static readonly IAminoAcid[] proteinogenics;
         private static readonly Dictionary<string, IAminoAcid> singleLetterCodeMap;
         private static readonly Dictionary<string, IAminoAcid> threeLetterCodeMap;
         private static readonly Dictionary<string, string> singleLetterToThreeLetter;
@@ -56,11 +54,11 @@ namespace NCDK.Templates
 #pragma warning restore CA1810 // Initialize reference type static fields inline
         {
             // Create set of AtomContainers
-            proteinogenics = new AminoAcid[20];
+            proteinogenics = new IAminoAcid[20];
 
             #region Create proteinogenics
             {
-                IChemFile list = new ChemFile();
+                IChemFile list = CDK.Builder.NewChemFile();
                 using (var reader = new CMLReader(ResourceLoader.GetAsStream("NCDK.Templates.Data.list_aminoacids.cml")))
                 {
                     try
@@ -72,7 +70,7 @@ namespace NCDK.Templates
                         {
                             Debug.WriteLine($"Adding AA: {ac}");
                             // convert into an AminoAcid
-                            var aminoAcid = new AminoAcid();
+                            var aminoAcid = CDK.Builder.NewAminoAcid();
                             foreach (var next in ac.GetProperties().Keys)
                             {
                                 Debug.WriteLine("Prop: " + next.ToString());
@@ -167,7 +165,7 @@ namespace NCDK.Templates
         /// <summary>
         /// Proteinogenic amino acid list.
         /// </summary>
-        public static IReadOnlyList<AminoAcid> Proteinogenics => proteinogenics;
+        public static IReadOnlyList<IAminoAcid> Proteinogenics => proteinogenics;
 
         /// <summary>
         /// Map where the key is one of G, A, V, L, I, S, T, C, M, D,

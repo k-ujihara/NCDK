@@ -26,7 +26,6 @@ namespace NCDK.Tools.Diff
     /// </summary>
     // @author     egonw
     // @cdk.module diff
-    // @cdk.githash
     public static class AtomDiff
     {
         /// <summary>
@@ -60,9 +59,9 @@ namespace NCDK.Tools.Diff
             {
                 return null;
             }
-            IAtom firstElem = (IAtom)first;
-            IAtom secondElem = (IAtom)second;
-            ChemObjectDifference totalDiff = new ChemObjectDifference("AtomDiff");
+            var firstElem = (IAtom)first;
+            var secondElem = (IAtom)second;
+            var totalDiff = new ChemObjectDifference("AtomDiff");
             totalDiff.AddChild(IntegerDifference.Construct("H", firstElem.ImplicitHydrogenCount,
                     secondElem.ImplicitHydrogenCount));
             totalDiff

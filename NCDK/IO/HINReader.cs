@@ -32,7 +32,6 @@ namespace NCDK.IO
     /// Reads an object from HIN formated input.
     /// </summary>
     // @cdk.module io
-    // @cdk.githash
     // @author  Rajarshi Guha <rajarshi.guha@gmail.com>
     // @cdk.created 2004-01-27
     // @cdk.keyword file format, HIN

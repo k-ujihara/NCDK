@@ -45,10 +45,9 @@ namespace NCDK.Hash
     /// </code></example>
     /// <seealso cref="MinimumEquivalentCyclicSet"/>
     /// <seealso cref="MinimumEquivalentCyclicSetUnion"/>
+    /// <seealso cref="PerturbedAtomHashGenerator"/>
     // @author John May
     // @cdk.module hash
-    // @see org.openscience.cdk.hash.PerturbedAtomHashGenerator
-    // @cdk.githash
     internal sealed class AllEquivalentCyclicSet : EquivalentSetFinder
     {
         public override ISet<int> Find(long[] invariants, IAtomContainer container, int[][] graph)

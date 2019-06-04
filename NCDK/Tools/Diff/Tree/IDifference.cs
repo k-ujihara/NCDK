@@ -24,7 +24,6 @@ namespace NCDK.Tools.Diff.Tree
     /// </summary>
     // @author     egonw
     // @cdk.module diff
-    // @cdk.githash
     public interface IDifference
     {
     }

@@ -27,7 +27,6 @@ namespace NCDK.IO.Formats
     /// See <see href="http://www.rcsb.org/pdb/docs/format/pdbguide2.2/guide2.2_frame.html">here</see>.
     /// </summary>
     // @cdk.module ioformats
-    // @cdk.githash
     public class PDBFormat : SimpleChemFormatMatcher, IChemFormatMatcher
     {
         private static IResourceFormat myself = null;

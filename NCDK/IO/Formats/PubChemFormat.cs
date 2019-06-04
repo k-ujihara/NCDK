@@ -26,7 +26,6 @@ namespace NCDK.IO.Formats
     /// See <see href="http://ftp.ncbi.nlm.nih.gov/pubchem/data_spec/pubchem.xsd">here</see>.
     /// </summary>
     // @cdk.module ioformats
-    // @cdk.githash
     public class PubChemFormat : AbstractResourceFormat, IChemFormat
     {
         private static IResourceFormat myself = null;

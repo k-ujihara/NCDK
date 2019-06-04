@@ -236,7 +236,6 @@ namespace NCDK.Graphs
     // @cdk.keyword cycle
     // @see MinimumCycleBasis
     // @see RelevantCycles
-    // @cdk.githash
     public sealed class TripletShortCycles
     {
         /// <summary>Adjacency list representation of the graph.</summary>

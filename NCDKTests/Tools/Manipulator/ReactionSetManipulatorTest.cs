@@ -154,7 +154,7 @@ namespace NCDK.Tools.Manipulator
             var allObjects = ReactionSetManipulator.GetAllChemObjects(set);
             // does not recurse beyond the IAtomContainer, so:
             // set, reaction, 2xreactant, 1xproduct
-            Assert.AreEqual(5, allObjects.Count);
+            Assert.AreEqual(5, allObjects.Count());
         }
 
         [TestMethod()]

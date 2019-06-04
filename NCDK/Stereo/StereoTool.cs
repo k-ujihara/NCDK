@@ -34,7 +34,6 @@ namespace NCDK.Stereo
     /// </remarks>
     // @author maclean
     // @cdk.module standard
-    // @cdk.githash
     public static class StereoTool
     {
         /// <summary>

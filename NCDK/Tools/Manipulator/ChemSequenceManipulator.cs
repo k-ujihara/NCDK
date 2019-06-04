@@ -31,7 +31,6 @@ namespace NCDK.Tools.Manipulator
     /// </summary>
     /// <seealso cref="IAtomContainer.RemoveAtomAndConnectedElectronContainers(IAtom)"/>
     // @cdk.module standard
-    // @cdk.githash
     public static class ChemSequenceManipulator
     {
         /// <summary>
@@ -82,7 +81,7 @@ namespace NCDK.Tools.Manipulator
         /// <returns>An enumerable of all ChemObjects.</returns>
         public static IEnumerable<IChemObject> GetAllChemObjects(IChemSequence sequence)
         {
-            List<IChemObject> list = new List<IChemObject>();
+            var list = new List<IChemObject>();
             // list.Add(sequence);
             for (int i = 0; i < sequence.Count; i++)
             {

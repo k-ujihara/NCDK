@@ -28,7 +28,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using static NCDK.Graphs.GraphUtil;
 
 namespace NCDK.Graphs
 {
@@ -71,7 +70,7 @@ namespace NCDK.Graphs
     /// </item> <item> <see cref="VertexShortFinder"/> - the shortest cycles through each vertex.
     /// Unlike the MCB, linear independence is not checked and it may not be possible
     /// to generate all other cycles from this set. In practice the vertex/edge short
-    /// cycles are similar to MCB. </item> <item> <see cref="EdgeShort"/> - the shortest
+    /// cycles are similar to MCB. </item> <item><see cref="EdgeShort"/> - the shortest
     /// cycles through each edge. Unlike the MCB, linear independence is not checked
     /// and it may not be possible to generate all other cycles from this set. In
     /// practice the vertex/edge short cycles are similar to MCB. </item>
@@ -79,7 +78,6 @@ namespace NCDK.Graphs
     /// </remarks>
     // @author John May
     // @cdk.module core
-    // @cdk.githash
     public sealed class Cycles
     {
         /// <summary>Vertex paths for each cycle.</summary>

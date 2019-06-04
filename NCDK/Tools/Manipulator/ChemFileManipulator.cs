@@ -31,7 +31,6 @@ namespace NCDK.Tools.Manipulator
     /// </summary>
     /// <seealso cref="IAtomContainer.RemoveAtomAndConnectedElectronContainers(IAtom)"/>
     // @cdk.module standard
-    // @cdk.githash
     public static class ChemFileManipulator
     {
         /// <summary>

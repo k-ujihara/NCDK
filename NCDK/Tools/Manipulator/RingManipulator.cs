@@ -20,15 +20,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
+ 
 namespace NCDK.Tools.Manipulator
 {
     // @cdk.module standard
-    // @cdk.githash
     public static class RingManipulator
     {
         /// <summary>
@@ -43,11 +38,13 @@ namespace NCDK.Tools.Manipulator
             // return as soon as the conditions are not met:
             // 1. all atoms are labeled aromatic
             foreach (var atom in ring.Atoms)
-                if (!atom.IsAromatic) return;
+                if (!atom.IsAromatic)
+                    return;
 
             // 2. all bonds are labeled aromatic
             foreach (var bond in ring.Bonds)
-                if (!bond.IsAromatic) return;
+                if (!bond.IsAromatic)
+                    return;
 
             // OK, all conditions are met, so ring is aromatic
             ring.IsAromatic = true;

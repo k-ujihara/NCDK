@@ -30,7 +30,6 @@ namespace NCDK.IO.CML
     /// CML can be found at <see href="http://www.xml-cml.org/">http://www.xml-cml.org/</see>.
     /// </summary>
     // @cdk.module io
-    // @cdk.githash
     // @author Egon Willighagen <egonw@sci.kun.nl>
     public class CMLResolver : XmlResolver
     {

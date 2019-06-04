@@ -35,7 +35,6 @@ namespace NCDK.IO
     /// it extracts the InChI and canonical SMILES properties.
     /// </summary>
     // @cdk.module io
-    // @cdk.githash
     // @cdk.iooptions
     // @cdk.keyword file format, PubChem Compound ASN
     public class PCSubstanceXMLReader : DefaultChemObjectReader

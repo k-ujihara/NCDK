@@ -41,7 +41,6 @@ namespace NCDK.Layout
     /// buildup of ringsystems by the user.
     /// </summary>
     // @cdk.module sdg
-    // @cdk.githash
     public class RingPlacer
     {
         // indicate we want to snap to regular polygons for bridges, not generally applicable

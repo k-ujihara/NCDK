@@ -29,7 +29,6 @@ namespace NCDK.IO.CML
 {
     // @author Egon Willighagen <egonw@sci.kun.nl>
     // @cdk.module io
-    // @cdk.githash
     public class JMOLANIMATIONConvention : CMLCoreModule
     {
         private const int Unknown = -1;

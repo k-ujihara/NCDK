@@ -16,11 +16,9 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.Config;
+
 using NCDK.Reactions.Types.Parameters;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace NCDK.Reactions.Types
 {
@@ -34,12 +32,8 @@ namespace NCDK.Reactions.Types
     // @author         Miguel Rojas
     // @cdk.created    2006-10-16
     // @cdk.module     reaction
-    // @cdk.githash
     public partial class CarbonylEliminationReaction : ReactionEngine, IReactionProcess
     {
-        /// <summary>
-        /// Constructor of the CarbonylEliminationReaction object.
-        /// </summary>
         public CarbonylEliminationReaction() { }
 
         /// <summary>

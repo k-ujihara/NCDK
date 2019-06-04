@@ -9,7 +9,6 @@ namespace NCDK.Modelings.Builder3D
     // @author         chhoppe
     // @cdk.created    2004-10-8
     // @cdk.module     forcefield
-    // @cdk.githash
     public class MMFF94ParametersCall
     {
         private IReadOnlyDictionary<string, IList> pSet = null;

@@ -31,7 +31,6 @@ namespace NCDK.Tools.Manipulator
     // @author     mfe4
     // @author     egonw
     // @cdk.module standard
-    // @cdk.githash
     public static class AtomTypeManipulator
     {
         /// <summary>

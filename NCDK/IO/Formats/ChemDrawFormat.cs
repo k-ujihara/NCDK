@@ -16,6 +16,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Tools;
 using System.Collections.Generic;
 
@@ -23,7 +24,6 @@ namespace NCDK.IO.Formats
 {
     // @author Miguel Rojas
     // @cdk.module ioformats
-    // @cdk.githash
     public class ChemDrawFormat : AbstractResourceFormat, IChemFormat
     {
         private static IResourceFormat myself = null;

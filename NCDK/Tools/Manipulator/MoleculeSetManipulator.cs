@@ -29,7 +29,6 @@ namespace NCDK.Tools.Manipulator
     /// </summary>
     /// <seealso cref="ChemModelManipulator"/>
     // @cdk.module standard
-    // @cdk.githash
     public static class MoleculeSetManipulator
     {
         public static int GetAtomCount(IChemObjectSet<IAtomContainer> set)

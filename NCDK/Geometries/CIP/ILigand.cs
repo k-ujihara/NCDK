@@ -28,7 +28,6 @@ namespace NCDK.Geometries.CIP
     /// have precedence over another.
     /// </summary>
     // @cdk.module cip
-    // @cdk.githash
     public interface ILigand
     {
         /// <summary>

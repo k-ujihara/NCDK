@@ -23,7 +23,6 @@ namespace NCDK.Templates
     /// This class contains methods for generating simple organic alkanes.
     /// </summary>
     // @cdk.keyword templates
-    // @cdk.githash
     public static class IsoAlkanes
     {
         public static IAtomContainer GetIsobutane(IChemObjectBuilder builder)

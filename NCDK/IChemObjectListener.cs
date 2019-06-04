@@ -29,7 +29,6 @@ namespace NCDK
     /// are interested in.
     /// </summary>
     // @cdk.module interfaces
-    // @cdk.githash
     public interface IChemObjectListener
     {
         /// <summary>

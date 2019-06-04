@@ -41,7 +41,6 @@ namespace NCDK.Geometries.Surface
     // @author Rajarshi Guha
     // @cdk.created 2005-05-08
     // @cdk.module  qsarmolecular
-    // @cdk.githash
     public class Tessellate
     {
         private Triangle[] Oldtess;

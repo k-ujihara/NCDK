@@ -25,7 +25,6 @@ namespace NCDK.IO.Setting
     /// An class for a reader setting which must be of type string.
     /// </summary>
     // @cdk.module io
-    // @cdk.githash
     // @author Egon Willighagen <egonw@sci.kun.nl>
     public class BooleanIOSetting : IOSetting
     {

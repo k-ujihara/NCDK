@@ -30,7 +30,6 @@ namespace NCDK.Graphs.Invariant
     /// Tool for calculating atom numbers using the InChI algorithm.
     /// </summary>
     // @cdk.module  inchi
-    // @cdk.githash
     public static class InChINumbersTools
     {
         /// <summary>

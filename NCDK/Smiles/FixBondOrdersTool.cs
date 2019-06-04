@@ -23,10 +23,8 @@
  */
 
 using NCDK.Graphs;
-using NCDK.Tools;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace NCDK.Smiles
 {
@@ -57,7 +55,6 @@ namespace NCDK.Smiles
     // @author Kevin Lawson
     // @author Lucy Entwistle
     // @cdk.module smiles
-    // @cdk.githash
     [Obsolete("Use " + nameof(Aromaticities.Kekulization))]
     public static class FixBondOrdersTool
     {

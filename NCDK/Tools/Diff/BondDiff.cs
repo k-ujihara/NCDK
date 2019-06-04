@@ -24,7 +24,6 @@ namespace NCDK.Tools.Diff.Tree
     /// </summary>
     // @author     egonw
     // @cdk.module diff
-    // @cdk.githash
     public static class BondDiff
     {
         /// <summary>
@@ -35,7 +34,7 @@ namespace NCDK.Tools.Diff.Tree
         /// <returns>a <see cref="string"/> representation of the difference between the first and second <see cref="IChemObject"/>.</returns>
         public static string Diff(IChemObject first, IChemObject second)
         {
-            IDifference diff = Difference(first, second);
+            var diff = Difference(first, second);
             if (diff == null)
             {
                 return "";
@@ -58,9 +57,9 @@ namespace NCDK.Tools.Diff.Tree
             {
                 return null;
             }
-            IBond firstB = (IBond)first;
-            IBond secondB = (IBond)second;
-            IDifferenceList totalDiff = new ChemObjectDifference("BondDiff");
+            var firstB = (IBond)first;
+            var secondB = (IBond)second;
+            var totalDiff = new ChemObjectDifference("BondDiff");
             totalDiff.AddChild(BondOrderDifference.Construct("order", firstB.Order, secondB.Order));
             totalDiff.AddChild(IntegerDifference.Construct("atomCount", firstB.Atoms.Count, secondB.Atoms.Count));
             if (firstB.Atoms.Count == secondB.Atoms.Count)

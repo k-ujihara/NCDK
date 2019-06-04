@@ -52,12 +52,11 @@ namespace NCDK.Fragments
     /// the largest framework.
     /// </para>
     /// </remarks>
+    /// <seealso cref="ExhaustiveFragmenter"/>
     // @author Rajarshi Guha
     // @cdk.module fragment
-    // @cdk.githash
     // @cdk.keyword fragment
     // @cdk.keyword framework
-    // @see org.openscience.cdk.fragment.ExhaustiveFragmenter
     public class MurckoFragmenter : IFragmenter
     {
         private const string IS_SIDECHAIN_ATOM = "sidechain";

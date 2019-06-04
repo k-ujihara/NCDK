@@ -26,7 +26,6 @@ namespace NCDK.Reactions
     /// </summary>
     // @author      Miguel Rojas
     // @cdk.module  reaction
-    // @cdk.githash
     public class ReactionSpecification : IImplementationSpecification
     {
         private string specificationReference;

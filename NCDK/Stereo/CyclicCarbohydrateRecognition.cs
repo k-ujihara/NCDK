@@ -21,13 +21,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
+
 using NCDK.Common.Collections;
 using NCDK.Graphs;
 using NCDK.Numerics;
 using NCDK.RingSearches;
 using System;
 using System.Collections.Generic;
-using static NCDK.Graphs.GraphUtil;
 
 namespace NCDK.Stereo
 {
@@ -43,7 +43,6 @@ namespace NCDK.Stereo
     /// <seealso href="http://en.wikipedia.org/wiki/Haworth_projection">Haworth projection (Wikipedia)</seealso>
     /// <seealso href="http://en.wikipedia.org/wiki/Chair_conformation">Chair conformation (Wikipedia)</seealso>
     // @author John May
-    // @cdk.githash
     internal sealed class CyclicCarbohydrateRecognition
     {
         /// <summary>

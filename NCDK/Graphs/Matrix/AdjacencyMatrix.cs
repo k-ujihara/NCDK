@@ -29,7 +29,6 @@ namespace NCDK.Graphs.Matrix
     /// See <token>cdk-cite-TRI92</token>.
     /// </summary>
     // @cdk.module  core
-    // @cdk.githash
     // @cdk.keyword adjacency matrix
     // @author      steinbeck
     // @cdk.created 2004-07-04

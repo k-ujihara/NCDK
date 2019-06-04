@@ -42,7 +42,6 @@ namespace NCDK.IO
     /// </note>
     /// </summary>
     // @cdk.module  smiles
-    // @cdk.githash
     // @cdk.iooptions
     // @cdk.keyword MoSS
     public class MoSSOutputReader : DefaultChemObjectReader

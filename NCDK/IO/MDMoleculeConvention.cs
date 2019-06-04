@@ -34,7 +34,6 @@ namespace NCDK.IO.CML
     /// Implements a Convention for parsing an MDMolecule from CML.
     /// </summary>
     // @cdk.module libiomd
-    // @cdk.githash
     // @author Ola Spjuth <ola.spjuth@farmbio.uu.se>
     public class MDMoleculeConvention : CMLCoreModule
     {

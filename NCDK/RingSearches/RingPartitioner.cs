@@ -32,7 +32,6 @@ namespace NCDK.RingSearches
     /// RingSet are considered connected.
     /// </summary>
     // @cdk.module standard
-    // @cdk.githash
     public static class RingPartitioner
     {
         /// <summary>

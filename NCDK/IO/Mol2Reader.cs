@@ -25,11 +25,9 @@ using NCDK.Common.Primitives;
 using NCDK.Config;
 using NCDK.IO.Formats;
 using NCDK.Numerics;
-using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -42,7 +40,6 @@ namespace NCDK.IO
     /// </summary>
     // @author Egon Willighagen
     // @cdk.module io
-    // @cdk.githash
     // @cdk.iooptions
     // @cdk.created 2003-08-21
     // @cdk.keyword file format, Mol2

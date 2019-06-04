@@ -23,18 +23,17 @@ using System.Collections.Generic;
 namespace NCDK.IO.Formats
 {
     // @cdk.module ioformats
-    // @cdk.githash
-    public class CDKSourceCodeFormat : AbstractResourceFormat, IChemFormat
+    public class NCDKSourceCodeFormat : AbstractResourceFormat, IChemFormat
     {
         private static IResourceFormat myself = null;
 
-        public CDKSourceCodeFormat() { }
+        public NCDKSourceCodeFormat() { }
 
         public static IResourceFormat Instance
         {
             get
             {
-                if (myself == null) myself = new CDKSourceCodeFormat();
+                if (myself == null) myself = new NCDKSourceCodeFormat();
                 return myself;
             }
         }

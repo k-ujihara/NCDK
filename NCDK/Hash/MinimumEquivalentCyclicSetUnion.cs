@@ -68,7 +68,6 @@ namespace NCDK.Hash
     /// <seealso cref="AllEquivalentCyclicSet"/>
     // @author John May
     // @cdk.module hash
-    // @cdk.githash
     [Obsolete("provided for to demonstrate a relatively robust but ultimately incomplete approach")]
     internal sealed class MinimumEquivalentCyclicSetUnion : EquivalentSetFinder
     {

@@ -23,7 +23,6 @@ using System.Collections.Generic;
 namespace NCDK.IO.Formats
 {
     // @cdk.module ioformats
-    // @cdk.githash
     public class MOPAC97Format : SimpleChemFormatMatcher, IChemFormatMatcher
     {
         private static IResourceFormat myself = null;

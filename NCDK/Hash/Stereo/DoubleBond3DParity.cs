@@ -35,7 +35,6 @@ namespace NCDK.Hash.Stereo
     /// </summary>
     // @author John May
     // @cdk.module hash
-    // @cdk.githash
     internal sealed class DoubleBond3DParity : GeometricParity
     {
         // coordinates of the double bond atoms:

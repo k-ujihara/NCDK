@@ -27,7 +27,6 @@ namespace NCDK
     /// A AminoAcid is Monomer which stores additional amino acid specific informations, like the N-terminus atom.
     /// </summary>
     // @cdk.module  interfaces
-    // @cdk.githash
     // @author      Egon Willighagen <e.willighagen@science.ru.nl>
     // @cdk.created 2005-12-05
     // @cdk.keyword amino acid

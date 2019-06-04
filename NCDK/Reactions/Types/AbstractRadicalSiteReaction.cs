@@ -16,13 +16,12 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Aromaticities;
-using NCDK.Config;
 using NCDK.Reactions.Types.Parameters;
 using NCDK.RingSearches;
 using NCDK.Tools;
 using NCDK.Tools.Manipulator;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -31,7 +30,6 @@ namespace NCDK.Reactions.Types
     // @author         Miguel Rojas
     // @cdk.created    2006-10-20
     // @cdk.module     reaction
-    // @cdk.githash
     public abstract class AbstractRadicalSiteReaction : ReactionEngine, IReactionProcess
     {
         /// <inheritdoc/>

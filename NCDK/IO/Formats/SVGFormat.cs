@@ -22,7 +22,6 @@ using System.Collections.Generic;
 namespace NCDK.IO.Formats
 {
     // @cdk.module ioformats
-    // @cdk.githash
     public class SVGFormat : AbstractResourceFormat, IResourceFormat
     {
         private static IResourceFormat myself = null;

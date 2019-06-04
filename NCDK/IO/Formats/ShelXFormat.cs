@@ -27,7 +27,6 @@ namespace NCDK.IO.Formats
     /// See <see href="http://shelx.uni-ac.gwdg.de/SHELX/">here</see>.
     /// </summary>
     // @cdk.module ioformats
-    // @cdk.githash
     public class ShelXFormat : SimpleChemFormatMatcher, IChemFormatMatcher
     {
         private static IResourceFormat myself = null;

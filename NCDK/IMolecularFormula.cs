@@ -37,7 +37,6 @@ namespace NCDK
     // @author      miguelrojasch
     // @cdk.created 2007-11-20
     // @cdk.keyword molecular formula
-    // @cdk.githash
     public partial interface IMolecularFormula : ICDKObject
     {
         /// <summary>

@@ -31,7 +31,6 @@ namespace NCDK.RingSearches
     /// </summary>
     // @author John May
     // @cdk.module core
-    // @cdk.githash
     public interface ICyclicVertexSearch
     {
         /// <summary>

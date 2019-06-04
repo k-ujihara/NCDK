@@ -64,7 +64,6 @@ namespace NCDK.Signatures
     /// </example>
     // @cdk.module signature
     // @author maclean
-    // @cdk.githash
     public class MoleculeSignature : AbstractGraphSignature
     {
         /// <summary>

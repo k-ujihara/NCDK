@@ -26,7 +26,6 @@ namespace NCDK.Validate
     /// a problem, and a warning, to allow for different coloring by renderer's.
     /// </summary>
     // @cdk.module standard
-    // @cdk.githash
     // @author   Egon Willighagen
     // @cdk.created  2003-08-11
     public static class ProblemMarker

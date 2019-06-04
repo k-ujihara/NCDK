@@ -31,7 +31,6 @@ namespace NCDK.IO
     /// <summary>
     /// </summary>
     // @cdk.module io
-    // @cdk.githash
     // @cdk.iooptions
     // @author  Bradley A. Smith <bradley@baysmith.com>
     // @author  J. Daniel Gezelter

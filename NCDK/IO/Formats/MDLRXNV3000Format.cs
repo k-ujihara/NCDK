@@ -27,7 +27,6 @@ namespace NCDK.IO.Formats
     /// See <see href="http://www.mdl.com/downloads/public/ctfile/ctfile.jsp">here</see>.
     /// </summary>
     // @cdk.module ioformats
-    // @cdk.githash
     public class MDLRXNV3000Format : SimpleChemFormatMatcher, IChemFormatMatcher
     {
         private static IResourceFormat myself = null;

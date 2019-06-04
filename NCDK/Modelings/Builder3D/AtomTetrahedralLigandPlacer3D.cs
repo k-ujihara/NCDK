@@ -22,11 +22,10 @@
  */
 
 using NCDK.Common.Mathematics;
+using NCDK.Numerics;
 using System;
 using System.Collections.Generic;
-using NCDK.Numerics;
 using System.Diagnostics;
-using NCDK.Config;
 
 namespace NCDK.Modelings.Builder3D
 {
@@ -36,7 +35,6 @@ namespace NCDK.Modelings.Builder3D
     // @author         Peter Murray-Rust,chhoppe,egonw
     // @cdk.created    2003-??-??
     // @cdk.module    builder3d
-    // @cdk.githash
     public class AtomTetrahedralLigandPlacer3D
     {
         private IReadOnlyDictionary<string, object> pSet = null;

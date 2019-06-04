@@ -38,7 +38,6 @@ namespace NCDK.IO
     // @author      Gilleain Torrance <gilleain.torrance@gmail.com>
     // @cdk.module pdb
     // @cdk.iooptions
-    // @cdk.githash
     public class PDBWriter : DefaultChemObjectWriter
     {
         private static string F_SERIAL_FORMAT(int serial) => serial.ToString(NumberFormatInfo.InvariantInfo).PadLeft(5);

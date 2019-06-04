@@ -26,7 +26,6 @@ namespace NCDK.Tools.Diff.Tree
     /// </summary>
     // @author     egonw
     // @cdk.module diff
-    // @cdk.githash
     public class StringDifference : IDifference
     {
         private readonly string name;

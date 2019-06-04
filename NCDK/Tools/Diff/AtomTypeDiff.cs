@@ -26,7 +26,6 @@ namespace NCDK.Tools.Diff
     /// </summary>
     // @author     egonw
     // @cdk.module diff
-    // @cdk.githash
     public static class AtomTypeDiff
     {
         /// <summary>
@@ -37,7 +36,7 @@ namespace NCDK.Tools.Diff
         /// <returns>a <see cref="string"/> representation of the difference between the first and second <see cref="IChemObject"/>.</returns>
         public static string Diff(IChemObject first, IChemObject second)
         {
-            IDifference difference = Difference(first, second);
+            var difference = Difference(first, second);
             if (difference == null)
             {
                 return "";
@@ -60,9 +59,9 @@ namespace NCDK.Tools.Diff
             {
                 return null;
             }
-            IAtomType firstElem = (IAtomType)first;
-            IAtomType secondElem = (IAtomType)second;
-            ChemObjectDifference totalDiff = new ChemObjectDifference("AtomTypeDiff");
+            var firstElem = (IAtomType)first;
+            var secondElem = (IAtomType)second;
+            var totalDiff = new ChemObjectDifference("AtomTypeDiff");
             totalDiff.AddChild(StringDifference.Construct("N", firstElem.AtomTypeName, secondElem.AtomTypeName));
             totalDiff.AddChild(BondOrderDifference.Construct("MBO", firstElem.MaxBondOrder,
                     secondElem.MaxBondOrder));

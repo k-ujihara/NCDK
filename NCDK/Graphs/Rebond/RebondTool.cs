@@ -37,7 +37,6 @@ namespace NCDK.Graphs.Rebond
     // @author      Miguel Howard
     // @cdk.created 2003-05-23
     // @cdk.module  standard
-    // @cdk.githash
     public class RebondTool
     {
         private double maxCovalentRadius;

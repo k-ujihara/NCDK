@@ -27,7 +27,6 @@ namespace NCDK.Formula.Rules
     // @cdk.module  formula
     // @author      miguelrojasch
     // @cdk.created 2007-11-20
-    // @cdk.githash
     public interface IRule
     {
         IReadOnlyList<object> Parameters { get; set; }

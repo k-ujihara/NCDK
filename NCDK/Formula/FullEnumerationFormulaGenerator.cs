@@ -43,7 +43,6 @@ namespace NCDK.Formula
     // @cdk.module formula
     // @author Tomas Pluskal
     // @cdk.created 2014-12-28
-    // @cdk.githash 
     internal class FullEnumerationFormulaGenerator : IFormulaGenerator
     {
         private readonly IChemObjectBuilder builder;

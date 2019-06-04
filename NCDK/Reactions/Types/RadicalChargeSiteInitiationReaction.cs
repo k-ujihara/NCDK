@@ -16,6 +16,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 namespace NCDK.Reactions.Types
 {
     /// <summary>
@@ -28,13 +29,12 @@ namespace NCDK.Reactions.Types
     // @author         Miguel Rojas
     // @cdk.created    2006-05-05
     // @cdk.module     reaction
-    // @cdk.githash
     public partial class RadicalChargeSiteInitiationReaction : AbstractRadicalSiteInitiationReaction
     {
         public RadicalChargeSiteInitiationReaction() { }
 
         /// <summary>
-        ///  Gets the specification attribute of the RadicalChargeSiteInitiationReaction object
+        /// Gets the specification attribute of the RadicalChargeSiteInitiationReaction object
         /// </summary>
         /// <returns>The specification value</returns>
         public override ReactionSpecification Specification =>

@@ -28,7 +28,6 @@ namespace NCDK.Reactions
     /// </summary>
     // @author      Miguel Rojas
     // @cdk.module  reaction
-    // @cdk.githash
     public interface IReactionProcess
     {
         /// <summary>

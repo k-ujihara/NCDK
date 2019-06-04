@@ -48,8 +48,6 @@ namespace NCDK.IO
     /// For bonds it outputs: order, atoms (2, or more) and wedges.
     /// </example>
     // @cdk.module       libiocml
-    // @cdk.githash
-    // @cdk.require      java1.5+
     // @cdk.bug          1565563
     // @cdk.iooptions
     // @author Egon Willighagen

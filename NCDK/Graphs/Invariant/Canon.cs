@@ -23,7 +23,6 @@
  */
 
 using NCDK.Common.Collections;
-using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -57,7 +56,6 @@ namespace NCDK.Graphs.Invariant
     /// </example>
     // @author John May
     // @cdk.module standard
-    // @cdk.githash
     public sealed class Canon
     {
         private const int N_PRIMES = 10000;

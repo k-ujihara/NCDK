@@ -29,7 +29,6 @@ namespace NCDK.IO.Formats
     /// This class is the interface that all ChemFormat's should implement.
     /// </summary>
     // @cdk.module ioformats
-    // @cdk.githash
     // @author      Egon Willighagen <egonw@sci.kun.nl>
     // @cdk.created 2004-10-25
     public interface IChemFormat : IResourceFormat

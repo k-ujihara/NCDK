@@ -49,7 +49,6 @@ namespace NCDK.Graphs
     /// <seealso cref="RingSearches.RingSearch"/>
     // @author John May
     // @cdk.module core
-    // @cdk.githash
     public sealed class AllCycles
     {
         /// <summary>All simple cycles.</summary>

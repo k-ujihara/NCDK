@@ -46,7 +46,6 @@ namespace NCDK.Hash
     /// <seealso cref="ConjugatedAtomEncoder"/>
     // @author John May
     // @cdk.module hash
-    // @cdk.githash
     internal sealed class SeedGenerator : AbstractHashGenerator, IAtomHashGenerator
     {
         /* used to encode atom attributes */

@@ -36,7 +36,6 @@ namespace NCDK.Graphs
     /// <seealso cref="RingSearches.RingSearch"/>
     // @author John May
     // @cdk.module core
-    // @cdk.githash
     public static class GraphUtil
     {
         /// <summary>

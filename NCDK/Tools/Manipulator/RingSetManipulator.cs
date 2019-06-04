@@ -27,14 +27,13 @@ using System.Linq;
 namespace NCDK.Tools.Manipulator
 {
     // @cdk.module standard
-    // @cdk.githash
     public static class RingSetManipulator
     {
         /// <summary>
         /// Return the total number of atoms over all the rings in the collection.
         /// </summary>
         /// <param name="set">The collection of rings</param>
-        /// <returns> The total number of atoms</returns>
+        /// <returns>The total number of atoms</returns>
         public static int GetAtomCount(IRingSet set)
         {
             int count = 0;
@@ -52,8 +51,8 @@ namespace NCDK.Tools.Manipulator
         /// <returns>The produced atomContainer</returns>
         public static IAtomContainer GetAllInOneContainer(IRingSet ringSet)
         {
-            IAtomContainer resultContainer = ringSet.Builder.NewAtomContainer();
-            IEnumerator<IAtomContainer> containers = RingSetManipulator.GetAllAtomContainers(ringSet).GetEnumerator();
+            var resultContainer = ringSet.Builder.NewAtomContainer();
+            var containers = RingSetManipulator.GetAllAtomContainers(ringSet).GetEnumerator();
             while (containers.MoveNext())
             {
                 resultContainer.Add(containers.Current);
@@ -154,7 +153,7 @@ namespace NCDK.Tools.Manipulator
         /// <returns>the ring with the highest numbers of other rings attached to it.</returns>
         public static IRing GetMostComplexRing(IChemObjectSet<IRing> ringSet)
         {
-            int[] neighbors = new int[ringSet.Count];
+            var neighbors = new int[ringSet.Count];
             IRing ring1, ring2;
             IAtom atom1, atom2;
             int mostComplex = 0, mostComplexPosition = 0;
@@ -217,8 +216,9 @@ namespace NCDK.Tools.Manipulator
         {
             foreach (var atomContainer in ringSet)
             {
-                IRing ring = (IRing)atomContainer;
-                if (ring.Contains(atom1) && ring.Contains(atom2)) return true;
+                var ring = (IRing)atomContainer;
+                if (ring.Contains(atom1) && ring.Contains(atom2))
+                    return true;
             }
             return false;
         }
@@ -255,7 +255,8 @@ namespace NCDK.Tools.Manipulator
                                 break;
                             }
                         }
-                        if (!equals) break;
+                        if (!equals)
+                            break;
                     }
                 }
 

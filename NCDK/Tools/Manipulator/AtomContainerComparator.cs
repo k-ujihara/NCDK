@@ -21,7 +21,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Config;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -43,7 +42,6 @@ namespace NCDK.Tools.Manipulator
     // @author Andreas Schueller
     // @cdk.created  2007-09-05
     // @cdk.module   standard
-    // @cdk.githash
     public class AtomContainerComparator<T>
         : IComparer<T> 
         where T : IAtomContainer
@@ -76,9 +74,12 @@ namespace NCDK.Tools.Manipulator
         public int Compare(T o1, T o2)
         {
             // Check for nulls
-            if (o1 == null && o2 == null) return 0;
-            if (o1 == null) return 1;
-            if (o2 == null) return -1;
+            if (o1 == null && o2 == null)
+                return 0;
+            if (o1 == null)
+                return 1;
+            if (o2 == null)
+                return -1;
 
             T atomContainer1 = o1;
             T atomContainer2 = o2;
@@ -117,8 +118,8 @@ namespace NCDK.Tools.Manipulator
                     else
                     {
                         // 4. Bond count equal, compare sum of bond orders (heavy atoms only)
-                        double bondOrderSum1 = AtomContainerManipulator.GetSingleBondEquivalentSum(atomContainer1);
-                        double bondOrderSum2 = AtomContainerManipulator.GetSingleBondEquivalentSum(atomContainer2);
+                        var bondOrderSum1 = AtomContainerManipulator.GetSingleBondEquivalentSum(atomContainer1);
+                        var bondOrderSum2 = AtomContainerManipulator.GetSingleBondEquivalentSum(atomContainer2);
                         if (bondOrderSum1 > bondOrderSum2)
                             return 1;
                         else if (bondOrderSum1 < bondOrderSum2) return -1;
@@ -135,9 +136,9 @@ namespace NCDK.Tools.Manipulator
         /// of all heavy atoms of the given IAtomContainer.
         /// </summary>
         /// <param name="atomContainer">an IAtomContainer to calculate the mocular weight for</param>
-        /// <exception cref="CDKException">if an error occurs with the IsotopeFactory</exception>
         /// <returns>the molecularweight (exact mass) of the major isotopes
         ///         of all heavy atoms of the given IAtomContainer</returns>
+        /// <exception cref="CDKException">if an error occurs with the IsotopeFactory</exception>
         private static double GetMolecularWeight(T atomContainer)
         {
             double mw = 0.0;
@@ -149,7 +150,7 @@ namespace NCDK.Tools.Manipulator
                 {
                     if (!atom.AtomicNumber.Equals(AtomicNumbers.H))
                     {
-                        IIsotope majorIsotope = isotopeFactory.GetMajorIsotope(atom.Symbol);
+                        var majorIsotope = isotopeFactory.GetMajorIsotope(atom.Symbol);
 
                         if (majorIsotope != null && majorIsotope.ExactMass != null)
                         {

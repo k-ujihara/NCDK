@@ -29,7 +29,6 @@ namespace NCDK.IO.CML
     /// This interface describes the procedures classes must implement to be plugable into the <see cref="CMLHandler"/>.
     /// </summary>
     // @cdk.module io
-    // @cdk.githash
     // @author Egon Willighagen <egonw@sci.kun.nl>
     public interface ICMLModule
     {

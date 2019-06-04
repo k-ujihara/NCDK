@@ -50,7 +50,6 @@ namespace NCDK.Graphs
     // @cdk.created    2009-09-09
     // @cdk.keyword    permutation
     // @cdk.module     standard
-    // @cdk.githash
     public class Permutor
     {
         /// <summary>
@@ -61,17 +60,17 @@ namespace NCDK.Graphs
         /// <summary>
         /// The maximum rank possible, given the size
         /// </summary>
-        private int maxRank;
+        private readonly int maxRank;
 
         /// <summary>
         /// The number of objects to permute
         /// </summary>
-        private int size;
+        private readonly int size;
 
         /// <summary>
         /// For accessing part of the permutation space
         /// </summary>
-        private Random random;
+        private readonly Random random;
 
         /// <summary>
         /// Create a permutor that will generate permutations of numbers up to <paramref name="size"/>.

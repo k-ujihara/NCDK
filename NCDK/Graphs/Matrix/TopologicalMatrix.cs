@@ -7,7 +7,6 @@ namespace NCDK.Graphs.Matrix
     /// two atoms in a molecule.
     /// </summary>
     // @author federico
-    // @cdk.githash
     // @cdk.module  qsarmolecular
     public class TopologicalMatrix : IGraphMatrix
     {

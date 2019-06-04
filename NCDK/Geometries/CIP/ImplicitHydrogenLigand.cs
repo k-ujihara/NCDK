@@ -27,7 +27,6 @@ namespace NCDK.Geometries.CIP
     /// Subclass of <see cref="Ligand"/> to which no further recursion must be applied.
     /// </summary>
     // @cdk.module cip
-    // @cdk.githash
     public class ImplicitHydrogenLigand : TerminalLigand
     {
         private static readonly IAtom IMMUTABLE_HYDROGEN = new ImmutableHydrogen();

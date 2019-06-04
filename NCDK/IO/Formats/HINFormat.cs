@@ -27,7 +27,6 @@ namespace NCDK.IO.Formats
     /// See <see href="http://www.hyper.com/">here</see>.
     /// </summary>
     // @cdk.module ioformats
-    // @cdk.githash
     public class HINFormat : SimpleChemFormatMatcher, IChemFormatMatcher
     {
         public HINFormat() { }

@@ -17,7 +17,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-
 namespace NCDK.Tools.Diff.Tree
 {
     /// <summary>
@@ -25,7 +24,6 @@ namespace NCDK.Tools.Diff.Tree
     /// </summary>
     // @author     egonw
     // @cdk.module diff
-    // @cdk.githash
     public static class ElectronContainerDiff
     {
         /// <summary>
@@ -37,7 +35,7 @@ namespace NCDK.Tools.Diff.Tree
         /// </summary>
         public static string Diff(IChemObject first, IChemObject second)
         {
-            IDifference diff = Difference(first, second);
+            var diff = Difference(first, second);
             if (diff == null)
             {
                 return "";
@@ -50,20 +48,19 @@ namespace NCDK.Tools.Diff.Tree
 
         /// <summary>
         /// Compare two <see cref="IChemObject"/> classes and return the difference as an <see cref="IDifference"/>.
-        ///
+        /// </summary>
         /// <param name="first">the first of the two classes to compare</param>
         /// <param name="second">the second of the two classes to compare</param>
         /// <returns>an <see cref="IDifference"/> representation of the difference between the first and second <see cref="IChemObject"/>.</returns>
-        /// </summary>
         public static IDifference Difference(IChemObject first, IChemObject second)
         {
             if (!(first is IElectronContainer && second is IElectronContainer))
             {
                 return null;
             }
-            IElectronContainer firstEC = (IElectronContainer)first;
-            IElectronContainer secondEC = (IElectronContainer)second;
-            IDifferenceList totalDiff = new ChemObjectDifference("ElectronContainerDiff");
+            var firstEC = (IElectronContainer)first;
+            var secondEC = (IElectronContainer)second;
+            var totalDiff = new ChemObjectDifference("ElectronContainerDiff");
             totalDiff.AddChild(IntegerDifference.Construct("eCount", firstEC.ElectronCount,
                     secondEC.ElectronCount));
             totalDiff.AddChild(ChemObjectDiff.Difference(first, second));
@@ -76,6 +73,5 @@ namespace NCDK.Tools.Diff.Tree
                 return null;
             }
         }
-
     }
 }

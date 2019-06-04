@@ -16,6 +16,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Tools;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,6 @@ using System.Collections.Generic;
 namespace NCDK.IO.Formats
 {
     // @cdk.module ioformats
-    // @cdk.githash
     public class Gaussian95Format : SimpleChemFormatMatcher, IChemFormatMatcher
     {
         private static IResourceFormat myself = null;

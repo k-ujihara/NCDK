@@ -36,7 +36,6 @@ namespace NCDK.Graphs
     /// <seealso cref="RelevantCycles"/>
     // @author John May
     // @cdk.module core
-    // @cdk.githash
     internal class GreedyBasis
     {
         /// <summary>Cycles which are members of the basis</summary>

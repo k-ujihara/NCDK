@@ -31,7 +31,6 @@ namespace NCDK.Graphs
     /// </summary>
     // @author John May
     // @cdk.module core
-    // @cdk.githash
     public interface ICycleFinder
     {
         /// <summary>

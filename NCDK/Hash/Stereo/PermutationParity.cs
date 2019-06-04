@@ -30,7 +30,6 @@ namespace NCDK.Hash.Stereo
     /// <seealso href="http://en.wikipedia.org/wiki/Parity_of_a_permutation">Parity of a Permutation, Wikipedia</seealso>
     // @author John May
     // @cdk.module hash
-    // @cdk.githash
     internal abstract class PermutationParity
     {
         /// <summary>

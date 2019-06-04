@@ -48,7 +48,6 @@ namespace NCDK.Tautomers
     /// </summary>
     // @author Mark Rijnbeek
     // @cdk.module tautomer
-    // @cdk.githash
     public sealed class InChITautomerGenerator
     {
         private static readonly SmilesGenerator CANSMI = new SmilesGenerator(SmiFlavors.Canonical);
@@ -103,11 +102,11 @@ namespace NCDK.Tautomers
             if ((flags & Options.OneFiveShift) != 0)
                 opt += " -15T";
 
-            InChIGenerator gen = InChIGeneratorFactory.Instance.GetInChIGenerator(mol, opt);
-            string inchi = gen.InChI;
-            string aux = gen.AuxInfo;
+            var gen = InChIGeneratorFactory.Instance.GetInChIGenerator(mol, opt);
+            var inchi = gen.InChI;
+            var aux = gen.AuxInfo;
 
-            long[] amap = new long[mol.Atoms.Count];
+            var amap = new long[mol.Atoms.Count];
             InChINumbersTools.ParseAuxInfo(aux, amap);
 
             if (inchi == null)
@@ -350,12 +349,12 @@ namespace NCDK.Tautomers
                     var dst = e.Value;
                     var position = src.Id;
                     dst.Id = position;
-                    Debug.WriteLine("Mapped InChI " + src.Symbol + " " + src.Id + " to " + dst.Symbol + " " + dst.Id);
+                    Debug.WriteLine($"Mapped InChI {src.Symbol} {src.Id} to {dst.Symbol} {dst.Id}");
                 }
             }
             else
             {
-                throw new ArgumentException(CANSMI.Create(inchiMolGraph) + " " + CANSMI.Create(mol));
+                throw new ArgumentException($"{CANSMI.Create(inchiMolGraph)} {CANSMI.Create(mol)}");
             }
         }
 

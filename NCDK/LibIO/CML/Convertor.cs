@@ -22,7 +22,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Config;
 using NCDK.Dict;
 using NCDK.Geometries;
 using NCDK.Tools;
@@ -38,10 +37,8 @@ using System.Xml.Linq;
 namespace NCDK.LibIO.CML
 {
     // @cdk.module       libiocml
-    // @cdk.githash
     // @cdk.keyword      CML
     // @cdk.keyword      class convertor
-    // @cdk.require      java1.5+
     public class Convertor
     {
         public const string NamespaceCML = "http://www.xml-cml.org/schema";

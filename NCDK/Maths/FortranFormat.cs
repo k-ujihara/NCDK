@@ -37,7 +37,6 @@ namespace NCDK.Maths
     /// </remarks>
     // @author Dan Gezelter
     // @cdk.module standard
-    // @cdk.githash
     internal static class FortranFormat
     {
         /// <summary>

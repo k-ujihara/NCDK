@@ -24,7 +24,6 @@ using System.Collections.Generic;
 namespace NCDK.IO.Formats
 {
     // @cdk.module ioformats
-    // @cdk.githash
     public class Gaussian92Format : SimpleChemFormatMatcher, IChemFormatMatcher
     {
         private static IResourceFormat myself = null;

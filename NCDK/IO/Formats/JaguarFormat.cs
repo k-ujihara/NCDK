@@ -26,7 +26,6 @@ namespace NCDK.IO.Formats
     /// See <see href="http://www.schrodinger.com/">here</see>.
     /// </summary>
     // @cdk.module ioformats
-    // @cdk.githash
     public class JaguarFormat : SimpleChemFormatMatcher, IChemFormatMatcher
     {
         private static IResourceFormat myself = null;

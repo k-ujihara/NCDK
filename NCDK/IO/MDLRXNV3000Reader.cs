@@ -34,7 +34,6 @@ namespace NCDK.IO
     /// for it.
     /// </summary>
     // @cdk.module io
-    // @cdk.githash
     // @cdk.iooptions
     // @author  Egon Willighagen <egonw@sci.kun.nl>
     // @cdk.created 2003-10-05

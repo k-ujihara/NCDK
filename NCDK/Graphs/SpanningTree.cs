@@ -33,7 +33,6 @@ namespace NCDK.Graphs
     /// </summary>
     // @author      Nina Jeliazkova
     // @cdk.module  core
-    // @cdk.githash
     // @cdk.dictref blue-obelisk:graphSpanningTree
     // @cdk.keyword spanning tree
     // @cdk.keyword ring finding

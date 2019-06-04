@@ -18,7 +18,6 @@
  */
 
 using NCDK.Numerics;
-using NCDK.Silent;
 
 namespace NCDK.Pharmacophore
 {
@@ -30,7 +29,7 @@ namespace NCDK.Pharmacophore
     // @cdk.module pcore
     // @cdk.keyword pharmacophore
     // @cdk.keyword 3D isomorphism
-    public class PharmacophoreBond : Bond
+    public class PharmacophoreBond : Silent.Bond
     {
         /// <summary>
         /// Create a pharmacophore distance constraint.

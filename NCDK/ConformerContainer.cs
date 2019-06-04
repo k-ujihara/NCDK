@@ -41,10 +41,9 @@ namespace NCDK
     /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.ConformerContainer_Example.cs"]/*' />
     /// </example>
     /// <seealso cref="EnumerableMDLConformerReader"/>
+    /// <seealso cref="IO.Iterator"/>
     // @cdk.module data
-    // @cdk.githash
     // @author Rajarshi Guha
-    // @see org.openscience.cdk.io.iterator.
     public class ConformerContainer : IList<IAtomContainer>
     {
         private IAtomContainer atomContainer = null;
@@ -52,11 +51,12 @@ namespace NCDK
 
         private static Vector3[] GetCoordinateList(IAtomContainer atomContainer)
         {
-            Vector3[] tmp = new Vector3[atomContainer.Atoms.Count];
+            var tmp = new Vector3[atomContainer.Atoms.Count];
             for (int i = 0; i < atomContainer.Atoms.Count; i++)
             {
-                IAtom atom = atomContainer.Atoms[i];
-                if (atom.Point3D == null) throw new ArgumentException("Molecule must have 3D coordinates");
+                var atom = atomContainer.Atoms[i];
+                if (atom.Point3D == null)
+                    throw new ArgumentException("Molecule must have 3D coordinates");
                 tmp[i] = atom.Point3D.Value;
             }
             return tmp;
@@ -104,7 +104,8 @@ namespace NCDK
         /// <param name="atomContainers">The array of conformers</param>
         public ConformerContainer(IAtomContainer[] atomContainers)
         {
-            if (atomContainers.Length == 0) throw new ArgumentException("Can't use a zero-length molecule array");
+            if (atomContainers.Length == 0)
+                throw new ArgumentException("Can't use a zero-length molecule array");
 
             // lets check that the titles match
             Title = atomContainers[0].Title;
@@ -168,14 +169,14 @@ namespace NCDK
         /// <returns>The conformers as an array of individual <see cref="IAtomContainer"/>s.</returns>
         public IAtomContainer[] ToArray()
         {
-            IAtomContainer[] ret = new IAtomContainer[coordinates.Count];
+            var ret = new IAtomContainer[coordinates.Count];
             int index = 0;
             foreach (var coords in coordinates)
             {
-                IAtomContainer conf = (IAtomContainer)atomContainer.Clone();
+                var conf = (IAtomContainer)atomContainer.Clone();
                 for (int i = 0; i < coords.Length; i++)
                 {
-                    IAtom atom = conf.Atoms[i];
+                    var atom = conf.Atoms[i];
                     atom.Point3D = coords[i];
                 }
                 ret[index++] = conf;
@@ -226,7 +227,8 @@ namespace NCDK
         public bool Remove(IAtomContainer atomContainer)
         {
             // we should never have a null conformer
-            if (atomContainer == null) return false;
+            if (atomContainer == null)
+                return false;
 
             int index = IndexOf(atomContainer);
             if (index >= 0)
@@ -253,10 +255,10 @@ namespace NCDK
         {
             get
             {
-                Vector3[] tmp = coordinates[i];
+                var tmp = coordinates[i];
                 for (int j = 0; j < atomContainer.Atoms.Count; j++)
                 {
-                    IAtom atom = atomContainer.Atoms[j];
+                    var atom = atomContainer.Atoms[j];
                     atom.Point3D = tmp[j];
                 }
                 return atomContainer;
@@ -270,10 +272,9 @@ namespace NCDK
         public IAtomContainer Set(int i, IAtomContainer atomContainer)
         {
             if (!Title.Equals(atomContainer.Title, StringComparison.Ordinal))
-                throw new ArgumentException(
-                        "The input molecules does not have the same title as the other conformers");
-            Vector3[] tmp = GetCoordinateList(atomContainer);
-            IAtomContainer oldAtomContainer = this[i];
+                throw new ArgumentException("The input molecules does not have the same title as the other conformers");
+            var tmp = GetCoordinateList(atomContainer);
+            var oldAtomContainer = this[i];
             coordinates[i] = tmp;
             return oldAtomContainer;
         }
@@ -287,13 +288,12 @@ namespace NCDK
             }
 
             if (!Title.Equals(atomContainer.Title, StringComparison.Ordinal))
-                throw new ArgumentException(
-                        "The input molecules does not have the same title as the other conformers");
+                throw new ArgumentException("The input molecules does not have the same title as the other conformers");
 
             if (atomContainer.Atoms.Count != this.atomContainer.Atoms.Count)
                 throw new ArgumentException("Doesn't have the same number of atoms as the rest of the conformers");
 
-            Vector3[] tmp = GetCoordinateList(atomContainer);
+            var tmp = GetCoordinateList(atomContainer);
             coordinates.Insert(i, tmp);
         }
 
@@ -331,7 +331,7 @@ namespace NCDK
                 coordsMatch = true;
                 for (int i = 0; i < atomContainer.Atoms.Count; i++)
                 {
-                    Vector3 p = atomContainer.Atoms[i].Point3D.Value;
+                    var p = atomContainer.Atoms[i].Point3D.Value;
                     if (!(p.X == coords[i].X && p.Y == coords[i].Y && p.Z == coords[i].Z))
                     {
                         coordsMatch = false;

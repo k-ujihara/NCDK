@@ -36,7 +36,6 @@ namespace NCDK.IO
     /// This MDL RXN reader uses the MDLV2000 reader to read each mol file
     /// </summary>
     // @cdk.module io
-    // @cdk.githash
     // @cdk.iooptions
     // @author     Egon Willighagen
     // @author        Thomas Kuhn

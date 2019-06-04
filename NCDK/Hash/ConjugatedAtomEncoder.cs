@@ -50,7 +50,6 @@ namespace NCDK.Hash
     /// </code></example>
     // @author John May
     // @cdk.module hash
-    // @cdk.githash
     internal sealed class ConjugatedAtomEncoder : IAtomEncoder
     {
         /* ordered list of encoders */

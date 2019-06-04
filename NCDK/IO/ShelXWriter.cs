@@ -27,7 +27,6 @@ using NCDK.Tools.Manipulator;
 using System;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 
 namespace NCDK.IO
 {
@@ -36,7 +35,6 @@ namespace NCDK.IO
     /// The output can be read with Platon.
     /// </summary>
     // @cdk.module  extra
-    // @cdk.githash
     // @cdk.iooptions
     // @author Egon Willighagen
     // @cdk.keyword file format, ShelX

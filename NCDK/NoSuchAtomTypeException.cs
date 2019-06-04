@@ -27,7 +27,6 @@ namespace NCDK
     /// Exception that may be thrown when an atom type is looked up or perceived but no such atom type was found.
     /// </summary>
     // @cdk.module core
-    // @cdk.githash
     public class NoSuchAtomTypeException
         : CDKException
     {

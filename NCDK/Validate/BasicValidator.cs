@@ -18,7 +18,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Config;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Diagnostics;
@@ -29,7 +28,6 @@ namespace NCDK.Validate
     /// Validator which tests a number of basic chemical semantics.
     /// </summary>
     // @author   Egon Willighagen
-    // @cdk.githash
     // @cdk.created  2003-08-22
     public class BasicValidator : AbstractValidator
     {

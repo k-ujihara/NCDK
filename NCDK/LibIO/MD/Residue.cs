@@ -21,8 +21,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Silent;
-
 namespace NCDK.LibIO.MD
 {
     /// <summary>
@@ -32,8 +30,7 @@ namespace NCDK.LibIO.MD
     /// </summary>
     // @author ola
     // @cdk.module libiomd
-    // @cdk.githash
-    public class Residue : AtomContainer
+    public class Residue : Silent.AtomContainer
     {
         private int number;
         public string Name { get; set; }
@@ -48,7 +45,7 @@ namespace NCDK.LibIO.MD
         /// Constructor to create a Residue based on an AC, a number, and a MDMolecule.
         /// </summary>
         public Residue(IAtomContainer container, int number, MDMolecule parentMolecule)
-                : base(container)
+            : base(container)
         {
             this.number = number;
             this.parentMolecule = parentMolecule;

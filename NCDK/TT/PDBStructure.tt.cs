@@ -33,10 +33,6 @@ namespace NCDK.Default
     public class PDBStructure 
         : ChemObject, IPDBStructure
     {
-        public const string Helix = "helix";
-        public const string Sheet = "sheet";
-        public const string Turn = "turn";
-
         /// <summary>
         /// Structure Type of this structure.
         /// </summary>
@@ -84,10 +80,6 @@ namespace NCDK.Silent
     public class PDBStructure 
         : ChemObject, IPDBStructure
     {
-        public const string Helix = "helix";
-        public const string Sheet = "sheet";
-        public const string Turn = "turn";
-
         /// <summary>
         /// Structure Type of this structure.
         /// </summary>

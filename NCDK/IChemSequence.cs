@@ -27,7 +27,6 @@ namespace NCDK
     /// stored in one ChemModel.
     /// </summary>
     // @cdk.module  interfaces
-    // @cdk.githash
     // @cdk.keyword animation
     // @cdk.keyword reaction
     public interface IChemSequence

@@ -34,7 +34,6 @@ namespace NCDK.IO.Formats
     /// chemical file format. For example: Chemical Markup Language, PDB etc.
     /// </summary>
     // @cdk.module ioformats
-    // @cdk.githash
     // @author      Egon Willighagen <egonw@sci.kun.nl>
     // @cdk.created 2004-10-25
     public interface IChemFormatMatcher : IChemFormat

@@ -17,7 +17,6 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Silent;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -32,7 +31,6 @@ namespace NCDK.Formula
     // @author      miguelrojasch
     // @cdk.created 2007-11-20
     // @cdk.keyword molecular formula
-    // @cdk.githash
     public class MolecularFormulaSet : IMolecularFormulaSet, ICloneable
     {
         /// <summary> Internal List of IMolecularFormula.</summary>
@@ -148,15 +146,6 @@ namespace NCDK.Formula
         /// <returns>The cloned object</returns>
         public virtual object Clone()
         {
-            //        /* it is not a super class of chemObject */
-            //        MolecularFormulaSet clone = (MolecularFormulaSet) base.Clone();
-            //        // start from scratch
-            //        clone.Clear();
-            //        // clone all molecularFormulas
-            //        IEnumerator<IMolecularFormula> iterForm = this;
-            //        while(iterForm.MoveNext()){
-            //            clone.AddMolecularFormula((IMolecularFormula) iterForm.Next().Clone());
-            //        }
             MolecularFormulaSet clone = new MolecularFormulaSet();
             foreach (var mf in this)
             {
@@ -187,7 +176,7 @@ namespace NCDK.Formula
             return GetEnumerator();
         }
 
-        public IChemObjectBuilder Builder => ChemObjectBuilder.Instance;
+        public IChemObjectBuilder Builder => CDK.Builder;
 
         public bool IsReadOnly => components.IsReadOnly;
     }

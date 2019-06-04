@@ -32,7 +32,6 @@ namespace NCDK.LibIO.CML
     /// </summary>
     // @author ola
     // @cdk.module libiomd
-    // @cdk.githash
     public class MDMoleculeCustomizer : ICMLCustomizer
     {
         internal static readonly XNamespace NS_MD = "http://www.bioclipse.net/mdmolecule/";
@@ -64,7 +63,8 @@ namespace NCDK.LibIO.CML
         /// <param name="nodeToAdd"></param>
         public void Customize(IAtomContainer molecule, object nodeToAdd)
         {
-            if (!(nodeToAdd is CMLMolecule)) throw new CDKException("NodeToAdd must be of type nu.xom.Element!");
+            if (!(nodeToAdd is CMLMolecule))
+                throw new CDKException("NodeToAdd must be of type nu.xom.Element!");
 
             //The nodeToAdd
             CMLMolecule molToCustomize = (CMLMolecule)nodeToAdd;

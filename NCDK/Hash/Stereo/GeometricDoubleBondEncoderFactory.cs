@@ -40,10 +40,9 @@ namespace NCDK.Hash.Stereo
     /// <para>This class is intended to be used with a the hash
     /// encoding classes and is easier used via the <see cref="HashGeneratorMaker"/>.</para>
     /// </summary>
+    /// <seealso cref="HashGeneratorMaker"/>
     // @author John May
     // @cdk.module hash
-    // @cdk.githash
-    // @see org.openscience.cdk.hash.HashGeneratorMaker
     public sealed class GeometricDoubleBondEncoderFactory : IStereoEncoderFactory
     {
         /// <summary>

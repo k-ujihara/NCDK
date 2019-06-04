@@ -20,8 +20,8 @@
 
 using NCDK.Common.Mathematics;
 using NCDK.Geometries;
-using System.Collections.Generic;
 using NCDK.Numerics;
+using System.Collections.Generic;
 
 namespace NCDK.Tools.Manipulator
 {
@@ -32,7 +32,6 @@ namespace NCDK.Tools.Manipulator
     // @author Mark Rijnbeek
     // @cdk.created  2009-10-14
     // @cdk.module   standard
-    // @cdk.githash
     public class AtomContainerComparatorBy2DCenter<T> : IComparer<T> where T : IAtomContainer
     {
         /// <summary>
@@ -40,8 +39,8 @@ namespace NCDK.Tools.Manipulator
         /// </summary>
         public int Compare(T a, T b)
         {
-            Vector2 p1 = Center(a);
-            Vector2 p2 = Center(b);
+            var p1 = Center(a);
+            var p2 = Center(b);
 
             if (p1.X > p2.X) return +1;
             if (p1.X < p2.X) return -1;

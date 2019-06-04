@@ -28,7 +28,6 @@ namespace NCDK.Tools
     /// Generates a Grid of points in 3D space within given boundaries.
     /// </summary>
     // @author cho
-    // @cdk.githash
     // @cdk.created 2005-09-30
     public class GridGenerator
     {
@@ -52,10 +51,6 @@ namespace NCDK.Tools
             GenerateGrid();
         }
 
-        /// <summary>
-        /// </summary>
-        /// <param name="min"></param>
-        /// <param name="max"></param>
         /// <param name="initialValue">used as initial value for the Grid points</param>
         public GridGenerator(double min, double max, double initialValue)
         {

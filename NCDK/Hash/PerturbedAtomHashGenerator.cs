@@ -54,11 +54,9 @@ namespace NCDK.Hash
     /// </example>
     /// <seealso href="http://onlinelibrary.wiley.com/doi/10.1002/jcc.540150802/abstract">Wolf Dietrich Ihlenfeldt, Johann Gasteiger</seealso>  
     /// <seealso cref="HashGeneratorMaker"/>
-    // @see 
+    /// <seealso cref="SeedGenerator"/>
     // @author John May
     // @cdk.module hash
-    // @see org.openscience.cdk.hash.SeedGenerator
-    // @cdk.githash
     internal sealed class PerturbedAtomHashGenerator : AbstractHashGenerator, IAtomHashGenerator
     {
         /* creates stereo encoders for IAtomContainers */

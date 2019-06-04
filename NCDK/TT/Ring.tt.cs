@@ -40,7 +40,6 @@ namespace NCDK.Default
     // @cdk.module  data
     // @cdk.keyword ring 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
-    [Serializable]
     public class Ring
         : AtomContainer, IRing
     {
@@ -130,7 +129,6 @@ namespace NCDK.Silent
     // @cdk.module  data
     // @cdk.keyword ring 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
-    [Serializable]
     public class Ring
         : AtomContainer, IRing
     {

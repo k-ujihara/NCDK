@@ -31,7 +31,6 @@ namespace NCDK.Signatures
     /// </summary>
     // @cdk.module signature
     // @author maclean
-    // @cdk.githash
     public class MoleculeFromSignatureBuilder : AbstractGraphBuilder
     {
          /// <summary>

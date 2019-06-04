@@ -40,7 +40,6 @@ namespace NCDK.Graphs.Invariant
     /// <seealso cref="HuLuIndexTool"/>
     // @author shk3
     // @cdk.module standard
-    // @cdk.githash
     // @cdk.created 2003-06-30
     // @cdk.keyword Morgan number
     public static class MorganNumbersTools

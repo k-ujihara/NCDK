@@ -17,9 +17,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace NCDK.Tools.Diff.Tree
@@ -29,7 +26,6 @@ namespace NCDK.Tools.Diff.Tree
     /// </summary>
     // @author     egonw
     // @cdk.module diff
-    // @cdk.githash
     public class BooleanArrayDifference
         : AbstractDifferenceList, IDifferenceList
     {
@@ -51,7 +47,7 @@ namespace NCDK.Tools.Diff.Tree
         {
             if (first == null && second == null) return null;
 
-            BooleanArrayDifference totalDiff = new BooleanArrayDifference(name);
+            var totalDiff = new BooleanArrayDifference(name);
             int firstLength = first == null ? 0 : first.Length;
             int secondLength = second == null ? 0 : second.Length;
             if (firstLength == secondLength)
@@ -101,7 +97,7 @@ namespace NCDK.Tools.Diff.Tree
 
             var diffBuffer = new StringBuilder();
             diffBuffer.Append(this.name).Append('{');
-            IEnumerable<IDifference> children = GetChildren();
+            var children = GetChildren();
             bool isFirst = true;
             foreach (var child in children)
             {

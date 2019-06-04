@@ -38,7 +38,6 @@ namespace NCDK
     /// </para>
     /// </summary>
     // @cdk.module interfaces
-    // @cdk.githash
     public interface ITetrahedralChirality
         : IStereoElement<IAtom, IAtom>
     {

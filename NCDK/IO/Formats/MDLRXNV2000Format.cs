@@ -19,7 +19,6 @@
 
 using NCDK.Tools;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace NCDK.IO.Formats
 {
@@ -27,7 +26,6 @@ namespace NCDK.IO.Formats
     /// See <see href="http://www.mdl.com/downloads/public/ctfile/ctfile.jsp">here</see>.
     /// </summary>
     // @cdk.module ioformats
-    // @cdk.githash
     public class MDLRXNV2000Format : AbstractResourceFormat, IChemFormatMatcher
     {
         private static IResourceFormat myself = null;

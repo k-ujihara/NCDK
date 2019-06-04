@@ -32,7 +32,6 @@ namespace NCDK.Tools
     /// C, H, other elements in alphabetic order.
     /// </summary>
     // @cdk.module standard
-    // @cdk.githash
     // @cdk.keyword element, sorting
     public class ElementComparator : IComparer<string>
     {

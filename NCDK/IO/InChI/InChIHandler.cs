@@ -17,7 +17,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Silent;
 using NCDK.Utils.Xml;
 using System;
 using System.Diagnostics;
@@ -41,12 +40,11 @@ namespace NCDK.IO.InChI
     /// </remarks>
     /// <seealso cref="InChIReader"/>
     // @cdk.module extra
-    // @cdk.githash
     [Obsolete]
     public class InChIHandler : XContentHandler
     {
-        private ChemSequence chemSequence;
-        private ChemModel chemModel;
+        private IChemSequence chemSequence;
+        private IChemModel chemModel;
         private IChemObjectSet<IAtomContainer> setOfMolecules;
         private IAtomContainer tautomer;
 
@@ -61,10 +59,10 @@ namespace NCDK.IO.InChI
 
         public override void StartDocument()
         {
-            ChemFile = new ChemFile();
-            chemSequence = new ChemSequence();
-            chemModel = new ChemModel();
-            setOfMolecules = new ChemObjectSet<IAtomContainer>();
+            ChemFile = CDK.Builder.NewChemFile();
+            chemSequence = CDK.Builder.NewChemSequence();
+            chemModel = CDK.Builder.NewChemModel();
+            setOfMolecules = CDK.Builder.NewChemObjectSet<IAtomContainer>();
         }
 
         public override void EndDocument()
@@ -75,44 +73,43 @@ namespace NCDK.IO.InChI
         public override void EndElement(XElement element)
         {
             Debug.WriteLine($"end element: {element.ToString()}");
-            if (string.Equals("identifier", element.Name.LocalName, StringComparison.Ordinal))
+            switch (element.Name.LocalName)
             {
-                if (tautomer != null)
-                {
-                    // ok, add tautomer
-                    setOfMolecules.Add(tautomer);
-                    chemModel.MoleculeSet = setOfMolecules;
-                    chemSequence.Add(chemModel);
-                }
-            }
-            else if (string.Equals("formula", element.Name.LocalName, StringComparison.Ordinal))
-            {
-                if (tautomer != null)
-                {
-                    Trace.TraceInformation("Parsing <formula> chars: ", element.Value);
-                    tautomer = new AtomContainer(InChIContentProcessorTool.ProcessFormula(
-                            setOfMolecules.Builder.NewAtomContainer(), element.Value));
-                }
-                else
-                {
-                    Trace.TraceWarning("Cannot set atom info for empty tautomer");
-                }
-            }
-            else if (string.Equals("connections", element.Name.LocalName, StringComparison.Ordinal))
-            {
-                if (tautomer != null)
-                {
-                    Trace.TraceInformation("Parsing <connections> chars: ", element.Value);
-                    InChIContentProcessorTool.ProcessConnections(element.Value, tautomer, -1);
-                }
-                else
-                {
-                    Trace.TraceWarning("Cannot set dbond info for empty tautomer");
-                }
-            }
-            else
-            {
-                // skip all other elements
+                case "identifier":
+                    if (tautomer != null)
+                    {
+                        // ok, add tautomer
+                        setOfMolecules.Add(tautomer);
+                        chemModel.MoleculeSet = setOfMolecules;
+                        chemSequence.Add(chemModel);
+                    }
+                    break;
+                case "formula":
+                    if (tautomer != null)
+                    {
+                        Trace.TraceInformation("Parsing <formula> chars: ", element.Value);
+                        tautomer = CDK.Builder.NewAtomContainer(InChIContentProcessorTool.ProcessFormula(
+                                setOfMolecules.Builder.NewAtomContainer(), element.Value));
+                    }
+                    else
+                    {
+                        Trace.TraceWarning("Cannot set atom info for empty tautomer");
+                    }
+                    break;
+                case "connections":
+                    if (tautomer != null)
+                    {
+                        Trace.TraceInformation("Parsing <connections> chars: ", element.Value);
+                        InChIContentProcessorTool.ProcessConnections(element.Value, tautomer, -1);
+                    }
+                    else
+                    {
+                        Trace.TraceWarning("Cannot set dbond info for empty tautomer");
+                    }
+                    break;
+                default:
+                    // skip all other elements
+                    break;
             }
         }
 
@@ -126,25 +123,25 @@ namespace NCDK.IO.InChI
             Debug.WriteLine($"uri: {element.Name.NamespaceName}");
             Debug.WriteLine($"local: {element.Name.LocalName}");
             Debug.WriteLine($"raw: {element.ToString()}");
-            if (string.Equals("INChI", element.Name.LocalName, StringComparison.Ordinal))
+            switch (element.Name.LocalName)
             {
-                // check version
-                foreach (var att in element.Attributes())
-                {
-                    if (string.Equals(att.Name.LocalName, "version", StringComparison.Ordinal))
-                        Trace.TraceInformation("INChI version: ", att.Value);
-                }
-            }
-            else if (string.Equals("structure", element.Name.LocalName, StringComparison.Ordinal))
-            {
-                tautomer = new AtomContainer();
-            }
-            else
-            {
-                // skip all other elements
+                case "INChI":
+                    // check version
+                    foreach (var att in element.Attributes())
+                    {
+                        if (string.Equals(att.Name.LocalName, "version", StringComparison.Ordinal))
+                            Trace.TraceInformation("INChI version: ", att.Value);
+                    }
+                    break;
+                case "structure":
+                    tautomer = CDK.Builder.NewAtomContainer();
+                    break;
+                default:
+                    // skip all other elements
+                    break;
             }
         }
 
-        public ChemFile ChemFile { get; private set; }
+        public IChemFile ChemFile { get; private set; }
     }
 }

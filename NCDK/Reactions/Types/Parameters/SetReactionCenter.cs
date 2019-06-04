@@ -16,6 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 namespace NCDK.Reactions.Types.Parameters
 {
     /// <summary>
@@ -24,7 +25,6 @@ namespace NCDK.Reactions.Types.Parameters
     /// </summary>
     // @author      miguelrojasch
     // @cdk.module  reaction
-    // @cdk.githash
     public class SetReactionCenter : ParameterReaction
     {
     }

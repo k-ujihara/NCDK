@@ -33,7 +33,6 @@ namespace NCDK.Graphs
     /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Graphs.AtomContainerBondPermutor_Example.cs"]/*' />
     /// </example>
     // @author         maclean
-    // @cdk.githash
     // @cdk.created    2009-09-09
     // @cdk.keyword    permutation
     // @cdk.module     standard

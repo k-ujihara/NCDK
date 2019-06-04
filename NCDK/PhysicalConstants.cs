@@ -16,13 +16,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 namespace NCDK
 {
      /// <summary>
      /// An class providing predefined properties of physical constants.
      /// </summary>
      // @cdk.keyword physical properties
-     // @cdk.githash
     public static class PhysicalConstants
     {
         /// <summary>
@@ -30,9 +30,9 @@ namespace NCDK
         /// </summary>
         public const double MassProton = 1.6726485E-27;
 
-         /// <summary>
-         /// Mass of an electron.
-         /// </summary>
+        /// <summary>
+        /// Mass of an electron.
+        /// </summary>
         public const double MassElectron = 9.109534E-31;
 
         /// <summary>

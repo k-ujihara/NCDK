@@ -45,7 +45,6 @@ namespace NCDK.IO.CML
     /// a certain element or attribute value in a valid CML document.</para>
     /// </summary>
     // @cdk.module io
-    // @cdk.githash
     // @author Egon Willighagen <egonw@sci.kun.nl>
     public class CMLCoreModule : ICMLModule
     {

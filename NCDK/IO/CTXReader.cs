@@ -31,7 +31,6 @@ namespace NCDK.IO
     /// Reader that extracts information from the IDENT, NAME, ATOMS and BONDS blocks in CTX files.
     /// </summary>
     // @cdk.module io
-    // @cdk.githash
     // @cdk.iooptions
     public class CTXReader : DefaultChemObjectReader
     {

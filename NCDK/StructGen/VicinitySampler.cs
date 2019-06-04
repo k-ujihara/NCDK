@@ -37,7 +37,6 @@ namespace NCDK.StructGen
     /// </summary>
     // @cdk.keyword  structure generator
     // @cdk.module   structgen
-    // @cdk.githash
     // @cdk.bug      1632610
     public static class VicinitySampler
     {

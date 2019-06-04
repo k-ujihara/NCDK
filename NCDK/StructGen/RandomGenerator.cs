@@ -39,7 +39,6 @@ namespace NCDK.StructGen
     /// the full Faulon vicinity.</para>
     /// </remarks>
     /// <seealso cref="VicinitySampler"/>
-    // @cdk.githash
     // @cdk.keyword structure generator
     // @cdk.module structgen
     public class RandomGenerator

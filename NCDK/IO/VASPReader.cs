@@ -34,7 +34,6 @@ namespace NCDK.IO
     /// Read output files generated with the VASP software.
     /// </summary>
     // @cdk.module extra
-    // @cdk.githash
     // @cdk.iooptions
     // @author  Fabian Dortu <Fabian.Dortu@wanadoo.be>
     public class VASPReader : DefaultChemObjectReader

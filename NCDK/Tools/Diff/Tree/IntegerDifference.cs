@@ -24,10 +24,9 @@ namespace NCDK.Tools.Diff.Tree
     /// </summary>
     // @author     egonw
     // @cdk.module diff
-    // @cdk.githash
     public class IntegerDifference : IDifference
     {
-        private string name;
+        private readonly string name;
         private int? first;
         private int? second;
 

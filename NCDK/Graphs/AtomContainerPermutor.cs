@@ -33,7 +33,6 @@ namespace NCDK.Graphs
     /// concrete derived classes.
     /// </summary>
     // @author maclean
-    // @cdk.githash
     // @cdk.created    2009-09-09
     // @cdk.keyword    permutation
     // @cdk.module     standard

@@ -20,9 +20,7 @@
 using NCDK.Config;
 using NCDK.IO;
 using NCDK.Numerics;
-using NCDK.Silent;
 using NCDK.Tools;
-using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -38,15 +36,14 @@ namespace NCDK.Proteins
     // @author      cho
     // @cdk.created 2005-09-30
     // @cdk.module extra
-    // @cdk.githash
     // @cdk.keyword protein
     // @cdk.keyword pocket
     public class ProteinPocketFinder
     {
         public int SolvantValue { get; set; } = 0;
         public int ProteinInterior { get; set; } = -1;
-        public int PocketSize { get; set; } = 100;                // # datapoints needed to form a pocket
-        public double RAtom { get; set; } = 1.5;                // default atom radius
+        public int PocketSize { get; set; } = 100;          // # datapoints needed to form a pocket
+        public double RAtom { get; set; } = 1.5;            // default atom radius
         public double RSolvent { get; set; } = 1.4;         // default solvant radius
         public double LatticeConstant { get; set; } = 0.5;
         public int MinPSPocket { get; set; } = 2;
@@ -105,11 +102,11 @@ namespace NCDK.Proteins
             {
                 // Read PDB file
                 var fileReader = new StreamReader(biopolymerFile);
-                ISimpleChemObjectReader reader = new ReaderFactory().CreateReader(fileReader);
-                IChemFile chemFile = (IChemFile)reader.Read((IChemObject)new ChemFile());
+                var reader = new ReaderFactory().CreateReader(fileReader);
+                var chemFile = (IChemFile)reader.Read((IChemObject)CDK.Builder.NewChemFile());
                 // Get molecule from ChemFile
-                IChemSequence chemSequence = chemFile[0];
-                IChemModel chemModel = chemSequence[0];
+                var chemSequence = chemFile[0];
+                var chemModel = chemSequence[0];
                 var setOfMolecules = chemModel.MoleculeSet;
                 Protein = (IBioPolymer)setOfMolecules[0];
             }
@@ -131,8 +128,8 @@ namespace NCDK.Proteins
         /// <returns>double[] stores min,max,min,max,min,max</returns>
         public double[] FindGridBoundaries()
         {
-            IAtom[] atoms = Protein.Atoms.ToArray();
-            double[] minMax = new double[6];
+            var atoms = Protein.Atoms.ToArray();
+            var minMax = new double[6];
             minMax[0] = atoms[0].Point3D.Value.X;
             minMax[1] = atoms[0].Point3D.Value.X;
             minMax[2] = atoms[0].Point3D.Value.Y;
@@ -184,34 +181,30 @@ namespace NCDK.Proteins
         /// The atom radius and solvent radius is accounted for with the variables:
         /// double rAtom, and double rSolvent.
         /// </summary>
-        /// <exception cref="Exception"></exception>
         public void AssignProteinToGrid()
         {
             // 1. Step: Set all grid points to solvent accessible
             this.Grid = GridGenerator.InitializeGrid(this.Grid, 0);
             // 2. Step Grid points inaccessible to solvent are assigend a value of -1
             // set grid points around (r_atom+r_solv) to -1
-            Vector3 gridPoint;
-            int checkGridPoints = 0;
-            double vdWRadius = 0;
-            int[] dim = gridGenerator.Dim;
-            int[] minMax = { 0, 0, 0, 0, 0, 0 };
+            var dim = gridGenerator.Dim;
+            var minMax = new int[] { 0, 0, 0, 0, 0, 0 };
 
             foreach (var atom in Protein.Atoms)
             {
-                var patom = (PDBAtom)atom;
+                var patom = (IPDBAtom)atom;
                 if (patom.HetAtom.Value)
                 {
                     continue;
                 }
-                gridPoint = gridGenerator.GetGridPointFrom3dCoordinates(patom.Point3D.Value);
+                var gridPoint = gridGenerator.GetGridPointFrom3dCoordinates(patom.Point3D.Value);
                 this.Grid[(int)gridPoint.X][(int)gridPoint.Y][(int)gridPoint.Z] = -1;
-                vdWRadius = PeriodicTable.GetVdwRadius(patom.Symbol).Value;
+                var vdWRadius = PeriodicTable.GetVdwRadius(patom.Symbol).Value;
                 if (vdWRadius == 0)
                 {
                     vdWRadius = RAtom;
                 }
-                checkGridPoints = (int)(((vdWRadius + RSolvent) / gridGenerator.LatticeConstant) - AtomCheckRadius);
+                var checkGridPoints = (int)(((vdWRadius + RSolvent) / gridGenerator.LatticeConstant) - AtomCheckRadius);
                 if (checkGridPoints < 0)
                 {
                     checkGridPoints = 0;
@@ -240,9 +233,9 @@ namespace NCDK.Proteins
         public void DebuggCheckPSPEvent()
         {
             Debug.WriteLine("    debugg_checkPSPEvent");
-            int[] dim = gridGenerator.Dim;
+            var dim = gridGenerator.Dim;
             // int pspMin=0;
-            int[] pspEvents = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+            var pspEvents = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
             int proteinGrid = 0;
             for (int x = 0; x <= dim[0]; x++)
             {
@@ -382,17 +375,17 @@ namespace NCDK.Proteins
         /// </summary>
         private void FindPockets()
         {
-            int[] dim = gridGenerator.Dim;
+            var dim = gridGenerator.Dim;
             for (int x = 0; x < dim[0]; x++)
             {
                 for (int y = 0; y < dim[1]; y++)
                 {
                     for (int z = 0; z < dim[2]; z++)
                     {
-                        Vector3 start = new Vector3(x, y, z);
+                        var start = new Vector3(x, y, z);
                         if (this.Grid[x][y][z] >= MinPSPocket & !visited.ContainsKey(x + "." + y + "." + z))
                         {
-                            List<Vector3> subPocket = new List<Vector3>();
+                            var subPocket = new List<Vector3>();
                             subPocket = this.ClusterPSPPocket(start, subPocket, dim);
                             if (subPocket != null && subPocket.Count >= PocketSize)
                             {
@@ -408,7 +401,7 @@ namespace NCDK.Proteins
         public List<Vector3> ClusterPSPPocket(Vector3 root, List<Vector3> subPocket, int[] dim)
         {
             visited[(int)root.X + "." + (int)root.Y + "." + (int)root.Z] = 1;
-            int[] minMax = { 0, 0, 0, 0, 0, 0 };
+            var minMax = new int[] { 0, 0, 0, 0, 0, 0 };
             minMax[0] = (int)(root.X - LinkageRadius);
             minMax[1] = (int)(root.X + LinkageRadius);
             minMax[2] = (int)(root.Y - LinkageRadius);
@@ -422,7 +415,7 @@ namespace NCDK.Proteins
                 {
                     for (int l = minMax[4]; l <= minMax[5]; l++)
                     {
-                        Vector3 node = new Vector3(k, m, l);
+                        var node = new Vector3(k, m, l);
                         if (this.Grid[k][m][l] >= MinPSCluster && !visited.ContainsKey(k + "." + m + "." + l))
                         {
                             subPocket.Add(node);
@@ -494,7 +487,7 @@ namespace NCDK.Proteins
             {
                 dimL = dimM;
             }
-            List<Vector3> line = new List<Vector3>();
+            var line = new List<Vector3>();
             int pspEvent = 0;
             int m = 0;
             for (int j = dimM; j >= 1; j--)
@@ -551,7 +544,7 @@ namespace NCDK.Proteins
             {
                 dimL = dimM;
             }
-            List<Vector3> line = new List<Vector3>();
+            var line = new List<Vector3>();
             int pspEvent = 0;
             int m = 0;
             for (int j = dimM; j >= 1; j--)
@@ -612,7 +605,7 @@ namespace NCDK.Proteins
             {
                 dimM = dimL;
             }
-            List<Vector3> line = new List<Vector3>();
+            var line = new List<Vector3>();
             int pspEvent = 0;
             int l = 0;
             for (int j = dimL; j >= 1; j--)
@@ -672,7 +665,7 @@ namespace NCDK.Proteins
             {
                 dimM = dimL;
             }
-            List<Vector3> line = new List<Vector3>();
+            var line = new List<Vector3>();
             int pspEvent = 0;
             int l = 0;
             for (int j = dimL; j >= 1; j--)
@@ -725,7 +718,7 @@ namespace NCDK.Proteins
         public void AxisScanX(int dimK, int dimL, int dimM)
         {
             // z,y,x
-            List<Vector3> line = new List<Vector3>();
+            var line = new List<Vector3>();
             int pspEvent = 0;
             for (int k = 0; k <= dimK; k++)
             {
@@ -774,7 +767,7 @@ namespace NCDK.Proteins
         public void AxisScanY(int dimK, int dimL, int dimM)
         {
             // z,x,y
-            List<Vector3> line = new List<Vector3>();
+            var line = new List<Vector3>();
             int pspEvent = 0;
             for (int k = 0; k <= dimK; k++)
             {
@@ -824,7 +817,7 @@ namespace NCDK.Proteins
         public void AxisScanZ(int dimK, int dimL, int dimM)
         {
             // x,y,z
-            List<Vector3> line = new List<Vector3>();
+            var line = new List<Vector3>();
             int pspEvent = 0;
             for (int k = 0; k <= dimK; k++)
             {
@@ -871,7 +864,7 @@ namespace NCDK.Proteins
         public void AssignVdWRadiiToProtein()
         {
             AtomTypeFactory atf = null;
-            IAtom[] atoms = Protein.Atoms.ToArray();
+            var atoms = Protein.Atoms.ToArray();
             try
             {
                 atf = AtomTypeFactory.GetInstance(VanDerWaalsFile);

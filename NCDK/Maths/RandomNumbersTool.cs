@@ -25,7 +25,6 @@ using System;
 
 namespace NCDK.Maths
 {
-    [Serializable]
     internal class Random
     {
         public Random()
@@ -75,7 +74,6 @@ namespace NCDK.Maths
     /// its static methods.
     /// </summary>
     // @cdk.module standard
-    // @cdk.githash
     public static class RandomNumbersTool
     {
         private static long randomSeed = DateTime.Now.Ticks;

@@ -53,7 +53,6 @@ namespace NCDK.Formula.Rules
     // @cdk.module  formula
     // @author      miguelrojasch
     // @cdk.created 2008-06-11
-    // @cdk.githash
     public class RDBERule : IRule
     {
         private static readonly Dictionary<string, int[]> oxidationStateTable = new Dictionary<string, int[]>()

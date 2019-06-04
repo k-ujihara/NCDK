@@ -21,8 +21,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Config;
-using System;
 using System.Collections.Generic;
 
 namespace NCDK.Tools.Manipulator
@@ -32,7 +30,6 @@ namespace NCDK.Tools.Manipulator
     /// AminoAcid's.
     /// </summary>
     // @cdk.module  standard
-    // @cdk.githash
     // @author      Egon Willighagen
     // @cdk.created 2005-08-19
     public static class AminoAcidManipulator
@@ -44,7 +41,8 @@ namespace NCDK.Tools.Manipulator
         /// <exception cref="CDKException">when the C-terminus is not defined for the given AminoAcid</exception>
         public static void RemoveAcidicOxygen(IAminoAcid acid)
         {
-            if (acid.CTerminus == null) throw new CDKException("Cannot remove oxygen: C-terminus is not defined!");
+            if (acid.CTerminus == null)
+                throw new CDKException("Cannot remove oxygen: C-terminus is not defined!");
 
             var atomsToRemove = new List<IAtom>();
             // ok, look for the oxygen which is singly bonded
@@ -73,9 +71,10 @@ namespace NCDK.Tools.Manipulator
         /// <exception cref="CDKException">when the C-terminus is not defined for the given AminoAcid</exception>
         public static void AddAcidicOxygen(IAminoAcid acid)
         {
-            if (acid.CTerminus == null) throw new CDKException("Cannot add oxygen: C-terminus is not defined!");
+            if (acid.CTerminus == null)
+                throw new CDKException("Cannot add oxygen: C-terminus is not defined!");
 
-            IAtom acidicOxygen = acid.Builder.NewAtom("O");
+            var acidicOxygen = acid.Builder.NewAtom("O");
             acid.Atoms.Add(acidicOxygen);
             acid.Bonds.Add(acid.Builder.NewBond(acid.CTerminus, acidicOxygen, BondOrder.Single));
         }

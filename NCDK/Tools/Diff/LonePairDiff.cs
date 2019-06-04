@@ -26,7 +26,6 @@ namespace NCDK.Tools.Diff
     /// </summary>
     // @author     egonw
     // @cdk.module diff
-    // @cdk.githash
     public static class LonePairDiff
     {
         /// <summary>
@@ -37,7 +36,7 @@ namespace NCDK.Tools.Diff
         /// <returns>a <see cref="string"/> representation of the difference between the first and second <see cref="IChemObject"/>.</returns>
         public static string Diff(IChemObject first, IChemObject second)
         {
-            IDifference diff = Difference(first, second);
+            var diff = Difference(first, second);
             if (diff == null)
             {
                 return "";
@@ -60,9 +59,9 @@ namespace NCDK.Tools.Diff
             {
                 return null;
             }
-            ILonePair firstB = (ILonePair)first;
-            ILonePair secondB = (ILonePair)second;
-            IDifferenceList totalDiff = new ChemObjectDifference("LonePairDiff");
+            var firstB = (ILonePair)first;
+            var secondB = (ILonePair)second;
+            var totalDiff = new ChemObjectDifference("LonePairDiff");
             totalDiff.AddChild(AtomDiff.Difference(firstB.Atom, secondB.Atom));
             totalDiff.AddChild(ElectronContainerDiff.Difference(first, second));
             if (totalDiff.ChildCount() > 0)

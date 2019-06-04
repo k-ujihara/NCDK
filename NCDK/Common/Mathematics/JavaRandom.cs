@@ -7,7 +7,6 @@ using System;
 
 namespace NCDK.Common.Mathematics
 {
-    [Serializable]
     public class JavaRandom
     {
         public JavaRandom(int seed)

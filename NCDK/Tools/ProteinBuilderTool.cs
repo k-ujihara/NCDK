@@ -34,7 +34,6 @@ namespace NCDK.Tools
     /// </summary>
     // Building DNA and RNA is done by a complementary class <see cref="NucleicAcidBuilderTool"/> (to be written).
     // @cdk.module pdb
-    // @cdk.githash
     public static class ProteinBuilderTool
     {
         /// <summary>

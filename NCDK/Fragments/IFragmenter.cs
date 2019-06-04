@@ -30,7 +30,6 @@ namespace NCDK.Fragments
     /// </summary>
     // @author Rajarshi Guha
     // @cdk.module  fragment
-    // @cdk.githash
     // @cdk.keyword fragment
     public interface IFragmenter
     {

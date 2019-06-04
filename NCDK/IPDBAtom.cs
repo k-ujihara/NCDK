@@ -23,7 +23,6 @@ namespace NCDK
     /// A PDBAtom is a subclass of a Atom which is supposed to store additional informations about the Atom.
     /// </summary>
     // @cdk.module  interfaces
-    // @cdk.githash
     // @author      Miguel Rojas <miguel.rojas @uni-koeln.de>
     // @cdk.created 2006-11-20
     // @cdk.keyword pdbpolymer

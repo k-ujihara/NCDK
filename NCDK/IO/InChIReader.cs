@@ -41,13 +41,11 @@ namespace NCDK.IO
     /// </summary>
     /// <seealso cref="InChIHandler"/>
     // @cdk.module extra
-    // @cdk.githash
     // @cdk.iooptions
     // @author      Egon Willighagen <egonw@sci.kun.nl>
     // @cdk.created 2004-05-17
     // @cdk.keyword file format, INChI
     // @cdk.keyword chemical identifier
-    // @cdk.require java1.4+
     public class InChIReader : DefaultChemObjectReader
     {
         private Stream input;

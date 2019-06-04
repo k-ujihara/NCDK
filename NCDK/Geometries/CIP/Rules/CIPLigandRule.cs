@@ -35,7 +35,6 @@ namespace NCDK.Geometries.CIP.Rules
     /// </list>
     /// </summary>
     // @cdk.module cip
-    // @cdk.githash
     public class CIPLigandRule : ISequenceSubRule<ILigand>
     {
         CombinedAtomicMassNumberRule numberRule = new CombinedAtomicMassNumberRule();

@@ -34,7 +34,6 @@ namespace NCDK.IO.CML
     /// This is an implementation for the CDK convention.
     /// </summary>
     // @cdk.module io
-    // @cdk.githash
     // @author egonw
     public class CDKConvention : CMLCoreModule
     {

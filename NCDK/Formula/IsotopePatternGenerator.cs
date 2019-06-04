@@ -32,7 +32,6 @@ namespace NCDK.Formula
     // @cdk.module  formula
     // @author      Miguel Rojas Cherto
     // @cdk.created 2007-11-20
-    // @cdk.githash
     // @cdk.keyword isotope pattern
     public class IsotopePatternGenerator
     {

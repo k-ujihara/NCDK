@@ -16,10 +16,6 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.Reactions.Types.Parameters;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 
 namespace NCDK.Reactions.Types
 {
@@ -33,12 +29,8 @@ namespace NCDK.Reactions.Types
     // @author         Miguel Rojas
     // @cdk.created    2006-10-27
     // @cdk.module     reaction
-    // @cdk.githash
     public partial class HomolyticCleavageReaction : AbstractHeterolyticCleavageReaction
     {
-        /// <summary>
-        /// Constructor of the HomolyticCleavageReaction object.
-        /// </summary>
         public HomolyticCleavageReaction() { }
 
         /// <summary>

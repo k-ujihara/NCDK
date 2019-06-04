@@ -41,7 +41,6 @@ namespace NCDK.Layout
     // @author Christoph Steinbeck
     // @cdk.created 2003-08-06
     // @cdk.module sdg
-    // @cdk.githash
     public sealed class HydrogenPlacer
     {
         /// <summary>

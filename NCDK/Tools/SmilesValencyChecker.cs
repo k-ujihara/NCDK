@@ -23,7 +23,6 @@
 
 using NCDK.Config;
 using NCDK.Tools.Manipulator;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -38,7 +37,6 @@ namespace NCDK.Tools
     // @cdk.created  2004-06-12
     // @cdk.keyword  atom, valency
     // @cdk.module   valencycheck
-    // @cdk.githash
     public class SmilesValencyChecker
         : IValencyChecker, IDeduceBondOrderTool
     {

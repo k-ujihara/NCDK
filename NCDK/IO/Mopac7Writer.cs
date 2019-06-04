@@ -39,7 +39,6 @@ namespace NCDK.IO
     /// Optimization is switched on if there are no coordinates.
     /// </summary>
     // @author      Nina Jeliazkova <nina@acad.bg>
-    // @cdk.githash
     // @cdk.module  io
     public class Mopac7Writer : DefaultChemObjectWriter
     {

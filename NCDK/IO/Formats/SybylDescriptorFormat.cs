@@ -26,7 +26,6 @@ namespace NCDK.IO.Formats
     /// See <see href="https://dx.doi.org/10.1021/ci034207y">here</see>.
     /// </summary>
     // @cdk.module ioformats
-    // @cdk.githash
     public class SybylDescriptorFormat : AbstractResourceFormat, IChemFormat
     {
         private static IResourceFormat myself = null;

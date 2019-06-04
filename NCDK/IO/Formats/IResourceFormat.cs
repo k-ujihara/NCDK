@@ -31,7 +31,6 @@ namespace NCDK.IO.Formats
     /// only private constructors, and implement the Instance method.
     /// </summary>
     // @cdk.module ioformats
-    // @cdk.githash
     // @author      Egon Willighagen <egonw@users.sf.net>
     // @cdk.created 2006-03-04
     public interface IResourceFormat

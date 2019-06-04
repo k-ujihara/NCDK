@@ -37,8 +37,6 @@ namespace NCDK.Smiles
     /// <see cref="IAtomContainer"/>s.
     /// </summary>
     // @cdk.module standard
-    // @cdk.githash
-    [Serializable]
     public class InvPair
     {
         /// <summary>

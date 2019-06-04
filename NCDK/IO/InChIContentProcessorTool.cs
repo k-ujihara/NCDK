@@ -33,7 +33,6 @@ namespace NCDK.IO
     /// Tool to help process INChI 1.12beta content.
     /// </summary>
     // @cdk.module extra
-    // @cdk.githash
     public static class InChIContentProcessorTool
     {
         private static readonly Regex pattern1 = new Regex("([A-Z][a-z]?)(\\d+)?(.*)", RegexOptions.Compiled);

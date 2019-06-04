@@ -36,7 +36,6 @@ namespace NCDK.IO
     /// is given later.
     /// </summary>
     // @cdk.module extra
-    // @cdk.githash
     // @cdk.iooptions
     // @cdk.keyword file format, Z-matrix
     public class ZMatrixReader : DefaultChemObjectReader

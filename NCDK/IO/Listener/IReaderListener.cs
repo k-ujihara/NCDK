@@ -23,7 +23,6 @@ namespace NCDK.IO.Listener
     /// Allows monitoring of progress of file reader activities.
     /// </summary>
     // @cdk.module io
-    // @cdk.githash
     // @author Bradley A. Smith <bradley@baysmith.com>
     public interface IReaderListener : IChemObjectIOListener
     {

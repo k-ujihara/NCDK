@@ -63,7 +63,6 @@ namespace NCDK.IO
     /// </para>
     /// </remarks>
     // @cdk.module  extra
-    // @cdk.githash
     // @cdk.keyword Gamess
     // @cdk.keyword file format
     // @cdk.keyword output

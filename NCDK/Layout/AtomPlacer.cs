@@ -41,7 +41,6 @@ namespace NCDK.Layout
     // @author      steinbeck
     // @cdk.created 2003-08-29
     // @cdk.module  sdg
-    // @cdk.githash
     public class AtomPlacer
     {
         private static readonly double ANGLE_120 = Vectors.DegreeToRadian(120);

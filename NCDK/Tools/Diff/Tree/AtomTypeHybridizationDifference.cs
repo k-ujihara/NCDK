@@ -16,11 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
+ 
 namespace NCDK.Tools.Diff.Tree
 {
     /// <summary>
@@ -28,10 +24,9 @@ namespace NCDK.Tools.Diff.Tree
     /// </summary>
     // @author     egonw
     // @cdk.module diff
-    // @cdk.githash
     public class AtomTypeHybridizationDifference : IDifference
     {
-        private string name;
+        private readonly string name;
         private Hybridization first;
         private Hybridization second;
 

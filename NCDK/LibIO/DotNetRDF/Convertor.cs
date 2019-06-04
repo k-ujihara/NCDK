@@ -12,7 +12,6 @@ namespace NCDK.LibIO.DotNetRDF
     /// dotNetRDF model and the CDK data model ontology.
     /// </summary>
     // @cdk.module       iordf
-    // @cdk.githash
     // @cdk.keyword      Resource Description Framework
     // @cdk.keyword      Jena
     // @cdk.keyword      RDF
@@ -69,31 +68,31 @@ namespace NCDK.LibIO.DotNetRDF
         private readonly static Dictionary<string, Hybridization> RESOURCE_TO_HYBRID
             = new Dictionary<string, Hybridization>()
             {
-                    { URI_HYBRID_S, Hybridization.S },
-                    { URI_HYBRID_SP1, Hybridization.SP1 },
-                    { URI_HYBRID_SP2, Hybridization.SP2 },
-                    { URI_HYBRID_SP3, Hybridization.SP3 },
-                    { URI_HYBRID_PLANAR3, Hybridization.Planar3 },
-                    { URI_HYBRID_SP3D1, Hybridization.SP3D1 },
-                    { URI_HYBRID_SP3D2, Hybridization.SP3D2 },
-                    { URI_HYBRID_SP3D3, Hybridization.SP3D3 },
-                    { URI_HYBRID_SP3D4, Hybridization.SP3D4 },
-                    { URI_HYBRID_SP3D5, Hybridization.SP3D5 },
+                { URI_HYBRID_S, Hybridization.S },
+                { URI_HYBRID_SP1, Hybridization.SP1 },
+                { URI_HYBRID_SP2, Hybridization.SP2 },
+                { URI_HYBRID_SP3, Hybridization.SP3 },
+                { URI_HYBRID_PLANAR3, Hybridization.Planar3 },
+                { URI_HYBRID_SP3D1, Hybridization.SP3D1 },
+                { URI_HYBRID_SP3D2, Hybridization.SP3D2 },
+                { URI_HYBRID_SP3D3, Hybridization.SP3D3 },
+                { URI_HYBRID_SP3D4, Hybridization.SP3D4 },
+                { URI_HYBRID_SP3D5, Hybridization.SP3D5 },
             };
 
         private readonly static Dictionary<Hybridization, string> HYBRID_TO_RESOURCE 
             = new Dictionary<Hybridization, string>()
             {
-                    { Hybridization.S, URI_HYBRID_S },
-                    { Hybridization.SP1, URI_HYBRID_SP1 },
-                    { Hybridization.SP2, URI_HYBRID_SP2 },
-                    { Hybridization.SP3, URI_HYBRID_SP3 },
-                    { Hybridization.Planar3, URI_HYBRID_PLANAR3 },
-                    { Hybridization.SP3D1, URI_HYBRID_SP3D1 },
-                    { Hybridization.SP3D2, URI_HYBRID_SP3D2 },
-                    { Hybridization.SP3D3, URI_HYBRID_SP3D3 },
-                    { Hybridization.SP3D4, URI_HYBRID_SP3D4 },
-                    { Hybridization.SP3D5, URI_HYBRID_SP3D5 },
+                { Hybridization.S, URI_HYBRID_S },
+                { Hybridization.SP1, URI_HYBRID_SP1 },
+                { Hybridization.SP2, URI_HYBRID_SP2 },
+                { Hybridization.SP3, URI_HYBRID_SP3 },
+                { Hybridization.Planar3, URI_HYBRID_PLANAR3 },
+                { Hybridization.SP3D1, URI_HYBRID_SP3D1 },
+                { Hybridization.SP3D2, URI_HYBRID_SP3D2 },
+                { Hybridization.SP3D3, URI_HYBRID_SP3D3 },
+                { Hybridization.SP3D4, URI_HYBRID_SP3D4 },
+                { Hybridization.SP3D5, URI_HYBRID_SP3D5 },
             };
 
         IGraph g;

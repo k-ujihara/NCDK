@@ -53,7 +53,6 @@ namespace NCDK.Stereo
     /// <seealso cref="Stereocenters"/>
     // @author John May
     // @cdk.module standard
-    // @cdk.githash
     public abstract class StereoElementFactory
     {
         /// <summary>Native CDK structure representation.</summary>

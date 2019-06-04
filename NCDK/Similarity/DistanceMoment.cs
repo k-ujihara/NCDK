@@ -1,5 +1,5 @@
-using System;
 using NCDK.Numerics;
+using System;
 
 namespace NCDK.Similarity
 {
@@ -33,7 +33,6 @@ namespace NCDK.Similarity
     // @author Rajarshi Guha
     // @cdk.created 2007-03-11
     // @cdk.keyword similarity, 3D, manhattan
-    // @cdk.githash
     // @cdk.module fingerprint
     public static class DistanceMoment
     {

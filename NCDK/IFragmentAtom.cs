@@ -28,7 +28,6 @@ namespace NCDK
     /// like the MDL molfile Group concept.
     /// </summary>
     // @cdk.module interfaces
-    // @cdk.githash
     // @author egonw
     public interface IFragmentAtom
         : IPseudoAtom

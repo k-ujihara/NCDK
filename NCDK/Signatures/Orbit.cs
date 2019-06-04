@@ -23,9 +23,9 @@
 
 using NCDK.Common.Collections;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Collections;
 
 namespace NCDK.Signatures
 {
@@ -34,7 +34,6 @@ namespace NCDK.Signatures
     /// </summary>
     // @cdk.module signature
     // @author maclean
-    // @cdk.githash
     public class Orbit : IEnumerable<int>, ICloneable
     {
         private readonly List<int> atomIndices;

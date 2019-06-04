@@ -26,7 +26,6 @@ namespace NCDK.IO.Formats {
     /// </summary>
     // @author Miguel Rojas
     // @cdk.module ioformats
-    // @cdk.githash
     public class PQSChemFormat : AbstractResourceFormat, IChemFormat
     {
         private static IResourceFormat myself = null;

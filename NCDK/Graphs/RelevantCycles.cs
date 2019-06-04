@@ -51,7 +51,6 @@ namespace NCDK.Graphs
     // @cdk.keyword cycle
     // @cdk.keyword ring
     // @cdk.keyword ring perception
-    // @cdk.githash
     public sealed class RelevantCycles
     { 
         /// <summary>The relevant cycle basis.</summary>

@@ -22,12 +22,12 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
 
+using NCDK.Common.Collections;
 using System;
-using System.Collections.Generic;
 using System.Collections;
+using System.Collections.Generic;
 using System.Text;
 using static NCDK.Graphs.InitialCycles;
-using NCDK.Common.Collections;
 
 namespace NCDK.Graphs
 {
@@ -56,7 +56,6 @@ namespace NCDK.Graphs
     /// </code></example>
     // @author John May
     // @cdk.module core
-    // @cdk.githash
     internal sealed class BitMatrix
     {
         /// <summary>rows of the matrix.</summary>

@@ -27,8 +27,6 @@ using System.Collections.Generic;
 namespace NCDK.Tools
 {
     // @cdk.keyword HOSE code
-    // @cdk.githash
-    [Serializable]
     public class BremserOneSphereHOSECodePredictor
     {
         private Dictionary<string, HOSECodeShiftRange> ht;
@@ -66,7 +64,6 @@ namespace NCDK.Tools
             throw new CDKException("No confidence limit available for HOSE code " + hoseCode);
         }
 
-        [Serializable]
         class HOSECodeShiftRange
         {
             public string code;

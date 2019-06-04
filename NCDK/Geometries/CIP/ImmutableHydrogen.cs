@@ -36,7 +36,6 @@ namespace NCDK.Geometries.CIP
     /// </summary>
     // @author egonw
     // @cdk.module cip
-    // @cdk.githash
     class ImmutableHydrogen : IAtom, ICloneable
     {
         private const string SymbolH = "H";

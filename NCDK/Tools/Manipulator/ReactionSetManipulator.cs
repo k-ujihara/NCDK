@@ -30,7 +30,6 @@ namespace NCDK.Tools.Manipulator
     /// </summary>
     /// <seealso cref="ChemModelManipulator"/>
     // @cdk.module standard
-    // @cdk.githash
     public static class ReactionSetManipulator
     {
         public static int GetAtomCount(IReactionSet set)
@@ -91,7 +90,8 @@ namespace NCDK.Tools.Manipulator
                             break;
                         }
                     }
-                    if (!contain) moleculeSet.Add(ac);
+                    if (!contain)
+                        moleculeSet.Add(ac);
 
                 }
             }
@@ -123,7 +123,7 @@ namespace NCDK.Tools.Manipulator
         {
             foreach (var reaction in set)
             {
-                IAtomContainer container = ReactionManipulator.GetRelevantAtomContainer(reaction, atom);
+                var container = ReactionManipulator.GetRelevantAtomContainer(reaction, atom);
                 if (container != null)
                 { // a match!
                     return reaction;
@@ -136,7 +136,7 @@ namespace NCDK.Tools.Manipulator
         {
             foreach (var reaction in set)
             {
-                IAtomContainer container = ReactionManipulator.GetRelevantAtomContainer(reaction, bond);
+                var container = ReactionManipulator.GetRelevantAtomContainer(reaction, bond);
                 if (container != null)
                 { // a match!
                     return reaction;
@@ -153,11 +153,11 @@ namespace NCDK.Tools.Manipulator
         /// <returns>The IReactionSet</returns>
         public static IReactionSet GetRelevantReactions(IReactionSet reactSet, IAtomContainer molecule)
         {
-            IReactionSet newReactSet = reactSet.Builder.NewReactionSet();
-            IReactionSet reactSetProd = GetRelevantReactionsAsProduct(reactSet, molecule);
+            var newReactSet = reactSet.Builder.NewReactionSet();
+            var reactSetProd = GetRelevantReactionsAsProduct(reactSet, molecule);
             foreach (var reaction in reactSetProd)
                 newReactSet.Add(reaction);
-            IReactionSet reactSetReact = GetRelevantReactionsAsReactant(reactSet, molecule);
+            var reactSetReact = GetRelevantReactionsAsReactant(reactSet, molecule);
             foreach (var reaction in reactSetReact)
                 newReactSet.Add(reaction);
             return newReactSet;
@@ -172,7 +172,7 @@ namespace NCDK.Tools.Manipulator
         /// <returns>The IReactionSet</returns>
         public static IReactionSet GetRelevantReactionsAsReactant(IReactionSet reactSet, IAtomContainer molecule)
         {
-            IReactionSet newReactSet = reactSet.Builder.NewReactionSet();
+            var newReactSet = reactSet.Builder.NewReactionSet();
             foreach (var reaction in reactSet)
             {
                 foreach (var atomContainer in reaction.Reactants)
@@ -190,7 +190,7 @@ namespace NCDK.Tools.Manipulator
         /// <returns>The IReactionSet</returns>
         public static IReactionSet GetRelevantReactionsAsProduct(IReactionSet reactSet, IAtomContainer molecule)
         {
-            IReactionSet newReactSet = reactSet.Builder.NewReactionSet();
+            var newReactSet = reactSet.Builder.NewReactionSet();
             foreach (var reaction in reactSet)
             {
                 foreach (var atomContainer in reaction.Products)
@@ -203,7 +203,7 @@ namespace NCDK.Tools.Manipulator
         {
             foreach (var reaction in set)
             {
-                IAtomContainer container = ReactionManipulator.GetRelevantAtomContainer(reaction, atom);
+                var container = ReactionManipulator.GetRelevantAtomContainer(reaction, atom);
                 if (container != null)
                 { // a match!
                     return container;
@@ -216,7 +216,7 @@ namespace NCDK.Tools.Manipulator
         {
             foreach (var reaction in set)
             {
-                IAtomContainer container = ReactionManipulator.GetRelevantAtomContainer(reaction, bond);
+                var container = ReactionManipulator.GetRelevantAtomContainer(reaction, bond);
                 if (container != null)
                 { // a match!
                     return container;
@@ -233,17 +233,15 @@ namespace NCDK.Tools.Manipulator
             }
         }
 
-        public static List<IChemObject> GetAllChemObjects(IReactionSet set)
+        public static IEnumerable<IChemObject> GetAllChemObjects(IReactionSet set)
         {
-            List<IChemObject> list = new List<IChemObject>
-            {
-                set
-            };
+            yield return set;
             foreach (var reaction in set)
             {
-                list.AddRange(ReactionManipulator.GetAllChemObjects(reaction));
+                foreach (var o in ReactionManipulator.GetAllChemObjects(reaction))
+                    yield return o;
             }
-            return list;
+            yield break;
         }
 
         /// <summary>
@@ -257,11 +255,13 @@ namespace NCDK.Tools.Manipulator
         {
             foreach (var reaction in reactionSet)
             {
-                if (AtomContainerSetManipulator.ContainsByID(reaction.Products, id)) return reaction;
+                if (AtomContainerSetManipulator.ContainsByID(reaction.Products, id))
+                    return reaction;
             }
             foreach (var reaction in reactionSet)
             {
-                if (AtomContainerSetManipulator.ContainsByID(reaction.Reactants, id)) return reaction;
+                if (AtomContainerSetManipulator.ContainsByID(reaction.Reactants, id))
+                    return reaction;
             }
             return null;
         }

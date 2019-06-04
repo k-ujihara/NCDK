@@ -41,7 +41,6 @@ namespace NCDK.Geometries.CIP
     /// reconstructed from 3D coordinates with the <see cref="StereoElementTools"/>.
     /// </example>
     // @cdk.module cip
-    // @cdk.githash
     public static class CIPTool
     {
         /// <summary>

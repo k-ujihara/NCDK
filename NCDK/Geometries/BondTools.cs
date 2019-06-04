@@ -38,7 +38,6 @@ namespace NCDK.Geometries
     // @author      shk3
     // @cdk.created 2005-08-04
     // @cdk.module  standard
-    // @cdk.githash
     public static class BondTools
     {
         // FIXME: class JavaDoc should use <token>cdk-cite-BLA</token> for the CDK News article

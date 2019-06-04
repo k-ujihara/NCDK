@@ -24,7 +24,6 @@ namespace NCDK.Validate
     /// <summary>
     /// A report on validation of chemical semantics.
     /// </summary>
-    // @cdk.githash
     public class ValidationReport
     {
         private List<ValidationTest> errors;

@@ -53,7 +53,6 @@ namespace NCDK.IO
     // @author Bradley A. Smith <yeldar@home.com>
     // @author Egon Willighagen
     // @cdk.module io
-    // @cdk.githash
     // @cdk.iooptions
     public class Gaussian03Reader : DefaultChemObjectReader
     {
@@ -127,7 +126,6 @@ namespace NCDK.IO
             try
             {
                 string line = input.ReadLine();
-                //string levelOfTheory = null;
 
                 // Find first set of coordinates
                 while (line != null)

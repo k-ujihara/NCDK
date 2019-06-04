@@ -30,7 +30,6 @@ namespace NCDK.Graphs.Invariant
     /// Collection of methods for the calculation of topological indices of a
     /// molecular graph.
     /// </summary>
-    // @cdk.githash
     public static class HuLuIndexTool
     {
         /// <summary>

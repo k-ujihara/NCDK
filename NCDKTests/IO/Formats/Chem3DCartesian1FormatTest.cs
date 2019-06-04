@@ -20,15 +20,16 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.IO.Formats
 {
     // @cdk.module test-ioformats
     [TestClass()]
-    public class Chem3D_Cartesian_1FormatTest : ChemFormatTest
+    public class Chem3DCartesian1FormatTest : ChemFormatTest
     {
-        public Chem3D_Cartesian_1FormatTest()
+        public Chem3DCartesian1FormatTest()
         {
             base.SetChemFormat((IChemFormat)Chem3DCartesian1Format.Instance);
         }

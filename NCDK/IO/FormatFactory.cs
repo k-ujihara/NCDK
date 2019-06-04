@@ -36,7 +36,6 @@ namespace NCDK.IO
     /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.IO.FormatFactory_Example.cs"]/*' />
     /// </example>
     // @cdk.module  ioformats
-    // @cdk.githash
     // @author  Egon Willighagen <egonw@sci.kun.nl>
     // @author  Bradley A. Smith <bradley@baysmith.com>
     public class FormatFactory

@@ -30,7 +30,6 @@ namespace NCDK.Geometries.CIP.Rules
     /// Compares to <see cref="ILigand"/>s based on mass numbers.
     /// </summary>
     // @cdk.module cip
-    // @cdk.githash
     internal class MassNumberRule : ISequenceSubRule<ILigand>
     {
         IsotopeFactory factory = CDK.IsotopeFactory;

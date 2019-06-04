@@ -33,7 +33,6 @@ namespace NCDK.Tools.Manipulator
     // @cdk.module  formula
     // @author      miguelrojasch
     // @cdk.created 2007-11-20
-    // @cdk.githash
     public static class MolecularFormulaRangeManipulator
     {
         /// <summary>
@@ -44,7 +43,7 @@ namespace NCDK.Tools.Manipulator
         /// <returns>A MolecularFormulaRange containing range occurrence of the elements</returns>
         public static MolecularFormulaRange GetRange(IMolecularFormulaSet mfSet)
         {
-            MolecularFormulaRange mfRange = new MolecularFormulaRange();
+            var mfRange = new MolecularFormulaRange();
 
             foreach (var mf in mfSet)
             {
@@ -98,7 +97,7 @@ namespace NCDK.Tools.Manipulator
         /// <returns>A IMolecularFormula containing the maximal occurrence of each isotope</returns>
         public static IMolecularFormula GetMaximalFormula(MolecularFormulaRange mfRange, IChemObjectBuilder builder)
         {
-            IMolecularFormula formula = builder.NewMolecularFormula();
+            var formula = builder.NewMolecularFormula();
 
             foreach (var isotope in mfRange.GetIsotopes())
             {
@@ -116,7 +115,7 @@ namespace NCDK.Tools.Manipulator
         /// <returns>A IMolecularFormula containing the minimal occurrence of each isotope</returns>
         public static IMolecularFormula GetMinimalFormula(MolecularFormulaRange mfRange, IChemObjectBuilder builder)
         {
-            IMolecularFormula formula = builder.NewMolecularFormula();
+            var formula = builder.NewMolecularFormula();
 
             foreach (var isotope in mfRange.GetIsotopes())
             {

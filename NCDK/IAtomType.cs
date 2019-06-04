@@ -48,7 +48,6 @@ namespace NCDK
     /// applications.
     /// </summary>
     // @cdk.module  interfaces
-    // @cdk.githash
     // @author      egonw
     // @cdk.created 2005-08-24
     // @cdk.keyword atom, type

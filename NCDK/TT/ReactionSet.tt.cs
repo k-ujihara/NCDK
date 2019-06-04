@@ -54,7 +54,6 @@ namespace NCDK.Default
     /// </example>
     // @cdk.keyword reaction
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
-    [Serializable]
     public class ReactionSet
         : ChemObject, IReactionSet, IChemObjectListener, ICloneable
     {
@@ -182,7 +181,6 @@ namespace NCDK.Silent
     /// </example>
     // @cdk.keyword reaction
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
-    [Serializable]
     public class ReactionSet
         : ChemObject, IReactionSet, IChemObjectListener, ICloneable
     {

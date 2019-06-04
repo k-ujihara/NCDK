@@ -37,7 +37,6 @@ namespace NCDK.IO
     /// <para>This class is based on Dan Gezelter's XYZReader from Jmol</para>
     /// </summary>
     // @cdk.module io
-    // @cdk.githash
     // @cdk.iooptions
     // @cdk.keyword file format, XYZ
     public class XYZReader : DefaultChemObjectReader
@@ -61,7 +60,8 @@ namespace NCDK.IO
 
         public override bool Accepts(Type type)
         {
-            if (typeof(IChemFile).IsAssignableFrom(type)) return true;
+            if (typeof(IChemFile).IsAssignableFrom(type))
+                return true;
             return false;
         }
 

@@ -28,7 +28,6 @@ namespace NCDK.IO
     /// Interface for classes aimed to handle <see cref="IChemObjectReader"/> errors.
     /// </summary>
     // @cdk.module io
-    // @cdk.githash
     // @author     Egon Willighagen <egonw@users.sf.net>
     public interface IChemObjectReaderErrorHandler
     {

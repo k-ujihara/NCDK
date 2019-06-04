@@ -35,7 +35,6 @@ namespace NCDK.Tools.Manipulator
     }
 
     // @cdk.module standard
-    // @cdk.githash
     public class RingSizeComparator : IComparer<IRing>
     {
         private readonly SortMode sortOrder = SortMode.SmallFirst;

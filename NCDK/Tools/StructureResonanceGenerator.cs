@@ -54,7 +54,6 @@ namespace NCDK.Tools
     // @author       Miguel Rojas
     // @cdk.created  2006-5-05
     // @cdk.module   reaction
-    // @cdk.githash
     public class StructureResonanceGenerator
     {
        /// <summary>Generate resonance structure without looking at the symmetry</summary>

@@ -28,7 +28,6 @@ namespace NCDK.IO.Formats
     /// </summary>
     // @author Miguel Rojas
     // @cdk.module ioformats
-    // @cdk.githash
     public class TinkerMM2Format : AbstractResourceFormat, IChemFormat
     {
         private static IResourceFormat myself = null;

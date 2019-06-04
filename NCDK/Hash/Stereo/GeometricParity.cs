@@ -29,7 +29,6 @@ namespace NCDK.Hash.Stereo
     /// </summary>
     // @author John May
     // @cdk.module hash
-    // @cdk.githash
     internal abstract class GeometricParity
     {
         /// <summary>

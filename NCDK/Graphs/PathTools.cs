@@ -33,7 +33,6 @@ namespace NCDK.Graphs
     /// </summary>
     // @author      steinbeck
     // @cdk.module  core
-    // @cdk.githash
     // @cdk.created 2001-06-17
     public static class PathTools
     {

@@ -26,10 +26,8 @@ namespace NCDK.IO.Formats
     /// See <see href="http://www.daylight.com/smiles/f_smiles.html">here</see>.
     /// </summary>
     // @cdk.module ioformats
-    // @cdk.githash
     public class SMILESFormat : AbstractResourceFormat, IChemFormat
     {
-
         private static IResourceFormat myself = null;
 
         public SMILESFormat() { }

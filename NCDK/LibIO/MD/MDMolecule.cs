@@ -21,15 +21,13 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Silent;
 using System;
 using System.Collections.Generic;
 
 namespace NCDK.LibIO.MD
 {
     // @cdk.module libiomd
-    // @cdk.githash
-    public class MDMolecule : AtomContainer
+    public class MDMolecule : Silent.AtomContainer
     {
         //List of Residues
         private List<Residue> residues;
@@ -38,11 +36,11 @@ namespace NCDK.LibIO.MD
         private List<ChargeGroup> chargeGroups;
 
         public MDMolecule()
-                : base()
+            : base()
         { }
 
         public MDMolecule(IAtomContainer container)
-                : base(container)
+            : base(container)
         { }
 
         public List<Residue> GetResidues()
@@ -66,7 +64,7 @@ namespace NCDK.LibIO.MD
             //Check if exists
             if (residues.Contains(residue))
             {
-                Console.Out.WriteLine("Residue: " + residue.Name + " already present in molecule: " + Id);
+                Console.Out.WriteLine($"Residue: {residue.Name} already present in molecule: {Id}");
                 return;
             }
 
@@ -94,7 +92,7 @@ namespace NCDK.LibIO.MD
             //Check if exists
             if (chargeGroups.Contains(chargeGroup))
             {
-                Console.Out.WriteLine("Charge group: " + chargeGroup.GetNumber() + " already present in molecule: " + Id);
+                Console.Out.WriteLine($"Charge group: {chargeGroup.GetNumber()} already present in molecule: {Id}");
                 return;
             }
 

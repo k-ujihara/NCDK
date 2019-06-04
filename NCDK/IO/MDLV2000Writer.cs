@@ -99,7 +99,7 @@ namespace NCDK.IO
             /// </summary>
             /// <param name="value">input value (in the property block)</param>
             /// <returns>instance</returns>
-            /// <exception cref="unknown spin multiplicity value">unknown spin multiplicity value</exception>
+            /// <exception cref="CDKException">unknown spin multiplicity value</exception>
             public static SpinMultiplicity OfValue(int value)
             {
                 switch (value)

@@ -33,7 +33,6 @@ namespace NCDK.IO.Formats
     /// </summary>
     // @author John May
     // @cdk.module ioformats
-    // @cdk.githash
     public abstract class AbstractResourceFormat : IResourceFormat
     {
         /// <inheritdoc/>

@@ -20,17 +20,18 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.IO.Formats
 {
     // @cdk.module test-ioformats
     [TestClass()]
-    public class FenskeHall_ZMatrixFormatTest : ChemFormatTest
+    public class Chem3DCartesian2FormatTest : ChemFormatTest
     {
-        public FenskeHall_ZMatrixFormatTest()
+        public Chem3DCartesian2FormatTest()
         {
-            base.SetChemFormat((IChemFormat)FenskeHallZMatrixFormat.Instance);
+            base.SetChemFormat((IChemFormat)Chem3DCartesian2Format.Instance);
         }
     }
 }

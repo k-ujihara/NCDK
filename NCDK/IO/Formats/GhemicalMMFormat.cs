@@ -27,7 +27,6 @@ namespace NCDK.IO.Formats
     /// See<see href="http://www.uku.fi/~thassine/ghemical/">here</see>.
     /// </summary>
     // @cdk.module ioformats
-    // @cdk.githash
     public class GhemicalMMFormat : SimpleChemFormatMatcher, IChemFormatMatcher
     {
         private static IResourceFormat myself = null;

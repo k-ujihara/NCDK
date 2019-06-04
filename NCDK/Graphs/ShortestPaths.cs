@@ -46,7 +46,6 @@ namespace NCDK.Graphs
     /// <seealso cref="Matrix.TopologicalMatrix"/>
     // @author John May
     // @cdk.module core
-    // @cdk.githash
     public sealed class ShortestPaths
     {
         /* empty path when no valid path was found */

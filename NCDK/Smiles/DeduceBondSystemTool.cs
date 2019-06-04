@@ -24,7 +24,6 @@
  */
 
 using NCDK.Aromaticities;
-using NCDK.Config;
 using NCDK.Graphs;
 using NCDK.RingSearches;
 using NCDK.Tools.Manipulator;
@@ -47,7 +46,6 @@ namespace NCDK.Smiles
     /// </remarks>
     // @author Todd Martin
     // @cdk.module smiles
-    // @cdk.githash
     // @cdk.keyword bond order
     // @cdk.bug 1895805
     // @cdk.bug 1931262

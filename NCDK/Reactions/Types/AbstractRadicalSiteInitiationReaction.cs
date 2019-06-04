@@ -27,7 +27,6 @@ namespace NCDK.Reactions.Types
     // @author         Miguel Rojas, Kazuya Ujihara
     // @cdk.created    2006-05-05
     // @cdk.module     reaction
-    // @cdk.githash
     public abstract class AbstractRadicalSiteInitiationReaction : ReactionEngine, IReactionProcess
     {
         /// <inheritdoc/>

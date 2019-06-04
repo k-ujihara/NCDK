@@ -18,7 +18,6 @@
  */
 
 using NCDK.Numerics;
-using System.Linq;
 using System.Text;
 
 namespace NCDK.Tools.Diff.Tree
@@ -28,7 +27,6 @@ namespace NCDK.Tools.Diff.Tree
     /// </summary>
     // @author     egonw
     // @cdk.module diff
-    // @cdk.githash
     public class Point2DDifference
         : AbstractDifferenceList, IDifferenceList
     {
@@ -48,9 +46,10 @@ namespace NCDK.Tools.Diff.Tree
         /// <returns>an <see cref="IDifference"/> reflecting the differences between the first and second object</returns>
         public static IDifference Construct(string name, Vector2? first, Vector2? second)
         {
-            if (first == null && second == null) return null;
+            if (first == null && second == null)
+                return null;
 
-            Point2DDifference totalDiff = new Point2DDifference(name);
+            var totalDiff = new Point2DDifference(name);
             totalDiff.AddChild(DoubleDifference.Construct("x", first.HasValue ? (double?)null : first.Value.X, second.HasValue ? (double?)null : second.Value.X));
             totalDiff.AddChild(DoubleDifference.Construct("y", first.HasValue ? (double?)null : first.Value.Y, second.HasValue ? (double?)null : second.Value.Y));
             if (totalDiff.ChildCount() == 0)

@@ -26,12 +26,11 @@ namespace NCDK.Tools.Diff.Tree
     /// </summary>
     // @author     egonw
     // @cdk.module diff
-    // @cdk.githash
     public class DoubleDifference : IDifference
     {
         private const double ERROR = 0.000000001;
 
-        private string name;
+        private readonly string name;
         private double? first;
         private double? second;
 

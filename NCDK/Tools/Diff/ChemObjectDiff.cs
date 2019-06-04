@@ -26,7 +26,6 @@ namespace NCDK.Tools.Diff
     /// </summary>
     // @author     egonw
     // @cdk.module diff
-    // @cdk.githash
     public static class ChemObjectDiff
     {
         /// <summary>
@@ -37,7 +36,7 @@ namespace NCDK.Tools.Diff
         /// <returns>a <see cref="string"/> representation of the difference between the first and second <see cref="IChemObject"/>.</returns>
         public static string Diff(IChemObject first, IChemObject second)
         {
-            IDifference difference = Difference(first, second);
+            var difference = Difference(first, second);
             if (difference == null)
             {
                 return "";
@@ -60,9 +59,9 @@ namespace NCDK.Tools.Diff
             {
                 return null;
             }
-            IChemObject firstElem = (IChemObject)first;
-            IChemObject secondElem = (IChemObject)second;
-            ChemObjectDifference coDiff = new ChemObjectDifference("ChemObjectDiff");
+            var firstElem = (IChemObject)first;
+            var secondElem = (IChemObject)second;
+            var coDiff = new ChemObjectDifference("ChemObjectDiff");
             // Compare flags 
             bool[] firstFlags = new[] { firstElem.IsVisited };
             bool[] secondFlags = new[] { secondElem.IsVisited };

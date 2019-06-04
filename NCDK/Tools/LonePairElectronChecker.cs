@@ -42,7 +42,6 @@ namespace NCDK.Tools
     /// with respect to a particular atom type.
     /// </summary>
     // @author         Miguel Rojas
-    // @cdk.githash
     // @cdk.created    2006-04-01
     // @cdk.keyword    saturation
     // @cdk.keyword    atom, valency

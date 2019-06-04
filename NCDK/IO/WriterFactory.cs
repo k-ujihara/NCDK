@@ -36,12 +36,11 @@ namespace NCDK.IO
     /// </summary>
     // @author Egon Willighagen <ewilligh@uni-koeln.de>
     // @cdk.module io
-    // @cdk.githash
     public class WriterFactory
     {
         private const string IO_FORMATS_LIST = "NCDK.io-formats.set";
         private static List<IChemFormat> formats = null;
-        private static Dictionary<string, System.Type> registeredReaders; // Type is IChemObjectWriter
+        private static Dictionary<string, Type> registeredReaders; // Type is IChemObjectWriter
 
         /// <summary>
         /// Constructs a ChemObjectIOInstantionTests.

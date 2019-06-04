@@ -102,9 +102,7 @@ namespace NCDK.Isomorphisms.MCSS
     /// </remarks>
     // @author      Stephane Werner from IXELIS mail@ixelis.net
     // @cdk.created 2002-07-17
-    // @cdk.require java1.4+
     // @cdk.module  standard
-    // @cdk.githash
     public class RGraph
     {
         // an RGraph is a list of RGraph nodes
@@ -194,13 +192,13 @@ namespace NCDK.Isomorphisms.MCSS
         }
 
         /// <summary>
-        ///  Parsing of the RGraph. This is the main method
-        ///  to perform a query. Given the constrains c1 and c2
-        ///  defining mandatory elements in G1 and G2 and given
-        ///  the search options, this method builds an initial set
-        ///  of starting nodes (B) and parses recursively the
-        ///  RGraph to find a list of solution according to
-        ///  these parameters.
+        /// Parsing of the RGraph. This is the main method
+        /// to perform a query. Given the constrains c1 and c2
+        /// defining mandatory elements in G1 and G2 and given
+        /// the search options, this method builds an initial set
+        /// of starting nodes (B) and parses recursively the
+        /// RGraph to find a list of solution according to
+        /// these parameters.
         /// </summary>
         /// <param name="c1">constrain on the graph G1</param>
         /// <param name="c2">constrain on the graph G2</param>

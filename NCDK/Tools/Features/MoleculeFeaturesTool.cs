@@ -19,29 +19,30 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
+
 namespace NCDK.Features
 {
     /// <summary>
     /// Utility that helps determine which data features are present.
     /// </summary>
+    /// <seealso cref="Tools.DataFeatures"/>
     // @author egonw
-    // @cdk.githash
-    // @see    DataFeatures
     public static class MoleculeFeaturesTool
     {
         public static bool HasPartialCharges(IAtomContainer molecule)
         {
             foreach (var atom in molecule.Atoms)
-                if (atom.Charge != 0.0000) return true;
+                if (atom.Charge != 0.0000)
+                    return true;
             return false;
         }
 
         public static bool HasFormalCharges(IAtomContainer molecule)
         {
             foreach (var atom in molecule.Atoms)
-                if (atom.FormalCharge != 0) return true;
+                if (atom.FormalCharge != 0)
+                    return true;
             return false;
         }
 
@@ -49,7 +50,8 @@ namespace NCDK.Features
         {
             foreach (var atom in molecule.Atoms)
             {
-                if (atom.Symbol != null && atom.Symbol.Length > 0) return true;
+                if (atom.Symbol != null && atom.Symbol.Length > 0)
+                    return true;
             }
             return false;
         }
@@ -60,7 +62,8 @@ namespace NCDK.Features
         public static bool HasGraphRepresentation(IAtomContainer molecule)
         {
             foreach (var bond in molecule.Bonds)
-                if (bond.Atoms.Count != 2) return false;
+                if (bond.Atoms.Count != 2)
+                    return false;
             return true;
         }
     }

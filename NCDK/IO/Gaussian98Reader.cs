@@ -30,7 +30,6 @@ using System;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Text;
 
 namespace NCDK.IO
@@ -55,7 +54,6 @@ namespace NCDK.IO
     // @author Egon Willighagen
     // @author Christoph Steinbeck
     // @cdk.module io
-    // @cdk.githash
     // @cdk.iooptions
     public class Gaussian98Reader : DefaultChemObjectReader
     {

@@ -16,6 +16,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.Tools;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,6 @@ namespace NCDK.IO.Formats
     /// Serializes a CDK model into the Web Ontology Language using the N3 format.
     /// </summary>
     // @cdk.module ioformats
-    // @cdk.githash
     public class CDKOWLFormat : SimpleChemFormatMatcher, IChemFormatMatcher
     {
         private static IResourceFormat myself = null;

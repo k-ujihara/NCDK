@@ -25,7 +25,6 @@ namespace NCDK
     /// Represents a mapping of two atoms.
     /// </summary>
     // @cdk.module  interfaces
-    // @cdk.githash
     // @author      kaihartmann
     // @cdk.created 2006-02-15
     public interface IMapping

@@ -22,7 +22,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Silent;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -36,8 +35,8 @@ namespace NCDK.Config
     internal sealed class ImmutableAtomType
         : IAtomType
     {
-        public IChemObjectBuilder Builder { get { return ChemObjectBuilder.Instance; } }
-
+        public IChemObjectBuilder Builder => CDK.Builder;
+        
         internal IAtomType baseAtomType;
 
         internal readonly IReadOnlyDictionary<string, object> properties = NCDK.Common.Collections.Dictionaries.Empty<string, object>();

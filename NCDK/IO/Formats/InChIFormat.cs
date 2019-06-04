@@ -26,7 +26,6 @@ namespace NCDK.IO.Formats
     /// See <see href="http://www.iupac.org/inchi/">here</see>.
     /// </summary>
     // @cdk.module ioformats
-    // @cdk.githash
     public class InChIFormat : SimpleChemFormatMatcher, IChemFormatMatcher
     {
         private static IResourceFormat myself = null;

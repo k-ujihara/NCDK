@@ -41,7 +41,6 @@ namespace NCDK.Modelings.Builder3D
     /// </summary>
     // @author      Christian Hoppe
     // @cdk.module  builder3dtools
-    // @cdk.githash
     public static class TemplateExtractor
     {
         private readonly static IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;

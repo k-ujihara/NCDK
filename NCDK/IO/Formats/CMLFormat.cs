@@ -26,7 +26,6 @@ namespace NCDK.IO.Formats
     /// See <see href="http://en.wikipedia.org/wiki/Chemical_Markup_Language">here</see>.
     /// </summary>
     // @cdk.module ioformats
-    // @cdk.githash
     public class CMLFormat : SimpleChemFormatMatcher, IChemFormatMatcher
     {
         private static IResourceFormat myself = null;

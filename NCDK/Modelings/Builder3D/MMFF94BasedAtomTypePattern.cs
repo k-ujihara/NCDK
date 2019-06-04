@@ -32,7 +32,6 @@ namespace NCDK.Modelings.Builder3D
     // @author     chhoppe
     // @cdk.created    2004-09-07
     // @cdk.module     forcefield
-    // @cdk.githash
     public class MMFF94BasedAtomTypePattern
     {
         private List<Regex> atomTypePatterns = new List<Regex>();

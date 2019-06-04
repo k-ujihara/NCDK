@@ -39,12 +39,8 @@ namespace NCDK.Reactions.Types
     // @author         Miguel Rojas
     // @cdk.created    2006-06-09
     // @cdk.module     reaction
-    // @cdk.githash
     public partial class HeterolyticCleavageSBReaction : AbstractHeterolyticCleavageReaction
     {
-        /// <summary>
-        /// Constructor of the HeterolyticCleavageSBReaction object.
-        /// </summary>
         public HeterolyticCleavageSBReaction() { }
 
         /// <summary>

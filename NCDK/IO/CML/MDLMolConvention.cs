@@ -31,7 +31,6 @@ namespace NCDK.IO.CML
     /// Implementation of the MDLMol Covention for CML.
     /// </summary>
     // @cdk.module io
-    // @cdk.githash
     // @author Egon Willighagen <egonw@sci.kun.nl>
     public class MDLMolConvention : CMLCoreModule
     {

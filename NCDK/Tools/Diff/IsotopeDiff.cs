@@ -17,10 +17,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
 namespace NCDK.Tools.Diff.Tree
 {
     /// <summary>
@@ -28,7 +24,6 @@ namespace NCDK.Tools.Diff.Tree
     /// </summary>
     // @author     egonw
     // @cdk.module diff
-    // @cdk.githash
     public static class IsotopeDiff
     {
         /// <summary>
@@ -39,7 +34,7 @@ namespace NCDK.Tools.Diff.Tree
         /// <returns>a <see cref="string"/> representation of the difference between the first and second <see cref="IChemObject"/>.</returns>
         public static string Diff(IChemObject first, IChemObject second)
         {
-            IDifference diff = Difference(first, second);
+            var diff = Difference(first, second);
             if (diff == null)
             {
                 return "";
@@ -62,13 +57,12 @@ namespace NCDK.Tools.Diff.Tree
             {
                 return null;
             }
-            IIsotope firstElem = (IIsotope)first;
-            IIsotope secondElem = (IIsotope)second;
-            ChemObjectDifference totalDiff = new ChemObjectDifference("IsotopeDiff");
+            var firstElem = (IIsotope)first;
+            var secondElem = (IIsotope)second;
+            var totalDiff = new ChemObjectDifference("IsotopeDiff");
             totalDiff.AddChild(IntegerDifference.Construct("MN", firstElem.MassNumber, secondElem.MassNumber));
             totalDiff.AddChild(DoubleDifference.Construct("EM", firstElem.ExactMass, secondElem.ExactMass));
-            totalDiff.AddChild(DoubleDifference.Construct("AB", firstElem.Abundance,
-                    secondElem.Abundance));
+            totalDiff.AddChild(DoubleDifference.Construct("AB", firstElem.Abundance, secondElem.Abundance));
             totalDiff.AddChild(ElementDiff.Difference(first, second));
             if (totalDiff.ChildCount() > 0)
             {

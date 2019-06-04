@@ -17,9 +17,8 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using System;
-using System.Collections.Generic;
 using NCDK.Numerics;
+using System.Collections.Generic;
 
 namespace NCDK.Tools.Diff.Tree
 {
@@ -29,7 +28,6 @@ namespace NCDK.Tools.Diff.Tree
     /// </summary>
     // @author     egonw
     // @cdk.module diff
-    // @cdk.githash
     public interface IDifferenceList : IDifference
     {
         /// <summary>

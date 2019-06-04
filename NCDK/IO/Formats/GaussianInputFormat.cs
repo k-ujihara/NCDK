@@ -26,7 +26,6 @@ namespace NCDK.IO.Formats
     /// See <see href="http://www.gaussian.com/g_ur/m_input.htm">here</see>.
     /// </summary>
     // @cdk.module ioformats
-    // @cdk.githash
     public class GaussianInputFormat : AbstractResourceFormat, IChemFormat
     {
         private static IResourceFormat myself = null;

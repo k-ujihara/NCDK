@@ -25,7 +25,6 @@
     /// may be passed to <see cref="Listener.IReaderListener"/>s.
     /// </summary>
     // @cdk.module io
-    // @cdk.githash
     // @author Bradley A. Smith <bradley@baysmith.com>
     public class ReaderEvent
     {

@@ -30,7 +30,6 @@ namespace NCDK.Geometries.CIP
     /// already been visited.
     /// </summary>
     // @cdk.module cip
-    // @cdk.githash
     public class VisitedAtoms
     {
         /// <summary>

@@ -39,7 +39,6 @@ namespace NCDK.IO
     /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.IO.NCDKSourceCodeWriter_Example.cs"]/*' />
     /// </example>
     // @cdk.module io
-    // @cdk.githash
     // @author  Egon Willighagen <egonw@sci.kun.nl>
     // @cdk.created 2003-10-01
     // @cdk.keyword file format, CDK source code
@@ -68,7 +67,7 @@ namespace NCDK.IO
             : this(new StreamWriter(output))
         { }
 
-        public override IResourceFormat Format => CDKSourceCodeFormat.Instance;
+        public override IResourceFormat Format => NCDKSourceCodeFormat.Instance;
 
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls

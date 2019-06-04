@@ -21,7 +21,6 @@ using System;
 
 namespace NCDK.Graphs.Invariant
 {
-    // @cdk.githash
     public class BadMatrixFormatException : Exception
     {
         public BadMatrixFormatException()

@@ -52,7 +52,6 @@ namespace NCDK.Tools
     // @cdk.keyword    saturation
     // @cdk.keyword    atom, valency
     // @cdk.module     valencycheck
-    // @cdk.githash
     public class SaturationChecker : ISaturationChecker
     {
         private static readonly AtomTypeFactory structgenATF = CDK.StructgenAtomTypeFactory;

@@ -32,7 +32,6 @@ namespace NCDK.Geometries
     /// A set of static utility classes for dealing with Z matrices.
     /// </summary>
     // @cdk.module  io
-    // @cdk.githash
     // @cdk.keyword Z-matrix
     // @cdk.created 2004-02-09
     internal static class ZMatrixTools

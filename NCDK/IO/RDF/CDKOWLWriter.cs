@@ -30,7 +30,6 @@ namespace NCDK.IO.RDF
     /// Serializes the data model into CDK OWL.
     /// </summary>
     // @cdk.module iordf
-    // @cdk.githash
     public class CDKOWLWriter : DefaultChemObjectWriter
     {
         private TextWriter output;

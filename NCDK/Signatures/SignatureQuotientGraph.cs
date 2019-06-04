@@ -37,7 +37,6 @@ namespace NCDK.Signatures
     /// </remarks>
     // @cdk.module signature
     // @author maclean
-    // @cdk.githash
     public class SignatureQuotientGraph : AbstractQuotientGraph
     {
         /// <summary>

@@ -44,7 +44,6 @@ namespace NCDK.IO
     /// <see href="http://www.msg.ucsf.edu/local/programs/shelxl/ch_07.html">http://www.msg.ucsf.edu/local/programs/shelxl/ch_07.html</see>.
     /// </remarks>
     // @cdk.module io
-    // @cdk.githash
     // @cdk.iooptions
     // @cdk.keyword file format, ShelXL
     // @author E.L. Willighagen

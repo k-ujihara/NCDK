@@ -31,7 +31,6 @@ namespace NCDK.IO.Formats
     /// Format for Symyx RGfiles (Rgroup query files).
     /// </summary>
     // @cdk.module ioformats
-    // @cdk.githash
     public class RGroupQueryFormat : SimpleChemFormatMatcher, IChemFormatMatcher
     {
         private static IResourceFormat myself = null;

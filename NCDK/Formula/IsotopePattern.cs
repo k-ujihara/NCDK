@@ -10,7 +10,6 @@ namespace NCDK.Formula
     /// </summary>
     // @author Miguel Rojas Cherto
     // @cdk.module formula
-    // @cdk.githash
     public class IsotopePattern
     {
         internal readonly List<IsotopeContainer> isotopes = new List<IsotopeContainer>();

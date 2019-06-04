@@ -29,7 +29,6 @@ namespace NCDK.IO.InChI
     /// Tool to help process INChI 1.12beta content.
     /// </summary>
     // @cdk.module extra
-    // @cdk.githash
     [Obsolete]
     public static class InChIContentProcessorTool
     {

@@ -30,7 +30,6 @@ namespace NCDK.IO
     /// Currently, database IO and file IO is supported. Internet IO is expected.</para>
     /// </summary>
     // @cdk.module io
-    // @cdk.githash
     public interface IChemObjectWriter : IChemObjectIO
     {
         /// <summary>

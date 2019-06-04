@@ -22,7 +22,6 @@
  */
 
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace NCDK.Stereo
@@ -33,7 +32,6 @@ namespace NCDK.Stereo
     /// </summary>
     /// <seealso cref="ITetrahedralChirality"/>
     // @cdk.module core
-    // @cdk.githash
     public class TetrahedralChirality
         : AbstractStereo<IAtom, IAtom>, ITetrahedralChirality
     {

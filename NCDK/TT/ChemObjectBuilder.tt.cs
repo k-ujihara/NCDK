@@ -168,6 +168,7 @@ namespace NCDK.Default
         public IPDBAtom NewPDBAtom(string symbol, Vector3 coordinate) => (IPDBAtom)new PDBAtom(symbol, coordinate);
         public IPDBMonomer NewPDBMonomer() => (IPDBMonomer)new PDBMonomer();
         public IPDBPolymer NewPDBPolymer() => (IPDBPolymer)new PDBPolymer();
+        public IPDBStrand NewPDBStrand() => (IPDBStrand)new PDBStrand();
         public IPDBStructure NewPDBStructure() => (IPDBStructure)new PDBStructure();
         public IPolymer NewPolymer() => (IPolymer)new Polymer();
         public IRing NewRing() => (IRing)new Ring();
@@ -319,6 +320,7 @@ namespace NCDK.Silent
         public IPDBAtom NewPDBAtom(string symbol, Vector3 coordinate) => (IPDBAtom)new PDBAtom(symbol, coordinate);
         public IPDBMonomer NewPDBMonomer() => (IPDBMonomer)new PDBMonomer();
         public IPDBPolymer NewPDBPolymer() => (IPDBPolymer)new PDBPolymer();
+        public IPDBStrand NewPDBStrand() => (IPDBStrand)new PDBStrand();
         public IPDBStructure NewPDBStructure() => (IPDBStructure)new PDBStructure();
         public IPolymer NewPolymer() => (IPolymer)new Polymer();
         public IRing NewRing() => (IRing)new Ring();

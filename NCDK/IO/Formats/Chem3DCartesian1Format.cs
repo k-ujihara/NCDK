@@ -24,46 +24,45 @@ namespace NCDK.IO.Formats
 {
     // @author Miguel Rojas
     // @cdk.module ioformats
-    // @cdk.githash
-    public class Chem3DCartesian2Format : AbstractResourceFormat, IChemFormat
+    public class Chem3DCartesian1Format : AbstractResourceFormat, IChemFormat
     {
         private static IResourceFormat myself = null;
 
-        public Chem3DCartesian2Format() { }
+        public Chem3DCartesian1Format() { }
 
         public static IResourceFormat Instance
         {
             get
             {
-                if (myself == null) myself = new Chem3DCartesian2Format();
+                if (myself == null) myself = new Chem3DCartesian1Format();
                 return myself;
             }
         }
 
         /// <inheritdoc/>
-        public override string FormatName => "Chem3D Cartesian 2";
-
+        public override string FormatName => "Chem3D Cartesian 1";
+        
         /// <inheritdoc/>
         public override string MIMEType => "chemical/x-chem3d";
-
+        
         /// <inheritdoc/>
         public override string PreferredNameExtension => NameExtensions[0];
-
+        
         /// <inheritdoc/>
-        public override IReadOnlyList<string> NameExtensions { get; } = new string[] { "c3d2" };
-
+        public override IReadOnlyList<string> NameExtensions { get; } = new string[] { "c3d1" };
+        
         /// <inheritdoc/>
         public string ReaderClassName => null;
-
+        
         /// <inheritdoc/>
         public string WriterClassName => null;
-
+        
         /// <inheritdoc/>
         public override bool IsXmlBased => false;
-
+        
         /// <inheritdoc/>
         public DataFeatures SupportedDataFeatures => DataFeatures.None;
-
+        
         /// <inheritdoc/>
         public DataFeatures RequiredDataFeatures => DataFeatures.None;
     }

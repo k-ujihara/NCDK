@@ -28,9 +28,10 @@ namespace NCDK.IO
     public enum ChemObjectReaderMode
     {
         /// <summary>Only fail on serious format problems</summary>
-        Relaxed,
+        Relaxed = 1,
+
         /// <summary>Fail on any format problem</summary>
-        Strict
+        Strict = 2,
     }
 
     /// <summary>
@@ -45,7 +46,6 @@ namespace NCDK.IO
     /// <seealso cref="ISimpleChemObjectReader"/>
     /// <seealso cref="Iterator.IEnumerableChemObjectReader{T}"/>
     // @cdk.module io
-    // @cdk.githash
     // @author     Egon Willighagen <egonw@users.sf.net>
     public interface IChemObjectReader : IChemObjectIO
     {

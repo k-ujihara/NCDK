@@ -26,7 +26,6 @@ namespace NCDK.IO.Formats
     /// See <see href="http://www.q-chem.com/">here</see>.
     /// </summary>
     // @cdk.module ioformats
-    // @cdk.githash
     public class QChemFormat : SimpleChemFormatMatcher, IChemFormatMatcher
     {
         private static IResourceFormat myself = null;

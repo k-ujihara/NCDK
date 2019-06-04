@@ -25,7 +25,6 @@
 using NCDK.IO.Formats;
 using NCDK.Isomorphisms.Matchers;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Text;
@@ -44,7 +43,6 @@ namespace NCDK.IO
     /// create CTAB data blocks.
     /// </remarks>
     // @cdk.module io
-    // @cdk.githash
     // @cdk.iooptions
     // @cdk.keyword Rgroup
     // @cdk.keyword R group

@@ -31,7 +31,6 @@ namespace NCDK.IO
     /// File writer thats generates input files for Gaussian calculation jobs. It was tested with Gaussian98.
     /// </summary>
     // @cdk.module io
-    // @cdk.githash
     // @author  Egon Willighagen <egonw@sci.kun.nl>
     // @cdk.keyword Gaussian (tm), input file
     public class GaussianInputWriter : DefaultChemObjectWriter

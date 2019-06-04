@@ -41,7 +41,6 @@ namespace NCDK.IO
     /// </summary>
     /// <seealso cref="InChIReader"/>
     // @cdk.module extra
-    // @cdk.githash
     // @cdk.iooptions
     // @author      Egon Willighagen <egonw@sci.kun.nl>
     // @cdk.created 2004-08-01

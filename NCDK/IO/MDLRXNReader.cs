@@ -36,7 +36,6 @@ namespace NCDK.IO
     /// Reads a molecule from an MDL RXN file <token>cdk-cite-DAL92</token>.
     /// </summary>
     // @cdk.module io
-    // @cdk.githash
     // @cdk.iooptions
     // @author     Egon Willighagen
     // @cdk.created    2003-07-24

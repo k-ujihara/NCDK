@@ -40,7 +40,6 @@ namespace NCDK.Formula
     // @author      miguelrojasch
     // @cdk.created 2007-11-20
     // @cdk.keyword molecular formula
-    // @cdk.githash
     public class MolecularFormulaRange
     {
         private Dictionary<IIsotope, int> isotopesMax;

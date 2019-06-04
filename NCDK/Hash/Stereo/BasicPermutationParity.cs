@@ -32,7 +32,6 @@ namespace NCDK.Hash.Stereo
     /// </summary>
     // @author John May
     // @cdk.module hash
-    // @cdk.githash
     internal sealed class BasicPermutationParity : PermutationParity
     {
         private readonly int[] indices;

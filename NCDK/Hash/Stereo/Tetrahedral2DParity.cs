@@ -40,7 +40,6 @@ namespace NCDK.Hash.Stereo
     /// <seealso href="http://www.mdpi.org/molecules/papers/61100915/61100915.htm">Cieplak, T and Wisniewski, J.L. 2001</seealso>
     // @author John May
     // @cdk.module hash
-    // @cdk.githash
     internal sealed class Tetrahedral2DParity : GeometricParity
     {
         /* four coordinates */

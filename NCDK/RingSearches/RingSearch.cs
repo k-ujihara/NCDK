@@ -21,9 +21,9 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Graphs;
 using System;
 using System.Collections.Generic;
-using NCDK.Graphs;
 
 namespace NCDK.RingSearches
 {
@@ -72,7 +72,6 @@ namespace NCDK.RingSearches
     /// <seealso cref="ICyclicVertexSearch"/>
     // @author John May
     // @cdk.module core
-    // @cdk.githash
     public sealed class RingSearch
     {
         /// <summary>depending on molecule size, delegate the search to one of two sub-classes</summary>

@@ -30,7 +30,6 @@ namespace NCDK.IO.CML
     /// Low weight alternative to Sun's Stack class.
     /// </summary>
     // @cdk.module io
-    // @cdk.githash
     // @cdk.keyword stack
     public class CMLModuleStack
     {

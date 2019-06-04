@@ -21,7 +21,6 @@ using System;
 
 namespace NCDK.Graphs.Invariant
 {
-    // @cdk.githash
     public class MatrixNotInvertibleException : Exception
     {
         public MatrixNotInvertibleException()

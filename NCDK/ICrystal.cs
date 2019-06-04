@@ -29,7 +29,6 @@ namespace NCDK
     /// Though this is not enforced, it is assumed by all methods.
     /// </summary>
     // @cdk.module interfaces
-    // @cdk.githash
     // @cdk.keyword crystal
     public interface ICrystal
         : IAtomContainer

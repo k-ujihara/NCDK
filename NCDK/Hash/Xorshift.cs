@@ -30,7 +30,6 @@ namespace NCDK.Hash
     /// <seealso href="http://en.wikipedia.org/wiki/Xorshift">Xorshift</seealso>
     /// <seealso href="http://www.javamex.com/tutorials/random_numbers/xorshift.shtml">Xorshift random number generators</seealso>
     // @author John May
-    // @cdk.githash
     // @cdk.module hash
     internal sealed class Xorshift : Pseudorandom
     {

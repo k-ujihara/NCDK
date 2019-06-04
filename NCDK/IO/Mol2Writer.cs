@@ -32,7 +32,6 @@ namespace NCDK.IO
     /// Writes the atoms and the bonds only at this moment.
     /// </summary>
     // @cdk.module io
-    // @cdk.githash
     // @cdk.iooptions
     // @author     Egon Willighagen
     public class Mol2Writer : DefaultChemObjectWriter

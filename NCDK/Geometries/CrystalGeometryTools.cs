@@ -31,7 +31,6 @@ namespace NCDK.Geometries
     /// A set of static methods for working with crystal coordinates.
     /// </summary>
     // @cdk.module standard
-    // @cdk.githash
     // @author  Egon Willighagen <egonw@sci.kun.nl>
     // @cdk.keyword fractional coordinates, crystal
     public static class CrystalGeometryTools

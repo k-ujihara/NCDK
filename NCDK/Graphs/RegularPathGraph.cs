@@ -42,7 +42,6 @@ namespace NCDK.Graphs
     // @author John May
     // @author Till Schäfer (predefined vertex ordering)
     // @cdk.module core
-    // @cdk.githash
     sealed class RegularPathGraph
         : PathGraph
     {

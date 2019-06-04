@@ -18,11 +18,10 @@
  */
 
 using NCDK.IO.Formats;
-using System.IO;
-using System;
 using NCDK.Numerics;
+using System;
 using System.Globalization;
-using System.Collections.Generic;
+using System.IO;
 
 namespace NCDK.IO
 {
@@ -31,7 +30,6 @@ namespace NCDK.IO
     /// </summary>
     // @author Rajarshi Guha <rajarshi@presidency.com>
     // @cdk.module io
-    // @cdk.githash
     // @cdk.created 2004-01-27
     // @cdk.iooptions
     public class HINWriter : DefaultChemObjectWriter

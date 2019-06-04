@@ -44,7 +44,6 @@ namespace NCDK.Formula.Rules
     // @cdk.module  formula
     // @author      Miguel Rojas Cherto
     // @cdk.created 2007-11-20
-    // @cdk.githash    
     public class IsotopePatternRule : IRule
     {
         /// <summary>Accuracy on the mass measuring isotope pattern</summary>

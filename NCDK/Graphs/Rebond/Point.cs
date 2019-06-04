@@ -22,7 +22,6 @@ namespace NCDK.Graphs.Rebond
     // @author      Miguel Howard
     // @cdk.created 2003-05
     // @cdk.module  standard
-    // @cdk.githash
     internal class Point : ITuple
     {
         double X { get; set; }

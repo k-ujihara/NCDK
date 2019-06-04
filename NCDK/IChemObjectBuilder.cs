@@ -114,6 +114,7 @@ namespace NCDK
         IPDBAtom NewPDBAtom(string symbol, Vector3 coordinate);
         IPDBMonomer NewPDBMonomer();
         IPDBPolymer NewPDBPolymer();
+        IPDBStrand NewPDBStrand();
         IPDBStructure NewPDBStructure();
         IPolymer NewPolymer();
         IRing NewRing();

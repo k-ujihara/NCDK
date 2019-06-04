@@ -38,7 +38,6 @@ namespace NCDK.Indexes
     /// <see href="http://www.cas.org">CAS website</see>
     /// </remarks>
     // @author Egon Willighagen <egonw@sci.kun.nl>
-    // @cdk.githash
     // @author Nathanaël "M.Le_maudit" Mazuir
     // @cdk.created 2003-06-30
     // @cdk.keyword CAS number

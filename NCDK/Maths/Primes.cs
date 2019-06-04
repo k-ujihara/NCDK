@@ -28,7 +28,6 @@ namespace NCDK.Maths
     /// <summary>
     /// </summary>
     // @cdk.module standard
-    // @cdk.githash
     // @author  Oliver Horlacher <oliver.horlacher@therastrat.com>
     // @cdk.created 2002-02-26
     // @cdk.keyword prime numbers

@@ -39,7 +39,6 @@ namespace NCDK.Tools
     // @author         egonw
     // @cdk.created    2007-03-08
     // @cdk.module     extra
-    // @cdk.githash
     public static class HOSECodeAnalyser
     {
         public static IReadOnlyList<string> GetElements(string code)

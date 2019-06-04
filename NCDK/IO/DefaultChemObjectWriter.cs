@@ -24,7 +24,6 @@ namespace NCDK.IO
     /// take care of basic stuff, like managing the ReaderListeners.
     /// </summary>
     // @cdk.module io
-    // @cdk.githash
     public abstract class DefaultChemObjectWriter : ChemObjectIO, IChemObjectWriter
     {
         public abstract void Write(IChemObject obj);

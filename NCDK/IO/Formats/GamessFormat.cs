@@ -26,7 +26,6 @@ namespace NCDK.IO.Formats
     /// See <see href="http://www.msg.ameslab.gov/GAMESS/doc.menu.html">here</see>.
     /// </summary>
     // @cdk.module ioformats
-    // @cdk.githash
     public class GamessFormat : SimpleChemFormatMatcher, IChemFormatMatcher
     {
         private static IResourceFormat myself = null;

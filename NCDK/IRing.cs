@@ -27,7 +27,6 @@ namespace NCDK
     /// atom i-1 and atom i+1 and atom 1 is bonded to atom N and atom 2.
     /// </summary>
     // @cdk.module  interfaces
-    // @cdk.githash
     // @cdk.keyword ring
     public interface IRing
         : IAtomContainer

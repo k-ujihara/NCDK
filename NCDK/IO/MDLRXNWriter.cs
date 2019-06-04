@@ -27,7 +27,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 
 namespace NCDK.IO
 {
@@ -42,7 +41,6 @@ namespace NCDK.IO
     /// See <token>cdk-cite-DAL92</token>.
     /// </remarks>
     // @cdk.module io
-    // @cdk.githash
     // @cdk.iooptions
     // @cdk.keyword file format, MDL RXN file
     public class MDLRXNWriter : DefaultChemObjectWriter

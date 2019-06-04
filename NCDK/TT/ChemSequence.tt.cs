@@ -35,11 +35,9 @@ namespace NCDK.Default
     /// store the course of a reaction. Each state of the reaction would be
     /// stored in one ChemModel.    
     /// </summary>
-    // @cdk.githash
     // @cdk.keyword animation
     // @cdk.keyword reaction
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
-    [Serializable]
     public class ChemSequence
         : ChemObject, IChemSequence, IChemObjectListener, ICloneable
     {
@@ -120,11 +118,9 @@ namespace NCDK.Silent
     /// store the course of a reaction. Each state of the reaction would be
     /// stored in one ChemModel.    
     /// </summary>
-    // @cdk.githash
     // @cdk.keyword animation
     // @cdk.keyword reaction
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
-    [Serializable]
     public class ChemSequence
         : ChemObject, IChemSequence, IChemObjectListener, ICloneable
     {

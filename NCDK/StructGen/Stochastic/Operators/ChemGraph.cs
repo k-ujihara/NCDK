@@ -28,7 +28,6 @@ using System.Collections.Generic;
 namespace NCDK.StructGen.Stochastic.Operators
 {
     // @cdk.module     structgen
-    // @cdk.githash
     public class ChemGraph
     {
         /* Number of atoms in this structure */

@@ -43,7 +43,6 @@ namespace NCDK.IO
     /// Doesn't update structure coordinates ! (TODO fix)
     /// </remarks>
     // @author      Nina Jeliazkova <nina@acad.bg>
-    // @cdk.githash
     // @cdk.module  io
     public class Mopac7Reader : DefaultChemObjectReader
     {

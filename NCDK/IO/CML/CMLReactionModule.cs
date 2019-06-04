@@ -30,7 +30,6 @@ namespace NCDK.IO.CML
 {
     // @author Egon Willighagen <elw38@cam.ac.uk>
     // @cdk.module io
-    // @cdk.githash
     public class CMLReactionModule : CMLCoreModule
     {
 #if DEBUG

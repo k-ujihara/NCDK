@@ -13,7 +13,6 @@ namespace NCDK.IO
     /// are put in separately. All other objects are made CML and put in.
     /// </summary>
     // @cdk.module       libiocml
-    // @cdk.githash
     // @cdk.iooptions
     // @author Stefan Kuhn
     // @cdk.keyword RSS

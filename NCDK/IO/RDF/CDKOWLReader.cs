@@ -34,7 +34,6 @@ namespace NCDK.IO.RDF
     /// Reads content from a CDK OWL serialization.
     /// </summary>
     // @cdk.module  iordf
-    // @cdk.githash
     // @cdk.keyword file format, OWL
     public class CDKOWLReader : DefaultChemObjectReader
     {

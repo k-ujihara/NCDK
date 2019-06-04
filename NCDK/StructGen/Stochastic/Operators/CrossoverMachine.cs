@@ -30,7 +30,6 @@ namespace NCDK.StructGen.Stochastic.Operators
     /// a certain fragments from both of its parents.
     /// </summary>
     // @cdk.module structgen
-    // @cdk.githash
     public class CrossoverMachine
     {
         PartialFilledStructureMerger pfsm = CDK.PartialFilledStructureMerger;

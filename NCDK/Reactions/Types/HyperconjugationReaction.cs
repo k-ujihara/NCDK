@@ -16,9 +16,8 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.Config;
+
 using NCDK.Reactions.Types.Parameters;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -38,16 +37,12 @@ namespace NCDK.Reactions.Types
     // @author         Miguel Rojas
     // @cdk.created    2006-07-04
     // @cdk.module     reaction
-    // @cdk.githash
     public partial class HyperconjugationReaction : ReactionEngine, IReactionProcess
     {
-        /// <summary>
-        /// Constructor of the HyperconjugationReaction object
-        /// </summary>
         public HyperconjugationReaction() { }
 
         /// <summary>
-        ///  Gets the specification attribute of the HyperconjugationReaction object
+        /// Gets the specification attribute of the HyperconjugationReaction object
         /// </summary>
         /// <returns>The specification value</returns>
         public ReactionSpecification Specification =>

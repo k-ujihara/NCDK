@@ -30,7 +30,7 @@ namespace NCDK.IO.Formats
     {
         public CDKSourceCodeFormatTest()
         {
-            base.SetChemFormat((IChemFormat)CDKSourceCodeFormat.Instance);
+            base.SetChemFormat((IChemFormat)NCDKSourceCodeFormat.Instance);
         }
     }
 }

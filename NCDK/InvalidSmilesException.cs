@@ -30,7 +30,6 @@ namespace NCDK
     /// Exception thrown when an error is occurred during SMILES parsing.
     /// </summary>
     // @cdk.module standard
-    // @cdk.githash
     public class InvalidSmilesException : CDKException
     {
         public InvalidSmilesException()

@@ -41,7 +41,6 @@ namespace NCDK.Geometries
     /// </example>
     /// <seealso cref="WeightFunction"/>
     // @cdk.module  extra
-    // @cdk.githash
     // @author      Egon Willighagen
     // @cdk.created 2005-01-10
     // @cdk.keyword radial distribution function
@@ -60,7 +59,6 @@ namespace NCDK.Geometries
         /// <param name="atom2">Second atom.</param>
         /// <returns></returns>
         // @cdk.module  extra
-        // @cdk.githash
         // @author      Egon Willighagen
         // @cdk.created 2005-01-14
         public delegate double WeightFunction(IAtom atom, IAtom atom2);

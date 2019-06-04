@@ -24,7 +24,6 @@ namespace NCDK.Validate
     /// </summary>
     /// <seealso cref="IChemObject"/>
     // @author   Egon Willighagen
-    // @cdk.githash
     // @cdk.created  2003-03-28
     // @cdk.keyword atom, chemical validation
     public class ValidationTest

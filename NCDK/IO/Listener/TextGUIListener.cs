@@ -21,7 +21,6 @@ using NCDK.IO.Setting;
 using System;
 using System.Globalization;
 using System.IO;
-using static NCDK.IO.Setting.IOSetting;
 
 namespace NCDK.IO.Listener
 {
@@ -34,7 +33,6 @@ namespace NCDK.IO.Listener
     /// has, by using a dummy StringWriter, and a <see langword="null"/> Reader.
     /// </remarks>
     // @cdk.module io
-    // @cdk.githash
     // @author Egon Willighagen <egonw@sci.kun.nl>
     public class TextGUIListener : IReaderListener, IWriterListener
     {

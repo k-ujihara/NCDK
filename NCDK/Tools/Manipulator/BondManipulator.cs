@@ -38,7 +38,6 @@ namespace NCDK.Tools.Manipulator
     /// it participates too.
     /// </example>
     // @cdk.module  core
-    // @cdk.githash
     // @author  Egon Willighagen
     // @cdk.created 2003-08-07
     public static class BondManipulator
@@ -48,7 +47,7 @@ namespace NCDK.Tools.Manipulator
         /// </summary>
         public static IAtom[] GetAtomArray(IBond container)
         {
-            IAtom[] ret = new IAtom[container.Atoms.Count];
+            var ret = new IAtom[container.Atoms.Count];
             for (int i = 0; i < ret.Length; ++i)
                 ret[i] = container.Atoms[i];
             return ret; 
@@ -66,7 +65,8 @@ namespace NCDK.Tools.Manipulator
         /// <seealso cref="IsHigherOrder(BondOrder, BondOrder)"/>
         public static bool IsLowerOrder(BondOrder first, BondOrder second)
         {
-            if (first == BondOrder.Unset || second == BondOrder.Unset) return false;
+            if (first == BondOrder.Unset || second == BondOrder.Unset)
+                return false;
             return first.CompareTo(second) < 0;
         }
 
@@ -189,10 +189,11 @@ namespace NCDK.Tools.Manipulator
         /// <seealso cref="GetMaximumBondOrder(IEnumerable{IBond})"/>
         public static BondOrder GetMaximumBondOrder(IEnumerable<IBond> bonds)
         {
-            BondOrder maxOrder = BondOrder.Single;
+            var maxOrder = BondOrder.Single;
             foreach (var bond in bonds)
             {
-                if (IsHigherOrder(bond.Order, maxOrder)) maxOrder = bond.Order;
+                if (IsHigherOrder(bond.Order, maxOrder))
+                    maxOrder = bond.Order;
             }
             return maxOrder;
         }
@@ -205,8 +206,10 @@ namespace NCDK.Tools.Manipulator
         /// <returns>The maximum bond order found</returns>
         public static BondOrder GetMaximumBondOrder(IBond firstBond, IBond secondBond)
         {
-            if (firstBond == null) throw new ArgumentNullException(nameof(firstBond));
-            if (secondBond == null) throw new ArgumentNullException(nameof(secondBond));
+            if (firstBond == null)
+                throw new ArgumentNullException(nameof(firstBond));
+            if (secondBond == null)
+                throw new ArgumentNullException(nameof(secondBond));
             return GetMaximumBondOrder(firstBond.Order, secondBond.Order);
         }
 
@@ -220,12 +223,14 @@ namespace NCDK.Tools.Manipulator
         {
             if (firstOrder == BondOrder.Unset)
             {
-                if (secondOrder == BondOrder.Unset) throw new ArgumentException("Both bond orders are unset");
+                if (secondOrder == BondOrder.Unset)
+                    throw new ArgumentException("Both bond orders are unset");
                 return secondOrder;
             }
             if (secondOrder == BondOrder.Unset)
             {
-                if (firstOrder == BondOrder.Unset) throw new ArgumentException("Both bond orders are unset");
+                if (firstOrder == BondOrder.Unset)
+                    throw new ArgumentException("Both bond orders are unset");
                 return firstOrder;
             }
 
@@ -244,7 +249,7 @@ namespace NCDK.Tools.Manipulator
         /// <seealso cref="GetMinimumBondOrder(IEnumerable{IBond})"/>
         public static BondOrder GetMinimumBondOrder(IEnumerable<IBond> bonds)
         {
-            BondOrder minOrder = BondOrder.Sextuple;
+            var minOrder = BondOrder.Sextuple;
             foreach (var bond in bonds)
                 if (IsLowerOrder(bond.Order, minOrder)) minOrder = bond.Order;
             return minOrder;
@@ -260,7 +265,7 @@ namespace NCDK.Tools.Manipulator
             int sum = 0;
             foreach (var bond in bonds)
             {
-                BondOrder order = bond.Order;
+                var order = bond.Order;
                 if (!order.IsUnset())
                 {
                     sum += order.Numeric();

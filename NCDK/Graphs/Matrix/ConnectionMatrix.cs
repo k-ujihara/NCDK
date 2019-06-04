@@ -30,7 +30,6 @@ namespace NCDK.Graphs.Matrix
     /// bond order value. Otherwise it is zero. See <token>cdk-cite-TRI92</token>.
     /// </summary>
     // @cdk.module  standard
-    // @cdk.githash
     // @cdk.keyword connection matrix
     // @cdk.dictref blue-obelisk:calculateConnectivityMatrix
     // @author      steinbeck

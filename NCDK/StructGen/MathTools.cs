@@ -23,7 +23,6 @@ namespace NCDK.StructGen
     /// Class providing convenience methods for simple mathematical operations.
     /// </summary>
     // @cdk.module standard
-    // @cdk.githash
     internal static class MathTools
     {
         /// <summary>

@@ -26,7 +26,6 @@ namespace NCDK.Tools.Diff.Tree
     /// </summary>
     // @author     egonw
     // @cdk.module diff
-    // @cdk.githash
     public abstract class AbstractDifferenceList : IDifferenceList
     {
         private List<IDifference> differences;

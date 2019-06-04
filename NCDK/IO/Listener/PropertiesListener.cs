@@ -39,7 +39,6 @@ namespace NCDK.IO.Listener
     /// </pre>
     /// </remarks>
     // @cdk.module io
-    // @cdk.githash
     // @author Egon Willighagen <egonw@sci.kun.nl>
     public class PropertiesListener : IReaderListener, IWriterListener
     {

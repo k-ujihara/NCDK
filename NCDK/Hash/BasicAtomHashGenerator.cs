@@ -64,7 +64,6 @@ namespace NCDK.Hash
     /// <seealso cref="SeedGenerator"/>
     // @author John May
     // @cdk.module hash
-    // @cdk.githash
     internal sealed class BasicAtomHashGenerator : AbstractAtomHashGenerator, IAtomHashGenerator
     {
         /* a generator for the initial atom seeds */

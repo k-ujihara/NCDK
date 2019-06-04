@@ -36,7 +36,6 @@ namespace NCDK.Hash.Stereo
     /// </summary>
     // @author John May
     // @cdk.module hash
-    // @cdk.githash
     internal sealed class Tetrahedral3DParity : GeometricParity
     {
         /* array of four 3D coordinates */

@@ -27,7 +27,6 @@ namespace NCDK.Tools.Diff.Tree
     /// </summary>
     // @author     egonw
     // @cdk.module diff
-    // @cdk.githash
     public class Point3DDifference
         : AbstractDifferenceList, IDifferenceList
     {
@@ -49,7 +48,7 @@ namespace NCDK.Tools.Diff.Tree
         {
             if (first == null && second == null) return null;
 
-            Point3DDifference totalDiff = new Point3DDifference(name);
+            var totalDiff = new Point3DDifference(name);
             totalDiff.AddChild(DoubleDifference.Construct("x", first.HasValue ? (double?)null : first.Value.X, second.HasValue ? (double?)null : second.Value.X));
             totalDiff.AddChild(DoubleDifference.Construct("y", first.HasValue ? (double?)null : first.Value.Y, second.HasValue ? (double?)null : second.Value.Y));
             totalDiff.AddChild(DoubleDifference.Construct("z", first.HasValue ? (double?)null : first.Value.Z, second.HasValue ? (double?)null : second.Value.Z));

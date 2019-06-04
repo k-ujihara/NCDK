@@ -19,7 +19,6 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
 
 namespace NCDK
@@ -28,7 +27,6 @@ namespace NCDK
     /// Exception that is thrown when an Atom is requested or required that does not exist in the relevant environment.
     /// </summary>
     // @cdk.module core
-    // @cdk.githash
     public class NoSuchAtomException
         : CDKException
     {

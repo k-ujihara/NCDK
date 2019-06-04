@@ -29,9 +29,8 @@ namespace NCDK.Tools
     /// <summary>
     /// Utility that helps determine which data features are present.
     /// </summary>
+    /// <seealso cref="Tools.DataFeatures"/>
     // @author egonw
-    // @cdk.githash
-    // @see    org.openscience.cdk.tools.DataFeatures
     public static class DataFeaturesTool
     {
         /// <summary>

@@ -16,6 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using NCDK.AtomTypes;
 using NCDK.Graphs;
 using NCDK.Tools.Manipulator;
@@ -33,7 +34,6 @@ namespace NCDK.Reactions.Mechanisms
     // @author         miguelrojasch
     // @cdk.created    2008-02-10
     // @cdk.module     reaction
-    // @cdk.githash
     public class RemovingSEofBMechanism : IReactionMechanism
     {
         /// <summary>
@@ -81,7 +81,7 @@ namespace NCDK.Reactions.Mechanisms
             // check if resulting atom type is reasonable
             atom1C.Hybridization = Hybridization.Unset;
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(reactantCloned);
-            IAtomType type = atMatcher.FindMatchingAtomType(reactantCloned, atom1C);
+            var type = atMatcher.FindMatchingAtomType(reactantCloned, atom1C);
             if (type == null || type.AtomTypeName.Equals("X", StringComparison.Ordinal))
                 return null;
             atom2C.Hybridization = Hybridization.Unset;

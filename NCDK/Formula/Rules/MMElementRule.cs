@@ -56,7 +56,6 @@ namespace NCDK.Formula.Rules
     // @cdk.module  formula
     // @author      miguelrojasch
     // @cdk.created 2007-11-20
-    // @cdk.githash
     public class MMElementRule : IRule
     {
         /// <summary> Database used. As default Willey.</summary>

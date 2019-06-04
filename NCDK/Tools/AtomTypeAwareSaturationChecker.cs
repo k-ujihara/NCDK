@@ -44,7 +44,6 @@ namespace NCDK.Tools
     // @author Klas Jönsson
     // @author Egon Willighagen
     // @cdk.created 2012-04-13
-    // @cdk.githash
     // @cdk.keyword bond order
     // @cdk.module  valencycheck
     public class AtomTypeAwareSaturationChecker : IValencyChecker, IDeduceBondOrderTool

@@ -23,7 +23,6 @@ using System.Collections.Generic;
 namespace NCDK.IO.Formats
 {
     // @cdk.module ioformats
-    // @cdk.githash
     public class MDLV2000Format : SimpleChemFormatMatcher, IChemFormatMatcher
     {
         public MDLV2000Format() { }

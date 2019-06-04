@@ -26,7 +26,6 @@ namespace NCDK.IO.Formats
     /// See <see href="http://www.emsl.pnl.gov/docs/nwchem/">here</see>.
     /// </summary>
     // @cdk.module ioformats
-    // @cdk.githash
     public class NWChemFormat : SimpleChemFormatMatcher, IChemFormatMatcher
     {
         private static IResourceFormat myself = null;

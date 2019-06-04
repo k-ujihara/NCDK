@@ -19,11 +19,18 @@
 
 namespace NCDK
 {
+    public static class PDBStructureType
+    {
+        public const string Unset = null;
+        public const string Helix = "helix";
+        public const string Sheet = "sheet";
+        public const string Turn = "turn";
+    }
+
     /// <summary>
     /// Represents the idea of an chemical structure.
     /// </summary>
     // @cdk.module  interfaces
-    // @cdk.githash
     // @author      Miguel Rojas <miguel.rojas @uni-koeln.de>
     // @cdk.created 2006-11-20
     // @cdk.keyword pdbpolymer
@@ -66,4 +73,3 @@ namespace NCDK
         string StructureType { get; set; }
     }
 }
-

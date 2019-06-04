@@ -36,7 +36,6 @@ namespace NCDK.Geometries.CIP.Rules
     /// ligand1, and 0 if they are equal.
     /// </remarks>
     // @cdk.module cip
-    // @cdk.githash
     public interface ISequenceSubRule<T> : IComparer<T> where T : ILigand
     {
     }

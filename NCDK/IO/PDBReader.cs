@@ -28,7 +28,6 @@ using NCDK.Graphs.Rebond;
 using NCDK.IO.Formats;
 using NCDK.IO.Setting;
 using NCDK.Numerics;
-using NCDK.Silent;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
@@ -45,7 +44,6 @@ namespace NCDK.IO
     /// <para>A description can be found at <see href="http://www.rcsb.org/pdb/static.do?p=file_formats/pdb/index.html">http://www.rcsb.org/pdb/static.do?p=file_formats/pdb/index.html</see>.</para>
     /// </summary>
     // @cdk.module  pdb
-    // @cdk.githash
     // @cdk.iooptions
     // @author      Edgar Luttmann
     // @author      Bradley Smith <bradley@baysmith.com>
@@ -155,7 +153,7 @@ namespace NCDK.IO
             var oSet = oFile.Builder.NewAtomContainerSet();
 
             // some variables needed
-            var oBP = new PDBPolymer();
+            var oBP = CDK.Builder.NewPDBPolymer();
             var molecularStructure = oFile.Builder.NewAtomContainer();
             string cRead = "";
             char chain = 'A'; // To ensure stringent name giving of monomers
@@ -230,25 +228,21 @@ namespace NCDK.IO
                                         var oStrand = oBP.GetStrand(strandName);
                                         if (oStrand == null)
                                         {
-                                            oStrand = new PDBStrand
-                                            {
-                                                StrandName = strandName,
-                                                Id = chain.ToString(NumberFormatInfo.InvariantInfo)
-                                            };
+                                            oStrand = CDK.Builder.NewPDBStrand();
+                                            oStrand.StrandName = strandName;
+                                            oStrand.Id = chain.ToString(NumberFormatInfo.InvariantInfo);
                                         }
 
                                         // search for an existing monomer or create a new one.
                                         var oMonomer = oBP.GetMonomer(cResidue.ToString(), chain.ToString(NumberFormatInfo.InvariantInfo));
                                         if (oMonomer == null)
                                         {
-                                            var monomer = new PDBMonomer
-                                            {
-                                                MonomerName = cResidue.ToString(),
-                                                MonomerType = oAtom.ResName,
-                                                ChainID = oAtom.ChainID,
-                                                ICode = oAtom.ICode,
-                                                ResSeq = oAtom.ResSeq
-                                            };
+                                            var monomer = CDK.Builder.NewPDBMonomer();
+                                            monomer.MonomerName = cResidue.ToString();
+                                            monomer.MonomerType = oAtom.ResName;
+                                            monomer.ChainID = oAtom.ChainID;
+                                            monomer.ICode = oAtom.ICode;
+                                            monomer.ResSeq = oAtom.ResSeq;
                                             oMonomer = monomer;
                                         }
 
@@ -302,10 +296,8 @@ namespace NCDK.IO
                                     #region
                                     // start new strand
                                     chain++;
-                                    var oStrand = new PDBStrand
-                                    {
-                                        StrandName = chain.ToString(NumberFormatInfo.InvariantInfo)
-                                    };
+                                    var oStrand = CDK.Builder.NewPDBStrand();
+                                    oStrand.StrandName = chain.ToString(NumberFormatInfo.InvariantInfo);
                                     Debug.WriteLine("Added new STRAND");
                                     #endregion
                                 }
@@ -338,7 +330,8 @@ namespace NCDK.IO
                                     }
                                     else
                                     {
-                                        if (useRebondTool.IsSet) CreateBondsWithRebondTool(molecularStructure);
+                                        if (useRebondTool.IsSet)
+                                            CreateBondsWithRebondTool(molecularStructure);
                                         oSet.Add(molecularStructure);
                                     }
                                     #endregion
@@ -357,7 +350,7 @@ namespace NCDK.IO
                                             oModel.MoleculeSet = oSet;
                                             oSeq.Add(oModel);
                                             // setup a new one
-                                            oBP = new PDBPolymer();
+                                            oBP = CDK.Builder.NewPDBPolymer();
                                             oModel = oFile.Builder.NewChemModel();
                                             oSet = oFile.Builder.NewAtomContainerSet();
                                             // avoid duplicate atom warnings
@@ -466,16 +459,14 @@ namespace NCDK.IO
                                     // HELIX    1 H1A CYS A   11  LYS A   18  1 RESIDUE 18 HAS POSITIVE PHI    1D66  72
                                     //           1         2         3         4         5         6         7
                                     // 01234567890123456789012345678901234567890123456789012345678901234567890123456789
-                                    var structure = new PDBStructure
-                                    {
-                                        StructureType = PDBStructure.Helix,
-                                        StartChainID = cRead[19],
-                                        StartSequenceNumber = int.Parse(cRead.Substring(21, 4).Trim(), NumberFormatInfo.InvariantInfo),
-                                        StartInsertionCode = cRead[25],
-                                        EndChainID = cRead[31],
-                                        EndSequenceNumber = int.Parse(cRead.Substring(33, 4).Trim(), NumberFormatInfo.InvariantInfo),
-                                        EndInsertionCode = cRead[37]
-                                    };
+                                    var structure = CDK.Builder.NewPDBStructure();
+                                    structure.StructureType = PDBStructureType.Helix;
+                                    structure.StartChainID = cRead[19];
+                                    structure.StartSequenceNumber = int.Parse(cRead.Substring(21, 4).Trim(), NumberFormatInfo.InvariantInfo);
+                                    structure.StartInsertionCode = cRead[25];
+                                    structure.EndChainID = cRead[31];
+                                    structure.EndSequenceNumber = int.Parse(cRead.Substring(33, 4).Trim(), NumberFormatInfo.InvariantInfo);
+                                    structure.EndInsertionCode = cRead[37];
                                     oBP.Add(structure);
                                     #endregion
                                 }
@@ -483,16 +474,14 @@ namespace NCDK.IO
                             case "SHEET ":
                                 {
                                     #region
-                                    var structure = new PDBStructure
-                                    {
-                                        StructureType = PDBStructure.Sheet,
-                                        StartChainID = cRead[21],
-                                        StartSequenceNumber = int.Parse(cRead.Substring(22, 4).Trim(), NumberFormatInfo.InvariantInfo),
-                                        StartInsertionCode = cRead[26],
-                                        EndChainID = cRead[32],
-                                        EndSequenceNumber = int.Parse(cRead.Substring(33, 4).Trim(), NumberFormatInfo.InvariantInfo),
-                                        EndInsertionCode = cRead[37]
-                                    };
+                                    var structure = CDK.Builder.NewPDBStructure();
+                                    structure.StructureType = PDBStructureType.Sheet;
+                                    structure.StartChainID = cRead[21];
+                                    structure.StartSequenceNumber = int.Parse(cRead.Substring(22, 4).Trim(), NumberFormatInfo.InvariantInfo);
+                                    structure.StartInsertionCode = cRead[26];
+                                    structure.EndChainID = cRead[32];
+                                    structure.EndSequenceNumber = int.Parse(cRead.Substring(33, 4).Trim(), NumberFormatInfo.InvariantInfo);
+                                    structure.EndInsertionCode = cRead[37];
                                     oBP.Add(structure);
                                     #endregion
                                 }
@@ -500,16 +489,14 @@ namespace NCDK.IO
                             case "TURN  ":
                                 {
                                     #region
-                                    var structure = new PDBStructure
-                                    {
-                                        StructureType = PDBStructure.Turn,
-                                        StartChainID = cRead[19],
-                                        StartSequenceNumber = int.Parse(cRead.Substring(20, 4).Trim(), NumberFormatInfo.InvariantInfo),
-                                        StartInsertionCode = cRead[24],
-                                        EndChainID = cRead[30],
-                                        EndSequenceNumber = int.Parse(cRead.Substring(31, 4).Trim(), NumberFormatInfo.InvariantInfo),
-                                        EndInsertionCode = cRead[35]
-                                    };
+                                    var structure = CDK.Builder.NewPDBStructure();
+                                    structure.StructureType = PDBStructureType.Turn;
+                                    structure.StartChainID = cRead[19];
+                                    structure.StartSequenceNumber = int.Parse(cRead.Substring(20, 4).Trim(), NumberFormatInfo.InvariantInfo);
+                                    structure.StartInsertionCode = cRead[24];
+                                    structure.EndChainID = cRead[30];
+                                    structure.EndSequenceNumber = int.Parse(cRead.Substring(31, 4).Trim(), NumberFormatInfo.InvariantInfo);
+                                    structure.EndInsertionCode = cRead[35];
                                     oBP.Add(structure);
                                     #endregion
                                 }
@@ -690,16 +677,16 @@ namespace NCDK.IO
         }
 
         /// <summary>
-        /// Creates an <see cref="PDBAtom"/> and sets properties to their values from
+        /// Creates an <see cref="IPDBAtom"/> and sets properties to their values from
         /// the ATOM or HETATM record. If the line is shorter than 80 characters, the
         /// information past 59 characters is treated as optional. If the line is
         /// shorter than 59 characters, a <see cref="ApplicationException"/> is thrown.
         /// </summary>
         /// <param name="cLine">the PDB ATOM or HEATATM record.</param>
         /// <param name="lineLength"></param>
-        /// <returns>the <see cref="PDBAtom"/>created from the record.</returns>
+        /// <returns>the <see cref="IPDBAtom"/>created from the record.</returns>
         /// <exception cref="InvalidDataException">if the line is too short (less than 59 characters).</exception>
-        private PDBAtom ReadAtom(string cLine, int lineLength)
+        private IPDBAtom ReadAtom(string cLine, int lineLength)
         {
             // a line can look like (two in old format, then two in new format):
             //
@@ -727,7 +714,7 @@ namespace NCDK.IO
             if (symbol == null)
                 HandleError($"Cannot parse symbol from {atomName}");
 
-            var oAtom = new PDBAtom(symbol, new Vector3(double.Parse(cLine.Substring(30, 8), NumberFormatInfo.InvariantInfo),
+            var oAtom = CDK.Builder.NewPDBAtom(symbol, new Vector3(double.Parse(cLine.Substring(30, 8), NumberFormatInfo.InvariantInfo),
                 double.Parse(cLine.Substring(38, 8), NumberFormatInfo.InvariantInfo), double.Parse(cLine.Substring(46, 8), NumberFormatInfo.InvariantInfo)));
             if (useHetDictionary.IsSet && isHetatm)
             {

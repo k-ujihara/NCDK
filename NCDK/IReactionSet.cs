@@ -25,7 +25,6 @@ namespace NCDK
     /// A set of reactions, for example those taking part in a reaction.
     /// </summary>
     // @cdk.module  interfaces
-    // @cdk.githash
     // @cdk.keyword reaction
     public interface IReactionSet
         : IChemObject, IList<IReaction>

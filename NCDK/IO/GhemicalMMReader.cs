@@ -32,7 +32,6 @@ namespace NCDK.IO
     /// Reads Ghemical (<see href="http://www.uku.fi/~thassine/ghemical/">http://www.uku.fi/~thassine/ghemical/</see>) molecular mechanics (*.mm1gp) files.
     /// </summary>
     // @cdk.module ioformats
-    // @cdk.githash
     // @author Egon Willighagen <egonw@sci.kun.nl>   
     public class GhemicalMMReader : DefaultChemObjectReader
     {

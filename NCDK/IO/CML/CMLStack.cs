@@ -32,7 +32,6 @@ namespace NCDK.IO.CML
     /// Low weight alternative to Sun's Stack class.
     /// </summary>
     // @cdk.module io
-    // @cdk.githash
     // @cdk.keyword stack    
 #pragma warning disable CA1010 // Collections should implement generic interface
     public sealed class CMLStack : Stack<string>

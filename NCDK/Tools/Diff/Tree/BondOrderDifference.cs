@@ -24,10 +24,9 @@ namespace NCDK.Tools.Diff.Tree
     /// </summary>
     // @author     egonw
     // @cdk.module diff
-    // @cdk.githash
     public class BondOrderDifference : IDifference
     {
-        private string name;
+        private readonly string name;
         private BondOrder first;
         private BondOrder second;
 

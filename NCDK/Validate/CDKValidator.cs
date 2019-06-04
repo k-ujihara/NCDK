@@ -23,7 +23,6 @@ namespace NCDK.Validate
     /// This Validator tests the internal data structures, and tries to detect inconsistencies in it.
     /// </summary>
     // @author   Egon Willighagen
-    // @cdk.githash
     // @cdk.created  2003-08-22
     public class CDKValidator : AbstractValidator
     {

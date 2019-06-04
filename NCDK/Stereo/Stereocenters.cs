@@ -26,7 +26,6 @@ using NCDK.Common.Collections;
 using NCDK.Graphs;
 using NCDK.Graphs.Invariant;
 using NCDK.RingSearches;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -108,7 +107,6 @@ namespace NCDK.Stereo
     /// </remarks>
     // @author John May
     // @cdk.module standard
-    // @cdk.githash
     public sealed class Stereocenters
     {
         /// <summary>native CDK structure representation.</summary>

@@ -24,7 +24,6 @@ namespace NCDK.IO.Formats
 {
     // @author Miguel Rojas
     // @cdk.module ioformats
-    // @cdk.githash
     public class XEDFormat : AbstractResourceFormat, IChemFormat
     {
         private static IResourceFormat myself = null;

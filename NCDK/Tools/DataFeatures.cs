@@ -38,7 +38,6 @@ namespace NCDK.Tools
     /// </example>
     // @author     Egon Willighagen <ewilligh@uni-koeln.de>
     // @cdk.module annotation
-    // @cdk.githash
     [Flags]
     public enum DataFeatures
     {

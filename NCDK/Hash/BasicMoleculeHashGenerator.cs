@@ -34,7 +34,7 @@ namespace NCDK.Hash
     /// </summary>
     /// <example><code>
     /// AtomHashGenerator atomGenerator = ...;
-    /// MoleculeHashGenerator generator     = new BasicMoleculeHashGenerator(atomGenerator)
+    /// MoleculeHashGenerator generator = new BasicMoleculeHashGenerator(atomGenerator)
     ///
     /// IAtomContainer benzene  = MoleculeFactory.MakeBenzene();
     /// long hashCode = generator.Generate(benzene);
@@ -43,7 +43,6 @@ namespace NCDK.Hash
     /// <seealso cref="BasicAtomHashGenerator"/>
     // @author John May
     // @cdk.module hash
-    // @cdk.githash
     internal sealed class BasicMoleculeHashGenerator : IMoleculeHashGenerator
     {
         /* generator for atom hashes */

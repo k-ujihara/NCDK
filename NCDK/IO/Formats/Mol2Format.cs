@@ -26,7 +26,6 @@ namespace NCDK.IO.Formats
     /// See <see href="http://www.tripos.com/data/support/mol2.pdf">here</see>.
     /// </summary>
     // @cdk.module ioformats
-    // @cdk.githash
     public class Mol2Format : SimpleChemFormatMatcher, IChemFormatMatcher
     {
         private static IResourceFormat myself = null;

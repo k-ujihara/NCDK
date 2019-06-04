@@ -18,11 +18,9 @@
  */
 
 using NCDK.Common.Collections;
-using NCDK.Config;
 using NCDK.Graphs.Matrix;
 using System;
 using System.Diagnostics;
-using System.Linq;
 
 namespace NCDK.Graphs.Invariant
 {
@@ -30,7 +28,6 @@ namespace NCDK.Graphs.Invariant
     /// An algorithm for topological symmetry. This algorithm derived from the
     /// algorithm <token>cdk-cite-Hu94</token>.
     /// </summary>
-    // @cdk.githash
     // @author Junfeng Hao
     // @author Luis F. de Figueiredo
     // @cdk.created 2003-09-24

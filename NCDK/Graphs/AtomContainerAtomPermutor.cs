@@ -34,7 +34,6 @@ namespace NCDK.Graphs
     // @cdk.created 2009-09-09
     // @cdk.keyword permutation
     // @cdk.module standard
-    // @cdk.githash
     public class AtomContainerAtomPermutor : AtomContainerPermutor
     {
         /// <summary>

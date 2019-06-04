@@ -42,7 +42,6 @@ namespace NCDK.Graphs.InChI
     /// </example>
     // @author Sam Adams
     // @cdk.module inchi
-    // @cdk.githash
     public class InChIToStructure
     {
         internal NInchiInputInchi input;

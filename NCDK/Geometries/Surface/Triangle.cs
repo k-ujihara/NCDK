@@ -30,7 +30,6 @@ namespace NCDK.Geometries.Surface
     /// </summary>
     // @author Rajarshi Guha
     // @cdk.module  qsarmolecular
-    // @cdk.githash
     public class Triangle
     {
         internal Vector3 p1, p2, p3;

@@ -25,9 +25,8 @@ namespace NCDK.IO.Formats
     /// <summary>
     /// See <see href="http://www.serenasoft.com/">here</see>.
     /// </summary>
-    ///     // @author Miguel Rojas
+    // @author Miguel Rojas
     // @cdk.module ioformats
-    // @cdk.githash
     public class PCModelFormat : AbstractResourceFormat, IChemFormat
     {
         private static IResourceFormat myself = null;

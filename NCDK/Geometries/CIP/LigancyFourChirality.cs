@@ -39,7 +39,6 @@ namespace NCDK.Geometries.CIP
     /// fourth ligand to be clockwise or anti-clockwise.
     /// </remarks>
     // @cdk.module cip
-    // @cdk.githash
     public class LigancyFourChirality
     {
         internal readonly List<ILigand> ligands;

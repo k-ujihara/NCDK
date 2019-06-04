@@ -60,7 +60,6 @@ namespace NCDK.StructGen
     // @author      steinbeck
     // @cdk.created 2001-09-04
     // @cdk.module  structgen
-    // @cdk.githash
     public class SingleStructureRandomGenerator
     {
         private static readonly ISaturationChecker satCheck = CDK.SaturationChecker;

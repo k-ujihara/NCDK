@@ -39,7 +39,6 @@ namespace NCDK.Formula
     // @author      miguelrojasch
     // @cdk.created 2007-11-20
     // @cdk.keyword molecule, molecular formula
-    // @cdk.githash
     public class MolecularFormulaChecker
     {
        /// <summary>List of IRules to be applied in the validation.</summary>

@@ -39,7 +39,6 @@ namespace NCDK.Modelings.Builder3D
     // @author         chhoppe
     // @cdk.created    2004-09-07
     // @cdk.module     forcefield
-    // @cdk.githash
     // @cdk.keyword    atom type, MM2
     public class MM2BasedParameterSetReader
     {

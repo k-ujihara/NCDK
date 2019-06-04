@@ -28,7 +28,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 
 namespace NCDK.IO
 {
@@ -36,7 +35,6 @@ namespace NCDK.IO
     /// Writes the SMILES strings to a plain text file.
     /// </summary>
     // @cdk.module  smiles
-    // @cdk.githash
     // @cdk.iooptions
     // @cdk.keyword file format, SMILES
     public class SMILESWriter : DefaultChemObjectWriter

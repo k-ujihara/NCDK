@@ -35,7 +35,6 @@ namespace NCDK.Graphs.Invariant
     /// </para>
     /// </summary>
     // @author Jean-Sebastien Senecal
-    // @cdk.githash
     // @version 1.0
     // @cdk.created 1999-05-20
     public class GIMatrix

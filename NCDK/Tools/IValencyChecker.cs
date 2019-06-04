@@ -30,7 +30,6 @@ namespace NCDK.Tools
     // @author         Egon Willighagen
     // @cdk.created    2004-01-08
     // @cdk.module     valencycheck
-    // @cdk.githash
     public interface IValencyChecker
     {
         /// <summary>

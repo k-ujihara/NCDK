@@ -37,7 +37,6 @@ namespace NCDK.Hash
     /// </summary>
     // @author John May
     // @cdk.module hash
-    // @cdk.githash
     internal abstract class EquivalentSetFinder
     {
         /// <summary>

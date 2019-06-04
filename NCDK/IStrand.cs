@@ -29,7 +29,6 @@ namespace NCDK
     /// A Strand is an AtomContainer which stores additional strand specific informations for a group of Atoms.
     /// </summary>
     // @cdk.module  interfaces
-    // @cdk.githash
     // @cdk.created 2004-12-20
     // @author Martin Eklund<martin.eklund@farmbio.uu.se>
     public interface IStrand

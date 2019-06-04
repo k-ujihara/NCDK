@@ -36,7 +36,6 @@ namespace NCDK.IO.CML
     /// <remarks>
     /// </remarks>
     // @cdk.module io
-    // @cdk.githash
     // @author Egon Willighagen <egonw@sci.kun.nl>
     public class PMPConvention : CMLCoreModule
     {
@@ -54,7 +53,6 @@ namespace NCDK.IO.CML
         public override void StartDocument()
         {
             base.StartDocument();
-            //        cdo.StartObject("Frame");
             CurrentChemModel = CurrentChemFile.Builder.NewChemModel();
         }
 
