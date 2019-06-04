@@ -14,8 +14,7 @@
 <#@ import namespace="System.Collections.Generic" #>
 
 /* Copyright (C) 2010  Egon Willighagen <egonw@users.sf.net>
- *
- * Contact: cdk-devel@lists.sourceforge.net
+ * Copyright (C) 2018-2019  Kazuya Ujihara <ujihara.kazuya@gmail.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -49,6 +48,8 @@ namespace NCDK
         /// </summary>
         /// <returns>The library version</returns>
         public static string Version => typeof(CDK).Assembly.GetName().Version.ToString();
+
+        private static object syncLock = new object();
 <#
     foreach (var nc in NCs)
     {
@@ -85,6 +86,7 @@ namespace NCDK
         new NC("public", "SaturationChecker", "Tools.ISaturationChecker", "new Tools.SaturationChecker()"),
         new NC("public", "Builder", "IChemObjectBuilder", "Silent.ChemObjectBuilder.Instance"),
         new NC("public", "SmilesParser", "Smiles.SmilesParser", "new Smiles.SmilesParser()"),
+        new NC("public", "SmilesGenerator", "Smiles.SmilesGenerator", "new Smiles.SmilesGenerator(Smiles.SmiFlavors.Default)"),
         new NC("public", "IsotopeFactory", "Config.IsotopeFactory", "Config.BODRIsotopeFactory.Instance"),
         new NC("public", "LonePairElectronChecker", "Tools.ILonePairElectronChecker", "new Tools.LonePairElectronChecker()"),
         new NC("public", "AtomTypeMatcher", "AtomTypes.IAtomTypeMatcher", "AtomTypes.CDKAtomTypeMatcher.GetInstance()"),
@@ -98,13 +100,12 @@ namespace NCDK
     {
 #>
         private static <#= nc.Type #> local<#= nc.Name #> = null;
-        private static readonly object lock<#= nc.Name #> = new object();
         <#= nc.Modifier #> static <#= nc.Type #> <#= nc.Name #>
         {
             get
             {
                 if (local<#= nc.Name #> == null)
-                    lock (lock<#= nc.Name #>)
+                    lock (syncLock)
                     {
                         if (local<#= nc.Name #> == null)
                             local<#= nc.Name #> = <#= nc.Creation #>;

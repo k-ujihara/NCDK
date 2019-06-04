@@ -1,7 +1,6 @@
 
 /* Copyright (C) 2010  Egon Willighagen <egonw@users.sf.net>
- *
- * Contact: cdk-devel@lists.sourceforge.net
+ * Copyright (C) 2018-2019  Kazuya Ujihara <ujihara.kazuya@gmail.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -35,14 +34,15 @@ namespace NCDK
         /// </summary>
         /// <returns>The library version</returns>
         public static string Version => typeof(CDK).Assembly.GetName().Version.ToString();
+
+        private static object syncLock = new object();
         private static Config.AtomTypeFactory localAtomTypeFactory = null;
-        private static readonly object lockAtomTypeFactory = new object();
         public static Config.AtomTypeFactory AtomTypeFactory
         {
             get
             {
                 if (localAtomTypeFactory == null)
-                    lock (lockAtomTypeFactory)
+                    lock (syncLock)
                     {
                         if (localAtomTypeFactory == null)
                             localAtomTypeFactory = Config.AtomTypeFactory.GetInstance();
@@ -51,13 +51,12 @@ namespace NCDK
             }
         }
         private static Config.AtomTypeFactory localJmolAtomTypeFactory = null;
-        private static readonly object lockJmolAtomTypeFactory = new object();
         internal static Config.AtomTypeFactory JmolAtomTypeFactory
         {
             get
             {
                 if (localJmolAtomTypeFactory == null)
-                    lock (lockJmolAtomTypeFactory)
+                    lock (syncLock)
                     {
                         if (localJmolAtomTypeFactory == null)
                             localJmolAtomTypeFactory = Config.AtomTypeFactory.GetInstance("NCDK.Config.Data.jmol_atomtypes.txt");
@@ -66,13 +65,12 @@ namespace NCDK
             }
         }
         private static Config.AtomTypeFactory localCdkAtomTypeFactory = null;
-        private static readonly object lockCdkAtomTypeFactory = new object();
         internal static Config.AtomTypeFactory CdkAtomTypeFactory
         {
             get
             {
                 if (localCdkAtomTypeFactory == null)
-                    lock (lockCdkAtomTypeFactory)
+                    lock (syncLock)
                     {
                         if (localCdkAtomTypeFactory == null)
                             localCdkAtomTypeFactory = Config.AtomTypeFactory.GetInstance("NCDK.Dict.Data.cdk-atom-types.owl");
@@ -81,13 +79,12 @@ namespace NCDK
             }
         }
         private static Config.AtomTypeFactory localStructgenAtomTypeFactory = null;
-        private static readonly object lockStructgenAtomTypeFactory = new object();
         internal static Config.AtomTypeFactory StructgenAtomTypeFactory
         {
             get
             {
                 if (localStructgenAtomTypeFactory == null)
-                    lock (lockStructgenAtomTypeFactory)
+                    lock (syncLock)
                     {
                         if (localStructgenAtomTypeFactory == null)
                             localStructgenAtomTypeFactory = Config.AtomTypeFactory.GetInstance("NCDK.Config.Data.structgen_atomtypes.xml");
@@ -96,13 +93,12 @@ namespace NCDK
             }
         }
         private static Tools.ISaturationChecker localSaturationChecker = null;
-        private static readonly object lockSaturationChecker = new object();
         public static Tools.ISaturationChecker SaturationChecker
         {
             get
             {
                 if (localSaturationChecker == null)
-                    lock (lockSaturationChecker)
+                    lock (syncLock)
                     {
                         if (localSaturationChecker == null)
                             localSaturationChecker = new Tools.SaturationChecker();
@@ -111,13 +107,12 @@ namespace NCDK
             }
         }
         private static IChemObjectBuilder localBuilder = null;
-        private static readonly object lockBuilder = new object();
         public static IChemObjectBuilder Builder
         {
             get
             {
                 if (localBuilder == null)
-                    lock (lockBuilder)
+                    lock (syncLock)
                     {
                         if (localBuilder == null)
                             localBuilder = Silent.ChemObjectBuilder.Instance;
@@ -126,13 +121,12 @@ namespace NCDK
             }
         }
         private static Smiles.SmilesParser localSmilesParser = null;
-        private static readonly object lockSmilesParser = new object();
         public static Smiles.SmilesParser SmilesParser
         {
             get
             {
                 if (localSmilesParser == null)
-                    lock (lockSmilesParser)
+                    lock (syncLock)
                     {
                         if (localSmilesParser == null)
                             localSmilesParser = new Smiles.SmilesParser();
@@ -140,14 +134,27 @@ namespace NCDK
                 return localSmilesParser;
             }
         }
+        private static Smiles.SmilesGenerator localSmilesGenerator = null;
+        public static Smiles.SmilesGenerator SmilesGenerator
+        {
+            get
+            {
+                if (localSmilesGenerator == null)
+                    lock (syncLock)
+                    {
+                        if (localSmilesGenerator == null)
+                            localSmilesGenerator = new Smiles.SmilesGenerator(Smiles.SmiFlavors.Default);
+                    }
+                return localSmilesGenerator;
+            }
+        }
         private static Config.IsotopeFactory localIsotopeFactory = null;
-        private static readonly object lockIsotopeFactory = new object();
         public static Config.IsotopeFactory IsotopeFactory
         {
             get
             {
                 if (localIsotopeFactory == null)
-                    lock (lockIsotopeFactory)
+                    lock (syncLock)
                     {
                         if (localIsotopeFactory == null)
                             localIsotopeFactory = Config.BODRIsotopeFactory.Instance;
@@ -156,13 +163,12 @@ namespace NCDK
             }
         }
         private static Tools.ILonePairElectronChecker localLonePairElectronChecker = null;
-        private static readonly object lockLonePairElectronChecker = new object();
         public static Tools.ILonePairElectronChecker LonePairElectronChecker
         {
             get
             {
                 if (localLonePairElectronChecker == null)
-                    lock (lockLonePairElectronChecker)
+                    lock (syncLock)
                     {
                         if (localLonePairElectronChecker == null)
                             localLonePairElectronChecker = new Tools.LonePairElectronChecker();
@@ -171,13 +177,12 @@ namespace NCDK
             }
         }
         private static AtomTypes.IAtomTypeMatcher localAtomTypeMatcher = null;
-        private static readonly object lockAtomTypeMatcher = new object();
         public static AtomTypes.IAtomTypeMatcher AtomTypeMatcher
         {
             get
             {
                 if (localAtomTypeMatcher == null)
-                    lock (lockAtomTypeMatcher)
+                    lock (syncLock)
                     {
                         if (localAtomTypeMatcher == null)
                             localAtomTypeMatcher = AtomTypes.CDKAtomTypeMatcher.GetInstance();
@@ -186,13 +191,12 @@ namespace NCDK
             }
         }
         private static Tools.IHydrogenAdder localHydrogenAdder = null;
-        private static readonly object lockHydrogenAdder = new object();
         public static Tools.IHydrogenAdder HydrogenAdder
         {
             get
             {
                 if (localHydrogenAdder == null)
-                    lock (lockHydrogenAdder)
+                    lock (syncLock)
                     {
                         if (localHydrogenAdder == null)
                             localHydrogenAdder = Tools.CDKHydrogenAdder.GetInstance();
@@ -201,13 +205,12 @@ namespace NCDK
             }
         }
         private static StructGen.Stochastic.PartialFilledStructureMerger localPartialFilledStructureMerger = null;
-        private static readonly object lockPartialFilledStructureMerger = new object();
         internal static StructGen.Stochastic.PartialFilledStructureMerger PartialFilledStructureMerger
         {
             get
             {
                 if (localPartialFilledStructureMerger == null)
-                    lock (lockPartialFilledStructureMerger)
+                    lock (syncLock)
                     {
                         if (localPartialFilledStructureMerger == null)
                             localPartialFilledStructureMerger = new StructGen.Stochastic.PartialFilledStructureMerger();
@@ -216,13 +219,12 @@ namespace NCDK
             }
         }
         private static Charges.GasteigerMarsiliPartialCharges localGasteigerMarsiliPartialCharges = null;
-        private static readonly object lockGasteigerMarsiliPartialCharges = new object();
         internal static Charges.GasteigerMarsiliPartialCharges GasteigerMarsiliPartialCharges
         {
             get
             {
                 if (localGasteigerMarsiliPartialCharges == null)
-                    lock (lockGasteigerMarsiliPartialCharges)
+                    lock (syncLock)
                     {
                         if (localGasteigerMarsiliPartialCharges == null)
                             localGasteigerMarsiliPartialCharges = new Charges.GasteigerMarsiliPartialCharges();
@@ -231,13 +233,12 @@ namespace NCDK
             }
         }
         private static NCDK.IO.ReaderFactory localReaderFactory = null;
-        private static readonly object lockReaderFactory = new object();
         internal static NCDK.IO.ReaderFactory ReaderFactory
         {
             get
             {
                 if (localReaderFactory == null)
-                    lock (lockReaderFactory)
+                    lock (syncLock)
                     {
                         if (localReaderFactory == null)
                             localReaderFactory = new NCDK.IO.ReaderFactory();
