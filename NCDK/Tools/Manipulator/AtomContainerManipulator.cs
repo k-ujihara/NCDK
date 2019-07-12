@@ -39,30 +39,30 @@ namespace NCDK.Tools.Manipulator
     public enum MolecularWeightTypes
     {
         /// <summary>
-        /// For use with {@link #getMass(IAtomContainer)}. This option uses the mass
-        /// stored on atoms ({@link IAtom#getExactMass()}) or the average mass of the
+        /// For use with <see cref="AtomContainerManipulator.GetMass(IAtomContainer, MolecularWeightTypes)"/>. This option uses the mass
+        /// stored on atoms (<see cref="IIsotope.ExactMass"/>) or the average mass of the
         /// element when unspecified. 
         /// </summary>
         MolWeight = 0x1,
 
         /// <summary>
-        /// For use with {@link #getMass(IAtomContainer)}. This option ignores the
-        /// mass stored on atoms ({@link IAtom#getExactMass()}) and uses the average
+        /// For use with <see cref="AtomContainerManipulator.GetMass(IAtomContainer, MolecularWeightTypes)"/>. This option ignores the
+        /// mass stored on atoms (<see cref="IIsotope.ExactMass"/>) and uses the average
         /// mass of each element. This option is primarily provided for backwards
         /// compatibility.
         /// </summary>
         MolWeightIgnoreSpecified = 0x2,
 
         /// <summary>
-        /// For use with {@link #getMass(IAtomContainer)}. This option uses the mass
-        /// stored on atoms {@link IAtom#getExactMass()} or the mass of the major
+        /// For use with <see cref="AtomContainerManipulator.GetMass(IAtomContainer, MolecularWeightTypes)"/>. This option uses the mass
+        /// stored on atoms <see cref="IIsotope.ExactMass"/> or the mass of the major
         /// isotope when this is not specified.
         /// </summary>
         MonoIsotopic = 0x3,
 
         /// <summary>
-        /// For use with {@link #getMass(IAtomContainer)}. This option uses the mass
-        /// stored on atoms {@link IAtom#getExactMass()} and then calculates a
+        /// For use with <see cref="AtomContainerManipulator.GetMass(IAtomContainer, MolecularWeightTypes)"/>. This option uses the mass
+        /// stored on atoms <see cref="IIsotope.ExactMass"/> and then calculates a
         /// distribution for any unspecified atoms and uses the most abundant
         /// distribution. For example C<sub>6</sub>Br<sub>6</sub> would have three
         /// <sup>79</sup>Br and <sup>81</sup>Br because their abundance is 51 and
