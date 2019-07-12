@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>NCDK</id>
-    <version>1.5.4-alpha</version>
+    <version>1.5.4</version>
     <title>NCDK: library of algorithms for structural cheminformatics</title>
     <authors>Kazuya Ujihara</authors>
     <owners>kazuya</owners>
@@ -11,7 +11,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>NCDK is C# implementation of the Chemistry Development Kit (CDK), which is an open-source library of algorithms for structural cheminformatics and bioinformatics.</description>
     <releaseNotes>This release is based on https://github.com/cdk/cdk/tree/a75ec0065e39525a86f7f613ce6a6b0fe24b2d35 snapshot.</releaseNotes>
-    <copyright>Copyright © 2016-2018 Kazuya Ujihara</copyright>
+    <copyright>Copyright © 2016-2019 Kazuya Ujihara</copyright>
     <tags>cdk cheminformatics chemistry toolkit</tags>
     <dependencies>
       <dependency id="dotNetRDF" version="2.1.0" />
