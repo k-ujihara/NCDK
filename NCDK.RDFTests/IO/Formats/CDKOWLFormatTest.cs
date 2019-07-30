@@ -30,6 +30,5 @@ namespace NCDK.IO.Formats
         {
             base.SetChemFormatMatcher((IChemFormatMatcher)CDKOWLFormat.Instance);
         }
-
     }
 }
