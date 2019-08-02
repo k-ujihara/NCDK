@@ -20,12 +20,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 namespace NCDK.IO.Formats
 {
     // @cdk.module test-ioformats
     public class CDKOWLFormatTest : ChemFormatMatcherTest
     {
-
         public CDKOWLFormatTest()
         {
             base.SetChemFormatMatcher((IChemFormatMatcher)CDKOWLFormat.Instance);
