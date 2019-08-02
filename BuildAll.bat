@@ -1,23 +1,31 @@
 pushd NCDK
 dotnet add package MathNet.Numerics.Signed
-dotnet add package dotNetRDF
 dotnet restore
-
 call :BuildProject NCDK yes
 popd
+pushd NCDK.Tests
+call :BuildProject NCDKTests
+popd
 
-pushd NCDK.Display
-call :BuildProject NCDK.Display yes
+pushd NCDK.RDF
+dotnet add package dotNetRDF
+dotnet restore
+call :BuildProject NCDK.RDF
+popd
+pushd NCDK.RDFTests
+call :BuildProject NCDK.RDFTests
 popd
 
 pushd NCDK.Legacy
 call :BuildProject NCDK.Legacy
 popd
-
-pushd NCDK.Tests
-call :BuildProject NCDKTests
+pushd NCDK.LegacyTests
+call :BuildProject NCDK.LegacyTests
 popd
 
+pushd NCDK.Display
+call :BuildProject NCDK.Display yes
+popd
 pushd NCDK.DisplayTests
 call :BuildProject NCDK.DisplayTests
 popd
