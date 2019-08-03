@@ -167,6 +167,16 @@
       <Project>{60b8bebc-9968-44a7-ab0b-11c03116579d}</Project>
       <Private>True</Private>
     </ProjectReference>
+    <ProjectReference Include="..\NCDK.Legacy\NCDK.Legacy.csproj">
+      <Name>NCDK.Legacy</Name>
+      <Project>{13552fda-815a-4c9b-955d-a36116c6f715}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\NCDK.RDF\NCDK.RDF.csproj">
+      <Name>NCDK.RDF</Name>
+      <Project>{0467822d-ad0a-434a-9888-94522bfe6076}</Project>
+      <Private>True</Private>
+    </ProjectReference>
     <ProjectReference Include="..\NCDK\NCDK.csproj">
       <Name>NCDK</Name>
       <Project>{b0b5eacf-5f39-42d0-bacd-1ff559ccc8b2}</Project>
