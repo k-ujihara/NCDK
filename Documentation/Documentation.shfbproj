@@ -54,6 +54,10 @@
       <DocumentationSource sourceFile="..\NCDK.Display\bin\Release\net461\NCDK.Display.xml" />
       <DocumentationSource sourceFile="..\NCDK.Display\bin\Release\net461\NCDK.dll" />
       <DocumentationSource sourceFile="..\NCDK.Display\bin\Release\net461\NCDK.xml" />
+      <DocumentationSource sourceFile="..\NCDK.RDF\bin\Release\net461\NCDK.RDF.dll" />
+      <DocumentationSource sourceFile="..\NCDK.RDF\bin\Release\net461\NCDK.RDF.xml" />
+      <DocumentationSource sourceFile="..\NCDK.Legacy\bin\Release\net461\NCDK.Legacy.dll" />
+      <DocumentationSource sourceFile="..\NCDK.Legacy\bin\Release\net461\NCDK.Legacy.xml" />
     </DocumentationSources>
     <ProjectSummary>https://github.com/kazuyaujihara/NCDK
 </ProjectSummary>
@@ -124,6 +128,7 @@
     <Folder Include="media" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Content\VersionHistory\v1.5.5.0.aml" />
     <None Include="Content\VersionHistory\v1.5.3.0.aml" />
     <None Include="Content\VersionHistory\v1.5.0.1.aml" />
     <None Include="Content\VersionHistory\v1.2.0.0.aml" />

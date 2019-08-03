@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="7C61980C-6B86-4BA7-A149-E9DD37C0AE9A" revisionNumber="1">
+  <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <introduction>
+      <para>
+        Version 1.5.5 was released on 2019-008-02.
+      </para>
+    </introduction>
+
+    <section>
+      <title>Changes in This Release</title>
+      <content>
+        <list class="bullet">
+          <listItem>
+            <para>
+              This release is based on This release is based on
+              <externalLink>
+                <linkText>cdk 2019-04-15 snapshot</linkText>
+                <linkUri>https://github.com/cdk/cdk/commit/c3d0f16502bf08df50365fee392e11d7c9856657</linkUri>
+              </externalLink>.
+            </para>
+          </listItem>
+          <listItem>
+            <para>Classes dependant on dorNetRDF were moved to NCDK.RDF assembly.</para>
+          </listItem>
+        </list>
+      </content>
+    </section>
+
+    <relatedTopics>
+      <link xlink:href="38e429c1-4197-40a9-a1ee-8b5f4c592a1c" />
+    </relatedTopics>
+
+  </developerConceptualDocument>
+</topic>

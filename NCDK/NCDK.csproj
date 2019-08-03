@@ -332,6 +332,7 @@
     </None>
     <None Update="TT\ChemFile.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ChemFile.tt.cs</LastGenOutput>
     </None>
     <None Update="TT\ChemModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -351,6 +352,7 @@
     </None>
     <None Update="TT\Crystal.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Crystal.tt.cs</LastGenOutput>
     </None>
     <None Update="TT\ElectronContainer.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -592,6 +594,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Bond.tt</DependentUpon>
     </Compile>
+    <Compile Update="TT\ChemFile.tt.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ChemFile.tt</DependentUpon>
+    </Compile>
     <Compile Update="TT\ChemModel.tt.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -611,6 +618,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>ChemSequence.tt</DependentUpon>
+    </Compile>
+    <Compile Update="TT\Crystal.tt.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Crystal.tt</DependentUpon>
     </Compile>
     <Compile Update="TT\ElectronContainer.tt.cs">
       <DesignTime>True</DesignTime>

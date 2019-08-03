@@ -262,9 +262,7 @@ namespace NCDK.Default
         {
             var container = new ConformerContainer(confs);
             Assert.AreEqual(nconfs, container.Count());
-            int x;
-            x = container.LastIndexOf(container[3]);
-            Assert.AreEqual(3, container.LastIndexOf(container[3]));
+            int x = container.LastIndexOf(container[3]);
             Assert.AreEqual(3, container.LastIndexOf(container[3]));
         }
 
