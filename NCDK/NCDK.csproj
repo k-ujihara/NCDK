@@ -3,9 +3,9 @@
   <PropertyGroup>
     <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
 
-    <AssemblyVersion>1.5.5.0</AssemblyVersion>
-    <FileVersion>1.5.5.0</FileVersion>
-    <Version>1.5.5</Version>
+    <AssemblyVersion>1.5.6.0</AssemblyVersion>
+    <FileVersion>1.5.6.0</FileVersion>
+    <Version>1.5.6</Version>
     <Copyright>Copyright © 2016-2019 Kazuya Ujihara</Copyright>
 
     <PackageId>NCDK</PackageId>
@@ -25,6 +25,7 @@
     <RootNamespace>NCDK</RootNamespace>
     <PackageProjectUrl>https://github.com/kazuyaujihara/NCDK</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/kazuyaujihara/NCDK/blob/master/LICENSE</PackageLicenseUrl>
+    <Platforms>AnyCPU</Platforms>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -32,7 +33,17 @@
     <NoWarn>1701;1702;0162,0164,0219,0612,0618,0672,0809,1591,3021,1573</NoWarn>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <NoWarn>1701;1702;0162,0164,0219,0612,0618,0672,0809,1591,3021,1573</NoWarn>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <NoWarn>1701;1702;0162,0164,0219,0612,0618,0672,0809,1591,3021,1573</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <NoWarn>1701;1702;0162,0164,0219,0612,0618,0672,0809,1591,3021,1573</NoWarn>
   </PropertyGroup>

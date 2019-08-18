@@ -37,7 +37,7 @@
     <KeepLogFile>True</KeepLogFile>
     <DisableCodeBlockComponent>False</DisableCodeBlockComponent>
     <CleanIntermediates>True</CleanIntermediates>
-    <HelpFileVersion>2.1.1.3</HelpFileVersion>
+    <HelpFileVersion>2.1.1.5</HelpFileVersion>
     <MaximumGroupParts>200</MaximumGroupParts>
     <NamespaceGrouping>False</NamespaceGrouping>
     <SyntaxFilters>C#</SyntaxFilters>
@@ -61,7 +61,7 @@
     </DocumentationSources>
     <ProjectSummary>https://github.com/kazuyaujihara/NCDK
 </ProjectSummary>
-    <CopyrightText>Copyright &amp;#169%3b 2016-2018 Kazuya Ujihara</CopyrightText>
+    <CopyrightText>Copyright &amp;#169%3b 2016-2019 Kazuya Ujihara</CopyrightText>
     <ComponentConfigurations>
       <ComponentConfig id="API Token Resolution" enabled="True" xmlns="">
         <component id="API Token Resolution">{@TokenFiles}

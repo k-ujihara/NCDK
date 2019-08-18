@@ -75,7 +75,8 @@ namespace NCDK.IO
                             break;
                     }
                     remainder = match.Groups[3].Value;
-                    if (remainder == null) remainder = "";
+                    if (remainder == null)
+                        remainder = "";
                     Debug.WriteLine($"  Remaining: {remainder}");
                 }
                 else
