@@ -305,6 +305,49 @@ namespace NCDK.SMARTS
                 return Next() == '}';
             }
 
+            private bool ParseGt(Expr expr)
+            {
+                if (Next() != '>')
+                    return false;
+                int lo = NextUnsignedInt();
+                ExprType type = expr.GetExprType();
+
+                // adjusted types
+                switch (type)
+                {
+                    case ExprType.HasImplicitHydrogen:
+                        type = ExprType.ImplicitHCount;
+                        break;
+                }
+
+                expr.SetPrimitive(type, 0);
+                expr.Negate();
+                for (int i = 1; i <= lo; i++)
+                    expr.And(new Expr(type, i).Negate());
+                return true;
+            }
+
+            private bool ParseLt(Expr expr)
+            {
+                if (Next() != '<')
+                    return false;
+                int lo = NextUnsignedInt();
+                ExprType type = expr.GetExprType();
+
+                // adjusted types
+                switch (type)
+                {
+                    case ExprType.HasImplicitHydrogen:
+                        type = ExprType.ImplicitHCount;
+                        break;
+                }
+
+                expr.SetPrimitive(type, 0);
+                for (int i = 1; i < lo; i++)
+                    expr.Or(new Expr(type, i));
+                return true;
+            }
+
             bool ParseAtomExpr(IAtom atom, Expr dest, char lastOp)
             {
                 Expr expr = null;
@@ -441,9 +484,24 @@ namespace NCDK.SMARTS
                                             expr = new Expr(ExprType.HeavyDegree, 1);
                                         else
                                             expr = new Expr(ExprType.Degree, 1);
-                                        // CACTVS style ranges D{0-2}
-                                        if (Peek() == '{' && !ParseRange(expr))
-                                            return false;
+                                        switch (Peek())
+                                        {
+                                            case '{':
+                                                // CACTVS style ranges D{0-2}
+                                                if (!ParseRange(expr))
+                                                    return false;
+                                                break;
+                                            case '>':
+                                                // Lilly/CACTVS/NextMove inequalities
+                                                if (!ParseGt(expr))
+                                                    return false;
+                                                break;
+                                            case '<':
+                                                // Lilly/CACTVS/NextMove inequalities
+                                                if (!ParseLt(expr))
+                                                    return false;
+                                                break;
+                                        }
                                     }
                                     else
                                     {
@@ -542,9 +600,24 @@ namespace NCDK.SMARTS
                                     if (num < 0)
                                     {
                                         expr = new Expr(ExprType.TotalHCount, 1);
-                                        // CACTVS style ranges H{0-2}
-                                        if (Peek() == '{' && !ParseRange(expr))
-                                            return false;
+                                        switch (Peek())
+                                        {
+                                            case '{':
+                                                // CACTVS style ranges H{0-2}
+                                                if (!ParseRange(expr))
+                                                    return false;
+                                                break;
+                                            case '>':
+                                                // Lilly/CACTVS/NextMove inequalities
+                                                if (!ParseGt(expr))
+                                                    return false;
+                                                break;
+                                            case '<':
+                                                // Lilly/CACTVS/NextMove inequalities
+                                                if (!ParseLt(expr))
+                                                    return false;
+                                                break;
+                                        }
                                     }
                                     else
                                         expr = new Expr(ExprType.TotalHCount, num);
@@ -741,12 +814,26 @@ namespace NCDK.SMARTS
                                     if (num < 0)
                                     {
                                         expr = new Expr(ExprType.IsInRing);
-                                        // CACTVS style ranges R{0-2}
-                                        if (Peek() == '{')
+                                        switch (Peek())
                                         {
-                                            expr.SetPrimitive(ExprType.RingCount, 0);
-                                            if (!ParseRange(expr))
-                                                return false;
+                                            case '{':
+                                                // CACTVS style ranges H{0-2}
+                                                expr.SetPrimitive(ExprType.RingCount, 0);
+                                                if (!ParseRange(expr))
+                                                    return false;
+                                                break;
+                                            case '>':
+                                                // Lilly/CACTVS/NextMove inequalities
+                                                expr.SetPrimitive(ExprType.RingCount, 0);
+                                                if (!ParseGt(expr))
+                                                    return false;
+                                                break;
+                                            case '<':
+                                                // Lilly/CACTVS/NextMove inequalities
+                                                expr.SetPrimitive(ExprType.RingCount, 0);
+                                                if (!ParseLt(expr))
+                                                    return false;
+                                                break;
                                         }
                                     }
                                     else if (num == 0)
@@ -864,9 +951,24 @@ namespace NCDK.SMARTS
                                     if (num < 0)
                                     {
                                         expr = new Expr(ExprType.TotalDegree, 1);
-                                        // CACTVS style ranges X{0-2}
-                                        if (Peek() == '{' && !ParseRange(expr))
-                                            return false;
+                                        switch (Peek())
+                                        {
+                                            case '{':
+                                                // CACTVS style ranges X{0-2}
+                                                if (!ParseRange(expr))
+                                                    return false;
+                                                break;
+                                            case '>':
+                                                // Lilly/CACTVS/NextMove inequalities
+                                                if (!ParseGt(expr))
+                                                    return false;
+                                                break;
+                                            case '<':
+                                                // Lilly/CACTVS/NextMove inequalities
+                                                if (!ParseLt(expr))
+                                                    return false;
+                                                break;
+                                        }
                                     }
                                     else
                                         expr = new Expr(ExprType.TotalDegree, num);
@@ -1012,9 +1114,24 @@ namespace NCDK.SMARTS
                             if (num < 0)
                             {
                                 expr = new Expr(ExprType.Valence, 1);
-                                // CACTVS style ranges v{0-2}
-                                if (Peek() == '{' && !ParseRange(expr))
-                                    return false;
+                                switch (Peek())
+                                {
+                                    case '{':
+                                        // CACTVS style ranges v{0-2}
+                                        if (!ParseRange(expr))
+                                            return false;
+                                        break;
+                                    case '>':
+                                        // Lilly/CACTVS/NextMove inequalities
+                                        if (!ParseGt(expr))
+                                            return false;
+                                        break;
+                                    case '<':
+                                        // Lilly/CACTVS/NextMove inequalities
+                                        if (!ParseLt(expr))
+                                            return false;
+                                        break;
+                                }
                             }
                             else
                                 expr = new Expr(ExprType.Valence, num);
@@ -1024,9 +1141,24 @@ namespace NCDK.SMARTS
                             if (num < 0)
                             {
                                 expr = new Expr(ExprType.HasImplicitHydrogen);
-                                // CACTVS style ranges h{0-2}
-                                if (Peek() == '{' && !ParseRange(expr))
-                                    return false;
+                                switch (Peek())
+                                {
+                                    case '{':
+                                        // CACTVS style ranges h{0-2}
+                                        if (!ParseRange(expr))
+                                            return false;
+                                        break;
+                                    case '>':
+                                        // Lilly/CACTVS/NextMove inequalities
+                                        if (!ParseGt(expr))
+                                            return false;
+                                        break;
+                                    case '<':
+                                        // Lilly/CACTVS/NextMove inequalities
+                                        if (!ParseLt(expr))
+                                            return false;
+                                        break;
+                                }
                             }
                             else
                                 expr = new Expr(ExprType.ImplicitHCount, num);
@@ -1036,12 +1168,26 @@ namespace NCDK.SMARTS
                             if (num < 0)
                             {
                                 expr = new Expr(ExprType.IsInRing);
-                                // CACTVS style ranges D{0-2}
-                                if (Peek() == '{')
+                                switch (Peek())
                                 {
-                                    expr.SetPrimitive(ExprType.RingBondCount, 0);
-                                    if (!ParseRange(expr))
-                                        return false;
+                                    case '{':
+                                        // CACTVS style ranges x{0-2}
+                                        expr.SetPrimitive(ExprType.RingBondCount, 0);
+                                        if (!ParseRange(expr))
+                                            return false;
+                                        break;
+                                    case '>':
+                                        // Lilly/CACTVS/NextMove inequalities
+                                        expr.SetPrimitive(ExprType.RingBondCount, 0);
+                                        if (!ParseGt(expr))
+                                            return false;
+                                        break;
+                                    case '<':
+                                        // Lilly/CACTVS/NextMove inequalities
+                                        expr.SetPrimitive(ExprType.RingBondCount, 0);
+                                        if (!ParseLt(expr))
+                                            return false;
+                                        break;
                                 }
                             }
                             else if (num == 0)
@@ -1092,12 +1238,13 @@ namespace NCDK.SMARTS
                             expr = new Expr(ExprType.HybridisationNumber, num);
                             break;
                         case 'i':
-                            if (!IsFlavor(SmartsFlaver.MOE | SmartsFlaver.CACTVS))
+                            if (!IsFlavor(SmartsFlaver.MOE | SmartsFlaver.CACTVS | SmartsFlaver.Loose))
                                 return false;
                             num = NextUnsignedInt();
                             if (num <= 0 || num > 8)
-                                return false;
-                            expr = new Expr(ExprType.Insaturation, num);
+                                expr = new Expr(ExprType.Unsaturated);
+                            else
+                                expr = new Expr(ExprType.Insaturation, num);
                             break;
                         case 'z':
                             if (!IsFlavor(SmartsFlaver.CACTVS))
@@ -1171,7 +1318,6 @@ namespace NCDK.SMARTS
                             // neigbours will be index on 'Finish()'
                             astereo.Add(atom);
                             break;
-
                         case '&':
                             if (dest.GetExprType() == ExprType.None)
                                 return false;
@@ -1226,12 +1372,12 @@ namespace NCDK.SMARTS
                             }
                             if (end == str.Length)
                                 return false;
-                            IAtomContainer submol = new QueryAtomContainer();
+                            var submol = new QueryAtomContainer();
                             if (!new Parser(submol, str.Substring(beg, end - beg - 1), flav).Parse())
                                 return false;
                             if (submol.Atoms.Count == 1)
                             {
-                                expr = ((QueryAtom)submol.Atoms[0]).Expression;
+                                expr = ((QueryAtom)AtomRef.Deref(submol.Atoms[0])).Expression;
                             }
                             else
                             {
@@ -1677,7 +1823,7 @@ namespace NCDK.SMARTS
             bool Finish()
             {
                 // check for unclosed rings, components, and branches
-                if (numRingOpens != 0 || curComponentId != 0 || stack.Any())
+                if (numRingOpens != 0 || curComponentId != 0 || stack.Any() || bond != null)
                 {
                     error = "Unclosed ring, component group, or branch";
                     return false;
@@ -1692,11 +1838,9 @@ namespace NCDK.SMARTS
                     MarkReactionRoles();
                     foreach (var atom in mol.Atoms)
                     {
-                        ReactionRole role = atom.GetProperty<ReactionRole>(CDKPropertyName.ReactionRole);
-                        ((QueryAtom)atom).Expression.And(
-                            new Expr(ExprType.ReactionRole,
-                                     role.Ordinal())
-                        );
+                        var role = atom.GetProperty<ReactionRole>(CDKPropertyName.ReactionRole);
+                        ((QueryAtom)AtomRef.Deref(atom)).Expression.And(
+                            new Expr(ExprType.ReactionRole, role.Ordinal()));
                     }
                 }
                 // setup data structures for stereo chemistry
@@ -1932,6 +2076,8 @@ namespace NCDK.SMARTS
                         case '!':
                         case '/':
                         case '\\':
+                            if (prev == null)
+                                return false;
                             Unget();
                             if (!ParseBondExpr())
                                 return false;

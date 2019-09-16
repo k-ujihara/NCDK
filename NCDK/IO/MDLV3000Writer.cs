@@ -632,11 +632,11 @@ namespace NCDK.IO
                             foreach (var bracket in brackets)
                             {
                                 writer.Write(" BRKXYZ=(");
-                                Vector2 p1 = bracket.FirstPoint;
-                                Vector2 p2 = bracket.SecondPoint;
+                                var p1 = bracket.FirstPoint;
+                                var p2 = bracket.SecondPoint;
                                 writer.Write("9");
-                                writer.Write(' ').Write(p1.X).Write(' ').Write(Strings.JavaFormat(p1.Y, 4, true)).Write(" 0");
-                                writer.Write(' ').Write(p2.X).Write(' ').Write(Strings.JavaFormat(p2.Y, 4, true)).Write(" 0");
+                                writer.Write(' ').Write(p1.X).Write(' ').Write(p1.Y).Write(" 0");
+                                writer.Write(' ').Write(p2.X).Write(' ').Write(p2.Y).Write(" 0");
                                 writer.Write(" 0 0 0");
                                 writer.Write(")");
                             }
@@ -759,7 +759,8 @@ namespace NCDK.IO
         /// </summary>
         private sealed class V30LineWriter : IDisposable
         {
-            public const string PREFIX = "M  V30 ";
+            // note: non-static
+            public const string  PREFIX = "M  V30 ";
             public const int LIMIT = 78; // -\n takes two chars (80 total)
 
             // the base writer instance
@@ -843,7 +844,7 @@ namespace NCDK.IO
             /// <exception cref="IOException">low-level IO error</exception>
             public V30LineWriter Write(double num)
             {
-                return Write(Strings.JavaFormat(num, 4, true)); 
+                return Write(Strings.JavaFormat(num, 4, true));
             }
 
             /// <summary>
@@ -865,7 +866,7 @@ namespace NCDK.IO
             /// <exception cref="IOException">low-level IO error</exception>
             public V30LineWriter Write(string str)
             {
-                int i = str.IndexOf('\n');
+                var i = str.IndexOf('\n');
                 if (i < 0)
                 {
                     WriteUnbroken(str);

@@ -31,7 +31,6 @@ namespace NCDK.Renderers.Elements
     /// </summary>
     // @author Arvid
     // @cdk.module renderbasic
-    // @cdk.githash
     public class GeneralPath : IRenderingElement
     {
         /// <summary>The color of the path.</summary>

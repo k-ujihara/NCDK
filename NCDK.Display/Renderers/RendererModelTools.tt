@@ -70,7 +70,7 @@ namespace NCDK.Renderers
         P("AtomColorer", "IAtomColorer", "new UniColor(WPF.Media.Color.FromRgb(0x44, 0x44, 0x44))", "<see cref=\"IAtomColorer\"/> used to draw elements");
         P("Visibility", "SymbolVisibility", "NCDK.Renderers.Generators.Standards.SelectionVisibility.Disconnected(SymbolVisibility.IupacRecommendationsWithoutTerminalCarbon)", "defines which atoms have their symbol displayed");
         P("StrokeRatio", "double", "1", "defines the ratio of the stroke to the width of the stroke of the font used to depict atom symbols");
-        P("BondSeparation", "double", "0.18", "defines the ratio of the separation between lines in double bonds as a percentage of length (<see cref=\"RendererModelTools.GetBondLength(RendererModel)\"/>)");
+        P("BondSeparation", "double", "0.16", "defines the ratio of the separation between lines in double bonds as a percentage of length (<see cref=\"RendererModelTools.GetBondLength(RendererModel)\"/>)");
         P("SymbolMarginRatio", "double", "2", "defines the margin between an atom symbol and a connected bond based on the stroke width");
         P("WedgeRatio", "double", "6", "ratio of the wide end of wedge compared to the narrow end (stroke width)");
         P("HashSpacing", "double", "5", "the preferred spacing between lines in hashed bonds");
@@ -86,6 +86,8 @@ namespace NCDK.Renderers
         P("SgroupBracketDepth", "double", "0.18", "relative to bond length how deep are brackets drawn");
         P("SgroupFontScale", "double", "0.6", "scale Sgroup annotations relative to the normal font size (atom symbol)");
         P("OmitMajorIsotopes", "bool", "false", "whether Major Isotopes e.g. 12C, 16O should be omitted");
+        P("ForceDelocalisedBondDisplay", "bool", "false", "indicate delocalised/aromatic bonds should always be rendered, even when there is a valid Kekule structure. Delocalised bonds will either be rendered as a dashed bond to the side or as a circle/donut/life buoy inside small rings. This depiction is used by default when a bond does not have an order assigned (e.g. null/unset), for example: c1cccc1. Turning this option on means all delocalised bonds will be rendered this way even when they have bond orders correctly assigned: e.g. c1ccccc1, [cH-]1cccc1. <br/><b>As recommended by IUPAC, their usage is discouraged and the Kekule representation is more clear.</b>");
+		P("DelocalisedDonutsBondDisplay", "bool", "true", "render small delocalised rings as bonds/life buoys? This can sometimes be misleading for fused rings but is commonly used.");
 
         //
         // BasicScene
@@ -138,7 +140,6 @@ namespace NCDK.Renderers
         P("DefaultBondColor", "WPF.Media.Color", "WPF.Media.Colors.Black", "the color to draw bonds if not other color is given");
         P("WedgeWidth", "double", "2", "the width on screen of the fat end of a wedge bond");
         P("TowardsRingCenterProportion", "double", "0.15", "the proportion to move in towards the ring center");
-        P("ForceDelocalisedBondDisplay", "bool", "false", "Indicate delocalised/aromatic bonds should always be rendered, even when there is a valid Kekule structure. Delocalised bonds will either be rendered as a dashed bond to the side or as a circle/donut/life buoy inside small rings. This depiction is used by default when a bond does not have an order assigned (e.g. null/unset). Turning this option on means all delocalised bonds will be rendered this way. <para>As recommended by IUPAC, their usage is discouraged and the Kekule representation is more clear.</para>");
 
         // Ring
 
@@ -146,7 +147,6 @@ namespace NCDK.Renderers
         P("CDKStyleAromaticity", "bool", "false", "depicts aromaticity of rings in the original CDK style");
         P("MaxDrawableAromaticRing", "int", "8", "the maximum ring size for which an aromatic ring should be drawn");
         P("RingProportion", "double", "0.35", "the proportion of a ring bounds to use to draw the ring");
-
 
         // 
         // Reaction

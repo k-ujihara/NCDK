@@ -46,7 +46,6 @@ namespace NCDK.IO
     // @cdk.created 2004-08-01
     // @cdk.keyword file format, INChI
     // @cdk.keyword chemical identifier
-    // @cdk.require java1.4+
     public class InChIPlainTextReader : DefaultChemObjectReader
     {
         private TextReader input;
@@ -68,7 +67,8 @@ namespace NCDK.IO
 
         public override bool Accepts(Type type)
         {
-            if (typeof(IChemFile).IsAssignableFrom(type)) return true;
+            if (typeof(IChemFile).IsAssignableFrom(type))
+                return true;
             return false;
         }
 
@@ -110,18 +110,17 @@ namespace NCDK.IO
                         cf = cf.Builder.NewChemFile();
                         // ok, we need to parse things like:
                         // INChI=1.12Beta/C6H6/c1-2-4-6-5-3-1/h1-6H
-                        string INChI = line.Substring(6);
+                        var INChI = line.Substring(6);
                         var tok = Strings.Tokenize(INChI, '/');
                         // ok, we expect 4 tokens
                         // tok[0]; // 1.12Beta not stored since never used
-                        string formula = tok[1]; // C6H6
+                        var formula = tok[1]; // C6H6
                         string connections = null;
                         if (tok.Count > 2)
                             connections = tok[2].Substring(1); // 1-2-4-6-5-3-1
                                                                //final string hydrogens = tokenizer.NextToken().Substring(1); // 1-6H
 
-                        IAtomContainer parsedContent = InChIContentProcessorTool.ProcessFormula(
-                                cf.Builder.NewAtomContainer(), formula);
+                        var parsedContent = InChIContentProcessorTool.ProcessFormula(cf.Builder.NewAtomContainer(), formula);
                         if (connections != null)
                             InChIContentProcessorTool.ProcessConnections(connections, parsedContent, -1);
 

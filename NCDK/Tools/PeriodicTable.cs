@@ -20,7 +20,6 @@
  */
 
 using NCDK.Config;
-using System;
 using System.Collections.Generic;
 
 namespace NCDK.Tools
@@ -356,6 +355,46 @@ namespace NCDK.Tools
                 AtomicNumbers.Rutherfordium, AtomicNumbers.Americium, AtomicNumbers.Curium, AtomicNumbers.Bohrium, AtomicNumbers.Berkelium, AtomicNumbers.Promethium, AtomicNumbers.Copernicium, AtomicNumbers.Technetium, AtomicNumbers.Hassium,
                 AtomicNumbers.Californium, AtomicNumbers.Mendelevium, AtomicNumbers.Neptunium, AtomicNumbers.Darmstadtium, AtomicNumbers.Dubnium);
             return ids;
+        }
+
+        /// <summary>
+        /// Utility method to determine if an atomic number is a metal.
+        /// </summary>
+        /// <param name="atomicNumber">atomic number</param>
+        /// <returns>the atomic number is a metal (or not)</returns>
+        public static bool IsMetal(int atomicNumber)
+        {
+            switch (atomicNumber)
+            {
+                case 0:  // *
+                case 1:  // H
+                case 2:  // He
+                case 6:  // C
+                case 7:  // N
+                case 8:  // O
+                case 9:  // F
+                case 10: // Ne
+                case 15: // P
+                case 16: // S
+                case 17: // Cl
+                case 18: // Ar
+                case 34: // Se
+                case 35: // Br
+                case 36: // Kr
+                case 53: // I
+                case 54: // Xe
+                case 86: // Rn
+                    return false;
+                case 5:   // B
+                case 14:  // Si
+                case 32:  // Ge
+                case 33:  // As
+                case 51:  // Sb
+                case 52:  // Te
+                case 85:  // At
+                    return false;
+            }
+            return true;
         }
     }
 }

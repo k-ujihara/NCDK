@@ -372,10 +372,10 @@ namespace NCDK.Renderers
             return model.Parameters.ContainsKey(key);
         }
 
-        public static readonly double DefaultBondSeparation = 0.18;
+        public static readonly double DefaultBondSeparation = 0.16;
 
         /// <summary>
-        /// Get defines the ratio of the separation between lines in double bonds as a percentage of length (<see cref="RendererModelTools.GetBondLength(RendererModel)"/>). Default value is 0.18.
+        /// Get defines the ratio of the separation between lines in double bonds as a percentage of length (<see cref="RendererModelTools.GetBondLength(RendererModel)"/>). Default value is 0.16.
         /// </summary>
         /// <returns>defines the ratio of the separation between lines in double bonds as a percentage of length (<see cref="RendererModelTools.GetBondLength(RendererModel)"/>)</returns>
         public static double GetBondSeparation(this RendererModel model)
@@ -897,6 +897,72 @@ namespace NCDK.Renderers
         public static bool HasOmitMajorIsotopes(this RendererModel model)
         {
             const string key = "OmitMajorIsotopes";
+            return model.Parameters.ContainsKey(key);
+        }
+
+        public static readonly bool DefaultForceDelocalisedBondDisplay = false;
+
+        /// <summary>
+        /// Get indicate delocalised/aromatic bonds should always be rendered, even when there is a valid Kekule structure. Delocalised bonds will either be rendered as a dashed bond to the side or as a circle/donut/life buoy inside small rings. This depiction is used by default when a bond does not have an order assigned (e.g. null/unset), for example: c1cccc1. Turning this option on means all delocalised bonds will be rendered this way even when they have bond orders correctly assigned: e.g. c1ccccc1, [cH-]1cccc1. <br/><b>As recommended by IUPAC, their usage is discouraged and the Kekule representation is more clear.</b>. Default value is false.
+        /// </summary>
+        /// <returns>indicate delocalised/aromatic bonds should always be rendered, even when there is a valid Kekule structure. Delocalised bonds will either be rendered as a dashed bond to the side or as a circle/donut/life buoy inside small rings. This depiction is used by default when a bond does not have an order assigned (e.g. null/unset), for example: c1cccc1. Turning this option on means all delocalised bonds will be rendered this way even when they have bond orders correctly assigned: e.g. c1ccccc1, [cH-]1cccc1. <br/><b>As recommended by IUPAC, their usage is discouraged and the Kekule representation is more clear.</b></returns>
+        public static bool GetForceDelocalisedBondDisplay(this RendererModel model)
+        {
+            const string key = "ForceDelocalisedBondDisplay";
+            bool value;
+            if (model.Parameters.TryGetValue(key, out object v))
+                value = (bool)v;
+            else
+                model.Parameters[key] = value = DefaultForceDelocalisedBondDisplay;
+
+            return value;
+        }
+
+        /// <summary>
+        /// Set indicate delocalised/aromatic bonds should always be rendered, even when there is a valid Kekule structure. Delocalised bonds will either be rendered as a dashed bond to the side or as a circle/donut/life buoy inside small rings. This depiction is used by default when a bond does not have an order assigned (e.g. null/unset), for example: c1cccc1. Turning this option on means all delocalised bonds will be rendered this way even when they have bond orders correctly assigned: e.g. c1ccccc1, [cH-]1cccc1. <br/><b>As recommended by IUPAC, their usage is discouraged and the Kekule representation is more clear.</b>.
+        /// </summary>
+        public static void SetForceDelocalisedBondDisplay(this RendererModel model, bool value)
+        {
+            const string key = "ForceDelocalisedBondDisplay";
+            model.Parameters[key] = value;
+        }
+
+        public static bool HasForceDelocalisedBondDisplay(this RendererModel model)
+        {
+            const string key = "ForceDelocalisedBondDisplay";
+            return model.Parameters.ContainsKey(key);
+        }
+
+        public static readonly bool DefaultDelocalisedDonutsBondDisplay = true;
+
+        /// <summary>
+        /// Get render small delocalised rings as bonds/life buoys? This can sometimes be misleading for fused rings but is commonly used.. Default value is true.
+        /// </summary>
+        /// <returns>render small delocalised rings as bonds/life buoys? This can sometimes be misleading for fused rings but is commonly used.</returns>
+        public static bool GetDelocalisedDonutsBondDisplay(this RendererModel model)
+        {
+            const string key = "DelocalisedDonutsBondDisplay";
+            bool value;
+            if (model.Parameters.TryGetValue(key, out object v))
+                value = (bool)v;
+            else
+                model.Parameters[key] = value = DefaultDelocalisedDonutsBondDisplay;
+
+            return value;
+        }
+
+        /// <summary>
+        /// Set render small delocalised rings as bonds/life buoys? This can sometimes be misleading for fused rings but is commonly used..
+        /// </summary>
+        public static void SetDelocalisedDonutsBondDisplay(this RendererModel model, bool value)
+        {
+            const string key = "DelocalisedDonutsBondDisplay";
+            model.Parameters[key] = value;
+        }
+
+        public static bool HasDelocalisedDonutsBondDisplay(this RendererModel model)
+        {
+            const string key = "DelocalisedDonutsBondDisplay";
             return model.Parameters.ContainsKey(key);
         }
 
@@ -1986,39 +2052,6 @@ namespace NCDK.Renderers
         public static bool HasTowardsRingCenterProportion(this RendererModel model)
         {
             const string key = "TowardsRingCenterProportion";
-            return model.Parameters.ContainsKey(key);
-        }
-
-        public static readonly bool DefaultForceDelocalisedBondDisplay = false;
-
-        /// <summary>
-        /// Get Indicate delocalised/aromatic bonds should always be rendered, even when there is a valid Kekule structure. Delocalised bonds will either be rendered as a dashed bond to the side or as a circle/donut/life buoy inside small rings. This depiction is used by default when a bond does not have an order assigned (e.g. null/unset). Turning this option on means all delocalised bonds will be rendered this way. <para>As recommended by IUPAC, their usage is discouraged and the Kekule representation is more clear.</para>. Default value is false.
-        /// </summary>
-        /// <returns>Indicate delocalised/aromatic bonds should always be rendered, even when there is a valid Kekule structure. Delocalised bonds will either be rendered as a dashed bond to the side or as a circle/donut/life buoy inside small rings. This depiction is used by default when a bond does not have an order assigned (e.g. null/unset). Turning this option on means all delocalised bonds will be rendered this way. <para>As recommended by IUPAC, their usage is discouraged and the Kekule representation is more clear.</para></returns>
-        public static bool GetForceDelocalisedBondDisplay(this RendererModel model)
-        {
-            const string key = "ForceDelocalisedBondDisplay";
-            bool value;
-            if (model.Parameters.TryGetValue(key, out object v))
-                value = (bool)v;
-            else
-                model.Parameters[key] = value = DefaultForceDelocalisedBondDisplay;
-
-            return value;
-        }
-
-        /// <summary>
-        /// Set Indicate delocalised/aromatic bonds should always be rendered, even when there is a valid Kekule structure. Delocalised bonds will either be rendered as a dashed bond to the side or as a circle/donut/life buoy inside small rings. This depiction is used by default when a bond does not have an order assigned (e.g. null/unset). Turning this option on means all delocalised bonds will be rendered this way. <para>As recommended by IUPAC, their usage is discouraged and the Kekule representation is more clear.</para>.
-        /// </summary>
-        public static void SetForceDelocalisedBondDisplay(this RendererModel model, bool value)
-        {
-            const string key = "ForceDelocalisedBondDisplay";
-            model.Parameters[key] = value;
-        }
-
-        public static bool HasForceDelocalisedBondDisplay(this RendererModel model)
-        {
-            const string key = "ForceDelocalisedBondDisplay";
             return model.Parameters.ContainsKey(key);
         }
 

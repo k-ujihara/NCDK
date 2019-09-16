@@ -26,6 +26,7 @@ using NCDK.Geometries;
 using NCDK.Graphs;
 using NCDK.Graphs.Matrix;
 using NCDK.Numerics;
+using NCDK.Tools;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -373,11 +374,28 @@ namespace NCDK.Layout
             }
         }
 
+        private bool IsTerminalD4(IAtom atom)
+        {
+            var bonds = Molecule.GetConnectedBonds(atom).ToReadOnlyList();
+            if (bonds.Count != 4)
+                return false;
+            int nonD1 = 0;
+            foreach (var bond in bonds)
+            {
+                if (Molecule.GetConnectedBonds(bond.GetOther(atom)).Count() != 1)
+                {
+                    if (++nonD1 > 1)
+                        return false;
+                }
+            }
+            return true;
+        }
+
         /// <summary>
-        ///  Returns the next bond vector needed for drawing an extended linear chain of
-        ///  atoms. It assumes an angle of 120 deg for a nice chain layout and
-        ///  calculates the two possible placments for the next atom. It returns the
-        ///  vector pointing farmost away from a given start atom.
+        /// Returns the next bond vector needed for drawing an extended linear chain of
+        /// atoms. It assumes an angle of 120 deg for a nice chain layout and
+        /// calculates the two possible placments for the next atom. It returns the
+        /// vector pointing farmost away from a given start atom.
         /// </summary>
         /// <param name="atom">An atom for which the vector to the next atom to draw is calculated</param>
         /// <param name="previousAtom">The preceding atom for angle calculation</param>
@@ -397,7 +415,12 @@ namespace NCDK.Layout
             }
 
             var angle = GeometryUtil.GetAngle(previousAtom.Point2D.Value.X - atom.Point2D.Value.X, previousAtom.Point2D.Value.Y - atom.Point2D.Value.Y);
-            var addAngle = Vectors.DegreeToRadian(120);
+            double addAngle;
+            if (IsTerminalD4(atom))
+                addAngle = Vectors.DegreeToRadian(45);
+            else
+                addAngle = Vectors.DegreeToRadian(120);
+
             if (!trans)
                 addAngle = Vectors.DegreeToRadian(60);
             if (IsColinear(atom, Molecule.GetConnectedBonds(atom)))
@@ -885,6 +908,9 @@ namespace NCDK.Layout
         /// </summary>
         internal static bool IsColinear(IAtom atom, IEnumerable<IBond> bonds)
         {
+            if (PeriodicTable.IsMetal(atom.AtomicNumber))
+                return true;
+
             int numSgl = atom.ImplicitHydrogenCount ?? 0;
             int numDbl = 0;
             int numTpl = 0;

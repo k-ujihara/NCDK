@@ -72,7 +72,7 @@ namespace NCDK.Geometries.Surface
             return (new Vector3(x, y, z));
         }
 
-        private static void Normalize(Vector3 p)
+        private static void Normalize(ref Vector3 p)
         {
             double mag = p.X * p.X + p.Y * p.Y + p.Z * p.Z;
             if (mag != 0.0)
@@ -100,9 +100,9 @@ namespace NCDK.Geometries.Surface
                     Vector3 p2 = Midpoint(old.p1, old.p2);
                     Vector3 p3 = Midpoint(old.p2, old.p3);
 
-                    Normalize(p1);
-                    Normalize(p2);
-                    Normalize(p3);
+                    Normalize(ref p1);
+                    Normalize(ref p2);
+                    Normalize(ref p3);
 
                     newtess[i * 4] = new Triangle(old.p1, p2, p1);
                     newtess[i * 4 + 1] = new Triangle(p2, old.p2, p3);
@@ -118,12 +118,12 @@ namespace NCDK.Geometries.Surface
 
         public int GetNumberOfTriangles()
         {
-            return (Oldtess.Length);
+            return Oldtess.Length;
         }
 
         public Triangle[] GetTessAsTriangles()
         {
-            return (Oldtess);
+            return Oldtess;
         }
 
         public Vector3[] GetTessAsPoint3ds()
@@ -135,7 +135,7 @@ namespace NCDK.Geometries.Surface
                 ret[i * 3 + 1] = Oldtess[i].p2;
                 ret[i * 3 + 2] = Oldtess[i].p3;
             }
-            return (ret);
+            return ret;
         }
 
         private static Triangle[] RepTet()
@@ -155,7 +155,7 @@ namespace NCDK.Geometries.Surface
                 new Triangle(v[2], v[1], v[3]),
                 new Triangle(v[3], v[0], v[2]),
             };
-            return (rep);
+            return rep;
         }
 
         private static Triangle[] RepOct()
@@ -183,7 +183,7 @@ namespace NCDK.Geometries.Surface
                 new Triangle(v[9], v[2], v[10]), new Triangle(v[8], v[4], v[0]), new Triangle(v[11], v[0], v[5]),
                 new Triangle(v[4], v[9], v[3]), new Triangle(v[5], v[3], v[10]), new Triangle(v[7], v[8], v[1]),
                 new Triangle(v[6], v[1], v[11]), new Triangle(v[7], v[2], v[9]), new Triangle(v[6], v[10], v[2])};
-            return (rep);
+            return rep;
         }
     }
 }

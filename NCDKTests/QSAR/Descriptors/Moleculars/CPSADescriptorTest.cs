@@ -43,10 +43,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
             var retval = CreateDescriptor().Calculate(ac).Values;
 
-            Assert.AreEqual(0, retval[28], 0.0001);
-            Assert.AreEqual(1, retval[27], 0.0001);
-            Assert.AreEqual(0, retval[26], 0.0001);
-            Assert.AreEqual(356.8849, retval[25], 0.0001);
+            Assert.AreEqual(0, retval[28], 0.0001); // RPSA
+            Assert.AreEqual(1, retval[27], 0.0001); // RHSA
+            Assert.AreEqual(0, retval[26], 0.0001); // TPSA
+            Assert.AreEqual(231.66182, retval[25], 0.0001); // THSA
         }
 
         [TestMethod()]

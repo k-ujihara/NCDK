@@ -26,20 +26,22 @@ namespace NCDK.Renderers.Elements
     /// An oval element (should) have both a width and a height.
     /// </summary>
     // @cdk.module renderbasic
-    // @cdk.githash
     public class OvalElement : IRenderingElement
     {
-        /// <summary>The center of the oval. </summary>
-        public readonly Point Coord;
+        /// <summary>The center of the oval.</summary>
+        public Point Coord { get; private set; }
 
-        /// <summary>The radius of the oval. </summary>
-        public readonly double Radius; // TODO : width AND height
+        /// <summary>The radius of the oval.</summary>
+        public double Radius { get; private set; }
+
+        /// <summary>The stroke width.</summary>
+        public double Stroke { get; private set; }
 
         /// <summary>If true, draw the oval as filled. </summary>
-        public readonly bool Fill;
+        public bool Fill { get; private set; }
 
         /// <summary>The color to draw the oval. </summary>
-        public readonly Color Color;
+        public Color Color { get; private set; }
 
         /// <summary>
         /// Make an oval with a default radius of 10.
@@ -67,12 +69,25 @@ namespace NCDK.Renderers.Elements
         /// <param name="radius">the radius of the oval</param>
         /// <param name="fill">if true, fill the oval when drawing</param>
         /// <param name="color">the color of the oval</param>
-        public OvalElement(Point coord, double radius, bool fill, Color color)
+        public OvalElement(Point coord, double radius, double stroke, bool fill, Color color)
         {
             this.Coord = coord;
             this.Radius = radius;
+            this.Stroke = stroke;
             this.Fill = fill;
             this.Color = color;
+        }
+
+        /// <summary>
+        /// Make an oval with a particular fill and color.
+        /// </summary>
+        /// <param name="coord">the coordinate of the center of the oval</param>
+        /// <param name="radius">the radius of the oval</param>
+        /// <param name="fill">if true, fill the oval when drawing</param>
+        /// <param name="color">the color of the oval</param>
+        public OvalElement(Point coord, double radius, bool fill, Color color)
+            : this(coord, radius, 1, fill, color)
+        {
         }
         
         public virtual void Accept(IRenderingVisitor v, Transform transform)

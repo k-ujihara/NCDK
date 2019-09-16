@@ -1,4 +1,4 @@
-/* Copyright (C) 2015  The Chemistry Development Kit (CDK) project
+﻿/* Copyright (C) 2015  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -257,6 +257,8 @@ namespace NCDK.Depict
             int molId = 0;
             foreach (var mol in mols)
             {
+                if (mol == null)
+                    throw new NullReferenceException("Null molecule provided!");
                 SetIfMissing(mol, MarkedElement.IdKey, "mol" + ++molId);
                 layoutBackups.Add(new LayoutBackup(mol));
             }
@@ -358,7 +360,7 @@ namespace NCDK.Depict
             if (highlight == null)
                 highlight = Dictionaries.Empty<IChemObject, Color>();
 
-            Ensure2DLayout(rxn); // can reorder components!
+            Ensure2DLayout(rxn); // can reorder components if align is enabled!
 
             var fgcol = templateModel.GetAtomColorer().GetAtomColor(rxn.Builder.NewAtom("C"));
 
@@ -929,6 +931,25 @@ namespace NCDK.Depict
         {
             get => templateModel.GetFitToScreen();
             set => templateModel.SetFitToScreen(value);
+        }
+
+        /// <summary>
+        /// When aromaticity is set on bonds, display this in the diagram. IUPAC
+        /// recommends depicting kekulé structures to avoid ambiguity but it's common
+        /// practice to render delocalised rings "donuts" or "life buoys". With fused
+        /// rings this can be somewhat confusing as you end up with three lines at
+        /// the fusion point.
+        /// </summary>
+        /// <remarks>
+        /// By default small rings are renders as donuts with dashed bonds used
+        /// otherwise. You can use dashed bonds always by setting <see langword="false"/>.
+        /// </remarks>
+        /// <seealso cref="RendererModelTools.GetForceDelocalisedBondDisplay(RendererModel)"/>
+        /// <seealso cref="RendererModelTools.SetForceDelocalisedBondDisplay(RendererModel, bool)"/>
+        public bool AromaticDisplay
+        {
+            get => templateModel.GetForceDelocalisedBondDisplay();
+            set => templateModel.SetForceDelocalisedBondDisplay(value);
         }
 
         /// <summary>

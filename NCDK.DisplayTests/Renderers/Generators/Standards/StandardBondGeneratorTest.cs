@@ -23,6 +23,7 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NCDK.Numerics;
 using NCDK.Templates;
 using System;
 using System.Diagnostics;
@@ -36,24 +37,62 @@ namespace NCDK.Renderers.Generators.Standards
         [TestMethod()]
         public void AdenineRingPreference()
         {
-            IAtomContainer adenine = TestMoleculeFactory.MakeAdenine();
+            var adenine = TestMoleculeFactory.MakeAdenine();
             var ringMap = StandardBondGenerator.RingPreferenceMap(adenine);
 
             int nSize5 = 0, nSize6 = 0;
             foreach (var bond in adenine.Bonds)
             {
-                IAtomContainer ring;
-                if (!ringMap.TryGetValue(bond, out ring))
+                if (!ringMap.TryGetValue(bond, out IAtomContainer ring))
                     continue;// exocyclic bond
-                int size = ring.Atoms.Count;
-                if (size == 5) nSize5++;
-                if (size == 6) nSize6++;
+                switch (ring.Atoms.Count)
+                {
+                    case 5:
+                        nSize5++;
+                        break;
+                    case 6:
+                        nSize6++;
+                        break;
+                }
             }
 
             // 6 bonds should point to the six member ring
             // 4 bonds should point to the five member ring
             Assert.AreEqual(4, nSize5);
             Assert.AreEqual(6, nSize6);
+        }
+
+        [TestMethod()]
+        public void MetalRingPreference()
+        {
+            var smipar = CDK.SmilesParser;
+            var mol = smipar.ParseSmiles("C1[Fe]C=CC2=C1C=CN2");
+            foreach (var atom in mol.Atoms)
+                atom.Point2D = new Vector2(0, 0);
+            var ringMap = StandardBondGenerator.RingPreferenceMap(mol);
+
+            int nSize5 = 0, nSize6 = 0;
+            foreach (var bond in mol.Bonds)
+            {
+                var ring = ringMap[bond];
+                // exocyclic bond
+                if (ring == null)
+                    continue;
+                switch (ring.Atoms.Count)
+                {
+                    case 5:
+                        nSize5++;
+                        break;
+                    case 6:
+                        nSize6++;
+                        break;
+                }
+            }
+
+            // 5 bonds should point to the six member ring
+            // 5 bonds should point to the five member ring
+            Assert.AreEqual(5, nSize5);
+            Assert.AreEqual(5, nSize6);
         }
 
         [TestMethod()]
@@ -74,7 +113,7 @@ namespace NCDK.Renderers.Generators.Standards
         }
 
         [TestMethod()]
-        public void macroCycle()
+        public void MacroCycle()
         {
             Assert.AreEqual(8, RingBondOffsetComparator.SizePreference(8));
             Assert.AreEqual(10, RingBondOffsetComparator.SizePreference(10));
@@ -90,7 +129,7 @@ namespace NCDK.Renderers.Generators.Standards
         [TestMethod()]
         public void BenzeneElementCount()
         {
-            int[] freq = RingBondOffsetComparator.CountLightElements(TestMoleculeFactory.MakeBenzene());
+            var freq = RingBondOffsetComparator.CountLightElements(TestMoleculeFactory.MakeBenzene());
             Assert.AreEqual(6, freq[6]);
         }
 
@@ -98,17 +137,17 @@ namespace NCDK.Renderers.Generators.Standards
         [TestMethod()]
         public void HighAtomicNoElementCount()
         {
-            IAtomContainer container = TestMoleculeFactory.MakeBenzene();
+            var container = TestMoleculeFactory.MakeBenzene();
             container.Atoms[0].AtomicNumber = 34;
             container.Atoms[0].Symbol = "Se";
-            int[] freq = RingBondOffsetComparator.CountLightElements(container);
+            var freq = RingBondOffsetComparator.CountLightElements(container);
             Assert.AreEqual(5, freq[6]);
         }
 
         [TestMethod()]
         public void AdenineElementCount()
         {
-            int[] freq = RingBondOffsetComparator.CountLightElements(TestMoleculeFactory.MakeAdenine());
+            var freq = RingBondOffsetComparator.CountLightElements(TestMoleculeFactory.MakeAdenine());
             Assert.AreEqual(5, freq[6]);
             Assert.AreEqual(5, freq[7]);
         }
@@ -116,8 +155,8 @@ namespace NCDK.Renderers.Generators.Standards
         [TestMethod()]
         public void BenzeneComparedToPyrrole()
         {
-            IAtomContainer benzene = TestMoleculeFactory.MakeBenzene();
-            IAtomContainer pyrrole = TestMoleculeFactory.MakePyrrole();
+            var benzene = TestMoleculeFactory.MakeBenzene();
+            var pyrrole = TestMoleculeFactory.MakePyrrole();
 
             Assert.AreEqual(-1, new RingBondOffsetComparator().Compare(benzene, pyrrole));
             Assert.AreEqual(+1, new RingBondOffsetComparator().Compare(pyrrole, benzene));
@@ -126,8 +165,8 @@ namespace NCDK.Renderers.Generators.Standards
         [TestMethod()]
         public void BenzeneComparedToCycloHexane()
         {
-            IAtomContainer benzene = TestMoleculeFactory.MakeBenzene();
-            IAtomContainer cyclohexane = TestMoleculeFactory.MakeCyclohexane();
+            var benzene = TestMoleculeFactory.MakeBenzene();
+            var cyclohexane = TestMoleculeFactory.MakeCyclohexane();
 
             Assert.AreEqual(-1, new RingBondOffsetComparator().Compare(benzene, cyclohexane));
             Assert.AreEqual(+1, new RingBondOffsetComparator().Compare(cyclohexane, benzene));
@@ -136,8 +175,8 @@ namespace NCDK.Renderers.Generators.Standards
         [TestMethod()]
         public void BenzeneComparedToCycloHexene()
         {
-            IAtomContainer benzene = TestMoleculeFactory.MakeBenzene();
-            IAtomContainer cyclohexene = TestMoleculeFactory.MakeCyclohexene();
+            var benzene = TestMoleculeFactory.MakeBenzene();
+            var cyclohexene = TestMoleculeFactory.MakeCyclohexene();
 
             Assert.AreEqual(-1, new RingBondOffsetComparator().Compare(benzene, cyclohexene));
             Assert.AreEqual(+1, new RingBondOffsetComparator().Compare(cyclohexene, benzene));
@@ -146,8 +185,8 @@ namespace NCDK.Renderers.Generators.Standards
         [TestMethod()]
         public void BenzeneComparedToBenzene()
         {
-            IAtomContainer benzene1 = TestMoleculeFactory.MakeBenzene();
-            IAtomContainer benzene2 = TestMoleculeFactory.MakeBenzene();
+            var benzene1 = TestMoleculeFactory.MakeBenzene();
+            var benzene2 = TestMoleculeFactory.MakeBenzene();
 
             Assert.AreEqual(0, new RingBondOffsetComparator().Compare(benzene1, benzene2));
             Assert.AreEqual(0, new RingBondOffsetComparator().Compare(benzene2, benzene1));
@@ -156,8 +195,8 @@ namespace NCDK.Renderers.Generators.Standards
         [TestMethod()]
         public void BenzeneComparedToPyridine()
         {
-            IAtomContainer benzene = TestMoleculeFactory.MakeBenzene();
-            IAtomContainer pyridine = TestMoleculeFactory.MakePyridine();
+            var benzene = TestMoleculeFactory.MakeBenzene();
+            var pyridine = TestMoleculeFactory.MakePyridine();
 
             Assert.AreEqual(-1, new RingBondOffsetComparator().Compare(benzene, pyridine));
             Assert.AreEqual(+1, new RingBondOffsetComparator().Compare(pyridine, benzene));
@@ -166,8 +205,8 @@ namespace NCDK.Renderers.Generators.Standards
         [TestMethod()]
         public void FuraneComparedToPyrrole()
         {
-            IAtomContainer furane = TestMoleculeFactory.MakePyrrole();
-            IAtomContainer pyrrole = TestMoleculeFactory.MakePyrrole();
+            var furane = TestMoleculeFactory.MakePyrrole();
+            var pyrrole = TestMoleculeFactory.MakePyrrole();
 
             Debug.Assert(furane.Atoms[1].AtomicNumber == 7);
             furane.Atoms[1].AtomicNumber = 8;
@@ -180,8 +219,8 @@ namespace NCDK.Renderers.Generators.Standards
         [TestMethod()]
         public void FuraneComparedToThiophene()
         {
-            IAtomContainer furane = TestMoleculeFactory.MakePyrrole();
-            IAtomContainer thiophene = TestMoleculeFactory.MakePyrrole();
+            var furane = TestMoleculeFactory.MakePyrrole();
+            var thiophene = TestMoleculeFactory.MakePyrrole();
 
             Debug.Assert(furane.Atoms[1].AtomicNumber == 7);
             Debug.Assert(thiophene.Atoms[1].AtomicNumber == 7);
@@ -195,4 +234,3 @@ namespace NCDK.Renderers.Generators.Standards
         }
     }
 }
-

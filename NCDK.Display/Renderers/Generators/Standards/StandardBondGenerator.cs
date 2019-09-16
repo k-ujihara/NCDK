@@ -28,6 +28,7 @@ using NCDK.Common.Primitives;
 using NCDK.Graphs;
 using NCDK.Numerics;
 using NCDK.Renderers.Elements;
+using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
@@ -36,6 +37,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Windows.Media;
 using static NCDK.Renderers.Generators.Standards.VecmathUtil;
+using WPF = System.Windows;
 
 namespace NCDK.Renderers.Generators.Standards
 {
@@ -71,10 +73,11 @@ namespace NCDK.Renderers.Generators.Standards
         private readonly IAtomContainer container;
         private readonly AtomSymbol[] symbols;
         private readonly RendererModel parameters;
+        private readonly StandardDonutGenerator donutGenerator;
 
         // indexes of atoms and rings
         private readonly IDictionary<IAtom, int> atomIndexMap = new Dictionary<IAtom, int>();
-        private readonly IDictionary<IBond, IAtomContainer> ringMap;
+        private readonly IReadOnlyDictionary<IBond, IAtomContainer> ringMap;
 
         // parameters
         private readonly double scale;
@@ -101,12 +104,13 @@ namespace NCDK.Renderers.Generators.Standards
         /// <param name="symbols">generated atom symbols</param>
         /// <param name="parameters">rendering options</param>
         /// <param name="stroke">scaled stroke width</param>
-        private StandardBondGenerator(IAtomContainer container, AtomSymbol[] symbols, RendererModel parameters, ElementGroup annotations, Typeface font, double emSize, double stroke)
+        private StandardBondGenerator(IAtomContainer container, AtomSymbol[] symbols, RendererModel parameters, ElementGroup annotations, Typeface font, double emSize, double stroke, StandardDonutGenerator donutGen)
         {
             this.container = container;
             this.symbols = symbols;
             this.parameters = parameters;
             this.annotations = annotations;
+            this.donutGenerator = donutGen;
 
             // index atoms and rings
             for (int i = 0; i < container.Atoms.Count; i++)
@@ -116,7 +120,7 @@ namespace NCDK.Renderers.Generators.Standards
             // set parameters
             this.scale = parameters.GetScale();
             this.stroke = stroke;
-            double length = parameters.GetBondLength() / scale;
+            var length = parameters.GetBondLength() / scale;
             this.separation = (parameters.GetBondSeparation() * parameters.GetBondLength()) / scale;
             this.backOff = parameters.GetSymbolMarginRatio() * stroke;
             this.wedgeWidth = parameters.GetWedgeRatio() * stroke;
@@ -144,10 +148,10 @@ namespace NCDK.Renderers.Generators.Standards
         /// <param name="symbols">generated atom symbols</param>
         /// <param name="parameters">rendering options</param>
         /// <param name="stroke">scaled stroke width</param>
-        public static IRenderingElement[] GenerateBonds(IAtomContainer container, AtomSymbol[] symbols, RendererModel parameters, double stroke, Typeface font, double emSize, ElementGroup annotations)
+        public static IRenderingElement[] GenerateBonds(IAtomContainer container, AtomSymbol[] symbols, RendererModel parameters, double stroke, Typeface font, double emSize, ElementGroup annotations, StandardDonutGenerator donutGen)
         {
-            StandardBondGenerator bondGenerator = new StandardBondGenerator(container, symbols, parameters, annotations, font, emSize, stroke);
-            IRenderingElement[] elements = new IRenderingElement[container.Bonds.Count];
+            var bondGenerator = new StandardBondGenerator(container, symbols, parameters, annotations, font, emSize, stroke, donutGen);
+            var elements = new IRenderingElement[container.Bonds.Count];
             for (int i = 0; i < container.Bonds.Count; i++)
             {
                 var bond = container.Bonds[i];
@@ -166,31 +170,49 @@ namespace NCDK.Renderers.Generators.Standards
         /// <returns>rendering element</returns>
         internal IRenderingElement Generate(IBond bond)
         {
-            IAtom atom1 = bond.Begin;
-            IAtom atom2 = bond.End;
+            var atom1 = bond.Begin;
+            var atom2 = bond.End;
 
-            BondOrder order = bond.Order;
+            var order = bond.Order;
 
             IRenderingElement elem;
 
             switch (order)
             {
                 case BondOrder.Single:
-                    if (bond.IsAromatic && forceDelocalised)
-                        elem = GenerateDoubleBond(bond, true);
+                    if (bond.IsAromatic)
+                    {
+                        if (donutGenerator.IsDelocalised(bond))
+                            elem = GenerateSingleBond(bond, atom1, atom2);
+                        else if (forceDelocalised && bond.IsInRing)
+                            elem = GenerateDoubleBond(bond, forceDelocalised);
+                        else
+                            elem = GenerateSingleBond(bond, atom1, atom2);
+                    }
                     else
                         elem = GenerateSingleBond(bond, atom1, atom2);
                     break;
                 case BondOrder.Double:
-                    elem = GenerateDoubleBond(bond, bond.IsAromatic && forceDelocalised);
+                    if (bond.IsAromatic)
+                    {
+                        if (donutGenerator.IsDelocalised(bond))
+                            elem = GenerateSingleBond(bond, atom1, atom2);
+                        else
+                            elem = GenerateDoubleBond(bond, forceDelocalised);
+                    }
+                    else
+                        elem = GenerateDoubleBond(bond, false);
                     break;
                 case BondOrder.Triple:
                     elem = GenerateTripleBond(bond, atom1, atom2);
                     break;
                 default:
-                    if (bond.IsAromatic && order == BondOrder.Unset)
+                    if (bond.IsAromatic && order.IsUnset())
                     {
-                        elem = GenerateDoubleBond(bond, true);
+                        if (donutGenerator.IsDelocalised(bond))
+                            elem = GenerateSingleBond(bond, atom1, atom2);
+                        else
+                            elem = GenerateDoubleBond(bond, true);
                     }
                     else
                     {
@@ -204,7 +226,7 @@ namespace NCDK.Renderers.Generators.Standards
             // number, typically within a circle
             if (IsAttachPoint(atom1))
             {
-                ElementGroup elemGrp = new ElementGroup
+                var elemGrp = new ElementGroup
                 {
                     elem,
                     GenerateAttachPoint(atom1, bond)
@@ -213,7 +235,7 @@ namespace NCDK.Renderers.Generators.Standards
             }
             if (IsAttachPoint(atom2))
             {
-                ElementGroup elemGrp = new ElementGroup
+                var elemGrp = new ElementGroup
                 {
                     elem,
                     GenerateAttachPoint(atom2, bond)
@@ -233,8 +255,8 @@ namespace NCDK.Renderers.Generators.Standards
         /// <returns>bond rendering element</returns>
         private IRenderingElement GenerateSingleBond(IBond bond, IAtom from, IAtom to)
         {
-            BondStereo stereo = bond.Stereo;
-            if (stereo == BondStereo.None)
+            var display = bond.Display;
+            if (display == BondDisplay.Solid)
                 return GeneratePlainSingleBond(from, to);
 
             var fromBonds = container.GetConnectedBonds(from).ToList();
@@ -244,26 +266,36 @@ namespace NCDK.Renderers.Generators.Standards
             toBonds.Remove(bond);
 
             // add annotation label
-            string label = StandardGenerator.GetAnnotationLabel(bond);
-            if (label != null) AddAnnotation(from, to, label);
+            var label = StandardGenerator.GetAnnotationLabel(bond);
+            if (label != null)
+                AddAnnotation(from, to, label);
 
-            switch (stereo)
+            switch (display)
             {
-                case BondStereo.None:
-                    return GeneratePlainSingleBond(from, to);
-                case BondStereo.Down:
+                case BondDisplay.WedgedHashBegin:
                     return GenerateHashedWedgeBond(from, to, toBonds);
-                case BondStereo.DownInverted:
+                case BondDisplay.WedgedHashEnd:
                     return GenerateHashedWedgeBond(to, from, fromBonds);
-                case BondStereo.Up:
+                case BondDisplay.WedgeBegin:
                     return GenerateBoldWedgeBond(from, to, toBonds);
-                case BondStereo.UpInverted:
+                case BondDisplay.WedgeEnd:
                     return GenerateBoldWedgeBond(to, from, fromBonds);
-                case BondStereo.UpOrDown:
-                case BondStereo.UpOrDownInverted: // up/down is undirected
-                    return GenerateWavyBond(to, from);
+                case BondDisplay.Wavy:
+                    return GenerateWavyBond(from, to);
+                case BondDisplay.Dash:
+                    return GenerateDashedBond(from, to);
+                case BondDisplay.ArrowEnd:
+                    return GenerateArrowBond(from, to);
+                case BondDisplay.ArrowBegin:
+                    return GenerateArrowBond(to, from);
+                case BondDisplay.Bold:
+                    return GenerateBoldBond(from, to, fromBonds, toBonds);
+                case BondDisplay.Hash:
+                    return GenerateHashBond(from, to, fromBonds, toBonds);
+                case BondDisplay.Dot:
+                    return GenerateDotBond(from, to);
                 default:
-                    Trace.TraceWarning("Unknown single bond stereochemistry ", stereo, " is not displayed");
+                    Trace.TraceWarning($"Unknown single bond display={display} is not displayed");
                     return GeneratePlainSingleBond(from, to);
             }
         }
@@ -297,24 +329,24 @@ namespace NCDK.Renderers.Generators.Standards
             var unit = NewUnitVector(fromPoint, toPoint);
             var perpendicular = NewPerpendicularVector(unit);
 
-            double halfNarrowEnd = stroke / 2;
-            double halfWideEnd = wedgeWidth / 2;
+            var halfNarrowEnd = stroke / 2;
+            var halfWideEnd = wedgeWidth / 2;
 
-            double opposite = halfWideEnd - halfNarrowEnd;
-            double adjacent = Vector2.Distance(fromPoint, toPoint);
+            var opposite = halfWideEnd - halfNarrowEnd;
+            var adjacent = Vector2.Distance(fromPoint, toPoint);
 
-            double fromOffset = halfNarrowEnd + opposite / adjacent * Vector2.Distance(fromBackOffPoint, fromPoint);
-            double toOffset = halfNarrowEnd + opposite / adjacent * Vector2.Distance(toBackOffPoint, fromPoint);
+            var fromOffset = halfNarrowEnd + opposite / adjacent * Vector2.Distance(fromBackOffPoint, fromPoint);
+            var toOffset = halfNarrowEnd + opposite / adjacent * Vector2.Distance(toBackOffPoint, fromPoint);
 
             // four points of the trapezoid
-            Vector2 a = Sum(fromBackOffPoint, Scale(perpendicular, fromOffset));
-            Vector2 b = Sum(fromBackOffPoint, Scale(perpendicular, -fromOffset));
-            Vector2 c = Sum(toBackOffPoint, Scale(perpendicular, -toOffset));
-            Vector2 e = toBackOffPoint;
-            Vector2 d = Sum(toBackOffPoint, Scale(perpendicular, toOffset));
+            var a = Sum(fromBackOffPoint, Scale(perpendicular, fromOffset));
+            var b = Sum(fromBackOffPoint, Scale(perpendicular, -fromOffset));
+            var c = Sum(toBackOffPoint, Scale(perpendicular, -toOffset));
+            var e = toBackOffPoint;
+            var d = Sum(toBackOffPoint, Scale(perpendicular, toOffset));
 
             // don't adjust wedge if the angle is shallow than this amount
-            double threshold = Vectors.DegreeToRadian(15);
+            var threshold = Vectors.DegreeToRadian(15);
 
             // if the symbol at the wide end of the wedge is not displayed, we can improve
             // the aesthetics by adjusting the endpoints based on connected bond angles.
@@ -323,10 +355,10 @@ namespace NCDK.Renderers.Generators.Standards
                 // slanted wedge
                 if (toBonds.Count == 1)
                 {
-                    IBond toBondNeighbor = toBonds[0];
-                    IAtom toNeighbor = toBondNeighbor.GetOther(to);
+                    var toBondNeighbor = toBonds[0];
+                    var toNeighbor = toBondNeighbor.GetOther(to);
 
-                    Vector2 refVector = NewUnitVector(toPoint, toNeighbor.Point2D.Value);
+                    var refVector = NewUnitVector(toPoint, toNeighbor.Point2D.Value);
                     bool wideToWide = false;
 
                     // special case when wedge bonds are in a bridged ring, wide-to-wide end we
@@ -337,7 +369,7 @@ namespace NCDK.Renderers.Generators.Standards
                         wideToWide = true;
                     }
 
-                    double theta = Vectors.Angle(refVector, unit);
+                    var theta = Vectors.Angle(refVector, unit);
 
                     if (theta > threshold && theta + threshold + threshold < Math.PI)
                     {
@@ -351,7 +383,7 @@ namespace NCDK.Renderers.Generators.Standards
                         // wide-on-wide with another bold wedge
                         if (!wideToWide)
                         {
-                            double nudge = (stroke / 2) / Math.Sin(theta);
+                            var nudge = (stroke / 2) / Math.Sin(theta);
                             c = Sum(c, Scale(unit, nudge));
                             d = Sum(d, Scale(unit, nudge));
                             e = Sum(e, Scale(unit, nudge));
@@ -362,8 +394,8 @@ namespace NCDK.Renderers.Generators.Standards
                 // bifurcated (forked) wedge
                 else if (toBonds.Count > 1)
                 {
-                    Vector2 refVectorA = GetNearestVector(perpendicular, to, toBonds);
-                    Vector2 refVectorB = GetNearestVector(Negate(perpendicular), to, toBonds);
+                    var refVectorA = GetNearestVector(perpendicular, to, toBonds);
+                    var refVectorB = GetNearestVector(Negate(perpendicular), to, toBonds);
 
                     if (Vectors.Angle(refVectorB, unit) > threshold) c = Intersection(b, NewUnitVector(b, c), toPoint, refVectorB);
                     if (Vectors.Angle(refVectorA, unit) > threshold) d = Intersection(a, NewUnitVector(a, d), toPoint, refVectorA);
@@ -396,41 +428,41 @@ namespace NCDK.Renderers.Generators.Standards
         /// <returns>the rendering element</returns>
         internal IRenderingElement GenerateHashedWedgeBond(IAtom from, IAtom to, List<IBond> toBonds)
         {
-            Vector2 fromPoint = from.Point2D.Value;
-            Vector2 toPoint = to.Point2D.Value;
+            var fromPoint = from.Point2D.Value;
+            var toPoint = to.Point2D.Value;
 
-            Vector2 fromBackOffPoint = BackOffPoint(from, to);
-            Vector2 toBackOffPoint = BackOffPoint(to, from);
+            var fromBackOffPoint = BackOffPoint(from, to);
+            var toBackOffPoint = BackOffPoint(to, from);
 
-            Vector2 unit = NewUnitVector(fromPoint, toPoint);
-            Vector2 perpendicular = NewPerpendicularVector(unit);
+            var unit = NewUnitVector(fromPoint, toPoint);
+            var perpendicular = NewPerpendicularVector(unit);
 
-            double halfNarrowEnd = stroke / 2;
-            double halfWideEnd = wedgeWidth / 2;
+            var halfNarrowEnd = stroke / 2;
+            var halfWideEnd = wedgeWidth / 2;
 
-            double opposite = halfWideEnd - halfNarrowEnd;
-            double adjacent = Vector2.Distance(fromPoint, toPoint);
+            var opposite = halfWideEnd - halfNarrowEnd;
+            var adjacent = Vector2.Distance(fromPoint, toPoint);
 
-            int nSections = (int)(adjacent / hashSpacing);
-            double step = adjacent / (nSections - 1);
+            var nSections = (int)(adjacent / hashSpacing);
+            var step = adjacent / (nSections - 1);
 
-            ElementGroup group = new ElementGroup();
+            var group = new ElementGroup();
 
-            double start = HasDisplayedSymbol(from) ? Vector2.Distance(fromPoint, fromBackOffPoint) : double.NegativeInfinity;
-            double end = HasDisplayedSymbol(to) ? Vector2.Distance(fromPoint, toBackOffPoint) : double.PositiveInfinity;
+            var start = HasDisplayedSymbol(from) ? Vector2.Distance(fromPoint, fromBackOffPoint) : double.NegativeInfinity;
+            var end = HasDisplayedSymbol(to) ? Vector2.Distance(fromPoint, toBackOffPoint) : double.PositiveInfinity;
 
             // don't adjust wedge if the angle is shallow than this amount
-            double threshold = Vectors.DegreeToRadian(35);
+            var threshold = Vectors.DegreeToRadian(35);
 
-            Vector2 hatchAngle = perpendicular;
+            var hatchAngle = perpendicular;
 
             // fancy hashed wedges with slanted hatch sections aligned with neighboring bonds
             if (CanDrawFancyHashedWedge(to, toBonds, adjacent))
             {
-                IBond toBondNeighbor = toBonds[0];
-                IAtom toNeighbor = toBondNeighbor.GetOther(to);
+                var toBondNeighbor = toBonds[0];
+                var toNeighbor = toBondNeighbor.GetOther(to);
 
-                Vector2 refVector = NewUnitVector(toPoint, toNeighbor.Point2D.Value);
+                var refVector = NewUnitVector(toPoint, toNeighbor.Point2D.Value);
 
                 // special case when wedge bonds are in a bridged ring, wide-to-wide end we
                 // don't want to slant as normal but rather butt up against each wind end
@@ -441,7 +473,7 @@ namespace NCDK.Renderers.Generators.Standards
                 }
 
                 // only slant if the angle isn't shallow
-                double theta = Vectors.Angle(refVector, unit);
+                var theta = Vectors.Angle(refVector, unit);
                 if (theta > threshold && theta + threshold + threshold < Math.PI)
                 {
                     hatchAngle = refVector;
@@ -450,13 +482,14 @@ namespace NCDK.Renderers.Generators.Standards
 
             for (int i = 0; i < nSections; i++)
             {
-                double distance = i * step;
+                var distance = i * step;
 
                 // don't draw if we're within an atom symbol
-                if (distance < start || distance > end) continue;
+                if (distance < start || distance > end)
+                    continue;
 
-                double offset = halfNarrowEnd + opposite / adjacent * distance;
-                Vector2 interval = fromPoint + Scale(unit, distance);
+                var offset = halfNarrowEnd + opposite / adjacent * distance;
+                var interval = fromPoint + Scale(unit, distance);
                 group.Add(NewLineElement(Sum(interval, Scale(hatchAngle, offset)),
                         Sum(interval, Scale(hatchAngle, -offset))));
             }
@@ -479,7 +512,7 @@ namespace NCDK.Renderers.Generators.Standards
         private bool CanDrawFancyHashedWedge(IAtom to, List<IBond> toBonds, double length)
         {
             // a bond is long if is more than 4 units larger that the desired 'BondLength'
-            bool longBond = (length * scale) - parameters.GetBondLength() > 4;
+            var longBond = (length * scale) - parameters.GetBondLength() > 4;
             return fancyHashedWedges && !longBond && !HasDisplayedSymbol(to) && toBonds.Count == 1;
         }
 
@@ -491,25 +524,25 @@ namespace NCDK.Renderers.Generators.Standards
         /// <returns>generated rendering element</returns>
         internal IRenderingElement GenerateWavyBond(IAtom from, IAtom to)
         {
-            Vector2 fromPoint = from.Point2D.Value;
-            Vector2 toPoint = to.Point2D.Value;
+            var fromPoint = from.Point2D.Value;
+            var toPoint = to.Point2D.Value;
 
-            Vector2 fromBackOffPoint = BackOffPoint(from, to);
-            Vector2 toBackOffPoint = BackOffPoint(to, from);
+            var fromBackOffPoint = BackOffPoint(from, to);
+            var toBackOffPoint = BackOffPoint(to, from);
 
-            Vector2 unit = NewUnitVector(fromPoint, toPoint);
-            Vector2 perpendicular = NewPerpendicularVector(unit);
+            var unit = NewUnitVector(fromPoint, toPoint);
+            var perpendicular = NewPerpendicularVector(unit);
 
-            double length = Vector2.Distance(fromPoint, toPoint);
+            var length = Vector2.Distance(fromPoint, toPoint);
 
             // 2 times the number of wave sections because each semi circle is drawn with two parts
-            int nCurves = 2 * (int)(length / waveSpacing);
-            double step = length / nCurves;
+            var nCurves = 2 * (int)(length / waveSpacing);
+            var step = length / nCurves;
 
-            Vector2 peak = Scale(perpendicular, step);
+            var peak = Scale(perpendicular, step);
 
-            double start = fromPoint.Equals(fromBackOffPoint) ? double.MinValue : Vector2.Distance(fromPoint, fromBackOffPoint);
-            double end = toPoint.Equals(toBackOffPoint) ? double.MaxValue : Vector2.Distance(fromPoint, toBackOffPoint);
+            var start = fromPoint.Equals(fromBackOffPoint) ? double.MinValue : Vector2.Distance(fromPoint, fromBackOffPoint);
+            var end = toPoint.Equals(toBackOffPoint) ? double.MaxValue : Vector2.Distance(fromPoint, toBackOffPoint);
 
             var path = new PathGeometry();
             PathFigure pf = null;
@@ -558,7 +591,7 @@ namespace NCDK.Renderers.Generators.Standards
                     if (dist >= start && dist <= end)
                     {
                         // first end point
-                        Vector2 endPoint = Sum(Sum(fromPoint, Scale(unit, dist)), peak);
+                        var endPoint = Sum(Sum(fromPoint, Scale(unit, dist)), peak);
                         if (pf != null)
                         {
                             var controlPoint1 = Sum(Sum(fromPoint, Scale(unit, (i - 1) * step)), Scale(peak, 0.5));
@@ -577,7 +610,7 @@ namespace NCDK.Renderers.Generators.Standards
 
                 // curving towards the center line
                 {
-                    double dist = (i + 1) * step;
+                    var dist = (i + 1) * step;
 
                     if (dist >= start && dist <= end)
                     {
@@ -610,27 +643,29 @@ namespace NCDK.Renderers.Generators.Standards
         /// Generates a double bond rendering element by deciding how best to display it.
         /// </summary>
         /// <param name="bond">the bond to render</param>
+        /// <param name="arom">the second line should be dashed</param>
         /// <returns>rendering element</returns>
-        private IRenderingElement GenerateDoubleBond(IBond bond, bool dashed)
+        private IRenderingElement GenerateDoubleBond(IBond bond, bool arom)
         {
             bool cyclic = ringMap.ContainsKey(bond);
 
             // select offset bonds from either the preferred ring or the whole structure
-            IAtomContainer refContainer = cyclic ? ringMap[bond] : container;
+            var refContainer = cyclic ? ringMap[bond] : container;
 
-            int length = refContainer.Atoms.Count;
-            int index1 = refContainer.Atoms.IndexOf(bond.Begin);
-            int index2 = refContainer.Atoms.IndexOf(bond.End);
+            var length = refContainer.Atoms.Count;
+            var index1 = refContainer.Atoms.IndexOf(bond.Begin);
+            var index2 = refContainer.Atoms.IndexOf(bond.End);
 
             // if the bond is in a cycle we are using ring bonds to determine offset, since rings
             // have been normalised and ordered to wind anti-clockwise we want to get the atoms
             // in the order they are in the ring.
-            bool outOfOrder = cyclic && index1 == (index2 + 1) % length;
+            var outOfOrder = cyclic && index1 == (index2 + 1) % length;
 
-            IAtom atom1 = outOfOrder ? bond.End : bond.Begin;
-            IAtom atom2 = outOfOrder ? bond.Begin : bond.End;
+            var atom1 = outOfOrder ? bond.End : bond.Begin;
+            var atom2 = outOfOrder ? bond.Begin : bond.End;
 
-            if (BondStereo.EOrZ.Equals(bond.Stereo)) return GenerateCrossedDoubleBond(atom1, atom2);
+            if (BondStereo.EOrZ.Equals(bond.Stereo))
+                return GenerateCrossedDoubleBond(atom1, atom2);
 
             var atom1Bonds = refContainer.GetConnectedBonds(atom1).ToList();
             var atom2Bonds = refContainer.GetConnectedBonds(atom2).ToList();
@@ -641,15 +676,15 @@ namespace NCDK.Renderers.Generators.Standards
             if (cyclic)
             {
                 // get the winding relative to the ring
-                int wind1 = Winding(atom1Bonds[0], bond);
-                int wind2 = Winding(bond, atom2Bonds[0]);
+                var wind1 = Winding(atom1Bonds[0], bond);
+                var wind2 = Winding(bond, atom2Bonds[0]);
                 if (wind1 > 0)
                 {
-                    return GenerateOffsetDoubleBond(bond, atom1, atom2, atom1Bonds[0], atom2Bonds, dashed);
+                    return GenerateOffsetDoubleBond(bond, atom1, atom2, atom1Bonds[0], atom2Bonds, arom);
                 }
                 else if (wind2 > 0)
                 {
-                    return GenerateOffsetDoubleBond(bond, atom2, atom1, atom2Bonds[0], atom1Bonds, dashed);
+                    return GenerateOffsetDoubleBond(bond, atom2, atom1, atom2Bonds[0], atom1Bonds, arom);
                 }
                 else
                 {
@@ -660,28 +695,29 @@ namespace NCDK.Renderers.Generators.Standards
                     //         a --- b
                     //        /       \
                     //    -- x         x --
-                    return GenerateOffsetDoubleBond(bond, atom1, atom2, atom1Bonds[0], atom2Bonds, true, dashed);
+                    return GenerateOffsetDoubleBond(bond, atom1, atom2, atom1Bonds[0], atom2Bonds, true, arom);
                 }
             }
-            else if (atom1Bonds.Count == 1 && !HasDisplayedSymbol(atom1) && (!HasDisplayedSymbol(atom2) || !atom2Bonds.Any()))
+            else if (!(HasDisplayedSymbol(atom1) && HasDisplayedSymbol(atom2)))
             {
-                return GenerateOffsetDoubleBond(bond, atom1, atom2, atom1Bonds[0], atom2Bonds, dashed);
-            }
-            else if (atom2Bonds.Count == 1 && !HasDisplayedSymbol(atom2) && (!HasDisplayedSymbol(atom1) || !atom1Bonds.Any()))
-            {
-                return GenerateOffsetDoubleBond(bond, atom2, atom1, atom2Bonds[0], atom1Bonds, dashed);
-            }
-            else if (SpecialOffsetBondNextToWedge(atom1, atom1Bonds) && !HasDisplayedSymbol(atom1))
-            {
-                return GenerateOffsetDoubleBond(bond, atom1, atom2, SelectPlainSingleBond(atom1Bonds), atom2Bonds, dashed);
-            }
-            else if (SpecialOffsetBondNextToWedge(atom2, atom2Bonds) && !HasDisplayedSymbol(atom2))
-            {
-                return GenerateOffsetDoubleBond(bond, atom2, atom1, SelectPlainSingleBond(atom2Bonds), atom1Bonds, dashed);
+                if (atom1Bonds.Count == 1 && !atom2Bonds.Any())
+                    return GenerateOffsetDoubleBond(bond, atom1, atom2, atom1Bonds[0], atom2Bonds, arom);
+                else if (atom2Bonds.Count == 1 && !atom1Bonds.Any())
+                    return GenerateOffsetDoubleBond(bond, atom2, atom1, atom2Bonds[0], atom1Bonds, arom);
+                else if (SpecialOffsetBondNextToWedge(atom1, atom1Bonds))
+                    return GenerateOffsetDoubleBond(bond, atom1, atom2, SelectPlainSingleBond(atom1Bonds), atom2Bonds, arom);
+                else if (SpecialOffsetBondNextToWedge(atom2, atom2Bonds))
+                    return GenerateOffsetDoubleBond(bond, atom2, atom1, SelectPlainSingleBond(atom2Bonds), atom1Bonds, arom);
+                else if (atom1Bonds.Count == 1)
+                    return GenerateOffsetDoubleBond(bond, atom1, atom2, atom1Bonds[0], atom2Bonds, arom);
+                else if (atom2Bonds.Count == 1)
+                    return GenerateOffsetDoubleBond(bond, atom2, atom1, atom2Bonds[0], atom1Bonds, arom);
+                else
+                    return GenerateCenteredDoubleBond(bond, atom1, atom2, atom1Bonds, atom2Bonds);
             }
             else
             {
-                if (dashed)
+                if (arom)
                 {
                     return GenerateDashedBond(atom1, atom2);
                 }
@@ -744,17 +780,19 @@ namespace NCDK.Renderers.Generators.Standards
         /// <returns>the atom is at the wide end of the wedge in the provided bond</returns>
         private bool AtWideEndOfWedge(IAtom atom, IBond bond)
         {
-            if (bond.Stereo == BondStereo.None) return false;
-            switch (bond.Stereo)
+            if (bond.Stereo == BondStereo.None)
+                return false;
+            switch (bond.Display)
             {
-                case BondStereo.Up:
-                    return bond.End == atom;
-                case BondStereo.UpInverted:
-                    return bond.Begin == atom;
-                case BondStereo.Down:
-                    return bond.End == atom;
-                case BondStereo.DownInverted:
-                    return bond.Begin == atom;
+                case BondDisplay.Bold:
+                case BondDisplay.Hash:
+                    return true;
+                case BondDisplay.WedgeBegin:
+                case BondDisplay.WedgedHashBegin:
+                    return bond.End.Equals(atom);
+                case BondDisplay.WedgeEnd:
+                case BondDisplay.WedgedHashEnd:
+                    return bond.Begin.Equals(atom);
                 default:
                     return false;
             }
@@ -796,28 +834,30 @@ namespace NCDK.Renderers.Generators.Standards
             }
             Debug.Assert(atom1Bond != null);
 
-            Vector2 atom1Point = atom1.Point2D.Value;
-            Vector2 atom2Point = atom2.Point2D.Value;
+            var atom1Point = atom1.Point2D.Value;
+            var atom2Point = atom2.Point2D.Value;
 
-            Vector2 atom1BackOffPoint = BackOffPoint(atom1, atom2);
-            Vector2 atom2BackOffPoint = BackOffPoint(atom2, atom1);
+            var atom1BackOffPoint = BackOffPoint(atom1, atom2);
+            var atom2BackOffPoint = BackOffPoint(atom2, atom1);
 
-            Vector2 unit = NewUnitVector(atom1Point, atom2Point);
-            Vector2 perpendicular = NewPerpendicularVector(unit);
+            var unit = NewUnitVector(atom1Point, atom2Point);
+            var perpendicular = NewPerpendicularVector(unit);
 
-            Vector2 reference = NewUnitVector(atom1.Point2D.Value, atom1Bond.GetOther(atom1).Point2D.Value);
+            var reference = NewUnitVector(atom1.Point2D.Value, atom1Bond.GetOther(atom1).Point2D.Value);
 
             // there are two perpendicular vectors, this check ensures we have one on the same side as
             // the reference
-            if (Vector2.Dot(reference, perpendicular) < 0) perpendicular = Negate(perpendicular);
+            if (Vector2.Dot(reference, perpendicular) < 0)
+                perpendicular = Negate(perpendicular);
             // caller requested inverted drawing
-            if (invert) perpendicular = Negate(perpendicular);
+            if (invert)
+                perpendicular = Negate(perpendicular);
 
             // when the symbol is terminal, we move it such that it is between the two lines
             if (!atom2Bonds.Any() && HasDisplayedSymbol(atom2))
             {
-                int atom2index = atomIndexMap[atom2];
-                Vector2 nudge = Scale(perpendicular, separation / 2);
+                var atom2index = atomIndexMap[atom2];
+                var nudge = Scale(perpendicular, separation / 2);
                 symbols[atom2index] = symbols[atom2index].Translate(nudge.X, nudge.Y);
             }
 
@@ -838,7 +878,7 @@ namespace NCDK.Renderers.Generators.Standards
             // we find the one which is closest to the perpendicular vector
             if (atom2Bonds.Any() && (dashed || !HasDisplayedSymbol(atom2)))
             {
-                Vector2 closest = GetNearestVector(perpendicular, atom2, atom2Bonds);
+                var closest = GetNearestVector(perpendicular, atom2, atom2Bonds);
                 atom2Offset = AdjacentLength(Sum(closest, Negate(unit)), perpendicular, separation);
 
                 // closest bond may still be on the other side, if so the offset needs
@@ -846,33 +886,52 @@ namespace NCDK.Renderers.Generators.Standards
                 if (Vector2.Dot(closest, perpendicular) < 0) atom2Offset = -atom2Offset;
             }
 
-            double halfBondLength = Vector2.Distance(atom1Point, atom2BackOffPoint) / 2;
+            var halfBondLength = Vector2.Distance(atom1Point, atom2BackOffPoint) / 2;
             if (atom1Offset > halfBondLength || atom1Offset < 0) atom1Offset = 0;
             if (atom2Offset > halfBondLength || atom2Offset < 0) atom2Offset = 0;
 
-            ElementGroup group = new ElementGroup
+            var group = new ElementGroup();
+
+            // first of offset double bond may have some style
+            switch (bond.Display)
             {
-                NewLineElement(atom1BackOffPoint, atom2BackOffPoint)
-            };
+                case BondDisplay.Bold:
+                    group.Add(GenerateBoldBond(atom1, atom2, new[] { atom1Bond }, atom2Bonds));
+                    break;
+                case BondDisplay.Hash:
+                    group.Add(GenerateHashBond(atom1, atom2, new[] { atom1Bond }, atom2Bonds));
+                    break;
+                case BondDisplay.Dash:
+                    group.Add(GenerateDashedBond(atom1, atom2));
+                    break;
+                case BondDisplay.Dot:
+                    group.Add(GenerateDashedBond(atom1, atom2));
+                    break;
+                default: // solid
+                    group.Add(NewLineElement(atom1BackOffPoint, atom2BackOffPoint));
+                    break;
+            }
+
             if (dashed)
             {
-                Vector2 beg = atom1Point + perpendicular * separation;
-                Vector2 end = atom2Point + perpendicular * separation;
+                var beg = atom1Point + perpendicular * separation;
+                var end = atom2Point + perpendicular * separation;
                 group.Add(GenerateDashedBond(beg, end,
                                              atom1Offset,
                                              Vector2.Distance(beg, end) - atom2Offset));
             }
             else
             {
-                Vector2 beg = atom1BackOffPoint + perpendicular * separation;
-                Vector2 end = atom2BackOffPoint + perpendicular * separation;
+                var beg = atom1BackOffPoint + perpendicular * separation;
+                var end = atom2BackOffPoint + perpendicular * separation;
                 group.Add(NewLineElement(beg + unit * atom1Offset,
                                          end + unit * -atom2Offset));
             }
 
             // add annotation label on the opposite side
-            string label = StandardGenerator.GetAnnotationLabel(bond);
-            if (label != null) AddAnnotation(atom1, atom2, label, VecmathUtil.Negate(perpendicular));
+            var label = StandardGenerator.GetAnnotationLabel(bond);
+            if (label != null)
+                AddAnnotation(atom1, atom2, label, VecmathUtil.Negate(perpendicular));
 
             return group;
         }
@@ -888,31 +947,31 @@ namespace NCDK.Renderers.Generators.Standards
         /// <returns>the rendering element</returns>
         private IRenderingElement GenerateCenteredDoubleBond(IBond bond, IAtom atom1, IAtom atom2, List<IBond> atom1Bonds, List<IBond> atom2Bonds)
         {
-            Vector2 atom1BackOffPoint = BackOffPoint(atom1, atom2);
-            Vector2 atom2BackOffPoint = BackOffPoint(atom2, atom1);
+            var atom1BackOffPoint = BackOffPoint(atom1, atom2);
+            var atom2BackOffPoint = BackOffPoint(atom2, atom1);
 
-            Vector2 unit = NewUnitVector(atom1BackOffPoint, atom2BackOffPoint);
-            Vector2 perpendicular1 = NewPerpendicularVector(unit);
-            Vector2 perpendicular2 = Negate(perpendicular1);
+            var unit = NewUnitVector(atom1BackOffPoint, atom2BackOffPoint);
+            var perpendicular1 = NewPerpendicularVector(unit);
+            var perpendicular2 = Negate(perpendicular1);
 
-            double halfBondLength = Vector2.Distance(atom1BackOffPoint, atom2BackOffPoint) / 2;
-            double halfSeparation = separation / 2;
+            var halfBondLength = Vector2.Distance(atom1BackOffPoint, atom2BackOffPoint) / 2;
+            var halfSeparation = separation / 2;
 
-            ElementGroup group = new ElementGroup();
+            var group = new ElementGroup();
 
-            Vector2 line1Atom1Point = Sum(atom1BackOffPoint, Scale(perpendicular1, halfSeparation));
-            Vector2 line1Atom2Point = Sum(atom2BackOffPoint, Scale(perpendicular1, halfSeparation));
-            Vector2 line2Atom1Point = Sum(atom1BackOffPoint, Scale(perpendicular2, halfSeparation));
-            Vector2 line2Atom2Point = Sum(atom2BackOffPoint, Scale(perpendicular2, halfSeparation));
+            var line1Atom1Point = Sum(atom1BackOffPoint, Scale(perpendicular1, halfSeparation));
+            var line1Atom2Point = Sum(atom2BackOffPoint, Scale(perpendicular1, halfSeparation));
+            var line2Atom1Point = Sum(atom1BackOffPoint, Scale(perpendicular2, halfSeparation));
+            var line2Atom2Point = Sum(atom2BackOffPoint, Scale(perpendicular2, halfSeparation));
 
             // adjust atom 1 lines to be flush with adjacent bonds
             if (!HasDisplayedSymbol(atom1) && atom1Bonds.Count > 1)
             {
-                Vector2 nearest1 = GetNearestVector(perpendicular1, atom1, atom1Bonds);
-                Vector2 nearest2 = GetNearestVector(perpendicular2, atom1, atom1Bonds);
+                var nearest1 = GetNearestVector(perpendicular1, atom1, atom1Bonds);
+                var nearest2 = GetNearestVector(perpendicular2, atom1, atom1Bonds);
 
-                double line1Adjust = AdjacentLength(nearest1, perpendicular1, halfSeparation);
-                double line2Adjust = AdjacentLength(nearest2, perpendicular2, halfSeparation);
+                var line1Adjust = AdjacentLength(nearest1, perpendicular1, halfSeparation);
+                var line2Adjust = AdjacentLength(nearest2, perpendicular2, halfSeparation);
 
                 // don't adjust beyond half the bond length
                 if (line1Adjust > halfBondLength || line1Adjust < 0) line1Adjust = 0;
@@ -929,11 +988,11 @@ namespace NCDK.Renderers.Generators.Standards
             // adjust atom 2 lines to be flush with adjacent bonds
             if (!HasDisplayedSymbol(atom2) && atom2Bonds.Count > 1)
             {
-                Vector2 nearest1 = GetNearestVector(perpendicular1, atom2, atom2Bonds);
-                Vector2 nearest2 = GetNearestVector(perpendicular2, atom2, atom2Bonds);
+                var nearest1 = GetNearestVector(perpendicular1, atom2, atom2Bonds);
+                var nearest2 = GetNearestVector(perpendicular2, atom2, atom2Bonds);
 
-                double line1Adjust = AdjacentLength(nearest1, perpendicular1, halfSeparation);
-                double line2Adjust = AdjacentLength(nearest2, perpendicular2, halfSeparation);
+                var line1Adjust = AdjacentLength(nearest1, perpendicular1, halfSeparation);
+                var line2Adjust = AdjacentLength(nearest2, perpendicular2, halfSeparation);
 
                 // don't adjust beyond half the bond length
                 if (line1Adjust > halfBondLength || line1Adjust < 0) line1Adjust = 0;
@@ -951,8 +1010,9 @@ namespace NCDK.Renderers.Generators.Standards
             group.Add(NewLineElement(line2Atom1Point, line2Atom2Point));
 
             // add annotation label
-            string label = StandardGenerator.GetAnnotationLabel(bond);
-            if (label != null) AddAnnotation(atom1, atom2, label);
+            var label = StandardGenerator.GetAnnotationLabel(bond);
+            if (label != null)
+                AddAnnotation(atom1, atom2, label);
 
             return group;
         }
@@ -966,24 +1026,24 @@ namespace NCDK.Renderers.Generators.Standards
         /// <returns>generated rendering element</returns>
         private IRenderingElement GenerateCrossedDoubleBond(IAtom from, IAtom to)
         {
-            Vector2 atom1BackOffPoint = BackOffPoint(from, to);
-            Vector2 atom2BackOffPoint = BackOffPoint(to, from);
+            var atom1BackOffPoint = BackOffPoint(from, to);
+            var atom2BackOffPoint = BackOffPoint(to, from);
 
-            Vector2 unit = NewUnitVector(atom1BackOffPoint, atom2BackOffPoint);
-            Vector2 perpendicular1 = NewPerpendicularVector(unit);
-            Vector2 perpendicular2 = Negate(perpendicular1);
+            var unit = NewUnitVector(atom1BackOffPoint, atom2BackOffPoint);
+            var perpendicular1 = NewPerpendicularVector(unit);
+            var perpendicular2 = Negate(perpendicular1);
 
-            double halfSeparation = separation / 2;
+            var halfSeparation = separation / 2;
 
             // same as centered double bond, this could be improved by interpolating the points
             // during back off
-            Vector2 line1Atom1Point = Sum(atom1BackOffPoint, Scale(perpendicular1, halfSeparation));
-            Vector2 line1Atom2Point = Sum(atom2BackOffPoint, Scale(perpendicular1, halfSeparation));
-            Vector2 line2Atom1Point = Sum(atom1BackOffPoint, Scale(perpendicular2, halfSeparation));
-            Vector2 line2Atom2Point = Sum(atom2BackOffPoint, Scale(perpendicular2, halfSeparation));
+            var line1Atom1Point = Sum(atom1BackOffPoint, Scale(perpendicular1, halfSeparation));
+            var line1Atom2Point = Sum(atom2BackOffPoint, Scale(perpendicular1, halfSeparation));
+            var line2Atom1Point = Sum(atom1BackOffPoint, Scale(perpendicular2, halfSeparation));
+            var line2Atom2Point = Sum(atom2BackOffPoint, Scale(perpendicular2, halfSeparation));
 
             // swap end points to generate a cross
-            ElementGroup group = new ElementGroup
+            var group = new ElementGroup
             {
                 NewLineElement(line1Atom1Point, line2Atom2Point),
                 NewLineElement(line2Atom1Point, line1Atom2Point)
@@ -1000,7 +1060,7 @@ namespace NCDK.Renderers.Generators.Standards
         /// <returns>triple bond rendering element</returns>
         private IRenderingElement GenerateTripleBond(IBond bond, IAtom atom1, IAtom atom2)
         {
-            ElementGroup group = new ElementGroup();
+            var group = new ElementGroup();
 
             var p1 = ToPoint(BackOffPoint(atom1, atom2));
             var p2 = ToPoint(BackOffPoint(atom2, atom1));
@@ -1013,8 +1073,9 @@ namespace NCDK.Renderers.Generators.Standards
             group.Add(new LineElement(p1 - perp, p2 - perp, stroke, foreground));
 
             // add annotation label
-            string label = StandardGenerator.GetAnnotationLabel(bond);
-            if (label != null) AddAnnotation(atom1, atom2, label);
+            var label = StandardGenerator.GetAnnotationLabel(bond);
+            if (label != null)
+                AddAnnotation(atom1, atom2, label);
 
             return group;
         }
@@ -1027,15 +1088,15 @@ namespace NCDK.Renderers.Generators.Standards
         /// <returns>the rendering element</returns>
         private IRenderingElement GenerateAttachPoint(IAtom atom, IBond bond)
         {
-            Vector2 mid = atom.Point2D.Value;
-            Vector2 bndVec = VecmathUtil.NewUnitVector(atom, bond);
-            Vector2 bndXVec = VecmathUtil.NewPerpendicularVector(bndVec);
+            var mid = atom.Point2D.Value;
+            var bndVec = VecmathUtil.NewUnitVector(atom, bond);
+            var bndXVec = VecmathUtil.NewPerpendicularVector(bndVec);
 
-            double length = Vector2.Distance(atom.Point2D.Value, bond.GetOther(atom).Point2D.Value);
+            var length = Vector2.Distance(atom.Point2D.Value, bond.GetOther(atom).Point2D.Value);
             bndXVec *= length / 2;
-            Vector2 beg = VecmathUtil.Sum(atom.Point2D.Value, bndXVec);
+            var beg = VecmathUtil.Sum(atom.Point2D.Value, bndXVec);
             bndXVec *= -1;
-            Vector2 end = VecmathUtil.Sum(atom.Point2D.Value, bndXVec);
+            var end = VecmathUtil.Sum(atom.Point2D.Value, bndXVec);
 
             // wavy line between beg and end, see generateWavyBond for explanation
 
@@ -1043,8 +1104,8 @@ namespace NCDK.Renderers.Generators.Standards
             double step = length / nCurves;
 
             bndXVec = Vector2.Normalize(bndXVec);
-            Vector2 peak = Scale(bndVec, step);
-            Vector2 unit = VecmathUtil.NewUnitVector(beg, end);
+            var peak = Scale(bndVec, step);
+            var unit = VecmathUtil.NewUnitVector(beg, end);
 
             var path = new PathGeometry();
             int halfNCurves = nCurves / 2;
@@ -1070,7 +1131,7 @@ namespace NCDK.Renderers.Generators.Standards
 
                     // curving towards the center line
                     {
-                        double dist = (i + 1) * step;
+                        var dist = (i + 1) * step;
                         // second end point
                         var endPoint = ToPoint(mid + Scale(unit, dist));
                         var controlPoint1 = ToPoint(mid + Scale(unit, (i + 0.5) * step) + peak);
@@ -1095,7 +1156,7 @@ namespace NCDK.Renderers.Generators.Standards
 
                     // curving away from the center line
                     {
-                        double dist = i * step;
+                        var dist = i * step;
                         // first end point
                         var endPoint = ToPoint(mid + Scale(unit, dist) + peak);
                         var controlPoint1 = ToPoint(mid + Scale(unit, (i - 1) * step) + Scale(peak, 0.5));
@@ -1105,7 +1166,7 @@ namespace NCDK.Renderers.Generators.Standards
 
                     // curving towards the center line
                     {
-                        double dist = (i + 1) * step;
+                        var dist = (i + 1) * step;
                         // second end point
                         var endPoint = ToPoint(mid + Scale(unit, dist));
                         var controlPoint1 = ToPoint(mid + Scale(unit, (i + 0.5) * step) + peak);
@@ -1139,7 +1200,7 @@ namespace NCDK.Renderers.Generators.Standards
         /// <seealso cref="AddAnnotation(IAtom, IAtom, string, Vector2)"/>
         private void AddAnnotation(IAtom atom1, IAtom atom2, string label)
         {
-            Vector2 perpendicular = VecmathUtil.NewPerpendicularVector(VecmathUtil.NewUnitVector(atom1.Point2D.Value, atom2.Point2D.Value));
+            var perpendicular = VecmathUtil.NewPerpendicularVector(VecmathUtil.NewUnitVector(atom1.Point2D.Value, atom2.Point2D.Value));
             AddAnnotation(atom1, atom2, label, perpendicular);
         }
 
@@ -1153,9 +1214,9 @@ namespace NCDK.Renderers.Generators.Standards
         /// <param name="perpendicular">the vector along which to place the annotation (starting from the midpoint)</param>
         private void AddAnnotation(IAtom atom1, IAtom atom2, string label, Vector2 perpendicular)
         {
-            Vector2 midPoint = VecmathUtil.Midpoint(atom1.Point2D.Value, atom2.Point2D.Value);
+            var midPoint = VecmathUtil.Midpoint(atom1.Point2D.Value, atom2.Point2D.Value);
 
-            TextOutline outline = StandardGenerator.GenerateAnnotation(midPoint, label, perpendicular, annotationDistance, annotationScale, font, emSize, null);
+            var outline = StandardGenerator.GenerateAnnotation(midPoint, label, perpendicular, annotationDistance, annotationScale, font, emSize, null);
             annotations.Add(MarkedElement.Markup(GeneralPath.ShapeOf(outline.GetOutline(), annotationColor), "annotation"));
         }
 
@@ -1169,30 +1230,29 @@ namespace NCDK.Renderers.Generators.Standards
         /// <returns>rendering of unknown bond</returns>
         internal IRenderingElement GenerateDashedBond(Vector2 fromPoint, Vector2 toPoint, double start, double end)
         {
-            Vector2 unit = NewUnitVector(fromPoint, toPoint);
+            var unit = NewUnitVector(fromPoint, toPoint);
 
-            int nDashes = parameters.GetDashSection();
+            var nDashes = parameters.GetDashSection();
 
-            double step = Vector2.Distance(fromPoint, toPoint) / ((3 * nDashes) - 2);
+            var step = Vector2.Distance(fromPoint, toPoint) / ((3 * nDashes) - 2);
 
-            ElementGroup group = new ElementGroup();
+            var group = new ElementGroup();
 
             double distance = 0;
 
             for (int i = 0; i < nDashes; i++)
             {
-
                 // draw a full dash section
                 if (distance > start && distance + step < end)
                 {
                     group.Add(NewLineElement(fromPoint * Scale(unit, distance),
-                            Sum(fromPoint, Scale(unit, distance + step))));
+                              Sum(fromPoint, Scale(unit, distance + step))));
                 }
                 // draw a dash section that starts late
                 else if (distance + step > start && distance + step < end)
                 {
                     group.Add(NewLineElement(Sum(fromPoint, Scale(unit, start)),
-                            Sum(fromPoint, Scale(unit, distance + step))));
+                              Sum(fromPoint, Scale(unit, distance + step))));
                 }
                 // draw a dash section that stops early
                 else if (distance > start && distance < end)
@@ -1208,13 +1268,259 @@ namespace NCDK.Renderers.Generators.Standards
             return group;
         }
 
+        /// <summary>
+        /// Dashed bond, <see cref="BondDisplay.Dash"/>.
+        /// </summary>
+        /// <param name="from">start atom</param>
+        /// <param name="to">end atom</param>
+        /// <returns>the bond glyph</returns>
         IRenderingElement GenerateDashedBond(IAtom from, IAtom to)
         {
-            Vector2 fromPoint = from.Point2D.Value;
-            Vector2 toPoint = to.Point2D.Value;
-            double start = HasDisplayedSymbol(from) ? Vector2.Distance(fromPoint, BackOffPoint(from, to)) : double.NegativeInfinity;
-            double end = HasDisplayedSymbol(to) ? Vector2.Distance(fromPoint, BackOffPoint(to, from)) : double.PositiveInfinity;
+            var fromPoint = from.Point2D.Value;
+            var toPoint = to.Point2D.Value;
+            var start = HasDisplayedSymbol(from) ? Vector2.Distance(fromPoint, BackOffPoint(from, to)) : double.NegativeInfinity;
+            var end = HasDisplayedSymbol(to) ? Vector2.Distance(fromPoint, BackOffPoint(to, from)) : double.PositiveInfinity;
             return GenerateDashedBond(fromPoint, toPoint, start, end);
+        }
+
+        /// <summary>
+        /// Arrow bond, <see cref="BondDisplay.ArrowBegin"/>
+        /// and <see cref="BondDisplay.ArrowBegin"/>
+        /// </summary>
+        /// <param name="from">start atom</param>
+        /// <param name="to">end atom (arrow points here)</param>
+        /// <returns>the bond glyph</returns>
+        IRenderingElement GenerateArrowBond(IAtom from, IAtom to)
+        {
+            var group = new ElementGroup();
+
+            var fromPoint = BackOffPoint(from, to);
+            var toPoint = BackOffPoint(to, from);
+
+            var unit = NewUnitVector(fromPoint, toPoint);
+            var perpendicular = NewPerpendicularVector(unit);
+
+            var arrowHeadLen = Scale(unit, -1.25 * wedgeWidth);
+            var arrowHeadIndent = Scale(unit, -wedgeWidth);
+
+            // four points of the trapezoid
+            var a = toPoint;
+            var b = Sum(Sum(toPoint, arrowHeadLen), Scale(perpendicular, 0.6 * wedgeWidth));
+            var c = Sum(toPoint, arrowHeadIndent);
+            var d = Sum(Sum(toPoint, arrowHeadLen), Scale(perpendicular, -0.6 * wedgeWidth));
+
+            group.Add(NewLineElement(fromPoint, Sum(toPoint, arrowHeadIndent)));
+            group.Add(NewPolygon(foreground, a, b, c, d));
+
+            return group;
+        }
+
+        /// <summary>
+        /// Bold bond, <see cref="BondDisplay.Bold"/>.
+        /// </summary>
+        /// <param name="from">start atom</param>
+        /// <param name="to">end atom</param>
+        /// <returns>the bond glyph</returns>
+        IRenderingElement GenerateBoldBond(IAtom from, IAtom to,
+                                           IReadOnlyList<IBond> fromBonds,
+                                           IReadOnlyList<IBond> toBonds)
+        {
+            var fromPoint = BackOffPoint(from, to);
+            var toPoint = BackOffPoint(to, from);
+
+            var unit = NewUnitVector(fromPoint, toPoint);
+            var perpendicular = NewPerpendicularVector(unit);
+
+            var halfWideEnd = wedgeWidth / 2;
+
+            // four points of the trapezoid
+            var a = Sum(fromPoint, Scale(perpendicular, halfWideEnd));
+            var b = Sum(fromPoint, Scale(perpendicular, -halfWideEnd));
+            var c = Sum(toPoint, Scale(perpendicular, -halfWideEnd));
+            var d = Sum(toPoint, Scale(perpendicular, halfWideEnd));
+
+            // don't adjust wedge if the angle is shallow than this amount
+            var threshold = Vectors.DegreeToRadian(15);
+
+            // if the symbol at the wide end of the wedge is not displayed, we can improve
+            // the aesthetics by adjusting the endpoints based on connected bond angles.
+            if (fancyBoldWedges)
+            {
+                if (!HasDisplayedSymbol(to))
+                {
+                    // slanted wedge
+                    if (toBonds.Count == 1)
+                    {
+                        var toBondNeighbor = toBonds[0];
+                        var toNeighbor = toBondNeighbor.GetOther(to);
+
+                        var refVector = NewUnitVector(toPoint, toNeighbor.Point2D.Value);
+                        bool wideToWide = false;
+
+                        // special case when wedge bonds are in a bridged ring, wide-to-wide end we
+                        // don't want to slant as normal but rather butt up against each wind end
+                        if (AtWideEndOfWedge(to, toBondNeighbor))
+                        {
+                            refVector = Sum(refVector, Negate(unit));
+                            wideToWide = true;
+                        }
+
+                        var theta = Vectors.Angle(refVector, unit);
+
+                        if (theta > threshold && theta + threshold + threshold < Math.PI)
+                        {
+                            c = Intersection(b, NewUnitVector(b, c), toPoint, refVector);
+                            d = Intersection(a, NewUnitVector(a, d), toPoint, refVector);
+
+                            // the points c, d, and e lie on the center point of the line between
+                            // the 'to' and 'toNeighbor'. Since the bond is drawn with a stroke and
+                            // has a thickness we need to move these points slightly to be flush
+                            // with the bond depiction, we only do this if the bond is not
+                            // wide-on-wide with another bold wedge
+                            if (!wideToWide)
+                            {
+                                var nudge = (stroke / 2) / Math.Sin(theta);
+                                c = Sum(c, Scale(unit, nudge));
+                                d = Sum(d, Scale(unit, nudge));
+                            }
+                        }
+                    }
+                }
+
+                if (!HasDisplayedSymbol(from))
+                {
+                    unit = Negate(unit);
+
+                    // slanted wedge
+                    if (fromBonds.Count == 1)
+                    {
+                        var fromNbrBond = fromBonds[0];
+                        var fromNbr = fromNbrBond.GetOther(from);
+
+                        var refVector = NewUnitVector(fromPoint, fromNbr.Point2D.Value);
+                        bool wideToWide = false;
+
+                        // special case when wedge bonds are in a bridged ring, wide-to-wide end we
+                        // don't want to slant as normal but rather butt up against each wind end
+                        if (AtWideEndOfWedge(from, fromNbrBond))
+                        {
+                            refVector = Sum(refVector, Negate(unit));
+                            wideToWide = true;
+                        }
+
+                        var theta = Vectors.Angle(refVector, unit);
+
+                        if (theta > threshold && theta + threshold + threshold < Math.PI)
+                        {
+                            b = Intersection(c, NewUnitVector(c, b), fromPoint, refVector);
+                            a = Intersection(d, NewUnitVector(d, a), fromPoint, refVector);
+
+                            // the points c, d, and e lie on the center point of the line between
+                            // the 'to' and 'toNeighbor'. Since the bond is drawn with a stroke and
+                            // has a thickness we need to move these points slightly to be flush
+                            // with the bond depiction, we only do this if the bond is not
+                            // wide-on-wide with another bold wedge
+                            if (!wideToWide)
+                            {
+                                var nudge = (stroke / 2) / Math.Sin(theta);
+                                a = Sum(a, Scale(unit, nudge));
+                                b = Sum(b, Scale(unit, nudge));
+                            }
+                        }
+                    }
+                }
+            }
+            return NewPolygon(foreground, a, b, c, d);
+        }
+
+        /// <summary>
+        /// Hashed bond, <see cref="BondDisplay.Hash"/>.
+        /// </summary>
+        /// <param name="from">start atom</param>
+        /// <param name="to">end atom</param>
+        /// <returns>the bond glyph</returns>
+        IRenderingElement GenerateHashBond(IAtom from, IAtom to,
+                                           IReadOnlyList<IBond> fromBonds,
+                                           IReadOnlyList<IBond> toBonds)
+        {
+            var fromPoint = from.Point2D.Value;
+            var toPoint = to.Point2D.Value;
+
+            var fromBackOffPoint = BackOffPoint(from, to);
+            var toBackOffPoint = BackOffPoint(to, from);
+
+            var unit = NewUnitVector(fromPoint, toPoint);
+            var perpendicular = NewPerpendicularVector(unit);
+
+            var halfWideEnd = wedgeWidth / 2;
+
+            var adjacent = Vector2.Distance(fromPoint, toPoint);
+
+            var nSections = (int)(adjacent / hashSpacing);
+            var step = adjacent / (nSections - 1);
+
+            var group = new ElementGroup();
+
+            var start = HasDisplayedSymbol(from) ? Vector2.Distance(fromPoint, fromBackOffPoint) : double.NegativeInfinity;
+            var end = HasDisplayedSymbol(to) ? Vector2.Distance(fromPoint, toBackOffPoint) : double.PositiveInfinity;
+
+            // don't adjust wedge if the angle is shallow than this amount
+            var threshold = Vectors.DegreeToRadian(35);
+
+            for (int i = 0; i < nSections; i++)
+            {
+                var distance = i * step;
+
+                // don't draw if we're within an atom symbol
+                if (distance < start || distance > end) continue;
+
+                var interval = Sum(fromPoint, Scale(unit, distance));
+                group.Add(NewLineElement(Sum(interval, Scale(perpendicular, halfWideEnd)),
+                                         Sum(interval, Scale(perpendicular, -halfWideEnd))));
+            }
+
+            return group;
+        }
+
+        /// <summary>
+        /// Dotted bond, <see cref="BondDisplay.Dot"/>.
+        /// </summary>
+        /// <param name="from">start atom</param>
+        /// <param name="to">end atom</param>
+        /// <returns>the bond glyph</returns>
+        IRenderingElement GenerateDotBond(IAtom from, IAtom to)
+        {
+            var fromPoint = from.Point2D.Value;
+            var toPoint = to.Point2D.Value;
+
+            var fromBackOffPoint = BackOffPoint(from, to);
+            var toBackOffPoint = BackOffPoint(to, from);
+
+            var unit = NewUnitVector(fromPoint, toPoint);
+            var perpendicular = NewPerpendicularVector(unit);
+
+            var adjacent = Vector2.Distance(fromPoint, toPoint);
+
+            var nSections = (int)(adjacent / (3 * stroke));
+            var step = adjacent / (nSections - 1);
+
+            var group = new ElementGroup();
+
+            var start = HasDisplayedSymbol(from) ? Vector2.Distance(fromPoint, fromBackOffPoint) : double.NegativeInfinity;
+            var end = HasDisplayedSymbol(to) ? Vector2.Distance(fromPoint, toBackOffPoint) : double.PositiveInfinity;
+
+            for (int i = 0; i < nSections; i++)
+            {
+                var distance = i * step;
+
+                // don't draw if we're within an atom symbol
+                if (distance < start || distance > end) continue;
+
+                var interval = Sum(fromPoint, Scale(unit, distance));
+                group.Add(new OvalElement(new WPF::Point(interval.X, interval.Y), 0.75 * stroke, foreground));
+            }
+
+            return group;
         }
 
         /// <summary>
@@ -1227,6 +1533,24 @@ namespace NCDK.Renderers.Generators.Standards
         internal IRenderingElement NewLineElement(Vector2 a, Vector2 b)
         {
             return new LineElement(ToPoint(a), ToPoint(b), stroke, foreground);
+        }
+
+        /// <summary>
+        /// Utility to create a filled polygon
+        /// </summary>
+        /// <param name="c">color</param>
+        /// <param name="points">the points, last point will be closed to first</param>
+        /// <returns>the polygon</returns>
+        GeneralPath NewPolygon(Color c, params Vector2[] points)
+        {
+            var path = new PathGeometry();
+            var pf = new PathFigure
+            {
+                StartPoint = ToPoint(points[0]),
+                Segments = new PathSegmentCollection(points.Skip(1).Select(n => new LineSegment(ToPoint(n), false)))
+            };
+            path.Figures.Add(pf);
+            return new GeneralPath(path, c);
         }
 
         /// <summary>
@@ -1266,14 +1590,14 @@ namespace NCDK.Renderers.Generators.Standards
             if (symbol == null)
                 return fromPoint;
 
-            Vector2 intersect = ToVector(symbol.GetConvexHull().Intersect(ToPoint(fromPoint), ToPoint(toPoint)));
+            var intersect = ToVector(symbol.GetConvexHull().Intersect(ToPoint(fromPoint), ToPoint(toPoint)));
 
             // does not intersect
             if (intersect == null)
                 return fromPoint;
 
             // move the point away from the intersect by the desired back off amount
-            Vector2 unit = NewUnitVector(fromPoint, toPoint);
+            var unit = NewUnitVector(fromPoint, toPoint);
             return intersect + Scale(unit, backOff);
         }
 
@@ -1287,8 +1611,8 @@ namespace NCDK.Renderers.Generators.Standards
         /// <exception cref="ArgumentException">bonds share no atoms</exception>
         internal static int Winding(IBond bond1, IBond bond2)
         {
-            IAtom atom1 = bond1.Atoms[0];
-            IAtom atom2 = bond1.Atoms[1];
+            var atom1 = bond1.Atoms[0];
+            var atom2 = bond1.Atoms[1];
             if (bond2.Contains(atom1))
             {
                 return Winding(atom2.Point2D.Value, atom1.Point2D.Value, bond2.GetOther(atom1).Point2D.Value);
@@ -1308,12 +1632,14 @@ namespace NCDK.Renderers.Generators.Standards
         /// </summary>
         /// <param name="container">structure representation</param>
         /// <returns>bond to ring map</returns>
-        internal static IDictionary<IBond, IAtomContainer> RingPreferenceMap(IAtomContainer container)
+        internal static IReadOnlyDictionary<IBond, IAtomContainer> RingPreferenceMap(IAtomContainer container, IRingSet smallest)
         {
-            IRingSet relevantRings = Cycles.FindSSSR(container).ToRingSet();
-            var rings = AtomContainerSetManipulator.GetAllAtomContainers(relevantRings).ToList();
+            if (smallest == null)
+                smallest = Cycles.EdgeShort.Find(container).ToRingSet();
 
-            rings.Sort(new RingBondOffsetComparator());
+            var rings = AtomContainerSetManipulator.GetAllAtomContainers(smallest).ToList();
+
+            rings.Sort(new RingBondOffsetComparator(container));
 
             var ringMap = new Dictionary<IBond, IAtomContainer>();
 
@@ -1329,6 +1655,16 @@ namespace NCDK.Renderers.Generators.Standards
             }
 
             return new ReadOnlyDictionary<IBond, IAtomContainer>(ringMap);
+        }
+
+        /// <summary>
+        /// Creates a mapping of bonds to preferred rings (stored as IAtomContainers).
+        /// </summary>
+        /// <param name="container">structure representation</param>
+        /// <returns>bond to ring map</returns>
+        internal static IReadOnlyDictionary<IBond, IAtomContainer> RingPreferenceMap(IAtomContainer container)
+        {
+            return RingPreferenceMap(container, Cycles.EdgeShort.Find(container).ToRingSet());
         }
 
         /// <summary>
@@ -1358,7 +1694,7 @@ namespace NCDK.Renderers.Generators.Standards
 
             if (winding < 0)
             {
-                IAtom[] atoms = new IAtom[n];
+                var atoms = new IAtom[n];
                 for (int i = 0; i < n; i++)
                     atoms[n - i - 1] = container.Atoms[i];
                 container.Atoms.Clear();
@@ -1401,11 +1737,22 @@ namespace NCDK.Renderers.Generators.Standards
                 }
             }
 
-            /// <summary>
-            /// Create a new comparator.
-            /// </summary>
+            private readonly bool hasMetal;
+
+            public RingBondOffsetComparator(IAtomContainer mol)
+            {
+                HasMetal(mol);
+            }
+
             public RingBondOffsetComparator()
-            { }
+            {
+                hasMetal = false;
+            }
+
+            private static bool HasMetal(IAtomContainer mol)
+            {
+                return mol.Atoms.Any(n => PeriodicTable.IsMetal(n.AtomicNumber));
+            }
 
             private static readonly int[] preferedElements = new int[]
             {
@@ -1417,25 +1764,36 @@ namespace NCDK.Renderers.Generators.Standards
             };
 
             /// <inheritdoc/>
-            public int Compare(IAtomContainer containerA, IAtomContainer containerB)
+            public int Compare(IAtomContainer ringa, IAtomContainer ringb)
             {
-                // first order by size
-                int sizeCmp = Ints.Compare(SizePreference(containerA.Atoms.Count),
-                        SizePreference(containerB.Atoms.Count));
-                if (sizeCmp != 0) return sizeCmp;
+                // non-metal rings (e.g. carbo/hetro cycles first)
+                if (hasMetal)
+                {
+                    int cmp = HasMetal(ringa).CompareTo(HasMetal(ringb));
+                    if (cmp != 0)
+                        return cmp;
+                }
+
+                // order by size 6,5,7,4,3,rest
+                var sizeCmp = Ints.Compare(SizePreference(ringa.Atoms.Count),
+                                           SizePreference(ringb.Atoms.Count));
+                if (sizeCmp != 0)
+                    return sizeCmp;
 
                 // now order by number of double bonds
-                int piBondCmp = Ints.Compare(CountNumberOfDoubleBonds(containerA), CountNumberOfDoubleBonds(containerB));
-                if (piBondCmp != 0) return -piBondCmp;
+                var piBondCmp = Ints.Compare(CountNumberOfDoubleBonds(ringa), CountNumberOfDoubleBonds(ringb));
+                if (piBondCmp != 0)
+                    return -piBondCmp;
 
                 // order by element frequencies, all carbon rings are preferred
-                int[] freqA = CountLightElements(containerA);
-                int[] freqB = CountLightElements(containerB);
+                var freqA = CountLightElements(ringa);
+                var freqB = CountLightElements(ringb);
 
                 foreach (var element in preferedElements)
                 {
-                    int elemCmp = Ints.Compare(freqA[element], freqB[element]);
-                    if (elemCmp != 0) return -elemCmp;
+                    var elemCmp = Ints.Compare(freqA[element], freqB[element]);
+                    if (elemCmp != 0)
+                        return -elemCmp;
                 }
 
                 return 0;
@@ -1448,8 +1806,10 @@ namespace NCDK.Renderers.Generators.Standards
             /// <returns>size preference</returns>
             internal static int SizePreference(int size)
             {
-                if (size < 3) throw new ArgumentException("a ring must have at least 3 atoms");
-                if (size > 7) return size;
+                if (size < 3)
+                    throw new ArgumentException("a ring must have at least 3 atoms");
+                if (size > 7)
+                    return size;
                 return PREFERENCE_INDEX[size];
             }
 
@@ -1462,7 +1822,8 @@ namespace NCDK.Renderers.Generators.Standards
             {
                 int count = 0;
                 foreach (var bond in container.Bonds)
-                    if (BondOrder.Double.Equals(bond.Order)) count++;
+                    if (BondOrder.Double.Equals(bond.Order))
+                        count++;
                 return count;
             }
 
@@ -1475,7 +1836,7 @@ namespace NCDK.Renderers.Generators.Standards
             internal static int[] CountLightElements(IAtomContainer container)
             {
                 // count elements up to Argon (number=18)
-                int[] freq = new int[19];
+                var freq = new int[19];
                 foreach (var atom in container.Atoms)
                 {
                     if (atom.AtomicNumber >= 0 && atom.AtomicNumber < 19)

@@ -136,8 +136,17 @@ namespace NCDK.Renderers.Generators.Standards
 
             var annotations = new ElementGroup();
 
-            var symbols = GenerateAtomSymbols(container, symbolRemap, visibility, parameters, annotations, foreground, stroke);
-            var bondElements = StandardBondGenerator.GenerateBonds(container, symbols, parameters, stroke, font, emSize, annotations);
+            var donutGenerator = new StandardDonutGenerator(container, font, emSize, parameters, stroke);
+            var donuts = donutGenerator.Generate();
+
+            var symbols = GenerateAtomSymbols(container, symbolRemap,
+                                              visibility, parameters,
+                                              annotations, foreground,
+                                              stroke, donutGenerator);
+            var bondElements = StandardBondGenerator.GenerateBonds(container, symbols,
+                                                                   parameters, stroke,
+                                                                   font, emSize, annotations,
+                                                                   donutGenerator);
 
             var style = parameters.GetHighlighting();
             var glowWidth = parameters.GetOuterGlowWidth();
@@ -168,6 +177,9 @@ namespace NCDK.Renderers.Generators.Standards
                     middleLayer.Add(MarkedElement.MarkupBond(bondElements[i], bond));
                 }
             }
+
+            // bonds for delocalised aromatic
+            frontLayer.Add(donuts);
 
             // convert the atom symbols to IRenderingElements
             for (int i = 0; i < container.Atoms.Count; i++)
@@ -262,7 +274,8 @@ namespace NCDK.Renderers.Generators.Standards
                                                 RendererModel parameters, 
                                                 ElementGroup annotations,
                                                 Color foreground,
-                                                double stroke)
+                                                double stroke,
+                                                StandardDonutGenerator donutGen)
         {
             var scale = parameters.GetScale();
             var annDist = parameters.GetAnnotationDistance() * (parameters.GetBondLength() / scale);
@@ -321,6 +334,16 @@ namespace NCDK.Renderers.Generators.Standards
                     if (remapped)
                     {
                         symbols[i] = atomGenerator.GenerateAbbreviatedSymbol(symbolRemap[atom], hPosition);
+                    }
+                    else if (donutGen.IsChargeDelocalised(atom))
+                    {
+                        var charge = atom.FormalCharge;
+                        atom.FormalCharge = 0;
+                        // can't think of a better way to handle this without API
+                        // change to symbol visibility
+                        if (atom.AtomicNumber != 6)
+                            symbols[i] = atomGenerator.GenerateSymbol(container, atom, hPosition, parameters);
+                        atom.FormalCharge = charge;
                     }
                     else
                     {

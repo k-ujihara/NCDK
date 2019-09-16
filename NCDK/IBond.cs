@@ -121,7 +121,16 @@ namespace NCDK
         /// <summary>
         /// The stereo descriptor for this bond.
         /// </summary>
+        /// <remarks>
+        /// <note type="note">This function will also modify the bond display style.</note>
+        /// </remarks>
+        /// <seealso cref="Display"/>
         BondStereo Stereo { get; set; }
+
+        /// <summary>
+        /// The bond display style.
+        /// </summary>
+        BondDisplay Display { get; set; }
 
         /// <summary>
         /// Calculate the geometric 2D center of the bond.

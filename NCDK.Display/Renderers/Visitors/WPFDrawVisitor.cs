@@ -193,7 +193,8 @@ namespace NCDK.Renderers.Visitors
         {
             // scale the stroke by zoom + scale (both included in the AffineTransform)
             var width = line.Width;
-            if (width < minStroke) width = minStroke;
+            if (width < minStroke)
+                width = minStroke;
 
             var pen = GetPen(line.Color, width);
 
@@ -219,9 +220,16 @@ namespace NCDK.Renderers.Visitors
             }
             else
             {
+                // scale the stroke by zoom + scale (both included in the AffineTransform)
+                var width = oval.Stroke;
+                if (width < minStroke)
+                    width = minStroke;
+
+                var pen = GetPen(oval.Color, width);
+
                 this.dc.DrawEllipse(
                     null,
-                    GetPen(oval.Color, 1),
+                    pen,
                     new WPF.Point(center.X - radius, center.Y - radius), diameter, diameter);
             }
         }

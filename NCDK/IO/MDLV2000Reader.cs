@@ -1599,7 +1599,7 @@ namespace NCDK.IO
             int sign = 1;
             int result = 0;
             char c;
-            switch ((c = line[index]))
+            switch (c = line[index])
             {
                 case ' ':
                     break;
@@ -1621,13 +1621,17 @@ namespace NCDK.IO
                 default:
                     return 0;
             }
-            switch ((c = line[index + 1]))
+            if (index + 1 == line.Length)
+                return sign * result;
+            switch (c = line[index + 1])
             {
                 case ' ':
-                    if (result > 0) return sign * result;
+                    if (result > 0)
+                        return sign * result;
                     break;
                 case '-':
-                    if (result > 0) return sign * result;
+                    if (result > 0)
+                        return sign * result;
                     sign = -1;
                     break;
                 case '0':
@@ -1645,14 +1649,13 @@ namespace NCDK.IO
                 default:
                     return sign * result;
             }
-            switch ((c = line[index + 2]))
+            if (index + 2 == line.Length)
+                return sign * result;
+            switch (c = line[index + 2])
             {
                 case ' ':
-                    if (result > 0) return sign * result;
-                    break;
-                case '-':
-                    if (result > 0) return sign * result;
-                    sign = -1;
+                    if (result > 0)
+                        return sign * result;
                     break;
                 case '0':
                 case '1':
@@ -1682,9 +1685,8 @@ namespace NCDK.IO
         /// <seealso cref="IPseudoAtom.Label"/>
         internal static void Label(IAtomContainer container, int index, string label)
         {
-            IAtom atom = container.Atoms[index];
-            IPseudoAtom pseudoAtom = atom is IPseudoAtom ? (IPseudoAtom)atom : container.Builder
-                   .NewPseudoAtom();
+            var atom = container.Atoms[index];
+            var pseudoAtom = atom is IPseudoAtom ? (IPseudoAtom)atom : container.Builder.NewPseudoAtom();
             if (atom == pseudoAtom)
             {
                 pseudoAtom.Label = label;

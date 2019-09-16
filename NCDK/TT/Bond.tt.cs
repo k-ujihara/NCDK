@@ -58,6 +58,7 @@ namespace NCDK.Default
     {
         internal BondOrder order;
         internal BondStereo stereo;
+		internal BondDisplay display;
         private IList<IAtom> atoms;
         
         /// <summary>
@@ -234,9 +235,42 @@ namespace NCDK.Default
             set
             {
                 this.stereo = value;
+				switch (stereo) 
+				{
+					case BondStereo.Up:
+						this.display = BondDisplay.WedgeBegin;
+						break;
+					case BondStereo.Down:
+						this.display = BondDisplay.WedgedHashBegin;
+						break;
+					case BondStereo.UpInverted:
+						this.display = BondDisplay.WedgeEnd;
+						break;
+					case BondStereo.DownInverted:
+						this.display = BondDisplay.WedgedHashEnd;
+						break;
+					case BondStereo.UpOrDown:
+					case BondStereo.UpOrDownInverted:
+						this.display = BondDisplay.Wavy;
+						break;
+				}
                 NotifyChanged();
             }
         }
+
+		/// <inheritdoc/>
+		public virtual BondDisplay Display
+		{ 
+			get
+			{
+				return this.display;
+			}
+			set
+			{
+				this.display = value;
+                NotifyChanged();
+			}
+		}
 
         /// <inheritdoc/>
         public virtual Vector2 GetGeometric2DCenter()
@@ -471,6 +505,7 @@ namespace NCDK.Silent
     {
         internal BondOrder order;
         internal BondStereo stereo;
+		internal BondDisplay display;
         private IList<IAtom> atoms;
         
         /// <summary>
@@ -649,8 +684,40 @@ namespace NCDK.Silent
             set
             {
                 this.stereo = value;
+				switch (stereo) 
+				{
+					case BondStereo.Up:
+						this.display = BondDisplay.WedgeBegin;
+						break;
+					case BondStereo.Down:
+						this.display = BondDisplay.WedgedHashBegin;
+						break;
+					case BondStereo.UpInverted:
+						this.display = BondDisplay.WedgeEnd;
+						break;
+					case BondStereo.DownInverted:
+						this.display = BondDisplay.WedgedHashEnd;
+						break;
+					case BondStereo.UpOrDown:
+					case BondStereo.UpOrDownInverted:
+						this.display = BondDisplay.Wavy;
+						break;
+				}
             }
         }
+
+		/// <inheritdoc/>
+		public virtual BondDisplay Display
+		{ 
+			get
+			{
+				return this.display;
+			}
+			set
+			{
+				this.display = value;
+			}
+		}
 
         /// <inheritdoc/>
         public virtual Vector2 GetGeometric2DCenter()

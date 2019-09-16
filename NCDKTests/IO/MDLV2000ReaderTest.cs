@@ -1478,7 +1478,7 @@ namespace NCDK.IO
             using (var reader = new MDLV2000Reader(ResourceLoader.GetAsStream("NCDK.Data.MDL.ChEBI_29293.mol")))
             {
                 container = reader.Read(builder.NewAtomContainer());
-           }
+            }
             Assert.AreEqual(0, container.Atoms[0].ImplicitHydrogenCount);
             Assert.AreEqual(0, container.Atoms[1].ImplicitHydrogenCount);
         }
@@ -1874,6 +1874,26 @@ namespace NCDK.IO
             };
             var atomContainer = mdlv2000Reader.Read(new Silent.AtomContainer());
             Assert.AreEqual(17, atomContainer.Atoms.Count);
+        }
+
+        [TestMethod()]
+        public void Test()
+        {
+            const string input = "\n" +
+                "Structure query\n" +
+                "\n" +
+                "  1  0  0  0  0  0  0  0  0  0999 V2000\n" +
+                " 2430.7100 2427.0000    0.0000 C   0  0  0  0  0  0\n" +
+                "A   1\n" +
+                "Blah\n" +
+                "M  END";
+            var bldr = CDK.Builder;
+            using (var mdlr = new MDLV2000Reader(new StringReader(input)))
+            {
+                IAtomContainer mol = mdlr.Read(bldr.NewAtomContainer());
+                Assert.IsInstanceOfType(mol.Atoms[0], typeof(IPseudoAtom));
+                Assert.AreEqual("Blah", ((IPseudoAtom)mol.Atoms[0]).Label);
+            }
         }
     }
 }

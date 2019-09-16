@@ -141,6 +141,13 @@ namespace NCDK.Isomorphisms.Matchers
             this.stereo = stereo;
         }
 
+        /// <summary>Not used for query bonds.</summary>
+        public override BondDisplay Display
+        {
+            get => 0;
+            set { }
+        }
+
         public virtual bool Matches(IBond bond)
         {
             return Expression.Matches(bond);

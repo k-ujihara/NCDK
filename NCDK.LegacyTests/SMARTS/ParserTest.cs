@@ -26,14 +26,21 @@ namespace NCDK.SMARTS
 {
     // @author Egon Willighagen
     // @cdk.module test-smarts
-    // @cdk.require ant1.6
     public class ParserTest : CDKTestCase
     {
+        private sealed class InvalidSmarts : Exception
+        {
+            public InvalidSmarts(string message)
+                : base(message)
+            {
+            }
+        }
+
         private void Parse(string smarts, SmartsFlaver flav)
         {
             var builder = CDK.Builder;
             if (!Smarts.Parse(builder.NewAtomContainer(), smarts, flav))
-                throw new Exception(Smarts.GetLastErrorMessage());
+                throw new InvalidSmarts(Smarts.GetLastErrorMessage());
         }
 
         private void Parse(string smarts)

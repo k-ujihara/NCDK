@@ -995,7 +995,7 @@ namespace NCDK.SMARTS
         }
 
         [TestMethod()]
-    public void DegreeRange()
+        public void DegreeRange()
         {
             Expr expr = GetAtomExpr("[D{1-3}]");
             Assert.AreEqual(GetOr(GetExpr(ExprType.Degree, 1),
@@ -1013,7 +1013,7 @@ namespace NCDK.SMARTS
         }
 
         [TestMethod()]
-    public void TotalHCountRange()
+        public void TotalHCountRange()
         {
             Expr expr = GetAtomExpr("[H{1-3}]");
             Assert.AreEqual(GetOr(GetExpr(ExprType.TotalHCount, 1),
@@ -1021,7 +1021,7 @@ namespace NCDK.SMARTS
                                       GetExpr(ExprType.TotalHCount, 3))), expr);
         }
         [TestMethod()]
-    public void ValenceRange()
+        public void ValenceRange()
         {
             Expr expr = GetAtomExpr("[v{1-3}]");
             Assert.AreEqual(GetOr(GetExpr(ExprType.Valence, 1),
@@ -1029,7 +1029,7 @@ namespace NCDK.SMARTS
                                       GetExpr(ExprType.Valence, 3))), expr);
         }
         [TestMethod()]
-    public void RingBondCountRange()
+        public void RingBondCountRange()
         {
             Expr expr = GetAtomExpr("[x{2-4}]");
             Assert.AreEqual(GetOr(GetExpr(ExprType.RingBondCount, 2),
@@ -1038,12 +1038,51 @@ namespace NCDK.SMARTS
         }
 
         [TestMethod()]
-    public void RingSmallestSizeCountRange()
+        public void RingSmallestSizeCountRange()
         {
             Expr expr = GetAtomExpr("[r{5-7}]");
             Assert.AreEqual(GetOr(GetExpr(ExprType.RingSmallest, 5),
-                                   GetOr(GetExpr(ExprType.RingSmallest, 6),
-                                      GetExpr(ExprType.RingSmallest, 7))), expr);
+                                  GetOr(GetExpr(ExprType.RingSmallest, 6),
+                                        GetExpr(ExprType.RingSmallest, 7))), expr);
+        }
+
+        [TestMethod()]
+        public void SupportInsaturatedByDefault()
+        {
+            Expr expr = GetAtomExpr("[i]");
+            Assert.AreEqual(GetExpr(ExprType.Unsaturated), expr);
+        }
+
+        [TestMethod()]
+        public void SupportHGt()
+        {
+            Expr expr = GetAtomExpr("[H>1]");
+            Assert.AreEqual(GetAnd(GetExpr(ExprType.TotalHCount, 0).Negate(),
+                                   GetExpr(ExprType.TotalHCount, 1).Negate()), expr);
+        }
+
+        [TestMethod()]
+        public void SupportHLt()
+        {
+            Expr expr = GetAtomExpr("[H<2]");
+            Assert.AreEqual(GetOr(GetExpr(ExprType.TotalHCount, 0),
+                                  GetExpr(ExprType.TotalHCount, 1)), expr);
+        }
+
+        [TestMethod()]
+        public void SupportDGt()
+        {
+            Expr expr = GetAtomExpr("[D>1]");
+            Assert.AreEqual(GetAnd(GetExpr(ExprType.Degree, 0).Negate(),
+                                   GetExpr(ExprType.Degree, 1).Negate()), expr);
+        }
+
+        [TestMethod()]
+        public void SupportDLt()
+        {
+            Expr expr = GetAtomExpr("[D<2]");
+            Assert.AreEqual(GetOr(GetExpr(ExprType.Degree, 0),
+                                  GetExpr(ExprType.Degree, 1)), expr);
         }
     }
 }

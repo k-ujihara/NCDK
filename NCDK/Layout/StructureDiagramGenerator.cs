@@ -1,4 +1,4 @@
-/* Copyright (C) 1997-2007  Christoph Steinbeck <steinbeck@users.sf.net>
+﻿/* Copyright (C) 1997-2007  Christoph Steinbeck <steinbeck@users.sf.net>
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -64,8 +64,13 @@ namespace NCDK.Layout
     // @cdk.bug 1788686
     public class StructureDiagramGenerator
     {
+        internal const double DefaultBondLength = 1.5;
+        static Vector2 DefaultBondVector { get; } = new Vector2(0, 1);
+        private static IdentityTemplateLibrary DefaultTempleteLibrary =
+            IdentityTemplateLibrary.LoadFromResource("custom-templates.smi")
+                .Add(IdentityTemplateLibrary.LoadFromResource("chebi-ring-templates.smi"));
+
         private static readonly double RAD_30 = Vectors.DegreeToRadian(-30);
-        public const double DefaultBondLength = 1.5;
 
         private IAtomContainer molecule;
         private IRingSet sssr;
@@ -100,11 +105,6 @@ namespace NCDK.Layout
         /// Identity templates - for laying out primary ring system.
         /// </summary>
         private IdentityTemplateLibrary identityLibrary;
-
-        public static Vector2 DefaultBondVector { get; set; } = new Vector2(0, 1);
-        private static IdentityTemplateLibrary DefaultTempleteLibrary =
-            IdentityTemplateLibrary.LoadFromResource("custom-templates.smi")
-            .Add(IdentityTemplateLibrary.LoadFromResource("chebi-ring-templates.smi"));
 
         public StructureDiagramGenerator()
             : this(DefaultTempleteLibrary)
@@ -907,10 +907,10 @@ namespace NCDK.Layout
                     }
                 }
 
-                // no attachment point, rorate to maximise horizontal spread etc.
+                // no attachment point, rotate to maximise horizontal spread etc.
                 if (begAttach == null)
                 {
-                    SelectOrientation(molecule, 2 * DefaultBondLength, 1);
+                    SelectOrientation(molecule, DefaultBondLength, 1);
                 }
                 // use attachment point bond to rotate
                 else
@@ -966,6 +966,35 @@ namespace NCDK.Layout
         }
 
         /// <summary>
+        /// Calculates a histogram of bond directions, this allows us to select an
+        /// orientation that has bonds at nice angles (e.g. 60/120 deg). The limit
+        /// parameter is used to quantize the vectors within a range. For example
+        /// a limit of 60 will fill the histogram 0..59 and Bond's orientated at 0,
+        /// 60, 120 degrees will all be counted in the 0 bucket.
+        /// </summary>
+        /// <param name="mol">molecule</param>
+        /// <param name="counts">the histogram is stored here, will be cleared</param>
+        /// <param name="lim">wrap angles to the (180 max)</param>
+        private static void CalcDirectionHistogram(IAtomContainer mol,
+                                                   int[] counts,
+                                                   int lim)
+        {
+            if (lim > 180)
+                throw new ArgumentException("limit must be ≤ 180", nameof(lim));
+            Arrays.Fill(counts, 0);
+            foreach (var bond in mol.Bonds)
+            {
+                var beg = bond.Begin.Point2D.Value;
+                var end = bond.End.Point2D.Value;
+                var vec = new Vector2(end.X - beg.X, end.Y - beg.Y);
+                if (vec.X < 0)
+                    vec = -vec;
+                double angle = Math.PI / 2 + Math.Atan2(vec.Y, vec.X);
+                counts[(int)(Math.Round(Vectors.RadianToDegree(angle)) % lim)]++;
+            }
+        }
+
+        /// <summary>
         /// Select the global orientation of the layout. We click round at 30 degree increments
         /// and select the orientation that a) is the widest or b) has the most bonds aligned to
         /// +/- 30 degrees <token>cdk-cite-Clark06</token>.
@@ -975,29 +1004,46 @@ namespace NCDK.Layout
         /// <param name="alignDiff">parameter at which we consider orientations equally good (bond align select)</param>
         private static void SelectOrientation(IAtomContainer mol, double widthDiff, int alignDiff)
         {
+            var dirhist = new int[180];
             var minmax = GeometryUtil.GetMinMax(mol);
             var pivot = new Vector2(minmax[0] + ((minmax[2] - minmax[0]) / 2), minmax[1] + ((minmax[3] - minmax[1]) / 2));
 
+            // initial alignment to snapping bonds 60 degrees
+            CalcDirectionHistogram(mol, dirhist, 60);
+            int max = 0;
+            for (int i = 1; i < dirhist.Length; i++)
+                if (dirhist[i] > dirhist[max])
+                    max = i;
+            // only apply if 50% of the bonds are pointing the same 'wrapped'
+            // direction, max=0 means already aligned
+            if (max != 0 && (dirhist[max] / (double)mol.Bonds.Count) > 0.5)
+                GeometryUtil.Rotate(mol, pivot, Vectors.DegreeToRadian(60 - max));
+
             var maxWidth = minmax[2] - minmax[0];
-            var maxAligned = CountAlignedBonds(mol);
+            var begWidth = maxWidth;
+            CalcDirectionHistogram(mol, dirhist, 180);
+            var maxAligned = dirhist[60] + dirhist[120];
 
             var coords = new Vector2[mol.Atoms.Count];
             for (int i = 0; i < mol.Atoms.Count; i++)
                 coords[i] = mol.Atoms[i].Point2D.Value;
 
-            var step = Vectors.DegreeToRadian(30);
-            var numSteps = (360 / 30) - 1;
-            for (int i = 0; i < numSteps; i++)
+            const double step = Math.PI / 3;
+            const double tau = 2 * Math.PI;
+            double total = 0;
+
+            while (total < tau)
             {
+                total += step;
                 GeometryUtil.Rotate(mol, pivot, step);
                 minmax = GeometryUtil.GetMinMax(mol);
 
                 var width = minmax[2] - minmax[0];
-                var delta = Math.Abs(width - maxWidth);
+                var delta = Math.Abs(width - begWidth);
 
                 // if this orientation is significantly wider than the
                 // best so far select it
-                if (delta > widthDiff && width > maxWidth)
+                if (delta >= widthDiff && width > maxWidth)
                 {
                     maxWidth = width;
                     for (int j = 0; j < mol.Atoms.Count; j++)
@@ -1007,7 +1053,8 @@ namespace NCDK.Layout
                 // the number of bonds aligned to 30 deg (aesthetics)
                 else if (delta <= widthDiff)
                 {
-                    var aligned = CountAlignedBonds(mol);
+                    CalcDirectionHistogram(mol, dirhist, 180);
+                    var aligned = dirhist[60] + dirhist[120];
                     var alignDelta = aligned - maxAligned;
                     if (alignDelta > alignDiff || (alignDelta == 0 && width > maxWidth))
                     {
@@ -1022,37 +1069,6 @@ namespace NCDK.Layout
             // set the best coordinates we found
             for (int i = 0; i < mol.Atoms.Count; i++)
                 mol.Atoms[i].Point2D = coords[i];
-        }
-
-        /// <summary>
-        /// Count the number of bonds aligned to 30 degrees.
-        /// </summary>
-        /// <param name="mol">molecule</param>
-        /// <returns>number of aligned bonds</returns>
-        private static int CountAlignedBonds(IAtomContainer mol)
-        {
-            var ref_ = Vectors.DegreeToRadian(30);
-            var diff = Vectors.DegreeToRadian(1);
-            int count = 0;
-            foreach (var bond in mol.Bonds)
-            {
-                var beg = bond.Begin.Point2D.Value;
-                var end = bond.End.Point2D.Value;
-                if (beg.X > end.X)
-                {
-                    var tmp = beg;
-                    beg = end;
-                    end = tmp;
-                }
-                var vec = new Vector2(end.X - beg.X, end.Y - beg.Y);
-                var angle = Math.Atan2(vec.Y, vec.X);
-
-                if (Math.Abs(angle) - ref_ < diff)
-                {
-                    count++;
-                }
-            }
-            return count;
         }
 
         private double AdjustForHydrogen(IAtom atom, IAtomContainer mol)

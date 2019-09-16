@@ -23,6 +23,7 @@ using NCDK.Numerics;
 using NCDK.Tools;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 
@@ -118,29 +119,29 @@ namespace NCDK.Geometries.Surface
             }
 
             // get r_f and geometric center
-            Vector3 cp = new Vector3(0, 0, 0);
+            var cp = new Vector3(0, 0, 0);
             double maxRadius = 0;
-            for (int i = 0; i < atoms.Length; i++)
+            foreach (var atom in atoms)
             {
-                double vdwr = PeriodicTable.GetVdwRadius(atoms[i].Symbol).Value;
+                var vdwr = PeriodicTable.GetVdwRadius(atom.Symbol).Value;
                 if (vdwr + solventRadius > maxRadius)
-                    maxRadius = PeriodicTable.GetVdwRadius(atoms[i].Symbol).Value + solventRadius;
+                    maxRadius = PeriodicTable.GetVdwRadius(atom.Symbol).Value + solventRadius;
 
-                cp.X = cp.X + atoms[i].Point3D.Value.X;
-                cp.Y = cp.Y + atoms[i].Point3D.Value.Y;
-                cp.Z = cp.Z + atoms[i].Point3D.Value.Z;
+                cp.X = cp.X + atom.Point3D.Value.X;
+                cp.Y = cp.Y + atom.Point3D.Value.Y;
+                cp.Z = cp.Z + atom.Point3D.Value.Z;
             }
             cp.X = cp.X / atoms.Length;
             cp.Y = cp.Y / atoms.Length;
             cp.Z = cp.Z / atoms.Length;
 
             // do the tesselation
-            Tessellate tess = new Tessellate("ico", tesslevel);
+            var tess = new Tessellate("ico", tesslevel);
             tess.DoTessellate();
-            Trace.TraceInformation("Got tesselation, number of triangles = " + tess.GetNumberOfTriangles());
+            Trace.TraceInformation($"Got tesselation, number of triangles = {tess.GetNumberOfTriangles()}");
 
             // get neighbor list
-            NeighborList nbrlist = new NeighborList(atoms, maxRadius + solventRadius);
+            var nbrlist = new NeighborList(atoms, maxRadius + solventRadius);
             Trace.TraceInformation("Got neighbor list");
 
             // loop over atoms and get surface points
@@ -150,8 +151,8 @@ namespace NCDK.Geometries.Surface
 
             for (int i = 0; i < atoms.Length; i++)
             {
-                int pointDensity = tess.GetNumberOfTriangles() * 3;
-                Vector3[][] points = AtomicSurfacePoints(nbrlist, i, atoms[i], tess);
+                var pointDensity = tess.GetNumberOfTriangles() * 3;
+                var points = AtomicSurfacePoints(nbrlist, i, atoms[i], tess);
                 TranslatePoints(i, points, pointDensity, atoms[i], cp);
             }
             Trace.TraceInformation("Obtained points, areas and volumes");
@@ -167,21 +168,33 @@ namespace NCDK.Geometries.Surface
         /// <returns>An array of Vector3 objects</returns>
         public Vector3[] GetAllSurfacePoints()
         {
-            int npt = 0;
-            for (int i = 0; i < this.surfPoints.Length; i++)
-                npt += this.surfPoints[i].Count;
-            Vector3[] ret = new Vector3[npt];
+            var npt = surfPoints.Sum(n => n.Count);
+            var ret = new Vector3[npt];
             int j = 0;
-            for (int i = 0; i < this.surfPoints.Length; i++)
+            foreach (var points in this.surfPoints)
             {
-                List<Vector3> arl = this.surfPoints[i];
-                foreach (var v in arl)
+                foreach (var p in points)
                 {
-                    ret[j] = v;
-                    j++;
+                    ret[j++] = p;
                 }
             }
-            return (ret);
+            return ret;
+        }
+
+        /// <summary>
+        /// Get the map from atom to surface points. If an atom does not appear in
+        /// the map it is buried. Atoms may share surface points with other atoms.
+        /// </summary>
+        /// <returns>surface atoms and associated points on the surface</returns>
+        public IReadOnlyDictionary<IAtom, IReadOnlyList<Vector3>> GetAtomSurfaceMap()
+        {
+            var map = new Dictionary<IAtom, IReadOnlyList<Vector3>>();
+            for (int i = 0; i < this.surfPoints.Length; i++)
+            {
+                if (this.surfPoints[i].Any())
+                   map[this.atoms[i]] = this.surfPoints[i];
+            }
+            return map;
         }
 
         /// <summary>
@@ -194,14 +207,8 @@ namespace NCDK.Geometries.Surface
         public Vector3[] GetSurfacePoints(int atomIdx)
         {
             if (atomIdx >= this.surfPoints.Length)
-            {
                 throw new CDKException("Atom index was out of bounds");
-            }
-            List<Vector3> arl = this.surfPoints[atomIdx];
-            Vector3[] ret = new Vector3[arl.Count];
-            for (int i = 0; i < arl.Count; i++)
-                ret[i] = arl[i];
-            return (ret);
+            return this.surfPoints[atomIdx].ToArray();
         }
 
         /// <summary>
@@ -214,10 +221,8 @@ namespace NCDK.Geometries.Surface
         public double GetSurfaceArea(int atomIdx)
         {
             if (atomIdx >= this.surfPoints.Length)
-            {
                 throw new CDKException("Atom index was out of bounds");
-            }
-            return (this.areas[atomIdx]);
+            return this.areas[atomIdx];
         }
 
         /// <summary>
@@ -226,7 +231,7 @@ namespace NCDK.Geometries.Surface
         /// <returns>An array of double giving the surface areas of all the atoms</returns>
         public double[] GetAllSurfaceAreas()
         {
-            return (this.areas);
+            return this.areas;
         }
 
         /// <summary>
@@ -236,60 +241,58 @@ namespace NCDK.Geometries.Surface
         /// which the surface was calculated for</returns>
         public double GetTotalSurfaceArea()
         {
-            double ta = 0.0;
-            for (int i = 0; i < this.areas.Length; i++)
-                ta += this.areas[i];
-            return (ta);
+            return this.areas.Sum();
         }
 
         private void TranslatePoints(int atmIdx, Vector3[][] points, int pointDensity, IAtom atom, Vector3 cp)
         {
-            double totalRadius = PeriodicTable.GetVdwRadius(atom.Symbol).Value + solventRadius;
+            var totalRadius = PeriodicTable.GetVdwRadius(atom.Symbol).Value + solventRadius;
 
-            double area = 4 * Math.PI * (totalRadius * totalRadius) * points.Length / pointDensity;
+            var area = 4 * Math.PI * (totalRadius * totalRadius) * points.Length / pointDensity;
 
             double sumx = 0.0;
             double sumy = 0.0;
             double sumz = 0.0;
-            for (int i = 0; i < points.Length; i++)
+            foreach (var point in points)
             {
-                Vector3 p = points[i][1];
+                var p = point[1];
                 sumx += p.X;
                 sumy += p.Y;
                 sumz += p.Z;
             }
-            double vconst = 4.0 / 3.0 * Math.PI / (double)pointDensity;
-            double dotp1 = (atom.Point3D.Value.X - cp.X) * sumx + (atom.Point3D.Value.Y - cp.Y) * sumy
-                    + (atom.Point3D.Value.Z - cp.Z) * sumz;
-            double volume = vconst * (totalRadius * totalRadius) * dotp1 + (totalRadius * totalRadius * totalRadius) * points.Length;
+            var vconst = 4.0 / 3.0 * Math.PI / (double)pointDensity;
+            var dotp1 = (atom.Point3D.Value.X - cp.X) * sumx
+                         + (atom.Point3D.Value.Y - cp.Y) * sumy
+                         + (atom.Point3D.Value.Z - cp.Z) * sumz;
+            var volume = vconst * (totalRadius * totalRadius) * dotp1 + (totalRadius * totalRadius * totalRadius) * points.Length;
 
             this.areas[atmIdx] = area;
             this.volumes[atmIdx] = volume;
 
-            List<Vector3> tmp = new List<Vector3>();
-            for (int i = 0; i < points.Length; i++)
-                tmp.Add(points[i][0]);
+            var tmp = new List<Vector3>();
+            foreach (var point in points)
+                tmp.Add(point[0]);
             this.surfPoints[atmIdx] = tmp;
         }
 
         private Vector3[][] AtomicSurfacePoints(NeighborList nbrlist, int currAtomIdx, IAtom atom, Tessellate tess)
         {
-            double totalRadius = PeriodicTable.GetVdwRadius(atom.Symbol).Value + solventRadius;
-            double totalRadius2 = totalRadius * totalRadius;
-            double twiceTotalRadius = 2 * totalRadius;
+            var totalRadius = PeriodicTable.GetVdwRadius(atom.Symbol).Value + solventRadius;
+            var totalRadius2 = totalRadius * totalRadius;
+            var twiceTotalRadius = 2 * totalRadius;
 
-            int[] nlist = nbrlist.GetNeighbors(currAtomIdx);
-            double[][] data = Arrays.CreateJagged<double>(nlist.Length, 4);
+            var nlist = nbrlist.GetNeighbors(currAtomIdx);
+            var data = Arrays.CreateJagged<double>(nlist.Length, 4);
             for (int i = 0; i < nlist.Length; i++)
             {
-                double x12 = atoms[nlist[i]].Point3D.Value.X - atom.Point3D.Value.X;
-                double y12 = atoms[nlist[i]].Point3D.Value.Y - atom.Point3D.Value.Y;
-                double z12 = atoms[nlist[i]].Point3D.Value.Z - atom.Point3D.Value.Z;
+                var x12 = atoms[nlist[i]].Point3D.Value.X - atom.Point3D.Value.X;
+                var y12 = atoms[nlist[i]].Point3D.Value.Y - atom.Point3D.Value.Y;
+                var z12 = atoms[nlist[i]].Point3D.Value.Z - atom.Point3D.Value.Z;
 
-                double d2 = x12 * x12 + y12 * y12 + z12 * z12;
-                double tmp = PeriodicTable.GetVdwRadius(atoms[nlist[i]].Symbol).Value + solventRadius;
+                var d2 = x12 * x12 + y12 * y12 + z12 * z12;
+                var tmp = PeriodicTable.GetVdwRadius(atoms[nlist[i]].Symbol).Value + solventRadius;
                 tmp = tmp * tmp;
-                double thresh = (d2 + totalRadius2 - tmp) / twiceTotalRadius;
+                var thresh = (d2 + totalRadius2 - tmp) / twiceTotalRadius;
 
                 data[i][0] = x12;
                 data[i][1] = y12;
@@ -297,25 +300,26 @@ namespace NCDK.Geometries.Surface
                 data[i][3] = thresh;
             }
 
-            Vector3[] tessPoints = tess.GetTessAsPoint3ds();
-            List<Vector3[]> points = new List<Vector3[]>();
-            for (int i = 0; i < tessPoints.Length; i++)
+            var tessPoints = tess.GetTessAsPoint3ds();
+            var points = new List<Vector3[]>();
+            foreach (var pt in tessPoints)
             {
-                Vector3 pt = tessPoints[i];
                 bool buried = false;
-                for (int j = 0; j < data.Length; j++)
+                foreach (var datum in data)
                 {
-                    if (data[j][0] * pt.X + data[j][1] * pt.Y + data[j][2] * pt.Z > data[j][3])
+                    if (datum[0] * pt.X + datum[1] * pt.Y + datum[2] * pt.Z > datum[3])
                     {
                         buried = true;
                         break;
                     }
                 }
-                if (buried == false)
+                if (!buried)
                 {
-                    Vector3[] tmp = new Vector3[2];
-                    tmp[0] = new Vector3(totalRadius * pt.X + atom.Point3D.Value.X, totalRadius * pt.Y
-                            + atom.Point3D.Value.Y, totalRadius * pt.Z + atom.Point3D.Value.Z);
+                    var tmp = new Vector3[2];
+                    tmp[0] = new Vector3(
+                        totalRadius * pt.X + atom.Point3D.Value.X, 
+                        totalRadius * pt.Y + atom.Point3D.Value.Y,
+                        totalRadius * pt.Z + atom.Point3D.Value.Z);
                     tmp[1] = pt;
                     points.Add(tmp);
                 }
@@ -324,14 +328,14 @@ namespace NCDK.Geometries.Surface
             // the first column contains the transformed points
             // and the second column contains the points from the
             // original unit tesselation
-            Vector3[][] ret = Arrays.CreateJagged<Vector3>(points.Count, 2);
+            var ret = Arrays.CreateJagged<Vector3>(points.Count, 2);
             for (int i = 0; i < points.Count; i++)
             {
-                Vector3[] tmp = points[i];
+                var tmp = points[i];
                 ret[i][0] = tmp[0];
                 ret[i][1] = tmp[1];
             }
-            return (ret);
+            return ret;
         }
     }
 }

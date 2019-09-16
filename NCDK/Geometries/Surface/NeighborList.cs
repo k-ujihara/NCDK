@@ -18,9 +18,9 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Numerics;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 
 namespace NCDK.Geometries.Surface
 {
@@ -38,60 +38,71 @@ namespace NCDK.Geometries.Surface
     // @cdk.module  qsarmolecular
     public class NeighborList
     {
-        Dictionary<string, List<int>> boxes;
-        double boxSize;
-        IAtom[] atoms;
+        readonly Dictionary<Key, List<int>> boxes;
+        readonly double boxSize;
+        readonly IAtom[] atoms;
 
-        public NeighborList(IAtom[] atoms, double radius)
+        /// <summary>
+        /// Custom key class for looking up items in the map.
+        /// </summary>
+        private sealed class Key
         {
-            this.atoms = atoms;
-            this.boxes = new Dictionary<string, List<int>>();
-            this.boxSize = 2 * radius;
-            for (int i = 0; i < atoms.Length; i++)
-            {
-                string key = GetKeyString(atoms[i]);
+            readonly NeighborList parent;
 
-                if (this.boxes.ContainsKey(key))
+            internal readonly int x, y, z;
+
+            public Key(NeighborList parent, IAtom atom)
+                : this(parent,
+                      (int)(Math.Floor(atom.Point3D.Value.X / parent.boxSize)),
+                      (int)(Math.Floor(atom.Point3D.Value.Y / parent.boxSize)),
+                      (int)(Math.Floor(atom.Point3D.Value.Z / parent.boxSize)))
+            {
+            }
+
+            public Key(NeighborList parent, int x, int y, int z)
+            {
+                this.parent = parent;
+
+                this.x = x;
+                this.y = y;
+                this.z = z;
+            }
+
+            public override bool Equals(object o)
+            {
+                if (this == o)
+                    return true;
+                if (o == null || GetType() != o.GetType())
+                    return false;
+                Key key = (Key)o;
+                return x == key.x &&
+                       y == key.y &&
+                       z == key.z;
+            }
+
+            public override int GetHashCode()
+            {
+                unchecked
                 {
-                    List<int> arl = this.boxes[key];
-                    arl.Add(i);
-                    this.boxes[key] = arl;
-                }
-                else
-                {
-                    this.boxes[key] = new List<int>();
+                    return (((x * 31) + y) * 31) + z;
                 }
             }
         }
 
-        private string GetKeyString(IAtom atom)
+        public NeighborList(IAtom[] atoms, double radius)
         {
-            double x = atom.Point3D.Value.X;
-            double y = atom.Point3D.Value.Y;
-            double z = atom.Point3D.Value.Z;
-
-            int k1, k2, k3;
-            k1 = (int)(Math.Floor(x / boxSize));
-            k2 = (int)(Math.Floor(y / boxSize));
-            k3 = (int)(Math.Floor(z / boxSize));
-
-            string key = k1.ToString(NumberFormatInfo.InvariantInfo) + " " + k2.ToString(NumberFormatInfo.InvariantInfo) + " " + k3.ToString(NumberFormatInfo.InvariantInfo) + " ";
-            return (key);
-        }
-
-        private int[] GetKeyArray(IAtom atom)
-        {
-            double x = atom.Point3D.Value.X;
-            double y = atom.Point3D.Value.Y;
-            double z = atom.Point3D.Value.Z;
-
-            int k1, k2, k3;
-            k1 = (int)(Math.Floor(x / boxSize));
-            k2 = (int)(Math.Floor(y / boxSize));
-            k3 = (int)(Math.Floor(z / boxSize));
-
-            int[] ret = { k1, k2, k3 };
-            return (ret);
+            this.atoms = atoms;
+            this.boxes = new Dictionary<Key, List<int>>();
+            this.boxSize = 2 * radius;
+            for (int i = 0; i < atoms.Length; i++)
+            {
+                Key key = new Key(this, atoms[i]);
+                if (!this.boxes.TryGetValue(key, out List<int> arl))
+                {
+                    this.boxes[key] = (arl = new List<int>());
+                }
+                arl.Add(i);
+            }
         }
 
         public int GetNumberOfNeighbors(int i)
@@ -99,51 +110,45 @@ namespace NCDK.Geometries.Surface
             return GetNeighbors(i).Length;
         }
 
-        public int[] GetNeighbors(int ii)
+        /// <summary>
+        /// Get the neighbors that are with the given radius of atom i.
+        /// </summary>
+        /// <param name="i">atom index</param>
+        /// <returns>atom indexs within that radius</returns>
+        public int[] GetNeighbors(int i)
         {
-            double maxDist2 = this.boxSize * this.boxSize;
-
-            IAtom ai = this.atoms[ii];
-            int[] key = GetKeyArray(ai);
-            List<int> nlist = new List<int>();
-
+            var result = new List<int>();
+            var maxDist2 = this.boxSize * this.boxSize;
+            var atom = this.atoms[i];
+            var key = new Key(this, atom);
             int[] bval = { -1, 0, 1 };
-            for (int i = 0; i < bval.Length; i++)
+            foreach (int x in bval)
             {
-                int x = bval[i];
-                for (int j = 0; j < bval.Length; j++)
+                foreach (int y in bval)
                 {
-                    int y = bval[j];
-                    for (int k = 0; k < bval.Length; k++)
+                    foreach (int z in bval)
                     {
-                        int z = bval[k];
-
-                        string keyj = (key[0] + x).ToString(NumberFormatInfo.InvariantInfo) + " " + (key[1] + y).ToString(NumberFormatInfo.InvariantInfo) + " " + (key[2] + z).ToString(NumberFormatInfo.InvariantInfo) + " ";
-                        if (boxes.ContainsKey(keyj))
+                        var probe = new Key(this, key.x + x, key.y + y, key.z + z);
+                        if (boxes.TryGetValue(probe, out List<int> nbrs))
                         {
-                            var nbrs = boxes[keyj];
-                            for (int l = 0; l < nbrs.Count; l++)
+                            foreach (var nbr in nbrs)
                             {
-                                int i2 = nbrs[l];
-                                if (i2 != ii)
+                                if (nbr != i)
                                 {
-                                    IAtom aj = atoms[i2];
-                                    double x12 = aj.Point3D.Value.X - ai.Point3D.Value.X;
-                                    double y12 = aj.Point3D.Value.Y - ai.Point3D.Value.Y;
-                                    double z12 = aj.Point3D.Value.Z - ai.Point3D.Value.Z;
-                                    double d2 = x12 * x12 + y12 * y12 + z12 * z12;
-                                    if (d2 < maxDist2) nlist.Add(i2);
+                                    var anbr = atoms[nbr];
+                                    var p1 = anbr.Point3D.Value;
+                                    var p2 = atom.Point3D.Value;
+                                    if (Vector3.DistanceSquared(p1, p2) < maxDist2)
+                                        result.Add(nbr);
                                 }
                             }
                         }
                     }
                 }
             }
-            var tmp = nlist.ToArray();
-            int[] ret = new int[tmp.Length];
-            for (int j = 0; j < tmp.Length; j++)
-                ret[j] = tmp[j];
-            return (ret);
+
+            // convert to primitive array
+            return result.ToArray();
         }
     }
 }

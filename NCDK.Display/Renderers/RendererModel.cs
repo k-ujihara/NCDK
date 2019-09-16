@@ -21,7 +21,6 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *  
  */
 
 using NCDK.Events;
@@ -36,8 +35,6 @@ namespace NCDK.Renderers
     /// </summary>
     // @author maclean
     // @cdk.module render
-    // @cdk.githash
-    [Serializable]
     public class RendererModel
         : IChemObjectListener
     {

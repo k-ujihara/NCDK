@@ -138,6 +138,13 @@ namespace NCDK
         }
 
         /// <inheritdoc/>
+        public BondDisplay Display
+        {
+            get { return bond.Display; }
+            set { bond.Display = value; }
+        }
+
+        /// <inheritdoc/>
         public Vector2 GetGeometric2DCenter() => bond.GetGeometric2DCenter();
 
         /// <inheritdoc/>
