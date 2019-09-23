@@ -355,7 +355,12 @@ namespace NCDK.Depict
         /// <param name="rxn">reaction instance</param>
         /// <returns>depiction</returns>
         /// <exception cref="CDKException">a depiction could not be generated</exception>
-        public Depiction Depict(IReaction rxn, IReadOnlyDictionary<IChemObject, Color> highlight = null)
+        public Depiction Depict(IReaction rxn)
+        {
+            return Depict(rxn, null);
+        }
+
+        public Depiction Depict(IReaction rxn, IReadOnlyDictionary<IChemObject, Color> highlight)
         {
             if (highlight == null)
                 highlight = Dictionaries.Empty<IChemObject, Color>();
@@ -464,6 +469,7 @@ namespace NCDK.Depict
         {
             var colorMap = new Dictionary<IChemObject, Color>();
             var mapToColor = new Dictionary<int, Color>();
+            var amap = new Dictionary<int, IAtom>();
             int colorIdx = -1;
             foreach (var mol in reactants)
             {
@@ -482,6 +488,7 @@ namespace NCDK.Depict
                         var color = atomMapColors[colorIdx];
                         colorMap[atom] = color;
                         mapToColor[mapidx] = color;
+                        amap[mapidx] = atom;
                     }
                 }
                 if (colorIdx > prevPalletIdx)
@@ -508,14 +515,30 @@ namespace NCDK.Depict
                         colorMap[atom] = mapToColor[mapidx];
                     }
                 }
-                foreach (var bond in mol.Bonds)
+                foreach (var pBnd in mol.Bonds)
                 {
-                    var a1 = bond.Begin;
-                    var a2 = bond.End;
-                    var c1 = colorMap[a1];
-                    var c2 = colorMap[a2];
-                    if (c1 != null && c1 == c2)
-                        colorMap[bond] = c1;
+                    var pBeg = pBnd.Begin;
+                    var pEnd = pBnd.End;
+                    if (colorMap.TryGetValue(pBeg, out Color c1)
+                     && colorMap.TryGetValue(pEnd, out Color c2)
+                     && c1 == c2)
+                    {
+                        if (amap.TryGetValue(AccessAtomMap(pBeg), out IAtom rBeg)
+                         && amap.TryGetValue(AccessAtomMap(pEnd), out IAtom rEnd))
+                        {
+                            var rBnd = rBeg.GetBond(rEnd);
+                            if (rBnd != null
+                             && ((pBnd.IsAromatic && rBnd.IsAromatic) 
+                              || rBnd.Order == pBnd.Order))
+                            {
+                                colorMap[pBnd] = c1;
+                            }
+                            else
+                            {
+                                colorMap.Remove(rBnd);
+                            }
+                        }
+                    }
                 }
             }
 

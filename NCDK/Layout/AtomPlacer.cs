@@ -909,8 +909,8 @@ namespace NCDK.Layout
         internal static bool IsColinear(IAtom atom, IEnumerable<IBond> bonds)
         {
             if (PeriodicTable.IsMetal(atom.AtomicNumber))
-                return true;
-
+                return bonds.Count() == 2;
+            
             int numSgl = atom.ImplicitHydrogenCount ?? 0;
             int numDbl = 0;
             int numTpl = 0;
