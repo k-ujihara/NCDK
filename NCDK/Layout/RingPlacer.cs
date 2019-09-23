@@ -360,7 +360,7 @@ namespace NCDK.Layout
                     sharedAtomsCenter += ringCenterVector;
                 }
                 var theta = Math.PI - (2 * Math.PI / (degree / 2));
-                Rotate(ringCenterVector, theta);
+                ringCenterVector = Rotate(ringCenterVector, theta);
             }
 
             var radius = GetNativeRingRadius(ring, bondLength);
@@ -715,22 +715,21 @@ namespace NCDK.Layout
         /// <returns>A Vector2 pointing to the new ring center</returns>
         public virtual Vector2 GetRingCenterOfFirstRing(IRing ring, Vector2 bondVector, double bondLength)
         {
-            int size = ring.Atoms.Count;
-            double radius = bondLength / (2 * Math.Sin((Math.PI) / size));
-            double newRingPerpendicular = Math.Sqrt(Math.Pow(radius, 2) - Math.Pow(bondLength / 2, 2));
+            var size = ring.Atoms.Count;
+            var radius = bondLength / (2 * Math.Sin((Math.PI) / size));
+            var newRingPerpendicular = Math.Sqrt(Math.Pow(radius, 2) - Math.Pow(bondLength / 2, 2));
             /* get the angle between the x axis and the bond vector */
-            double rotangle = GeometryUtil.GetAngle(bondVector.X, bondVector.Y);
+            var rotangle = GeometryUtil.GetAngle(bondVector.X, bondVector.Y);
             // Add 90 Degrees to this angle, this is supposed to be the new ringcenter vector
             rotangle += Math.PI / 2;
             return new Vector2((Math.Cos(rotangle) * newRingPerpendicular), (Math.Sin(rotangle) * newRingPerpendicular));
         }
 
-        private static void Rotate(Vector2 vec, double rad)
+        private static Vector2 Rotate(Vector2 vec, double rad)
         {
-            double rx = (vec.X * Math.Cos(rad)) - (vec.Y * Math.Sin(rad));
-            double ry = (vec.X * Math.Sin(rad)) + (vec.Y * Math.Cos(rad));
-            vec.X = rx;
-            vec.Y = ry;
+            var sin = Math.Sin(rad);
+            var cos = Math.Cos(rad);
+            return new Vector2(vec.X * cos - vec.Y * sin, vec.X * sin + vec.Y * cos);
         }
 
         /// <summary>
@@ -807,7 +806,7 @@ namespace NCDK.Layout
                                         bestLen = len;
                                         newRingCenterVector = vec;
                                     }
-                                    Rotate(vec, RAD_30);
+                                    vec = Rotate(vec, RAD_30);
                                 }
                             }
                         }

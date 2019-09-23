@@ -1723,7 +1723,7 @@ namespace NCDK.Layout
             // Place the most complex ring at the origin of the coordinate system
             if (!first.IsPlaced)
             {
-                var sharedAtoms = PlaceFirstBond(first.Bonds[0], firstBondVector);
+                var sharedAtoms = PlaceFirstBond(first.Bonds[0], ref firstBondVector);
                 if (!macro || !MacroCycleLayout.Layout(first, rs))
                 {
                     // de novo layout of ring as a regular polygon
@@ -2128,7 +2128,7 @@ namespace NCDK.Layout
         /// <param name="bondVector">A 2D vector to point to the position of the second bond atom</param>
         /// <param name="bond">the bond to lay out</param>
         /// <returns>an IAtomContainer with the atoms of the bond and the bond itself</returns>
-        private IAtomContainer PlaceFirstBond(IBond bond, Vector2 bondVector)
+        private IAtomContainer PlaceFirstBond(IBond bond, ref Vector2 bondVector)
         {
             IAtomContainer sharedAtoms = null;
 
