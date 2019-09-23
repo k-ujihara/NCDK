@@ -29,6 +29,7 @@ using NCDK.Layout;
 using NCDK.Renderers;
 using NCDK.Renderers.Colors;
 using NCDK.Smiles;
+using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -77,6 +78,7 @@ namespace NCDK.MolViewer
                         try
                         {
                             rxn = parser.ParseReactionSmiles(text);
+                            PerceiveDativeBonds(rxn);
                         }
                         catch (Exception)
                         {
@@ -91,6 +93,7 @@ namespace NCDK.MolViewer
                         try
                         {
                             mol = parser.ParseSmiles(text);
+                            PerceiveDativeBonds(mol);
                         }
                         catch (Exception)
                         {
@@ -108,6 +111,126 @@ namespace NCDK.MolViewer
 
                     this.SetProperty(ref this._Smiles, text);
                 }
+            }
+        }
+
+        private static int CalcValence(IAtom atom)
+        {
+            int v = atom.ImplicitHydrogenCount ?? 0;
+            foreach (var bond in atom.Bonds)
+            {
+                var order = bond.Order;
+                if (!order.IsUnset())
+                    v += order.Numeric();
+            }
+            return v;
+        }
+
+
+        private static bool IsDativeDonor(IAtom a)
+        {
+            switch (a.AtomicNumber)
+            {
+                case 7:
+                case 15:
+                    return a.FormalCharge == 0 && CalcValence(a) == 4;
+                case 8:
+                    return a.FormalCharge == 0 && CalcValence(a) == 3;
+                default:
+                    return false;
+            }
+        }
+
+        private static bool IsDativeAcceptor(IAtom a)
+        {
+            if (PeriodicTable.IsMetal(a.AtomicNumber))
+                return true;
+            switch (a.AtomicNumber)
+            {
+                case 5:
+                    return a.FormalCharge == 0 && CalcValence(a) == 4;
+                case 8:
+                    return a.FormalCharge == 0 && CalcValence(a) == 1;
+                default:
+                    return false;
+            }
+        }
+
+        private static bool IsChargedDativeDonor(IAtom a)
+        {
+            switch (a.AtomicNumber)
+            {
+                case 7:
+                case 15:
+                    return a.FormalCharge == +1 && CalcValence(a) == 4;
+                case 8:
+                    return a.FormalCharge == +1 && CalcValence(a) == 3;
+                default:
+                    return false;
+            }
+        }
+
+        private static bool IsChargedDativeAcceptor(IAtom a)
+        {
+            if (a.FormalCharge != -1)
+                return false;
+            if (PeriodicTable.IsMetal(a.AtomicNumber))
+                return true;
+            switch (a.AtomicNumber)
+            {
+                case 5:
+                    return CalcValence(a) == 4;
+                case 8:
+                    return CalcValence(a) == 1;
+                default:
+                    return false;
+            }
+        }
+
+        private static void PerceiveDativeBonds(IAtomContainer mol)
+        {
+            foreach (var bond in mol.Bonds)
+            {
+                var beg = bond.Begin;
+                var end = bond.End;
+                if (IsDativeDonor(end) && IsDativeAcceptor(beg))
+                {
+                    bond.Display = BondDisplay.ArrowBegin;
+                }
+                else if (IsDativeDonor(beg) && IsDativeAcceptor(end))
+                {
+                    bond.Display = BondDisplay.ArrowEnd;
+                    //bond.setOrder(IBond.Order.UNSET);
+                }
+                else if (IsChargedDativeDonor(end) && IsChargedDativeAcceptor(beg))
+                {
+                    bond.Display = BondDisplay.ArrowBegin;
+                    //bond.setOrder(IBond.Order.UNSET);
+                }
+                else if (IsChargedDativeDonor(beg) && IsChargedDativeAcceptor(end))
+                {
+                    bond.Display = BondDisplay.ArrowEnd;
+                    //bond.setOrder(IBond.Order.UNSET);
+                }
+            }
+            foreach (var bond in mol.Bonds)
+            {
+                var beg = bond.Begin;
+                var end = bond.End;
+                if (bond.Display == BondDisplay.ArrowBegin
+                 || bond.Display == BondDisplay.ArrowEnd)
+                {
+                    beg.FormalCharge = 0;
+                    end.FormalCharge = 0;
+                }
+            }
+        }
+
+        private static void PerceiveDativeBonds(IReaction reaction)
+        {
+            foreach (var mol in ReactionManipulator.GetAllMolecules(reaction))
+            {
+                PerceiveDativeBonds(mol);
             }
         }
 
