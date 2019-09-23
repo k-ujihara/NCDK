@@ -1649,7 +1649,8 @@ namespace NCDK.Renderers.Generators.Standards
                 NormalizeRingWinding(ring);
                 foreach (var bond in ring.Bonds)
                 {
-                    if (ringMap.ContainsKey(bond)) continue;
+                    if (ringMap.ContainsKey(bond))
+                        continue;
                     ringMap[bond] = ring;
                 }
             }
@@ -1741,7 +1742,7 @@ namespace NCDK.Renderers.Generators.Standards
 
             public RingBondOffsetComparator(IAtomContainer mol)
             {
-                HasMetal(mol);
+                hasMetal = HasMetal(mol);
             }
 
             public RingBondOffsetComparator()
