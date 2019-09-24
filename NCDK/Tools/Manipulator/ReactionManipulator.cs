@@ -557,5 +557,21 @@ namespace NCDK.Tools.Manipulator
             }
             return mapped;
         }
+
+        public static void PerceiveRadicals(IReaction reaction)
+        {
+            foreach (var mol in ReactionManipulator.GetAllMolecules(reaction))
+            {
+                AtomContainerManipulator.PerceiveRadicals(mol);
+            }
+        }
+
+        public static void PerceiveDativeBonds(IReaction reaction)
+        {
+            foreach (var mol in ReactionManipulator.GetAllMolecules(reaction))
+            {
+                AtomContainerManipulator.PerceiveDativeBonds(mol);
+            }
+        }
     }
 }
