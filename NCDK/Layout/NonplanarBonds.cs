@@ -165,25 +165,23 @@ namespace NCDK.Layout
             // Rarer types of stereo
             foreach (var se in container.StereoElements)
             {
-                if (se is ExtendedTetrahedral)
+                switch (se)
                 {
-                    Label((ExtendedTetrahedral)se);
-                }
-                else if (se is Atropisomeric)
-                {
-                    Label((Atropisomeric)se);
-                }
-                else if (se is SquarePlanar)
-                {
-                    ModifyAndLabel((SquarePlanar)se);
-                }
-                else if (se is TrigonalBipyramidal)
-                {
-                    ModifyAndLabel((TrigonalBipyramidal)se);
-                }
-                else if (se is Octahedral)
-                {
-                    ModifyAndLabel((Octahedral)se);
+                    case ExtendedTetrahedral e:
+                        Label(e);
+                        break;
+                    case Atropisomeric e:
+                        Label(e);
+                        break;
+                    case SquarePlanar e:
+                        ModifyAndLabel(e);
+                        break;
+                    case TrigonalBipyramidal e:
+                        ModifyAndLabel(e);
+                        break;
+                    case Octahedral e:
+                        ModifyAndLabel(e);
+                        break;
                 }
             }
 
@@ -209,34 +207,31 @@ namespace NCDK.Layout
             }
         }
 
-        private static void Rotate(Vector2 p, Vector2 pivot, double cos, double sin)
+        private static Vector2 GetRotated(Vector2 p, Vector2 pivot, double cos, double sin)
         {
-            double x = p.X - pivot.X;
-            double y = p.Y - pivot.Y;
-            double nx = x * cos + y * sin;
-            double ny = -x * sin + y * cos;
-            p.X = nx + pivot.X;
-            p.Y = ny + pivot.Y;
+            var x = p.X - pivot.X;
+            var y = p.Y - pivot.Y;
+            var nx =  x * cos + y * sin;
+            var ny = -x * sin + y * cos;
+            return new Vector2(nx + pivot.X, ny + pivot.Y);
         }
 
-        private static Vector2 GetRotated(Vector2 org, Vector2 piviot, double theta)
+        private static Vector2 GetRotated(Vector2 p, Vector2 piviot, double theta)
         {
-            Vector2 cpy = org;
-            Rotate(cpy, piviot, Math.Cos(theta), Math.Sin(theta));
-            return cpy;
+            return GetRotated(p, piviot, Math.Cos(theta), Math.Sin(theta));
         }
 
         // tP=target point
         private void SnapBondToPosition(IAtom beg, IBond bond, Vector2 tP)
         {
-            IAtom end = bond.GetOther(beg);
-            Vector2 bP = beg.Point2D.Value;
-            Vector2 eP = end.Point2D.Value;
-            Vector2 curr = new Vector2(eP.X - bP.X, eP.Y - bP.Y);
-            Vector2 dest = new Vector2(tP.X - bP.X, tP.Y - bP.Y);
-            double theta = Math.Atan2(curr.Y, curr.X) - Math.Atan2(dest.Y, dest.X);
-            double sin = Math.Sin(theta);
-            double cos = Math.Cos(theta);
+            var end = bond.GetOther(beg);
+            var bP = beg.Point2D.Value;
+            var eP = end.Point2D.Value;
+            var curr = new Vector2(eP.X - bP.X, eP.Y - bP.Y);
+            var dest = new Vector2(tP.X - bP.X, tP.Y - bP.Y);
+            var theta = Math.Atan2(curr.Y, curr.X) - Math.Atan2(dest.Y, dest.X);
+            var sin = Math.Sin(theta);
+            var cos = Math.Cos(theta);
             bond.IsVisited = true;
             var queue = new ArrayDeque<IAtom>
             {
@@ -244,13 +239,13 @@ namespace NCDK.Layout
             };
             while (queue.Any())
             {
-                IAtom atom = queue.Poll();
+                var atom = queue.Poll();
                 if (!atom.IsVisited)
                 {
-                    Rotate(atom.Point2D.Value, bP, cos, sin);
+                    atom.Point2D = GetRotated(atom.Point2D.Value, bP, cos, sin);
                     atom.IsVisited = true;
                 }
-                foreach (IBond b in container.GetConnectedBonds(atom))
+                foreach (var b in container.GetConnectedBonds(atom))
                     if (!b.IsVisited)
                     {
                         queue.Add(b.GetOther(atom));
@@ -808,7 +803,8 @@ namespace NCDK.Layout
         {
             int n = 0;
             foreach (var atom in tetrahedralElements[i].Ligands)
-                if (tetrahedralElements[atomToIndex[atom]] != null) n++;
+                if (tetrahedralElements[atomToIndex[atom]] != null)
+                    n++;
             return n;
         }
 

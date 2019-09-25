@@ -303,7 +303,7 @@ namespace NCDK.Layout
         /// <param name="atomContainer">The IAtomContainer containing the chain atom to be placed</param>
         /// <param name="initialBondVector">The Vector indicating the direction of the first bond</param>
         /// <param name="bondLength">The factor used to scale the initialBondVector</param>
-        public void PlaceLinearChain(IAtomContainer atomContainer, Vector2 initialBondVector, double bondLength)
+        public void PlaceLinearChain(IAtomContainer atomContainer, ref Vector2 initialBondVector, double bondLength)
         {
             var withh = atomContainer.Builder.NewAtomContainer(atomContainer);
 
@@ -327,6 +327,10 @@ namespace NCDK.Layout
                 var atomPoint = atom.Point2D.Value;
                 bondVector = Vector2.Normalize(bondVector);
                 bondVector = bondVector * bondLength;
+
+                if (f == 0)
+                    initialBondVector = bondVector;
+
                 atomPoint += bondVector;
                 nextAtom.Point2D = atomPoint;
                 nextAtom.IsPlaced = true;
