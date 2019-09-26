@@ -20,6 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Silent;
 using System;
@@ -85,7 +86,8 @@ namespace NCDK.Layout
             m.Atoms[0].IsPlaced = true;
 
             AtomPlacer atomPlacer = new AtomPlacer { Molecule = m };
-            atomPlacer.PlaceLinearChain(m, new Vector2(0, 1.5), 1.5);
+            var v = new Vector2(0, 1.5);
+            atomPlacer.PlaceLinearChain(m, ref v, 1.5);
 
             Vector2 p1 = m.Atoms[1].Point2D.Value;
             Vector2 p2 = m.Atoms[2].Point2D.Value;
@@ -122,7 +124,8 @@ namespace NCDK.Layout
             m.Atoms[0].IsPlaced = true;
 
             AtomPlacer atomPlacer = new AtomPlacer { Molecule = m };
-            atomPlacer.PlaceLinearChain(m, new Vector2(0, 1.5), 1.5);
+            var v = new Vector2(0, 1.5);
+            atomPlacer.PlaceLinearChain(m, ref v, 1.5);
 
             Vector2 p1 = m.Atoms[1].Point2D.Value;
             Vector2 p2 = m.Atoms[2].Point2D.Value;
