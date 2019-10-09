@@ -69,13 +69,13 @@ namespace NCDK.Isomorphisms
             if (hasStereo)
             {
                 mappings = hasQueryStereo
-                    ? mappings.Filter(n => new QueryStereoFilter(query, target).Apply(n))
-                    : mappings.Filter(n => new StereoMatch(query, target).Apply(n));
+                    ? mappings.Filter(new QueryStereoFilter(query, target).Apply)
+                    : mappings.Filter(new StereoMatch(query, target).Apply);
             }
             if (hasComponentGrouping)
-                mappings = mappings.Filter(n => new ComponentFilter(query, target).Apply(n));
+                mappings = mappings.Filter(new ComponentFilter(query, target).Apply);
             if (hasReactionMap)
-                mappings = mappings.Filter(n => new AtomMapFilter(query, target).Apply(n));
+                mappings = mappings.Filter(new AtomMapFilter(query, target).Apply);
             return mappings;
         }
 

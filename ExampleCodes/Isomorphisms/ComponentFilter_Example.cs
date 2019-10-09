@@ -23,7 +23,7 @@ namespace NCDK.Isomorphisms
 
             // filter for mappings which respect component grouping in the query
             var filter = new ComponentFilter(query, target);
-            pattern.MatchAll(target).Where(n => filter.Apply(n));
+            pattern.MatchAll(target).Where(filter.Apply);
             #endregion
         }
     }

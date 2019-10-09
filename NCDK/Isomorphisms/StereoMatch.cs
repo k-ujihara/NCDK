@@ -33,11 +33,9 @@ namespace NCDK.Isomorphisms
     /// (MCS) but could easily be extended to handle such cases. <p/> The class
     /// implements the Guava predicate and can be used easily filter the mappings.
     /// </summary>
-    /// <example><code>
-    /// var f = new StereoMatch(query, target);
-    /// var mappings = ...; // from subgraph isomorphism etc.
-    /// var stereoMappings = Iterables.Filter(mappings, f);
-    /// </code></example>
+    /// <example>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Isomorphisms.StereoMatch_Example.cs"]/*' />
+    /// </example>
     // @author John May
     // @cdk.module isomorphism
     internal sealed class StereoMatch 

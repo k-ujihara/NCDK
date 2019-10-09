@@ -173,7 +173,7 @@ namespace NCDK.Isomorphisms
             // otherwise multiple iterations are always filtered (seen before)
             int[][] g = GraphUtil.ToAdjList(query);
             var m = new UniqueBondMatches(g);
-            return new Mappings(query, target, iterable.Where(n => m.Apply(n)));
+            return new Mappings(query, target, iterable.Where(m.Apply));
         }
 
         /// <summary>
@@ -297,11 +297,12 @@ namespace NCDK.Isomorphisms
         /// Convenience method to count the number of unique atom mappings. 
         /// </summary>
         /// <remarks>
-        /// Note
-        /// mappings are lazily generated and checking the count and then iterating
+        /// <note type="note">
+        /// Mappings are lazily generated and checking the count and then iterating
         /// over the mappings currently performs two searches. If the mappings are
         /// also needed, it is more efficient to check the mappings and count
         /// manually.
+        /// </note>
         /// <para>
         /// The method is simply invokes <c>Mappings.GetUniqueAtoms().Count()</c>.
         /// </para>

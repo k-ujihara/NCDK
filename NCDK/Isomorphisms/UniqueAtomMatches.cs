@@ -32,13 +32,9 @@ namespace NCDK.Isomorphisms
     /// A predicate for filtering atom-mapping results. This class is intended for
     /// use with <see cref="Pattern"/>.
     /// </summary>
-    ///
-    /// <example><code>
-    ///     Pattern pattern = Ullmann.CreateSubstructureFinder(query);
-    ///     var unique = FluentIterable.Of(patter.MatchAll(target))
-    ///                                         .Filter(new UniqueAtomMatches())
-    ///                                         .ToList();
-    /// </code></example>
+    /// <example>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Isomorphisms.UniqueAtomMatches_Example.cs"]/*' />
+    /// </example>
     // @author John May
     // @cdk.module isomorphism
     internal sealed class UniqueAtomMatches
@@ -77,7 +73,7 @@ namespace NCDK.Isomorphisms
         /// <returns>a bit set of the mapped vertices (values in array)</returns>
         private static BitArray ToBitArray(int[] mapping)
         {
-            BitArray hits = new BitArray(0);
+            var hits = new BitArray(0);
             foreach (var v in mapping)
                 BitArrays.SetValue(hits, v, true);
             return hits;

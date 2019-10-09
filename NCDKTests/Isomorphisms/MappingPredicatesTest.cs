@@ -55,13 +55,13 @@ namespace NCDK.Isomorphisms
             // using unique atoms we may think we only found 1 mapping
             {
                 var p = new UniqueAtomMatches();
-                Assert.AreEqual(1, mappings.Count(n => p.Apply(n)));
+                Assert.AreEqual(1, mappings.Count(p.Apply));
             }
 
             // when in fact we found 4 different mappings
             {
                 var p = new UniqueBondMatches(GraphUtil.ToAdjList(query));
-                Assert.AreEqual(3, mappings.Count(n => p.Apply(n)));
+                Assert.AreEqual(3, mappings.Count(p.Apply));
             }
         }
 

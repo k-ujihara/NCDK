@@ -135,6 +135,9 @@
     <Compile Include="Isomorphisms\Matchers\QueryAtomContainer_Example.cs" />
     <Compile Include="Isomorphisms\DfPattern_Example.cs" />
     <Compile Include="Isomorphisms\Pattern_Example.cs" />
+    <Compile Include="Isomorphisms\StereoMatch_Example.cs" />
+    <Compile Include="Isomorphisms\UniqueBondMatches_Example.cs" />
+    <Compile Include="Isomorphisms\UniqueAtomMatches_Example.cs" />
     <Compile Include="Isomorphisms\Ullmann_Example.cs" />
     <Compile Include="Isomorphisms\UniversalIsomorphismTester_Example.cs" />
     <Compile Include="Isomorphisms\VentoFoggia_Example.cs" />

@@ -22,8 +22,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
 
-using NCDK.Common.Base;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -33,12 +31,9 @@ namespace NCDK.Isomorphisms
     /// A predicate for filtering atom-mapping results for those which cover unique
     /// edges. This class is intended for use with <see cref="Pattern"/>.
     /// </summary>
-    /// <example><code>
-    ///     Pattern pattern = Ullmann.CreateSubstructureFinder(query);
-    ///     var unique = FluentIterable.Of(patter.MatchAll(target))
-    ///                                         .Filter(new UniqueBondMatches())
-    ///                                         .ToList();
-    /// </code></example>
+    /// <example>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Isomorphisms.UniqueBondMatches_Example.cs"]/*' />
+    /// </example>
     // @author John May
     // @cdk.module isomorphism
     internal sealed class UniqueBondMatches 
@@ -53,7 +48,7 @@ namespace NCDK.Isomorphisms
         /// Create filter for the expected number of unique matches. The number of
         /// matches can grow if required.
         /// </summary>
-        /// <param name="g"></param>
+        /// <param name="g">query graph</param>
         /// <param name="expectedHits">expected number of unique matches</param>
         private UniqueBondMatches(int[][] g, int expectedHits)
         {
@@ -96,7 +91,7 @@ namespace NCDK.Isomorphisms
         /// <returns>a bit set of the mapped vertices (values in array)</returns>
         private ICollection<Tuple> ToEdgeSet(int[] mapping)
         {
-            ICollection<Tuple> edges = new HashSet<Tuple>();
+            var edges = new HashSet<Tuple>();
             for (int u = 0; u < g.Length; u++)
             {
                 foreach (var v in g[u])
@@ -131,9 +126,9 @@ namespace NCDK.Isomorphisms
 
             public override bool Equals(object o)
             {
-                if (this == o) return true;
-                Tuple that = o as Tuple;
-                if (that == null)
+                if (this == o)
+                    return true;
+                if (!(o is Tuple that))
                     return false;
 
                 return this.u == that.u && this.v == that.v || this.u == that.v && this.v == that.u;
