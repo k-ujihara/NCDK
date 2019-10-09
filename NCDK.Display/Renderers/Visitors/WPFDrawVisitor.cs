@@ -33,8 +33,6 @@ namespace NCDK.Renderers.Visitors
     /// Implementation of the <see cref="IDrawVisitor"/> interface for the WPF,
     /// allowing molecules to be rendered with toolkits based on WPF.
     /// </summary>
-    // @cdk.module renderawt
-    // @cdk.githash
     public class WPFDrawVisitor : AbstractWPFDrawVisitor
     {
         /// <summary>

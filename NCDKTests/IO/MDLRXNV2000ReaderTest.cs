@@ -20,11 +20,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Silent;
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Text;
 
 namespace NCDK.IO
 {
@@ -124,6 +126,41 @@ namespace NCDK.IO
                 MDLRXNV2000Reader rdr = new MDLRXNV2000Reader(ins);
                 IReaction reaction = rdr.Read(new Reaction());
                 Assert.AreEqual(1, reaction.Agents.Count);
+            }
+        }
+
+        [TestMethod()]
+        public void OptionalSdfSeparator()
+        {
+            const string dummyRecord = "ethanol\n" +
+                       "  Mrv1810 09251921392D          \n" +
+                       "\n" +
+                       "  3  2  0  0  0  0            999 V2000\n" +
+                       "    1.9520   -1.1270    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                       "    1.2375   -0.7145    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                       "    2.6664   -0.7145    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                       "  1  2  1  0  0  0  0\n" +
+                       "  1  3  1  0  0  0  0\n" +
+                       "M  END\n" +
+                       "$$$$\n";
+            var sb = new StringBuilder();
+            sb.Append("$RXN\n");
+            sb.Append("Test\n\n\n  2  1\n");
+            sb.Append("$MOL\n");
+            sb.Append(dummyRecord);
+            sb.Append("$MOL\n");
+            sb.Append(dummyRecord);
+            sb.Append("$MOL\n");
+            sb.Append(dummyRecord);
+
+            var bldr = CDK.Builder;
+            using (var reader = new MDLRXNV2000Reader(new StringReader(sb.ToString())))
+            {
+                var rxn = reader.Read(bldr.NewReaction());
+                Assert.AreEqual(2, rxn.Reactants.Count);
+                Assert.AreEqual(1, rxn.Products.Count);
+                Assert.AreEqual(3, rxn.Reactants[0].Atoms.Count);
+                Assert.AreEqual(3, rxn.Reactants[1].Atoms.Count);
             }
         }
     }

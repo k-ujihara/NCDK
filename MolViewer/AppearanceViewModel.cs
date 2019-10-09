@@ -29,6 +29,7 @@ using NCDK.Layout;
 using NCDK.Renderers;
 using NCDK.Renderers.Colors;
 using NCDK.Smiles;
+using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -77,6 +78,8 @@ namespace NCDK.MolViewer
                         try
                         {
                             rxn = parser.ParseReactionSmiles(text);
+                            ReactionManipulator.PerceiveDativeBonds(rxn);
+                            ReactionManipulator.PerceiveRadicals(rxn);
                         }
                         catch (Exception)
                         {
@@ -91,6 +94,8 @@ namespace NCDK.MolViewer
                         try
                         {
                             mol = parser.ParseSmiles(text);
+                            AtomContainerManipulator.PerceiveDativeBonds(mol);
+                            AtomContainerManipulator.PerceiveRadicals(mol);
                         }
                         catch (Exception)
                         {

@@ -67,8 +67,8 @@ namespace NCDK.Layout
         internal const double DefaultBondLength = 1.5;
         static Vector2 DefaultBondVector { get; } = new Vector2(0, 1);
         private static IdentityTemplateLibrary DefaultTempleteLibrary =
-            IdentityTemplateLibrary.LoadFromResource("custom-templates.smi")
-                .Add(IdentityTemplateLibrary.LoadFromResource("chebi-ring-templates.smi"));
+                IdentityTemplateLibrary.LoadFromResource("custom-templates.smi")
+           .Add(IdentityTemplateLibrary.LoadFromResource("chebi-ring-templates.smi"));
 
         private static readonly double RAD_30 = Vectors.DegreeToRadian(-30);
 
@@ -806,10 +806,13 @@ namespace NCDK.Layout
 
                 // place the first bond such that the whole chain will be horizontally alligned on the x axis
                 Debug.WriteLine("Attempting to place the first bond such that the whole chain will be horizontally alligned on the x axis");
-                if (firstBondVector != null && firstBondVector != DefaultBondVector)
-                    atomPlacer.PlaceLinearChain(longestChain, firstBondVector, BondLength);
+                if (firstBondVector != Vector2.Zero)
+                    atomPlacer.PlaceLinearChain(longestChain, ref firstBondVector, BondLength);
                 else
-                    atomPlacer.PlaceLinearChain(longestChain, new Vector2(Math.Cos(RAD_30), Math.Sin(RAD_30)), BondLength);
+                {
+                    var vec30 = new Vector2(Math.Cos(RAD_30), Math.Sin(RAD_30));
+                    atomPlacer.PlaceLinearChain(longestChain, ref vec30, BondLength);
+                }
                 Debug.WriteLine("Placed longest aliphatic chain");
             }
         }
@@ -1918,7 +1921,7 @@ namespace NCDK.Layout
                         {
                             longestUnplacedChain.Atoms[f].IsPlaced = false;
                         }
-                        atomPlacer.PlaceLinearChain(longestUnplacedChain, direction, BondLength);
+                        atomPlacer.PlaceLinearChain(longestUnplacedChain, ref direction, BondLength);
                     }
                     else
                     {

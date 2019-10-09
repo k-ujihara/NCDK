@@ -1704,6 +1704,153 @@ namespace NCDK.Tools.Manipulator
 
             return ac;
         }
+
+        public static void PerceiveRadicals(IAtomContainer mol)
+        {
+            foreach (var atom in mol.Atoms)
+            {
+                int v;
+                var q = atom.FormalCharge ?? 0;
+                switch (atom.AtomicNumber)
+                {
+                    case AtomicNumbers.C:
+                        if (q == 0)
+                        {
+                            v = CalcValence(atom);
+                            if (v == 2)
+                                mol.AddSingleElectronTo(atom);
+                            if (v < 4)
+                                mol.AddSingleElectronTo(atom);
+                        }
+                        break;
+                    case AtomicNumbers.N:
+                        if (q == 0)
+                        {
+                            v = CalcValence(atom);
+                            if (v < 3)
+                                mol.AddSingleElectronTo(atom);
+                        }
+                        break;
+                    case AtomicNumbers.O:
+                        if (q == 0)
+                        {
+                            v = CalcValence(atom);
+                            if (v < 2)
+                                mol.AddSingleElectronTo(atom);
+                            if (v < 1)
+                                mol.AddSingleElectronTo(atom);
+                        }
+                        break;
+                }
+            }
+        }
+
+        public static void PerceiveDativeBonds(IAtomContainer mol)
+        {
+            foreach (var bond in mol.Bonds)
+            {
+                var beg = bond.Begin;
+                var end = bond.End;
+                if (IsDativeDonor(end) && IsDativeAcceptor(beg))
+                {
+                    bond.Display = BondDisplay.ArrowBegin;
+                }
+                else if (IsDativeDonor(beg) && IsDativeAcceptor(end))
+                {
+                    bond.Display = BondDisplay.ArrowEnd;
+                }
+                else if (IsChargedDativeDonor(end) && IsChargedDativeAcceptor(beg))
+                {
+                    bond.Display = BondDisplay.ArrowBegin;
+                }
+                else if (IsChargedDativeDonor(beg) && IsChargedDativeAcceptor(end))
+                {
+                    bond.Display = BondDisplay.ArrowEnd;
+                }
+            }
+            foreach (var bond in mol.Bonds)
+            {
+                var beg = bond.Begin;
+                var end = bond.End;
+                if (bond.Display == BondDisplay.ArrowBegin
+                 || bond.Display == BondDisplay.ArrowEnd)
+                {
+                    beg.FormalCharge = 0;
+                    end.FormalCharge = 0;
+                }
+            }
+        }
+
+        private static int CalcValence(IAtom atom)
+        {
+            int v = atom.ImplicitHydrogenCount ?? 0;
+            foreach (var bond in atom.Bonds)
+            {
+                var order = bond.Order;
+                if (!order.IsUnset())
+                    v += order.Numeric();
+            }
+            return v;
+        }
+
+        private static bool IsDativeDonor(IAtom a)
+        {
+            switch (a.AtomicNumber)
+            {
+                case AtomicNumbers.N:
+                case AtomicNumbers.P:
+                    return a.FormalCharge == 0 && CalcValence(a) == 4;
+                case AtomicNumbers.O:
+                    return a.FormalCharge == 0 && CalcValence(a) == 3;
+                default:
+                    return false;
+            }
+        }
+
+        private static bool IsDativeAcceptor(IAtom a)
+        {
+            if (PeriodicTable.IsMetal(a.AtomicNumber))
+                return true;
+            switch (a.AtomicNumber)
+            {
+                case AtomicNumbers.B:
+                    return a.FormalCharge == 0 && CalcValence(a) == 4;
+                case AtomicNumbers.O:
+                    return a.FormalCharge == 0 && CalcValence(a) == 1;
+                default:
+                    return false;
+            }
+        }
+
+        private static bool IsChargedDativeDonor(IAtom a)
+        {
+            switch (a.AtomicNumber)
+            {
+                case AtomicNumbers.N:
+                case AtomicNumbers.P:
+                    return a.FormalCharge == +1 && CalcValence(a) == 4;
+                case AtomicNumbers.O:
+                    return a.FormalCharge == +1 && CalcValence(a) == 3;
+                default:
+                    return false;
+            }
+        }
+
+        private static bool IsChargedDativeAcceptor(IAtom a)
+        {
+            if (a.FormalCharge != -1)
+                return false;
+            if (PeriodicTable.IsMetal(a.AtomicNumber))
+                return true;
+            switch (a.AtomicNumber)
+            {
+                case AtomicNumbers.B:
+                    return CalcValence(a) == 4;
+                case AtomicNumbers.O:
+                    return CalcValence(a) == 1;
+                default:
+                    return false;
+            }
+        }
     }
 }
-
