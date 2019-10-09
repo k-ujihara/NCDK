@@ -68,7 +68,7 @@ namespace NCDK.SMARTS
     /// For example "[D{2-4}]" means degree 2, 3, or 4. On writing such
     /// ranges are converted to "[D2, D3, D4]".
     /// </remarks>
-    public sealed class Smarts
+    public static class Smarts
     {
         // input flags
         private const int BOND_UNSPEC = '?';
