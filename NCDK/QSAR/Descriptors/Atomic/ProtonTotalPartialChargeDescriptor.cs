@@ -18,7 +18,6 @@
  */
 
 using NCDK.Charges;
-using NCDK.Config;
 using System.Collections.Generic;
 
 namespace NCDK.QSAR.Descriptors.Atomic

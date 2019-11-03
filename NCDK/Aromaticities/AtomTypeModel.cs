@@ -23,7 +23,6 @@
  */
 
 using NCDK.Common.Collections;
-using NCDK.Config;
 using NCDK.RingSearches;
 using System;
 using System.Collections.Generic;

@@ -22,7 +22,6 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Smiles;
 
 namespace NCDK.SMARTS
 {

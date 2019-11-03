@@ -18,7 +18,6 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
 using System.IO;
 using System.Linq;
 
@@ -31,14 +30,14 @@ namespace NCDK.Config.AtomTypes
         [TestMethod()]
         public void TestAtomTypeReader_Reader()
         {
-            AtomTypeReader reader = new AtomTypeReader(new StringReader(""));
+            var reader = new AtomTypeReader(new StringReader(""));
             Assert.IsNotNull(reader);
         }
 
         [TestMethod()]
         public void TestReadAtomTypes_IChemObjectBuilder()
         {
-            AtomTypeReader reader = new AtomTypeReader(
+            var reader = new AtomTypeReader(
                 new StringReader(
                     "<atomTypeList xmlns=\"http://www.xml-cml.org/schema/cml2/core\"                              "
                             + "  xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"                                    "
@@ -63,7 +62,7 @@ namespace NCDK.Config.AtomTypes
         [TestMethod()]
         public void TestReadAtomTypes2()
         {
-            string data = "<atomTypeList xmlns=\"http://www.xml-cml.org/schema/cml2/core\"                              "
+            var data = "<atomTypeList xmlns=\"http://www.xml-cml.org/schema/cml2/core\"                              "
                 + "  xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"                                    "
                 + "  xsi:schemaLocation=\"http://www.xml-cml.org/schema/cml2/core ../../io/cml/data/cmlAll.xsd\""
                 + "  id=\"mol2\" title=\"MOL2 AtomTypes\">                                                      "
@@ -78,7 +77,7 @@ namespace NCDK.Config.AtomTypes
                 + "  </atomType>                                                                                "
                 + "</atomTypeList>";
 
-            AtomTypeReader reader = new AtomTypeReader(new StringReader(data));
+            var reader = new AtomTypeReader(new StringReader(data));
             Assert.IsNotNull(reader);
             var types = reader.ReadAtomTypes();
             Assert.IsNotNull(types);
@@ -88,7 +87,7 @@ namespace NCDK.Config.AtomTypes
         [TestMethod()]
         public void TestReadAtomTypes_CDK()
         {
-            string data = "<atomTypeList xmlns=\"http://www.xml-cml.org/schema/cml2/core\"                              \n"
+            var data = "<atomTypeList xmlns=\"http://www.xml-cml.org/schema/cml2/core\"                              \n"
                 + "  xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"                                    \n"
                 + "  xsi:schemaLocation=\"http://www.xml-cml.org/schema/cml2/core ../../io/cml/data/cmlAll.xsd\"\n"
                 + "  id=\"mol2\" title=\"MOL2 AtomTypes\">                                                      \n"
@@ -101,7 +100,7 @@ namespace NCDK.Config.AtomTypes
                 + "  </atomType>                                                                                "
                 + "</atomTypeList>";
 
-            AtomTypeReader reader = new AtomTypeReader(new StringReader(data));
+            var reader = new AtomTypeReader(new StringReader(data));
             Assert.IsNotNull(reader);
             var types = reader.ReadAtomTypes().ToReadOnlyList();
             Assert.IsNotNull(types);
@@ -110,7 +109,7 @@ namespace NCDK.Config.AtomTypes
             object obj = types[0];
             Assert.IsNotNull(obj);
             Assert.IsTrue(obj is IAtomType);
-            IAtomType atomType = (IAtomType)obj;
+            var atomType = (IAtomType)obj;
 
             Assert.AreEqual(0, atomType.FormalCharge.Value);
             Assert.AreEqual(Hybridization.SP1, atomType.Hybridization);
@@ -121,7 +120,7 @@ namespace NCDK.Config.AtomTypes
         [TestMethod()]
         public void TestReadAtomTypes_FF()
         {
-            string data = "<atomTypeList xmlns=\"http://www.xml-cml.org/schema/cml2/core\"                              \n"
+            var data = "<atomTypeList xmlns=\"http://www.xml-cml.org/schema/cml2/core\"                              \n"
                 + "  xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"                                    \n"
                 + "  xsi:schemaLocation=\"http://www.xml-cml.org/schema/cml2/core ../../io/cml/data/cmlAll.xsd\"\n"
                 + "  id=\"mol2\" title=\"MOL2 AtomTypes\">                                                      \n"
@@ -139,7 +138,7 @@ namespace NCDK.Config.AtomTypes
                 + "     <scalar dataType=\"xsd:integer\" dictRef=\"cdk:ringConstant\">3</scalar>\n" + "   </atom>\n"
                 + " </atomType>\n" + "</atomTypeList>\n";
 
-            AtomTypeReader reader = new AtomTypeReader(new StringReader(data));
+            var reader = new AtomTypeReader(new StringReader(data));
             Assert.IsNotNull(reader);
             var types = reader.ReadAtomTypes().ToReadOnlyList();
             Assert.IsNotNull(types);
@@ -148,7 +147,7 @@ namespace NCDK.Config.AtomTypes
             object obj = types[0];
             Assert.IsNotNull(obj);
             Assert.IsTrue(obj is IAtomType);
-            IAtomType atomType = (IAtomType)obj;
+            var atomType = (IAtomType)obj;
 
             Assert.AreEqual("[CSP]-[0-4][-]?+;", atomType.GetProperty<string>(CDKPropertyName.SphericalMatcher));
             Assert.IsFalse(atomType.IsHydrogenBondAcceptor);

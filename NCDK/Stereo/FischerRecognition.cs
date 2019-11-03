@@ -22,7 +22,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
 
-using NCDK.Config;
 using NCDK.Graphs;
 using NCDK.RingSearches;
 using System;

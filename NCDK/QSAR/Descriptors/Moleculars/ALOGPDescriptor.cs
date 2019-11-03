@@ -20,7 +20,6 @@
  */
 
 using NCDK.AtomTypes;
-using NCDK.Config;
 using NCDK.RingSearches;
 using NCDK.Tools;
 using NCDK.Tools.Manipulator;
@@ -51,7 +50,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// Returns three values
     /// <list type="bullet">
     /// <item><term>ALogP</term><description>Ghose-Crippen LogKow</description></item>
-    /// <item><term>ALogP2</term><description></description></item>
+    /// <item><term>ALogP2</term><description>ALogP<sup>2</sup></description></item>
     /// <item><term>amr</term><description>molar refractivity</description></item>
     /// </list>
     /// </para>
@@ -421,7 +420,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 var arf = new AllRingsFinder();
                 rs = arf.FindAllRings(atomContainer);
 
-                var eStateMatcher = new EStateAtomTypeMatcher { RingSet = rs };
+                var eStateMatcher = new EStateAtomTypeMatcher(rs);
 
                 foreach (var ring in rs)
                 {

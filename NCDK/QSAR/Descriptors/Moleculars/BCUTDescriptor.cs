@@ -21,7 +21,6 @@ using MathNet.Numerics.LinearAlgebra;
 using NCDK.Aromaticities;
 using NCDK.Charges;
 using NCDK.Common.Collections;
-using NCDK.Config;
 using NCDK.Graphs;
 using NCDK.Graphs.Matrix;
 using NCDK.Tools.Manipulator;

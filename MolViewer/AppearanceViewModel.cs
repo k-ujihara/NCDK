@@ -29,7 +29,6 @@ using NCDK.Layout;
 using NCDK.Renderers;
 using NCDK.Renderers.Colors;
 using NCDK.Smiles;
-using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 using Prism.Commands;
 using Prism.Mvvm;

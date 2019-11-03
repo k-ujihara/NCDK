@@ -64,19 +64,18 @@ namespace NCDK.Reactions.Mechanisms
             {
                 throw new CDKException("RadicalSiteIonizationMechanism only expect one bond in the List");
             }
-            IAtomContainer molecule = atomContainerSet[0];
-            IAtomContainer reactantCloned;
-            reactantCloned = (IAtomContainer)molecule.Clone();
-            IAtom atom1 = atomList[0];// Atom containing the ISingleElectron
-            IAtom atom1C = reactantCloned.Atoms[molecule.Atoms.IndexOf(atom1)];
-            IAtom atom2 = atomList[1];// Atom
-            IAtom atom2C = reactantCloned.Atoms[molecule.Atoms.IndexOf(atom2)];
-            IAtom atom3 = atomList[2];// Atom to be saved
-            IAtom atom3C = reactantCloned.Atoms[molecule.Atoms.IndexOf(atom3)];
-            IBond bond1 = bondList[0];// Bond to increase the order
-            int posBond1 = molecule.Bonds.IndexOf(bond1);
-            IBond bond2 = bondList[1];// Bond to remove
-            int posBond2 = molecule.Bonds.IndexOf(bond2);
+            var molecule = atomContainerSet[0];
+            var reactantCloned = (IAtomContainer)molecule.Clone();
+            var atom1 = atomList[0];// Atom containing the ISingleElectron
+            var atom1C = reactantCloned.Atoms[molecule.Atoms.IndexOf(atom1)];
+            var atom2 = atomList[1];// Atom
+            var atom2C = reactantCloned.Atoms[molecule.Atoms.IndexOf(atom2)];
+            var atom3 = atomList[2];// Atom to be saved
+            var atom3C = reactantCloned.Atoms[molecule.Atoms.IndexOf(atom3)];
+            var bond1 = bondList[0];// Bond to increase the order
+            var posBond1 = molecule.Bonds.IndexOf(bond1);
+            var bond2 = bondList[1];// Bond to remove
+            var posBond2 = molecule.Bonds.IndexOf(bond2);
 
             BondManipulator.IncreaseBondOrder(reactantCloned.Bonds[posBond1]);
             reactantCloned.Bonds.Remove(reactantCloned.Bonds[posBond2]);
@@ -85,7 +84,7 @@ namespace NCDK.Reactions.Mechanisms
             reactantCloned.SingleElectrons.Remove(selectron.Last());
             atom1C.Hybridization = Hybridization.Unset;
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(reactantCloned);
-            IAtomType type = atMatcher.FindMatchingAtomType(reactantCloned, atom1C);
+            var type = atMatcher.FindMatchingAtomType(reactantCloned, atom1C);
             if (type == null || type.AtomTypeName.Equals("X", StringComparison.Ordinal))
                 return null;
 
@@ -108,7 +107,7 @@ namespace NCDK.Reactions.Mechanisms
             /* mapping */
             foreach (var atom in molecule.Atoms)
             {
-                IMapping mapping = atom2C.Builder.NewMapping(atom,
+                var mapping = atom2C.Builder.NewMapping(atom,
                         reactantCloned.Atoms[molecule.Atoms.IndexOf(atom)]);
                 reaction.Mappings.Add(mapping);
             }

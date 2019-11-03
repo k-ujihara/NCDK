@@ -22,7 +22,6 @@
  */
 
 using NCDK.Common.Primitives;
-using NCDK.Config;
 using NCDK.Dict;
 using NCDK.Geometries;
 using NCDK.Numerics;

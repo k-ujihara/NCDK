@@ -20,8 +20,6 @@
 
 using NCDK.Common.Collections;
 using NCDK.Common.Primitives;
-using NCDK.Config;
-using NCDK.Graphs.Invariant;
 using System;
 
 namespace NCDK.Graphs.Invariant

@@ -18,7 +18,6 @@
  */
 
 using NCDK.Aromaticities;
-using NCDK.Config;
 using NCDK.Tools.Manipulator;
 using System.Linq;
 

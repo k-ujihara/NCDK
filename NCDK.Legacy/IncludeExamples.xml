@@ -1198,7 +1198,7 @@ namespace NCDK.Graphs
 
             // filter for mappings which respect component grouping in the query
             var filter = new ComponentFilter(query, target);
-            pattern.MatchAll(target).Where(n =&gt; filter.Apply(n));
+            pattern.MatchAll(target).Where(filter.Apply);
 </code>
   </Codes>
   <Codes id="NCDK.Isomorphisms.DfPattern_Example.cs">
@@ -1488,6 +1488,12 @@ namespace NCDK.Graphs
                                           .ToArray();
 </code>
   </Codes>
+  <Codes id="NCDK.Isomorphisms.StereoMatch_Example.cs">
+    <code>                StereoMatch f = new StereoMatch(query, target);
+                Mappings mappings = something; // from subgraph isomorphism etc.
+                Mappings stereoMappings = mappings.Filter(f.Apply);
+</code>
+  </Codes>
   <Codes id="NCDK.Isomorphisms.Ullmann_Example.cs+1">
     <code>                IAtomContainer query = queryStructure;
                 Pattern pattern = Ullmann.CreateSubstructureFinder(query);
@@ -1509,6 +1515,16 @@ namespace NCDK.Graphs
                     if (match.Length &gt; 0)
                         hits++;
                 }
+</code>
+  </Codes>
+  <Codes id="NCDK.Isomorphisms.UniqueAtomMatches_Example.cs">
+    <code>                Pattern pattern = Ullmann.CreateSubstructureFinder(query);
+                pattern.MatchAll(target).Filter(new UniqueAtomMatches().Apply);
+</code>
+  </Codes>
+  <Codes id="NCDK.Isomorphisms.UniqueBondMatches_Example.cs">
+    <code>                Pattern pattern = Ullmann.CreateSubstructureFinder(query);
+                var unique = pattern.MatchAll(target).Filter(new UniqueBondMatches(queryGraph).Apply);
 </code>
   </Codes>
   <Codes id="NCDK.Isomorphisms.UniversalIsomorphismTester_Example.cs">

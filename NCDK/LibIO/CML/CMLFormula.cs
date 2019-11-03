@@ -14,7 +14,6 @@
  *    limitations under the License.
  */
 
-using NCDK.Config;
 using System;
 using System.Collections.Generic;
 using System.Globalization;

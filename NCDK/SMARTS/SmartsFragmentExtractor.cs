@@ -108,8 +108,8 @@ namespace NCDK.SMARTS
         {
             this.mol = mol;
 
-            int numAtoms = mol.Atoms.Count;
-            int numBonds = mol.Bonds.Count;
+            var numAtoms = mol.Atoms.Count;
+            var numBonds = mol.Bonds.Count;
 
             // build fast access
             this.deg = new int[numAtoms];
@@ -125,11 +125,11 @@ namespace NCDK.SMARTS
             // reference and traversal
             for (int bondIdx = 0; bondIdx < numBonds; bondIdx++)
             {
-                IBond bond = mol.Bonds[bondIdx];
-                IAtom beg = bond.Begin;
-                IAtom end = bond.End;
-                int begIdx = mol.Atoms.IndexOf(beg);
-                int endIdx = mol.Atoms.IndexOf(end);
+                var bond = mol.Bonds[bondIdx];
+                var beg = bond.Begin;
+                var end = bond.End;
+                var begIdx = mol.Atoms.IndexOf(beg);
+                var endIdx = mol.Atoms.IndexOf(end);
                 this.bexpr[bondIdx] = EncodeBondExpr(bondIdx, begIdx, endIdx);
 
                 // make sufficient space
@@ -223,7 +223,8 @@ namespace NCDK.SMARTS
             {
                 if (avisit[atomIdxs[i]] < 0)
                 {
-                    if (i > 0) sb.Append('.');
+                    if (i > 0)
+                        sb.Append('.');
                     EncodeExpr(atomIdxs[i], -1, sb);
                 }
             }
@@ -240,7 +241,7 @@ namespace NCDK.SMARTS
         private void MarkRings(int idx, int bprev)
         {
             avisit[idx] = numVisit++;
-            int d = deg[idx];
+            var d = deg[idx];
             for (int j = 0; j < d; j++)
             {
                 int nbr = atomAdj[idx][j];
@@ -265,61 +266,67 @@ namespace NCDK.SMARTS
         {
             avisit[idx] = numVisit++;
             sb.Append(aexpr[idx]);
-            int d = deg[idx];
+            var d = deg[idx];
 
-            int remain = d;
+            var remain = d;
             for (int j = 0; j < d; j++)
             {
-                int nbr = atomAdj[idx][j];
-                int bidx = bondAdj[idx][j];
+                var nbr = atomAdj[idx][j];
+                var bidx = bondAdj[idx][j];
 
                 // ring open/close
                 if (rbnds[bidx] < 0)
                 {
                     // open
-                    int rnum = ChooseRingNumber();
-                    if (rnum > 9) sb.Append('%');
+                    var rnum = ChooseRingNumber();
+                    if (rnum > 9)
+                        sb.Append('%');
                     sb.Append(rnum);
                     rbnds[bidx] = rnum;
                 }
                 else if (rbnds[bidx] > 0)
                 {
                     // close
-                    int rnum = rbnds[bidx];
+                    var rnum = rbnds[bidx];
                     ReleaseRingNumber(rnum);
-                    if (rnum > 9) sb.Append('%');
+                    if (rnum > 9)
+                        sb.Append('%');
                     sb.Append(rnum);
                 }
 
-                if (mode == SubstructureSelectionMode.ExactSmarts && avisit[nbr] == 0 ||
-                    bidx == bprev ||
-                    rbnds[bidx] != 0)
+                if (mode == SubstructureSelectionMode.ExactSmarts && avisit[nbr] == 0 
+                 || bidx == bprev 
+                 || rbnds[bidx] != 0)
                     remain--;
             }
 
             for (int j = 0; j < d; j++)
             {
-                int nbr = atomAdj[idx][j];
-                int bidx = bondAdj[idx][j];
-                if (mode == SubstructureSelectionMode.ExactSmarts && avisit[nbr] == 0 ||
-                    bidx == bprev ||
-                    rbnds[bidx] != 0)
+                var nbr = atomAdj[idx][j];
+                var bidx = bondAdj[idx][j];
+                if (mode == SubstructureSelectionMode.ExactSmarts && avisit[nbr] == 0
+                 || bidx == bprev 
+                 || rbnds[bidx] != 0)
                     continue; // ignored
                 remain--;
                 if (avisit[nbr] == 0)
                 {
                     // peripheral bond
-                    if (remain > 0) sb.Append('(');
+                    if (remain > 0)
+                        sb.Append('(');
                     sb.Append(bexpr[bidx]);
                     sb.Append(mol.Atoms[nbr].IsAromatic ? 'a' : '*');
-                    if (remain > 0) sb.Append(')');
+                    if (remain > 0)
+                        sb.Append(')');
                 }
                 else
                 {
-                    if (remain > 0) sb.Append('(');
+                    if (remain > 0)
+                        sb.Append('(');
                     sb.Append(bexpr[bidx]);
                     EncodeExpr(nbr, bidx, sb);
-                    if (remain > 0) sb.Append(')');
+                    if (remain > 0)
+                        sb.Append(')');
                 }
             }
         }
@@ -359,10 +366,8 @@ namespace NCDK.SMARTS
         /// <returns>SMARTS atom expression</returns>
         private string EncodeAtomExpr(int atmIdx)
         {
-            IAtom atom = mol.Atoms[atmIdx];
-
-            bool complex = mode == SubstructureSelectionMode.ExactSmarts;
-
+            var atom = mol.Atoms[atmIdx];
+            var complex = mode == SubstructureSelectionMode.ExactSmarts;
             var sb = new StringBuilder();
 
             switch (atom.AtomicNumber)
@@ -390,19 +395,18 @@ namespace NCDK.SMARTS
 
             if (mode == SubstructureSelectionMode.ExactSmarts)
             {
+                var hcount = atom.ImplicitHydrogenCount.Value;
+                var valence = hcount;
+                var connections = hcount;
 
-                int hcount = atom.ImplicitHydrogenCount.Value;
-                int valence = hcount;
-                int connections = hcount;
-
-                int atmDeg = this.deg[atmIdx];
+                var atmDeg = this.deg[atmIdx];
                 for (int i = 0; i < atmDeg; i++)
                 {
-                    IBond bond = mol.Bonds[bondAdj[atmIdx][i]];
-                    IAtom nbr = bond.GetOther(atom);
+                    var bond = mol.Bonds[bondAdj[atmIdx][i]];
+                    var nbr = bond.GetOther(atom);
                     if (nbr.AtomicNumber == 1)
                         hcount++;
-                    int bord = bond.Order.IsUnset() ? 0 : bond.Order.Numeric();
+                    var bord = bond.Order.IsUnset() ? 0 : bond.Order.Numeric();
                     if (bord == 0)
                         throw new ArgumentException("Molecule had unsupported zero-order or unset bonds!");
                     valence += bord;
@@ -418,10 +422,13 @@ namespace NCDK.SMARTS
 
             if (chg <= -1 || chg >= +1)
             {
-                if (chg >= 0) sb.Append('+');
-                else sb.Append('-');
-                int abs = Math.Abs(chg);
-                if (abs > 1) sb.Append(abs);
+                if (chg >= 0)
+                    sb.Append('+');
+                else
+                    sb.Append('-');
+                var abs = Math.Abs(chg);
+                if (abs > 1)
+                    sb.Append(abs);
                 complex = true;
             }
             else if (mode == SubstructureSelectionMode.ExactSmarts)
@@ -429,7 +436,7 @@ namespace NCDK.SMARTS
                 sb.Append("+0");
             }
 
-            return complex ? '[' + sb.ToString() + ']' : sb.ToString();
+            return complex ? $"[{sb.ToString()}]" : sb.ToString();
         }
 
         /// <summary>
@@ -442,12 +449,12 @@ namespace NCDK.SMARTS
         /// <returns>SMARTS bond expression</returns>
         private string EncodeBondExpr(int bondIdx, int beg, int end)
         {
-            IBond bond = mol.Bonds[bondIdx];
+            var bond = mol.Bonds[bondIdx];
             if (bond.Order == BondOrder.Unset)
                 return "";
 
-            bool bArom = bond.IsAromatic;
-            bool aArom = mol.Atoms[beg].IsAromatic && mol.Atoms[end].IsAromatic;
+            var bArom = bond.IsAromatic;
+            var aArom = mol.Atoms[beg].IsAromatic && mol.Atoms[end].IsAromatic;
             switch (bond.Order)
             {
                 case BondOrder.Single:

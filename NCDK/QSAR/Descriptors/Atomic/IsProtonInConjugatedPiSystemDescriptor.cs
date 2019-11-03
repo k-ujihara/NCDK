@@ -18,7 +18,6 @@
  */
 
 using NCDK.Aromaticities;
-using NCDK.Config;
 using NCDK.Graphs.Invariant;
 using NCDK.Tools.Manipulator;
 

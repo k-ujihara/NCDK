@@ -30,35 +30,27 @@ namespace NCDK.AtomTypes
     public class EStateAtomTypeMatcherTest : CDKTestCase
     {
         private static readonly IChemObjectBuilder builder = CDK.Builder;
-        static EStateAtomTypeMatcher matcher = new EStateAtomTypeMatcher();
-        IAtomContainer mol = null;
 
         public EStateAtomTypeMatcherTest()
             : base()
         { }
 
-        [TestMethod()]
-        public void TestEStateAtomTypeMatcher()
+        private static IRingSet GetRings(IAtomContainer mol)
         {
-            Assert.IsNotNull(matcher);
-        }
-
-        IRingSet GetRings()
-        {
-            IRingSet rs = null;
             try
             {
-                AllRingsFinder arf = new AllRingsFinder();
-                rs = arf.FindAllRings(mol);
+                var arf = new AllRingsFinder();
+                var rs = arf.FindAllRings(mol);
+                return rs;
             }
             catch (Exception e)
             {
-                Console.Out.WriteLine("Could not find all rings: " + e.Message);
+                Console.Out.WriteLine($"Could not find all rings: {e.Message}");
             }
-            return (rs);
+            return null;
         }
 
-        private bool TestAtom(string expectedAtType, IAtom atom)
+        private bool TestAtom(IAtomTypeMatcher matcher, IAtomContainer mol, string expectedAtType, IAtom atom)
         {
             return expectedAtType.Equals(matcher.FindMatchingAtomType(mol, atom).AtomTypeName);
         }
@@ -66,6 +58,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestFindMatchingAtomType_IAtomContainer()
         {
+            var matcher = new EStateAtomTypeMatcher();
             var mol = builder.NewAtomContainer();
             var atom = builder.NewAtom("C");
             var thisHybridization = Hybridization.SP3;
@@ -85,282 +78,282 @@ namespace NCDK.AtomTypes
         public void TestSP3Atoms()
         {
             //Testing with CC(C)(C)CC
-            mol = builder.NewAtomContainer();
-            IAtom a1 = mol.Builder.NewAtom("C");
+            var mol = builder.NewAtomContainer();
+            var a1 = mol.Builder.NewAtom("C");
             mol.Atoms.Add(a1);
-            IAtom a2 = mol.Builder.NewAtom("C");
+            var a2 = mol.Builder.NewAtom("C");
             mol.Atoms.Add(a2);
-            IAtom a3 = mol.Builder.NewAtom("C");
+            var a3 = mol.Builder.NewAtom("C");
             mol.Atoms.Add(a3);
-            IAtom a4 = mol.Builder.NewAtom("C");
+            var a4 = mol.Builder.NewAtom("C");
             mol.Atoms.Add(a4);
-            IAtom a5 = mol.Builder.NewAtom("C");
+            var a5 = mol.Builder.NewAtom("C");
             mol.Atoms.Add(a5);
-            IAtom a6 = mol.Builder.NewAtom("C");
+            var a6 = mol.Builder.NewAtom("C");
             mol.Atoms.Add(a6);
-            IAtom a7 = mol.Builder.NewAtom("H");
+            var a7 = mol.Builder.NewAtom("H");
             mol.Atoms.Add(a7);
-            IAtom a8 = mol.Builder.NewAtom("H");
+            var a8 = mol.Builder.NewAtom("H");
             mol.Atoms.Add(a8);
-            IAtom a9 = mol.Builder.NewAtom("H");
+            var a9 = mol.Builder.NewAtom("H");
             mol.Atoms.Add(a9);
-            IAtom a10 = mol.Builder.NewAtom("H");
+            var a10 = mol.Builder.NewAtom("H");
             mol.Atoms.Add(a10);
-            IAtom a11 = mol.Builder.NewAtom("H");
+            var a11 = mol.Builder.NewAtom("H");
             mol.Atoms.Add(a11);
-            IAtom a12 = mol.Builder.NewAtom("H");
+            var a12 = mol.Builder.NewAtom("H");
             mol.Atoms.Add(a12);
-            IAtom a13 = mol.Builder.NewAtom("H");
+            var a13 = mol.Builder.NewAtom("H");
             mol.Atoms.Add(a13);
-            IAtom a14 = mol.Builder.NewAtom("H");
+            var a14 = mol.Builder.NewAtom("H");
             mol.Atoms.Add(a14);
-            IAtom a15 = mol.Builder.NewAtom("H");
+            var a15 = mol.Builder.NewAtom("H");
             mol.Atoms.Add(a15);
-            IAtom a16 = mol.Builder.NewAtom("H");
+            var a16 = mol.Builder.NewAtom("H");
             mol.Atoms.Add(a16);
-            IAtom a17 = mol.Builder.NewAtom("H");
+            var a17 = mol.Builder.NewAtom("H");
             mol.Atoms.Add(a17);
-            IAtom a18 = mol.Builder.NewAtom("H");
+            var a18 = mol.Builder.NewAtom("H");
             mol.Atoms.Add(a18);
-            IAtom a19 = mol.Builder.NewAtom("H");
+            var a19 = mol.Builder.NewAtom("H");
             mol.Atoms.Add(a19);
-            IAtom a20 = mol.Builder.NewAtom("H");
+            var a20 = mol.Builder.NewAtom("H");
             mol.Atoms.Add(a20);
-            IBond b1 = mol.Builder.NewBond(a2, a1, BondOrder.Single);
+            var b1 = mol.Builder.NewBond(a2, a1, BondOrder.Single);
             mol.Bonds.Add(b1);
-            IBond b2 = mol.Builder.NewBond(a3, a2, BondOrder.Single);
+            var b2 = mol.Builder.NewBond(a3, a2, BondOrder.Single);
             mol.Bonds.Add(b2);
-            IBond b3 = mol.Builder.NewBond(a4, a2, BondOrder.Single);
+            var b3 = mol.Builder.NewBond(a4, a2, BondOrder.Single);
             mol.Bonds.Add(b3);
-            IBond b4 = mol.Builder.NewBond(a5, a2, BondOrder.Single);
+            var b4 = mol.Builder.NewBond(a5, a2, BondOrder.Single);
             mol.Bonds.Add(b4);
-            IBond b5 = mol.Builder.NewBond(a6, a5, BondOrder.Single);
+            var b5 = mol.Builder.NewBond(a6, a5, BondOrder.Single);
             mol.Bonds.Add(b5);
-            IBond b6 = mol.Builder.NewBond(a1, a7, BondOrder.Single);
+            var b6 = mol.Builder.NewBond(a1, a7, BondOrder.Single);
             mol.Bonds.Add(b6);
-            IBond b7 = mol.Builder.NewBond(a1, a8, BondOrder.Single);
+            var b7 = mol.Builder.NewBond(a1, a8, BondOrder.Single);
             mol.Bonds.Add(b7);
-            IBond b8 = mol.Builder.NewBond(a1, a9, BondOrder.Single);
+            var b8 = mol.Builder.NewBond(a1, a9, BondOrder.Single);
             mol.Bonds.Add(b8);
-            IBond b9 = mol.Builder.NewBond(a3, a10, BondOrder.Single);
+            var b9 = mol.Builder.NewBond(a3, a10, BondOrder.Single);
             mol.Bonds.Add(b9);
-            IBond b10 = mol.Builder.NewBond(a3, a11, BondOrder.Single);
+            var b10 = mol.Builder.NewBond(a3, a11, BondOrder.Single);
             mol.Bonds.Add(b10);
-            IBond b11 = mol.Builder.NewBond(a3, a12, BondOrder.Single);
+            var b11 = mol.Builder.NewBond(a3, a12, BondOrder.Single);
             mol.Bonds.Add(b11);
-            IBond b12 = mol.Builder.NewBond(a4, a13, BondOrder.Single);
+            var b12 = mol.Builder.NewBond(a4, a13, BondOrder.Single);
             mol.Bonds.Add(b12);
-            IBond b13 = mol.Builder.NewBond(a4, a14, BondOrder.Single);
+            var b13 = mol.Builder.NewBond(a4, a14, BondOrder.Single);
             mol.Bonds.Add(b13);
-            IBond b14 = mol.Builder.NewBond(a4, a15, BondOrder.Single);
+            var b14 = mol.Builder.NewBond(a4, a15, BondOrder.Single);
             mol.Bonds.Add(b14);
-            IBond b15 = mol.Builder.NewBond(a5, a16, BondOrder.Single);
+            var b15 = mol.Builder.NewBond(a5, a16, BondOrder.Single);
             mol.Bonds.Add(b15);
-            IBond b16 = mol.Builder.NewBond(a5, a17, BondOrder.Single);
+            var b16 = mol.Builder.NewBond(a5, a17, BondOrder.Single);
             mol.Bonds.Add(b16);
-            IBond b17 = mol.Builder.NewBond(a6, a18, BondOrder.Single);
+            var b17 = mol.Builder.NewBond(a6, a18, BondOrder.Single);
             mol.Bonds.Add(b17);
-            IBond b18 = mol.Builder.NewBond(a6, a19, BondOrder.Single);
+            var b18 = mol.Builder.NewBond(a6, a19, BondOrder.Single);
             mol.Bonds.Add(b18);
-            IBond b19 = mol.Builder.NewBond(a6, a20, BondOrder.Single);
+            var b19 = mol.Builder.NewBond(a6, a20, BondOrder.Single);
             mol.Bonds.Add(b19);
 
-            matcher.RingSet = GetRings();
-            Assert.IsTrue(TestAtom("SsCH3", a1));
-            Assert.IsTrue(TestAtom("SssssC", a2));
-            Assert.IsTrue(TestAtom("SsCH3", a3));
-            Assert.IsTrue(TestAtom("SsCH3", a4));
-            Assert.IsTrue(TestAtom("SssCH2", a5));
-            Assert.IsTrue(TestAtom("SsCH3", a6));
-            Assert.IsTrue(TestAtom("SsH", a7));
-            Assert.IsTrue(TestAtom("SsH", a8));
+            var matcher = new EStateAtomTypeMatcher(GetRings(mol));
+            Assert.IsTrue(TestAtom(matcher, mol, "SsCH3", a1));
+            Assert.IsTrue(TestAtom(matcher, mol, "SssssC", a2));
+            Assert.IsTrue(TestAtom(matcher, mol, "SsCH3", a3));
+            Assert.IsTrue(TestAtom(matcher, mol, "SsCH3", a4));
+            Assert.IsTrue(TestAtom(matcher, mol, "SssCH2", a5));
+            Assert.IsTrue(TestAtom(matcher, mol, "SsCH3", a6));
+            Assert.IsTrue(TestAtom(matcher, mol, "SsH", a7));
+            Assert.IsTrue(TestAtom(matcher, mol, "SsH", a8));
         }
 
         [TestMethod()]
         public void TestSP2Atoms()
         {
             //Test with C=CC=N
-            mol = builder.NewAtomContainer();
-            IAtom a1 = mol.Builder.NewAtom("C");
+            var mol = builder.NewAtomContainer();
+            var a1 = mol.Builder.NewAtom("C");
             mol.Atoms.Add(a1);
-            IAtom a2 = mol.Builder.NewAtom("C");
+            var a2 = mol.Builder.NewAtom("C");
             mol.Atoms.Add(a2);
-            IAtom a3 = mol.Builder.NewAtom("C");
+            var a3 = mol.Builder.NewAtom("C");
             mol.Atoms.Add(a3);
-            IAtom a4 = mol.Builder.NewAtom("N");
+            var a4 = mol.Builder.NewAtom("N");
             mol.Atoms.Add(a4);
-            IAtom a5 = mol.Builder.NewAtom("H");
+            var a5 = mol.Builder.NewAtom("H");
             mol.Atoms.Add(a5);
-            IAtom a6 = mol.Builder.NewAtom("H");
+            var a6 = mol.Builder.NewAtom("H");
             mol.Atoms.Add(a6);
-            IAtom a7 = mol.Builder.NewAtom("H");
+            var a7 = mol.Builder.NewAtom("H");
             mol.Atoms.Add(a7);
-            IAtom a8 = mol.Builder.NewAtom("H");
+            var a8 = mol.Builder.NewAtom("H");
             mol.Atoms.Add(a8);
-            IAtom a9 = mol.Builder.NewAtom("H");
+            var a9 = mol.Builder.NewAtom("H");
             mol.Atoms.Add(a9);
-            IBond b1 = mol.Builder.NewBond(a2, a1, BondOrder.Double);
+            var b1 = mol.Builder.NewBond(a2, a1, BondOrder.Double);
             mol.Bonds.Add(b1);
-            IBond b2 = mol.Builder.NewBond(a3, a2, BondOrder.Single);
+            var b2 = mol.Builder.NewBond(a3, a2, BondOrder.Single);
             mol.Bonds.Add(b2);
-            IBond b3 = mol.Builder.NewBond(a4, a3, BondOrder.Double);
+            var b3 = mol.Builder.NewBond(a4, a3, BondOrder.Double);
             mol.Bonds.Add(b3);
-            IBond b4 = mol.Builder.NewBond(a1, a5, BondOrder.Single);
+            var b4 = mol.Builder.NewBond(a1, a5, BondOrder.Single);
             mol.Bonds.Add(b4);
-            IBond b5 = mol.Builder.NewBond(a1, a6, BondOrder.Single);
+            var b5 = mol.Builder.NewBond(a1, a6, BondOrder.Single);
             mol.Bonds.Add(b5);
-            IBond b6 = mol.Builder.NewBond(a2, a7, BondOrder.Single);
+            var b6 = mol.Builder.NewBond(a2, a7, BondOrder.Single);
             mol.Bonds.Add(b6);
-            IBond b7 = mol.Builder.NewBond(a3, a8, BondOrder.Single);
+            var b7 = mol.Builder.NewBond(a3, a8, BondOrder.Single);
             mol.Bonds.Add(b7);
-            IBond b8 = mol.Builder.NewBond(a4, a9, BondOrder.Single);
+            var b8 = mol.Builder.NewBond(a4, a9, BondOrder.Single);
             mol.Bonds.Add(b8);
 
-            matcher.RingSet = GetRings();
-            Assert.IsTrue(TestAtom("SdCH2", a1));
-            Assert.IsTrue(TestAtom("SdsCH", a2));
-            Assert.IsTrue(TestAtom("SdsCH", a3));
-            Assert.IsTrue(TestAtom("SdNH", a4));
-            Assert.IsTrue(TestAtom("SsH", a9));
+            var matcher = new EStateAtomTypeMatcher(GetRings(mol));
+            Assert.IsTrue(TestAtom(matcher, mol, "SdCH2", a1));
+            Assert.IsTrue(TestAtom(matcher, mol, "SdsCH", a2));
+            Assert.IsTrue(TestAtom(matcher, mol, "SdsCH", a3));
+            Assert.IsTrue(TestAtom(matcher, mol, "SdNH", a4));
+            Assert.IsTrue(TestAtom(matcher, mol, "SsH", a9));
         }
 
         [TestMethod()]
         public void TestSPAtoms()
         {
             //Testing with  C#CCC#N
-            mol = builder.NewAtomContainer();
-            IAtom a1 = mol.Builder.NewAtom("C");
+            var mol = builder.NewAtomContainer();
+            var a1 = mol.Builder.NewAtom("C");
             mol.Atoms.Add(a1);
-            IAtom a2 = mol.Builder.NewAtom("C");
+            var a2 = mol.Builder.NewAtom("C");
             mol.Atoms.Add(a2);
-            IAtom a3 = mol.Builder.NewAtom("C");
+            var a3 = mol.Builder.NewAtom("C");
             mol.Atoms.Add(a3);
-            IAtom a4 = mol.Builder.NewAtom("C");
+            var a4 = mol.Builder.NewAtom("C");
             mol.Atoms.Add(a4);
-            IAtom a5 = mol.Builder.NewAtom("N");
+            var a5 = mol.Builder.NewAtom("N");
             mol.Atoms.Add(a5);
-            IAtom a6 = mol.Builder.NewAtom("H");
+            var a6 = mol.Builder.NewAtom("H");
             mol.Atoms.Add(a6);
-            IAtom a7 = mol.Builder.NewAtom("H");
+            var a7 = mol.Builder.NewAtom("H");
             mol.Atoms.Add(a7);
-            IAtom a8 = mol.Builder.NewAtom("H");
+            var a8 = mol.Builder.NewAtom("H");
             mol.Atoms.Add(a8);
-            IBond b1 = mol.Builder.NewBond(a2, a1, BondOrder.Triple);
+            var b1 = mol.Builder.NewBond(a2, a1, BondOrder.Triple);
             mol.Bonds.Add(b1);
-            IBond b2 = mol.Builder.NewBond(a3, a2, BondOrder.Single);
+            var b2 = mol.Builder.NewBond(a3, a2, BondOrder.Single);
             mol.Bonds.Add(b2);
-            IBond b3 = mol.Builder.NewBond(a4, a3, BondOrder.Single);
+            var b3 = mol.Builder.NewBond(a4, a3, BondOrder.Single);
             mol.Bonds.Add(b3);
-            IBond b4 = mol.Builder.NewBond(a5, a4, BondOrder.Triple);
+            var b4 = mol.Builder.NewBond(a5, a4, BondOrder.Triple);
             mol.Bonds.Add(b4);
-            IBond b5 = mol.Builder.NewBond(a1, a6, BondOrder.Single);
+            var b5 = mol.Builder.NewBond(a1, a6, BondOrder.Single);
             mol.Bonds.Add(b5);
-            IBond b6 = mol.Builder.NewBond(a3, a7, BondOrder.Single);
+            var b6 = mol.Builder.NewBond(a3, a7, BondOrder.Single);
             mol.Bonds.Add(b6);
-            IBond b7 = mol.Builder.NewBond(a3, a8, BondOrder.Single);
+            var b7 = mol.Builder.NewBond(a3, a8, BondOrder.Single);
             mol.Bonds.Add(b7);
 
-            matcher.RingSet = GetRings();
-            Assert.IsTrue(TestAtom("StCH", a1));
-            Assert.IsTrue(TestAtom("StsC", a2));
-            Assert.IsTrue(TestAtom("SssCH2", a3));
-            Assert.IsTrue(TestAtom("StsC", a4));
-            Assert.IsTrue(TestAtom("StN", a5));
+            var matcher = new EStateAtomTypeMatcher(GetRings(mol));
+            Assert.IsTrue(TestAtom(matcher, mol, "StCH", a1));
+            Assert.IsTrue(TestAtom(matcher, mol, "StsC", a2));
+            Assert.IsTrue(TestAtom(matcher, mol, "SssCH2", a3));
+            Assert.IsTrue(TestAtom(matcher, mol, "StsC", a4));
+            Assert.IsTrue(TestAtom(matcher, mol, "StN", a5));
         }
 
         [TestMethod()]
         public void TestAromaticAtoms()
         {
             //Testing with C1=CN=CC=C1C
-            mol = builder.NewAtomContainer();
-            IAtom a1 = mol.Builder.NewAtom("C");
+            var mol = builder.NewAtomContainer();
+            var a1 = mol.Builder.NewAtom("C");
             a1.IsAromatic = true;
             mol.Atoms.Add(a1);
-            IAtom a2 = mol.Builder.NewAtom("C");
+            var a2 = mol.Builder.NewAtom("C");
             a2.IsAromatic = true;
             mol.Atoms.Add(a2);
-            IAtom a3 = mol.Builder.NewAtom("N");
+            var a3 = mol.Builder.NewAtom("N");
             a3.IsAromatic = true;
             mol.Atoms.Add(a3);
-            IAtom a4 = mol.Builder.NewAtom("C");
+            var a4 = mol.Builder.NewAtom("C");
             a4.IsAromatic = true;
             mol.Atoms.Add(a4);
-            IAtom a5 = mol.Builder.NewAtom("C");
+            var a5 = mol.Builder.NewAtom("C");
             a5.IsAromatic = true;
             mol.Atoms.Add(a5);
-            IAtom a6 = mol.Builder.NewAtom("C");
+            var a6 = mol.Builder.NewAtom("C");
             a6.IsAromatic = true;
             mol.Atoms.Add(a6);
-            IAtom a7 = mol.Builder.NewAtom("C");
+            var a7 = mol.Builder.NewAtom("C");
             mol.Atoms.Add(a7);
-            IAtom a8 = mol.Builder.NewAtom("H");
+            var a8 = mol.Builder.NewAtom("H");
             mol.Atoms.Add(a8);
-            IAtom a9 = mol.Builder.NewAtom("H");
+            var a9 = mol.Builder.NewAtom("H");
             mol.Atoms.Add(a9);
-            IAtom a10 = mol.Builder.NewAtom("H");
+            var a10 = mol.Builder.NewAtom("H");
             mol.Atoms.Add(a10);
-            IAtom a11 = mol.Builder.NewAtom("H");
+            var a11 = mol.Builder.NewAtom("H");
             mol.Atoms.Add(a11);
-            IAtom a12 = mol.Builder.NewAtom("H");
+            var a12 = mol.Builder.NewAtom("H");
             mol.Atoms.Add(a12);
-            IAtom a13 = mol.Builder.NewAtom("H");
+            var a13 = mol.Builder.NewAtom("H");
             mol.Atoms.Add(a13);
-            IAtom a14 = mol.Builder.NewAtom("H");
+            var a14 = mol.Builder.NewAtom("H");
             mol.Atoms.Add(a14);
-            IBond b1 = mol.Builder.NewBond(a2, a1, BondOrder.Double);
+            var b1 = mol.Builder.NewBond(a2, a1, BondOrder.Double);
             mol.Bonds.Add(b1);
-            IBond b2 = mol.Builder.NewBond(a3, a2, BondOrder.Single);
+            var b2 = mol.Builder.NewBond(a3, a2, BondOrder.Single);
             mol.Bonds.Add(b2);
-            IBond b3 = mol.Builder.NewBond(a4, a3, BondOrder.Double);
+            var b3 = mol.Builder.NewBond(a4, a3, BondOrder.Double);
             mol.Bonds.Add(b3);
-            IBond b4 = mol.Builder.NewBond(a5, a4, BondOrder.Single);
+            var b4 = mol.Builder.NewBond(a5, a4, BondOrder.Single);
             mol.Bonds.Add(b4);
-            IBond b5 = mol.Builder.NewBond(a6, a5, BondOrder.Double);
+            var b5 = mol.Builder.NewBond(a6, a5, BondOrder.Double);
             mol.Bonds.Add(b5);
-            IBond b6 = mol.Builder.NewBond(a6, a1, BondOrder.Single);
+            var b6 = mol.Builder.NewBond(a6, a1, BondOrder.Single);
             mol.Bonds.Add(b6);
-            IBond b7 = mol.Builder.NewBond(a7, a6, BondOrder.Single);
+            var b7 = mol.Builder.NewBond(a7, a6, BondOrder.Single);
             mol.Bonds.Add(b7);
-            IBond b8 = mol.Builder.NewBond(a1, a8, BondOrder.Single);
+            var b8 = mol.Builder.NewBond(a1, a8, BondOrder.Single);
             mol.Bonds.Add(b8);
-            IBond b9 = mol.Builder.NewBond(a2, a9, BondOrder.Single);
+            var b9 = mol.Builder.NewBond(a2, a9, BondOrder.Single);
             mol.Bonds.Add(b9);
-            IBond b10 = mol.Builder.NewBond(a5, a10, BondOrder.Single);
+            var b10 = mol.Builder.NewBond(a5, a10, BondOrder.Single);
             mol.Bonds.Add(b10);
-            IBond b11 = mol.Builder.NewBond(a7, a11, BondOrder.Single);
+            var b11 = mol.Builder.NewBond(a7, a11, BondOrder.Single);
             mol.Bonds.Add(b11);
-            IBond b12 = mol.Builder.NewBond(a7, a12, BondOrder.Single);
+            var b12 = mol.Builder.NewBond(a7, a12, BondOrder.Single);
             mol.Bonds.Add(b12);
-            IBond b13 = mol.Builder.NewBond(a7, a13, BondOrder.Single);
+            var b13 = mol.Builder.NewBond(a7, a13, BondOrder.Single);
             mol.Bonds.Add(b13);
-            IBond b14 = mol.Builder.NewBond(a4, a14, BondOrder.Single);
+            var b14 = mol.Builder.NewBond(a4, a14, BondOrder.Single);
             mol.Bonds.Add(b14);
 
-            matcher.RingSet = GetRings();
-            Assert.IsTrue(TestAtom("SaaCH", a1));
-            Assert.IsTrue(TestAtom("SaaCH", a2));
-            Assert.IsTrue(TestAtom("SaaN", a3));
-            Assert.IsTrue(TestAtom("SaaCH", a4));
-            Assert.IsTrue(TestAtom("SaaCH", a5));
-            Assert.IsTrue(TestAtom("SsaaC", a6));
-            Assert.IsTrue(TestAtom("SsCH3", a7));
+            var matcher = new EStateAtomTypeMatcher(GetRings(mol));
+            Assert.IsTrue(TestAtom(matcher, mol, "SaaCH", a1));
+            Assert.IsTrue(TestAtom(matcher, mol, "SaaCH", a2));
+            Assert.IsTrue(TestAtom(matcher, mol, "SaaN", a3));
+            Assert.IsTrue(TestAtom(matcher, mol, "SaaCH", a4));
+            Assert.IsTrue(TestAtom(matcher, mol, "SaaCH", a5));
+            Assert.IsTrue(TestAtom(matcher, mol, "SsaaC", a6));
+            Assert.IsTrue(TestAtom(matcher, mol, "SsCH3", a7));
         }
 
         [TestMethod()]
         public void TestBenzeneFromSmiles()
         {
             var sp = CDK.SmilesParser;
-            mol = sp.ParseSmiles("C1=CC=CC=C1");
+            var mol = sp.ParseSmiles("C1=CC=CC=C1");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             Aromaticity.CDKLegacy.Apply(mol);
             AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(mol);
 
-            matcher.RingSet = GetRings();
+            var matcher = new EStateAtomTypeMatcher(GetRings(mol));
             foreach (var atom in mol.Atoms)
             {
                 if (atom.Symbol.Equals("C"))
                 {
-                    Assert.IsTrue(TestAtom("SaaCH", atom));
+                    Assert.IsTrue(TestAtom(matcher, mol, "SaaCH", atom));
                 }
             }
         }
@@ -369,175 +362,179 @@ namespace NCDK.AtomTypes
         public void TestNaphthalene()
         {
             //Testing with C1=CC2C=CC=CC=2C=C1
-            mol = builder.NewAtomContainer();
-            IAtom a1 = mol.Builder.NewAtom("C");
+            var mol = builder.NewAtomContainer();
+            var a1 = mol.Builder.NewAtom("C");
             a1.IsAromatic = true;
             mol.Atoms.Add(a1);
-            IAtom a2 = mol.Builder.NewAtom("C");
+            var a2 = mol.Builder.NewAtom("C");
             a2.IsAromatic = true;
             mol.Atoms.Add(a2);
-            IAtom a3 = mol.Builder.NewAtom("C");
+            var a3 = mol.Builder.NewAtom("C");
             a3.IsAromatic = true;
             mol.Atoms.Add(a3);
-            IAtom a4 = mol.Builder.NewAtom("C");
+            var a4 = mol.Builder.NewAtom("C");
             a4.IsAromatic = true;
             mol.Atoms.Add(a4);
-            IAtom a5 = mol.Builder.NewAtom("C");
+            var a5 = mol.Builder.NewAtom("C");
             a5.IsAromatic = true;
             mol.Atoms.Add(a5);
-            IAtom a6 = mol.Builder.NewAtom("C");
+            var a6 = mol.Builder.NewAtom("C");
             a6.IsAromatic = true;
             mol.Atoms.Add(a6);
-            IAtom a7 = mol.Builder.NewAtom("C");
+            var a7 = mol.Builder.NewAtom("C");
             a7.IsAromatic = true;
             mol.Atoms.Add(a7);
-            IAtom a8 = mol.Builder.NewAtom("C");
+            var a8 = mol.Builder.NewAtom("C");
             a8.IsAromatic = true;
             mol.Atoms.Add(a8);
-            IAtom a9 = mol.Builder.NewAtom("C");
+            var a9 = mol.Builder.NewAtom("C");
             a9.IsAromatic = true;
             mol.Atoms.Add(a9);
-            IAtom a10 = mol.Builder.NewAtom("C");
+            var a10 = mol.Builder.NewAtom("C");
             a10.IsAromatic = true;
             mol.Atoms.Add(a10);
-            IAtom a11 = mol.Builder.NewAtom("H");
+            var a11 = mol.Builder.NewAtom("H");
             mol.Atoms.Add(a11);
-            IAtom a12 = mol.Builder.NewAtom("H");
+            var a12 = mol.Builder.NewAtom("H");
             mol.Atoms.Add(a12);
-            IAtom a13 = mol.Builder.NewAtom("H");
+            var a13 = mol.Builder.NewAtom("H");
             mol.Atoms.Add(a13);
-            IAtom a14 = mol.Builder.NewAtom("H");
+            var a14 = mol.Builder.NewAtom("H");
             mol.Atoms.Add(a14);
-            IAtom a15 = mol.Builder.NewAtom("H");
+            var a15 = mol.Builder.NewAtom("H");
             mol.Atoms.Add(a15);
-            IAtom a16 = mol.Builder.NewAtom("H");
+            var a16 = mol.Builder.NewAtom("H");
             mol.Atoms.Add(a16);
-            IAtom a17 = mol.Builder.NewAtom("H");
+            var a17 = mol.Builder.NewAtom("H");
             mol.Atoms.Add(a17);
-            IAtom a18 = mol.Builder.NewAtom("H");
+            var a18 = mol.Builder.NewAtom("H");
             mol.Atoms.Add(a18);
-            IBond b1 = mol.Builder.NewBond(a2, a1, BondOrder.Double);
+            var b1 = mol.Builder.NewBond(a2, a1, BondOrder.Double);
             mol.Bonds.Add(b1);
-            IBond b2 = mol.Builder.NewBond(a3, a2, BondOrder.Single);
+            var b2 = mol.Builder.NewBond(a3, a2, BondOrder.Single);
             mol.Bonds.Add(b2);
-            IBond b3 = mol.Builder.NewBond(a4, a3, BondOrder.Single);
+            var b3 = mol.Builder.NewBond(a4, a3, BondOrder.Single);
             mol.Bonds.Add(b3);
-            IBond b4 = mol.Builder.NewBond(a5, a4, BondOrder.Double);
+            var b4 = mol.Builder.NewBond(a5, a4, BondOrder.Double);
             mol.Bonds.Add(b4);
-            IBond b5 = mol.Builder.NewBond(a6, a5, BondOrder.Single);
+            var b5 = mol.Builder.NewBond(a6, a5, BondOrder.Single);
             mol.Bonds.Add(b5);
-            IBond b6 = mol.Builder.NewBond(a7, a6, BondOrder.Double);
+            var b6 = mol.Builder.NewBond(a7, a6, BondOrder.Double);
             mol.Bonds.Add(b6);
-            IBond b7 = mol.Builder.NewBond(a8, a7, BondOrder.Single);
+            var b7 = mol.Builder.NewBond(a8, a7, BondOrder.Single);
             mol.Bonds.Add(b7);
-            IBond b8 = mol.Builder.NewBond(a8, a3, BondOrder.Double);
+            var b8 = mol.Builder.NewBond(a8, a3, BondOrder.Double);
             mol.Bonds.Add(b8);
-            IBond b9 = mol.Builder.NewBond(a9, a8, BondOrder.Single);
+            var b9 = mol.Builder.NewBond(a9, a8, BondOrder.Single);
             mol.Bonds.Add(b9);
-            IBond b10 = mol.Builder.NewBond(a10, a9, BondOrder.Double);
+            var b10 = mol.Builder.NewBond(a10, a9, BondOrder.Double);
             mol.Bonds.Add(b10);
-            IBond b11 = mol.Builder.NewBond(a10, a1, BondOrder.Single);
+            var b11 = mol.Builder.NewBond(a10, a1, BondOrder.Single);
             mol.Bonds.Add(b11);
-            IBond b12 = mol.Builder.NewBond(a1, a11, BondOrder.Single);
+            var b12 = mol.Builder.NewBond(a1, a11, BondOrder.Single);
             mol.Bonds.Add(b12);
-            IBond b13 = mol.Builder.NewBond(a2, a12, BondOrder.Single);
+            var b13 = mol.Builder.NewBond(a2, a12, BondOrder.Single);
             mol.Bonds.Add(b13);
-            IBond b14 = mol.Builder.NewBond(a10, a13, BondOrder.Single);
+            var b14 = mol.Builder.NewBond(a10, a13, BondOrder.Single);
             mol.Bonds.Add(b14);
-            IBond b15 = mol.Builder.NewBond(a9, a14, BondOrder.Single);
+            var b15 = mol.Builder.NewBond(a9, a14, BondOrder.Single);
             mol.Bonds.Add(b15);
-            IBond b16 = mol.Builder.NewBond(a4, a15, BondOrder.Single);
+            var b16 = mol.Builder.NewBond(a4, a15, BondOrder.Single);
             mol.Bonds.Add(b16);
-            IBond b17 = mol.Builder.NewBond(a5, a16, BondOrder.Single);
+            var b17 = mol.Builder.NewBond(a5, a16, BondOrder.Single);
             mol.Bonds.Add(b17);
-            IBond b18 = mol.Builder.NewBond(a7, a17, BondOrder.Single);
+            var b18 = mol.Builder.NewBond(a7, a17, BondOrder.Single);
             mol.Bonds.Add(b18);
-            IBond b19 = mol.Builder.NewBond(a6, a18, BondOrder.Single);
+            var b19 = mol.Builder.NewBond(a6, a18, BondOrder.Single);
             mol.Bonds.Add(b19);
 
-            matcher.RingSet = GetRings();
-            Assert.IsTrue(TestAtom("SaaCH", a1));
-            Assert.IsTrue(TestAtom("SaaCH", a2));
-            Assert.IsTrue(TestAtom("SaaaC", a3));
-            Assert.IsTrue(TestAtom("SaaCH", a4));
-            Assert.IsTrue(TestAtom("SaaCH", a5));
-            Assert.IsTrue(TestAtom("SaaCH", a6));
-            Assert.IsTrue(TestAtom("SaaCH", a7));
-            Assert.IsTrue(TestAtom("SaaaC", a8));
-            Assert.IsTrue(TestAtom("SaaCH", a9));
-            Assert.IsTrue(TestAtom("SaaCH", a10));
+            var matcher = new EStateAtomTypeMatcher(GetRings(mol));
+            Assert.IsTrue(TestAtom(matcher, mol, "SaaCH", a1));
+            Assert.IsTrue(TestAtom(matcher, mol, "SaaCH", a2));
+            Assert.IsTrue(TestAtom(matcher, mol, "SaaaC", a3));
+            Assert.IsTrue(TestAtom(matcher, mol, "SaaCH", a4));
+            Assert.IsTrue(TestAtom(matcher, mol, "SaaCH", a5));
+            Assert.IsTrue(TestAtom(matcher, mol, "SaaCH", a6));
+            Assert.IsTrue(TestAtom(matcher, mol, "SaaCH", a7));
+            Assert.IsTrue(TestAtom(matcher, mol, "SaaaC", a8));
+            Assert.IsTrue(TestAtom(matcher, mol, "SaaCH", a9));
+            Assert.IsTrue(TestAtom(matcher, mol, "SaaCH", a10));
         }
 
         [TestMethod()]
         public void TestChargedAtoms()
         {
             //Testing with C[N+]
-            mol = builder.NewAtomContainer();
-            IAtom a1 = mol.Builder.NewAtom("C");
+            var mol = builder.NewAtomContainer();
+            var a1 = mol.Builder.NewAtom("C");
             mol.Atoms.Add(a1);
-            IAtom a2 = mol.Builder.NewAtom("N");
+            var a2 = mol.Builder.NewAtom("N");
             a2.FormalCharge = +1;
             mol.Atoms.Add(a2);
-            IAtom a3 = mol.Builder.NewAtom("H");
+            var a3 = mol.Builder.NewAtom("H");
             mol.Atoms.Add(a3);
-            IAtom a4 = mol.Builder.NewAtom("H");
+            var a4 = mol.Builder.NewAtom("H");
             mol.Atoms.Add(a4);
-            IAtom a5 = mol.Builder.NewAtom("H");
+            var a5 = mol.Builder.NewAtom("H");
             mol.Atoms.Add(a5);
-            IAtom a6 = mol.Builder.NewAtom("H");
+            var a6 = mol.Builder.NewAtom("H");
             mol.Atoms.Add(a6);
-            IAtom a7 = mol.Builder.NewAtom("H");
+            var a7 = mol.Builder.NewAtom("H");
             mol.Atoms.Add(a7);
-            IAtom a8 = mol.Builder.NewAtom("H");
+            var a8 = mol.Builder.NewAtom("H");
             mol.Atoms.Add(a8);
-            IBond b1 = mol.Builder.NewBond(a2, a1, BondOrder.Single);
+            var b1 = mol.Builder.NewBond(a2, a1, BondOrder.Single);
             mol.Bonds.Add(b1);
-            IBond b2 = mol.Builder.NewBond(a1, a3, BondOrder.Single);
+            var b2 = mol.Builder.NewBond(a1, a3, BondOrder.Single);
             mol.Bonds.Add(b2);
-            IBond b3 = mol.Builder.NewBond(a1, a4, BondOrder.Single);
+            var b3 = mol.Builder.NewBond(a1, a4, BondOrder.Single);
             mol.Bonds.Add(b3);
-            IBond b4 = mol.Builder.NewBond(a1, a5, BondOrder.Single);
+            var b4 = mol.Builder.NewBond(a1, a5, BondOrder.Single);
             mol.Bonds.Add(b4);
-            IBond b5 = mol.Builder.NewBond(a2, a6, BondOrder.Single);
+            var b5 = mol.Builder.NewBond(a2, a6, BondOrder.Single);
             mol.Bonds.Add(b5);
-            IBond b6 = mol.Builder.NewBond(a2, a7, BondOrder.Single);
+            var b6 = mol.Builder.NewBond(a2, a7, BondOrder.Single);
             mol.Bonds.Add(b6);
-            IBond b7 = mol.Builder.NewBond(a2, a8, BondOrder.Single);
+            var b7 = mol.Builder.NewBond(a2, a8, BondOrder.Single);
             mol.Bonds.Add(b7);
 
-            matcher.RingSet = GetRings();
-            Assert.IsTrue(TestAtom("SsCH3", a1));
-            Assert.IsTrue(TestAtom("SsNpH3", a2));
+            var matcher = new EStateAtomTypeMatcher(GetRings(mol));
+            Assert.IsTrue(TestAtom(matcher, mol, "SsCH3", a1));
+            Assert.IsTrue(TestAtom(matcher, mol, "SsNpH3", a2));
         }
 
         [TestMethod()]
         public void TestNaCl()
         {
             //Testing with [Na+].[Cl-]
-            mol = builder.NewAtomContainer();
-            IAtom a1 = mol.Builder.NewAtom("Na");
+            var mol = builder.NewAtomContainer();
+            var a1 = mol.Builder.NewAtom("Na");
             a1.FormalCharge = +1;
             mol.Atoms.Add(a1);
-            IAtom a2 = mol.Builder.NewAtom("Cl");
+            var a2 = mol.Builder.NewAtom("Cl");
             a2.FormalCharge = -1;
             mol.Atoms.Add(a2);
 
-            matcher.RingSet = GetRings();
-            Assert.IsTrue(TestAtom("SNap", a1));
-            Assert.IsTrue(TestAtom("SClm", a2));
+            {
+                var matcher = new EStateAtomTypeMatcher(GetRings(mol));
+                Assert.IsTrue(TestAtom(matcher, mol, "SNap", a1));
+                Assert.IsTrue(TestAtom(matcher, mol, "SClm", a2));
 
-            //Testing with different presentation - [Na]Cl
-            mol = builder.NewAtomContainer();
-            a1 = mol.Builder.NewAtom("Na");
-            mol.Atoms.Add(a1);
-            a2 = mol.Builder.NewAtom("Cl");
-            mol.Atoms.Add(a2);
-            IBond b1 = mol.Builder.NewBond(a2, a1, BondOrder.Single);
-            mol.Bonds.Add(b1);
+                //Testing with different presentation - [Na]Cl
+                mol = builder.NewAtomContainer();
+                a1 = mol.Builder.NewAtom("Na");
+                mol.Atoms.Add(a1);
+                a2 = mol.Builder.NewAtom("Cl");
+                mol.Atoms.Add(a2);
+                var b1 = mol.Builder.NewBond(a2, a1, BondOrder.Single);
+                mol.Bonds.Add(b1);
+            }
 
-            matcher.RingSet = GetRings();
-            Assert.IsTrue(TestAtom("SsNa", a1));
-            Assert.IsTrue(TestAtom("SsCl", a2));
+            {
+                var matcher = new EStateAtomTypeMatcher(GetRings(mol));
+                Assert.IsTrue(TestAtom(matcher, mol, "SsNa", a1));
+                Assert.IsTrue(TestAtom(matcher, mol, "SsCl", a2));
+            }
         }
     }
 }

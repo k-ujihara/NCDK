@@ -59,22 +59,21 @@ namespace NCDK.Reactions.Mechanisms
             {
                 throw new CDKException("RemovingSEofBMechanism only expects one bond in the List");
             }
-            IAtomContainer molecule = atomContainerSet[0];
-            IAtomContainer reactantCloned;
-            reactantCloned = (IAtomContainer)molecule.Clone();
-            IAtom atom1 = atomList[0];
-            IAtom atom1C = reactantCloned.Atoms[molecule.Atoms.IndexOf(atom1)];
-            IAtom atom2 = atomList[1];
-            IAtom atom2C = reactantCloned.Atoms[molecule.Atoms.IndexOf(atom2)];
-            IBond bond1 = bondList[0];
-            int posBond1 = molecule.Bonds.IndexOf(bond1);
+            var molecule = atomContainerSet[0];
+            var reactantCloned = (IAtomContainer)molecule.Clone();
+            var atom1 = atomList[0];
+            var atom1C = reactantCloned.Atoms[molecule.Atoms.IndexOf(atom1)];
+            var atom2 = atomList[1];
+            var atom2C = reactantCloned.Atoms[molecule.Atoms.IndexOf(atom2)];
+            var bond1 = bondList[0];
+            var posBond1 = molecule.Bonds.IndexOf(bond1);
 
             if (bond1.Order == BondOrder.Single)
                 reactantCloned.Bonds.Remove(reactantCloned.Bonds[posBond1]);
             else
                 BondManipulator.DecreaseBondOrder(reactantCloned.Bonds[posBond1]);
 
-            int charge = atom1C.FormalCharge.Value;
+            var charge = atom1C.FormalCharge.Value;
             atom1C.FormalCharge = charge + 1;
             reactantCloned.SingleElectrons.Add(atom1C.Builder.NewSingleElectron(atom2C));
 
@@ -90,7 +89,7 @@ namespace NCDK.Reactions.Mechanisms
             if (type == null || type.AtomTypeName.Equals("X", StringComparison.Ordinal))
                 return null;
 
-            IReaction reaction = atom1C.Builder.NewReaction();
+            var reaction = atom1C.Builder.NewReaction();
             reaction.Reactants.Add(molecule);
 
             /* mapping */

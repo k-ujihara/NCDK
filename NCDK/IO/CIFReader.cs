@@ -39,10 +39,9 @@ namespace NCDK.IO
     /// It's very ad hoc, not written
     /// using any dictionary. So please complain if something is not working.
     /// In addition, the things it does read are considered experimental.
-    ///
+    /// </summary>
     /// <para>The CIF example on the IUCR website has been tested, as well as Crambin (1CRN)
     /// in the PDB database.</para>
-    /// </summary>
     // @cdk.module io
     // @cdk.keyword file format, CIF
     // @cdk.keyword file format, mmCIF
@@ -53,13 +52,13 @@ namespace NCDK.IO
     {
         class LineReader
         {
-            private TextReader input;
+            public TextReader Reader { get; private set; }
             private string nextLine;
 
             public LineReader(TextReader input)
             {
-                this.input = input;
-                nextLine = this.input.ReadLine();
+                this.Reader = input;
+                nextLine = this.Reader.ReadLine();
             }
 
             public string ReadLine()
@@ -67,13 +66,11 @@ namespace NCDK.IO
                 if (nextLine == null)
                     return null;
                 string line = nextLine;
-                nextLine = input.ReadLine();
+                nextLine = Reader.ReadLine();
                 return line;
             }
 
             public bool Ready() => nextLine != null;
-
-            public TextReader Reader => input;
         }
 
         private LineReader input;
@@ -104,7 +101,8 @@ namespace NCDK.IO
 
         public override bool Accepts(Type type)
         {
-            if (typeof(IChemFile).IsAssignableFrom(type)) return true;
+            if (typeof(IChemFile).IsAssignableFrom(type))
+                return true;
             return false;
         }
 
@@ -116,36 +114,34 @@ namespace NCDK.IO
         /// <returns>the content in a ChemFile object</returns>
         public override T Read<T>(T obj)
         {
-            if (obj is IChemFile cf)
+            switch (obj)
             {
-                try
-                {
-                    cf = ReadChemFile(cf);
-                }
-                catch (IOException)
-                {
-                    Trace.TraceError("Input/Output error while reading from input.");
-                }
-                return (T)cf;
-            }
-            else
-            {
-                throw new CDKException("Only supported is reading of ChemFile.");
+                case IChemFile cf:
+                    try
+                    {
+                        cf = ReadChemFile(cf);
+                    }
+                    catch (IOException)
+                    {
+                        Trace.TraceError("Input/Output error while reading from input.");
+                    }
+                    return (T)cf;
+                default:
+                    throw new CDKException("Only supported is reading of ChemFile.");
             }
         }
 
         /// <summary>
         /// Read the ShelX from input. Each ShelX document is expected to contain one crystal structure.
         /// </summary>
-        /// <param name="file"></param>
         /// <returns>a ChemFile with the coordinates, charges, vectors, etc.</returns>
         private IChemFile ReadChemFile(IChemFile file)
         {
-            IChemSequence seq = file.Builder.NewChemSequence();
-            IChemModel model = file.Builder.NewChemModel();
+            var seq = file.Builder.NewChemSequence();
+            var model = file.Builder.NewChemModel();
             crystal = file.Builder.NewCrystal();
 
-            string line = input.ReadLine();
+            var line = input.ReadLine();
             bool end_found = false;
             while (input.Ready() && line != null && !end_found)
             {
@@ -156,19 +152,19 @@ namespace NCDK.IO
                 }
                 else if (line[0] == '#')
                 {
-                    Trace.TraceWarning("Skipping comment: " + line);
+                    Trace.TraceWarning($"Skipping comment: {line}");
                     // skip comment lines
                 }
                 else if (!(line[0] == '_' || line.StartsWith("loop_", StringComparison.Ordinal)))
                 {
-                    Trace.TraceWarning("Skipping unrecognized line: " + line);
+                    Trace.TraceWarning($"Skipping unrecognized line: {line}");
                     // skip line
                 }
                 else
                 {
                     /* determine CIF command */
                     string command = "";
-                    int spaceIndex = line.IndexOf(' ');
+                    var spaceIndex = line.IndexOf(' ');
                     if (spaceIndex != -1)
                     {
                         // everything upto space is command
@@ -224,7 +220,7 @@ namespace NCDK.IO
                 }
                 line = input.ReadLine();
             }
-            Trace.TraceInformation("Adding crystal to file with #atoms: " + crystal.Atoms.Count);
+            Trace.TraceInformation($"Adding crystal to file with #atoms: {crystal.Atoms.Count}");
             model.Crystal = crystal;
             seq.Add(model);
             file.Add(seq);
@@ -236,37 +232,37 @@ namespace NCDK.IO
             command = command.Substring(6); // skip the "_cell." part
             if (string.Equals(command, "length_a", StringComparison.Ordinal))
             {
-                string value = line.Substring(14).Trim();
+                var value = line.Substring(14).Trim();
                 a = ParseIntoDouble(value);
                 PossiblySetCellParams(a, b, c, alpha, beta, gamma);
             }
             else if (string.Equals(command, "length_b", StringComparison.Ordinal))
             {
-                string value = line.Substring(14).Trim();
+                var value = line.Substring(14).Trim();
                 b = ParseIntoDouble(value);
                 PossiblySetCellParams(a, b, c, alpha, beta, gamma);
             }
             else if (string.Equals(command, "length_c", StringComparison.Ordinal))
             {
-                string value = line.Substring(14).Trim();
+                var value = line.Substring(14).Trim();
                 c = ParseIntoDouble(value);
                 PossiblySetCellParams(a, b, c, alpha, beta, gamma);
             }
             else if (string.Equals(command, "angle_alpha", StringComparison.Ordinal))
             {
-                string value = line.Substring(17).Trim();
+                var value = line.Substring(17).Trim();
                 alpha = ParseIntoDouble(value);
                 PossiblySetCellParams(a, b, c, alpha, beta, gamma);
             }
             else if (string.Equals(command, "angle_beta", StringComparison.Ordinal))
             {
-                string value = line.Substring(16).Trim();
+                var value = line.Substring(16).Trim();
                 beta = ParseIntoDouble(value);
                 PossiblySetCellParams(a, b, c, alpha, beta, gamma);
             }
             else if (string.Equals(command, "angle_gamma", StringComparison.Ordinal))
             {
-                string value = line.Substring(17).Trim();
+                var value = line.Substring(17).Trim();
                 gamma = ParseIntoDouble(value);
                 PossiblySetCellParams(a, b, c, alpha, beta, gamma);
             }
@@ -357,47 +353,47 @@ namespace NCDK.IO
                 {
                     atomFractX = headerCount;
                     hasParsableInformation = true;
-                    Trace.TraceInformation("frac x found in col: " + atomFractX);
+                    Trace.TraceInformation($"frac x found in col: {atomFractX}");
                 }
                 else if (line.StartsWith("_atom_site_fract_y", StringComparison.Ordinal))
                 {
                     atomFractY = headerCount;
                     hasParsableInformation = true;
-                    Trace.TraceInformation("frac y found in col: " + atomFractY);
+                    Trace.TraceInformation($"frac y found in col: {atomFractY}");
                 }
                 else if (line.StartsWith("_atom_site_fract_z", StringComparison.Ordinal))
                 {
                     atomFractZ = headerCount;
                     hasParsableInformation = true;
-                    Trace.TraceInformation("frac z found in col: " + atomFractZ);
+                    Trace.TraceInformation($"frac z found in col: {atomFractZ}");
                 }
                 else if (string.Equals(line, "_atom_site.Cartn_x", StringComparison.Ordinal))
                 {
                     atomRealX = headerCount;
                     hasParsableInformation = true;
-                    Trace.TraceInformation("cart x found in col: " + atomRealX);
+                    Trace.TraceInformation($"cart x found in col: {atomRealX}");
                 }
                 else if (string.Equals(line, "_atom_site.Cartn_y", StringComparison.Ordinal))
                 {
                     atomRealY = headerCount;
                     hasParsableInformation = true;
-                    Trace.TraceInformation("cart y found in col: " + atomRealY);
+                    Trace.TraceInformation($"cart y found in col: {atomRealY}");
                 }
                 else if (string.Equals(line, "_atom_site.Cartn_z", StringComparison.Ordinal))
                 {
                     atomRealZ = headerCount;
                     hasParsableInformation = true;
-                    Trace.TraceInformation("cart z found in col: " + atomRealZ);
+                    Trace.TraceInformation($"cart z found in col: {atomRealZ}");
                 }
                 else if (string.Equals(line, "_atom_site.type_symbol", StringComparison.Ordinal))
                 {
                     atomSymbol = headerCount;
                     hasParsableInformation = true;
-                    Trace.TraceInformation("type_symbol found in col: " + atomSymbol);
+                    Trace.TraceInformation($"type_symbol found in col: {atomSymbol}");
                 }
                 else
                 {
-                    Trace.TraceWarning("Ignoring atom loop block field: " + line);
+                    Trace.TraceWarning($"Ignoring atom loop block field: {line}");
                 }
                 line = input.ReadLine().Trim();
             }
@@ -409,11 +405,11 @@ namespace NCDK.IO
             else
             {
                 // now that headers are parsed, read the data
-                while (line != null && line.Length > 0 &&
-                    line[0] != '#' &&
-                    line[0] != '_' &&
-                    !line.StartsWith("loop_", StringComparison.Ordinal) &&
-                    !line.StartsWith("data_", StringComparison.Ordinal))
+                while (line != null && line.Length > 0
+                    && line[0] != '#'
+                    && line[0] != '_'
+                    && !line.StartsWith("loop_", StringComparison.Ordinal)
+                    && !line.StartsWith("data_", StringComparison.Ordinal))
                 {
                     Debug.WriteLine("new row");
                     var tokenizer = Strings.Tokenize(line);
@@ -425,15 +421,15 @@ namespace NCDK.IO
                     }
                     int colIndex = 0;
                     // process one row
-                    IAtom atom = crystal.Builder.NewAtom("C");
-                    Vector3 frac = new Vector3();
-                    Vector3 real = new Vector3();
+                    var atom = crystal.Builder.NewAtom("C");
+                    var frac = new Vector3();
+                    var real = new Vector3();
                     bool hasFractional = false;
                     bool hasCartesian = false;
                     foreach (var field in tokenizer)
                     {
                         colIndex++;
-                        Debug.WriteLine("Parsing col,token: " + colIndex + "=" + field);
+                        Debug.WriteLine($"Parsing col,token: {colIndex}={field}");
                         if (colIndex == atomLabel)
                         {
                             if (atomSymbol == -1)
@@ -466,19 +462,19 @@ namespace NCDK.IO
                         else if (colIndex == atomRealX)
                         {
                             hasCartesian = true;
-                            Debug.WriteLine("Adding x3: " + ParseIntoDouble(field));
+                            Debug.WriteLine($"Adding x3: {ParseIntoDouble(field)}");
                             real.X = ParseIntoDouble(field);
                         }
                         else if (colIndex == atomRealY)
                         {
                             hasCartesian = true;
-                            Debug.WriteLine("Adding y3: " + ParseIntoDouble(field));
+                            Debug.WriteLine($"Adding y3: {ParseIntoDouble(field)}");
                             real.Y = ParseIntoDouble(field);
                         }
                         else if (colIndex == atomRealZ)
                         {
                             hasCartesian = true;
-                            Debug.WriteLine("Adding x3: " + ParseIntoDouble(field));
+                            Debug.WriteLine($"Adding x3: {ParseIntoDouble(field)}");
                             real.Z = ParseIntoDouble(field);
                         }
                     }
@@ -499,7 +495,8 @@ namespace NCDK.IO
 
                     // look up next row
                     line = input.ReadLine();
-                    if (line != null) line = line.Trim();
+                    if (line != null)
+                        line = line.Trim();
                 }
             }
             return line;
@@ -511,7 +508,8 @@ namespace NCDK.IO
         private static double ParseIntoDouble(string value)
         {
             double returnVal = 0.0;
-            if (value[0] == '.') value = "0" + value;
+            if (value[0] == '.')
+                value = "0" + value;
             int bracketIndex = value.IndexOf('(');
             if (bracketIndex != -1)
             {

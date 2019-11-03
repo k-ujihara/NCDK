@@ -24,6 +24,8 @@ using NCDK.Graphs.InChI;
 using NCDK.IO;
 using NCDK.IO.Iterator;
 using NCDK.IO.RandomAccess;
+using NCDK.SMARTS;
+using NCDK.Smiles;
 using System;
 using System.IO;
 
@@ -40,14 +42,16 @@ namespace NCDK
     /// </example>
     public partial class Chem
     {
-        public static IAtomContainer MolFromSmiles(string smiles)
+        public static IAtomContainer MolFromSmiles(string smiles, bool sanitize = true)
         {
-            return CDK.SmilesParser.ParseSmiles(smiles);
+            var parser = new SmilesParser(CDK.Builder, kekulise: sanitize);
+            return parser.ParseSmiles(smiles);
         }
 
-        public static IReaction ReactionFromSmiles(string smiles)
+        public static IReaction ReactionFromSmiles(string smiles, bool sanitize = true)
         {
-            return CDK.SmilesParser.ParseReactionSmiles(smiles);
+            var parser = new SmilesParser(CDK.Builder, kekulise: sanitize);
+            return parser.ParseReactionSmiles(smiles);
         }
 
         public static IAtomContainer MolFromFile(string fileName)
@@ -107,6 +111,48 @@ namespace NCDK
         public static IAtomContainer MolFromMolBlock(string molBlock)
         {
             return MolFrom(() => new StringReader(molBlock));
+        }
+
+        public static IAtomContainer MolFromSmarts(string smarts)
+        {
+            var mol = CDK.Builder.NewAtomContainer();
+            Smarts.Parse(mol, smarts, SmartsFlaver.Daylight);
+            return mol;
+        }
+
+        public static string MolToSmiles(IAtomContainer mol)
+        {
+            var gen = new SmilesGenerator();
+            return gen.Create(mol);
+        }
+
+        public static string MolToSmarts(IAtomContainer mol)
+        {
+            return Smarts.Generate(mol);
+        }
+
+
+        public static string MolToMolBlock(IAtomContainer mol, bool forceV3000 = false)
+        {
+            using (var sr = new StringWriter())
+            {
+                IChemObjectWriter w;
+                if (forceV3000 
+                 || mol.Atoms.Count > 999
+                 || mol.Bonds.Count > 999)
+                    w = new MDLV3000Writer(sr);
+                else
+                    w = new MDLV2000Writer(sr);
+                try
+                {
+                    w.Write(mol);
+                }
+                finally
+                {
+                    w.Close();
+                }
+                return sr.ToString();
+            }
         }
 
         public static IEnumerableChemObjectReader<IAtomContainer> ForwardSDMolSupplier(Stream stream)

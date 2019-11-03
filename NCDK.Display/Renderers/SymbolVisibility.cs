@@ -23,7 +23,6 @@
  */
 
 using NCDK.Common.Mathematics;
-using NCDK.Config;
 using NCDK.Numerics;
 using System;
 using System.Collections.Generic;

@@ -22,7 +22,6 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Silent;
 using NCDK.Numerics;
 using System;
 
@@ -45,58 +44,59 @@ namespace NCDK.IO
         public void Cod1100784()
         {
             var ins = ResourceLoader.GetAsStream(GetType(), "1100784.cif");
-            CIFReader cifReader = new CIFReader(ins);
-            //        try {
-            var chemFile = cifReader.Read(new ChemFile());
-            Assert.AreEqual(1, chemFile.Count);
-            Assert.AreEqual(1, chemFile[0].Count);
-            Assert.IsNotNull(chemFile[0][0].Crystal);
-            //        } finally {
-            cifReader.Close();
-            //        }
+            using (var cifReader = new CIFReader(ins))
+            {
+                var chemFile = cifReader.Read(CDK.Builder.NewChemFile());
+                Assert.AreEqual(1, chemFile.Count);
+                Assert.AreEqual(1, chemFile[0].Count);
+                Assert.IsNotNull(chemFile[0][0].Crystal);
+            }
         }
 
         [TestMethod()]
         public void Cod1100784AtomCount()
         {
             var ins = ResourceLoader.GetAsStream(GetType(), "1100784.cif");
-            CIFReader cifReader = new CIFReader(ins);
-            var chemFile = cifReader.Read(new ChemFile());
-            ICrystal crystal = chemFile[0][0].Crystal;
-            Assert.AreEqual(72, crystal.Atoms.Count);
-            cifReader.Close();
+            using (var cifReader = new CIFReader(ins))
+            {
+                var chemFile = cifReader.Read(CDK.Builder.NewChemFile());
+                var crystal = chemFile[0][0].Crystal;
+                Assert.AreEqual(72, crystal.Atoms.Count);
+            }
         }
 
         [TestMethod()]
         public void Cod1100784CellLengths()
         {
             var ins = ResourceLoader.GetAsStream(GetType(), "1100784.cif");
-            CIFReader cifReader = new CIFReader(ins);
-            var chemFile = cifReader.Read(new ChemFile());
-            ICrystal crystal = chemFile[0][0].Crystal;
-            Assert.IsTrue(Math.Abs(crystal.A.Length() - 10.9754) < 1E-5);
-            Assert.IsTrue(Math.Abs(crystal.B.Length() - 11.4045) < 1E-5);
-            Assert.IsTrue(Math.Abs(crystal.C.Length() - 12.9314) < 1E-5);
-            cifReader.Close();
+            using (var cifReader = new CIFReader(ins))
+            {
+                var chemFile = cifReader.Read(CDK.Builder.NewChemFile());
+                var crystal = chemFile[0][0].Crystal;
+                Assert.IsTrue(Math.Abs(crystal.A.Length() - 10.9754) < 1E-5);
+                Assert.IsTrue(Math.Abs(crystal.B.Length() - 11.4045) < 1E-5);
+                Assert.IsTrue(Math.Abs(crystal.C.Length() - 12.9314) < 1E-5);
+            }
         }
 
         [TestMethod()]
         public void Cod1100784CellAngles()
         {
             var ins = ResourceLoader.GetAsStream(GetType(), "1100784.cif");
-            CIFReader cifReader = new CIFReader(ins);
-            var chemFile = cifReader.Read(new ChemFile());
-            ICrystal crystal = chemFile[0][0].Crystal;
-            Vector3 a = crystal.A;
-            Vector3 b = crystal.B;
-            Vector3 c = crystal.C;
-            double alpha = Math.Acos(Vector3.Dot(b, c) / (b.Length() * c.Length())) * 180 / Math.PI;
-            double beta = Math.Acos(Vector3.Dot(c, a) / (c.Length() * a.Length())) * 180 / Math.PI;
-            double gamma = Math.Acos(Vector3.Dot(a, b) / (a.Length() * b.Length())) * 180 / Math.PI;
-            Assert.IsTrue(Math.Abs(alpha - 109.1080) < 1E-5);
-            Assert.IsTrue(Math.Abs(beta - 98.4090) < 1E-5);
-            Assert.IsTrue(Math.Abs(gamma - 102.7470) < 1E-5);
-            cifReader.Close();
+            using (var cifReader = new CIFReader(ins))
+            {
+                var chemFile = cifReader.Read(CDK.Builder.NewChemFile());
+                var crystal = chemFile[0][0].Crystal;
+                var a = crystal.A;
+                var b = crystal.B;
+                var c = crystal.C;
+                var alpha = Math.Acos(Vector3.Dot(b, c) / (b.Length() * c.Length())) * 180 / Math.PI;
+                var beta = Math.Acos(Vector3.Dot(c, a) / (c.Length() * a.Length())) * 180 / Math.PI;
+                var gamma = Math.Acos(Vector3.Dot(a, b) / (a.Length() * b.Length())) * 180 / Math.PI;
+                Assert.IsTrue(Math.Abs(alpha - 109.1080) < 1E-5);
+                Assert.IsTrue(Math.Abs(beta - 98.4090) < 1E-5);
+                Assert.IsTrue(Math.Abs(gamma - 102.7470) < 1E-5);
+            }
         }
     }
 }

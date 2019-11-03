@@ -122,7 +122,7 @@ namespace NCDK.Fingerprints
             // of the smarts are given e.g. CCC C(C)C
             var mol = parser.ParseSmiles(moleculeSmiles);
 
-            CircularFingerprinter circ = new CircularFingerprinter();
+            var circ = new CircularFingerprinter();
             circ.Calculate(mol);
             var subsmarts = new SmartsFragmentExtractor(mol);
             subsmarts.SetMode(SubstructureSelectionMode.JCompoundMapper);
