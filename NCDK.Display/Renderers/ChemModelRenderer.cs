@@ -118,6 +118,7 @@ namespace NCDK.Renderers
                 : base(new RendererModel())
         {
             this.fontManager = fontManager;
+			moleculeSetRenderer = new MoleculeSetRenderer(rendererModel, generators, fontManager);
             reactionSetRenderer = new ReactionSetRenderer(rendererModel, generators, reactionGenerators, fontManager);
             this.Setup();
         }

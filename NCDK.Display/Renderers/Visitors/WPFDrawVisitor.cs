@@ -214,7 +214,7 @@ namespace NCDK.Renderers.Visitors
                 this.dc.DrawEllipse(
                     GetBrush(oval.Color),
                     null,
-                    new WPF.Point(center.X - radius, center.Y - radius), diameter, diameter);
+                    new WPF.Point(center.X, center.Y), diameter, diameter);
             }
             else
             {
@@ -228,7 +228,7 @@ namespace NCDK.Renderers.Visitors
                 this.dc.DrawEllipse(
                     null,
                     pen,
-                    new WPF.Point(center.X - radius, center.Y - radius), diameter, diameter);
+                    new WPF.Point(center.X, center.Y), diameter, diameter);
             }
         }
 

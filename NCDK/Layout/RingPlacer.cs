@@ -144,7 +144,9 @@ namespace NCDK.Layout
             // Different ring sizes get different start angles to have visually
             // correct placement
             int ringSize = ring.RingSize;
-            startAngle = startAngles[ringSize];
+            if(startAngles.TryGetValue(ringSize, out double angle))
+				startAngle = angle;
+
 
             var bonds = ring.GetConnectedBonds(startAtom);
             // Store all atoms to draw in consecutive order relative to the chosen bond.
