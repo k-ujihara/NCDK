@@ -196,8 +196,12 @@ namespace NCDK.Renderers.Generators.Standards
                                 tokens.Add(label.Substring(st, i - st));
                         }
                         continue;
+                    // separators
                     case '/':
                     case '·':
+                    case '.':
+                    case '•':
+                    case '=':
                         tokens.Add(c.ToString());
                         i++;
                         continue;

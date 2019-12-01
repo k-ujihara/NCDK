@@ -42,6 +42,7 @@ namespace NCDK.Depict
         {
             var mol = Smi("[K+].[O-]C(=O)[O-].[K+]");
             var factory = new Abbreviations { "[K+].[O-]C(=O)[O-].[K+] K2CO3" };
+            factory.ContractToSingleLabel = true;
             var sgroups = factory.Generate(mol);
             Assert.AreEqual(1, sgroups.Count);
             Assert.AreEqual("K2CO3", sgroups[0].Subscript);
@@ -73,6 +74,62 @@ namespace NCDK.Depict
             var mol = Smi("c1ccccc1");
             var sgroups = factory.Generate(mol);
             Assert.AreEqual(0, sgroups.Count);
+        }
+        [TestMethod()]
+        public void TFASaltDisconnected()
+        {
+            Abbreviations factory = new Abbreviations();
+        IAtomContainer mol = Smi("c1ccccc1c1ccccc1.FC(F)(F)C(=O)O");
+        factory.Add("*C(F)(F)F CF3");
+        factory.Add("*C(=O)O CO2H");
+        factory.Add("FC(F)(F)C(=O)O TFA");
+        var sgroups = factory.Generate(mol);
+            Assert.AreEqual(1, sgroups.Count);
+            Assert.AreEqual("TFA", sgroups[0].Subscript);
+    }
+
+        [TestMethod()]
+        public void TFASaltConnected()
+        {
+            var factory = new Abbreviations();
+            var mol = Smi("FC(F)(F)C(=O)O");
+            factory.Add("*C(F)(F)F CF3");
+            factory.Add("*C(=O)O CO2H");
+            factory.Add("FC(F)(F)C(=O)O TFA");
+            var sgroups = factory.Generate(mol);
+            Assert.AreEqual(2, sgroups.Count);
+            for (int i = 0; i < 2; i++)
+            {
+                var sgroup = sgroups[i];
+                Assert.IsTrue(sgroup.Subscript.Contains("CF3") || sgroup.Subscript.Contains("CO2H"));
+            }
+            Assert.AreNotEqual(sgroups[0].Subscript, sgroups[1].Subscript);
+        }
+
+        [TestMethod()]
+        public void DcmAndTfa()
+        {
+            var factory = new Abbreviations();
+            var mol = Smi("ClCCl.FC(F)(F)C(=O)O");
+            factory.Add("ClCCl DCM");
+            factory.Add("FC(F)(F)C(=O)O TFA");
+            factory.ContractToSingleLabel = true;
+            var sgroups = factory.Generate(mol);
+            Assert.AreEqual(1, sgroups.Count);
+            Assert.AreEqual("TFA·DCM", sgroups[0].Subscript);
+        }
+
+        [TestMethod()]
+        public void DcmAndTfaNoSingleFrag()
+        {
+            var factory = new Abbreviations();
+            var mol = Smi("ClCCl.FC(F)(F)C(=O)O");
+            factory.Add("ClCCl DCM");
+            factory.Add("FC(F)(F)C(=O)O TFA");
+            factory.ContractToSingleLabel = false;
+            var sgroups = factory.Generate(mol);
+            Assert.AreEqual(1, sgroups.Count);
+            Assert.AreEqual("DCM", sgroups[0].Subscript);
         }
 
         [TestMethod()]
@@ -250,9 +307,10 @@ namespace NCDK.Depict
         }
 
         [TestMethod()]
-        public void HclSaltOfEdci()
+        public void HClSaltOfEdci()
         {
             var factory = new Abbreviations { "CCN=C=NCCCN(C)C EDCI" };
+            factory.ContractToSingleLabel = true;
             var mol = Smi("CCN=C=NCCCN(C)C.Cl");
             var sgroups = factory.Generate(mol);
             Assert.AreEqual(1, sgroups.Count);
@@ -286,8 +344,9 @@ namespace NCDK.Depict
             var factory = new Abbreviations
             {
                 "ClCCl DCM",
-                "Cl[Pd]Cl.[Fe+2].c1ccc(P([c-]2cccc2)c2ccccc2)cc1.c1ccc(P([c-]2cccc2)c2ccccc2)cc1 Pd(dppf)Cl2"
+                "Cl[Pd]Cl.[Fe+2].c1ccc(P([c-]2cccc2)c2ccccc2)cc1.c1ccc(P([c-]2cccc2)c2ccccc2)cc1 Pd(dppf)Cl2"                
             };
+            factory.ContractToSingleLabel = true;
             var mol = Smi(smi);
             var sgroups = factory.Generate(mol);
             Assert.AreEqual(1, sgroups.Count);
@@ -303,6 +362,7 @@ namespace NCDK.Depict
                 "Cl[Pd]Cl.[Fe+2].c1ccc(P([c-]2cccc2)c2ccccc2)cc1.c1ccc(P([c-]2cccc2)c2ccccc2)cc1 Pd(dppf)Cl2",
                 "Cl[Pd]Cl PdCl2"
             };
+            factory.ContractToSingleLabel = true;
             var mol = Smi(smi);
             var sgroups = factory.Generate(mol);
             Assert.AreEqual(1, sgroups.Count);

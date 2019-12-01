@@ -1026,11 +1026,16 @@ namespace NCDK.IO
         public void TestRGroupHighAtomNumber()
         {
             var ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.brenda_molfile_rgroup.mol");
-            var reader = new MDLV2000Reader(ins);
-            IAtomContainer molecule = builder.NewAtomContainer();
-            reader.Read(molecule);
-            reader.Close();
-            Assert.AreEqual("R", molecule.Atoms[55].Symbol);
+            IAtomContainer molecule;
+            using (var reader = new MDLV2000Reader(ins))
+            {
+                molecule = builder.NewAtomContainer();
+                reader.Read(molecule);
+            }
+
+            var atom = molecule.Atoms[55];
+            Assert.IsInstanceOfType(atom, typeof(IPseudoAtom));
+            Assert.AreEqual("R", ((IPseudoAtom)atom).Label);
         }
 
         [TestMethod()]
@@ -1038,7 +1043,7 @@ namespace NCDK.IO
         {
             var ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.mol_testAliasAtomNaming.mol");
             var reader = new MDLV2000Reader(ins);
-            IAtomContainer molecule = builder.NewAtomContainer();
+            var molecule = builder.NewAtomContainer();
             reader.Read(molecule);
             reader.Close();
 
@@ -1059,7 +1064,7 @@ namespace NCDK.IO
         {
             var ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.pseudoatoms.sdf");
             var reader = new MDLV2000Reader(ins);
-            IAtomContainer molecule = builder.NewAtomContainer();
+            var molecule = builder.NewAtomContainer();
             molecule = reader.Read(molecule);
             reader.Close();
             Assert.IsTrue(molecule.Atoms[4] is IPseudoAtom);
@@ -1074,7 +1079,7 @@ namespace NCDK.IO
         {
             var ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.bug3485634.mol");
             var reader = new MDLV2000Reader(ins);
-            IAtomContainer molecule = builder.NewAtomContainer();
+            var molecule = builder.NewAtomContainer();
             molecule = reader.Read(molecule);
             reader.Close();
             Assert.AreEqual(9, molecule.Atoms.Count);
@@ -1085,7 +1090,7 @@ namespace NCDK.IO
         {
             var ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.mdlWithBond4.mol");
             var reader = new MDLV2000Reader(ins);
-            IAtomContainer molecule = builder.NewAtomContainer();
+            var molecule = builder.NewAtomContainer();
             molecule = reader.Read(molecule);
             reader.Close();
             Assert.AreEqual(9, molecule.Atoms.Count);
@@ -1100,7 +1105,7 @@ namespace NCDK.IO
         {
             var ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.mol_testAtomParity.mol");
             var reader = new MDLV2000Reader(ins);
-            IAtomContainer molecule = builder.NewAtomContainer();
+            var molecule = builder.NewAtomContainer();
             molecule = reader.Read(molecule);
             reader.Close();
 
@@ -1125,7 +1130,7 @@ namespace NCDK.IO
 
             var ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.singleSingletRadical.mol");
             var reader = new MDLV2000Reader(ins);
-            IAtomContainer molecule = builder.NewAtomContainer();
+            var molecule = builder.NewAtomContainer();
             molecule = reader.Read(molecule);
             reader.Close();
 
@@ -1138,7 +1143,7 @@ namespace NCDK.IO
 
             var ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.singleDoubletRadical.mol");
             var reader = new MDLV2000Reader(ins);
-            IAtomContainer molecule = builder.NewAtomContainer();
+            var molecule = builder.NewAtomContainer();
             molecule = reader.Read(molecule);
             reader.Close();
 
@@ -1151,7 +1156,7 @@ namespace NCDK.IO
 
             var ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.singleTripletRadical.mol");
             var reader = new MDLV2000Reader(ins);
-            IAtomContainer molecule = builder.NewAtomContainer();
+            var molecule = builder.NewAtomContainer();
             molecule = reader.Read(molecule);
             reader.Close();
             Assert.AreEqual(2, molecule.GetConnectedSingleElectrons(molecule.Atoms[1]).Count());
@@ -1163,7 +1168,7 @@ namespace NCDK.IO
 
             var ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.multipleRadicals.mol");
             var reader = new MDLV2000Reader(ins);
-            IAtomContainer molecule = builder.NewAtomContainer();
+            var molecule = builder.NewAtomContainer();
             molecule = reader.Read(molecule);
             reader.Close();
 
@@ -1183,7 +1188,7 @@ namespace NCDK.IO
         {
             var ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.iron-iii.mol");
             var reader = new MDLV2000Reader(ins);
-            IAtomContainer molecule = builder.NewAtomContainer();
+            var molecule = builder.NewAtomContainer();
             molecule = reader.Read(molecule);
             reader.Close();
             Assert.AreEqual(1, molecule.Atoms[0].ImplicitHydrogenCount);
@@ -1196,7 +1201,7 @@ namespace NCDK.IO
         {
             var ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.bismuth-ion.mol");
             var reader = new MDLV2000Reader(ins);
-            IAtomContainer molecule = builder.NewAtomContainer();
+            var molecule = builder.NewAtomContainer();
             molecule = reader.Read(molecule);
             reader.Close();
             Assert.AreEqual(3, molecule.Atoms[0].ImplicitHydrogenCount);
@@ -1207,7 +1212,7 @@ namespace NCDK.IO
         {
             var ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.e_butene_2d.mol");
             var reader = new MDLV2000Reader(ins);
-            IAtomContainer molecule = builder.NewAtomContainer();
+            var molecule = builder.NewAtomContainer();
             molecule = reader.Read(molecule);
             reader.Close();
             Assert.IsTrue(molecule.StereoElements.GetEnumerator().MoveNext());
@@ -1219,7 +1224,7 @@ namespace NCDK.IO
         {
             var ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.e_butene_0d.mol");
             var reader = new MDLV2000Reader(ins);
-            IAtomContainer molecule = builder.NewAtomContainer();
+            var molecule = builder.NewAtomContainer();
             molecule = reader.Read(molecule);
             reader.Close();
             Assert.IsNotNull(molecule);
@@ -1243,7 +1248,7 @@ namespace NCDK.IO
             reader.Listeners.Add(listener);
             reader.CustomizeJob();
 
-            IAtomContainer molecule = builder.NewAtomContainer();
+            var molecule = builder.NewAtomContainer();
             molecule = reader.Read(molecule);
             reader.Close();
             Assert.IsNotNull(molecule);
@@ -1264,7 +1269,7 @@ namespace NCDK.IO
             reader.Listeners.Add(listener);
             reader.CustomizeJob();
 
-            IAtomContainer molecule = builder.NewAtomContainer();
+            var molecule = builder.NewAtomContainer();
             molecule = reader.Read(molecule);
             reader.Close();
             Assert.IsNotNull(molecule);
@@ -1286,7 +1291,7 @@ namespace NCDK.IO
             reader.Listeners.Add(listener);
             reader.CustomizeJob();
 
-            IAtomContainer molecule = builder.NewAtomContainer();
+            var molecule = builder.NewAtomContainer();
             molecule = reader.Read(molecule);
             reader.Close();
             Assert.IsNotNull(molecule);
@@ -1405,14 +1410,29 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestAliasAfterRgroup()
         {
-            var ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.r-group-with-alias.mol");
-            var reader = new MDLV2000Reader(ins);
-            IAtomContainer container = reader.Read(builder.NewAtomContainer());
-            reader.Close();
+            IAtomContainer container;
+            using (var reader = new MDLV2000Reader(
+                ResourceLoader.GetAsStream("NCDK.Data.MDL.r-group-with-alias.mol")))
+            {
+                container = reader.Read(builder.NewAtomContainer());
+            }
             Assert.IsInstanceOfType(container.Atoms[6], typeof(IPseudoAtom));
             Assert.AreEqual("R6", ((IPseudoAtom)container.Atoms[6]).Label);
             Assert.IsInstanceOfType(container.Atoms[7], typeof(IPseudoAtom));
             Assert.AreEqual("Protein", ((IPseudoAtom)container.Atoms[7]).Label);
+        }
+
+        [TestMethod()]
+        public void KeepAtomicNumberOfAlias()
+        {
+            IAtomContainer container;
+            using (var reader = new MDLV2000Reader(
+                ResourceLoader.GetAsStream("NCDK.Data.MDL.element-with-alias.mol")))
+            {
+                container = reader.Read(builder.NewAtomContainer());
+            }
+            Assert.IsInstanceOfType(container.Atoms[6], typeof(IPseudoAtom));
+            Assert.AreEqual(7, ((IPseudoAtom)container.Atoms[6]).AtomicNumber);
         }
 
         [TestMethod()]

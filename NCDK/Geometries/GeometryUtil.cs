@@ -300,19 +300,19 @@ namespace NCDK.Geometries
         }
 
         /// <summary>
-        /// Returns the minimum and maximum X and Y coordinates of the atoms in the
-        /// <see cref="IAtomContainer"/>. The output is returned as: 
+        /// Returns the minimum and maximum X and Y coordinates of the atoms.
+        /// The output is returned as: 
         /// <c>double[] { minX, minY, maxX, maxY }</c>.
         /// </summary>
-        /// <param name="container"></param>
+        /// <param name="atoms"></param>
         /// <returns>An four int array as defined above.</returns>
-        public static double[] GetMinMax(IAtomContainer container)
+        public static double[] GetMinMax(IEnumerable<IAtom> atoms)
         {
             double maxX = -double.MaxValue;
             double maxY = -double.MaxValue;
             double minX = double.MaxValue;
             double minY = double.MaxValue;
-            foreach (var atom in container.Atoms)
+            foreach (var atom in atoms)
             {
                 if (atom.Point2D != null)
                 {
@@ -340,6 +340,18 @@ namespace NCDK.Geometries
             minmax[2] = maxX;
             minmax[3] = maxY;
             return minmax;
+        }
+
+        /// <summary>
+        /// Returns the minimum and maximum X and Y coordinates of the atoms in the
+        /// <see cref="IAtomContainer"/>. The output is returned as: 
+        /// <c>double[] { minX, minY, maxX, maxY }</c>.
+        /// </summary>
+        /// <param name="container"></param>
+        /// <returns>An four int array as defined above.</returns>
+        public static double[] GetMinMax(IAtomContainer container)
+        {
+            return GetMinMax(container.Atoms);
         }
 
         /// <summary>

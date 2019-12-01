@@ -1694,7 +1694,7 @@ namespace NCDK.IO
             else
             {
                 pseudoAtom.Symbol = label;
-                pseudoAtom.AtomicNumber = 0;
+                pseudoAtom.AtomicNumber = atom.AtomicNumber;
                 pseudoAtom.Point2D = atom.Point2D;
                 pseudoAtom.Point3D = atom.Point3D;
                 pseudoAtom.MassNumber = atom.MassNumber;
@@ -2136,6 +2136,7 @@ namespace NCDK.IO
                     }
 
                     var newPseudoAtom = container.Builder.NewPseudoAtom(alias);
+                    newPseudoAtom.AtomicNumber = aliasAtom.AtomicNumber;
                     if (aliasAtom.Point2D != null) newPseudoAtom.Point2D = aliasAtom.Point2D;
                     if (aliasAtom.Point3D != null) newPseudoAtom.Point3D = aliasAtom.Point3D;
                     AtomContainerManipulator.ReplaceAtomByAtom(container, aliasAtom, newPseudoAtom);

@@ -245,6 +245,14 @@ namespace NCDK.Renderers.Generators.Standards
         }
 
         [TestMethod()]
+        public void Hydrate()
+        {
+            var tokens = new List<string>();
+            AbbreviationLabel.Parse("•H2O", tokens);
+            Assert.IsTrue(tokens.SequenceEqual(new string[] { "•", "H2", "O" }));
+        }
+
+        [TestMethod()]
         public void Het()
         {
             // 'Het' not 'He'lium and 't'erts

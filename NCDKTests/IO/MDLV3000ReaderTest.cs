@@ -147,5 +147,15 @@ namespace NCDK.IO
                 Assert.AreEqual(3, container.Atoms[0].ImplicitHydrogenCount);
             }
         }
+
+        [TestMethod()]
+        public void Issue602()
+        {
+            using (var reader = new MDLV3000Reader(ResourceLoader.GetAsStream(GetType(), "issue602.mol")))
+            {
+                var mol = reader.Read(builder.NewAtomContainer());
+                Assert.AreEqual(31, mol.Atoms.Count);
+            }
+        }
     }
 }

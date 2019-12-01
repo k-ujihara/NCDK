@@ -112,6 +112,8 @@ namespace NCDK.Depict
         /// </summary>
         public bool ContractOnHetero { get; set; } = true;
 
+        public bool ContractToSingleLabel { get; set; } = false;
+
         private static ISet<IBond> FindCutBonds(IAtomContainer mol, EdgeToBondMap bmap, int[][] adjlist)
         {
             var cuts = new HashSet<IBond>();
@@ -278,6 +280,8 @@ namespace NCDK.Depict
                         usedAtoms.Add(atom);
             }
 
+            var newSgroups = new List<Sgroup>();
+
             // disconnected abbreviations, salts, common reagents, large compounds
             if (!usedAtoms.Any())
             {
@@ -285,7 +289,7 @@ namespace NCDK.Depict
                 {
                     var copy = AtomContainerManipulator.CopyAndSuppressedHydrogens(mol);
                     string cansmi = usmigen.Create(copy);
-                    if (disconnectedAbbreviations.TryGetValue(cansmi, out string label) && !disabled.Contains(label))
+                    if (disconnectedAbbreviations.TryGetValue(cansmi, out string label) && !disabled.Contains(label) && ContractToSingleLabel)
                     {
                         var sgroup = new Sgroup
                         {
@@ -299,7 +303,8 @@ namespace NCDK.Depict
                     else if (cansmi.Contains("."))
                     {
                         var parts = ConnectivityChecker.PartitionIntoMolecules(mol);
-                        // partiton in two two parts
+
+                        // leave one out
                         Sgroup best = null;
                         for (int i = 0; i < parts.Count; i++)
                         {
@@ -310,7 +315,7 @@ namespace NCDK.Depict
                                     b.Add(parts[j]);
                             var sgroup1 = GetAbbr(a);
                             var sgroup2 = GetAbbr(b);
-                            if (sgroup1 != null && sgroup2 != null)
+                            if (sgroup1 != null && sgroup2 != null && ContractToSingleLabel)
                             {
                                 var combined = new Sgroup();
                                 label = null;
@@ -327,11 +332,15 @@ namespace NCDK.Depict
                             }
                             if (sgroup1 != null && (best == null || sgroup1.Atoms.Count > best.Atoms.Count))
                                 best = sgroup1;
-                            if (sgroup2 != null && (best == null || sgroup2.Atoms.Count > best.Atoms.Count))
+                            if (sgroup2 != null && (best == null || sgroup2.Atoms.Count < best.Atoms.Count))
                                 best = sgroup2;
                         }
                         if (best != null)
-                            return new[] { best };
+                        {
+                            newSgroups.Add(best);
+                            foreach (var atom in best.Atoms)
+                                usedAtoms.Add(atom);
+                        }
                     }
                 }
                 catch (CDKException)
@@ -339,7 +348,6 @@ namespace NCDK.Depict
                 }
             }
 
-            var newSgroups = new List<Sgroup>();
             var fragments = GenerateFragments(mol);
             var sgroupAdjs = new MultiDictionary<IAtom, Sgroup>();
 

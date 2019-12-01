@@ -42,6 +42,7 @@ namespace NCDK.Renderers.Generators.Standards
     sealed class StandardSgroupGenerator
     {
         public const double EQUIV_THRESHOLD = 0.1;
+        public const char INTERPUNCT = '·';
         private readonly double stroke;
         private readonly double scale;
         private readonly double bracketDepth;
@@ -354,12 +355,50 @@ namespace NCDK.Renderers.Generators.Standards
             var style = parameters.GetHighlighting();
             var glowWidth = parameters.GetOuterGlowWidth();
 
-            Vector2 labelCoords = GeometryUtil.Get2DCenter(sgroupAtoms);
+            Vector2 labelLocation;
+            if (mol.Atoms.Count == sgroup.Atoms.Count)
+            {
+                labelLocation = GeometryUtil.Get2DCenter(sgroupAtoms);
+            }
+            else
+            {
+                // contraction of part of a fragment, e.g. SALT
+                // here we work out the point we want to place the contract relative
+                // to the SGroup Atoms
+                labelLocation = new Vector2();
+                var sgrpCenter = GeometryUtil.Get2DCenter(sgroupAtoms);
+                var molCenter = GeometryUtil.Get2DCenter(mol);
+                var minMax = GeometryUtil.GetMinMax(sgroupAtoms);
+                double xDiff = sgrpCenter.X - molCenter.X;
+                double yDiff = sgrpCenter.Y - molCenter.Y;
+                if (xDiff > 0.1)
+                {
+                    labelLocation.X = minMax[0]; // min x
+                    label = INTERPUNCT + label;
+                }
+                else if (xDiff < -0.1)
+                {
+                    labelLocation.X = minMax[2]; // max x
+                    label = label + INTERPUNCT;
+                }
+                else
+                {
+                    labelLocation.X = sgrpCenter.X;
+                    label = INTERPUNCT + label;
+                }
+                if (yDiff > 0.1)
+                    labelLocation.Y = minMax[1]; // min y
+                else if (yDiff < -0.1)
+                    labelLocation.Y = minMax[3]; // max y
+                else
+                    labelLocation.Y = sgrpCenter.Y;
+            }
 
-            ElementGroup labelgroup = new ElementGroup();
+            var labelgroup = new ElementGroup();
             foreach (var outline in atomGenerator.GenerateAbbreviatedSymbol(label, HydrogenPosition.Right)
-                                              .Resize(1 / scale, 1 / -scale)
-                                              .GetOutlines())
+                                                 .Center(labelLocation.X, labelLocation.Y)
+                                                 .Resize(1 / scale, 1 / -scale)
+                                                 .GetOutlines())
             {
                 if (highlight != null && style == HighlightStyle.Colored)
                 {
