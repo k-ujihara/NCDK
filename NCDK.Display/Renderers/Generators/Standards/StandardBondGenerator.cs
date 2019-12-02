@@ -1245,7 +1245,7 @@ namespace NCDK.Renderers.Generators.Standards
                 // draw a full dash section
                 if (distance > start && distance + step < end)
                 {
-                    group.Add(NewLineElement(fromPoint * Scale(unit, distance),
+                    group.Add(NewLineElement(fromPoint + Scale(unit, distance),
                               Sum(fromPoint, Scale(unit, distance + step))));
                 }
                 // draw a dash section that starts late

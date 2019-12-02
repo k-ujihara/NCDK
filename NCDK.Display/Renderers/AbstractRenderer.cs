@@ -227,11 +227,12 @@ namespace NCDK.Renderers
             // set the transform
             try
             {
-				Matrix matrix = new Matrix(1, 0, 0, 1, drawCenter.X, drawCenter.Y);
-				//matrix.Scale(1, -1); // Converts between CDK Y-up & Java2D Y-down coordinate-systems
-				matrix.Scale(scale, scale);
-				matrix.Scale(zoom, zoom);
-				matrix.Translate(-this.modelCenter.X, -this.modelCenter.Y);
+				Matrix matrix = new Matrix();
+                matrix.Translate(-this.modelCenter.X, -this.modelCenter.Y);
+                matrix.Scale(zoom, zoom);
+                matrix.Scale(scale, scale);
+                //matrix.Scale(1, -1); // Converts between CDK Y-up & Java2D Y-down coordinate-systems
+				matrix.Translate(drawCenter.X, drawCenter.Y);
 				
 				transform = Transform.Parse(matrix.ToString());	
             }
