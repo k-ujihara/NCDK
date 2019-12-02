@@ -49,8 +49,8 @@ C=CC#N
 >  <SMILES_Parent>
 C=CC#N
 
->  <InChI>
-InChI=1.12Beta/C3H3N/c1-2-3-4/h1H2,2H
+>  <INChI>
+INChI=1.12Beta/C3H3N/c1-2-3-4/h1H2,2H
 
 >  <StudyType>
 carcinogenicity

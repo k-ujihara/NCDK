@@ -500,32 +500,31 @@ namespace NCDK.IO
                         var options = ParseOptions(ExhaustStringTokenizer(tokenizer));
                         foreach (var key in options.Keys)
                         {
-                            string value = options[key];
+                            var value = options[key];
                             try
                             {
                                 switch (key)
                                 {
                                     case "CFG":
-                                        int configuration = int.Parse(value, NumberFormatInfo.InvariantInfo);
-                                        if (configuration == 0)
+                                        var configuration = int.Parse(value, NumberFormatInfo.InvariantInfo);
+                                        switch (configuration)
                                         {
-                                            bond.Stereo = BondStereo.None;
-                                        }
-                                        else if (configuration == 1)
-                                        {
-                                            bond.Stereo = BondStereo.Up;
-                                        }
-                                        else if (configuration == 2)
-                                        {
-                                            bond.Stereo = BondStereo.None;
-                                        }
-                                        else if (configuration == 3)
-                                        {
-                                            bond.Stereo = BondStereo.Down;
+                                            case 0:
+                                                bond.Stereo = BondStereo.None;
+                                                break;
+                                            case 1:
+                                                bond.Stereo = BondStereo.Up;
+                                                break;
+                                            case 2:
+                                                bond.Stereo = BondStereo.UpOrDown;
+                                                break;
+                                            case 3:
+                                                bond.Stereo = BondStereo.Down;
+                                                break;
                                         }
                                         break;
                                     case "ENDPTS":
-                                        string[] endptStr = value.Split(' ');
+                                        var endptStr = value.Split(' ');
                                         // skip first value that is count
                                         for (int i = 1; i < endptStr.Length; i++)
                                         {
@@ -542,7 +541,7 @@ namespace NCDK.IO
                             }
                             catch (Exception exception)
                             {
-                                string error = "Error while parsing key/value " + key + "=" + value + ": "
+                                var error = $"Error while parsing key/value {key}={value}: "
                                                + exception.Message;
                                 Trace.TraceError(error);
                                 Debug.WriteLine(exception);

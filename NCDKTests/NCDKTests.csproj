@@ -270,6 +270,7 @@
     <None Remove="Data\MDL\D-mannose.mol" />
     <None Remove="Data\MDL\decalin.mol" />
     <None Remove="Data\MDL\diadamantane-cubane.mol" />
+    <None Remove="Data\MDL\element-with-alias.mol" />
     <None Remove="Data\MDL\emptyStructure.sdf" />
     <None Remove="Data\MDL\emptyStructures.sdf" />
     <None Remove="Data\MDL\equivClassPartiOOMBug.sdf" />
@@ -532,6 +533,7 @@
     <None Remove="IO\ethylesterification.mol" />
     <None Remove="IO\finalPump96.09.06.pdb" />
     <None Remove="IO\CH3.mol" />
+    <None Remove="IO\issue602.mol" />
     <None Remove="IO\multicenterBond.mol" />
     <None Remove="IO\pseudoAtomReplacement.mol" />
     <None Remove="IO\1100784.cif" />
@@ -792,6 +794,7 @@
     <EmbeddedResource Include="Data\MDL\D-mannose.mol" />
     <EmbeddedResource Include="Data\MDL\decalin.mol" />
     <EmbeddedResource Include="Data\MDL\diadamantane-cubane.mol" />
+    <EmbeddedResource Include="Data\MDL\element-with-alias.mol" />
     <EmbeddedResource Include="Data\MDL\emptyStructure.sdf" />
     <EmbeddedResource Include="Data\MDL\emptyStructures.sdf" />
     <EmbeddedResource Include="Data\MDL\equivClassPartiOOMBug.sdf" />
@@ -1054,6 +1057,7 @@
     <EmbeddedResource Include="IO\ethylesterification.mol" />
     <EmbeddedResource Include="IO\finalPump96.09.06.pdb" />
     <EmbeddedResource Include="IO\CH3.mol" />
+    <EmbeddedResource Include="IO\issue602.mol" />
     <EmbeddedResource Include="IO\multicenterBond.mol" />
     <EmbeddedResource Include="IO\pseudoAtomReplacement.mol" />
     <EmbeddedResource Include="IO\1100784.cif" />

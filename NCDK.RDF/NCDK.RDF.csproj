@@ -3,9 +3,9 @@
   <PropertyGroup>
     <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
 
-    <AssemblyVersion>1.5.5.0</AssemblyVersion>
-    <FileVersion>1.5.5.0</FileVersion>
-    <Version>1.5.5</Version>
+    <AssemblyVersion>1.5.6.0</AssemblyVersion>
+    <FileVersion>1.5.6.0</FileVersion>
+    <Version>1.5.7</Version>
     <Copyright>Copyright © 2019 Kazuya Ujihara</Copyright>
 
     <PackageId>NCDK.RDF</PackageId>
@@ -13,7 +13,7 @@
     <Description>RDF package for NCDK.</Description>
 
     <PackageTags>cdk cheminformatics chemistry toolkit</PackageTags>
-    <PackageReleaseNotes>This release is based on [cdk 2018-12-08 ](https://github.com/cdk/cdk/tree/a75ec0065e39525a86f7f613ce6a6b0fe24b2d35) snapshot.</PackageReleaseNotes>
+    <PackageReleaseNotes>This release is based on [cdk 2019-11-27](https://github.com/cdk/cdk/tree/c76443e0a69a4110c6a0fe65704abccce8a435ff) snapshot.</PackageReleaseNotes>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
 
     <Authors>Kazuya Ujihara</Authors>

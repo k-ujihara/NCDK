@@ -72,6 +72,16 @@ namespace NCDK.Layout
 
         private static readonly double RAD_30 = Vectors.DegreeToRadian(-30);
 
+        class LargestFirstComparator : IComparer<IAtomContainer>
+        {
+            public int Compare(IAtomContainer o1, IAtomContainer o2)
+            {
+                return o2.Bonds.Count.CompareTo(o1.Bonds.Count);
+            }
+        }
+
+        static readonly IComparer<IAtomContainer> LARGEST_FIRST_COMPARATOR = new LargestFirstComparator();
+
         private IAtomContainer molecule;
         private IRingSet sssr;
 
@@ -616,11 +626,14 @@ namespace NCDK.Layout
             // intercept fragment molecules and lay them out in a grid
             if (!isConnected)
             {
-                var frags = ConnectivityChecker.PartitionIntoMolecules(molecule).ToReadOnlyList();
+                var frags = ConnectivityChecker.PartitionIntoMolecules(molecule);
                 if (frags.Count > 1)
                 {
                     var rollback = molecule;
-                    GenerateFragmentCoordinates(molecule, frags);
+                    // large => small (e.g. salt will appear on the right)
+                    var fragList = frags.ToList();
+                    fragList.Sort(LARGEST_FIRST_COMPARATOR);
+                    GenerateFragmentCoordinates(molecule, fragList);
                     // don't call set molecule as it wipes x,y coordinates!
                     // this looks like a self assignment but actually the fragment
                     // method changes this.molecule

@@ -237,6 +237,9 @@ namespace NCDK.Default
                 this.stereo = value;
 				switch (stereo) 
 				{
+                    case BondStereo.None:
+                        this.display = BondDisplay.Solid;
+						break;
 					case BondStereo.Up:
 						this.display = BondDisplay.WedgeBegin;
 						break;
@@ -686,6 +689,9 @@ namespace NCDK.Silent
                 this.stereo = value;
 				switch (stereo) 
 				{
+                    case BondStereo.None:
+                        this.display = BondDisplay.Solid;
+						break;
 					case BondStereo.Up:
 						this.display = BondDisplay.WedgeBegin;
 						break;

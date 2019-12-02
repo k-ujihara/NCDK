@@ -252,6 +252,9 @@ namespace <#= ns.NS #>
                 this.stereo = value;
 				switch (stereo) 
 				{
+                    case BondStereo.None:
+                        this.display = BondDisplay.Solid;
+						break;
 					case BondStereo.Up:
 						this.display = BondDisplay.WedgeBegin;
 						break;
