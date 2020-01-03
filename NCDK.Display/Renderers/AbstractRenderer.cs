@@ -227,13 +227,14 @@ namespace NCDK.Renderers
             // set the transform
             try
             {
-				Matrix matrix = new Matrix(1, 0, 0, 1, drawCenter.X, drawCenter.Y);
-				//matrix.Scale(1, -1); // Converts between CDK Y-up & Java2D Y-down coordinate-systems
-				matrix.Scale(scale, scale);
-				matrix.Scale(zoom, zoom);
-				matrix.Translate(-this.modelCenter.X, -this.modelCenter.Y);
+		Matrix matrix = new Matrix();
+                matrix.Translate(-this.modelCenter.X, -this.modelCenter.Y);
+                matrix.Scale(zoom, zoom);
+                matrix.Scale(scale, scale);
+                //matrix.Scale(1, -1); // Converts between CDK Y-up & Java2D Y-down coordinate-systems
+		matrix.Translate(drawCenter.X, drawCenter.Y);
 				
-				transform = Transform.Parse(matrix.ToString());	
+		transform = Transform.Parse(matrix.ToString());	
             }
             catch (NullReferenceException)
             {
@@ -397,6 +398,10 @@ namespace NCDK.Renderers
         /// <returns>the bounds in screen space of the drawn diagram</returns>
         protected virtual Rect ConvertToDiagramBounds(Rect modelBounds)
         {
+	    if (modelBounds == Rect.Empty)
+            {
+                return Rect.Empty;
+            }
             var xCenter = modelBounds.X + modelBounds.Width / 2;
             var yCenter = modelBounds.Y + modelBounds.Height / 2;
             var modelWidth = modelBounds.Width;

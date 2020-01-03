@@ -45,14 +45,22 @@ namespace NCDK.Renderers
         {
             var moleculeSet = chemModel.MoleculeSet;
             IReactionSet reactionSet = chemModel.ReactionSet;
-            var totalBounds = new Rect();
+            var totalBounds = Rect.Empty;
             if (moleculeSet != null)
             {
-                totalBounds = Rect.Union(totalBounds, CalculateBounds(moleculeSet));
+                totalBounds = CalculateBounds(moleculeSet);
+                
             }
             if (reactionSet != null)
             {
-                totalBounds = Rect.Union(totalBounds, CalculateBounds(reactionSet));
+                if (totalBounds.IsEmpty)
+                {
+                    totalBounds = CalculateBounds(moleculeSet);
+                }
+                else
+                {
+                    totalBounds = Rect.Union(totalBounds, CalculateBounds(reactionSet));
+                }
             }
             return totalBounds;
         }
@@ -64,7 +72,7 @@ namespace NCDK.Renderers
         /// <returns>the bounding rectangle of the reaction set</returns>
         public static Rect CalculateBounds(IReactionSet reactionSet)
         {
-            var totalBounds = new Rect();
+            var totalBounds = Rect.Empty;
             foreach (var reaction in reactionSet)
             {
                 var reactionBounds = CalculateBounds(reaction).Value;
@@ -104,7 +112,7 @@ namespace NCDK.Renderers
         /// <returns>the bounding rectangle of the molecule set</returns>
         public static Rect CalculateBounds(IChemObjectSet<IAtomContainer> moleculeSet)
         {
-            var totalBounds = new Rect();
+            var totalBounds = Rect.Empty;
             foreach (var container in moleculeSet)
             {
                 var acBounds = CalculateBounds(container);
