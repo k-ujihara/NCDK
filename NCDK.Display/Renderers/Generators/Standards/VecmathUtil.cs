@@ -198,10 +198,10 @@ namespace NCDK.Renderers.Generators.Standards
         /// <seealso href="http://en.wikipedia.org/wiki/Line–line_intersection">Line-line intersection, Wikipedia</seealso>
         public static Vector2 Intersection(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4)
         {
-            double x = ((x2 - x1) * (x3 * y4 - x4 * y3) - (x4 - x3) * (x1 * y2 - x2 * y1))
-                    / ((x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4));
-            double y = ((y3 - y4) * (x1 * y2 - x2 * y1) - (y1 - y2) * (x3 * y4 - x4 * y3))
-                    / ((x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4));
+            var x = ((x2 - x1) * (x3 * y4 - x4 * y3) - (x4 - x3) * (x1 * y2 - x2 * y1))
+                  / ((x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4));
+            var y = ((y3 - y4) * (x1 * y2 - x2 * y1) - (y1 - y2) * (x3 * y4 - x4 * y3))
+                  / ((x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4));
             return new Vector2(x, y);
         }
 
@@ -226,7 +226,7 @@ namespace NCDK.Renderers.Generators.Standards
         /// <returns>average vector</returns>
         public static Vector2 Average(ICollection<Vector2> vectors)
         {
-            Vector2 average = new Vector2(0, 0);
+            var average = new Vector2(0, 0);
             foreach (var vector in vectors)
             {
                 average += vector;
@@ -245,17 +245,18 @@ namespace NCDK.Renderers.Generators.Standards
         /// <exception cref="ArgumentException">no vectors provided</exception>
         public static Vector2 GetNearestVector(Vector2 reference, IList<Vector2> vectors)
         {
-            if (!vectors.Any()) throw new ArgumentException("No vectors provided", nameof(vectors));
+            if (!vectors.Any())
+                throw new ArgumentException("No vectors provided", nameof(vectors));
 
             // to find the closest vector we find use the dot product,
             // for the general case (non-unit vectors) one can use the
             // cosine similarity
-            Vector2 closest = vectors[0];
+            var closest = vectors[0];
             double maxProd = Vector2.Dot(reference, closest);
 
             for (int i = 1; i < vectors.Count; i++)
             {
-                double newProd = Vector2.Dot(reference, vectors[i]);
+                var newProd = Vector2.Dot(reference, vectors[i]);
                 if (newProd > maxProd)
                 {
                     maxProd = newProd;
@@ -276,7 +277,7 @@ namespace NCDK.Renderers.Generators.Standards
         /// <returns>the nearest vector</returns>
         public static Vector2 GetNearestVector(Vector2 reference, IAtom fromAtom, IList<IBond> bonds)
         {
-            List<IAtom> toAtoms = new List<IAtom>();
+            var toAtoms = new List<IAtom>();
             foreach (var bond in bonds)
             {
                 toAtoms.Add(bond.GetOther(fromAtom));
@@ -298,7 +299,7 @@ namespace NCDK.Renderers.Generators.Standards
         /// <returns>the extent (radians)</returns>
         public static double Extent(Vector2 vector)
         {
-            double radians = Math.Atan2(vector.Y, vector.X);
+            var radians = Math.Atan2(vector.Y, vector.X);
             return radians < 0 ? TAU + radians : radians;
         }
 
@@ -310,8 +311,8 @@ namespace NCDK.Renderers.Generators.Standards
         /// <seealso cref="Extent(Vector2)"/>
         public static double[] Extents(IList<Vector2> vectors)
         {
-            int n = vectors.Count;
-            double[] extents = new double[n];
+            var n = vectors.Count;
+            var extents = new double[n];
             for (int i = 0; i < n; i++)
                 extents[i] = VecmathUtil.Extent(vectors[i]);
             return extents;
@@ -328,7 +329,7 @@ namespace NCDK.Renderers.Generators.Standards
         public static Vector2 NewVectorInLargestGap(IList<Vector2> vectors)
         {
             Debug.Assert(vectors.Count > 1);
-            double[] extents = VecmathUtil.Extents(vectors);
+            var extents = VecmathUtil.Extents(vectors);
             Array.Sort(extents);
 
             // find and store the index of the largest extent
@@ -336,8 +337,9 @@ namespace NCDK.Renderers.Generators.Standards
             int index = -1;
             for (int i = 0; i < vectors.Count; i++)
             {
-                double extent = extents[(i + 1) % vectors.Count] - extents[i];
-                if (extent < 0) extent += TAU;
+                var extent = extents[(i + 1) % vectors.Count] - extents[i];
+                if (extent < 0)
+                    extent += TAU;
                 if (extent > max)
                 {
                     max = extent;
@@ -347,8 +349,8 @@ namespace NCDK.Renderers.Generators.Standards
 
             Debug.Assert(index >= 0);
 
-            double mid = (max / 2);
-            double theta = extents[index] + mid;
+            var mid = (max / 2);
+            var theta = extents[index] + mid;
 
             return new Vector2(Math.Cos(theta), Math.Sin(theta));
         }

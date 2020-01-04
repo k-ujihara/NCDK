@@ -26,7 +26,6 @@ namespace NCDK.Renderers.Elements
     /// A text element with added information.
     /// </summary>
     // @cdk.module renderbasic
-    // @cdk.githash
     public class AtomSymbolElement : TextElement
     {
         /// <summary>The formal charge.</summary>

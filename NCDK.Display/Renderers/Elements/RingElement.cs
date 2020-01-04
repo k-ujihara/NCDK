@@ -7,7 +7,6 @@ namespace NCDK.Renderers.Elements
     /// A ring is just a circle - in other words, an oval whose width and height are the same.
     /// </summary>
     // @cdk.module renderbasic
-    // @cdk.githash
     public class RingElement : OvalElement, IRenderingElement
     {
         /// <summary>

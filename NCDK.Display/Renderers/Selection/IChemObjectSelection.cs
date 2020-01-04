@@ -28,7 +28,6 @@ namespace NCDK.Renderers.Selection
     /// </summary>
     // @author maclean
     // @cdk.module render
-    // @cdk.githash
     public interface IChemObjectSelection
     {
         /// <summary>

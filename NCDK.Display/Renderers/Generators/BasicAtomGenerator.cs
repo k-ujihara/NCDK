@@ -31,7 +31,6 @@ namespace NCDK.Renderers.Generators
     /// Generates basic <see cref="IRenderingElement"/>s for atoms in an atom container.
     /// </summary>
     // @cdk.module renderbasic
-    // @cdk.githash
     public class BasicAtomGenerator : IGenerator<IAtomContainer>
     {
         /// <summary>
@@ -42,7 +41,7 @@ namespace NCDK.Renderers.Generators
         /// <inheritdoc/>
         public virtual IRenderingElement Generate(IAtomContainer container, RendererModel model)
         {
-            ElementGroup elementGroup = new ElementGroup();
+            var elementGroup = new ElementGroup();
             foreach (var atom in container.Atoms)
             {
                 elementGroup.Add(MarkedElement.MarkupAtom(this.Generate(container, atom, model), atom));

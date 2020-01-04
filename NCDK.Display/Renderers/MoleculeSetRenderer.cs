@@ -96,7 +96,6 @@ namespace NCDK.Renderers
     /// </remarks>
     // @author maclean
     // @cdk.module renderextra
-    // @cdk.githash
     public class MoleculeSetRenderer : AbstractRenderer<IChemObjectSet<IAtomContainer>>, IRenderer<IChemObjectSet<IAtomContainer>>
     {
         private IRenderer<IAtomContainer> atomContainerRenderer;
@@ -196,8 +195,8 @@ namespace NCDK.Renderers
         /// <param name="moleculeSet">the <see cref="IChemObjectSet{T}"/> for what to set the scale</param>
         public void SetScale(IChemObjectSet<IAtomContainer> moleculeSet)
         {
-            double bondLength = AverageBondLengthCalculator.CalculateAverageBondLength(moleculeSet);
-            double scale = this.CalculateScaleForBondLength(bondLength);
+            var bondLength = AverageBondLengthCalculator.CalculateAverageBondLength(moleculeSet);
+            var scale = this.CalculateScaleForBondLength(bondLength);
 
             // store the scale so that other components can access it
             this.rendererModel.SetScale(scale);
@@ -240,7 +239,7 @@ namespace NCDK.Renderers
         /// <inheritdoc/>
         public override IRenderingElement GenerateDiagram(IChemObjectSet<IAtomContainer> molecules)
         {
-            ElementGroup diagram = new ElementGroup();
+            var diagram = new ElementGroup();
             foreach (var molecule in molecules)
             {
                 diagram.Add(atomContainerRenderer.GenerateDiagram(molecule));
@@ -251,7 +250,8 @@ namespace NCDK.Renderers
         /// <inheritdoc/>
         public Rect CalculateDiagramBounds(IChemObjectSet<IAtomContainer> moleculeSet)
         {
-            if (moleculeSet == null) return this.CalculateScreenBounds(new Rect());
+            if (moleculeSet == null)
+                return this.CalculateScreenBounds(new Rect());
             return this.CalculateScreenBounds(BoundsCalculator.CalculateBounds(moleculeSet));
         }
 

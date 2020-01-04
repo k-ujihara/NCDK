@@ -26,7 +26,6 @@ namespace NCDK.Renderers.Elements
     /// Rendering element that shows the <see cref="IAtom"/> mass number information.
     /// </summary>
     // @cdk.module renderextra
-    // @cdk.githash
     public class AtomMassSymbolElement : AtomSymbolElement
     {
         /// <summary>The <see cref="IAtom"/>s mass number.</summary>

@@ -110,8 +110,8 @@ namespace NCDK.Renderers
                     return true;
 
                 // charge, normally caught by previous rule but can have bad input: C=[CH-]C
-                if (atom.FormalCharge != null &&
-                    atom.FormalCharge != 0)
+                if (atom.FormalCharge != null 
+                 && atom.FormalCharge != 0)
                     return true;
 
                 // carbon isotopes are displayed
@@ -121,8 +121,8 @@ namespace NCDK.Renderers
 
                 // no kink between bonds to imply the presence of a carbon and it must
                 // be displayed if the bonds have the same bond order
-                if (bonds.Count == 2 &&
-                        bonds[0].Order == bonds[1].Order)
+                if (bonds.Count == 2 
+                 && bonds[0].Order == bonds[1].Order)
                 {
                     var bndord = bonds[0].Order;
                     if (bndord == BondOrder.Double || HasParallelBonds(atom, bonds))

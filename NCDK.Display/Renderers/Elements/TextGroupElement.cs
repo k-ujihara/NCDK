@@ -30,7 +30,6 @@ namespace NCDK.Renderers.Elements
     /// annotation elements are the 'children' of the parent text element.
     /// </summary>
     // @cdk.module renderbasic
-    // @cdk.githash
     public class TextGroupElement : TextElement
     {
         /// <summary>

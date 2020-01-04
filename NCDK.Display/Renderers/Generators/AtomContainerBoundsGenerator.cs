@@ -28,7 +28,6 @@ namespace NCDK.Renderers.Generators
     /// <see cref="IGenerator{T}"/> that draws a rectangular around the <see cref="IAtomContainer"/>.
     /// </summary>
     // @cdk.module renderextra
-    // @cdk.githash
     public class AtomContainerBoundsGenerator : IGenerator<IAtomContainer>
     {
         /// <inheritdoc/>

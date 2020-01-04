@@ -25,7 +25,6 @@ namespace NCDK.Renderers.Colors
     /// Interface to a class for coloring atoms.
     /// </summary>
     // @cdk.module  render
-    // @cdk.githash   
     public interface IAtomColorer
     {
         /// <summary>

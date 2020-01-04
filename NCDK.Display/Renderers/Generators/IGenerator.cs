@@ -32,7 +32,6 @@ namespace NCDK.Renderers.Generators
     /// drawing situations.
     /// </remarks>
     // @cdk.module  render
-    // @cdk.githash
     public interface IGenerator<T> where T: IChemObject
     {
         /// <summary>

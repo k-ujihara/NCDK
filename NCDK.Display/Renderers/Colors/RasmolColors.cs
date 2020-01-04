@@ -28,8 +28,6 @@ namespace NCDK.Renderers.Colors
     /// <see href="http://www.umass.edu/microbio/rasmol/rascolor.htm">http://www.umass.edu/microbio/rasmol/rascolor.htm</see>.
     /// </summary>
     // @cdk.module render
-    // @cdk.githash
-    [Serializable]
     public class RasmolColors : IAtomColorer
     {
         private readonly static Color DEFAULT = Color.FromRgb(255, 20, 147);
@@ -94,8 +92,8 @@ namespace NCDK.Renderers.Colors
         /// <returns>the atom's color according to this coloring scheme.</returns>
         public Color GetAtomColor(IAtom atom, Color defaultColor)
         {
-            Color color = defaultColor;
-            string symbol = atom.Symbol;
+            var color = defaultColor;
+            var symbol = atom.Symbol;
             if (colorMap.ContainsKey(symbol))
             {
                 color = colorMap[symbol];

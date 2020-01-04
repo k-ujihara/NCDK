@@ -25,7 +25,6 @@ namespace NCDK.Renderers.Fonts
     /// Implements the common parts of the <see cref="IFontManager"/> interface.
     /// </summary>
     // @cdk.module renderbasic
-    // @cdk.githash
     public abstract class AbstractFontManager : IFontManager
     {
         /// <summary>The default font family</summary>

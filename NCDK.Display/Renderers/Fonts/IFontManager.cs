@@ -17,8 +17,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using WPF = System.Windows;
-
 namespace NCDK.Renderers.Fonts
 {
     /// <summary>
@@ -37,7 +35,6 @@ namespace NCDK.Renderers.Fonts
     /// </summary>
     // @author maclean
     // @cdk.module render
-    // @cdk.githash
     public interface IFontManager
     {
         /// <summary>

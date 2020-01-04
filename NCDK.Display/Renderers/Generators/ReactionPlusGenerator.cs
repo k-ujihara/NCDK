@@ -30,13 +30,12 @@ namespace NCDK.Renderers.Generators
     /// </summary>
     // @author maclean
     // @cdk.module renderextra
-    // @cdk.githash
     public class ReactionPlusGenerator : IGenerator<IReaction>
     {
         /// <inheritdoc/>
         public IRenderingElement Generate(IReaction reaction, RendererModel model)
         {
-            ElementGroup diagram = new ElementGroup();
+            var diagram = new ElementGroup();
 
             var color = model.GetForegroundColor();
             var reactants = reaction.Reactants;
@@ -46,7 +45,7 @@ namespace NCDK.Renderers.Generators
             {
                 var totalBoundsReactants = BoundsCalculator.CalculateBounds(reactants);
                 var bounds1 = BoundsCalculator.CalculateBounds(reactants[0]);
-                double axis = totalBoundsReactants.CenterY();
+                var axis = totalBoundsReactants.CenterY();
                 foreach (var reactant in reaction.Reactants.Skip(1))
                 {
                     var bounds2 = BoundsCalculator.CalculateBounds(reactant);
@@ -60,7 +59,7 @@ namespace NCDK.Renderers.Generators
             if (products.Count > 1)
             {
                 var totalBoundsProducts = BoundsCalculator.CalculateBounds(products);
-                double axis = totalBoundsProducts.CenterY();
+                var axis = totalBoundsProducts.CenterY();
                 var bounds1 = BoundsCalculator.CalculateBounds(reactants[0]);
                 foreach (var product in reaction.Products.Skip(1))
                 {
@@ -76,7 +75,7 @@ namespace NCDK.Renderers.Generators
         /// <summary>Place a '+' sign between two molecules.</summary>
         private TextElement MakePlus(Rect moleculeBox1, Rect moleculeBox2, double axis, Color color)
         {
-            double arrowCenter = (moleculeBox1.CenterX() + moleculeBox2.CenterX()) / 2;
+            var arrowCenter = (moleculeBox1.CenterX() + moleculeBox2.CenterX()) / 2;
             return new TextElement(new Point(arrowCenter, axis), "+", color);
         }
     }

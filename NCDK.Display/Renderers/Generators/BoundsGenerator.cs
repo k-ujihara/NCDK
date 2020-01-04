@@ -27,7 +27,6 @@ namespace NCDK.Renderers.Generators
     /// </summary>
     // @author maclean
     // @cdk.module renderextra
-    // @cdk.githash
     public class BoundsGenerator : IGenerator<IReaction>
     {
         public BoundsGenerator() { }
@@ -35,7 +34,7 @@ namespace NCDK.Renderers.Generators
         /// <inheritdoc/>
         public IRenderingElement Generate(IReaction reaction, RendererModel model)
         {
-            ElementGroup elementGroup = new ElementGroup();
+            var elementGroup = new ElementGroup();
             var reactants = reaction.Reactants;
             if (reactants != null)
             {

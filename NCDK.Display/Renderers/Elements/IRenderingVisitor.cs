@@ -28,7 +28,6 @@ namespace NCDK.Renderers.Elements
     /// supported widget toolkits include SWT, Swing, and SVG.
     /// </summary>
     // @cdk.module  render
-    // @cdk.githash
     public interface IRenderingVisitor
     {
         /// <summary>

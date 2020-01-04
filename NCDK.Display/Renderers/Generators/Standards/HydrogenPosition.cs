@@ -195,24 +195,26 @@ namespace NCDK.Renderers.Generators.Standards
                 foreach (var position in Values)
                 {
                     // adjust the extents such that this position is '0'
-                    double bias = Tau - V[(int)position].Direction;
-                    double afterBias = after + bias;
-                    double beforeBias = before + bias;
+                    var bias = Tau - V[(int)position].Direction;
+                    var afterBias = after + bias;
+                    var beforeBias = before + bias;
 
                     // ensure values are 0 <= x < Tau
-                    if (beforeBias >= Tau) beforeBias -= Tau;
-                    if (afterBias >= Tau) afterBias -= Tau;
+                    if (beforeBias >= Tau)
+                        beforeBias -= Tau;
+                    if (afterBias >= Tau)
+                        afterBias -= Tau;
 
                     // we can now determine the extents before and after this
                     // hydrogen position
-                    double afterExtent = afterBias;
-                    double beforeExtent = Tau - beforeBias;
+                    var afterExtent = afterBias;
+                    var beforeExtent = Tau - beforeBias;
 
                     // the total extent is amount of space between these two bonds
                     // when sweeping round. The offset is how close this hydrogen
                     // position is to the center of the extent.
-                    double totalExtent = afterExtent + beforeExtent;
-                    double offset = Math.Abs(totalExtent / 2 - beforeExtent);
+                    var totalExtent = afterExtent + beforeExtent;
+                    var offset = Math.Abs(totalExtent / 2 - beforeExtent);
 
                     // for each position keep the one with the smallest extent this is
                     // the most space available without another bond getting in the way
@@ -228,7 +230,8 @@ namespace NCDK.Renderers.Generators.Standards
             KeyValuePair<HydrogenPosition, OffsetExtent>? best = null;
             foreach (var e in extentEntries)
             {
-                if (best == null || ExtentPriority.Instance.Compare(e, best.Value) < 0) best = e;
+                if (best == null || ExtentPriority.Instance.Compare(e, best.Value) < 0)
+                    best = e;
             }
 
             Debug.Assert(best != null);
@@ -271,18 +274,20 @@ namespace NCDK.Renderers.Generators.Standards
 
             public int Compare(KeyValuePair<HydrogenPosition, OffsetExtent> a, KeyValuePair<HydrogenPosition, OffsetExtent> b)
             {
-                OffsetExtent aExtent = a.Value;
-                OffsetExtent bExtent = b.Value;
+                var aExtent = a.Value;
+                var bExtent = b.Value;
 
                 // if difference in extents is noticeable, favour the one
                 // with a larger extent
-                double extentDiff = bExtent.Extent - aExtent.Extent;
-                if (Math.Abs(extentDiff) > 0.05) return (int)Math.Sign(extentDiff);
+                var extentDiff = bExtent.Extent - aExtent.Extent;
+                if (Math.Abs(extentDiff) > 0.05)
+                    return (int)Math.Sign(extentDiff);
 
                 // if the difference in offset is noticeable, favour the one
                 // with the smaller offset (position is more centered)
-                double offsetDiff = bExtent.Offset - aExtent.Offset;
-                if (Math.Abs(offsetDiff) > 0.05) return (int)-Math.Sign(offsetDiff);
+                var offsetDiff = bExtent.Offset - aExtent.Offset;
+                if (Math.Abs(offsetDiff) > 0.05)
+                    return (int)-Math.Sign(offsetDiff);
 
                 // favour Right > Left > Above > Below
                 return a.Key.CompareTo(b.Key);
@@ -297,8 +302,8 @@ namespace NCDK.Renderers.Generators.Standards
         /// <returns>the position</returns>
         internal static HydrogenPosition UsingCardinalDirection(Vector2 opposite)
         {
-            double theta = Math.Atan2(opposite.Y, opposite.X);
-            int direction = (int)Math.Round(theta / (Math.PI / 4));
+            var theta = Math.Atan2(opposite.Y, opposite.X);
+            var direction = (int)Math.Round(theta / (Math.PI / 4));
 
             switch (direction)
             {

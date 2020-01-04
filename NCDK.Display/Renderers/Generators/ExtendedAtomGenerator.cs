@@ -41,8 +41,10 @@ namespace NCDK.Renderers.Generators
             {
                 drawNumbers = model.GetWillDrawAtomNumbers();
             }
-            if (!HasCoordinates(atom) || InvisibleHydrogen(atom, model)
-                    || (InvisibleCarbon(atom, container, model) && !drawNumbers))
+            if (!HasCoordinates(atom) 
+             || InvisibleHydrogen(atom, model)
+             || (InvisibleCarbon(atom, container, model)
+             && !drawNumbers))
             {
                 return null;
             }
@@ -92,7 +94,7 @@ namespace NCDK.Renderers.Generators
             {
                 if (atom.ImplicitHydrogenCount != null)
                 {
-                    int hCount = atom.ImplicitHydrogenCount.Value;
+                    var hCount = atom.ImplicitHydrogenCount.Value;
                     if (hCount > 0)
                     {
                         var position = GetNextPosition(unused);
@@ -163,8 +165,8 @@ namespace NCDK.Renderers.Generators
         {
             var pointA = atom.Point2D.Value;
             var pointB = connectedAtom.Point2D.Value;
-            double diffx = pointB.X - pointA.X;
-            double diffy = pointB.Y - pointA.Y;
+            var diffx = pointB.X - pointA.X;
+            var diffy = pointB.Y - pointA.Y;
 
             const double DELTA = 0.2;
 

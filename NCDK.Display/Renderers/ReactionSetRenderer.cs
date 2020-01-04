@@ -95,7 +95,6 @@ namespace NCDK.Renderers
     /// </remarks>
     // @author maclean
     // @cdk.module renderextra
-    // @cdk.githash
     public class ReactionSetRenderer : AbstractRenderer<IReactionSet>, IRenderer<IReactionSet>
     {
         private IRenderer<IReaction> reactionRenderer;
@@ -107,7 +106,7 @@ namespace NCDK.Renderers
         /// <param name="generators">a list of classes that implement the IGenerator interface</param>
         /// <param name="fontManager">a class that manages mappings between zoom and font sizes</param>
         public ReactionSetRenderer(IEnumerable<IGenerator<IAtomContainer>> generators, IFontManager fontManager)
-                : this(new RendererModel(), generators, fontManager)
+            : this(new RendererModel(), generators, fontManager)
         {
         }
 
@@ -132,7 +131,7 @@ namespace NCDK.Renderers
         { }
 
         protected internal ReactionSetRenderer(RendererModel rendererModel, IEnumerable<IGenerator<IAtomContainer>> generators, IEnumerable<IGenerator<IReaction>> reactionGenerators, IFontManager fontManager)
-                : base(rendererModel)
+            : base(rendererModel)
         {
             this.fontManager = fontManager;
             reactionRenderer = new ReactionRenderer(generators, reactionGenerators, fontManager);
@@ -239,7 +238,6 @@ namespace NCDK.Renderers
         /// <inheritdoc/>
         public IList<IGenerator<IReactionSet>> GetGenerators()
         {
-            //        return reactionRenderer.GetReactionGenerators();
             return null;
         }
     }

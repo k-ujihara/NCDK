@@ -236,9 +236,9 @@ namespace NCDK.Renderers.Visitors
         {
             get
             {
-                return rendererModel == null ?
-                    RendererModelTools.DefaultBackgroundColor :
-                    rendererModel.GetBackgroundColor();
+                return rendererModel == null 
+                     ? RendererModelTools.DefaultBackgroundColor 
+                     : rendererModel.GetBackgroundColor();
             }
         }
 
@@ -274,17 +274,17 @@ namespace NCDK.Renderers.Visitors
                 var pen = GetPen(wedge.Color, 1);
 
                 // calculate the distances between lines
-                double distance = Vector2.Distance(vertexB, vertexA);
-                double gapFactor = 0.1;
-                double gap = distance * gapFactor;
-                double numberOfDashes = distance / gap;
+                var distance = Vector2.Distance(vertexB, vertexA);
+                const double gapFactor = 0.1;
+                var gap = distance * gapFactor;
+                var numberOfDashes = distance / gap;
                 double displacement = 0;
 
                 // draw by interpolating along the edges of the triangle
                 for (int i = 0; i < numberOfDashes; i++)
                 {
-                    Vector2 point1 = Vector2.Lerp(vertexA, vertexB, displacement);
-                    Vector2 point2 = Vector2.Lerp(vertexA, vertexC, displacement);
+                    var point1 = Vector2.Lerp(vertexA, vertexB, displacement);
+                    var point2 = Vector2.Lerp(vertexA, vertexC, displacement);
                     var p1T = ToPoint(point1);
                     var p2T = ToPoint(point2);
                     this.dc.DrawLine(pen, p1T, p2T);
@@ -316,16 +316,16 @@ namespace NCDK.Renderers.Visitors
             else if (wedge.BondType == WedgeLineElement.WedgeType.Indiff)
             {
                 var pen = GetRoundPen(wedge.Color);
-                
+
                 // calculate the distances between lines
-                double distance = Vector2.Distance(vertexB, vertexA);
-                double gapFactor = 0.05;
-                double gap = distance * gapFactor;
-                double numberOfDashes = distance / gap;
+                var distance = Vector2.Distance(vertexB, vertexA);
+                const double gapFactor = 0.05;
+                var gap = distance * gapFactor;
+                var numberOfDashes = distance / gap;
                 double displacement = 0;
 
                 // draw by interpolating along the edges of the triangle
-                Vector2 point1 = Vector2.Lerp(vertexA, vertexB, displacement);
+                var point1 = Vector2.Lerp(vertexA, vertexB, displacement);
                 bool flip = false;
                 var p1T = ToPoint(point1);
                 displacement += gapFactor;
@@ -362,18 +362,18 @@ namespace NCDK.Renderers.Visitors
 
             var bounds = GetTextBounds(atomSymbol.Text, this.fontManager.CureentTypeface, this.fontManager.Size);
 
-            double w = bounds.Width;
-            double h = bounds.Height;
+            var w = bounds.Width;
+            var h = bounds.Height;
 
-            double xOffset = bounds.X;
-            double yOffset = bounds.Y + bounds.Height;
+            var xOffset = bounds.X;
+            var yOffset = bounds.Y + bounds.Height;
 
             bounds = new WPF.Rect(xy.X - (w / 2), xy.Y - (h / 2), w, h);
 
             var backgroundBrush = GetBrush(this.BackgroundColor);
             var atomSymbolBrush = GetBrush(atomSymbol.Color);
 
-            double padding = h / 4;
+            var padding = h / 4;
             this.dc.DrawRoundedRectangle(
                 backgroundBrush, null,
                 new WPF::Rect(
@@ -493,7 +493,7 @@ namespace NCDK.Renderers.Visitors
 
         private void Visit(ArrowElement line)
         {
-            Pen pen = GetPen(line.Color, line.Width);
+            var pen = GetPen(line.Color, line.Width);
 
             var a = line.Start;
             var b = line.End;

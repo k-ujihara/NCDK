@@ -92,7 +92,6 @@ namespace NCDK.Renderers.Generators
     /// </example>
     // @author John May
     // @cdk.module renderextra
-    // @cdk.githash
     public sealed class HighlightGenerator : IGenerator<IAtomContainer>
     {
         /// <summary>Property key.</summary>
@@ -103,9 +102,10 @@ namespace NCDK.Renderers.Generators
         {
             var highlight = container.GetProperty<IDictionary<IChemObject, int>>(IdMapKey);
 
-            if (highlight == null) return null;
+            if (highlight == null)
+                return null;
 
-            IPalette palette = model.GetHighlightPalette();
+            var palette = model.GetHighlightPalette();
             double radius = model.GetHighlightRadius() / model.GetScale();
 
             var shapes = new Dictionary<int, Geometry>();
@@ -144,16 +144,18 @@ namespace NCDK.Renderers.Generators
                 var a2 = bond.End;
                 if (highlight.TryGetValue(a1, out int a1Id))
                 {
-                    if (!a1Id.Equals(id)) area = new CombinedGeometry(GeometryCombineMode.Exclude, area, shapes[a1Id]);
+                    if (!a1Id.Equals(id))
+                        area = new CombinedGeometry(GeometryCombineMode.Exclude, area, shapes[a1Id]);
                 }
                 if (highlight.TryGetValue(a2, out int a2Id))
                 {
-                    if (!a2Id.Equals(id)) area = new CombinedGeometry(GeometryCombineMode.Exclude, area, shapes[a2Id]);
+                    if (!a2Id.Equals(id))
+                        area = new CombinedGeometry(GeometryCombineMode.Exclude, area, shapes[a2Id]);
                 }
             }
 
             // create rendering elements for each highlight shape
-            ElementGroup group = new ElementGroup();
+            var group = new ElementGroup();
             foreach (var e in shapes)
             {
                 group.Add(GeneralPath.ShapeOf(e.Value, palette.Color(e.Key)));
@@ -170,8 +172,8 @@ namespace NCDK.Renderers.Generators
         /// <returns>the shape which will highlight the atom</returns>
         private static RectangleGeometry CreateAtomHighlight(IAtom atom, double radius)
         {
-            double x = atom.Point2D.Value.X;
-            double y = atom.Point2D.Value.Y;
+            var x = atom.Point2D.Value.X;
+            var y = atom.Point2D.Value.Y;
             var rect = new Rect(x - radius, y - radius, 2 * radius, 2 * radius);
             return new RectangleGeometry(rect, 2 * radius, 2 * radius);
         }
@@ -184,24 +186,24 @@ namespace NCDK.Renderers.Generators
         /// <returns>the shape which will highlight the atom</returns>
         private static Geometry CreateBondHighlight(IBond bond, double radius)
         {
-            double x1 = bond.Begin.Point2D.Value.X;
-            double x2 = bond.End.Point2D.Value.X;
-            double y1 = bond.Begin.Point2D.Value.Y;
-            double y2 = bond.End.Point2D.Value.Y;
+            var x1 = bond.Begin.Point2D.Value.X;
+            var x2 = bond.End.Point2D.Value.X;
+            var y1 = bond.Begin.Point2D.Value.Y;
+            var y2 = bond.End.Point2D.Value.Y;
 
-            double dx = x2 - x1;
-            double dy = y2 - y1;
+            var dx = x2 - x1;
+            var dy = y2 - y1;
 
-            double mag = Math.Sqrt((dx * dx) + (dy * dy));
+            var mag = Math.Sqrt((dx * dx) + (dy * dy));
 
             dx /= mag;
             dy /= mag;
 
-            double r2 = radius / 2;
+            var r2 = radius / 2;
 
             var s = new RectangleGeometry(new Rect(x1 - r2, y1 - r2, mag + radius, radius), radius, radius);
 
-            double theta = Math.Atan2(dy, dx);
+            var theta = Math.Atan2(dy, dx);
             var m = Matrix.Identity;
             m.RotateAt(theta, x1, y1);
             var mt = new MatrixTransform(m);
@@ -227,7 +229,7 @@ namespace NCDK.Renderers.Generators
         /// <returns>a palette to use in highlighting</returns>
         public static IPalette CreatePalette(Color color, params Color[] colors)
         {
-            Color[] cs = new Color[colors.Length + 1];
+            var cs = new Color[colors.Length + 1];
             cs[0] = color;
             Array.Copy(colors, 0, cs, 1, colors.Length);
             return new FixedPalette(cs);
@@ -291,8 +293,10 @@ namespace NCDK.Renderers.Generators
             /// <inheritdoc/>
             public Color Color(int id)
             {
-                if (id < 0) throw new ArgumentException("id should be positive");
-                if (id >= colors.Length) throw new ArgumentException("no color has been provided for id=" + id);
+                if (id < 0)
+                    throw new ArgumentException("id should be positive");
+                if (id >= colors.Length)
+                    throw new ArgumentException("no color has been provided for id=" + id);
                 return colors[id];
             }
         }
@@ -325,7 +329,7 @@ namespace NCDK.Renderers.Generators
             /// <param name="n">pre-generate this many colors</param>
             /// <param name="alpha">transparency (0-255)</param>
             public AutoGenerated(int n, int alpha)
-           : this(n, 0.45f, 0.95f, alpha)
+                : this(n, 0.45f, 0.95f, alpha)
             { }
 
             /// <summary>
@@ -357,7 +361,7 @@ namespace NCDK.Renderers.Generators
                 {
                     for (int i = from; i <= to; i++)
                     {
-                        Color c = HSBtoRGB((offset + i) * PHI, saturation, brightness);
+                        var c = HSBtoRGB((offset + i) * PHI, saturation, brightness);
                         colors[i] = WPF::Media.Color.FromArgb((byte)alpha, c.R, c.G, c.B);
                     }
                 }
@@ -370,7 +374,9 @@ namespace NCDK.Renderers.Generators
 
             private static Color HSBtoRGB(double hue, double saturation, double brightness)
             {
-                int r = 0, g = 0, b = 0;
+                int r = 0;
+                int g = 0;
+                int b = 0;
                 if (saturation == 0)
                 {
                     r = g = b = (int)(brightness * 255.0f + 0.5f);
@@ -423,8 +429,10 @@ namespace NCDK.Renderers.Generators
             /// <inheritdoc/>
             public Color Color(int id)
             {
-                if (id < 0) throw new ArgumentException("id should be positive");
-                if (id >= colors.Length) throw new ArgumentException($"no color has been provided for id={id}");
+                if (id < 0)
+                    throw new ArgumentException("id should be positive");
+                if (id >= colors.Length)
+                    throw new ArgumentException($"no color has been provided for id={id}");
                 return colors[id];
             }
         }

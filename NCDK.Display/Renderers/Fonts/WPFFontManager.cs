@@ -26,7 +26,6 @@ namespace NCDK.Renderers.Fonts
     /// WPF-specific font manager.
     /// </summary>
     // @cdk.module renderbasic
-    // @cdk.githash
     public class WPFFontManager : AbstractFontManager
     {
         private int minFontSize;

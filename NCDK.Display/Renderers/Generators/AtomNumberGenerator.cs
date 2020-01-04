@@ -32,28 +32,27 @@ namespace NCDK.Renderers.Generators
     /// </summary>
     // @author      maclean
     // @cdk.module  renderextra
-    // @cdk.githash
     public class AtomNumberGenerator : IGenerator<IAtomContainer>
     {
         /// <inheritdoc/>
         public IRenderingElement Generate(IAtomContainer container, RendererModel model)
         {
-            ElementGroup numbers = new ElementGroup();
-            if (!model.GetWillDrawAtomNumbers()) return numbers;
+            var numbers = new ElementGroup();
+            if (!model.GetWillDrawAtomNumbers())
+                return numbers;
 
             var _offset = model.GetAtomNumberOffset();
-            Vector2 offset = new Vector2(_offset.X, -_offset.Y);
+            var offset = new Vector2(_offset.X, -_offset.Y);
             offset *= (1 / model.GetScale());
 
             int number = 1;
             foreach (var atom in container.Atoms)
             {
-                Vector2 point = atom.Point2D.Value + offset;
-                numbers.Add(
-                    new TextElement(ToPoint(point), number.ToString(),
-                        model.GetAtomNumberColorByType() ?
-                            model.GetAtomNumberColorer().GetAtomColor(atom) :
-                            model.GetAtomNumberTextColor()));
+                var point = atom.Point2D.Value + offset;
+                numbers.Add(new TextElement(ToPoint(point), number.ToString(),
+                                            model.GetAtomNumberColorByType() 
+                                          ? model.GetAtomNumberColorer().GetAtomColor(atom)
+                                          : model.GetAtomNumberTextColor()));
                 number++;
             }
             return numbers;

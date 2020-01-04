@@ -95,7 +95,6 @@ namespace NCDK.Renderers
     /// </remarks>
     // @author maclean
     // @cdk.module renderbasic
-    // @cdk.githash
     public class AtomContainerRenderer : AbstractRenderer<IAtomContainer>, IRenderer<IAtomContainer>
     {
         /// <summary>
@@ -154,7 +153,7 @@ namespace NCDK.Renderers
         /// <param name="atomContainer">the atom container that will be drawn</param>
         public void SetScale(IAtomContainer atomContainer)
         {
-            double bondLength = GeometryUtil.GetBondLengthAverage(atomContainer);
+            var bondLength = GeometryUtil.GetBondLengthAverage(atomContainer);
             rendererModel.SetScale(this.CalculateScaleForBondLength(bondLength));
         }
 
@@ -166,7 +165,7 @@ namespace NCDK.Renderers
 
             // setup and draw
             this.SetupTransformNatural(modelBounds);
-            IRenderingElement diagram = GenerateDiagram(atomContainer);
+            var diagram = GenerateDiagram(atomContainer);
             this.Paint(drawVisitor, diagram);
 
             return this.ConvertToDiagramBounds(modelBounds);
@@ -217,11 +216,13 @@ namespace NCDK.Renderers
             }
 
             // the diagram to draw
-            IRenderingElement diagram = GenerateDiagram(atomContainer);
+            var diagram = GenerateDiagram(atomContainer);
 
             // the bounds of the model from 'Bounds' elements
             // no bounding elements, use the atom coordinates
-            var modelBounds = GetBounds(diagram) ?? BoundsCalculator.CalculateBounds(atomContainer);
+            var modelBounds = GetBounds(diagram);
+            if (modelBounds.IsEmpty)
+                modelBounds = BoundsCalculator.CalculateBounds(atomContainer);
 
             SetupTransformToFit(bounds, modelBounds, resetCenter);
 

@@ -27,7 +27,6 @@ namespace NCDK.Renderers.Elements
     /// <see cref="IRenderingElement"/> for linear arrows.
     /// </summary>
     // @cdk.module renderbasic
-    // @cdk.githash
     public class ArrowElement : IRenderingElement
     {
         /// <summary>coordinate of the point where the arrow starts.</summary>

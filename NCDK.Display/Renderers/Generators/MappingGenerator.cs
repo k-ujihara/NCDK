@@ -28,7 +28,6 @@ namespace NCDK.Renderers.Generators
     /// <see cref="IGenerator{T}"/> that will show how atoms map between the reactant and product side.
     /// </summary>
     // @cdk.module renderextra
-    // @cdk.githash
     public class MappingGenerator : IGenerator<IReaction>
     {
         public MappingGenerator() { }
@@ -36,15 +35,16 @@ namespace NCDK.Renderers.Generators
         /// <inheritdoc/>
         public IRenderingElement Generate(IReaction reaction, RendererModel model)
         {
-            if (!model.GetShowAtomAtomMapping()) return null;
-            ElementGroup elementGroup = new ElementGroup();
-            Color mappingColor = model.GetAtomAtomMappingLineColor();
+            if (!model.GetShowAtomAtomMapping())
+                return null;
+            var elementGroup = new ElementGroup();
+            var mappingColor = model.GetAtomAtomMappingLineColor();
             foreach (var mapping in reaction.Mappings)
             {
                 // XXX assume that there are only 2 endpoints!
                 // XXX assume that the ChemObjects are actually IAtoms...
-                IAtom endPointA = (IAtom)mapping[0];
-                IAtom endPointB = (IAtom)mapping[1];
+                var endPointA = (IAtom)mapping[0];
+                var endPointB = (IAtom)mapping[1];
                 var pointA = ToPoint(endPointA.Point2D.Value);
                 var pointB = ToPoint(endPointB.Point2D.Value);
                 elementGroup.Add(new LineElement(pointA, pointB, GetWidthForMappingLine(model), mappingColor));
@@ -61,7 +61,7 @@ namespace NCDK.Renderers.Generators
         /// <returns>a double in chem-model space</returns>
         private double GetWidthForMappingLine(RendererModel model)
         {
-            double scale = model.GetScale();
+            var scale = model.GetScale();
             return model.GetMappingLineWidth() / scale;
         }
     }

@@ -26,7 +26,6 @@ namespace NCDK.Renderers.Elements
     /// A rectangle, with width and height.
     /// </summary>
     // @cdk.module renderbasic
-    // @cdk.githash
     public class RectangleElement : IRenderingElement
     {
         /// <summary>The base point of the rectangle. </summary>

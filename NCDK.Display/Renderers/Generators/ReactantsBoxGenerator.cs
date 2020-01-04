@@ -27,23 +27,24 @@ namespace NCDK.Renderers.Generators
     /// </summary>
     // @author maclean
     // @cdk.module renderextra
-    // @cdk.githash
     public class ReactantsBoxGenerator : IGenerator<IReaction>
     {
         /// <inheritdoc/>
         public IRenderingElement Generate(IReaction reaction, RendererModel model)
         {
-            if (!model.GetShowReactionBoxes()) return null;
-            if (reaction.Reactants.Count == 0) return new ElementGroup();
+            if (!model.GetShowReactionBoxes())
+                return null;
+            if (reaction.Reactants.Count == 0)
+                return new ElementGroup();
 
-            double separation = model.GetBondLength() / model.GetScale() / 2;
+            var separation = model.GetBondLength() / model.GetScale() / 2;
             var totalBounds = BoundsCalculator.CalculateBounds(reaction.Reactants);
 
-            ElementGroup diagram = new ElementGroup();
-            double minX = totalBounds.Left;
-            double minY = totalBounds.Top;
-            double maxX = totalBounds.Right;
-            double maxY = totalBounds.Bottom;
+            var diagram = new ElementGroup();
+            var minX = totalBounds.Left;
+            var minY = totalBounds.Top;
+            var maxX = totalBounds.Right;
+            var maxY = totalBounds.Bottom;
             var foregroundColor = model.GetForegroundColor();
             diagram.Add(new RectangleElement(new Rect(minX - separation, minY - separation, maxX + separation, maxY + separation), foregroundColor));
             diagram.Add(new TextElement(new Point((minX + maxX) / 2, minY - separation), "Reactants", foregroundColor));

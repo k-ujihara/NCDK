@@ -27,7 +27,6 @@ namespace NCDK.Renderers.Selection
     /// </summary>
     // @author Arvid
     // @cdk.module renderbasic
-    // @cdk.githash
     public abstract class AbstractSelection : IChemObjectSelection
     {
         class AbstractSelection_EMPTY_SELECTION : AbstractSelection

@@ -26,7 +26,6 @@ namespace NCDK.Renderers.Generators
     /// Generator for general reaction scene components.
     /// </summary>
     // @cdk.module renderextra
-    // @cdk.githash
     public class ReactionSceneGenerator : IGenerator<IReaction>
     {
         /// <inheritdoc/>

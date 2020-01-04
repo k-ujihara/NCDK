@@ -31,7 +31,6 @@ namespace NCDK.Renderers.Generators
     /// Generates just the aromatic indicators for rings : circles, or light-gray inner bonds, depending on the value of CDKStyleAromaticity.
     /// </summary>
     // @cdk.module renderbasic
-    // @cdk.githash
     public class RingGenerator : BasicBondGenerator
     {
         /// <summary>
@@ -51,10 +50,11 @@ namespace NCDK.Renderers.Generators
         /// <inheritdoc/>
         public override IRenderingElement GenerateRingElements(IBond bond, IRing ring, RendererModel model)
         {
-            if (RingIsAromatic(ring) && model.GetShowAromaticity()
-                    && ring.Atoms.Count < model.GetMaxDrawableAromaticRing())
+            if (RingIsAromatic(ring)
+             && model.GetShowAromaticity()
+             && ring.Atoms.Count < model.GetMaxDrawableAromaticRing())
             {
-                ElementGroup pair = new ElementGroup();
+                var pair = new ElementGroup();
                 if (model.GetCDKStyleAromaticity())
                 {
                     pair.Add(GenerateBondElement(bond, BondOrder.Single, model));
@@ -83,10 +83,10 @@ namespace NCDK.Renderers.Generators
         {
             var c = ToPoint(GeometryUtil.Get2DCenter(ring));
 
-            double[] minmax = GeometryUtil.GetMinMax(ring);
-            double width = minmax[2] - minmax[0];
-            double height = minmax[3] - minmax[1];
-            double radius = Math.Min(width, height) * model.GetRingProportion();
+            var minmax = GeometryUtil.GetMinMax(ring);
+            var width = minmax[2] - minmax[0];
+            var height = minmax[3] - minmax[1];
+            var radius = Math.Min(width, height) * model.GetRingProportion();
             var color = GetColorForBond(bond, model);
 
             return new OvalElement(c, radius, false, color);

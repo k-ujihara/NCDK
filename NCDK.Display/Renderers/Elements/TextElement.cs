@@ -26,7 +26,6 @@ namespace NCDK.Renderers.Elements
     /// Text element as used in the chemical drawing. This can be a element symbol.
     /// </summary>
     // @cdk.module render
-    // @cdk.githash
     public class TextElement : IRenderingElement
     {
         /// <summary>The coordinate where the text should be displayed.</summary>

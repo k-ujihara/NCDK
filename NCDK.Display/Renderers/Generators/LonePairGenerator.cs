@@ -31,7 +31,6 @@ namespace NCDK.Renderers.Generators
     /// </summary>
     // @author maclean
     // @cdk.module renderextra
-    // @cdk.githash
     public class LonePairGenerator : IGenerator<IAtomContainer>
     {
         public LonePairGenerator() { }
@@ -39,26 +38,26 @@ namespace NCDK.Renderers.Generators
         /// <inheritdoc/>
         public IRenderingElement Generate(IAtomContainer container, RendererModel model)
         {
-            ElementGroup group = new ElementGroup();
+            var group = new ElementGroup();
 
             // TODO : put into RendererModel
             const double SCREEN_RADIUS = 1.0;
             // separation between centers
             const double SCREEN_SEPARATION = 2.5;
-            Color RADICAL_COLOR = WPF.Media.Colors.Black;
+            var RADICAL_COLOR = WPF.Media.Colors.Black;
 
             // XXX : is this the best option?
-            double ATOM_RADIUS = model.GetAtomRadius();
+            var ATOM_RADIUS = model.GetAtomRadius();
 
-            double scale = model.GetScale();
-            double modelAtomRadius = ATOM_RADIUS / scale;
-            double modelPointRadius = SCREEN_RADIUS / scale;
-            double modelSeparation = SCREEN_SEPARATION / scale;
+            var scale = model.GetScale();
+            var modelAtomRadius = ATOM_RADIUS / scale;
+            var modelPointRadius = SCREEN_RADIUS / scale;
+            var modelSeparation = SCREEN_SEPARATION / scale;
             foreach (var lonePair in container.LonePairs)
             {
-                IAtom atom = lonePair.Atom;
-                Vector2 point = atom.Point2D.Value;
-                int align = GeometryUtil.GetBestAlignmentForLabelXY(container, atom);
+                var atom = lonePair.Atom;
+                var point = atom.Point2D.Value;
+                var align = GeometryUtil.GetBestAlignmentForLabelXY(container, atom);
                 var center = ToPoint(point);
                 var diff = new WPF::Vector();
                 if (align == 1)

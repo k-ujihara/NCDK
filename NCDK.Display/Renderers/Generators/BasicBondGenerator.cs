@@ -36,7 +36,6 @@ namespace NCDK.Renderers.Generators
     /// Generator for elements from bonds. Only two-atom bonds are supported by this generator.
     /// </summary>
     // @cdk.module renderbasic
-    // @cdk.githash
     public class BasicBondGenerator : IGenerator<IAtomContainer>
     {
         /// <summary>
@@ -95,7 +94,7 @@ namespace NCDK.Renderers.Generators
         /// <returns>the rings of the molecule</returns>
         protected virtual IRingSet GetRingSet(IAtomContainer atomContainer)
         {
-            IRingSet ringSet = atomContainer.Builder.NewRingSet();
+            var ringSet = atomContainer.Builder.NewRingSet();
             try
             {
                 var molecules = ConnectivityChecker.PartitionIntoMolecules(atomContainer);
@@ -145,7 +144,7 @@ namespace NCDK.Renderers.Generators
         /// <returns>a double in chem-model space</returns>
         public virtual double GetWidthForBond(IBond bond, RendererModel model)
         {
-            double scale = model.GetScale();
+            var scale = model.GetScale();
             if (this.overrideBondWidth != -1)
             {
                 return this.overrideBondWidth / scale;
@@ -159,7 +158,7 @@ namespace NCDK.Renderers.Generators
         /// <inheritdoc/>
         public virtual IRenderingElement Generate(IAtomContainer container, RendererModel model)
         {
-            ElementGroup group = new ElementGroup();
+            var group = new ElementGroup();
             this.ringSet = this.GetRingSet(container);
 
             //Sort the ringSet consistently to ensure consistent rendering.
@@ -184,7 +183,7 @@ namespace NCDK.Renderers.Generators
         /// <returns>one or more rendering elements</returns>
         public virtual IRenderingElement Generate(IBond currentBond, RendererModel model)
         {
-            IRing ring = RingSetManipulator.GetHeaviestRing(ringSet, currentBond);
+            var ring = RingSetManipulator.GetHeaviestRing(ringSet, currentBond);
             if (ring != null)
             {
                 return GenerateRingElements(currentBond, ring, model);
@@ -219,21 +218,22 @@ namespace NCDK.Renderers.Generators
         public virtual IRenderingElement GenerateBondElement(IBond bond, BondOrder type, RendererModel model)
         {
             // More than 2 atoms per bond not supported by this module
-            if (bond.Atoms.Count > 2) return null;
+            if (bond.Atoms.Count > 2)
+                return null;
 
             // is object right? if not replace with a good one
-            Vector2 point1 = bond.Begin.Point2D.Value;
-            Vector2 point2 = bond.End.Point2D.Value;
-            Color color = this.GetColorForBond(bond, model);
-            double bondWidth = this.GetWidthForBond(bond, model);
-            double bondDistance = model.GetBondDistance() / model.GetScale();
+            var point1 = bond.Begin.Point2D.Value;
+            var point2 = bond.End.Point2D.Value;
+            var color = this.GetColorForBond(bond, model);
+            var bondWidth = this.GetWidthForBond(bond, model);
+            var bondDistance = model.GetBondDistance() / model.GetScale();
             if (type == BondOrder.Single)
             {
                 return new LineElement(ToPoint(point1), ToPoint(point2), bondWidth, color);
             }
             else
             {
-                ElementGroup group = new ElementGroup();
+                var group = new ElementGroup();
                 switch (type)
                 {
                     case BondOrder.Double:
@@ -257,24 +257,24 @@ namespace NCDK.Renderers.Generators
         private void CreateLines(Vector2 point1, Vector2 point2, double width, double dist, Color color, ElementGroup group)
         {
             var output = GenerateDistanceData(point1, point2, dist);
-            LineElement l1 = new LineElement(ToPoint(output[0]), ToPoint(output[2]), width, color);
-            LineElement l2 = new LineElement(ToPoint(output[1]), ToPoint(output[3]), width, color);
+            var l1 = new LineElement(ToPoint(output[0]), ToPoint(output[2]), width, color);
+            var l2 = new LineElement(ToPoint(output[1]), ToPoint(output[3]), width, color);
             group.Add(l1);
             group.Add(l2);
         }
 
         private Vector2[] GenerateDistanceData(Vector2 point1, Vector2 point2, double dist)
         {
-            Vector2 normal = point2 - point1;
+            var normal = point2 - point1;
             normal = new Vector2(-normal.Y, normal.X);
             normal = Vector2.Normalize(normal) * dist;
 
-            Vector2 line1p1 = point1 + normal;
-            Vector2 line1p2 = point2 + normal;
+            var line1p1 = point1 + normal;
+            var line1p2 = point2 + normal;
 
             normal = -normal;
-            Vector2 line2p1 = point1 + normal;
-            Vector2 line2p2 = point2 + normal;
+            var line2p1 = point1 + normal;
+            var line2p2 = point2 + normal;
 
             return new Vector2[] { line1p1, line2p1, line1p2, line2p2, };
         }
@@ -294,7 +294,7 @@ namespace NCDK.Renderers.Generators
             }
             else if (IsDouble(bond))
             {
-                ElementGroup pair = new ElementGroup
+                var pair = new ElementGroup
                 {
                     GenerateBondElement(bond, BondOrder.Single, model),
                     GenerateInnerElement(bond, ring, model)
@@ -316,33 +316,33 @@ namespace NCDK.Renderers.Generators
         /// <returns>the line element</returns>
         public virtual LineElement GenerateInnerElement(IBond bond, IRing ring, RendererModel model)
         {
-            Vector2 center = GeometryUtil.Get2DCenter(ring);
-            Vector2 a = bond.Begin.Point2D.Value;
-            Vector2 b = bond.End.Point2D.Value;
+            var center = GeometryUtil.Get2DCenter(ring);
+            var a = bond.Begin.Point2D.Value;
+            var b = bond.End.Point2D.Value;
 
             // the proportion to move in towards the ring center
             double distanceFactor = model.GetTowardsRingCenterProportion();
             double ringDistance = distanceFactor * IDEAL_RINGSIZE / ring.Atoms.Count;
             if (ringDistance < distanceFactor / MIN_RINGSIZE_FACTOR) ringDistance = distanceFactor / MIN_RINGSIZE_FACTOR;
 
-            Vector2 w = Vector2.Lerp(a, center, ringDistance);
-            Vector2 u = Vector2.Lerp(b, center, ringDistance);
+            var w = Vector2.Lerp(a, center, ringDistance);
+            var u = Vector2.Lerp(b, center, ringDistance);
 
             double alpha = 0.2;
-            Vector2 ww = Vector2.Lerp(w, u, alpha);
-            Vector2 uu = Vector2.Lerp(u, w, alpha);
+            var ww = Vector2.Lerp(w, u, alpha);
+            var uu = Vector2.Lerp(u, w, alpha);
 
-            double width = GetWidthForBond(bond, model);
-            Color color = GetColorForBond(bond, model);
+            var width = GetWidthForBond(bond, model);
+            var color = GetColorForBond(bond, model);
 
             return new LineElement(ToPoint(u), ToPoint(w), width, color);
         }
 
         private IRenderingElement GenerateStereoElement(IBond bond, RendererModel model)
         {
-            BondStereo stereo = bond.Stereo;
-            WedgeLineElement.WedgeType type = WedgeLineElement.WedgeType.Wedged;
-            BondDirection dir = BondDirection.ToSecond;
+            var stereo = bond.Stereo;
+            var type = WedgeLineElement.WedgeType.Wedged;
+            var dir = BondDirection.ToSecond;
             switch (stereo)
             {
                 case BondStereo.Down:
@@ -363,7 +363,7 @@ namespace NCDK.Renderers.Generators
                     break;
             }
 
-            IRenderingElement base_ = GenerateBondElement(bond, BondOrder.Single, model);
+            var base_ = GenerateBondElement(bond, BondOrder.Single, model);
             return new WedgeLineElement((LineElement)base_, type, dir, GetColorForBond(bond, model));
         }
 
@@ -394,8 +394,9 @@ namespace NCDK.Renderers.Generators
         /// <returns>true if the bond has stereo information</returns>
         private bool IsStereoBond(IBond bond)
         {
-            return bond.Stereo != BondStereo.None && bond.Stereo != BondStereo.None
-                    && bond.Stereo != BondStereo.EZByCoordinates;
+            return bond.Stereo != BondStereo.None 
+                && bond.Stereo != BondStereo.None
+                && bond.Stereo != BondStereo.EZByCoordinates;
         }
 
         /// <summary>

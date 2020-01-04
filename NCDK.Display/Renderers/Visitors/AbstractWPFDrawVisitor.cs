@@ -31,7 +31,6 @@ namespace NCDK.Renderers.Visitors
     /// widget toolkit, allowing molecules to be rendered with toolkits based on WPF.
     /// </summary>
     // @cdk.module renderawt
-    // @cdk.githash
     public abstract class AbstractWPFDrawVisitor : IDrawVisitor
     {
         /// <summary>
@@ -48,8 +47,8 @@ namespace NCDK.Renderers.Visitors
             double widthPad = 3;
             double heightPad = 1;
 
-            double width = bounds.Width + widthPad;
-            double height = bounds.Height + heightPad;
+            var width = bounds.Width + widthPad;
+            var height = bounds.Height + heightPad;
             var point = coord;
             return new WPF.Rect(point.X - width / 2, point.Y - height / 2, width, height);
         }

@@ -29,7 +29,6 @@ namespace NCDK.Renderers
     /// </summary>
     // @author maclean
     // @cdk.module renderbasic
-    // @cdk.githash
     public class AverageBondLengthCalculator
     {
         /// <summary>

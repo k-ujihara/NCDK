@@ -74,7 +74,7 @@ namespace NCDK.Renderers.Generators.Standards
         /// </summary>
         /// <param name="font">the symbol font</param>
         public StandardAtomGenerator(Typeface font, double emSize)
-                : this(font, emSize, DefaultAdjunctSpacingRatio, DefaultSubscriptSize)
+            : this(font, emSize, DefaultAdjunctSpacingRatio, DefaultSubscriptSize)
         {
         }
 

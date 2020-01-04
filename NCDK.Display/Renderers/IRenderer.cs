@@ -34,7 +34,6 @@ namespace NCDK.Renderers
     /// </summary>
     // @author egonw
     // @cdk.module render
-    // @cdk.githash
     interface IRenderer<T> where T : IChemObject
     {
         /// <summary>

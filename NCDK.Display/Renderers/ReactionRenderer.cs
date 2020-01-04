@@ -96,7 +96,6 @@ namespace NCDK.Renderers
     /// </remarks>
     // @author maclean
     // @cdk.module renderextra
-    // @cdk.githash
     public class ReactionRenderer : AbstractRenderer<IReaction>, IRenderer<IReaction>
     {
         private IRenderer<IChemObjectSet<IAtomContainer>> moleculeSetRenderer;
@@ -127,7 +126,7 @@ namespace NCDK.Renderers
         /// <param name="reactionGenerators">a list of <see cref="IGenerator{T}"/> related to <see cref="IReaction"/>s</param>
         /// <param name="fontManager">a class that manages mappings between zoom and font sizes</param>
         public ReactionRenderer(IEnumerable<IGenerator<IAtomContainer>> generators, IEnumerable<IGenerator<IReaction>> reactionGenerators, IFontManager fontManager)
-                : this(generators, fontManager)
+            : this(generators, fontManager)
         {
             this.generators = reactionGenerators.ToList();
             this.Setup();
@@ -142,7 +141,7 @@ namespace NCDK.Renderers
         {
             this.SetScale(reaction);
             var bounds = BoundsCalculator.CalculateBounds(reaction);
-            this.modelCenter = new Point(bounds.Value.CenterX(), bounds.Value.CenterY());
+            this.modelCenter = new Point(bounds.CenterX(), bounds.CenterY());
             this.drawCenter = new Point(screen.CenterX(), screen.CenterY());
             this.Setup();
         }
@@ -166,7 +165,7 @@ namespace NCDK.Renderers
         public Rect Paint(IReaction reaction, IDrawVisitor drawVisitor)
         {
             // calculate the bounds
-            var modelBounds = BoundsCalculator.CalculateBounds(reaction).Value;
+            var modelBounds = BoundsCalculator.CalculateBounds(reaction);
 
             // setup and draw
             this.SetupTransformNatural(modelBounds);
@@ -186,7 +185,7 @@ namespace NCDK.Renderers
         public void Paint(IReaction reaction, IDrawVisitor drawVisitor, Rect bounds, bool resetCenter)
         {
             // calculate the bounds
-            var modelBounds = BoundsCalculator.CalculateBounds(reaction).Value;
+            var modelBounds = BoundsCalculator.CalculateBounds(reaction);
 
             this.SetupTransformToFit(bounds, modelBounds, AverageBondLengthCalculator.CalculateAverageBondLength(reaction), resetCenter);
 
@@ -200,7 +199,7 @@ namespace NCDK.Renderers
         /// <inheritdoc/>
         public Rect CalculateDiagramBounds(IReaction reaction)
         {
-            return this.CalculateScreenBounds(BoundsCalculator.CalculateBounds(reaction).Value);
+            return this.CalculateScreenBounds(BoundsCalculator.CalculateBounds(reaction));
         }
 
         /// <summary>
@@ -224,7 +223,7 @@ namespace NCDK.Renderers
         /// <inheritdoc/>
         public override IRenderingElement GenerateDiagram(IReaction reaction)
         {
-            ElementGroup diagram = new ElementGroup();
+            var diagram = new ElementGroup();
 
             foreach (var generator in this.generators)
             {

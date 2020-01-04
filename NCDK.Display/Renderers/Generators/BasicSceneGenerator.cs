@@ -28,7 +28,6 @@ namespace NCDK.Renderers.Generators
     /// background color, margin, etc.
     /// </summary>
     // @cdk.module renderbasic
-    // @cdk.githash
     public class BasicSceneGenerator : IGenerator<IAtomContainer>
     {
         /// <summary>

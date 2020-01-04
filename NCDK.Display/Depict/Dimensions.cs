@@ -95,11 +95,11 @@ namespace NCDK.Depict
                 // +1 because first offset is always 0
                 int col = 1 + i % nCol;
                 int row = 1 + i / nCol;
-                Bounds bound = bounds[i];
+                var bound = bounds[i];
                 if (bound.IsEmpty())
                     continue;
-                double width = bound.Width;
-                double height = bound.Height;
+                var width = bound.Width;
+                var height = bound.Height;
                 if (width > xOffset[col])
                     xOffset[col] = width;
                 if (height > yOffset[row])

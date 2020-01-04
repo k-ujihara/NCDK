@@ -21,7 +21,6 @@ namespace NCDK.Renderers.Elements
     /// A line between two points.
     /// </summary>
     // @cdk.module renderbasic
-    // @cdk.githash
     public class LineElement : IRenderingElement
     {
         /// <summary>The first point. </summary>

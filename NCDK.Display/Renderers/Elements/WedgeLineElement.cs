@@ -27,7 +27,6 @@ namespace NCDK.Renderers.Elements
     /// It can be dashed or not to indicate up and down.
     /// </summary>
     // @cdk.module renderbasic
-    // @cdk.githash
     public class WedgeLineElement : LineElement
     {
         /// <summary>

@@ -76,8 +76,8 @@ namespace NCDK.Renderers.Generators.Standards
         /// <param name="transform">the transform</param>
         private TextOutline(string text, Typeface typeface, double emSize, Transform transform)
             : this(text, typeface, emSize, 
-                  new FormattedText(text, CultureInfo.InvariantCulture, FlowDirection.LeftToRight, typeface, emSize, Brushes.Transparent).BuildGeometry(new Point()),
-                  transform)
+                   new FormattedText(text, CultureInfo.InvariantCulture, FlowDirection.LeftToRight, typeface, emSize, Brushes.Transparent).BuildGeometry(new Point()),
+                   transform)
         { }
 
         /// <summary>
@@ -143,10 +143,10 @@ namespace NCDK.Renderers.Generators.Standards
             maxPoint = transform.Transform(maxPoint);
 
             // may be flipped by transformation
-            double minX = Math.Min(minPoint.X, maxPoint.X);
-            double maxX = Math.Max(minPoint.X, maxPoint.X);
-            double minY = Math.Min(minPoint.Y, maxPoint.Y);
-            double maxY = Math.Max(minPoint.Y, maxPoint.Y);
+            var minX = Math.Min(minPoint.X, maxPoint.X);
+            var maxX = Math.Max(minPoint.X, maxPoint.X);
+            var minY = Math.Min(minPoint.Y, maxPoint.Y);
+            var maxY = Math.Max(minPoint.Y, maxPoint.Y);
 
             return new Rect(minX, minY, maxX - minX, maxY - minY);
         }
@@ -212,12 +212,11 @@ namespace NCDK.Renderers.Generators.Standards
         /// <returns>new text outline</returns>
         public TextOutline Transform(Transform nextTransform)
         {
-            return new TextOutline(
-                text, 
-                typeface,
-                emSize,
-                outline, 
-                new MatrixTransform(transform.Value * nextTransform.Value));
+            return new TextOutline(text, 
+                                   typeface,
+                                   emSize,
+                                   outline, 
+                                   new MatrixTransform(transform.Value * nextTransform.Value));
         }
 
         /// <summary>

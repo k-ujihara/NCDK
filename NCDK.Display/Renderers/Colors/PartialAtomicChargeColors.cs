@@ -34,7 +34,6 @@ namespace NCDK.Renderers.Colors
     /// </para>
     /// </remarks>
     // @cdk.module  render
-    // @cdk.githash
     // @cdk.keyword atom coloring, partial charges
     public class PartialAtomicChargeColors : IAtomColorer
     {
@@ -57,9 +56,10 @@ namespace NCDK.Renderers.Colors
         /// <returns>the color for the given atom.</returns>
         public Color GetAtomColor(IAtom atom, Color defaultColor)
         {
-            Color color = defaultColor;
-            if (atom.Charge == null) return defaultColor;
-            double charge = atom.Charge.Value;
+            var color = defaultColor;
+            if (atom.Charge == null)
+                return defaultColor;
+            var charge = atom.Charge.Value;
             if (charge > 0.0)
             {
                 if (charge < 1.0)

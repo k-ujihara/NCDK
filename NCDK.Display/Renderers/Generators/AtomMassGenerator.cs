@@ -26,7 +26,6 @@ namespace NCDK.Renderers.Generators
     /// <see cref="IGenerator{T}"/> that can render mass number information of atoms.
     /// </summary>
     // @cdk.module renderextra
-    // @cdk.githash
     public class AtomMassGenerator : BasicAtomGenerator
     {
         /// <summary>

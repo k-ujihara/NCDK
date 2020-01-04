@@ -39,7 +39,6 @@ namespace NCDK.Renderers.Elements
     /// </summary>
     // @author John May
     // @cdk.module renderbasic
-    // @cdk.githash
     public sealed class Bounds : IRenderingElement
     {
         /// <summary>

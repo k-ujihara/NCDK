@@ -115,8 +115,8 @@ namespace NCDK.Renderers.Generators.Standards
                     // should only be one bond
                     foreach (var bond in sgroup.Bonds)
                     {
-                        IAtom beg = bond.Begin;
-                        IAtom end = bond.End;
+                        var beg = bond.Begin;
+                        var end = bond.End;
                         if (atoms.Contains(beg))
                         {
                             StandardGenerator.HideFully(beg);
@@ -168,8 +168,8 @@ namespace NCDK.Renderers.Generators.Standards
             }
             foreach (var bond in container.Bonds)
             {
-                IAtom beg = bond.Begin;
-                IAtom end = bond.End;
+                var beg = bond.Begin;
+                var end = bond.End;
                 if (sgroupAtoms.Contains(beg) && sgroupAtoms.Contains(end))
                 {
                     numSgroupBonds++;
@@ -252,8 +252,8 @@ namespace NCDK.Renderers.Generators.Standards
             foreach (var bond in crossing)
             {
                 StandardGenerator.Unhide(bond);
-                IAtom a1 = bond.Begin;
-                IAtom a2 = bond.End;
+                var a1 = bond.Begin;
+                var a2 = bond.End;
                 StandardGenerator.Unhide(a1);
                 if (atoms.Contains(a1))
                     symbolRemap[a1] = sgroup.Subscript;
@@ -270,7 +270,7 @@ namespace NCDK.Renderers.Generators.Standards
         /// <returns>Sgroup rendering elements</returns>
         IRenderingElement GenerateSgroups(IAtomContainer container, AtomSymbol[] symbols)
         {
-            ElementGroup result = new ElementGroup();
+            var result = new ElementGroup();
             var sgroups = container.GetCtabSgroups();
 
             if (sgroups == null || !sgroups.Any())
@@ -369,8 +369,8 @@ namespace NCDK.Renderers.Generators.Standards
                 var sgrpCenter = GeometryUtil.Get2DCenter(sgroupAtoms);
                 var molCenter = GeometryUtil.Get2DCenter(mol);
                 var minMax = GeometryUtil.GetMinMax(sgroupAtoms);
-                double xDiff = sgrpCenter.X - molCenter.X;
-                double yDiff = sgrpCenter.Y - molCenter.Y;
+                var xDiff = sgrpCenter.X - molCenter.X;
+                var yDiff = sgrpCenter.Y - molCenter.Y;
                 if (xDiff > 0.1)
                 {
                     labelLocation.X = minMax[0]; // min x
@@ -412,7 +412,7 @@ namespace NCDK.Renderers.Generators.Standards
 
             if (highlight != null && style == HighlightStyle.OuterGlow)
             {
-                ElementGroup group = new ElementGroup
+                var group = new ElementGroup
                 {
                     // outer glow needs to be being the label
                     StandardGenerator.OuterGlow(labelgroup, highlight, glowWidth, stroke),
@@ -437,7 +437,7 @@ namespace NCDK.Renderers.Generators.Standards
             var brackets = (IList<SgroupBracket>)sgroup.GetValue(SgroupKey.CtabBracket);
             if (brackets != null)
             {
-                SgroupType type = sgroup.Type;
+                var type = sgroup.Type;
 
                 var subscript = (string)sgroup.GetValue(SgroupKey.CtabSubScript);
                 var connectivity = (string)sgroup.GetValue(SgroupKey.CtabConnectivity);
@@ -506,7 +506,7 @@ namespace NCDK.Renderers.Generators.Standards
             var brackets = (IList<SgroupBracket>)sgroup.GetValue(SgroupKey.CtabBracket);
             if (brackets != null)
             {
-                SgroupType type = sgroup.Type;
+                var type = sgroup.Type;
                 string subscript = "?";
                 switch (type)
                 {
@@ -563,7 +563,7 @@ namespace NCDK.Renderers.Generators.Standards
             // brackets are square by default (style:0)
             var style = (int?)sgroup.GetValue(SgroupKey.CtabBracketStyle);
             bool round = style != null && style == 1;
-            ElementGroup result = new ElementGroup();
+            var result = new ElementGroup();
 
             var atoms = sgroup.Atoms;
             var crossingBonds = sgroup.Bonds;
@@ -579,25 +579,25 @@ namespace NCDK.Renderers.Generators.Standards
             // override bracket layout around single atoms to bring them in closer
             if (atoms.Count == 1)
             {
-                IAtom atom = atoms.First();
+                var atom = atoms.First();
 
                 // e.g. 2 HCL, 8 H2O etc.
                 if (IsUnsignedInt(subscriptSuffix) &&
                     !crossingBonds.Any() &&
                     symbols.ContainsKey(atom))
                 {
-                    TextOutline prefix = new TextOutline('·' + subscriptSuffix, font, emSize).Resize(1 / scale, 1 / -scale);
-                    Rect prefixBounds = prefix.LogicalBounds;
+                    var prefix = new TextOutline('·' + subscriptSuffix, font, emSize).Resize(1 / scale, 1 / -scale);
+                    var prefixBounds = prefix.LogicalBounds;
 
-                    AtomSymbol symbol = symbols[atom];
+                    var symbol = symbols[atom];
 
-                    Rect bounds = symbol.GetConvexHull().Outline.Bounds;
+                    var bounds = symbol.GetConvexHull().Outline.Bounds;
 
                     // make slightly large
                     bounds = new Rect(bounds.Bottom - 2 * stroke,
-                                   bounds.Left - 2 * stroke,
-                                   bounds.Width + 4 * stroke,
-                                   bounds.Height + 4 * stroke);
+                                      bounds.Left - 2 * stroke,
+                                      bounds.Width + 4 * stroke,
+                                      bounds.Height + 4 * stroke);
 
                     prefix = prefix.Translate(bounds.Bottom - prefixBounds.Top,
                                               symbol.GetAlignmentCenter().Y - prefixBounds.CenterY());
@@ -607,24 +607,24 @@ namespace NCDK.Renderers.Generators.Standards
                 // e.g. CC(O)nCC
                 else if (crossingBonds.Count > 0)
                 {
-                    double scriptscale = labelScale;
+                    var scriptscale = labelScale;
 
-                    TextOutline leftBracket = new TextOutline("(", font, emSize).Resize(1 / scale, 1 / -scale);
-                    TextOutline rightBracket = new TextOutline(")", font, emSize).Resize(1 / scale, 1 / -scale);
+                    var leftBracket = new TextOutline("(", font, emSize).Resize(1 / scale, 1 / -scale);
+                    var rightBracket = new TextOutline(")", font, emSize).Resize(1 / scale, 1 / -scale);
 
                     var leftCenter = leftBracket.GetCenter();
                     var rightCenter = rightBracket.GetCenter();
 
                     if (symbols.ContainsKey(atom))
                     {
-                        AtomSymbol symbol = symbols[atom];
+                        var symbol = symbols[atom];
 
                         var bounds = symbol.GetConvexHull().Outline.Bounds;
                         // make slightly large
                         bounds = new Rect(bounds.Left - 2 * stroke,
-                                       bounds.Top - 2 * stroke,
-                                       bounds.Width + 4 * stroke,
-                                       bounds.Height + 4 * stroke);
+                                          bounds.Top - 2 * stroke,
+                                          bounds.Width + 4 * stroke,
+                                          bounds.Height + 4 * stroke);
 
                         leftBracket = leftBracket.Translate(bounds.Left - 0.1 - leftCenter.X,
                                                             symbol.GetAlignmentCenter().Y - leftCenter.Y);
@@ -633,7 +633,7 @@ namespace NCDK.Renderers.Generators.Standards
                     }
                     else
                     {
-                        Vector2 p = atoms.First().Point2D.Value;
+                        var p = atoms.First().Point2D.Value;
                         leftBracket = leftBracket.Translate(p.X - 0.2 - leftCenter.X, p.Y - leftCenter.Y);
                         rightBracket = rightBracket.Translate(p.X + 0.2 - rightCenter.X, p.Y - rightCenter.Y);
                     }
@@ -655,11 +655,11 @@ namespace NCDK.Renderers.Generators.Standards
                     }
                     if (superscriptSuffix != null && superscriptSuffix.Any())
                     {
-                        TextOutline superscriptOutline = LeftAlign(MakeText(superscriptSuffix.ToLowerInvariant(),
-                                                                            new Vector2(rightBracketBounds.Right,
-                                                                                        rightBracketBounds.Bottom + 0.1),
-                                                                            new Vector2(-rightBracketBounds.Width, 0),
-                                                                            scriptscale));
+                        var superscriptOutline = LeftAlign(MakeText(superscriptSuffix.ToLowerInvariant(),
+                                                                    new Vector2(rightBracketBounds.Right,
+                                                                                rightBracketBounds.Bottom + 0.1),
+                                                                    new Vector2(-rightBracketBounds.Width, 0),
+                                                                    scriptscale));
                         result.Add(GeneralPath.ShapeOf(superscriptOutline.GetOutline(), foreground));
                     }
                 }
@@ -681,7 +681,7 @@ namespace NCDK.Renderers.Generators.Standards
                     var perp = VecmathUtil.NewPerpendicularVector(VecmathUtil.NewUnitVector(p1, p2));
 
                     // point the vector at the atom group
-                    Vector2 midpoint = VecmathUtil.Midpoint(p1, p2);
+                    var midpoint = VecmathUtil.Midpoint(p1, p2);
                     if (Vector2.Dot(perp, VecmathUtil.NewUnitVector(midpoint, inGroupAtom.Point2D.Value)) < 0)
                     {
                         perp = Vector2.Negate(perp);
@@ -701,16 +701,16 @@ namespace NCDK.Renderers.Generators.Standards
                     else
                     {
                         // is this bracket better as a suffix?
-                        Vector2 sp1 = suffixBracket.FirstPoint;
-                        Vector2 sp2 = suffixBracket.SecondPoint;
-                        double bestMaxX = Math.Max(sp1.X, sp2.X);
-                        double thisMaxX = Math.Max(p1.X, p2.X);
-                        double bestMaxY = Math.Max(sp1.Y, sp2.Y);
-                        double thisMaxY = Math.Max(p1.Y, p2.Y);
+                        var sp1 = suffixBracket.FirstPoint;
+                        var sp2 = suffixBracket.SecondPoint;
+                        var bestMaxX = Math.Max(sp1.X, sp2.X);
+                        var thisMaxX = Math.Max(p1.X, p2.X);
+                        var bestMaxY = Math.Max(sp1.Y, sp2.Y);
+                        var thisMaxY = Math.Max(p1.Y, p2.Y);
 
                         // choose the most eastern or.. the most southern
-                        double xDiff = thisMaxX - bestMaxX;
-                        double yDiff = thisMaxY - bestMaxY;
+                        var xDiff = thisMaxX - bestMaxX;
+                        var yDiff = thisMaxY - bestMaxY;
                         if (xDiff > EQUIV_THRESHOLD || (xDiff > -EQUIV_THRESHOLD && yDiff < -EQUIV_THRESHOLD))
                         {
                             suffixBracket = bracket;
@@ -722,15 +722,15 @@ namespace NCDK.Renderers.Generators.Standards
                 // write the labels
                 if (suffixBracket != null)
                 {
-                    Vector2 subSufPnt = suffixBracket.FirstPoint;
-                    Vector2 supSufPnt = suffixBracket.SecondPoint;
+                    var subSufPnt = suffixBracket.FirstPoint;
+                    var supSufPnt = suffixBracket.SecondPoint;
 
                     // try to put the subscript on the bottom
-                    double xDiff = subSufPnt.X - supSufPnt.X;
-                    double yDiff = subSufPnt.Y - supSufPnt.Y;
+                    var xDiff = subSufPnt.X - supSufPnt.X;
+                    var yDiff = subSufPnt.Y - supSufPnt.Y;
                     if (yDiff > EQUIV_THRESHOLD || (yDiff > -EQUIV_THRESHOLD && xDiff > EQUIV_THRESHOLD))
                     {
-                        Vector2 tmpP = subSufPnt;
+                        var tmpP = subSufPnt;
                         subSufPnt = supSufPnt;
                         supSufPnt = tmpP;
                     }
@@ -738,12 +738,12 @@ namespace NCDK.Renderers.Generators.Standards
                     // subscript/superscript suffix annotation
                     if (subscriptSuffix != null && subscriptSuffix.Any())
                     {
-                        TextOutline subscriptOutline = LeftAlign(MakeText(subscriptSuffix.ToLowerInvariant(), subSufPnt, suffixBracketPerp.Value, labelScale));
+                        var subscriptOutline = LeftAlign(MakeText(subscriptSuffix.ToLowerInvariant(), subSufPnt, suffixBracketPerp.Value, labelScale));
                         result.Add(GeneralPath.ShapeOf(subscriptOutline.GetOutline(), foreground));
                     }
                     if (superscriptSuffix != null && superscriptSuffix.Any())
                     {
-                        TextOutline superscriptOutline = LeftAlign(MakeText(superscriptSuffix.ToLowerInvariant(), supSufPnt, suffixBracketPerp.Value, labelScale));
+                        var superscriptOutline = LeftAlign(MakeText(superscriptSuffix.ToLowerInvariant(), supSufPnt, suffixBracketPerp.Value, labelScale));
                         result.Add(GeneralPath.ShapeOf(superscriptOutline.GetOutline(), foreground));
                     }
                 }
@@ -772,8 +772,8 @@ namespace NCDK.Renderers.Generators.Standards
                 b2pvec *= bracketDepth;
 
                 // bad brackets
-                if (double.IsNaN(b1pvec.X) || double.IsNaN(b1pvec.Y) ||
-                    double.IsNaN(b2pvec.X) || double.IsNaN(b2pvec.Y))
+                if (double.IsNaN(b1pvec.X) || double.IsNaN(b1pvec.Y) 
+                 || double.IsNaN(b2pvec.X) || double.IsNaN(b2pvec.Y))
                     return result;
 
                 {
@@ -804,7 +804,7 @@ namespace NCDK.Renderers.Generators.Standards
                             {
                                 StartPoint = new Point(b2p1.X + b2pvec.X, b2p1.Y + b2pvec.Y)
                             };
-                            Vector2 cpb2 = VecmathUtil.Midpoint(b2p1, b2p2);
+                            var cpb2 = VecmathUtil.Midpoint(b2p1, b2p2);
                             cpb2 += VecmathUtil.Negate(b2pvec);
                             var seg = new QuadraticBezierSegment
                             {
@@ -852,17 +852,17 @@ namespace NCDK.Renderers.Generators.Standards
                 // work out where to put the suffix labels (e.g. ht/hh/eu) superscript
                 // and (e.g. n, xl, c, mix) subscript
                 // TODO: could be improved
-                double b1MaxX = Math.Max(b1p1.X, b1p2.X);
-                double b2MaxX = Math.Max(b2p1.X, b2p2.X);
-                double b1MaxY = Math.Max(b1p1.Y, b1p2.Y);
-                double b2MaxY = Math.Max(b2p1.Y, b2p2.Y);
+                var b1MaxX = Math.Max(b1p1.X, b1p2.X);
+                var b2MaxX = Math.Max(b2p1.X, b2p2.X);
+                var b1MaxY = Math.Max(b1p1.Y, b1p2.Y);
+                var b2MaxY = Math.Max(b2p1.Y, b2p2.Y);
 
-                Vector2 subSufPnt = b2p2;
-                Vector2 supSufPnt = b2p1;
-                Vector2 subpvec = b2pvec;
+                var subSufPnt = b2p2;
+                var supSufPnt = b2p1;
+                var subpvec = b2pvec;
 
-                double bXDiff = b1MaxX - b2MaxX;
-                double bYDiff = b1MaxY - b2MaxY;
+                var bXDiff = b1MaxX - b2MaxX;
+                var bYDiff = b1MaxY - b2MaxY;
 
                 if (bXDiff > EQUIV_THRESHOLD || (bXDiff > -EQUIV_THRESHOLD && bYDiff < -EQUIV_THRESHOLD))
                 {
@@ -871,12 +871,12 @@ namespace NCDK.Renderers.Generators.Standards
                     subpvec = b1pvec;
                 }
 
-                double xDiff = subSufPnt.X - supSufPnt.X;
-                double yDiff = subSufPnt.Y - supSufPnt.Y;
+                var xDiff = subSufPnt.X - supSufPnt.X;
+                var yDiff = subSufPnt.Y - supSufPnt.Y;
 
                 if (yDiff > EQUIV_THRESHOLD || (yDiff > -EQUIV_THRESHOLD && xDiff > EQUIV_THRESHOLD))
                 {
-                    Vector2 tmpP = subSufPnt;
+                    var tmpP = subSufPnt;
                     subSufPnt = supSufPnt;
                     supSufPnt = tmpP;
                 }
@@ -884,12 +884,12 @@ namespace NCDK.Renderers.Generators.Standards
                 // subscript/superscript suffix annotation
                 if (subscriptSuffix != null && subscriptSuffix.Any())
                 {
-                    TextOutline subscriptOutline = LeftAlign(MakeText(subscriptSuffix.ToLowerInvariant(), subSufPnt, subpvec, labelScale));
+                    var subscriptOutline = LeftAlign(MakeText(subscriptSuffix.ToLowerInvariant(), subSufPnt, subpvec, labelScale));
                     result.Add(GeneralPath.ShapeOf(subscriptOutline.GetOutline(), foreground));
                 }
                 if (superscriptSuffix != null && superscriptSuffix.Any())
                 {
-                    TextOutline superscriptOutline = LeftAlign(MakeText(superscriptSuffix.ToLowerInvariant(), supSufPnt, subpvec, labelScale));
+                    var superscriptOutline = LeftAlign(MakeText(superscriptSuffix.ToLowerInvariant(), supSufPnt, subpvec, labelScale));
                     result.Add(GeneralPath.ShapeOf(superscriptOutline.GetOutline(), foreground));
                 }
             }
@@ -905,7 +905,7 @@ namespace NCDK.Renderers.Generators.Standards
             {
                 StartPoint = new Point(p1.X + perp.X, p1.Y + perp.Y)
             };
-            Vector2 cpb1 = midpoint + VecmathUtil.Negate(perp);
+            var cpb1 = midpoint + VecmathUtil.Negate(perp);
             var seg = new QuadraticBezierSegment
             {
                 Point1 = new Point(cpb1.X, cpb1.Y),
@@ -942,8 +942,8 @@ namespace NCDK.Renderers.Generators.Standards
                 IBond crossingBond = null;
                 foreach (var bond in bonds)
                 {
-                    IAtom a1 = bond.Begin;
-                    IAtom a2 = bond.End;
+                    var a1 = bond.Begin;
+                    var a2 = bond.End;
                     if (Vectors.LinesIntersect(
                         bracket.FirstPoint.X, bracket.FirstPoint.Y,
                         bracket.SecondPoint.X, bracket.SecondPoint.Y,

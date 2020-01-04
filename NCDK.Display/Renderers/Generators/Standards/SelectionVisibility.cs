@@ -91,8 +91,10 @@ namespace NCDK.Renderers.Generators.Standards
         /// <returns>object is selected</returns>
         internal static bool IsSelected(IChemObject obj, RendererModel model)
         {
-            if (obj.GetProperty<Color?>(StandardGenerator.HighlightColorKey) != null) return true;
-            if (model.GetSelection() != null) return model.GetSelection().Contains(obj);
+            if (obj.GetProperty<Color?>(StandardGenerator.HighlightColorKey) != null)
+                return true;
+            if (model.GetSelection() != null)
+                return model.GetSelection().Contains(obj);
             return false;
         }
 
@@ -105,7 +107,8 @@ namespace NCDK.Renderers.Generators.Standards
         {
             foreach (var bond in bonds)
             {
-                if (IsSelected(bond, model)) return true;
+                if (IsSelected(bond, model))
+                    return true;
             }
             return false;
         }

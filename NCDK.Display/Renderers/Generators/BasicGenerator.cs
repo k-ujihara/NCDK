@@ -28,7 +28,6 @@ namespace NCDK.Renderers.Generators
     /// </summary>
     // @author maclean
     // @cdk.module renderbasic
-    // @cdk.githash
     public class BasicGenerator : IGenerator<IAtomContainer>
     {
         /// <summary>Holder for various parameters, such as background color</summary>
@@ -53,7 +52,7 @@ namespace NCDK.Renderers.Generators
         /// <inheritdoc/>
         public IRenderingElement Generate(IAtomContainer ac, RendererModel model)
         {
-            ElementGroup diagram = new ElementGroup
+            var diagram = new ElementGroup
             {
                 this.sceneGenerator.Generate(ac, model),
                 this.bondGenerator.Generate(ac, model),

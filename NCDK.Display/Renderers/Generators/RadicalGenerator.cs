@@ -32,7 +32,6 @@ namespace NCDK.Renderers.Generators
     /// </summary>
     // @author maclean
     // @cdk.module renderextra
-    // @cdk.githash
     public class RadicalGenerator : IGenerator<IAtomContainer>
     {
         public RadicalGenerator() { }
@@ -40,25 +39,25 @@ namespace NCDK.Renderers.Generators
         /// <inheritdoc/>
         public IRenderingElement Generate(IAtomContainer container, RendererModel model)
         {
-            ElementGroup group = new ElementGroup();
+            var group = new ElementGroup();
 
             // TODO : put into RendererModel
             const double ScreenRadius = 2.0;
-            Color RadicalColor = WPF.Media.Colors.Black;
+            var RadicalColor = WPF.Media.Colors.Black;
 
             // XXX : is this the best option?
-            double AtomRadius = model.GetAtomRadius() / model.GetScale();
+            var AtomRadius = model.GetAtomRadius() / model.GetScale();
 
-            double modelRadius = ScreenRadius / model.GetScale();
-            double modelSpacing = modelRadius * 2.5;
+            var modelRadius = ScreenRadius / model.GetScale();
+            var modelSpacing = modelRadius * 2.5;
             var singleElectronsPerAtom = new Dictionary<IAtom, int>();
             foreach (var electron in container.SingleElectrons)
             {
-                IAtom atom = electron.Atom;
+                var atom = electron.Atom;
                 if (!singleElectronsPerAtom.ContainsKey(atom))
                     singleElectronsPerAtom[atom] = 0;
-                Vector2 point = atom.Point2D.Value;
-                int align = GeometryUtil.GetBestAlignmentForLabelXY(container, atom);
+                var point = atom.Point2D.Value;
+                var align = GeometryUtil.GetBestAlignmentForLabelXY(container, atom);
                 var center = ToPoint(point);
                 if (align == 1)
                 {

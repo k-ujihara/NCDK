@@ -27,7 +27,6 @@ namespace NCDK.Renderers.Visitors
     /// customized and knows about fonts and other rendering parameters.
     /// </summary>
     // @cdk.module render
-    // @cdk.githash
     public interface IDrawVisitor : IRenderingVisitor
     {
         /// <summary>

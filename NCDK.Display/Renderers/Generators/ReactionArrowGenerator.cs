@@ -27,7 +27,6 @@ namespace NCDK.Renderers.Generators
     /// </summary>
     // @author maclean
     // @cdk.module renderextra
-    // @cdk.githash
     public class ReactionArrowGenerator : IGenerator<IReaction>
     {
         /// <inheritdoc/>
@@ -39,7 +38,7 @@ namespace NCDK.Renderers.Generators
             if (totalBoundsReactants == null || totalBoundsProducts == null)
                 return null;
 
-            double separation = model.GetBondLength() / model.GetScale();
+            var separation = model.GetBondLength() / model.GetScale();
             var foregroundColor = model.GetForegroundColor();
             return new ArrowElement(
                 new WPF::Point(totalBoundsReactants.Right + separation, totalBoundsReactants.CenterY()),
