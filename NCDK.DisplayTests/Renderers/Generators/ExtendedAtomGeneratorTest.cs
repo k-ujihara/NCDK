@@ -39,9 +39,9 @@ namespace NCDK.Renderers.Generators
     {
         private ExtendedAtomGenerator generator;
 
-        public override Rect? GetCustomCanvas()
+        public override Rect GetCustomCanvas()
         {
-            return null;
+            return Rect.Empty;
         }
 
         public ExtendedAtomGeneratorTest()

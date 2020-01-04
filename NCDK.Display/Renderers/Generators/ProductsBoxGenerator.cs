@@ -27,16 +27,17 @@ namespace NCDK.Renderers.Generators
     /// </summary>
     // @author maclean
     // @cdk.module renderextra
-    // @cdk.githash
     public class ProductsBoxGenerator : IGenerator<IReaction>
     {
         /// <inheritdoc/>
         public IRenderingElement Generate(IReaction reaction, RendererModel model)
         {
-            if (!model.GetShowReactionBoxes()) return null;
-            if (reaction.Products.Count == 0) return new ElementGroup();
-            double distance = model.GetBondLength() / model.GetScale() / 2;
-            Rect? totalBounds = null;
+            if (!model.GetShowReactionBoxes())
+                return null;
+            if (reaction.Products.Count == 0)
+                return new ElementGroup();
+            var distance = model.GetBondLength() / model.GetScale() / 2;
+            Rect totalBounds = Rect.Empty;
             foreach (var molecule in reaction.Products)
             {
                 var bounds = BoundsCalculator.CalculateBounds(molecule);
@@ -46,25 +47,24 @@ namespace NCDK.Renderers.Generators
                 }
                 else
                 {
-                    totalBounds = Rect.Union(totalBounds.Value, bounds);
+                    totalBounds = Rect.Union(totalBounds, bounds);
                 }
             }
-            if (totalBounds == null) return null;
+            if (totalBounds.IsEmpty)
+                return null;
 
-            ElementGroup diagram = new ElementGroup();
+            var diagram = new ElementGroup();
             var foregroundColor = model.GetForegroundColor();
             diagram.Add(new RectangleElement(
                 new Rect(
-                    totalBounds.Value.Left - distance,
-                    totalBounds.Value.Top - distance,
-                    totalBounds.Value.Right + distance,
-                    totalBounds.Value.Bottom + distance),
+                    totalBounds.Left - distance,
+                    totalBounds.Top - distance,
+                    totalBounds.Right + distance,
+                    totalBounds.Bottom + distance),
                 foregroundColor));
-            diagram.Add(new TextElement(
-                new Point(
-                    (totalBounds.Value.Left + totalBounds.Value.Right) / 2,
-                    totalBounds.Value.Top - distance),
-                "Products", foregroundColor));
+            diagram.Add(new TextElement(new Point((totalBounds.Left + totalBounds.Right) / 2, 
+                                                  totalBounds.Top - distance),
+                                        "Products", foregroundColor));
             return diagram;
         }
    }

@@ -59,7 +59,8 @@ namespace NCDK.Renderers.Generators
         /// </summary>
         public AbstractGeneratorTest()
         {
-            if (model != null) return; // things are already set up
+            if (model != null)
+                return; // things are already set up
             model = new RendererModel();
             elementUtil = new ElementUtility();
             sceneGenerator = new BasicSceneGenerator();
@@ -67,7 +68,7 @@ namespace NCDK.Renderers.Generators
 
         public IReadOnlyList<IRenderingElement> GetAllSimpleElements(IGenerator<IAtomContainer> generator, IAtomContainer container)
         {
-            IRenderingElement root = generator.Generate(container, model);
+            var root = generator.Generate(container, model);
             return elementUtil.GetAllSimpleElements(root);
         }
 
@@ -75,7 +76,7 @@ namespace NCDK.Renderers.Generators
         /// Implement this in derived classes, either returning null if no custom canvas is desired, or with a Rectangle with the appropriate size.
         /// </summary>
         /// <returns>a Rectangle representing a custom drawing canvas</returns>
-        public abstract Rect? GetCustomCanvas();
+        public abstract Rect GetCustomCanvas();
 
         /// <summary>
         /// Gets the default canvas for drawing on.
@@ -92,7 +93,9 @@ namespace NCDK.Renderers.Generators
         /// <returns>the affine transform based on the current canvas</returns>
         public Transform GetTransform()
         {
-            var canvas = GetCustomCanvas() ?? this.GetDefaultCanvas();
+            var canvas = GetCustomCanvas();
+            if (canvas.IsEmpty)
+                canvas = this.GetDefaultCanvas();
             return MakeTransform(canvas);
         }
 
@@ -151,7 +154,7 @@ namespace NCDK.Renderers.Generators
                         break;
                     case LineElement e:
                         {
-                            LineElement l = e;
+                            var l = e;
                             center.X += l.FirstPoint.X;
                             center.X += l.SecondPoint.X;
                             center.Y += l.FirstPoint.Y;
@@ -179,7 +182,7 @@ namespace NCDK.Renderers.Generators
         /// <returns>an atom container with a single atom</returns>
         public IAtomContainer MakeSingleAtom()
         {
-            IAtomContainer container = builder.NewAtomContainer();
+            var container = builder.NewAtomContainer();
             container.Atoms.Add(builder.NewAtom("C", new Vector2(0, 0)));
             return container;
         }
@@ -191,14 +194,14 @@ namespace NCDK.Renderers.Generators
         /// <returns>an atom container with a single atom</returns>
         public IAtomContainer MakeSingleAtom(string elementSymbol)
         {
-            IAtomContainer container = builder.NewAtomContainer();
+            var container = builder.NewAtomContainer();
             container.Atoms.Add(builder.NewAtom(elementSymbol, new Vector2(0, 0)));
             return container;
         }
 
         public IAtomContainer MakeMethane()
         {
-            IAtomContainer methane = builder.NewAtomContainer();
+            var methane = builder.NewAtomContainer();
             methane.Atoms.Add(builder.NewAtom("C", new Vector2(0, 0)));
             methane.Atoms.Add(builder.NewAtom("H", new Vector2(1, 1)));
             methane.Atoms.Add(builder.NewAtom("H", new Vector2(1, -1)));
@@ -213,7 +216,7 @@ namespace NCDK.Renderers.Generators
         /// <returns>an atom container with a single C-C bond</returns>
         public IAtomContainer MakeSingleBond()
         {
-            IAtomContainer container = builder.NewAtomContainer();
+            var container = builder.NewAtomContainer();
             container.Atoms.Add(builder.NewAtom("C", new Vector2(0, -1)));
             container.Atoms.Add(builder.NewAtom("C", new Vector2(0, 1)));
             container.AddBond(container.Atoms[0], container.Atoms[1], BondOrder.Single);
@@ -222,7 +225,7 @@ namespace NCDK.Renderers.Generators
 
         public IAtomContainer MakeCCC()
         {
-            IAtomContainer container = builder.NewAtomContainer();
+            var container = builder.NewAtomContainer();
             container.Atoms.Add(builder.NewAtom("C", new Vector2(-1, -1)));
             container.Atoms.Add(builder.NewAtom("C", new Vector2(0, 0)));
             container.Atoms.Add(builder.NewAtom("C", new Vector2(1, -1)));
@@ -237,7 +240,7 @@ namespace NCDK.Renderers.Generators
         /// <returns>four carbon atoms connected by bonds into a square</returns>
         public IAtomContainer MakeSquare()
         {
-            IAtomContainer container = builder.NewAtomContainer();
+            var container = builder.NewAtomContainer();
             container.Atoms.Add(builder.NewAtom("C", new Vector2(-1, -1)));
             container.Atoms.Add(builder.NewAtom("C", new Vector2(1, -1)));
             container.Atoms.Add(builder.NewAtom("C", new Vector2(1, 1)));
@@ -255,7 +258,7 @@ namespace NCDK.Renderers.Generators
         /// <returns>an unlikely S-N-O-P square</returns>
         public IAtomContainer MakeSNOPSquare()
         {
-            IAtomContainer container = builder.NewAtomContainer();
+            var container = builder.NewAtomContainer();
             container.Atoms.Add(builder.NewAtom("S", new Vector2(-1, -1)));
             container.Atoms.Add(builder.NewAtom("N", new Vector2(1, -1)));
             container.Atoms.Add(builder.NewAtom("O", new Vector2(1, 1)));

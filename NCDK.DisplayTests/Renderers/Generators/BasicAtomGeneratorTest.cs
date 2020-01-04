@@ -45,9 +45,9 @@ namespace NCDK.Renderers.Generators
             return element;
         }
 
-        public override Rect? GetCustomCanvas()
+        public override Rect GetCustomCanvas()
         {
-            return null;
+            return Rect.Empty;
         }
 
         public BasicAtomGeneratorTest()
@@ -60,11 +60,11 @@ namespace NCDK.Renderers.Generators
         [TestMethod()]
         public virtual void GenerateElementTest()
         {
-            IAtom atom = base.builder.NewAtom("C");
+            var atom = base.builder.NewAtom("C");
             atom.Point2D = new Vector2(2, 3);
             atom.ImplicitHydrogenCount = 0;
             int alignment = 1;
-            AtomSymbolElement element = generator.GenerateElement(atom, alignment, model);
+            var element = generator.GenerateElement(atom, alignment, model);
             Assert.AreEqual(atom.Point2D.Value.X, element.Coord.X, 0.01);
             Assert.AreEqual(atom.Point2D.Value.Y, element.Coord.Y, 0.01);
             Assert.AreEqual(atom.Symbol, element.Text);
@@ -77,11 +77,11 @@ namespace NCDK.Renderers.Generators
         [TestMethod()]
         public virtual void HasCoordinatesTest()
         {
-            IAtom atomWithCoordinates = base.builder.NewAtom();
+            var atomWithCoordinates = base.builder.NewAtom();
             atomWithCoordinates.Point2D = new Vector2(0, 0);
             Assert.IsTrue(generator.HasCoordinates(atomWithCoordinates));
 
-            IAtom atomWithoutCoordinates = base.builder.NewAtom();
+            var atomWithoutCoordinates = base.builder.NewAtom();
             atomWithoutCoordinates.Point2D = null;
             Assert.IsFalse(generator.HasCoordinates(atomWithoutCoordinates));
 
@@ -92,13 +92,13 @@ namespace NCDK.Renderers.Generators
         [TestMethod()]
         public virtual void CanDrawTest()
         {
-            IAtom drawableCAtom = base.builder.NewAtom("C");
+            var drawableCAtom = base.builder.NewAtom("C");
             drawableCAtom.Point2D = new Vector2(0, 0);
 
-            IAtom drawableHAtom = base.builder.NewAtom("H");
+            var drawableHAtom = base.builder.NewAtom("H");
             drawableHAtom.Point2D = new Vector2(0, 0);
 
-            IAtomContainer dummyContainer = base.builder.NewAtomContainer();
+            var dummyContainer = base.builder.NewAtomContainer();
             model.SetKekuleStructure(true);
             model.SetShowExplicitHydrogens(true);
 
@@ -109,7 +109,7 @@ namespace NCDK.Renderers.Generators
         [TestMethod()]
         public virtual void InvisibleHydrogenTest()
         {
-            IAtom hydrogen = base.builder.NewAtom("H");
+            var hydrogen = base.builder.NewAtom("H");
             model.SetShowExplicitHydrogens(false);
             Assert.IsTrue(generator.InvisibleHydrogen(hydrogen, model));
 
@@ -129,8 +129,8 @@ namespace NCDK.Renderers.Generators
         {
             // NOTE : just testing the element symbol here, see showCarbonTest
             // for the full range of possibilities...
-            IAtom carbon = base.builder.NewAtom("C");
-            IAtomContainer dummyContainer = base.builder.NewAtomContainer();
+            var carbon = base.builder.NewAtom("C");
+            var dummyContainer = base.builder.NewAtomContainer();
 
             // we force the issue by making isKekule=true
             model.SetKekuleStructure(true);
@@ -141,8 +141,8 @@ namespace NCDK.Renderers.Generators
         [TestMethod()]
         public virtual void ShowCarbon_KekuleTest()
         {
-            IAtomContainer atomContainer = base.MakeCCC();
-            IAtom carbon = atomContainer.Atoms[1];
+            var atomContainer = base.MakeCCC();
+            var carbon = atomContainer.Atoms[1];
 
             model.SetKekuleStructure(true);
             Assert.IsTrue(generator.ShowCarbon(carbon, atomContainer, model));
@@ -151,8 +151,8 @@ namespace NCDK.Renderers.Generators
         [TestMethod()]
         public virtual void ShowCarbon_FormalChargeTest()
         {
-            IAtomContainer atomContainer = base.MakeCCC();
-            IAtom carbon = atomContainer.Atoms[1];
+            var atomContainer = base.MakeCCC();
+            var carbon = atomContainer.Atoms[1];
 
             carbon.FormalCharge = 1;
             Assert.IsTrue(generator.ShowCarbon(carbon, atomContainer, model));
@@ -161,8 +161,8 @@ namespace NCDK.Renderers.Generators
         [TestMethod()]
         public virtual void ShowCarbon_SingleCarbonTest()
         {
-            IAtomContainer atomContainer = base.MakeSingleAtom("C");
-            IAtom carbon = atomContainer.Atoms[0];
+            var atomContainer = base.MakeSingleAtom("C");
+            var carbon = atomContainer.Atoms[0];
 
             Assert.IsTrue(generator.ShowCarbon(carbon, atomContainer, model));
         }
@@ -170,8 +170,8 @@ namespace NCDK.Renderers.Generators
         [TestMethod()]
         public virtual void ShowCarbon_ShowEndCarbonsTest()
         {
-            IAtomContainer atomContainer = base.MakeCCC();
-            IAtom carbon = atomContainer.Atoms[0];
+            var atomContainer = base.MakeCCC();
+            var carbon = atomContainer.Atoms[0];
             model.SetShowEndCarbons(true);
             Assert.IsTrue(generator.ShowCarbon(carbon, atomContainer, model));
         }
@@ -179,8 +179,8 @@ namespace NCDK.Renderers.Generators
         [TestMethod()]
         public virtual void ShowCarbon_ErrorMarker()
         {
-            IAtomContainer atomContainer = base.MakeCCC();
-            IAtom carbon = atomContainer.Atoms[1];
+            var atomContainer = base.MakeCCC();
+            var carbon = atomContainer.Atoms[1];
             ProblemMarker.MarkWithError(carbon);
             Assert.IsTrue(generator.ShowCarbon(carbon, atomContainer, model));
         }
@@ -188,8 +188,8 @@ namespace NCDK.Renderers.Generators
         [TestMethod()]
         public virtual void ShowCarbon_ConnectedSingleElectrons()
         {
-            IAtomContainer atomContainer = base.MakeCCC();
-            IAtom carbon = atomContainer.Atoms[1];
+            var atomContainer = base.MakeCCC();
+            var carbon = atomContainer.Atoms[1];
             atomContainer.AddSingleElectronTo(atomContainer.Atoms[1]);
             Assert.IsTrue(generator.ShowCarbon(carbon, atomContainer, model));
         }
@@ -197,7 +197,7 @@ namespace NCDK.Renderers.Generators
         [TestMethod()]
         public virtual void OvalShapeTest()
         {
-            IAtomContainer singleAtom = MakeSingleAtom();
+            var singleAtom = MakeSingleAtom();
             model.SetCompactShape(AtomShapeType.Oval);
             model.SetCompactAtom(true);
             var elements = GetAllSimpleElements(generator, singleAtom);
@@ -208,7 +208,7 @@ namespace NCDK.Renderers.Generators
         [TestMethod()]
         public virtual void SquareShapeTest()
         {
-            IAtomContainer singleAtom = MakeSingleAtom();
+            var singleAtom = MakeSingleAtom();
             model.SetCompactShape(AtomShapeType.Square);
             model.SetCompactAtom(true);
             var elements = GetAllSimpleElements(generator, singleAtom);
@@ -219,15 +219,15 @@ namespace NCDK.Renderers.Generators
         [TestMethod()]
         public virtual void GetAtomColorTest()
         {
-            Color testColor = WPF.Media.Colors.Red;
-            IAtomContainer singleAtom = MakeSingleAtom("O");
+            var testColor = WPF.Media.Colors.Red;
+            var singleAtom = MakeSingleAtom("O");
             model.SetAtomColor(testColor);
             model.SetAtomColorByType(false);
             generator.GetAtomColor(singleAtom.Atoms[0], model);
 
             var elements = GetAllSimpleElements(generator, singleAtom);
             Assert.AreEqual(1, elements.Count);
-            AtomSymbolElement element = ((AtomSymbolElement)Unbox(elements[0]));
+            var element = ((AtomSymbolElement)Unbox(elements[0]));
             Assert.AreEqual(testColor, element.Color);
         }
 
@@ -247,7 +247,7 @@ namespace NCDK.Renderers.Generators
 
             public Color? _GetAtomColor(IAtom atom)
             {
-                string symbol = atom.Symbol;
+                var symbol = atom.Symbol;
                 if (colorMap.ContainsKey(symbol))
                 {
                     return colorMap[symbol];
@@ -267,7 +267,7 @@ namespace NCDK.Renderers.Generators
         [TestMethod()]
         public virtual void AtomColorerTest()
         {
-            IAtomContainer cnop = MakeSNOPSquare();
+            var cnop = MakeSNOPSquare();
             var colorMap = new Dictionary<string, Color>
             {
                 ["S"] = WPF.Media.Colors.Yellow,
@@ -275,7 +275,7 @@ namespace NCDK.Renderers.Generators
                 ["O"] = WPF.Media.Colors.Red,
                 ["P"] = WPF.Media.Colors.Magenta
             };
-            IAtomColorer atomColorer = new AtomColorerTestIAtomColorer(colorMap);
+            var atomColorer = new AtomColorerTestIAtomColorer(colorMap);
             model.SetAtomColorer(atomColorer);
             model.SetAtomColorByType(true);
             var elements = GetAllSimpleElements(generator, cnop);
@@ -292,13 +292,13 @@ namespace NCDK.Renderers.Generators
         [TestMethod()]
         public virtual void ColorByTypeTest()
         {
-            IAtomContainer snop = MakeSNOPSquare();
+            var snop = MakeSNOPSquare();
             model.SetAtomColorByType(false);
             var elements = GetAllSimpleElements(generator, snop);
-            Color defaultColor = RendererModelTools.DefaultAtomColor;
+            var defaultColor = RendererModelTools.DefaultAtomColor;
             foreach (var element in elements)
             {
-                AtomSymbolElement symbolElement = (AtomSymbolElement)Unbox(element);
+                var symbolElement = (AtomSymbolElement)Unbox(element);
                 Assert.AreEqual(defaultColor, symbolElement.Color);
             }
         }
@@ -306,7 +306,7 @@ namespace NCDK.Renderers.Generators
         [TestMethod()]
         public virtual void ShowExplicitHydrogensTest()
         {
-            IAtomContainer methane = MakeMethane();
+            var methane = MakeMethane();
             // don't generate elements for hydrogens
             model.SetShowExplicitHydrogens(false);
             var carbonOnly = GetAllSimpleElements(generator, methane);
@@ -321,7 +321,7 @@ namespace NCDK.Renderers.Generators
         [TestMethod()]
         public virtual void KekuleTest()
         {
-            IAtomContainer singleBond = MakeSingleBond();
+            var singleBond = MakeSingleBond();
             model.SetKekuleStructure(true);
             Assert.AreEqual(2, GetAllSimpleElements(generator, singleBond).Count);
             model.SetKekuleStructure(false);
@@ -331,7 +331,7 @@ namespace NCDK.Renderers.Generators
         [TestMethod()]
         public virtual void ShowEndCarbonsTest()
         {
-            IAtomContainer singleBond = MakeCCC();
+            var singleBond = MakeCCC();
             model.SetShowEndCarbons(true);
             Assert.AreEqual(2, GetAllSimpleElements(generator, singleBond).Count);
             model.SetShowEndCarbons(false);
@@ -341,10 +341,10 @@ namespace NCDK.Renderers.Generators
         [TestMethod()]
         public virtual void TestSingleAtom()
         {
-            IAtomContainer singleAtom = MakeSingleAtom();
+            var singleAtom = MakeSingleAtom();
 
             // nothing should be made
-            IRenderingElement root = generator.Generate(singleAtom, singleAtom.Atoms[0], model);
+            var root = generator.Generate(singleAtom, singleAtom.Atoms[0], model);
             var elements = elementUtil.GetAllSimpleElements(root);
             Assert.AreEqual(1, elements.Count);
         }
@@ -352,30 +352,30 @@ namespace NCDK.Renderers.Generators
         [TestMethod()]
         public virtual void TestSingleBond()
         {
-            IAtomContainer container = MakeSingleBond();
+            var container = MakeSingleBond();
             model.SetCompactAtom(true);
             model.SetCompactShape(AtomShapeType.Oval);
             model.SetShowEndCarbons(true);
 
             // generate the single line element
-            IRenderingElement root = generator.Generate(container, model);
+            var root = generator.Generate(container, model);
             var elements = elementUtil.GetAllSimpleElements(root);
             Assert.AreEqual(2, elements.Count);
 
             // test that the endpoints are distinct
-            OvalElement ovalA = (OvalElement)elements[0];
-            OvalElement ovalB = (OvalElement)elements[1];
+            var ovalA = (OvalElement)elements[0];
+            var ovalB = (OvalElement)elements[1];
             Assert.AreNotSame(0, Distance(ovalA.Coord, ovalB.Coord));
         }
 
         [TestMethod()]
         public virtual void TestSquare()
         {
-            IAtomContainer square = MakeSquare();
+            var square = MakeSquare();
             model.SetKekuleStructure(true);
 
             // generate all four atoms
-            IRenderingElement root = generator.Generate(square, model);
+            var root = generator.Generate(square, model);
             var elements = elementUtil.GetAllSimpleElements(root);
             Assert.AreEqual(4, elements.Count);
 

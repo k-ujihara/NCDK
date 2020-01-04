@@ -36,9 +36,9 @@ namespace NCDK.Renderers.Generators
     {
         private BasicSceneGenerator generator;
 
-        public override Rect? GetCustomCanvas()
+        public override Rect GetCustomCanvas()
         {
-            return null;
+            return Rect.Empty;
         }
 
         public BasicSceneGeneratorTest()
@@ -51,7 +51,7 @@ namespace NCDK.Renderers.Generators
         [TestMethod()]
         public void TestSingleAtom()
         {
-            IAtomContainer singleAtom = MakeSingleAtom();
+            var singleAtom = MakeSingleAtom();
 
             // nothing should be made
             var root = generator.Generate(singleAtom, model);
@@ -62,7 +62,7 @@ namespace NCDK.Renderers.Generators
         [TestMethod()]
         public void TestSingleBond()
         {
-            IAtomContainer container = MakeSingleBond();
+            var container = MakeSingleBond();
 
             // generate the single line element
             var root = generator.Generate(container, model);
@@ -73,7 +73,7 @@ namespace NCDK.Renderers.Generators
         [TestMethod()]
         public void TestSquare()
         {
-            IAtomContainer square = MakeSquare();
+            var square = MakeSquare();
 
             // generate all four bonds
             var root = generator.Generate(square, model);

@@ -31,9 +31,9 @@ namespace NCDK.Renderers.Generators
     {
         private AtomContainerBoundsGenerator generator;
 
-        public override Rect? GetCustomCanvas()
+        public override Rect GetCustomCanvas()
         {
-            return null;
+            return Rect.Empty;
         }
 
         public AtomContainerBoundsGeneratorTest()
@@ -46,7 +46,7 @@ namespace NCDK.Renderers.Generators
         [TestMethod()]
         public void TestEmptyContainer()
         {
-            IAtomContainer emptyContainer = base.builder.NewAtomContainer();
+            var emptyContainer = base.builder.NewAtomContainer();
 
             // nothing should be made
             var root = generator.Generate(emptyContainer, model);

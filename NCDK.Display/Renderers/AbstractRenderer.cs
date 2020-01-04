@@ -397,7 +397,7 @@ namespace NCDK.Renderers
         /// <returns>the bounds in screen space of the drawn diagram</returns>
         protected virtual Rect ConvertToDiagramBounds(Rect modelBounds)
         {
-            if (modelBounds == Rect.Empty)
+            if (modelBounds.IsEmpty)
             {
                 return Rect.Empty;
             }
@@ -505,11 +505,11 @@ namespace NCDK.Renderers
         /// are considered.
         /// </summary>
         /// <param name="element">a rendering element</param>
-        /// <returns>the bounds required (null if unspecified)</returns>
-        public virtual Rect? GetBounds(IRenderingElement element)
+        /// <returns>the bounds required (<see cref="Rect.Empty"/> if unspecified)</returns>
+        public virtual Rect GetBounds(IRenderingElement element)
         {
             if (element == null)
-                return null;
+                return Rect.Empty;
             var bounds = new Bounds(element);
             return new Rect(bounds.MinX, bounds.MinY,
                             bounds.Width, bounds.Height);

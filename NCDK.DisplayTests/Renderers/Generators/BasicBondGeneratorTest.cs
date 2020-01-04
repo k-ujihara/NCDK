@@ -21,9 +21,9 @@ namespace NCDK.Renderers.Generators
             return element;
         }
 
-        public override Rect? GetCustomCanvas()
+        public override Rect GetCustomCanvas()
         {
-            return null;
+            return Rect.Empty;
         }
 
         public BasicBondGeneratorTest()

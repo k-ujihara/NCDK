@@ -31,9 +31,9 @@ namespace NCDK.Renderers.Generators
     {
         private ReactionPlusGenerator generator;
 
-        public override Rect? GetCustomCanvas()
+        public override Rect GetCustomCanvas()
         {
-            return null;
+            return Rect.Empty;
         }
 
         public ReactionPlusGeneratorTest()
@@ -46,7 +46,7 @@ namespace NCDK.Renderers.Generators
         [TestMethod()]
         public void TestEmptyReaction()
         {
-            IReaction singleReaction = base.builder.NewReaction();
+            var singleReaction = base.builder.NewReaction();
 
             // nothing should be made
             var root = generator.Generate(singleReaction, model);

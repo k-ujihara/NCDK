@@ -60,6 +60,8 @@ namespace NCDK.Renderers
                     totalBounds = Rect.Union(totalBounds, CalculateBounds(reactionSet));
                 }
             }
+            if (totalBounds.IsEmpty)
+                totalBounds = new Rect();
             return totalBounds;
         }
 
@@ -73,7 +75,7 @@ namespace NCDK.Renderers
             var totalBounds = Rect.Empty;
             foreach (var reaction in reactionSet)
             {
-                var reactionBounds = CalculateBounds(reaction).Value;
+                var reactionBounds = CalculateBounds(reaction);
                 if (totalBounds.IsEmpty)
                 {
                     totalBounds = reactionBounds;
@@ -83,6 +85,8 @@ namespace NCDK.Renderers
                     totalBounds = Rect.Union(totalBounds, reactionBounds);
                 }
             }
+            if (totalBounds.IsEmpty)
+                totalBounds = new Rect();
             return totalBounds;
         }
 
@@ -91,13 +95,13 @@ namespace NCDK.Renderers
         /// </summary>
         /// <param name="reaction">the reaction to use</param>
         /// <returns>the bounding rectangle of the reaction</returns>
-        public static Rect? CalculateBounds(IReaction reaction)
+        public static Rect CalculateBounds(IReaction reaction)
         {
             // get the participants in the reaction
             var reactants = reaction.Reactants;
             var products = reaction.Products;
             if (reactants == null || products == null)
-                return null;
+                return Rect.Empty;
 
             // determine the bounds of everything in the reaction
             var reactantsBounds = CalculateBounds(reactants);
@@ -124,6 +128,8 @@ namespace NCDK.Renderers
                     totalBounds = Rect.Union(totalBounds, acBounds);
                 }
             }
+            if (totalBounds.IsEmpty)
+                totalBounds = new Rect();
             return totalBounds;
         }
 

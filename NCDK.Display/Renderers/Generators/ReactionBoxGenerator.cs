@@ -36,17 +36,17 @@ namespace NCDK.Renderers.Generators
                 return null;
             var separation = model.GetBondLength() / model.GetScale();
             var totalBounds = BoundsCalculator.CalculateBounds(reaction);
-            if (totalBounds == null)
+            if (totalBounds.IsEmpty)
                 return null;
 
             var diagram = new ElementGroup();
             var foregroundColor = model.GetForegroundColor();
-            diagram.Add(new RectangleElement(new Rect(totalBounds.Value.Left - separation, totalBounds.Value.Top - separation,
-                                                      totalBounds.Value.Right + separation, totalBounds.Value.Bottom + separation), 
+            diagram.Add(new RectangleElement(new Rect(totalBounds.Left - separation, totalBounds.Top - separation,
+                                                      totalBounds.Right + separation, totalBounds.Bottom + separation), 
                                              foregroundColor));
             if (reaction.Id != null)
             {
-                diagram.Add(new TextElement(new Point((totalBounds.Value.Left + totalBounds.Value.Right) / 2, totalBounds.Value.Top - separation),
+                diagram.Add(new TextElement(new Point((totalBounds.Left + totalBounds.Right) / 2, totalBounds.Top - separation),
                                             reaction.Id, foregroundColor));
             }
             return diagram;

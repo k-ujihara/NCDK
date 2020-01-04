@@ -31,9 +31,9 @@ namespace NCDK.Renderers.Generators
     {
         private BoundsGenerator generator;
 
-        public override Rect? GetCustomCanvas()
+        public override Rect GetCustomCanvas()
         {
-            return null;
+            return Rect.Empty;
         }
 
         public BoundsGeneratorTest()
@@ -46,7 +46,7 @@ namespace NCDK.Renderers.Generators
         [TestMethod()]
         public void TestEmptyReaction()
         {
-            IReaction emptyReaction = base.builder.NewReaction();
+            var emptyReaction = base.builder.NewReaction();
 
             // nothing should be made
             var root = generator.Generate(emptyReaction, model);

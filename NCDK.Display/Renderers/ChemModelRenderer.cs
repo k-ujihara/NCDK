@@ -93,7 +93,6 @@ namespace NCDK.Renderers
     /// </remarks>
     // @author maclean
     // @cdk.module renderextra
-    // @cdk.githash
     public class ChemModelRenderer : AbstractRenderer<IChemModel>, IRenderer<IChemModel>
     {
         private IRenderer<IChemObjectSet<IAtomContainer>> moleculeSetRenderer;
@@ -132,7 +131,9 @@ namespace NCDK.Renderers
         {
             this.SetScale(chemModel);
             var bounds = BoundsCalculator.CalculateBounds(chemModel);
-            if (bounds != null) this.modelCenter = new Point((bounds.Left + bounds.Right) / 2, (bounds.Top + bounds.Bottom) / 2);
+            if (bounds != null)
+                this.modelCenter = new Point((bounds.Left + bounds.Right) / 2, 
+                                             (bounds.Top + bounds.Bottom) / 2);
             this.drawCenter = new Point((screen.Left + screen.Right) / 2, (screen.Top + screen.Bottom) / 2);
             this.Setup();
         }
@@ -145,8 +146,8 @@ namespace NCDK.Renderers
         /// <param name="chemModel"></param>
         public void SetScale(IChemModel chemModel)
         {
-            double bondLength = AverageBondLengthCalculator.CalculateAverageBondLength(chemModel);
-            double scale = this.CalculateScaleForBondLength(bondLength);
+            var bondLength = AverageBondLengthCalculator.CalculateAverageBondLength(chemModel);
+            var scale = this.CalculateScaleForBondLength(bondLength);
 
             // store the scale so that other components can access it
             this.rendererModel.SetScale(scale);
@@ -166,18 +167,18 @@ namespace NCDK.Renderers
 
             if (moleculeSet == null && reactionSet != null)
             {
-                Rect totalBounds = BoundsCalculator.CalculateBounds(reactionSet);
+                var totalBounds = BoundsCalculator.CalculateBounds(reactionSet);
                 this.SetupTransformNatural(totalBounds);
-                IRenderingElement diagram = reactionSetRenderer.GenerateDiagram(reactionSet);
+                var diagram = reactionSetRenderer.GenerateDiagram(reactionSet);
                 this.Paint(drawVisitor, diagram);
                 return this.ConvertToDiagramBounds(totalBounds);
             }
 
             if (moleculeSet != null && reactionSet == null)
             {
-                Rect totalBounds = BoundsCalculator.CalculateBounds(moleculeSet);
+                var totalBounds = BoundsCalculator.CalculateBounds(moleculeSet);
                 this.SetupTransformNatural(totalBounds);
-                IRenderingElement diagram = moleculeSetRenderer.GenerateDiagram(moleculeSet);
+                var diagram = moleculeSetRenderer.GenerateDiagram(moleculeSet);
                 this.Paint(drawVisitor, diagram);
                 return this.ConvertToDiagramBounds(totalBounds);
             }
@@ -188,7 +189,7 @@ namespace NCDK.Renderers
 
                 this.SetupTransformNatural(totalBounds);
 
-                ElementGroup diagram = new ElementGroup
+                var diagram = new ElementGroup
                 {
                     reactionSetRenderer.GenerateDiagram(reactionSet),
                     moleculeSetRenderer.GenerateDiagram(moleculeSet)
@@ -268,11 +269,12 @@ namespace NCDK.Renderers
             // calculate the total bounding box
             var modelBounds = BoundsCalculator.CalculateBounds(moleculeSet);
 
-            this.SetupTransformToFit(bounds, modelBounds,
-                    AverageBondLengthCalculator.CalculateAverageBondLength(chemModel), resetCenter);
+            this.SetupTransformToFit(bounds, modelBounds, 
+                                     AverageBondLengthCalculator.CalculateAverageBondLength(chemModel), 
+                                     resetCenter);
 
             // generate the elements
-            IRenderingElement diagram = moleculeSetRenderer.GenerateDiagram(moleculeSet);
+            var diagram = moleculeSetRenderer.GenerateDiagram(moleculeSet);
 
             // paint it
             this.Paint(drawVisitor, diagram);
@@ -295,14 +297,14 @@ namespace NCDK.Renderers
         public Rect CalculateDiagramBounds(IChemModel model)
         {
             var moleculeSet = model.MoleculeSet;
-            IReactionSet reactionSet = model.ReactionSet;
+            var reactionSet = model.ReactionSet;
             if ((moleculeSet == null && reactionSet == null))
             {
-                return new Rect();
+                return Rect.Empty;
             }
 
-            Rect? moleculeBounds = null;
-            Rect? reactionBounds = null;
+            var moleculeBounds = Rect.Empty;
+            var reactionBounds = Rect.Empty;
             if (moleculeSet != null)
             {
                 moleculeBounds = BoundsCalculator.CalculateBounds(moleculeSet);
@@ -312,17 +314,17 @@ namespace NCDK.Renderers
                 reactionBounds = BoundsCalculator.CalculateBounds(reactionSet);
             }
 
-            if (moleculeBounds == null)
+            if (moleculeBounds.IsEmpty)
             {
-                return this.CalculateScreenBounds(reactionBounds.Value);
+                return this.CalculateScreenBounds(reactionBounds);
             }
-            else if (reactionBounds == null)
+            else if (reactionBounds.IsEmpty)
             {
-                return this.CalculateScreenBounds(moleculeBounds.Value);
+                return this.CalculateScreenBounds(moleculeBounds);
             }
             else
             {
-                Rect allbounds = Rect.Union(moleculeBounds.Value, reactionBounds.Value);
+                var allbounds = Rect.Union(moleculeBounds, reactionBounds);
                 return this.CalculateScreenBounds(allbounds);
             }
         }
