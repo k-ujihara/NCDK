@@ -491,7 +491,7 @@ namespace NCDK.Renderers.Generators.Standards
                 var offset = halfNarrowEnd + opposite / adjacent * distance;
                 var interval = fromPoint + Scale(unit, distance);
                 group.Add(NewLineElement(Sum(interval, Scale(hatchAngle, offset)),
-                        Sum(interval, Scale(hatchAngle, -offset))));
+                                         Sum(interval, Scale(hatchAngle, -offset))));
             }
 
             return group;
@@ -738,9 +738,12 @@ namespace NCDK.Renderers.Generators.Standards
         /// <returns>special case</returns>
         private bool SpecialOffsetBondNextToWedge(IAtom atom, List<IBond> bonds)
         {
-            if (bonds.Count != 2) return false;
-            if (AtWideEndOfWedge(atom, bonds[0]) && IsPlainBond(bonds[1])) return true;
-            if (AtWideEndOfWedge(atom, bonds[1]) && IsPlainBond(bonds[0])) return true;
+            if (bonds.Count != 2)
+                return false;
+            if (AtWideEndOfWedge(atom, bonds[0]) && IsPlainBond(bonds[1]))
+                return true;
+            if (AtWideEndOfWedge(atom, bonds[1]) && IsPlainBond(bonds[0]))
+                return true;
             return false;
         }
 
@@ -828,10 +831,6 @@ namespace NCDK.Renderers.Generators.Standards
         /// <returns>the rendered bond element</returns>
         private IRenderingElement GenerateOffsetDoubleBond(IBond bond, IAtom atom1, IAtom atom2, IBond atom1Bond, List<IBond> atom2Bonds, bool invert, bool dashed)
         {
-            if (HasDisplayedSymbol(atom1))
-            {
-
-            }
             Debug.Assert(atom1Bond != null);
 
             var atom1Point = atom1.Point2D.Value;
@@ -872,7 +871,8 @@ namespace NCDK.Renderers.Generators.Standards
             }
 
             // reference bond may be on the other side (invert specified) - the offset needs negating
-            if (Vector2.Dot(reference, perpendicular) < 0) atom1Offset = -atom1Offset;
+            if (Vector2.Dot(reference, perpendicular) < 0)
+                atom1Offset = -atom1Offset;
 
             // the second atom may have zero or more bonds which we can use to get the offset
             // we find the one which is closest to the perpendicular vector
@@ -883,7 +883,8 @@ namespace NCDK.Renderers.Generators.Standards
 
                 // closest bond may still be on the other side, if so the offset needs
                 // negating
-                if (Vector2.Dot(closest, perpendicular) < 0) atom2Offset = -atom2Offset;
+                if (Vector2.Dot(closest, perpendicular) < 0)
+                    atom2Offset = -atom2Offset;
             }
 
             var halfBondLength = Vector2.Distance(atom1Point, atom2BackOffPoint) / 2;
@@ -1514,7 +1515,8 @@ namespace NCDK.Renderers.Generators.Standards
                 var distance = i * step;
 
                 // don't draw if we're within an atom symbol
-                if (distance < start || distance > end) continue;
+                if (distance < start || distance > end)
+                    continue;
 
                 var interval = Sum(fromPoint, Scale(unit, distance));
                 group.Add(new OvalElement(new WPF::Point(interval.X, interval.Y), 0.75 * stroke, foreground));

@@ -33,7 +33,6 @@ namespace NCDK.Renderers
     /// </summary>
     // @author maclean
     // @cdk.module renderbasic
-    // @cdk.githash 
     public class BoundsCalculator
     {
         /// <summary>
@@ -44,12 +43,11 @@ namespace NCDK.Renderers
         public static Rect CalculateBounds(IChemModel chemModel)
         {
             var moleculeSet = chemModel.MoleculeSet;
-            IReactionSet reactionSet = chemModel.ReactionSet;
+            var reactionSet = chemModel.ReactionSet;
             var totalBounds = Rect.Empty;
             if (moleculeSet != null)
             {
                 totalBounds = CalculateBounds(moleculeSet);
-                
             }
             if (reactionSet != null)
             {
@@ -98,7 +96,8 @@ namespace NCDK.Renderers
             // get the participants in the reaction
             var reactants = reaction.Reactants;
             var products = reaction.Products;
-            if (reactants == null || products == null) return null;
+            if (reactants == null || products == null)
+                return null;
 
             // determine the bounds of everything in the reaction
             var reactantsBounds = CalculateBounds(reactants);
@@ -152,10 +151,10 @@ namespace NCDK.Renderers
                 return new Rect(point.X, point.Y, 0, 0);
             }
 
-            double xmin = double.PositiveInfinity;
-            double xmax = double.NegativeInfinity;
-            double ymin = double.PositiveInfinity;
-            double ymax = double.NegativeInfinity;
+            var xmin = double.PositiveInfinity;
+            var xmax = double.NegativeInfinity;
+            var ymin = double.PositiveInfinity;
+            var ymax = double.NegativeInfinity;
 
             foreach (var atom in atomContainer.Atoms)
             {
@@ -169,8 +168,8 @@ namespace NCDK.Renderers
                 ymin = Math.Min(ymin, point.Y);
                 ymax = Math.Max(ymax, point.Y);
             }
-            double width = xmax - xmin;
-            double height = ymax - ymin;
+            var width = xmax - xmin;
+            var height = ymax - ymin;
             return new Rect(xmin, ymin, width, height);
         }
     }

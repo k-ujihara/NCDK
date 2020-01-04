@@ -27,26 +27,27 @@ namespace NCDK.Renderers.Generators
     /// </summary>
     // @author maclean
     // @cdk.module renderextra
-    // @cdk.githash
     public class ReactionBoxGenerator : IGenerator<IReaction>
     {
         /// <inheritdoc/>
         public IRenderingElement Generate(IReaction reaction, RendererModel model)
         {
-            if (!model.GetShowReactionBoxes()) return null;
-            double separation = model.GetBondLength() / model.GetScale();
+            if (!model.GetShowReactionBoxes())
+                return null;
+            var separation = model.GetBondLength() / model.GetScale();
             var totalBounds = BoundsCalculator.CalculateBounds(reaction);
-            if (totalBounds == null) return null;
+            if (totalBounds == null)
+                return null;
 
-            ElementGroup diagram = new ElementGroup();
+            var diagram = new ElementGroup();
             var foregroundColor = model.GetForegroundColor();
             diagram.Add(new RectangleElement(new Rect(totalBounds.Value.Left - separation, totalBounds.Value.Top - separation,
-                    totalBounds.Value.Right + separation, totalBounds.Value.Bottom + separation), foregroundColor));
+                                                      totalBounds.Value.Right + separation, totalBounds.Value.Bottom + separation), 
+                                             foregroundColor));
             if (reaction.Id != null)
             {
-                diagram.Add(new TextElement(
-                    new Point((totalBounds.Value.Left + totalBounds.Value.Right) / 2, totalBounds.Value.Top - separation),
-                    reaction.Id, foregroundColor));
+                diagram.Add(new TextElement(new Point((totalBounds.Value.Left + totalBounds.Value.Right) / 2, totalBounds.Value.Top - separation),
+                                            reaction.Id, foregroundColor));
             }
             return diagram;
         }

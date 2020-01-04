@@ -55,7 +55,6 @@ namespace NCDK.Renderers
     /// </remarks>
     // @cdk.module renderbasic
     // @author maclean
-    // @cdk.githash
     public abstract class AbstractRenderer<T> where T : IChemObject
     {
         /// <summary>
@@ -107,7 +106,7 @@ namespace NCDK.Renderers
         /// <returns>the diagram as a tree of <see cref="IRenderingElement"/>s</returns>
         public virtual IRenderingElement GenerateDiagram(T obj)
         {
-            ElementGroup diagram = new ElementGroup();
+            var diagram = new ElementGroup();
             foreach (var generator in this.generators)
             {
                 diagram.Add(generator.Generate(obj, this.rendererModel));
@@ -134,18 +133,17 @@ namespace NCDK.Renderers
         /// <returns>the bounds of the diagram as drawn on screen</returns>
         public virtual Rect CalculateScreenBounds(Rect modelBounds)
         {
-            double scale = rendererModel.GetScale();
-            double zoom = rendererModel.GetZoomFactor();
-            double margin = rendererModel.GetMargin();
+            var scale = rendererModel.GetScale();
+            var zoom = rendererModel.GetZoomFactor();
+            var margin = rendererModel.GetMargin();
             var modelScreenCenter = this.ToScreenCoordinates(
                 modelBounds.X + modelBounds.Width / 2,
                 modelBounds.Y + modelBounds.Height / 2);
-            double width = (scale * zoom * modelBounds.Width) + (2 * margin);
-            double height = (scale * zoom * modelBounds.Height) + (2 * margin);
-            return new Rect(
-                modelScreenCenter.X - width / 2,
-                modelScreenCenter.Y - height / 2,
-                width, height);
+            var width = (scale * zoom * modelBounds.Width) + (2 * margin);
+            var height = (scale * zoom * modelBounds.Height) + (2 * margin);
+            return new Rect(modelScreenCenter.X - width / 2,
+                            modelScreenCenter.Y - height / 2,
+                            width, height);
         }
 
         /// <summary>
@@ -156,9 +154,9 @@ namespace NCDK.Renderers
         /// <returns>the equivalent point in model space, or (0,0) if there is an error</returns>
         public virtual Point ToModelCoordinates(double screenX, double screenY)
         {
-            Matrix inv = transform.Value;
+            var inv = transform.Value;
             if (inv.HasInverse)
-            { 
+            {
                 inv.Invert();
                 var src = new Point(screenX, screenY);
                 var dest = inv.Transform(src);
@@ -222,19 +220,19 @@ namespace NCDK.Renderers
         /// </summary>
         protected virtual void Setup()
         {
-            double scale = rendererModel.GetScale();
-            double zoom = rendererModel.GetZoomFactor();
+            var scale = rendererModel.GetScale();
+            var zoom = rendererModel.GetZoomFactor();
             // set the transform
             try
             {
-		Matrix matrix = new Matrix();
+                var matrix = new Matrix();
                 matrix.Translate(-this.modelCenter.X, -this.modelCenter.Y);
                 matrix.Scale(zoom, zoom);
                 matrix.Scale(scale, scale);
                 //matrix.Scale(1, -1); // Converts between CDK Y-up & Java2D Y-down coordinate-systems
-		matrix.Translate(drawCenter.X, drawCenter.Y);
-				
-		transform = Transform.Parse(matrix.ToString());	
+                matrix.Translate(drawCenter.X, drawCenter.Y);
+
+                transform = Transform.Parse(matrix.ToString());
             }
             catch (NullReferenceException)
             {
@@ -292,13 +290,13 @@ namespace NCDK.Renderers
         /// <param name="diagramHeight">the height of the diagram</param>
         public virtual void SetZoomToFit(double drawWidth, double drawHeight, double diagramWidth, double diagramHeight)
         {
-            double margin = rendererModel.GetMargin();
+            var margin = rendererModel.GetMargin();
 
             // determine the zoom needed to fit the diagram to the screen
-            double widthRatio = drawWidth / (diagramWidth + (2 * margin));
-            double heightRatio = drawHeight / (diagramHeight + (2 * margin));
+            var widthRatio = drawWidth / (diagramWidth + (2 * margin));
+            var heightRatio = drawHeight / (diagramHeight + (2 * margin));
 
-            double zoom = Math.Min(widthRatio, heightRatio);
+            var zoom = Math.Min(widthRatio, heightRatio);
 
             this.fontManager.Zoom = zoom;
 
@@ -322,7 +320,8 @@ namespace NCDK.Renderers
         /// <param name="diagram">the IRenderingElement tree to render</param>
         protected virtual void Paint(IDrawVisitor drawVisitor, IRenderingElement diagram)
         {
-            if (diagram == null) return;
+            if (diagram == null)
+                return;
 
             // cache the diagram for quick-redraw
             this.cachedDiagram = diagram;
@@ -341,7 +340,7 @@ namespace NCDK.Renderers
         /// <param name="modelBounds">the bounding box of the model</param>
         protected virtual void SetupTransformNatural(Rect modelBounds)
         {
-            double zoom = rendererModel.GetZoomFactor();
+            var zoom = rendererModel.GetZoomFactor();
             this.fontManager.Zoom = zoom;
             this.Setup();
         }
@@ -398,7 +397,7 @@ namespace NCDK.Renderers
         /// <returns>the bounds in screen space of the drawn diagram</returns>
         protected virtual Rect ConvertToDiagramBounds(Rect modelBounds)
         {
-	    if (modelBounds == Rect.Empty)
+            if (modelBounds == Rect.Empty)
             {
                 return Rect.Empty;
             }
@@ -436,17 +435,18 @@ namespace NCDK.Renderers
         /// <param name="reset">if true, model center will be set to the modelBounds center and the scale will be re-calculated</param>
         protected internal virtual void SetupTransformToFit(Rect screenBounds, Rect modelBounds, bool reset)
         {
-            double scale = rendererModel.GetScale();
+            var scale = rendererModel.GetScale();
 
-            if (screenBounds == null) return;
+            if (screenBounds == null)
+                return;
 
             SetDrawCenter(screenBounds.X + screenBounds.Width / 2, screenBounds.Y + screenBounds.Height / 2);
 
-            double drawWidth = screenBounds.Width;
-            double drawHeight = screenBounds.Height;
+            var drawWidth = screenBounds.Width;
+            var drawHeight = screenBounds.Height;
 
-            double diagramWidth = modelBounds.Width * scale;
-            double diagramHeight = modelBounds.Height * scale;
+            var diagramWidth = modelBounds.Width * scale;
+            var diagramHeight = modelBounds.Height * scale;
 
             SetZoomToFit(drawWidth, drawHeight, diagramWidth, diagramHeight);
 
@@ -470,17 +470,18 @@ namespace NCDK.Renderers
         /// <param name="reset">if true, model center will be set to the modelBounds center and the scale will be re-calculated</param>
         protected virtual void SetupTransformToFit(Rect screenBounds, Rect modelBounds, double bondLength, bool reset)
         {
-            if (screenBounds == null) return;
+            if (screenBounds == null)
+                return;
 
             SetDrawCenter(screenBounds.X + screenBounds.Width / 2, screenBounds.Y + screenBounds.Height / 2);
 
-            double scale = this.CalculateScaleForBondLength(bondLength);
+            var scale = this.CalculateScaleForBondLength(bondLength);
 
-            double drawWidth = screenBounds.Width;
-            double drawHeight = screenBounds.Height;
+            var drawWidth = screenBounds.Width;
+            var drawHeight = screenBounds.Height;
 
-            double diagramWidth = modelBounds.Width * scale;
-            double diagramHeight = modelBounds.Height * scale;
+            var diagramWidth = modelBounds.Width * scale;
+            var diagramHeight = modelBounds.Height * scale;
 
             SetZoomToFit(drawWidth, drawHeight, diagramWidth, diagramHeight);
 
@@ -493,7 +494,7 @@ namespace NCDK.Renderers
 
             // set the scale in the renderer model for the generators
             rendererModel.SetScale(scale);
-            
+
             Setup();
         }
 
@@ -507,10 +508,11 @@ namespace NCDK.Renderers
         /// <returns>the bounds required (null if unspecified)</returns>
         public virtual Rect? GetBounds(IRenderingElement element)
         {
-            if (element == null) return null;
-            Bounds bounds = new Bounds(element);
+            if (element == null)
+                return null;
+            var bounds = new Bounds(element);
             return new Rect(bounds.MinX, bounds.MinY,
-                                          bounds.Width, bounds.Height);
+                            bounds.Width, bounds.Height);
         }
     }
 }

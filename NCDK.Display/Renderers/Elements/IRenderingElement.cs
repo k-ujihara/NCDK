@@ -25,7 +25,6 @@ namespace NCDK.Renderers.Elements
     /// Widget toolkit-independent, abstract definition of something to be drawn.
     /// </summary>
     // @cdk.module render
-    // @cdk.githash
     public interface IRenderingElement
     {
         /// <summary>

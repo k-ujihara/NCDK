@@ -27,7 +27,6 @@ namespace NCDK.Renderers.Elements
     /// A group of rendering elements, of any type.
     /// </summary>
     // @cdk.module  renderbasic
-    // @cdk.githash
     public class ElementGroup 
         : IRenderingElement, IEnumerable<IRenderingElement>
     {
