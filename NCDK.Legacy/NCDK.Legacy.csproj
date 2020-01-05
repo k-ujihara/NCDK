@@ -29,6 +29,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="SMARTS\**" />
+    <EmbeddedResource Remove="SMARTS\**" />
+    <None Remove="SMARTS\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Include="..\NCDK\Properties\InternalVisibles..cs" Link="Properties\InternalVisibles..cs" />
   </ItemGroup>
 
@@ -38,7 +44,6 @@
 
   <ItemGroup>
     <Folder Include="Properties\" />
-    <Folder Include="SMARTS\" />
   </ItemGroup>
 
   <ItemGroup>

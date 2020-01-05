@@ -211,10 +211,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MathNet.Numerics.Signed" Version="4.9.0" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="CDK.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>CDK.tt.cs</LastGenOutput>

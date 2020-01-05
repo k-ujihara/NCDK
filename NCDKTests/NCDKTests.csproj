@@ -1082,6 +1082,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\NCDK.Math\NCDK.Math.csproj" />
     <ProjectReference Include="..\NCDK\NCDK.csproj" />
   </ItemGroup>
 

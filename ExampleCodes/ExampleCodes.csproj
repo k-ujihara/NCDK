@@ -216,6 +216,14 @@
       <Project>{d69ed942-9971-4f54-884d-4d795f74c6a4}</Project>
       <Name>NCDK.Legacy</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NCDK.Math\NCDK.Math.csproj">
+      <Project>{1641eaa9-6ece-4929-85b7-7d3ea4f24c78}</Project>
+      <Name>NCDK.Math</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NCDK.RDF\NCDK.RDF.csproj">
+      <Project>{0467822d-ad0a-434a-9888-94522bfe6076}</Project>
+      <Name>NCDK.RDF</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NCDK\NCDK.csproj">
       <Project>{b0b5eacf-5f39-42d0-bacd-1ff559ccc8b2}</Project>
       <Name>NCDK</Name>

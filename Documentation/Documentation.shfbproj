@@ -58,6 +58,8 @@
       <DocumentationSource sourceFile="..\NCDK.RDF\bin\Release\net461\NCDK.RDF.xml" />
       <DocumentationSource sourceFile="..\NCDK.Legacy\bin\Release\net461\NCDK.Legacy.dll" />
       <DocumentationSource sourceFile="..\NCDK.Legacy\bin\Release\net461\NCDK.Legacy.xml" />
+      <DocumentationSource sourceFile="..\NCDK.Math\bin\Release\net461\NCDK.Math.dll" />
+      <DocumentationSource sourceFile="..\NCDK.Math\bin\Release\net461\NCDK.Math.xml" />
     </DocumentationSources>
     <ProjectSummary>https://github.com/kazuyaujihara/NCDK
 </ProjectSummary>
@@ -175,6 +177,11 @@
     <ProjectReference Include="..\NCDK.Legacy\NCDK.Legacy.csproj">
       <Name>NCDK.Legacy</Name>
       <Project>{13552fda-815a-4c9b-955d-a36116c6f715}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\NCDK.Math\NCDK.Math.csproj">
+      <Name>NCDK.Math</Name>
+      <Project>{1641eaa9-6ece-4929-85b7-7d3ea4f24c78}</Project>
       <Private>True</Private>
     </ProjectReference>
     <ProjectReference Include="..\NCDK.RDF\NCDK.RDF.csproj">
