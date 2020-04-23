@@ -131,7 +131,7 @@ namespace NCDK.IO
                 parser = XmlReader.Create(input, setting);
             }
 
-            CMLHandler handler = new CMLHandler(file);
+            var handler = new CMLHandler(file);
             // copy the manually added conventions
             foreach (var conv in userConventions.Keys)
             {
@@ -146,14 +146,14 @@ namespace NCDK.IO
             }
             catch (IOException e)
             {
-                var error = "Error while reading file: " + e.Message;
+                var error = $"Error while reading file: {e.Message}";
                 Trace.TraceError(error);
                 Debug.WriteLine(e);
                 throw new CDKException(error, e);
             }
             catch (XmlException saxe)
             {
-                string error = "Error while parsing XML: " + saxe.Message;
+                var error = $"Error while parsing XML: {saxe.Message}";
                 Trace.TraceError(error);
                 Debug.WriteLine(saxe);
                 throw new CDKException(error, saxe);

@@ -96,7 +96,7 @@ namespace NCDK.LibIO.CML
                     {
                         try
                         {
-                            ICMLCustomizer customizer = (ICMLCustomizer)this.GetType().Assembly.CreateInstance(customizerName);
+                            var customizer = (ICMLCustomizer)this.GetType().Assembly.CreateInstance(customizerName);
                             if (customizer == null)
                             {
                                 Trace.TraceInformation("Could not find this Customizer: ", customizerName);
@@ -215,7 +215,7 @@ namespace NCDK.LibIO.CML
 
         public CMLCml CDKReactionSchemeToCMLReactionSchemeAndMoleculeList(IReactionScheme cdkScheme)
         {
-            CMLCml cml = new CMLCml();
+            var cml = new CMLCml();
             cml.Add(CDKAtomContainerSetToCMLList(ReactionSchemeManipulator.GetAllAtomContainers(cdkScheme)));
             cml.Add(CDKReactionSchemeToCMLReactionScheme(cdkScheme, true));
             return cml;
@@ -355,7 +355,7 @@ namespace NCDK.LibIO.CML
             var cmlProducts = new CMLProductList();
             foreach (var product in reaction.Products)
             {
-                CMLProduct cmlProduct = new CMLProduct();
+                var cmlProduct = new CMLProduct();
                 cmlProduct.Add(CDKAtomContainerToCMLMolecule(product));
                 cmlProducts.Add(cmlProduct);
             }
@@ -468,7 +468,7 @@ namespace NCDK.LibIO.CML
 
         private CMLMolecule CDKAtomContainerToCMLMolecule(IAtomContainer structure, bool setIDs, bool isRef)
         {
-            CMLMolecule cmlMolecule = new CMLMolecule();
+            var cmlMolecule = new CMLMolecule();
 
             if (useCMLIDs && setIDs)
             {
@@ -488,7 +488,7 @@ namespace NCDK.LibIO.CML
             }
             if (structure.GetProperty<string>(CDKPropertyName.InChI) != null)
             {
-                CMLIdentifier ident = new CMLIdentifier
+                var ident = new CMLIdentifier
                 {
                     Convention = "iupac:inchi"
                 };
@@ -499,8 +499,8 @@ namespace NCDK.LibIO.CML
             {
                 for (int i = 0; i < structure.Atoms.Count; i++)
                 {
-                    IAtom cdkAtom = structure.Atoms[i];
-                    CMLAtom cmlAtom = CDKAtomToCMLAtom(structure, cdkAtom);
+                    var cdkAtom = structure.Atoms[i];
+                    var cmlAtom = CDKAtomToCMLAtom(structure, cdkAtom);
                     if (structure.GetConnectedSingleElectrons(cdkAtom).Count() > 0)
                     {
                         cmlAtom.SpinMultiplicity = structure.GetConnectedSingleElectrons(cdkAtom).Count() + 1;
@@ -509,7 +509,7 @@ namespace NCDK.LibIO.CML
                 }
                 for (int i = 0; i < structure.Bonds.Count; i++)
                 {
-                    CMLBond cmlBond = CDKJBondToCMLBond(structure.Bonds[i]);
+                    var cmlBond = CDKJBondToCMLBond(structure.Bonds[i]);
                     cmlMolecule.Add(cmlBond);
                 }
             }
@@ -628,28 +628,29 @@ namespace NCDK.LibIO.CML
 
         public CMLAtom CDKAtomToCMLAtom(IAtomContainer container, IAtom cdkAtom)
         {
-            CMLAtom cmlAtom = new CMLAtom();
+            var cmlAtom = new CMLAtom();
             this.CheckPrefix(cmlAtom);
             AddAtomID(cdkAtom, cmlAtom);
             AddDictRef(cdkAtom, cmlAtom);
             cmlAtom.ElementType = cdkAtom.Symbol;
             if (cdkAtom is IPseudoAtom)
             {
-                string label = ((IPseudoAtom)cdkAtom).Label;
-                if (label != null) cmlAtom.Title = label;
+                var label = ((IPseudoAtom)cdkAtom).Label;
+                if (label != null)
+                    cmlAtom.Title = label;
                 cmlAtom.ElementType = "Du";
             }
             Map2DCoordsToCML(cmlAtom, cdkAtom);
             Map3DCoordsToCML(cmlAtom, cdkAtom);
             MapFractionalCoordsToCML(cmlAtom, cdkAtom);
 
-            int? formalCharge = cdkAtom.FormalCharge;
+            var formalCharge = cdkAtom.FormalCharge;
             if (formalCharge != null)
                 cmlAtom.FormalCharge = formalCharge.Value;
 
             // CML's hydrogen count consists of the sum of implicit and explicit
             // hydrogens (see bug #1655045).
-            int? totalHydrogen = cdkAtom.ImplicitHydrogenCount;
+            var totalHydrogen = cdkAtom.ImplicitHydrogenCount;
             if (totalHydrogen != null)
             {
                 if (container != null)
@@ -666,7 +667,7 @@ namespace NCDK.LibIO.CML
                 cmlAtom.HydrogenCount = totalHydrogen.Value;
             } // else: don't report it, people can count the explicit Hs themselves
 
-            int? massNumber = cdkAtom.MassNumber;
+            var massNumber = cdkAtom.MassNumber;
             if (!(cdkAtom is IPseudoAtom))
             {
                 if (massNumber != null)
@@ -677,7 +678,7 @@ namespace NCDK.LibIO.CML
 
             if (cdkAtom.Charge != null)
             {
-                CMLScalar scalar = new CMLScalar();
+                var scalar = new CMLScalar();
                 this.CheckPrefix(scalar);
                 scalar.DictRef = "cdk:partialCharge";
                 scalar.SetValue(cdkAtom.Charge.Value);
@@ -687,13 +688,13 @@ namespace NCDK.LibIO.CML
 
             if (cdkAtom.IsAromatic)
             {
-                CMLScalar aromAtom = new CMLScalar { DictRef = "cdk:aromaticAtom" };
+                var aromAtom = new CMLScalar { DictRef = "cdk:aromaticAtom" };
                 cmlAtom.Add(aromAtom);
             }
 
             foreach (var element in customizers.Keys)
             {
-                ICMLCustomizer customizer = customizers[element];
+                var customizer = customizers[element];
                 try
                 {
                     customizer.Customize(cdkAtom, cmlAtom);
@@ -709,7 +710,7 @@ namespace NCDK.LibIO.CML
 
         public CMLBond CDKJBondToCMLBond(IBond cdkBond)
         {
-            CMLBond cmlBond = new CMLBond();
+            var cmlBond = new CMLBond();
             this.CheckPrefix(cmlBond);
             if (string.IsNullOrEmpty(cdkBond.Id))
             {
@@ -720,10 +721,10 @@ namespace NCDK.LibIO.CML
                 cmlBond.Id = cdkBond.Id;
             }
 
-            string[] atomRefArray = new string[cdkBond.Atoms.Count];
+            var atomRefArray = new string[cdkBond.Atoms.Count];
             for (int i = 0; i < cdkBond.Atoms.Count; i++)
             {
-                string atomID = cdkBond.Atoms[i].Id;
+                var atomID = cdkBond.Atoms[i].Id;
                 if (string.IsNullOrEmpty(atomID))
                 {
                     atomRefArray[i] = "a" + cdkBond.Atoms[i].GetHashCode().ToString(NumberFormatInfo.InvariantInfo);
@@ -742,7 +743,7 @@ namespace NCDK.LibIO.CML
                 cmlBond.AtomRefs = atomRefArray;
             }
 
-            BondOrder border = cdkBond.Order;
+            var border = cdkBond.Order;
             switch (border)
             {
                 case BondOrder.Single:
@@ -755,7 +756,7 @@ namespace NCDK.LibIO.CML
                     cmlBond.Order = "T";
                     break;
                 default:
-                    CMLScalar scalar = new CMLScalar();
+                    var scalar = new CMLScalar();
                     this.CheckPrefix(scalar);
                     scalar.DictRef = "cdk:bondOrder";
                     scalar.Title = "order";
@@ -765,7 +766,7 @@ namespace NCDK.LibIO.CML
             }
             if (cdkBond.IsAromatic)
             {
-                CMLBondType bType = new CMLBondType { DictRef = "cdk:aromaticBond" };
+                var bType = new CMLBondType { DictRef = "cdk:aromaticBond" };
                 cmlBond.Add(bType);
             }
 
@@ -773,7 +774,7 @@ namespace NCDK.LibIO.CML
             {
                 case BondStereo.Up:
                 case BondStereo.Down:
-                    CMLBondStereo bondStereo = new CMLBondStereo();
+                    var bondStereo = new CMLBondStereo();
                     this.CheckPrefix(bondStereo);
                     if (cdkBond.Stereo == BondStereo.Up)
                     {
@@ -793,7 +794,7 @@ namespace NCDK.LibIO.CML
 
             foreach (var element in customizers.Keys)
             {
-                ICMLCustomizer customizer = customizers[element];
+                var customizer = customizers[element];
                 try
                 {
                     customizer.Customize(cdkBond, cmlBond);
@@ -813,7 +814,7 @@ namespace NCDK.LibIO.CML
             var props = obj.GetProperties();
             foreach (var key in props.Keys)
             {
-                string stringKey = (string)key;
+                var stringKey = (string)key;
                 switch (stringKey)
                 {
                     case CDKPropertyName.Title:
@@ -823,7 +824,7 @@ namespace NCDK.LibIO.CML
                         if (!(stringKey.StartsWith("org.openscience.cdk", StringComparison.Ordinal)))
                         {
                             object value = props[key];
-                            CMLScalar scalar = new CMLScalar();
+                            var scalar = new CMLScalar();
                             this.CheckPrefix(scalar);
                             scalar.Title = (string)key;
                             scalar.Value = value.ToString();

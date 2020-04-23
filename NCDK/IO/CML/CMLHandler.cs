@@ -142,7 +142,7 @@ namespace NCDK.IO.CML
                     }
                     else
                     {
-                        Trace.TraceInformation("New Convention: ", convName);
+                        Trace.TraceInformation($"New Convention: {convName}");
                         switch (convName)
                         {
                             case "CML":
@@ -168,7 +168,7 @@ namespace NCDK.IO.CML
                                 if (userConventions.ContainsKey(convName))
                                 {
                                     //unknown convention. userConvention?
-                                    ICMLModule newconv = (ICMLModule)userConventions[convName];
+                                    var newconv = userConventions[convName];
                                     newconv.Inherit(conv);
                                     conv = newconv;
                                 }

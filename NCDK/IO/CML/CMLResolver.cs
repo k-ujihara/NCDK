@@ -35,7 +35,7 @@ namespace NCDK.IO.CML
     {
         public override object GetEntity(Uri absoluteUri, string role, Type ofObjectToReturn)
         {
-            Debug.WriteLine(nameof(CMLResolver) + ": resolving " + absoluteUri);
+            Debug.WriteLine($"{nameof(CMLResolver)}: resolving {absoluteUri}");
 #pragma warning disable CA1308 // Normalize strings to uppercase
             var systemId = absoluteUri.AbsolutePath.ToLowerInvariant();
 #pragma warning restore CA1308 // Normalize strings to uppercase
@@ -55,7 +55,7 @@ namespace NCDK.IO.CML
             }
             else
             {
-                Trace.TraceWarning("Could not resolve systemID: ", systemId);
+                Trace.TraceWarning($"Could not resolve systemID: {systemId}");
                 return null;
             }
         }
