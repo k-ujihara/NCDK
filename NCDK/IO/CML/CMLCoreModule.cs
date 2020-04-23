@@ -758,6 +758,13 @@ namespace NCDK.IO.CML
                 case "scalar":
                     if (xpath.EndsWith("crystal", "scalar"))
                         CrystalScalar++;
+                    else if (xpath.EndsWith("bond", "scalar"))
+                    {
+                        if (this.DictRef == "cdk:bondOrder")
+                        {
+                            this.Order.Add(element.Value);
+                        }
+                    }
                     break;
                 case "label":
                     if (xpath.EndsWith("atomType", "label"))

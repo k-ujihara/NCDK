@@ -56,7 +56,7 @@
     <AssemblyOriginatorKeyFile>ncdk.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>NCDK.Chem_Example</StartupObject>
+    <StartupObject>NCDK.Issue20</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="PresentationCore" />
@@ -76,6 +76,7 @@
     <Compile Include="Aromaticities\ElectronDonation_Example.cs" />
     <Compile Include="Charges\MMFF94PartialCharges_Example.cs" />
     <Compile Include="Chem_Example.cs" />
+    <Compile Include="Issue20.cs" />
     <Compile Include="Config\AtomTypeFactory_Example.cs" />
     <Compile Include="Config\ChemicalElement_Example.cs" />
     <Compile Include="Config\XMLIsotopeFactory_Example.cs" />
