@@ -118,10 +118,12 @@ namespace NCDK.Default
         }
 
         /// <inheritdoc/>
-        public override object Clone()
+        public new PDBPolymer Clone()
         {
-            return (IPDBPolymer)base.Clone();
+            return (PDBPolymer)base.Clone();
         }
+
+        object ICloneable.Clone() => Clone();
     }
 }
 namespace NCDK.Silent
@@ -211,9 +213,11 @@ namespace NCDK.Silent
         }
 
         /// <inheritdoc/>
-        public override object Clone()
+        public new PDBPolymer Clone()
         {
-            return (IPDBPolymer)base.Clone();
+            return (PDBPolymer)base.Clone();
         }
+
+        object ICloneable.Clone() => Clone();
     }
 }

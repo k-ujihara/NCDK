@@ -209,7 +209,7 @@ namespace NCDK.Default
             return multipliers[index];
         }
 
-        public override ICDKObject Clone(CDKObjectMap map)
+        public new ChemObjectSet<T> Clone(CDKObjectMap map)
         {
             var clone = (ChemObjectSet<T>)base.Clone(map);
             clone.atomContainers = new List<T>(atomContainers.Count);
@@ -221,6 +221,10 @@ namespace NCDK.Default
             }
             return clone;
         }
+
+        public new ChemObjectSet<T> Clone() => Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
+        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
 
         IEnumerator IEnumerable.GetEnumerator()
         {
@@ -477,7 +481,7 @@ namespace NCDK.Silent
             return multipliers[index];
         }
 
-        public override ICDKObject Clone(CDKObjectMap map)
+        public new ChemObjectSet<T> Clone(CDKObjectMap map)
         {
             var clone = (ChemObjectSet<T>)base.Clone(map);
             clone.atomContainers = new List<T>(atomContainers.Count);
@@ -489,6 +493,10 @@ namespace NCDK.Silent
             }
             return clone;
         }
+
+        public new ChemObjectSet<T> Clone() => Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
+        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
 
         IEnumerator IEnumerable.GetEnumerator()
         {

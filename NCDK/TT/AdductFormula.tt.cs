@@ -24,6 +24,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -220,7 +221,7 @@ namespace NCDK.Default
         /// Clones this AdductFormula object and its content.
         /// </summary>
         /// <returns> The cloned object</returns>
-        public virtual object Clone()
+        public AdductFormula Clone()
         {
             AdductFormula clone = new AdductFormula();
             foreach (var form in this)
@@ -230,10 +231,10 @@ namespace NCDK.Default
             return clone;
         }
 
-        public ICDKObject Clone(CDKObjectMap map)
-        {
-            return (ICDKObject)Clone();
-        }
+        public AdductFormula Clone(CDKObjectMap map) => Clone();
+
+        object ICloneable.Clone() => Clone();
+        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
 
         /// <summary>
         /// Compare to IIsotope. The method doesn't compare instance but if they
@@ -473,7 +474,7 @@ namespace NCDK.Silent
         /// Clones this AdductFormula object and its content.
         /// </summary>
         /// <returns> The cloned object</returns>
-        public virtual object Clone()
+        public AdductFormula Clone()
         {
             AdductFormula clone = new AdductFormula();
             foreach (var form in this)
@@ -483,10 +484,10 @@ namespace NCDK.Silent
             return clone;
         }
 
-        public ICDKObject Clone(CDKObjectMap map)
-        {
-            return (ICDKObject)Clone();
-        }
+        public AdductFormula Clone(CDKObjectMap map) => Clone();
+
+        object ICloneable.Clone() => Clone();
+        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
 
         /// <summary>
         /// Compare to IIsotope. The method doesn't compare instance but if they

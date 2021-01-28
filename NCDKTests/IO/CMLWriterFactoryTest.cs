@@ -21,6 +21,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.IO.Formats;
 using System.IO;
@@ -39,9 +40,9 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestCMLWriter()
         {
-            WriterFactory factory = new WriterFactory();
+            var factory = new WriterFactory();
             WriterFactory.RegisterWriter(typeof(CMLWriter));
-            IChemObjectWriter writer = factory.CreateWriter((IChemFormat)CMLFormat.Instance, new StringWriter());
+            var writer = factory.CreateWriter((IChemFormat)CMLFormat.Instance, new StringWriter());
             Assert.IsNotNull(writer);
             Assert.AreEqual(new CMLWriter(new StringWriter()).GetType().Name, writer.GetType().Name);
         }

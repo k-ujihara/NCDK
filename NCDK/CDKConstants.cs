@@ -281,6 +281,11 @@ namespace NCDK
         public const string ACDLabsAtomLabel = "cdk:ACDLabsAtomLabel";
 
         /// <summary>
+        /// Enumeration of all valid radical values.
+        /// </summary>
+        public const string SpinMultiplicity = "cdk:SpinMultiplicity";
+
+        /// <summary>
         /// Property for reaction objects where the conditions of reactions can be placed.
         /// </summary>
         public const string ReactionConditions = "cdk:ReactionConditions";

@@ -140,7 +140,7 @@ namespace NCDK.Default
 
         public bool IsEmpty() => reactions.Count == 0;
 
-        public override ICDKObject Clone(CDKObjectMap map)
+        public new ReactionSet Clone(CDKObjectMap map)
         {
             var clonedReactions = new List<IReaction>();
             foreach (var reaction in reactions)
@@ -149,6 +149,10 @@ namespace NCDK.Default
             clone.reactions = clonedReactions;
             return clone;
         }
+
+        public new ReactionSet Clone() => Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
+        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
 
         public void OnStateChanged(ChemObjectChangeEventArgs evt)
         {
@@ -267,7 +271,7 @@ namespace NCDK.Silent
 
         public bool IsEmpty() => reactions.Count == 0;
 
-        public override ICDKObject Clone(CDKObjectMap map)
+        public new ReactionSet Clone(CDKObjectMap map)
         {
             var clonedReactions = new List<IReaction>();
             foreach (var reaction in reactions)
@@ -276,6 +280,10 @@ namespace NCDK.Silent
             clone.reactions = clonedReactions;
             return clone;
         }
+
+        public new ReactionSet Clone() => Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
+        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
 
         public void OnStateChanged(ChemObjectChangeEventArgs evt)
         {

@@ -24,6 +24,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using System;
 using System.Collections.Generic;
 
 namespace NCDK.Default
@@ -69,7 +70,7 @@ namespace NCDK.Default
         public IEnumerable<IReaction> Reactions => this;
 
         /// <inheritdoc/>
-        public override ICDKObject Clone(CDKObjectMap map)
+        public new ReactionScheme Clone(CDKObjectMap map)
         {
             var reactionScheme = new List<IReactionScheme>();
             foreach (var scheme in Schemes)
@@ -80,6 +81,10 @@ namespace NCDK.Default
             clone.reactionScheme = reactionScheme;
             return clone;
         }
+
+        public new ReactionScheme Clone() => Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
+        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
     }
 }
 namespace NCDK.Silent
@@ -125,7 +130,7 @@ namespace NCDK.Silent
         public IEnumerable<IReaction> Reactions => this;
 
         /// <inheritdoc/>
-        public override ICDKObject Clone(CDKObjectMap map)
+        public new ReactionScheme Clone(CDKObjectMap map)
         {
             var reactionScheme = new List<IReactionScheme>();
             foreach (var scheme in Schemes)
@@ -136,5 +141,9 @@ namespace NCDK.Silent
             clone.reactionScheme = reactionScheme;
             return clone;
         }
+
+        public new ReactionScheme Clone() => Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
+        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
     }
 }

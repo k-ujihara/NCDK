@@ -22,6 +22,7 @@
  */
 
 using NCDK.Numerics;
+using System;
 using System.Collections.Generic;
 
 namespace NCDK
@@ -216,10 +217,15 @@ namespace NCDK
         }
 
         /// <inheritdoc/>
-        public override ICDKObject Clone(CDKObjectMap map)
+        public new IBond Clone(CDKObjectMap map)
         {
-            return bond.Clone(map);
+            return (IBond)bond.Clone(map);
         }
+
+        /// <inheritdoc/>
+        public new IBond Clone() => Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
+        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
 
         /// <inheritdoc/>
         public override string ToString()

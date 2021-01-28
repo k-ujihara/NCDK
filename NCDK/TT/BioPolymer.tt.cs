@@ -168,7 +168,7 @@ namespace NCDK.Default
             return strands;
         }
 
-        public override ICDKObject Clone(CDKObjectMap map)
+        public new BioPolymer Clone(CDKObjectMap map)
         {
             var clone = (BioPolymer)base.Clone(map);
             clone.strands = new Dictionary<string, IStrand>();
@@ -181,6 +181,10 @@ namespace NCDK.Default
             }
             return clone;
         }
+
+        public new BioPolymer Clone() => Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
+        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
     }
 }
 namespace NCDK.Silent
@@ -319,7 +323,7 @@ namespace NCDK.Silent
             return strands;
         }
 
-        public override ICDKObject Clone(CDKObjectMap map)
+        public new BioPolymer Clone(CDKObjectMap map)
         {
             var clone = (BioPolymer)base.Clone(map);
             clone.strands = new Dictionary<string, IStrand>();
@@ -332,5 +336,9 @@ namespace NCDK.Silent
             }
             return clone;
         }
+
+        public new BioPolymer Clone() => Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
+        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
     }
 }

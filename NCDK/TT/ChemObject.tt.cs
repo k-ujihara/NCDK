@@ -30,6 +30,7 @@
  */
 
 using NCDK.Common.Collections;
+using System;
 using System.Collections.Generic;
 
 namespace NCDK.Default
@@ -261,12 +262,7 @@ namespace NCDK.Default
             NotifyChanged();
         }
 
-        public virtual object Clone()
-        {
-            return Clone(new CDKObjectMap());
-        }
-
-        public virtual ICDKObject Clone(CDKObjectMap map)
+        public ChemObject Clone(CDKObjectMap map)
         {
             var clone = (ChemObject)MemberwiseClone();
 
@@ -278,6 +274,10 @@ namespace NCDK.Default
             clone.listeners = null;
             return clone;
         }
+
+        public ChemObject Clone() => Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
+        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
 
         /// <summary>
         /// Compares a <see cref="IChemObject"/> with this <see cref="IChemObject"/>.
@@ -520,12 +520,7 @@ namespace NCDK.Silent
                 this.properties[pair.Key] = pair.Value;
         }
 
-        public virtual object Clone()
-        {
-            return Clone(new CDKObjectMap());
-        }
-
-        public virtual ICDKObject Clone(CDKObjectMap map)
+        public ChemObject Clone(CDKObjectMap map)
         {
             var clone = (ChemObject)MemberwiseClone();
 
@@ -537,6 +532,10 @@ namespace NCDK.Silent
             clone.listeners = null;
             return clone;
         }
+
+        public ChemObject Clone() => Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
+        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
 
         /// <summary>
         /// Compares a <see cref="IChemObject"/> with this <see cref="IChemObject"/>.

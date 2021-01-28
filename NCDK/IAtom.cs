@@ -137,5 +137,10 @@ namespace NCDK
         /// <returns>the bond connecting the atoms</returns>
         /// <exception cref="InvalidOperationException">thrown if the bonds are not known</exception>
         IBond GetBond(IAtom atom);
+
+        /// <summary>
+        /// The map index for this atom.
+        /// </summary>
+        int MapIdx { get; set; }
     }
 }

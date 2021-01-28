@@ -91,12 +91,16 @@ namespace NCDK.Default
             return (this.atom.Equals(atom));
         }
 
-        public override ICDKObject Clone(CDKObjectMap map)
+        public new LonePair Clone(CDKObjectMap map)
         {
             var clone = (LonePair)base.Clone(map);
             clone.atom = (IAtom)atom?.Clone(map);
             return clone;
         }
+
+        public new LonePair Clone() => Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
+        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
     }
 }
 namespace NCDK.Silent
@@ -164,11 +168,15 @@ namespace NCDK.Silent
             return (this.atom.Equals(atom));
         }
 
-        public override ICDKObject Clone(CDKObjectMap map)
+        public new LonePair Clone(CDKObjectMap map)
         {
             var clone = (LonePair)base.Clone(map);
             clone.atom = (IAtom)atom?.Clone(map);
             return clone;
         }
+
+        public new LonePair Clone() => Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
+        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
     }
 }

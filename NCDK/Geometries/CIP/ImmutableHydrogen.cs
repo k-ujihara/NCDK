@@ -73,6 +73,7 @@ namespace NCDK.Geometries.CIP
         public bool IsAliphatic { get { return false; } set { } }
         public bool IsAromatic { get { return false; } set { } }
         public bool IsInRing { get { return false; } set { } }
+        public int MapIdx { get { return 0; } set { } }
         public bool IsReactiveCenter { get { return false; } set { } }
         public bool IsSingleOrDouble { get { return false; } set { } }
         public bool IsPlaced { get { return false; } set { } }
@@ -90,7 +91,7 @@ namespace NCDK.Geometries.CIP
 
         class ImmutableCollection : ICollection<IChemObjectListener>
         {
-            private static EmptyEnumerable<IChemObjectListener> empty = new EmptyEnumerable<IChemObjectListener>();
+            private static readonly EmptyEnumerable<IChemObjectListener> empty = new EmptyEnumerable<IChemObjectListener>();
 
             public int Count => 0;
             public bool IsReadOnly => false;
@@ -115,8 +116,11 @@ namespace NCDK.Geometries.CIP
             return this == obj;
         }
 
-        public object Clone() => this;
-        public ICDKObject Clone(CDKObjectMap map) => (ICDKObject)Clone();
+        public ImmutableHydrogen Clone() => this;
+        public ImmutableHydrogen Clone(CDKObjectMap map) => Clone();
+        object ICloneable.Clone() => Clone();
+        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
+
         public IChemObjectBuilder Builder => null;
         public IAtomContainer Container => null;
         public int Index => 0;

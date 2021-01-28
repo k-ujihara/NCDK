@@ -32,7 +32,7 @@ namespace NCDK.Stereo
             where TC : IChemObject
     {
         private StereoElement value;
-        private TF focus;
+        private readonly TF focus;
         private List<TC> carriers;
         private IChemObjectBuilder builder;
 
@@ -78,18 +78,17 @@ namespace NCDK.Stereo
         /// <inheritdoc/>
         public virtual bool Contains(IAtom atom)
         {
-            if (focus.Equals(atom) || (focus is IBond && ((IBond)focus).Contains(atom)))
+            if (focus.Equals(atom) || (focus is IBond bond && bond.Contains(atom)))
                 return true;
             foreach (TC carrier in carriers)
             {
-                if (carrier.Equals(atom) ||
-                    (carrier is IBond && ((IBond)carrier).Contains(atom)))
+                if (carrier.Equals(atom) || (carrier is IBond bond2 && bond2.Contains(atom)))
                     return true;
             }
             return false;
         }
 
-        public virtual ICDKObject Clone(CDKObjectMap map)
+        public virtual AbstractStereo<TF, TC> Clone(CDKObjectMap map)
         {
             if (map == null)
                 throw new ArgumentNullException(nameof(map));
@@ -114,12 +113,15 @@ namespace NCDK.Stereo
             return Create(newfocus, newcarriers, value);
         }
 
-        public virtual object Clone()
+        public virtual AbstractStereo<TF, TC> Clone()
         {
             return Clone(new CDKObjectMap());
         }
 
-        protected abstract IStereoElement<TF, TC> Create(TF focus, IReadOnlyList<TC> carriers, StereoElement stereo);
+        object ICloneable.Clone() => Clone();
+        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
+
+        protected abstract AbstractStereo<TF, TC> Create(TF focus, IReadOnlyList<TC> carriers, StereoElement stereo);
 
         /// <inheritdoc/>
         public virtual IChemObjectBuilder Builder

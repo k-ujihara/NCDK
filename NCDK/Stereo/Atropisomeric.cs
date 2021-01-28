@@ -68,7 +68,7 @@ namespace NCDK.Stereo
         }
 
         /// <inheritdoc/>
-        protected override IStereoElement<IBond, IAtom> Create(IBond focus, IReadOnlyList<IAtom> carriers, StereoElement stereo)
+        protected override AbstractStereo<IBond, IAtom> Create(IBond focus, IReadOnlyList<IAtom> carriers, StereoElement stereo)
         {
             return new Atropisomeric(focus, carriers.ToArray(), stereo.Configuration);
         }

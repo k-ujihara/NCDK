@@ -1331,7 +1331,7 @@ namespace NCDK.Default
         }
 
         /// <inheritdoc/>
-        public override ICDKObject Clone(CDKObjectMap map)
+        public new AtomContainer2 Clone(CDKObjectMap map)
         {
             CDKObjectMap refmap = new CDKObjectMap();
 
@@ -1423,6 +1423,10 @@ namespace NCDK.Default
 
             return clone;
         }
+
+        public new AtomContainer2 Clone() => Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
+        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
 
         /// <inheritdoc/>
         public void OnStateChanged(ChemObjectChangeEventArgs evt)
@@ -2687,7 +2691,7 @@ namespace NCDK.Silent
         }
 
         /// <inheritdoc/>
-        public override ICDKObject Clone(CDKObjectMap map)
+        public new AtomContainer2 Clone(CDKObjectMap map)
         {
             CDKObjectMap refmap = new CDKObjectMap();
 
@@ -2779,6 +2783,10 @@ namespace NCDK.Silent
 
             return clone;
         }
+
+        public new AtomContainer2 Clone() => Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
+        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
 
         /// <inheritdoc/>
         public void OnStateChanged(ChemObjectChangeEventArgs evt)

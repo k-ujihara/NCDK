@@ -79,6 +79,21 @@ namespace NCDK
             return null;
         }
 
+        public static string MolToInChI(IAtomContainer mol)
+        {
+            try
+            {
+                var gen = InChIGeneratorFactory.Instance.GetInChIGenerator(mol, "FixedH");
+                if (gen.ReturnStatus > InChIReturnCode.Warning)
+                    return null;
+                return gen.InChI;
+            }
+            catch (Exception)
+            {
+            }
+            return null;
+        }
+
         private static IAtomContainer MolFrom(Func<TextReader> readerCreator)
         {
             foreach (var creator in
@@ -131,28 +146,41 @@ namespace NCDK
             return Smarts.Generate(mol);
         }
 
+        internal static void MolTo(IAtomContainer mol, TextWriter writer, bool forceV3000 = false)
+        {
+            IChemObjectWriter w;
+            if (forceV3000
+                || mol.Atoms.Count > 999
+                || mol.Bonds.Count > 999)
+                w = new MDLV3000Writer(writer);
+            else
+                w = new MDLV2000Writer(writer);
+            try
+            {
+                w.Write(mol);
+            }
+            finally
+            {
+                w.Close();
+            }
+        }
+
+        public static void MolToMolFile(IAtomContainer mol, string fiename, bool forceV3000 = false)
+        {
+            using (var writer = new StreamWriter(fiename))
+            {
+                MolTo(mol, writer, forceV3000);
+            }
+        }
 
         public static string MolToMolBlock(IAtomContainer mol, bool forceV3000 = false)
         {
-            using (var sr = new StringWriter())
+            StringWriter writer;
+            using (writer = new StringWriter())
             {
-                IChemObjectWriter w;
-                if (forceV3000 
-                 || mol.Atoms.Count > 999
-                 || mol.Bonds.Count > 999)
-                    w = new MDLV3000Writer(sr);
-                else
-                    w = new MDLV2000Writer(sr);
-                try
-                {
-                    w.Write(mol);
-                }
-                finally
-                {
-                    w.Close();
-                }
-                return sr.ToString();
+                MolTo(mol, writer, forceV3000);
             }
+            return writer.ToString();
         }
 
         public static IEnumerableChemObjectReader<IAtomContainer> ForwardSDMolSupplier(Stream stream)

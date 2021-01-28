@@ -78,7 +78,7 @@ namespace NCDK.Default
             direction = ReactionDirection.Forward;
         }
 
-        public override ICDKObject Clone(CDKObjectMap map)
+        public new Reaction Clone(CDKObjectMap map)
         {
             var clone_reactants = (IChemObjectSet<IAtomContainer>)reactants.Clone(map);
             var clone_agents = (IChemObjectSet<IAtomContainer>)agents.Clone(map);
@@ -96,6 +96,10 @@ namespace NCDK.Default
 
             return clone;
         }
+
+        public new Reaction Clone() => Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
+        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
     }
 }
 namespace NCDK.Silent
@@ -145,7 +149,7 @@ namespace NCDK.Silent
             direction = ReactionDirection.Forward;
         }
 
-        public override ICDKObject Clone(CDKObjectMap map)
+        public new Reaction Clone(CDKObjectMap map)
         {
             var clone_reactants = (IChemObjectSet<IAtomContainer>)reactants.Clone(map);
             var clone_agents = (IChemObjectSet<IAtomContainer>)agents.Clone(map);
@@ -163,5 +167,9 @@ namespace NCDK.Silent
 
             return clone;
         }
+
+        public new Reaction Clone() => Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
+        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
     }
 }

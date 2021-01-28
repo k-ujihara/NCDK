@@ -214,7 +214,7 @@ namespace <#= ns.NS #>
             return multipliers[index];
         }
 
-        public override ICDKObject Clone(CDKObjectMap map)
+        public new ChemObjectSet<T> Clone(CDKObjectMap map)
         {
             var clone = (ChemObjectSet<T>)base.Clone(map);
             clone.atomContainers = new List<T>(atomContainers.Count);
@@ -226,6 +226,10 @@ namespace <#= ns.NS #>
             }
             return clone;
         }
+
+        public new ChemObjectSet<T> Clone() => Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
+        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
 
         IEnumerator IEnumerable.GetEnumerator()
         {

@@ -166,7 +166,7 @@ namespace NCDK.Formula
         /// Clones this <see cref="MolecularFormula"/> object and its content. I should integrate into ChemObject.
         /// </summary>
         /// <returns>The cloned object</returns>
-        public object Clone()
+        public MolecularFormula Clone()
         {
             MolecularFormula clone = new MolecularFormula();
             foreach (var isotope_count in isotopes)
@@ -177,7 +177,10 @@ namespace NCDK.Formula
             return clone;
         }
 
-        public ICDKObject Clone(CDKObjectMap map) => (ICDKObject)Clone();
+        public MolecularFormula Clone(CDKObjectMap map) => Clone();
+
+        object ICloneable.Clone() => Clone();
+        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
 
         /// <summary>
         /// Compare to IIsotope. The method doesn't compare instance but if they

@@ -138,7 +138,8 @@ namespace NCDK.IO
 
         public void RegisterCustomizer(ICMLCustomizer customizer)
         {
-            if (customizers == null) customizers = new List<ICMLCustomizer>();
+            if (customizers == null)
+                customizers = new List<ICMLCustomizer>();
 
             customizers.Add(customizer);
             Trace.TraceInformation("Loaded Customizer: ", customizer.GetType().Name);
@@ -186,11 +187,16 @@ namespace NCDK.IO
         /// <param name="obj">A Molecule of AtomContaineSet object</param>
         public override void Write(IChemObject obj)
         {
-            if (!(obj is IAtomContainer) && !(obj is IEnumerableChemObject<IAtomContainer>)
-                    && !(obj is IReaction) && !(obj is IReactionSet)
-                    && !(obj is IChemSequence) && !(obj is IChemModel)
-                    && !(obj is IChemFile) && !(obj is ICrystal) && !(obj is IAtom)
-                    && !(obj is IBond))
+            if (!(obj is IAtomContainer) 
+             && !(obj is IEnumerableChemObject<IAtomContainer>)
+             && !(obj is IReaction) 
+             && !(obj is IReactionSet)
+             && !(obj is IChemSequence) 
+             && !(obj is IChemModel)
+             && !(obj is IChemFile) 
+             && !(obj is ICrystal) 
+             && !(obj is IAtom)
+             && !(obj is IBond))
             {
                 throw new CDKException("Cannot write this unsupported IChemObject: " + obj.GetType().Name);
             }
@@ -199,8 +205,7 @@ namespace NCDK.IO
 
             CustomizeJob();
 
-            Convertor convertor = new Convertor(cmlIds.IsSet,
-                    (namespacePrefix.Setting.Length > 0) ? namespacePrefix.Setting : null);
+            var convertor = new Convertor(cmlIds.IsSet, (namespacePrefix.Setting.Length > 0) ? namespacePrefix.Setting : null);
             // adding the customizer
             if (customizers != null)
             {
@@ -281,7 +286,7 @@ namespace NCDK.IO
             }
 
             var de = new XDeclaration(null, encoding, null);
-            XDocument doc = new XDocument(de, root);
+            var doc = new XDocument(de, root);
             doc.Save(output);
         }
 

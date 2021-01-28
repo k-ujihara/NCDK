@@ -95,7 +95,7 @@ namespace NCDK.Stereo
 
 
         /// <inheritdoc/>
-        protected override IStereoElement<IBond, IBond> Create(IBond focus, IReadOnlyList<IBond> carriers, StereoElement stereo)
+        protected override AbstractStereo<IBond, IBond> Create(IBond focus, IReadOnlyList<IBond> carriers, StereoElement stereo)
         {
             return new ExtendedCisTrans(focus, carriers, stereo.Configuration);
         }

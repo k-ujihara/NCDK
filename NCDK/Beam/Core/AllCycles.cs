@@ -211,8 +211,11 @@ namespace NCDK.Beam
         {
             /* Reduced vertices. */
             internal BitArray xs;
+
             /// <summary>End points of the edge.</summary>
-            int u, v;
+            private readonly int u;
+            private readonly int v;
+
             /// <summary>Number of pi electrons in the path.</summary>
             internal int ps;
 

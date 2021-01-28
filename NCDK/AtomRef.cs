@@ -22,6 +22,7 @@
  */
 
 using NCDK.Numerics;
+using System;
 using System.Collections.Generic;
 
 namespace NCDK
@@ -54,8 +55,8 @@ namespace NCDK
         /// <returns>non-pointer atom</returns>
         public static IAtom Deref(IAtom atom)
         {
-            while (atom is AtomRef)
-                atom = ((AtomRef)atom).Deref();
+            while (atom is AtomRef atom_ref)
+                atom = atom_ref.Deref();
             return atom;
         }
 
@@ -241,6 +242,13 @@ namespace NCDK
         }
 
         /// <inheritdoc/>
+        public int MapIdx
+        {
+            get { return atom.MapIdx; }
+            set { atom.MapIdx = value; }
+        }
+
+        /// <inheritdoc/>
         public bool IsSingleOrDouble
         {
             get { return atom.IsSingleOrDouble; }
@@ -287,15 +295,17 @@ namespace NCDK
         }
 
         /// <inheritdoc/>
-        public override ICDKObject Clone(CDKObjectMap map)
-        {
-            return atom.Clone(map);
-        }
+        public new IAtom Clone(CDKObjectMap map) => (IAtom)atom.Clone(map);
+
+        /// <inheritdoc/>
+        public new IAtom Clone() => Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
+        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
 
         /// <inheritdoc/>
         public override string ToString()
         {
-            return $"{nameof(AtomRef)}({atom.ToString()})";
+            return $"{nameof(AtomRef)}({atom})";
         }
     }
 }

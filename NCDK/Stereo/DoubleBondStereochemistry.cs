@@ -57,7 +57,7 @@ namespace NCDK.Stereo
         public virtual IBond StereoBond => Focus;
         public virtual DoubleBondConformation Stereo => Configure.ToConformation();
 
-        protected override IStereoElement<IBond, IBond> Create(IBond focus, IReadOnlyList<IBond> carriers, StereoElement stereo)
+        protected override AbstractStereo<IBond, IBond> Create(IBond focus, IReadOnlyList<IBond> carriers, StereoElement stereo)
         {
             return new DoubleBondStereochemistry(focus, carriers, stereo);
         }

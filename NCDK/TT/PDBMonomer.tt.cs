@@ -66,10 +66,12 @@ namespace NCDK.Default
         }
 
         /// <inheritdoc/>
-        public override object Clone()
+        public new PDBMonomer Clone()
         {
-            return (IPDBMonomer)base.Clone();
+            return (PDBMonomer)base.Clone();
         }
+
+        object ICloneable.Clone() => Clone();
     }
 }
 namespace NCDK.Silent
@@ -108,9 +110,11 @@ namespace NCDK.Silent
         }
 
         /// <inheritdoc/>
-        public override object Clone()
+        public new PDBMonomer Clone()
         {
-            return (IPDBMonomer)base.Clone();
+            return (PDBMonomer)base.Clone();
         }
+
+        object ICloneable.Clone() => Clone();
     }
 }

@@ -91,7 +91,7 @@ namespace NCDK.Default
         public void RemoveAt(int index) => chemModels.RemoveAt(index);
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        public override ICDKObject Clone(CDKObjectMap map)
+        public new ChemSequence Clone(CDKObjectMap map)
         {
             var clone_chemModels = new List<IChemModel>();
             foreach (var chemModel in chemModels)
@@ -100,6 +100,10 @@ namespace NCDK.Default
             clone.chemModels = clone_chemModels;
             return clone;
         }
+
+        public new ChemSequence Clone() => Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
+        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
 
         /// <summary>
         ///  Called by objects to which this object has
@@ -168,7 +172,7 @@ namespace NCDK.Silent
         public void RemoveAt(int index) => chemModels.RemoveAt(index);
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        public override ICDKObject Clone(CDKObjectMap map)
+        public new ChemSequence Clone(CDKObjectMap map)
         {
             var clone_chemModels = new List<IChemModel>();
             foreach (var chemModel in chemModels)
@@ -177,6 +181,10 @@ namespace NCDK.Silent
             clone.chemModels = clone_chemModels;
             return clone;
         }
+
+        public new ChemSequence Clone() => Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
+        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
 
         /// <summary>
         ///  Called by objects to which this object has

@@ -68,10 +68,12 @@ namespace <#= ns.NS #>
         }
 
         /// <inheritdoc/>
-        public override object Clone()
+        public new PDBMonomer Clone()
         {
-            return (IPDBMonomer)base.Clone();
+            return (PDBMonomer)base.Clone();
         }
+
+        object ICloneable.Clone() => Clone();
     }
 }
 <#

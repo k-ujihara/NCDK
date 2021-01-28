@@ -111,10 +111,14 @@ namespace NCDK.Default
         public int GetBondOrderSum()
             => bonds.Where(n => !n.Order.IsUnset()).Select(n => n.Order.Numeric()).Sum();
 
-        public override ICDKObject Clone(CDKObjectMap map)
+        public new Ring Clone(CDKObjectMap map)
         {
-            return base.Clone(map);
+            return (Ring)base.Clone(map);
         }
+
+        public new Ring Clone() => Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
+        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
     }
 }
 namespace NCDK.Silent
@@ -200,9 +204,13 @@ namespace NCDK.Silent
         public int GetBondOrderSum()
             => bonds.Where(n => !n.Order.IsUnset()).Select(n => n.Order.Numeric()).Sum();
 
-        public override ICDKObject Clone(CDKObjectMap map)
+        public new Ring Clone(CDKObjectMap map)
         {
-            return base.Clone(map);
+            return (Ring)base.Clone(map);
         }
+
+        public new Ring Clone() => Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
+        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
     }
 }

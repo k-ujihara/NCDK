@@ -314,7 +314,7 @@ namespace NCDK.Stereo
         }
 
         /// <inheritdoc/>
-        protected override IStereoElement<IAtom, IAtom> Create(IAtom focus, IReadOnlyList<IAtom> carriers, StereoElement stereo)
+        protected override AbstractStereo<IAtom, IAtom> Create(IAtom focus, IReadOnlyList<IAtom> carriers, StereoElement stereo)
         {
             return new Octahedral(focus,
                                   carriers.ToArray(),

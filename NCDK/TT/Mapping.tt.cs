@@ -70,7 +70,7 @@ namespace NCDK.Default
             return relation;
         }
 
-        public override ICDKObject Clone(CDKObjectMap map)
+        public new Mapping Clone(CDKObjectMap map)
         {
             var clone = (Mapping)base.Clone(map);
             clone.relation = new IAtom[relation.Length];
@@ -78,6 +78,10 @@ namespace NCDK.Default
                 clone.relation[i] = (IAtom)relation[i].Clone(map);
             return clone;
         }
+
+        public new Mapping Clone() => Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
+        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
     }
 }
 namespace NCDK.Silent
@@ -123,7 +127,7 @@ namespace NCDK.Silent
             return relation;
         }
 
-        public override ICDKObject Clone(CDKObjectMap map)
+        public new Mapping Clone(CDKObjectMap map)
         {
             var clone = (Mapping)base.Clone(map);
             clone.relation = new IAtom[relation.Length];
@@ -131,5 +135,9 @@ namespace NCDK.Silent
                 clone.relation[i] = (IAtom)relation[i].Clone(map);
             return clone;
         }
+
+        public new Mapping Clone() => Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
+        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
     }
 }

@@ -72,7 +72,7 @@ namespace <#= ns.NS #>
             return relation;
         }
 
-        public override ICDKObject Clone(CDKObjectMap map)
+        public new Mapping Clone(CDKObjectMap map)
         {
             var clone = (Mapping)base.Clone(map);
             clone.relation = new IAtom[relation.Length];
@@ -80,6 +80,10 @@ namespace <#= ns.NS #>
                 clone.relation[i] = (IAtom)relation[i].Clone(map);
             return clone;
         }
+
+        public new Mapping Clone() => Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
+        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
     }
 }
 <#

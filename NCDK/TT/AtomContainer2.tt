@@ -1363,7 +1363,7 @@ namespace <#= ns.NS #>
         }
 
         /// <inheritdoc/>
-        public override ICDKObject Clone(CDKObjectMap map)
+        public new AtomContainer2 Clone(CDKObjectMap map)
         {
             CDKObjectMap refmap = new CDKObjectMap();
 
@@ -1469,6 +1469,10 @@ namespace <#= ns.NS #>
 
             return clone;
         }
+
+        public new AtomContainer2 Clone() => Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
+        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
 
         /// <inheritdoc/>
         public void OnStateChanged(ChemObjectChangeEventArgs evt)

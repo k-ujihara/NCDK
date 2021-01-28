@@ -187,7 +187,7 @@ namespace NCDK.Formula
         /// integrate into ChemObject.
         /// </summary>
         /// <returns>The cloned object</returns>
-        public virtual object Clone()
+        public virtual MolecularFormulaRange Clone()
         {
             MolecularFormulaRange clone = new MolecularFormulaRange();
             foreach (var isotope in GetIsotopes())

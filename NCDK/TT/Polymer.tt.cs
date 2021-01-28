@@ -31,6 +31,7 @@
 using NCDK.Sgroups;
 using NCDK.Tools.Manipulator;
 using System.Collections.Generic;
+using System;
 using System.Linq;
 using System.Text;
 
@@ -110,7 +111,7 @@ namespace NCDK.Default
             }
         }
 
-        public override ICDKObject Clone(CDKObjectMap map)
+        public new Polymer Clone(CDKObjectMap map)
         {
             var clone = (Polymer)base.Clone(map);
             clone.monomers = new Dictionary<string, IMonomer>();
@@ -131,6 +132,10 @@ namespace NCDK.Default
 
             return clone;
         }
+
+        public new Polymer Clone() => Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
+        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
     }
 }
 namespace NCDK.Silent
@@ -209,7 +214,7 @@ namespace NCDK.Silent
             }
         }
 
-        public override ICDKObject Clone(CDKObjectMap map)
+        public new Polymer Clone(CDKObjectMap map)
         {
             var clone = (Polymer)base.Clone(map);
             clone.monomers = new Dictionary<string, IMonomer>();
@@ -230,5 +235,9 @@ namespace NCDK.Silent
 
             return clone;
         }
+
+        public new Polymer Clone() => Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
+        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
     }
 }

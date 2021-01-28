@@ -25,8 +25,6 @@ using NCDK.Tools.Manipulator;
 using NCDK.Aromaticities;
 using NCDK.Common.Primitives;
 using NCDK.Templates;
-using NCDK.Tools;
-using NCDK.AtomTypes;
 using NCDK.Graphs;
 using NCDK.Isomorphisms;
 using NCDK.Stereo;
@@ -55,7 +53,7 @@ namespace NCDK.Smiles
 
             // need to load the exact representation - this is SMILES string is
             // invalid and cannot be correctly kekulised
-            IAtomContainer mol = LoadExact(smiles);
+            var mol = LoadExact(smiles);
 
             // single or double flags now assigned separately
             AtomContainerManipulator.SetSingleOrDoubleFlags(mol);
@@ -66,7 +64,6 @@ namespace NCDK.Smiles
             Assert.IsTrue(mol.Atoms[2].IsSingleOrDouble);
             Assert.IsTrue(mol.Atoms[3].IsSingleOrDouble);
             Assert.IsTrue(mol.Atoms[4].IsSingleOrDouble);
-
             Assert.IsTrue(mol.Atoms[5].IsSingleOrDouble);
             Assert.IsTrue(mol.Atoms[6].IsSingleOrDouble);
             Assert.IsTrue(mol.Atoms[7].IsSingleOrDouble);
@@ -107,8 +104,8 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void Pyrrolylpyrrole_valid()
         {
-            IAtomContainer m = Load("c1cccn1c2ccc[nH]2");
-            Assert.IsNotNull(m);
+            var mol = Load("c1cccn1c2ccc[nH]2");
+            Assert.IsNotNull(mol);
         }
 
         // cdk.bug 1363882
@@ -192,7 +189,8 @@ namespace NCDK.Smiles
             Assert.AreEqual(13, mol.Atoms.Count);
             Assert.IsTrue(Aromaticity.CDKLegacy.Apply(mol));
             for (int i = 1; i < 13; i++)
-            { // first atom is not aromatic
+            {
+                // first atom is not aromatic
                 IAtom atom = mol.Atoms[i];
                 if (atom.Symbol.Equals("C"))
                     Assert.AreEqual(Hybridization.SP2, atom.Hybridization);
@@ -209,7 +207,7 @@ namespace NCDK.Smiles
         public void TestPyridine_N_oxideUncharged()
         {
             var smiles = "O=n1ccccc1";
-            IAtomContainer mol = LoadExact(smiles);
+            var mol = LoadExact(smiles);
             MakeAtomType(mol);
             AssertAtomTypesPerceived(mol);
             Assert.AreEqual(7, mol.Atoms.Count);
@@ -1260,7 +1258,7 @@ namespace NCDK.Smiles
         [Timeout(1000)]
         public void TestBug1365547()
         {
-            IAtomContainer mol = LoadExact("c2ccc1[nH]ccc1c2");
+            var mol = LoadExact("c2ccc1[nH]ccc1c2");
             Assert.IsNotNull(mol);
             Assert.AreEqual(9, mol.Atoms.Count);
             Assert.IsTrue(mol.Bonds[0].IsAromatic);
@@ -1271,7 +1269,7 @@ namespace NCDK.Smiles
         [Timeout(1000)]
         public void TestBug1365547_2()
         {
-            IAtomContainer mol = LoadExact("[H]c1c([H])c(c([H])c2c([H])c([H])n([H])c12)Br");
+            var mol = LoadExact("[H]c1c([H])c(c([H])c2c([H])c([H])n([H])c12)Br");
             Assert.IsNotNull(mol);
             Assert.AreEqual(16, mol.Atoms.Count);
             Assert.AreEqual(17, mol.Bonds.Count);
@@ -1326,7 +1324,7 @@ namespace NCDK.Smiles
         public void TestBug1530926()
         {
             //                               0      12345   6
-            IAtomContainer mol = LoadExact("[n+]%101ccccc1.[O-]%10");
+            var mol = LoadExact("[n+]%101ccccc1.[O-]%10");
             Assert.IsNotNull(mol);
             Assert.AreEqual(7, mol.Atoms.Count);
             Assert.AreEqual(7, mol.Bonds.Count);
@@ -1375,7 +1373,7 @@ namespace NCDK.Smiles
         public void TestBug1719287()
         {
             //                              01  2  3  4  5 67 8
-            IAtomContainer mol = sp
+            var mol = sp
                     .ParseSmiles("OC(=O)[C@@H](N)CC[S+1](C)C[C@@H](O1)[C@@H](O)[C@@H](O)[C@@H]1n(c3)c(n2)c(n3)c(N)nc2");
             Assert.IsNotNull(mol);
             Assert.AreEqual(27, mol.Atoms.Count);
@@ -1469,7 +1467,7 @@ namespace NCDK.Smiles
         {
             // easy case
             var smiles = "c1ccccc1C1=CC=CC=C1";
-            IAtomContainer mol = LoadExact(smiles);
+            var mol = LoadExact(smiles);
             Assert.IsTrue(mol.Bonds[0].IsAromatic);
             Assert.IsTrue(mol.Bonds[1].IsAromatic);
             Assert.IsTrue(mol.Bonds[2].IsAromatic);
@@ -1772,8 +1770,8 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void TestIndole1()
         {
-            string smiles1 = "c1ccc2cc[nH]c2(c1)";
-            IAtomContainer mol = LoadExact(smiles1);
+            var smiles1 = "c1ccc2cc[nH]c2(c1)";
+            var mol = LoadExact(smiles1);
             AssertAtomTypesPerceived(mol);
             Assert.AreEqual(9, mol.Atoms.Count);
 
@@ -1787,8 +1785,8 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void TestIndole2()
         {
-            string smiles1 = "C1(NC=C2)=C2C=CC=C1";
-            IAtomContainer mol = LoadExact(smiles1);
+            var smiles1 = "C1(NC=C2)=C2C=CC=C1";
+            var mol = LoadExact(smiles1);
             MakeAtomType(mol);
             Aromaticity.CDKLegacy.Apply(mol);
             AssertAtomTypesPerceived(mol);
@@ -2066,7 +2064,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void TestAromaticity()
         {
-            IAtomContainer mol = LoadExact("c1cnc2s[cH][cH]n12");
+            var mol = LoadExact("c1cnc2s[cH][cH]n12");
             foreach (var atom in mol.Atoms)
             {
                 Assert.IsTrue(atom.IsAromatic);
@@ -2436,7 +2434,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void TestAromaticBoron()
         {
-            IAtomContainer mol = LoadExact("c1cc2c3cc1.c1cb23cc1");
+            var mol = LoadExact("c1cc2c3cc1.c1cb23cc1");
             Assert.IsNotNull(mol);
             AssertAllSingleOrAromatic(mol);
         }
@@ -2497,7 +2495,7 @@ namespace NCDK.Smiles
         {
             var smiles = "[H]B1([H])HB([H]1)([H])[H]";
 
-            IAtomContainer mol = LoadExact(smiles);
+            var mol = LoadExact(smiles);
             Assert.AreEqual(8, mol.Atoms.Count);
             Assert.AreEqual(4, mol.GetConnectedBonds(mol.Atoms[1]).Count());
             Assert.AreEqual(2, mol.GetConnectedBonds(mol.Atoms[3]).Count());

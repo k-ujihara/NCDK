@@ -108,7 +108,10 @@ namespace NCDK.Config
             set { }
         }
 
-        public object Clone() => this;
-        public ICDKObject Clone(CDKObjectMap map)  => this;
+        public BODRIsotope Clone() => this;
+        public BODRIsotope Clone(CDKObjectMap map)  => this;
+
+        object ICloneable.Clone() => Clone();
+        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
     }
 }

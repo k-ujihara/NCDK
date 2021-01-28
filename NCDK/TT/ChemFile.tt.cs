@@ -151,7 +151,7 @@ namespace NCDK.Default
             return this.GetEnumerator();
         }
 
-        public override ICDKObject Clone(CDKObjectMap map)
+        public new ChemFile Clone(CDKObjectMap map)
         {
             var clone = (ChemFile)base.Clone(map);
             clone.chemSequences = new List<IChemSequence>();
@@ -159,6 +159,10 @@ namespace NCDK.Default
                 clone.chemSequences.Add((IChemSequence)chemSequence.Clone());
             return clone;
         }
+
+        public new ChemFile Clone() => Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
+        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
 
         /// <summary>
         ///  Called by objects to which this object has
@@ -275,7 +279,7 @@ namespace NCDK.Silent
             return this.GetEnumerator();
         }
 
-        public override ICDKObject Clone(CDKObjectMap map)
+        public new ChemFile Clone(CDKObjectMap map)
         {
             var clone = (ChemFile)base.Clone(map);
             clone.chemSequences = new List<IChemSequence>();
@@ -283,6 +287,10 @@ namespace NCDK.Silent
                 clone.chemSequences.Add((IChemSequence)chemSequence.Clone());
             return clone;
         }
+
+        public new ChemFile Clone() => Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
+        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
 
         /// <summary>
         ///  Called by objects to which this object has

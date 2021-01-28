@@ -142,10 +142,14 @@ namespace NCDK.Default
             return sb.ToString();
         }
 
-        public override ICDKObject Clone(CDKObjectMap map)
+        public new PseudoAtom Clone(CDKObjectMap map)
         {
-            return base.Clone(map);
+            return (PseudoAtom)base.Clone(map);
         }
+
+        public new PseudoAtom Clone() => Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
+        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
     }
 }
 namespace NCDK.Silent
@@ -258,9 +262,13 @@ namespace NCDK.Silent
             return sb.ToString();
         }
 
-        public override ICDKObject Clone(CDKObjectMap map)
+        public new PseudoAtom Clone(CDKObjectMap map)
         {
-            return base.Clone(map);
+            return (PseudoAtom)base.Clone(map);
         }
+
+        public new PseudoAtom Clone() => Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
+        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
     }
 }

@@ -187,7 +187,7 @@ namespace NCDK.Stereo
             return atoms;
         }
 
-        protected override IStereoElement<IAtom, IAtom> Create(IAtom focus, IReadOnlyList<IAtom> carriers, StereoElement stereo)
+        protected override AbstractStereo<IAtom, IAtom> Create(IAtom focus, IReadOnlyList<IAtom> carriers, StereoElement stereo)
         {
             return new ExtendedTetrahedral(focus, carriers, stereo);
         }

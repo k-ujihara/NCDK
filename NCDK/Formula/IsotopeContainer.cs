@@ -105,7 +105,7 @@ namespace NCDK.Formula
         /// Clones this <see cref="IsotopeContainer"/> object and its content.
         /// </summary>
         /// <returns>The cloned object</returns>
-        public object Clone()
+        public IsotopeContainer Clone()
         {
             var isoClone = new IsotopeContainer();
             isoClone.forms.AddRange(forms);

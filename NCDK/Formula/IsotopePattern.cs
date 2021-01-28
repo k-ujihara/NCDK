@@ -59,7 +59,7 @@ namespace NCDK.Formula
         /// Clones this <see cref="IsotopePattern"/> object and its content.
         /// </summary>
         /// <returns>The cloned object</returns>
-        public object Clone()
+        public IsotopePattern Clone()
         {
             var isoClone = new IsotopePattern();
             var isoHighest = this.MonoIsotope;

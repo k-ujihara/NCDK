@@ -22,6 +22,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using System;
 using System.Collections.Generic;
 
 <#
@@ -71,7 +72,7 @@ namespace <#= ns.NS #>
         public IEnumerable<IReaction> Reactions => this;
 
         /// <inheritdoc/>
-        public override ICDKObject Clone(CDKObjectMap map)
+        public new ReactionScheme Clone(CDKObjectMap map)
         {
             var reactionScheme = new List<IReactionScheme>();
             foreach (var scheme in Schemes)
@@ -82,6 +83,10 @@ namespace <#= ns.NS #>
             clone.reactionScheme = reactionScheme;
             return clone;
         }
+
+        public new ReactionScheme Clone() => Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
+        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
     }
 }
 <#

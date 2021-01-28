@@ -275,7 +275,7 @@ namespace NCDK.Charges
                     /* difference of electronegativity 1 lower */
                     var max1 = Math.Max(electronegativity[0], electronegativity[1]);
                     var min1 = Math.Min(electronegativity[0], electronegativity[1]);
-                    double DX = 1.0;
+                    double DX;
                     if (electronegativity[0] < electronegativity[1])
                         DX = gasteigerFactors[k][StepSize * atom1 + atom1 + 3];
                     else
@@ -348,8 +348,7 @@ namespace NCDK.Charges
                         if (iSet[k].Atoms[i].IsPlaced)
                         {
                             var charge = ac.Atoms[i].Charge.Value;
-                            double chargeT = 0.0;
-                            chargeT = charge + gasteigerFactors[k][StepSize * i + i + 5];
+                            double chargeT = charge + gasteigerFactors[k][StepSize * i + i + 5];
                             Debug.WriteLine("i<|" + ac.Atoms[i].Symbol + ", " + chargeT + "=c:" + charge + "+g: "
                                     + gasteigerFactors[k][StepSize * i + i + 5]);
                             ac.Atoms[i].Charge = chargeT;

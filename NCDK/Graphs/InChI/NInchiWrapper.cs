@@ -49,56 +49,48 @@ namespace NCDK.Graphs.InChI
     unsafe internal class NInchiWrapper
     {
         private const string DllBaseName = "libinchi";
-
-        [SuppressUnmanagedCodeSecurity]
-        [DllImport("kernel32", CharSet = CharSet.Unicode, SetLastError = true)]
-        internal static extern bool SetDllDirectory(string lpPathName);
-
-        private static readonly object sync_LoadDll = new object();
-
-        static void LoadDll()
+#if NETFRAMEWORK
+        [System.Security.SuppressUnmanagedCodeSecurity]
+        internal static class UnsafeNativeMethods
         {
-            lock (sync_LoadDll)
+            [DllImport("kernel32", CharSet = CharSet.Unicode, SetLastError = true)]
+            internal static extern bool SetDllDirectory(string lpPathName);
+        }
+#endif
+
+        internal static void LoadDll()
+        {
+#if NETFRAMEWORK    
+            var os = Environment.OSVersion;
+            switch (os.Platform)
             {
-                OperatingSystem os = Environment.OSVersion;
-                switch (os.Platform)
-                {
-                    case PlatformID.Win32NT:
-                        const string DllFileName = DllBaseName + ".dll";
-
-                        string subdir = null;
-                        if (Environment.Is64BitProcess)
+                case PlatformID.Win32NT:
+                    const string DllFileName = ModuleName + ".dll";
+                    var cpu = Environment.Is64BitProcess ? "x64" : "x86";
+                    var executingAsm = System.Reflection.Assembly.GetExecutingAssembly();
+                    foreach (var subdir in new[] {
+                        cpu, 
+                        Path.Combine("runtimes", $"win-{cpu}", "native"),
+                    })
+                    {
+                        if (SetDllDirectoryIfFileExist(Path.GetDirectoryName(executingAsm.Location), subdir, DllFileName))
+                            break;
+                        // for ASP.NET
+                        var uri = new Uri(executingAsm.CodeBase);
+                        if (uri.Scheme == "file")
                         {
-                            subdir = "x64";
+                            if (SetDllDirectoryIfFileExist(Path.GetDirectoryName(uri.AbsolutePath), subdir, DllFileName))
+                                break;
                         }
-                        else
-                        {
-                            subdir = "x86";
-                        }
-
-                        var executingAsm = System.Reflection.Assembly.GetExecutingAssembly();
-                        {
-                            var currPath = Path.GetDirectoryName(executingAsm.Location);
-                            if (SetDllDirectoryIfFileExist(currPath, subdir, DllFileName))
-                                goto L_Found;
-                        }
-                        {
-                            var uri = new Uri(executingAsm.CodeBase);
-                            if (uri.Scheme == "file")
-                            {
-                                var currPath = Path.GetDirectoryName(uri.AbsolutePath);
-                                if (SetDllDirectoryIfFileExist(currPath, subdir, DllFileName))
-                                    goto L_Found;
-                            }
-                        }
-                    L_Found:
-                        break;
-                    default:
-                        break;
-                }
+                    }
+                    break;
+                default:
+                    break;
             }
+#endif
         }
 
+#if NETFRAMEWORK
         /// <summary>
         /// SetDllDirectory if <paramref name="directoryName"/>/<paramref name="subdir"/>/<paramref name="dllName"/> or <paramref name="directoryName"/>/<paramref name="dllName"/>exists.
         /// </summary>
@@ -108,11 +100,8 @@ namespace NCDK.Graphs.InChI
         /// <returns><see langword="true"/> if file exists and set it.</returns>
         private static bool SetDllDirectoryIfFileExist(string directoryName, string subdir, string dllName)
         {
-            if (subdir != null)
-            {
-                if (SetDllDirectoryIfFileExist(Path.Combine(directoryName, subdir), dllName))
-                    return true;
-            }
+            if (SetDllDirectoryIfFileExist(Path.Combine(directoryName, subdir), dllName))
+                return true;
 
             if (SetDllDirectoryIfFileExist(directoryName, dllName))
                 return true;
@@ -131,12 +120,13 @@ namespace NCDK.Graphs.InChI
             var dllPath = Path.Combine(directoryName, dllName);
             if (File.Exists(dllPath))
             {
-                SetDllDirectory(null);
-                SetDllDirectory(directoryName);
+                UnsafeNativeMethods.SetDllDirectory(null);
+                UnsafeNativeMethods.SetDllDirectory(directoryName);
                 return true;
             }
             return false;
         }
+#endif
 
         static NInchiWrapper()
         {

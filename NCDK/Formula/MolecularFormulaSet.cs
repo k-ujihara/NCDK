@@ -144,7 +144,7 @@ namespace NCDK.Formula
         /// Clones this MolecularFormulaSet object and its content.
         /// </summary>
         /// <returns>The cloned object</returns>
-        public virtual object Clone()
+        public virtual MolecularFormulaSet Clone()
         {
             MolecularFormulaSet clone = new MolecularFormulaSet();
             foreach (var mf in this)
@@ -154,7 +154,10 @@ namespace NCDK.Formula
             return clone;
         }
 
-        public ICDKObject Clone(CDKObjectMap map) => (ICDKObject)Clone();
+        public MolecularFormulaSet Clone(CDKObjectMap map) => Clone();
+
+        object ICloneable.Clone() => Clone();
+        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
 
         public int IndexOf(IMolecularFormula item)
         {

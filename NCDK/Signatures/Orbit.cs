@@ -56,7 +56,7 @@ namespace NCDK.Signatures
             return GetEnumerator();
         }
 
-        public object Clone()
+        public Orbit Clone()
         {
             Orbit orbit = new Orbit(this.Label, this.Height);
             foreach (var i in this.AtomIndices)
@@ -65,6 +65,8 @@ namespace NCDK.Signatures
             }
             return orbit;
         }
+
+        object ICloneable.Clone() => Clone();
 
         /// <summary>
         /// Sorts the atom indices in this orbit.

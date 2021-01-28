@@ -28,6 +28,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -152,7 +153,7 @@ namespace NCDK.Default
             }
         }
 
-        public override ICDKObject Clone(CDKObjectMap map)
+        public new Strand Clone(CDKObjectMap map)
         {
             var clone = (Strand)base.Clone(map);
             clone.monomers = new Dictionary<string, IMonomer>();
@@ -165,6 +166,10 @@ namespace NCDK.Default
             }
             return clone;
         }
+
+        public new Strand Clone() => Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
+        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
     }
 }
 namespace NCDK.Silent
@@ -288,7 +293,7 @@ namespace NCDK.Silent
             }
         }
 
-        public override ICDKObject Clone(CDKObjectMap map)
+        public new Strand Clone(CDKObjectMap map)
         {
             var clone = (Strand)base.Clone(map);
             clone.monomers = new Dictionary<string, IMonomer>();
@@ -301,5 +306,9 @@ namespace NCDK.Silent
             }
             return clone;
         }
+
+        public new Strand Clone() => Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
+        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
     }
 }

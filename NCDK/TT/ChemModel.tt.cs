@@ -140,7 +140,7 @@ namespace NCDK.Default
             }
         }
 
-        public override ICDKObject Clone(CDKObjectMap map)
+        public new ChemModel Clone(CDKObjectMap map)
         {
             ChemModel clone = (ChemModel)base.Clone(map);
             clone.setOfMolecules = (IChemObjectSet<IAtomContainer>)setOfMolecules?.Clone(map);
@@ -149,6 +149,10 @@ namespace NCDK.Default
             clone.crystal = (ICrystal)crystal?.Clone(map);
             return clone;
         }
+
+        public new ChemModel Clone() => Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
+        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
 
         /// <summary>
         ///  Called by objects to which this object has
@@ -253,7 +257,7 @@ namespace NCDK.Silent
             }
         }
 
-        public override ICDKObject Clone(CDKObjectMap map)
+        public new ChemModel Clone(CDKObjectMap map)
         {
             ChemModel clone = (ChemModel)base.Clone(map);
             clone.setOfMolecules = (IChemObjectSet<IAtomContainer>)setOfMolecules?.Clone(map);
@@ -262,6 +266,10 @@ namespace NCDK.Silent
             clone.crystal = (ICrystal)crystal?.Clone(map);
             return clone;
         }
+
+        public new ChemModel Clone() => Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
+        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
 
         /// <summary>
         ///  Called by objects to which this object has

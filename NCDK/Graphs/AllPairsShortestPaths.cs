@@ -153,11 +153,14 @@ namespace NCDK.Graphs
             public void Add(IElectronContainer electronContainer)
             { throw new InvalidOperationException("not supported"); }
 
-            public object Clone()
+            public IAtomContainer Clone()
             { throw new InvalidOperationException("not supported"); }
 
-            public ICDKObject Clone(CDKObjectMap map)
+            public IAtomContainer Clone(CDKObjectMap map)
             { throw new InvalidOperationException("not supported"); }
+
+            object ICloneable.Clone() => Clone();
+            ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
 
             public bool Contains(ILonePair lonePair)
                 => false;

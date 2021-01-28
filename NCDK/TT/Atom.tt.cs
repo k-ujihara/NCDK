@@ -292,6 +292,19 @@ namespace NCDK.Default
         }
 
         /// <inheritdoc/>
+        public int MapIdx
+        {
+            get => GetProperty<int>(CDKPropertyName.AtomAtomMapping);
+
+            set
+            {
+                if (value < 0)
+                    throw new ArgumentOutOfRangeException("MapIdx value must be >= 0");
+                SetProperty(CDKPropertyName.AtomAtomMapping, value);
+            }
+        }
+
+        /// <inheritdoc/>
         public override bool Compare(object obj)
         {
             // XXX: floating point comparision!
@@ -303,16 +316,20 @@ namespace NCDK.Default
                 && Charge == aa.Charge;
         }
 
-        public override ICDKObject Clone(CDKObjectMap map)
+        public new Atom Clone(CDKObjectMap map)
         {
             if (map == null)
                 throw new ArgumentNullException(nameof(map));
-            if (map.TryGetValue(this, out IAtom clone))
+            if (map.TryGetValue(this, out Atom clone))
                 return clone;
             clone = (Atom)base.Clone(map);
             map.Add(this, clone);
             return clone;
         }
+
+        public new Atom Clone() => Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
+        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
 
         private static bool IsUpper(char c)
         {
@@ -714,6 +731,19 @@ namespace NCDK.Silent
         }
 
         /// <inheritdoc/>
+        public int MapIdx
+        {
+            get => GetProperty<int>(CDKPropertyName.AtomAtomMapping);
+
+            set
+            {
+                if (value < 0)
+                    throw new ArgumentOutOfRangeException("MapIdx value must be >= 0");
+                SetProperty(CDKPropertyName.AtomAtomMapping, value);
+            }
+        }
+
+        /// <inheritdoc/>
         public override bool Compare(object obj)
         {
             // XXX: floating point comparision!
@@ -725,16 +755,20 @@ namespace NCDK.Silent
                 && Charge == aa.Charge;
         }
 
-        public override ICDKObject Clone(CDKObjectMap map)
+        public new Atom Clone(CDKObjectMap map)
         {
             if (map == null)
                 throw new ArgumentNullException(nameof(map));
-            if (map.TryGetValue(this, out IAtom clone))
+            if (map.TryGetValue(this, out Atom clone))
                 return clone;
             clone = (Atom)base.Clone(map);
             map.Add(this, clone);
             return clone;
         }
+
+        public new Atom Clone() => Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
+        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
 
         private static bool IsUpper(char c)
         {

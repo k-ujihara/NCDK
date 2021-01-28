@@ -73,10 +73,14 @@ namespace NCDK.Default
         {
         }
 
-        public override ICDKObject Clone(CDKObjectMap map)
+        public new Monomer Clone(CDKObjectMap map)
         {
-            return base.Clone(map);
+            return (Monomer)base.Clone(map);
         }
+
+        public new Monomer Clone() => Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
+        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
     }
 }
 namespace NCDK.Silent
@@ -122,9 +126,13 @@ namespace NCDK.Silent
         {
         }
 
-        public override ICDKObject Clone(CDKObjectMap map)
+        public new Monomer Clone(CDKObjectMap map)
         {
-            return base.Clone(map);
+            return (Monomer)base.Clone(map);
         }
+
+        public new Monomer Clone() => Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
+        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
     }
 }

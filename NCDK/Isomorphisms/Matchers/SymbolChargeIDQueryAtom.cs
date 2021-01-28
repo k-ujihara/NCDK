@@ -56,9 +56,11 @@ namespace NCDK.Isomorphisms.Matchers
             return s.ToString();
         }
 
-        public override object Clone()
+        public new SymbolChargeIDQueryAtom Clone()
         {
             throw new InvalidOperationException();
         }
+
+        object ICloneable.Clone() => Clone();
     }
 }

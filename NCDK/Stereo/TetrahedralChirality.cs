@@ -73,7 +73,7 @@ namespace NCDK.Stereo
             set { Configure = value.ToConfiguration(); }
         }
 
-        protected override IStereoElement<IAtom, IAtom> Create(IAtom focus, IReadOnlyList<IAtom> carriers, StereoElement stereo)
+        protected override AbstractStereo<IAtom, IAtom> Create(IAtom focus, IReadOnlyList<IAtom> carriers, StereoElement stereo)
         {
             return new TetrahedralChirality(focus, carriers, stereo);
         }

@@ -418,12 +418,12 @@ namespace NCDK.Default
                 flags &= ~CDKConstants.IsReactiveCenterMask; 
         }
 
-        public override ICDKObject Clone(CDKObjectMap map)
+        public new Bond Clone(CDKObjectMap map)
         {
             if (map == null)
                 throw new ArgumentNullException(nameof(map));
 
-            if (map.TryGetValue(this, out IBond iclone))
+            if (map.TryGetValue(this, out Bond iclone))
                 return iclone;
             var clone = (Bond)base.Clone(map);
             // clone all the Atoms
@@ -434,6 +434,10 @@ namespace NCDK.Default
             map.Add(this, clone);
             return clone;
         }
+
+        public new Bond Clone() => Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
+        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
 
         /// <inheritdoc/>
         public override int GetHashCode() 
@@ -863,12 +867,12 @@ namespace NCDK.Silent
                 flags &= ~CDKConstants.IsReactiveCenterMask; 
         }
 
-        public override ICDKObject Clone(CDKObjectMap map)
+        public new Bond Clone(CDKObjectMap map)
         {
             if (map == null)
                 throw new ArgumentNullException(nameof(map));
 
-            if (map.TryGetValue(this, out IBond iclone))
+            if (map.TryGetValue(this, out Bond iclone))
                 return iclone;
             var clone = (Bond)base.Clone(map);
             // clone all the Atoms
@@ -879,6 +883,10 @@ namespace NCDK.Silent
             map.Add(this, clone);
             return clone;
         }
+
+        public new Bond Clone() => Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
+        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
 
         /// <inheritdoc/>
         public override int GetHashCode() 

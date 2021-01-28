@@ -1,13 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <IsPackable>false</IsPackable>
     <Authors>Kazuya Ujihara</Authors>
     <RootNamespace>NCDK</RootNamespace>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>ncdk.snk</AssemblyOriginatorKeyFile>
-    <Copyright>Copyright © 2016-2018 Kazuya Ujihara</Copyright>
+    <Copyright>Copyright © 2016-2021 Kazuya Ujihara</Copyright>
     <PackageLicenseUrl>https://github.com/kazuyaujihara/NCDK/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/kazuyaujihara/NCDK</PackageProjectUrl>
     <RepositoryUrl>https://github.com/kazuyaujihara/NCDK</RepositoryUrl>
@@ -1460,6 +1460,10 @@
 
   <ItemGroup>
     <Folder Include="Properties\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
   </ItemGroup>
 
   <ItemGroup>

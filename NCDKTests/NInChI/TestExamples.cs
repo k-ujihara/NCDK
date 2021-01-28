@@ -28,7 +28,6 @@ namespace NCDK.Graphs.InChI
             //END SNIPPET: structure2inchi - dichloroethene
         }
 
-
         [TestMethod()]
         public void TestExampleStructure2InchiAlanine()
         {
