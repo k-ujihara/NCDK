@@ -49,23 +49,22 @@ namespace NCDK.Graphs.InChI
     unsafe internal class NInchiWrapper
     {
         private const string DllBaseName = "libinchi";
-#if NETFRAMEWORK
+
         [System.Security.SuppressUnmanagedCodeSecurity]
         internal static class UnsafeNativeMethods
         {
             [DllImport("kernel32", CharSet = CharSet.Unicode, SetLastError = true)]
             internal static extern bool SetDllDirectory(string lpPathName);
         }
-#endif
 
         internal static void LoadDll()
         {
-#if NETFRAMEWORK    
+   
             var os = Environment.OSVersion;
             switch (os.Platform)
             {
                 case PlatformID.Win32NT:
-                    const string DllFileName = ModuleName + ".dll";
+                    const string DllFileName = DllBaseName + ".dll";
                     var cpu = Environment.Is64BitProcess ? "x64" : "x86";
                     var executingAsm = System.Reflection.Assembly.GetExecutingAssembly();
                     foreach (var subdir in new[] {
@@ -87,10 +86,8 @@ namespace NCDK.Graphs.InChI
                 default:
                     break;
             }
-#endif
         }
 
-#if NETFRAMEWORK
         /// <summary>
         /// SetDllDirectory if <paramref name="directoryName"/>/<paramref name="subdir"/>/<paramref name="dllName"/> or <paramref name="directoryName"/>/<paramref name="dllName"/>exists.
         /// </summary>
@@ -126,7 +123,6 @@ namespace NCDK.Graphs.InChI
             }
             return false;
         }
-#endif
 
         static NInchiWrapper()
         {

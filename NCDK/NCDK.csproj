@@ -454,10 +454,10 @@
       <LastGenOutput>Substance.tt.cs</LastGenOutput>
     </None>
     <None Update="runtimes\win-x64\native\libinchi.dll">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="runtimes\win-x86\native\libinchi.dll">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   
