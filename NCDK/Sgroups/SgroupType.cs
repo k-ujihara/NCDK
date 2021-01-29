@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
+﻿using System.Reflection;
 
 namespace NCDK.Sgroups
 {
@@ -124,7 +122,14 @@ namespace NCDK.Sgroups
         /// </summary>
         CtabGeneric,
 
-        // extension for handling positional variation and distributed coordination bonds
+        /// <summary>
+        /// extension for handling positional variation and distributed coordination bonds
+        /// </summary>
         ExtMulticenter,
+
+        /// <summary>
+        /// extension for handling bond attachment, LO: in CXSMILES
+        /// </summary>
+        ExtAttachOrdering,
     }
 }

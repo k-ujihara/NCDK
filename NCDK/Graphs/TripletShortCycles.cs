@@ -403,7 +403,7 @@ namespace NCDK.Graphs
         /// Append the vertex <paramref name="v"/> to the end of the path <paramref name="p"/>.
         /// </summary>
         /// <param name="p">a path</param>
-        /// <param name="v">a vertex to append</param>
+        /// <param name="v">a vertex to Append</param>
         /// <returns>the path with <paramref name="v"/> appended</returns>
         private static int[] Append(int[] p, int v)
         {

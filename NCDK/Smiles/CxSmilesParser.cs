@@ -233,8 +233,8 @@ namespace NCDK.Smiles
 
         private static bool ProcessDataSgroups(CharIter iter, CxSmilesState state)
         {
-            if (state.dataSgroups == null)
-                state.dataSgroups = new List<DataSgroup>(4);
+            if (state.mysgroups == null)
+                state.mysgroups = new List<CxSgroup>(4);
 
             var atomset = new List<int>();
             if (!ProcessIntList(iter, CommaSeparatorChar, atomset))
@@ -256,7 +256,7 @@ namespace NCDK.Smiles
 
             if (!iter.NextIf(':'))
             {
-                state.dataSgroups.Add(new CxSmilesState.DataSgroup(atomset, field, value, "", "", ""));
+                state.mysgroups.Add(new CxSmilesState.CxDataSgroup(atomset, field, value, "", "", ""));
                 return true;
             }
 
@@ -267,7 +267,7 @@ namespace NCDK.Smiles
 
             if (!iter.NextIf(':'))
             {
-                state.dataSgroups.Add(new CxSmilesState.DataSgroup(atomset, field, value, operator_, "", ""));
+                state.mysgroups.Add(new CxSmilesState.CxDataSgroup(atomset, field, value, operator_, "", ""));
                 return true;
             }
 
@@ -278,7 +278,7 @@ namespace NCDK.Smiles
 
             if (!iter.NextIf(':'))
             {
-                state.dataSgroups.Add(new CxSmilesState.DataSgroup(atomset, field, value, operator_, unit, ""));
+                state.mysgroups.Add(new CxSmilesState.CxDataSgroup(atomset, field, value, operator_, unit, ""));
                 return true;
             }
 
@@ -287,7 +287,7 @@ namespace NCDK.Smiles
                 iter.Next();
             string tag = Unescape(iter.Substr(beg, iter.pos));
 
-            state.dataSgroups.Add(new CxSmilesState.DataSgroup(atomset, field, value, operator_, unit, tag));
+            state.mysgroups.Add(new CxSmilesState.CxDataSgroup(atomset, field, value, operator_, unit, tag));
 
             return true;
         }
@@ -300,8 +300,8 @@ namespace NCDK.Smiles
         /// <returns>parse was a success (or not)</returns>
         private static bool ProcessPolymerSgroups(CharIter iter, CxSmilesState state)
         {
-            if (state.sgroups == null)
-                state.sgroups = new List<PolymerSgroup>();
+            if (state.mysgroups == null)
+                state.mysgroups = new List<CxSgroup>();
             var beg = iter.pos;
             while (iter.HasNext() && !IsSgroupDelim(iter.Curr()))
                 iter.Next();
@@ -329,23 +329,47 @@ namespace NCDK.Smiles
                 subscript = keyword;
 
             // "In the superscript only connectivity and flip information is allowed.", default
-            // appears to be "eu" either/unspecified
+            // appears to be "eu" either/unspecified for SRU
             if (!iter.NextIf(':'))
                 return false;
             beg = iter.pos;
             while (iter.HasNext() && !IsSgroupDelim(iter.Curr()))
                 iter.Next();
             supscript = Unescape(iter.Substr(beg, iter.pos));
-            if (string.IsNullOrEmpty(supscript))
+            if (string.IsNullOrEmpty(supscript)
+             && !keyword.Equals("c") && !keyword.Equals("mix")
+             && !keyword.Equals("f") && !keyword.Equals("mod"))
                 supscript = "eu";
 
             if (iter.NextIf(',') || iter.Curr() == '|')
             {
-                state.sgroups.Add(new CxSmilesState.PolymerSgroup(keyword, atomset, subscript, supscript));
+                state.mysgroups.Add(new CxSmilesState.CxPolymerSgroup(keyword, atomset, subscript, supscript));
                 return true;
             }
             // not supported: crossing bond info (difficult to work out from doc) and bracket orientation
 
+            return false;
+        }
+        private static bool ProcessIntListMap(IDictionary<int, IList<int>> map, CharIter iter)
+        {
+            while (iter.HasNext())
+            {
+                if (IsDigit(iter.Curr()))
+                {
+                    int beg = ProcessUnsignedInt(iter);
+                    if (!iter.NextIf(':'))
+                        return false;
+                    var endpoints = new List<int>(6);
+                    if (!ProcessIntList(iter, DotSeparatorChar, endpoints))
+                        return false;
+                    iter.NextIf(',');
+                    map[beg] = endpoints;
+                }
+                else
+                {
+                    return true;
+                }
+            }
             return false;
         }
 
@@ -359,25 +383,20 @@ namespace NCDK.Smiles
         {
             if (state.positionVar == null)
                 state.positionVar = new SortedDictionary<int, IList<int>>();
-            while (iter.HasNext())
-            {
-                if (IsDigit(iter.Curr()))
-                {
-                    int beg = ProcessUnsignedInt(iter);
-                    if (!iter.NextIf(':'))
-                        return false;
-                    var endpoints = new List<int>(6);
-                    if (!ProcessIntList(iter, DotSeparatorChar, endpoints))
-                        return false;
-                    iter.NextIf(',');
-                    state.positionVar.Add(beg, endpoints);
-                }
-                else
-                {
-                    return true;
-                }
-            }
-            return false;
+            return ProcessIntListMap(state.positionVar, iter);
+        }
+
+        /// <summary>
+        /// Ligand ordering indicate attachments around R groups.
+        /// </summary>
+        /// <param name="iter">the character iterator</param>
+        /// <param name="state">the CX state</param>
+        /// <returns>parse was a success (or not)</returns>
+        private static bool ProcessLigandOrdering(CharIter iter, CxSmilesState state)
+        {
+            if (state.ligandOrdering == null)
+                state.ligandOrdering = new SortedDictionary<int, IList<int>>();
+            return ProcessIntListMap(state.ligandOrdering, iter);
         }
 
         /// <summary>
@@ -509,6 +528,13 @@ namespace NCDK.Smiles
                         {
                             if (!ProcessDataSgroups(iter, state))
                                 return -1;
+                            if (iter.NextIf(','))
+                                break;
+                        }
+                        else if (iter.NextIf("gH:"))
+                        {
+                            if (!ProcessSgroupsHierarchy(iter, state))
+                                return -1;
                         }
                         else
                         {
@@ -540,12 +566,68 @@ namespace NCDK.Smiles
                               // consume optional separators
                         if (!iter.NextIf(' ')) iter.NextIf('\t');
                         return iter.pos;
+                    case 'L':
+                        // LO, Ligand Ordering
+                        if (iter.NextIf('O'))
+                        {
+                            if (!iter.NextIf(':'))
+                                return -1;
+                            if (!ProcessLigandOrdering(iter, state))
+                                return -1;
+                        }
+                        else
+                        {
+                            // LP, bond connected lone pair?
+                            return -1;
+                        }
+                        break;
                     default:
                         return -1;
                 }
             }
 
             return -1;
+        }
+
+        private static bool ProcessSgroupsHierarchy(CharIter iter, CxSmilesState state)
+        {
+            int nsgroups = 0;
+            if (state.mysgroups != null)
+                nsgroups += state.mysgroups.Count;
+            if (nsgroups == 0)
+                return false; // may not be written yet
+            for (; ; )
+            {
+                int parent = ProcessUnsignedInt(iter);
+                if (parent < 0)
+                    return false;
+                if (!iter.NextIf(':'))
+                    return false;
+                var children = new List<int>();
+                ProcessIntList(iter, '.', children);
+                if (parent < state.mysgroups.Count)
+                {
+                    foreach (var child in children)
+                    {
+                        if (child < nsgroups)
+                        {
+                            state.mysgroups[parent].children.Add(state.mysgroups[child]);
+                        }
+                        else
+                            return false; // missing Sgroup
+                    }
+                }
+                else
+                {
+                    return false; // missing Sgroup
+                }
+                if (iter.Curr() == '|')
+                    return true;
+                if (!iter.NextIf(','))
+                    return false;
+                if (!IsDigit(iter.Curr()))
+                    return true;
+            }
         }
 
         private static bool IsDigit(char c)

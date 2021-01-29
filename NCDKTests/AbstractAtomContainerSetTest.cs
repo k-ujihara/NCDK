@@ -156,7 +156,7 @@ namespace NCDK
                 return CountAtoms(o1).CompareTo(CountAtoms(o2));
             }
 
-            public int CountAtoms(T container)
+            public static int CountAtoms(T container)
             {
                 return container == null ? int.MinValue : container.Atoms.Count;
             }

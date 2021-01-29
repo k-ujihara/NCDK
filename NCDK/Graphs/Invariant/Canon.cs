@@ -97,12 +97,33 @@ namespace NCDK.Graphs.Invariant
         /// </summary>
         /// <param name="container">structure</param>
         /// <param name="g">adjacency list graph representation</param>
+        /// <param name="opts">canonical generation options see <see cref="CanonOpts"/></param>
+        /// <returns>the canonical labelling</returns>
+        /// <seealso cref="EquivalentClassPartitioner"/>
+        /// <seealso cref="InChINumbersTools"/>
+
+        public static long[] Label(IAtomContainer container, int[][] g, int opts)
+        {
+            return Label(container, g, BasicInvariants(container, g, opts));
+        }
+
+
+        /// <summary>
+        /// Compute the canonical labels for the provided structure. The labelling
+        /// does not consider isomer information or stereochemistry. The current
+        /// implementation does not fully distinguish all structure topologies
+        /// but in practise performs well in the majority of cases. A complete
+        /// canonical labelling can be obtained using the <see cref="InChINumbersTools"/>
+        /// but is computationally much more expensive.
+        /// </summary>
+        /// <param name="container">structure</param>
+        /// <param name="g">adjacency list graph representation</param>
         /// <returns>the canonical labelling</returns>
         /// <seealso cref="EquivalentClassPartitioner"/>
         /// <seealso cref="InChINumbersTools"/>
         public static long[] Label(IAtomContainer container, int[][] g)
         {
-            return Label(container, g, BasicInvariants(container, g));
+            return Label(container, g, CanonOpts.Default);
         }
 
         /// <summary>
@@ -168,11 +189,30 @@ namespace NCDK.Graphs.Invariant
         /// </summary>
         /// <param name="container">structure</param>
         /// <param name="g">adjacency list graph representation</param>
+        /// <param name="opts">canonical generation options see <see cref="CanonOpts"/></param>
         /// <returns>symmetry classes</returns>
         /// <seealso cref="EquivalentClassPartitioner"/>
+        /// <seealso cref="BasicInvariants(IAtomContainer, int[][], int)"/>
+        public static long[] Symmetry(IAtomContainer container, int[][] g, int opts)
+        {
+            return new Canon(g, BasicInvariants(container, g, opts), TerminalHydrogens(container, g), true).symmetry;
+        }
+
+        /// <summary>
+        /// Compute the symmetry classes for the provided structure. There are known
+        /// examples where symmetry is incorrectly found. The <see cref="EquivalentClassPartitioner"/> 
+        /// gives more accurate symmetry perception but
+        /// this method is very quick and in practise successfully portions the
+        /// majority of chemical structures.
+        /// </summary>
+        /// <param name="container">structure</param>
+        /// <param name="g">adjacency list graph representation</param>
+        /// <returns>symmetry classes</returns>
+        /// <seealso cref="EquivalentClassPartitioner"/>
+        /// <seealso cref="BasicInvariants(IAtomContainer, int[][], int)"/>
         public static long[] Symmetry(IAtomContainer container, int[][] g)
         {
-            return new Canon(g, BasicInvariants(container, g), TerminalHydrogens(container, g), true).symmetry;
+            return Symmetry(container, g, CanonOpts.Default);
         }
 
         /// <summary>
@@ -267,6 +307,8 @@ namespace NCDK.Graphs.Invariant
                 // could also swap but this is cleaner
                 Array.Copy(nextVs, 0, currVs, 0, nnu);
             }
+            if (symmetry == null)
+                symmetry = Array.Empty<long>();
 
             return symmetry;
         }
@@ -293,6 +335,18 @@ namespace NCDK.Graphs.Invariant
         }
 
         /// <summary>
+        /// See <see cref="BasicInvariants(IAtomContainer, int[][], int)"/>.
+        /// </summary>
+        /// <param name="container">an atom container to generate labels for</param>
+        /// <param name="graph">graph representation (adjacency list)</param>
+        /// <returns>the initial invariants</returns>
+        /// <seealso cref="BasicInvariants(IAtomContainer, int[][], int)"/>
+        public static long[] BasicInvariants(IAtomContainer container, int[][] graph)
+        {
+            return BasicInvariants(container, graph, CanonOpts.Default);
+        }
+
+        /// <summary>
         /// Generate the initial invariants for each atom in the <paramref name="container"/>.
         /// The labels use the invariants described in <token>cdk-cite-WEI89</token>. 
         /// </summary>
@@ -316,9 +370,10 @@ namespace NCDK.Graphs.Invariant
         /// </remarks>
         /// <param name="container">an atom container to generate labels for</param>
         /// <param name="graph">graph representation (adjacency list)</param>
+        /// <param name="flav">bit mask canon flavor (see <see cref="CanonOpts"/>)</param>
         /// <returns>initial invariants</returns>
         /// <exception cref="NullReferenceException">an atom had unset atomic number, hydrogen count or formal charge</exception>
-        public static long[] BasicInvariants(IAtomContainer container, int[][] graph)
+        public static long[] BasicInvariants(IAtomContainer container, int[][] graph, int flav)
         {
             long[] labels = new long[graph.Length];
 
@@ -348,6 +403,17 @@ namespace NCDK.Graphs.Invariant
                 label |= (long)(Math.Abs(chg) & 0x3);
                 label <<= 4; // hydrogen count <= 15 (4 bits)
                 label |= (long)(impH + expH & 0xf);
+
+                // atomic mass to split ties (if flavour requested), we can't do this
+                // by default because "unique" smiles doesn't include the isotopic mass
+                // so splitting on something that doesn't appear in the output would not
+                // function correctly
+                // n.b. the comparator based invariants are much more flexible still
+                if ((flav & CanonOpts.AtomicMass) != 0 && atom.MassNumber != null)
+                {
+                    label <<= 10;
+                    label |= (uint)atom.MassNumber.Value;
+                }
 
                 labels[v] = label;
             }

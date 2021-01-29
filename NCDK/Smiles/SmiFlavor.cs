@@ -165,14 +165,24 @@ namespace NCDK.Smiles
         CxFragmentGroup = 0x100000,
 
         /// <summary>
+        /// Output ligand order information.
+        /// </summary>
+        CxLigandOrder = 0x200000,
+
+        /// <summary>
         /// Renumber AtomAtomMaps during canonical generation
         /// </summary>
-        AtomAtomMapRenumber = Canonical | AtomAtomMap | 0x200000,
+        AtomAtomMapRenumber = Canonical | AtomAtomMap | 0x2000000,
+
+        /// <summary>
+        /// Output data Sgroups.
+        /// </summary>
+        CxDataSgroups = 0x400000,
 
         /// <summary>
         /// Output CXSMILES layers.
         /// </summary>
-        CxSmiles = CxAtomLabel | CxAtomValue | CxRadical | CxFragmentGroup | CxMulticenter | CxPolymer,
+        CxSmiles = CxAtomLabel | CxAtomValue | CxRadical | CxFragmentGroup | CxMulticenter | CxPolymer | CxLigandOrder,
 
         /// <summary>
         /// Output CXSMILES layers and coordinates.

@@ -46,9 +46,9 @@ namespace NCDK.MolViewer
         : BindableBase
     {
         private static readonly IChemObjectBuilder builder = CDK.Builder;
-        private static StructureDiagramGenerator sdg = new StructureDiagramGenerator();
-        private static SmilesParser parser = new SmilesParser(builder);
-        private static SmilesGenerator smilesGenerator = new SmilesGenerator(SmiFlavors.Default);
+        private static readonly StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+        private static readonly SmilesParser parser = new SmilesParser(builder);
+        private static readonly SmilesGenerator smilesGenerator = new SmilesGenerator(SmiFlavors.Default);
 
         private string _Smiles = null;
         private IChemObject _ChemObject = null;
@@ -391,7 +391,7 @@ namespace NCDK.MolViewer
 
         private void OnChemObjectChanged()
         {
-            string smiles = null;
+            string smiles;
 
             try
             {

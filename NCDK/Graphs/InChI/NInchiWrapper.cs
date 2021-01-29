@@ -20,11 +20,14 @@
 using NCDK.Common.Primitives;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security;
 using System.Text;
+using System.IO;
+#if NETCOREAPP3_1
+using System.Reflection;
+#endif
 
 namespace NCDK.Graphs.InChI
 {
@@ -50,6 +53,63 @@ namespace NCDK.Graphs.InChI
     {
         private const string DllBaseName = "libinchi";
 
+#if NETCOREAPP3_1
+        static void LoadDll()
+        {
+            var os = Environment.OSVersion;
+            switch (os.Platform)
+            {
+                case PlatformID.Win32NT:
+                case PlatformID.Unix:
+                    NativeLibrary.SetDllImportResolver(typeof(NInchiWrapper).Assembly, ImportResolver);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private static IntPtr ImportResolver(string libraryName, Assembly assembly, DllImportSearchPath? searchPath)
+        {
+            var os = Environment.OSVersion;
+            var ext = os.Platform == PlatformID.Win32NT ? "dll" : "so";
+            var dllBaseName = $"{libraryName}.{ext}";
+
+            IntPtr libHandle;
+
+            if (NativeLibrary.TryLoad(dllBaseName, assembly, DllImportSearchPath.SafeDirectories, out libHandle))
+                return libHandle;
+
+            switch (os.Platform)
+            {
+                case PlatformID.Win32NT:
+                case PlatformID.Unix:
+                    string asmLocation;
+                    asmLocation = Path.GetDirectoryName(assembly.Location);
+                    var cpu = Environment.Is64BitProcess ? "x64" : "x86";
+                    var os_id = os.Platform == PlatformID.Win32NT ? "win" : "linux";
+                    foreach (var subdir in new[] { Path.Combine("runtimes", $"{os_id}-{cpu}", "native"), cpu, })
+                    {
+                        if (NativeLibrary.TryLoad(Path.Combine(asmLocation, subdir, dllBaseName), out libHandle))
+                            return libHandle;
+                    }
+                    // for ASP.NET
+                    var uri = new Uri(assembly.CodeBase);
+                    if (uri.Scheme == "file")
+                    {
+                        asmLocation = Path.GetDirectoryName(uri.AbsolutePath);
+                        if (NativeLibrary.TryLoad(Path.Combine(asmLocation, dllBaseName), out libHandle))
+                            return libHandle;
+                        foreach (var subdir in new[] { Path.Combine("runtimes", $"{os_id}-{cpu}", "native"), cpu, })
+                        {
+                            if (NativeLibrary.TryLoad(Path.Combine(asmLocation, subdir, dllBaseName), out libHandle))
+                                return libHandle;
+                        }
+                    }
+                    break;
+            }
+            return libHandle;
+        }
+#else
         [System.Security.SuppressUnmanagedCodeSecurity]
         internal static class UnsafeNativeMethods
         {
@@ -59,7 +119,6 @@ namespace NCDK.Graphs.InChI
 
         internal static void LoadDll()
         {
-   
             var os = Environment.OSVersion;
             switch (os.Platform)
             {
@@ -68,8 +127,8 @@ namespace NCDK.Graphs.InChI
                     var cpu = Environment.Is64BitProcess ? "x64" : "x86";
                     var executingAsm = System.Reflection.Assembly.GetExecutingAssembly();
                     foreach (var subdir in new[] {
-                        cpu, 
                         Path.Combine("runtimes", $"win-{cpu}", "native"),
+                        cpu,
                     })
                     {
                         if (SetDllDirectoryIfFileExist(Path.GetDirectoryName(executingAsm.Location), subdir, DllFileName))
@@ -123,6 +182,7 @@ namespace NCDK.Graphs.InChI
             }
             return false;
         }
+#endif
 
         static NInchiWrapper()
         {

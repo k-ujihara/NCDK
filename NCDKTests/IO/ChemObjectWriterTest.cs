@@ -93,7 +93,7 @@ namespace NCDK.IO
                         }
                         else
                         {
-                            throw exception;
+                            throw;
                         }
                     }
                 }

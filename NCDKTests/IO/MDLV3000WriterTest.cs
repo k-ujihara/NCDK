@@ -501,7 +501,7 @@ namespace NCDK.IO
                     mdlw.CustomizeJob();
                     mdlw.Write(mol);
                 }
-                Assert.IsTrue(sw.ToString().Contains("FakeNews", StringComparison.Ordinal));
+                Assert.IsTrue(sw.ToString().IndexOf("FakeNews", StringComparison.Ordinal) >= 0);
             }
         }
 

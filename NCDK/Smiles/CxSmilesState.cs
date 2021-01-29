@@ -35,15 +35,15 @@ namespace NCDK.Smiles
     /// </summary>
     internal sealed class CxSmilesState
     {
-        public SortedDictionary<int, string> atomLabels = null;
-        public SortedDictionary<int, string> atomValues = null;
-        public List<double[]> atomCoords  = null;
-        public List<List<int>> fragGroups = null;
-        public SortedDictionary<int, Radical> atomRads = null;
-        public SortedDictionary<int, IList<int>> positionVar = null;
-        public List<PolymerSgroup> sgroups = null;
-        public List<DataSgroup> dataSgroups = null;
-        public bool coordFlag = false;
+        internal SortedDictionary<int, string> atomLabels = null;
+        internal SortedDictionary<int, string> atomValues = null;
+        internal List<double[]> atomCoords  = null;
+        internal List<List<int>> fragGroups = null;
+        internal SortedDictionary<int, Radical> atomRads = null;
+        internal SortedDictionary<int, IList<int>> ligandOrdering = null;
+        internal SortedDictionary<int, IList<int>> positionVar = null;
+        internal List<CxSgroup> mysgroups = null;
+        internal bool coordFlag = false;
 
         public enum Radical
         {
@@ -56,18 +56,22 @@ namespace NCDK.Smiles
             TrivalentQuartet,
         }
 
-        public sealed class DataSgroup
+        public class CxSgroup
         {
-            readonly IReadOnlyList<int> atoms;
-            readonly string field;
-            readonly string value;
-            readonly string operator_;
+            internal HashSet<CxSgroup> children = new HashSet<CxSgroup>();
+            internal List<int> atoms = new List<int>();
+            internal int id = -1;
+        }
 
-            readonly string unit;
+        public sealed class CxDataSgroup : CxSgroup
+        {
+            internal readonly string field;
+            internal readonly string value;
+            internal readonly string operator_;
+            internal readonly string unit;
+            internal readonly string tag;
 
-            readonly string tag;
-
-            public DataSgroup(IReadOnlyList<int> atoms, string field, string value, string operator_, string unit, string tag)
+            public CxDataSgroup(List<int> atoms, string field, string value, string operator_, string unit, string tag)
             {
                 this.atoms = atoms;
                 this.field = field;
@@ -77,9 +81,9 @@ namespace NCDK.Smiles
                 this.tag = tag;
             }
 
-            public override bool Equals(Object o)
+            public override bool Equals(object o)
             {
-                if (!(o is DataSgroup that))
+                if (!(o is CxDataSgroup that))
                     return false;
 
                 if (atoms != null ? !Compares.AreEqual(atoms, that.atoms) : that.atoms != null)
@@ -94,7 +98,6 @@ namespace NCDK.Smiles
                     return false;
                 return tag != null ? tag.Equals(that.tag, StringComparison.Ordinal) : that.tag == null;
             }
-
 
             public override int GetHashCode()
             {
@@ -123,29 +126,28 @@ namespace NCDK.Smiles
             internal string Value => value;
         }
 
-        public sealed class PolymerSgroup
+        public sealed class CxPolymerSgroup : CxSgroup
         {
             internal readonly string type;
-            internal readonly List<int> atomset;
             internal readonly string subscript;
             internal readonly string supscript;
 
-            public PolymerSgroup(string type, IList<int> atomset, string subscript, string supscript)
+            public CxPolymerSgroup(string type, IList<int> atomset, string subscript, string supscript)
             {
                 Trace.Assert(type != null && atomset != null);
                 this.type = type;
-                this.atomset = new List<int>(atomset);
+                this.atoms = new List<int>(atomset);
                 this.subscript = subscript;
                 this.supscript = supscript;
             }
 
-            public override bool Equals(Object o)
+            public override bool Equals(object o)
             {
-                if (!(o is PolymerSgroup that))
+                if (!(o is CxPolymerSgroup that))
                     return false;
 
                 return type.Equals(that.type, StringComparison.Ordinal) &&
-                       Compares.AreEqual(atomset, that.atomset) &&
+                       Compares.AreEqual(atoms, that.atoms) &&
                        subscript.Equals(that.subscript, StringComparison.Ordinal) &&
                        supscript.Equals(that.supscript, StringComparison.Ordinal);
             }
@@ -153,7 +155,7 @@ namespace NCDK.Smiles
             public override int GetHashCode()
             {
                 int result = type.GetHashCode();
-                foreach (var a in atomset)
+                foreach (var a in atoms)
                     result = 31 * result + a.GetHashCode();
                 result = 31 * result + subscript.GetHashCode();
                 result = 31 * result + supscript.GetHashCode();
@@ -164,19 +166,14 @@ namespace NCDK.Smiles
             {
                 return "PolymerSgroup{" +
                        "type='" + type + '\'' +
-                       ", atomset=" + atomset +
+                       ", atomset=" + atoms +
                        ", subscript='" + subscript + '\'' +
                        ", supscript='" + supscript + '\'' +
                        '}';
             }
-
-            internal string Type => type;
-            internal List<int> AtomSet => atomset;
-            internal string Subscript => subscript;
-            internal string Supscript => supscript;
         }
 
-        static string Escape(string str)
+        internal static string Escape(string str)
         {
             var sb = new StringBuilder();
             for (int i = 0; i < str.Length; i++)

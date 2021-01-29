@@ -397,24 +397,24 @@ namespace NCDK.Geometries
         ///    (i) 1 points: required; if A, B, C, D coplanar, no points.
         ///       else vector is resultant of BA, CA, DA
         /// </remarks>
-        /// <param name="aPoint">to which substituents are added</param>
-        /// <param name="bPoint">first ligand of A</param>
-        /// <param name="cPoint">second ligand of A</param>
-        /// <param name="dPoint">third ligand of A</param>
+        /// <param name="focus">to which substituents are added</param>
+        /// <param name="aNbor">first ligand of A</param>
+        /// <param name="bNbor">second ligand of A</param>
+        /// <param name="cNbor">third ligand of A</param>
         /// <param name="length">A-X length</param>
         /// <returns>Vector3 nwanted points (or null if failed (coplanar))</returns>
-        public static Vector3? Calculate3DCoordinates3(Vector3 aPoint, Vector3 bPoint, Vector3 cPoint, Vector3 dPoint, double length)
+        public static Vector3? Calculate3DCoordinates3(Vector3 focus, Vector3 aNbor, Vector3 bNbor, Vector3 cNbor, double length)
         {
-            var v1 = aPoint - bPoint;
-            var v2 = aPoint - cPoint;
-            var v3 = aPoint - dPoint;
-            var v = bPoint + cPoint + dPoint;
+            var v1 = focus - aNbor;
+            var v2 = focus - bNbor;
+            var v3 = focus - cNbor;
+            var v = v1 + v2 + v3;
             if (v.Length() < 0.00001)
             {
                 return null;
             }
             v = Vector3.Normalize(v) * length;
-            var point = aPoint + v;
+            var point = focus + v;
             return point;
         }
 

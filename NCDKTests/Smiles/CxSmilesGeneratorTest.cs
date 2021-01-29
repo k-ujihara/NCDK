@@ -68,10 +68,10 @@ namespace NCDK.Smiles
         {
             CxSmilesState state = new CxSmilesState
             {
-                sgroups = new List<CxSmilesState.PolymerSgroup>(1)
+                mysgroups = new List<CxSmilesState.CxSgroup>(1)
                 {
-                    new CxSmilesState.PolymerSgroup("n", new[] { 2, 3 }, "n", "ht"),
-                    new CxSmilesState.PolymerSgroup("n", new[] { 5 }, "m", "ht")
+                    new CxSmilesState.CxPolymerSgroup("n", new[] { 2, 3 }, "n", "ht"),
+                    new CxSmilesState.CxPolymerSgroup("n", new[] { 5 }, "m", "ht")
                 }
             };
             Assert.AreEqual(" |Sg:n:2:m:ht,Sg:n:4,5:n:ht|", CxSmilesGenerator.Generate(state, SmiFlavors.CxPolymer, Array.Empty<int>(), new int[] { 7, 6, 5, 4, 3, 2, 1, 0 }));
@@ -144,6 +144,30 @@ namespace NCDK.Smiles
             var molb = smipar.ParseSmiles("CC(CCC[CH2])C |^1:5|");
             SmilesGenerator smigen = new SmilesGenerator(SmiFlavors.Canonical | SmiFlavors.CxRadical);
             Assert.AreEqual(smigen.Create(molb), smigen.Create(mola));
+        }
+
+        [TestMethod()]
+        public void RoundTripLigandOrdering()
+        {
+            var mol = CDK.SmilesParser.ParseSmiles("Cl[*](Br)I |$;_R1;;$,LO:1:0.2.3|");
+            var smigen = new SmilesGenerator(SmiFlavors.CxSmiles);
+            Assert.AreEqual("Cl*(Br)I |$;R1$,LO:1:0.2.3|", smigen.Create(mol));
+        }
+
+        [TestMethod()]
+        public void CanonLigandOrdering()
+        {
+            var mol = CDK.SmilesParser.ParseSmiles("Cl[*](I)Br |$;_R1;;$,LO:1:0.2.3|");
+            var smigen = new SmilesGenerator(SmiFlavors.Canonical | SmiFlavors.CxSmiles);
+            Assert.AreEqual("Cl*(Br)I |$;R1$,LO:1:0.3.2|", smigen.Create(mol));
+        }
+
+        [TestMethod()]
+        public void RoundTripSgroupParents()
+        {
+            var mol = CDK.SmilesParser.ParseSmiles("CN1CCCCC1.CO.O |Sg:c:0,1,2,3,4,5,6::,Sg:c:7,8::,Sg:c:9::,Sg:mix:0,1,2,3,4,5,6,7,8,9::,Sg:mix:7,8,9::,SgH:3:4.0,4:2.1|");
+            var smigen = new SmilesGenerator(SmiFlavors.CxSmiles);
+            Assert.AreEqual("CN1CCCCC1.CO.O |Sg:c:0,1,2,3,4,5,6:c:,Sg:c:7,8:c:,Sg:c:9:c:,Sg:mix:0,1,2,3,4,5,6,7,8,9:mix:,Sg:mix:7,8,9:mix:,SgH:3:0.4,4:1.2|", smigen.Create(mol));
         }
     }
 }

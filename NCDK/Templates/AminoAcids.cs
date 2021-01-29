@@ -17,7 +17,9 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Aromaticities;
 using NCDK.Dict;
+using NCDK.Graphs;
 using NCDK.IO;
 using NCDK.Tools.Manipulator;
 using System;
@@ -53,6 +55,10 @@ namespace NCDK.Templates
         static AminoAcids()
 #pragma warning restore CA1810 // Initialize reference type static fields inline
         {
+            // amino-acids only have benzene aromaticity so we can run a simple
+            // alternating pi-bond arom model to keep things in a consistent state
+            Aromaticity arom = new Aromaticity(ElectronDonation.CDKModel, Cycles.GetAllFinder(6));
+
             // Create set of AtomContainers
             proteinogenics = new IAminoAcid[20];
 
@@ -120,6 +126,8 @@ namespace NCDK.Templates
                             AminoAcidManipulator.RemoveAcidicOxygen(aminoAcid);
                             aminoAcid.SetProperty(NoAtomsKey, "" + aminoAcid.Atoms.Count);
                             aminoAcid.SetProperty(NoBoundsKey, "" + aminoAcid.Bonds.Count);
+                            AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(aminoAcid);
+                            arom.Apply(aminoAcid);
                             if (counter < proteinogenics.Length)
                             {
                                 proteinogenics[counter] = aminoAcid;

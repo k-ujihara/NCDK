@@ -1,5 +1,5 @@
-/*
- * Copyright (c) 2015 John May <jwmay@users.sf.net>
+﻿/*
+ * Copyright (c) 2021 John Mayfield
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -12,7 +12,7 @@
  * copyright notice that you may distribute with programs based on this work.
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
- * Any WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
  * License for more details.
  *
@@ -21,37 +21,22 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
 
-namespace NCDK.Sgroups
+namespace NCDK.Graphs.Invariant
 {
     /// <summary>
-    /// Keys for indexing common Sgroup attributes. 
+    /// Basic flavor options to tweak canonical invariants, note these deliberately mirror some fields
+    /// from the <see cref="NCDK.Smiles.SmiFlavor"/> .
     /// </summary>
-    public enum SgroupKey
+    public static class CanonOpts
     {
-        CtabType,
-        CtabSubType,
         /// <summary>
-        /// Not to be confused with the subscript key
-        /// this is Sgroup label not the bracket label (e.g. 'n').
+        /// Default canon flavour options.
         /// </summary>
-        CtabLabel,
-        CtabExpansion,
-        CtabCorrespondence,
-        CtabAbbreviationVector,
-        CtabAbbreviationAttachPoint,
-        CtabDisplayInfo,
-        CtabSubScript,
-        CtabConnectivity,
-        CtabBracket,
-        CtabBracketStyle,
-        CtabClass,
-        CtabParentAtomList,
-        CtabComponentNumber,
-        // Data Sgroups
-        DataFieldName,
-        DataFieldFormat,
-        DataFieldUnits,
-        DataDisplayInformation,
-        Data,
+        public const int Default = 0;
+
+        /// <summary>
+        /// Distinguish atoms based on atomic mass.
+        /// </summary>
+        public const int AtomicMass = 0x008;
     }
 }

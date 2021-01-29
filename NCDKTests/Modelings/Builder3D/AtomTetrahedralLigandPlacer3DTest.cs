@@ -16,7 +16,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.Common.Mathematics;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Silent;
 using NCDK.Numerics;
@@ -34,19 +34,19 @@ namespace NCDK.Modelings.Builder3D
         [TestMethod()]
         public void TestAdd3DCoordinatesForSinglyBondedLigands_IAtomContainer()
         {
-            IAtom atom1 = new Atom("C")
+            var atom1 = new Atom("C")
             {
                 Point3D = new Vector3(1, 1, 1)
             };
-            IAtom atom2 = new Atom("H");
-            IAtom atom3 = new Atom("H");
-            IAtom atom4 = new Atom("H");
-            IAtom atom5 = new Atom("H");
-            IBond bond1 = new Bond(atom1, atom2);
-            IBond bond2 = new Bond(atom1, atom3);
-            IBond bond3 = new Bond(atom1, atom4);
-            IBond bond4 = new Bond(atom1, atom5);
-            IAtomContainer ac = atom1.Builder.NewAtomContainer();
+            var atom2 = new Atom("H");
+            var atom3 = new Atom("H");
+            var atom4 = new Atom("H");
+            var atom5 = new Atom("H");
+            var bond1 = new Bond(atom1, atom2);
+            var bond2 = new Bond(atom1, atom3);
+            var bond3 = new Bond(atom1, atom4);
+            var bond4 = new Bond(atom1, atom5);
+            var ac = atom1.Builder.NewAtomContainer();
             atom1.FormalNeighbourCount = 4;
             atom2.FormalNeighbourCount = 1;
             atom3.FormalNeighbourCount = 1;
@@ -68,17 +68,17 @@ namespace NCDK.Modelings.Builder3D
         [TestMethod()]
         public void RescaleBondLength_IAtom_IAtom_Point3d()
         {
-            IAtom atom1 = new Atom("C")
+            var atom1 = new Atom("C")
             {
                 Point3D = new Vector3(1, 1, 1),
                 CovalentRadius = 0.2
             };
-            IAtom atom2 = new Atom("C")
+            var atom2 = new Atom("C")
             {
                 Point3D = new Vector3(2, 2, 2),
                 CovalentRadius = 0.2
             };
-            Vector3 newpoint = new AtomTetrahedralLigandPlacer3D().RescaleBondLength(atom1, atom2, atom2.Point3D.Value);
+            var newpoint = new AtomTetrahedralLigandPlacer3D().RescaleBondLength(atom1, atom2, atom2.Point3D.Value);
             Assert.AreEqual(0.4, Vector3.Distance(newpoint, atom1.Point3D.Value), 0.001);
         }
 
@@ -89,15 +89,15 @@ namespace NCDK.Modelings.Builder3D
             {
                 Point3D = new Vector3(1, 1, 1)
             };
-            IAtom atom2 = new Atom("H");
-            IAtom atom3 = new Atom("H");
-            IAtom atom4 = new Atom("H");
-            IAtom atom5 = new Atom("H");
-            IBond bond1 = new Bond(atom1, atom2);
-            IBond bond2 = new Bond(atom1, atom3);
-            IBond bond3 = new Bond(atom1, atom4);
-            IBond bond4 = new Bond(atom1, atom5);
-            IAtomContainer ac = atom1.Builder.NewAtomContainer();
+            var atom2 = new Atom("H");
+            var atom3 = new Atom("H");
+            var atom4 = new Atom("H");
+            var atom5 = new Atom("H");
+            var bond1 = new Bond(atom1, atom2);
+            var bond2 = new Bond(atom1, atom3);
+            var bond3 = new Bond(atom1, atom4);
+            var bond4 = new Bond(atom1, atom5);
+            var ac = atom1.Builder.NewAtomContainer();
             ac.Atoms.Add(atom1);
             ac.Atoms.Add(atom2);
             ac.Atoms.Add(atom3);
@@ -112,15 +112,13 @@ namespace NCDK.Modelings.Builder3D
             ac.Bonds.Add(bond2);
             ac.Bonds.Add(bond3);
             ac.Bonds.Add(bond4);
-            IAtomContainer noCoords = AtomTetrahedralLigandPlacer3D.GetUnsetAtomsInAtomContainer(atom1, ac);
-            IAtomContainer withCoords = AtomTetrahedralLigandPlacer3D.GetPlacedAtomsInAtomContainer(atom1, ac);
+            var noCoords = AtomTetrahedralLigandPlacer3D.GetUnsetAtomsInAtomContainer(atom1, ac);
+            var withCoords = AtomTetrahedralLigandPlacer3D.GetPlacedAtomsInAtomContainer(atom1, ac);
             var placer = new AtomTetrahedralLigandPlacer3D();
-            Vector3[] newPoints = placer.Get3DCoordinatesForLigands(atom1, noCoords, withCoords, null, 4, placer.DefaultBondLengthH, -1);
+            var newPoints = placer.Get3DCoordinatesForLigands(atom1, noCoords, withCoords, null, 4, placer.DefaultBondLengthH, -1);
             for (int j = 0; j < noCoords.Atoms.Count; j++)
             {
-                if (newPoints[j] == null)
-                    Assert.Fail("No coordinates generated for atom " + j);
-                IAtom ligand = noCoords.Atoms[j];
+                var ligand = noCoords.Atoms[j];
                 ligand.Point3D = newPoints[j];
             }
             ModelBuilder3DTest.CheckAverageBondLength(ac);

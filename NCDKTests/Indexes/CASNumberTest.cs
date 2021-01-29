@@ -34,6 +34,7 @@ namespace NCDK.Indexes
         public void TestValidNumbers()
         {
             // valid cas numbers
+            Assert.IsTrue(CASNumber.IsValid("36-88-4"));
             Assert.IsTrue(CASNumber.IsValid("50-00-0")); // formaldehyde
             Assert.IsTrue(CASNumber.IsValid("548-00-5"));
             Assert.IsTrue(CASNumber.IsValid("2622-26-6"));
@@ -54,13 +55,6 @@ namespace NCDK.Indexes
             Assert.IsFalse(CASNumber.IsValid("50-00-7"));
             Assert.IsFalse(CASNumber.IsValid("50-00-8"));
             Assert.IsFalse(CASNumber.IsValid("50-00-9"));
-        }
-
-        [TestMethod()]
-        public void TestLargerThanFirst()
-        {
-            // valid format, but wrong number, the first is 50-00-0
-            Assert.IsFalse(CASNumber.IsValid("3-21-4"));
         }
 
         [TestMethod()]

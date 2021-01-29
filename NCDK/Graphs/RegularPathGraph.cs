@@ -244,7 +244,7 @@ namespace NCDK.Graphs
             /// Reconstruct the path through the edge by appending vertices to a
             /// mutable <see cref="ArrayBuilder"/>.
             /// </summary>
-            /// <param name="ab">array builder to append vertices to</param>
+            /// <param name="ab">array builder to Append vertices to</param>
             /// <returns>the array builder parameter for convenience</returns>
             public abstract ArrayBuilder Reconstruct(ArrayBuilder ab);
 

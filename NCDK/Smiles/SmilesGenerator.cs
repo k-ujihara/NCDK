@@ -631,12 +631,11 @@ namespace NCDK.Smiles
             for (int idx = 0; idx < mol.Atoms.Count; idx++)
             {
                 IAtom atom = mol.Atoms[idx];
-                if (atom is IPseudoAtom)
+                if (atom is IPseudoAtom pseudo)
                 {
                     if (state.atomLabels == null)
                         state.atomLabels = new SortedDictionary<int, string>();
 
-                    IPseudoAtom pseudo = (IPseudoAtom)atom;
                     if (pseudo.AttachPointNum > 0)
                     {
                         state.atomLabels[idx] = "_AP" + pseudo.AttachPointNum;
@@ -699,10 +698,12 @@ namespace NCDK.Smiles
             }
 
             var sgroups = mol.GetCtabSgroups();
+            var mapping = new Dictionary<Sgroup, CxSmilesState.CxSgroup>();
             if (sgroups != null)
             {
-                state.sgroups = new List<CxSmilesState.PolymerSgroup>();
+                state.mysgroups = new List<CxSmilesState.CxSgroup>();
                 state.positionVar = new SortedDictionary<int, IList<int>>();
+                state.ligandOrdering = new SortedDictionary<int, IList<int>>();
                 foreach (Sgroup sgroup in sgroups)
                 {
                     switch (sgroup.Type)
@@ -720,44 +721,88 @@ namespace NCDK.Smiles
                         case SgroupType.CtabGeneric:
                         case SgroupType.CtabComponent:
                         case SgroupType.CtabGraft:
+                            if ((flavour & SmiFlavors.CxPolymer) == 0)
+                                break;
                             string supscript = (string)sgroup.GetValue(SgroupKey.CtabConnectivity);
-                            state.sgroups.Add(new CxSmilesState.PolymerSgroup(GetSgroupPolymerKey(sgroup),
-                                                                              ToAtomIdxs(sgroup.Atoms, atomidx),
-                                                                              sgroup.Subscript,
-                                                                              supscript));
+                            CxSmilesState.CxPolymerSgroup cxSgrp;
+                            cxSgrp = new CxSmilesState.CxPolymerSgroup(GetSgroupPolymerKey(sgroup), ToAtomIdxs(sgroup.Atoms, atomidx), sgroup.Subscript, supscript);
+                            state.mysgroups.Add(cxSgrp);
+                            mapping[sgroup] = cxSgrp;
                             break;
                         case SgroupType.ExtMulticenter:
-                            IAtom beg = null;
-                            List<IAtom> ends = new List<IAtom>();
-                            ISet<IBond> bonds = sgroup.Bonds;
-                            if (bonds.Count != 1)
-                                throw new ArgumentException("Multicenter Sgroup in inconsistent state!");
-                            IBond bond = bonds.First();
-                            foreach (IAtom atom in sgroup.Atoms)
                             {
-                                if (bond.Contains(atom))
+                                IAtom beg = null;
+                                List<IAtom> ends = new List<IAtom>();
+                                ISet<IBond> bonds = sgroup.Bonds;
+                                if (bonds.Count != 1)
+                                    throw new ArgumentException("Multicenter Sgroup in inconsistent state!");
+                                IBond bond = bonds.First();
+                                foreach (IAtom atom in sgroup.Atoms)
                                 {
-                                    if (beg != null)
-                                        throw new ArgumentException("Multicenter Sgroup in inconsistent state!");
-                                    beg = atom;
+                                    if (bond.Contains(atom))
+                                    {
+                                        if (beg != null)
+                                            throw new ArgumentException("Multicenter Sgroup in inconsistent state!");
+                                        beg = atom;
+                                    }
+                                    else
+                                    {
+                                        ends.Add(atom);
+                                    }
                                 }
-                                else
-                                {
-                                    ends.Add(atom);
-                                }
+                                state.positionVar[EnsureNotNull(atomidx[beg])] = ToAtomIdxs(ends, atomidx);
                             }
-                            state.positionVar[EnsureNotNull(atomidx[beg])] =
-                                                  ToAtomIdxs(ends, atomidx);
+                            break;
+                        case SgroupType.ExtAttachOrdering:
+                            {
+                                IAtom beg = null;
+                                var ends = new List<IAtom>();
+                                if (sgroup.Atoms.Count != 1)
+                                    throw new ArgumentException("Attach ordering in inconsistent state!");
+                                beg = sgroup.Atoms.First();
+                                foreach (IBond bond in sgroup.Bonds)
+                                {
+                                    IAtom nbr = bond.GetOther(beg);
+                                    if (nbr == null)
+                                        throw new ArgumentException("Attach ordering in inconsistent state!");
+                                    ends.Add(nbr);
+                                }
+                                state.ligandOrdering[EnsureNotNull(atomidx[beg])] = ToAtomIdxs(ends, atomidx);
+                            }
                             break;
                         case SgroupType.CtabAbbreviation:
                         case SgroupType.CtabMultipleGroup:
                             // display shortcuts are not output
                             break;
                         case SgroupType.CtabData:
+                            if ((flavour & SmiFlavors.CxDataSgroups) == 0)
+                                break;
                             // can be generated but currently ignored
+                            CxSmilesState.CxDataSgroup cxDataSgrp;
+                            cxDataSgrp = new CxSmilesState.CxDataSgroup(ToAtomIdxs(sgroup.Atoms, atomidx),
+                                (string)sgroup.GetValue(SgroupKey.DataFieldName),
+                                (string)sgroup.GetValue(SgroupKey.Data),
+                                                                       null,
+                                  (string)sgroup.GetValue(SgroupKey.DataFieldUnits),
+                                                                      null);
+                            state.mysgroups.Add(cxDataSgrp);
+                            mapping[sgroup] = cxDataSgrp;
                             break;
                         default:
                             throw new NotSupportedException("Unsupported Sgroup Polymer");
+                    }
+                }
+                foreach (Sgroup sgroup in sgroups)
+                {
+                    CxSmilesState.CxSgroup cxChild = mapping[sgroup];
+                    if (cxChild == null)
+                        continue;
+                    foreach (Sgroup parent in sgroup.Parents)
+                    {
+                        CxSmilesState.CxSgroup cxParent = mapping[parent];
+                        if (cxParent == null)
+                            continue;
+                        cxParent.children.Add(cxChild);
                     }
                 }
             }

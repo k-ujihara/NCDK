@@ -42,7 +42,7 @@ namespace NCDK.Config
         private const string JAXP_SCHEMA_LANGUAGE = "http://java.sun.com/xml/jaxp/properties/schemaLanguage";
         private const string W3C_XML_SCHEMA = "http://www.w3.org/2001/XMLSchema";
 
-        private static List<FileInfo> tmpFiles = new List<FileInfo>();
+        private static readonly List<FileInfo> tmpFiles = new List<FileInfo>();
         private static string tmpCMLSchema;
 
         public XMLIsotopeFactoryTest()

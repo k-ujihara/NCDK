@@ -1112,7 +1112,7 @@ namespace NCDK.Beam
             /// <summary>
             /// Append a vertex to the arrangement.
             /// </summary>
-            /// <param name="v">vertex to append</param>
+            /// <param name="v">vertex to Append</param>
             public void Add(int v)
             {
                 if (n == vs.Length)

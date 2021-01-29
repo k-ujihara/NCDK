@@ -23,7 +23,6 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Common.Base;
-using NCDK.Sgroups;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -220,8 +219,8 @@ namespace NCDK.Smiles
             CxSmilesState state = new CxSmilesState();
             Assert.AreNotEqual(-1, CxSmilesParser.ProcessCx("|Sg:n:1,2,3:m:ht|", state));
             Assert.IsTrue(Compares.DeepContains(
-                state.sgroups,
-                new CxSmilesState.PolymerSgroup("n", new[] { 1, 2, 3 }, "m", "ht")));
+                state.mysgroups,
+                new CxSmilesState.CxPolymerSgroup("n", new[] { 1, 2, 3 }, "m", "ht")));
         }
 
         [TestMethod()]
@@ -230,8 +229,8 @@ namespace NCDK.Smiles
             CxSmilesState state = new CxSmilesState();
             Assert.AreNotEqual(-1, CxSmilesParser.ProcessCx("|SgD::cdk&#58;ReactionConditions:Heat&#10;Hv|", state));
             Assert.IsTrue(Compares.DeepContains(
-                state.dataSgroups,
-                new CxSmilesState.DataSgroup(new List<int>(), "cdk:ReactionConditions", "Heat\nHv", "", "", "")));
+                state.mysgroups,
+                new CxSmilesState.CxDataSgroup(new List<int>(), "cdk:ReactionConditions", "Heat\nHv", "", "", "")));
         }
 
         [TestMethod()]
@@ -258,13 +257,37 @@ namespace NCDK.Smiles
             Assert.AreNotEqual(-1, CxSmilesParser.ProcessCx("|r:2,4,5|", state));
         }
 
+        [TestMethod()]
+        public void SgroupHierarchy()
+        {
+            const string cxsmilayers = "|Sg:c:0,1,2,3,4,5,6::,Sg:c:7,8::,Sg:c:9::,Sg:mix:0,1,2,3,4,5,6,7,8,9::,Sg:mix:7,8,9::,SgH:3:4.0,4:2.1|";
+            CxSmilesState state = new CxSmilesState();
+            Assert.AreNotEqual(-1, CxSmilesParser.ProcessCx(cxsmilayers, state));
+        }
+
+        [TestMethod()]
+        public void CxSmiLay()
+        {
+            const string cxsmilayers = "|Sg:c:0,1,2,3,4,5,6::,Sg:c:7,8::,Sg:c:9::,Sg:mix:0,1,2,3,4,5,6,7,8,9::,Sg:mix:7,8,9::,SgD::RATIO:1/3::,SgD::RATIO:2/3::,SgD::WEIGHT_PERCENT:15::%,SgH:3:4.0,0:7,4:2.1,1:5,2:6|";
+            CxSmilesState state = new CxSmilesState();
+            Assert.AreNotEqual(-1, CxSmilesParser.ProcessCx(cxsmilayers, state));
+        }
+
+        [TestMethod()]
+        public void CxSmiLay2()
+        {
+            const string cxsmilayers = "|Sg:c:0,1,2::,Sg:c:3::,Sg:mix:0,1,2,3::,SgH:2:1.0|";
+            CxSmilesState state = new CxSmilesState();
+            Assert.AreNotEqual(-1, CxSmilesParser.ProcessCx(cxsmilayers, state));
+        }
+
         /// <summary>
         /// Custom matcher for checking an array of doubles closely matches (epsilon=0.01)
         /// an expected value.
         /// </summary>
         private class AprxDoubleArray
         {
-            double[] expected;
+            readonly double[] expected;
             const double epsilon = 0.01;
 
             public AprxDoubleArray(params double[] expected)

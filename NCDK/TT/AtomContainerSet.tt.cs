@@ -31,8 +31,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Collections;
 
-#pragma warning disable CA1710 // Identifiers should have correct suffix
-
 namespace NCDK.Default
 {
     public class AtomContainerSet
@@ -290,7 +288,7 @@ namespace NCDK.Default
         class CompareRefByIndex : IComparer<int>
         {
             private readonly ChemObjectSet<T> parent;
-            private IComparer<T> comparator;
+            private readonly IComparer<T> comparator;
 
             public CompareRefByIndex(ChemObjectSet<T> parent, IComparer<T> comparator)
             {
@@ -562,7 +560,7 @@ namespace NCDK.Silent
         class CompareRefByIndex : IComparer<int>
         {
             private readonly ChemObjectSet<T> parent;
-            private IComparer<T> comparator;
+            private readonly IComparer<T> comparator;
 
             public CompareRefByIndex(ChemObjectSet<T> parent, IComparer<T> comparator)
             {
