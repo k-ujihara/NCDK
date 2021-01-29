@@ -110,6 +110,19 @@ namespace NCDK.Renderers.Elements
         }
 
         /// <summary>
+        /// Ensure the point x,y is included in the bounding box.
+        /// </summary>
+        /// <param name="x">x-coordinate</param>
+        /// <param name="y">y-coordinate</param>
+        public void Add(double x, double y)
+        {
+            if (x < MinX) MinX = x;
+            if (y < MinY) MinY = y;
+            if (x > MaxX) MaxX = x;
+            if (y > MaxY) MaxY = y;
+        }
+
+        /// <summary>
         /// Add one bounds to another.
         /// </summary>
         /// <param name="bounds">other bounds</param>

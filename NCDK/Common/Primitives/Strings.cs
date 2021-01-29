@@ -46,7 +46,7 @@ namespace NCDK.Common.Primitives
                 else if (s.StartsWith("-0", StringComparison.Ordinal))
                     s = "-" + s.Substring(2);
             }
-            if (!s.Contains("."))
+            if (!s.Contains('.'))
                 return s;
             while (s.EndsWithChar('0'))
                 s = s.Substring(0, s.Length - 1);
@@ -164,10 +164,10 @@ namespace NCDK.Common.Primitives
 
         public static string ToJavaString(object o)
         {
-            if (o is Array)
-                return ToJavaString((Array)o);
-            if (o is ICollection)
-                return ToJavaString((ICollection)o);
+            if (o is Array array)
+                return ToJavaString(array);
+            if (o is ICollection collection)
+                return ToJavaString(collection);
             return o.ToString();
         }
 
@@ -212,6 +212,16 @@ namespace NCDK.Common.Primitives
         public static bool EndsWithChar(this string str, char c)
         {
             return str.Length >= 1 && str[str.Length - 1] == c;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool ContainsOrdinal(this string str, string value)
+        {
+#if NETSTANDARD2_1 || NETCOREAPP2_1 || NETCOREAPP3 || NETCOREAPP3_1
+            return str.Contains(value, StringComparison.Ordinal);
+#else
+            return str.Contains(value);
+#endif
         }
     }
 }

@@ -21,6 +21,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
 
+using NCDK.Common.Collections;
 using System.Collections.Generic;
 
 namespace NCDK.Sgroups
@@ -37,31 +38,27 @@ namespace NCDK.Sgroups
         /// <summary>
         /// the atoms of this substructure group.
         /// </summary>
-        public ISet<IAtom> Atoms { get; private set; }
+        public ISet<IAtom> Atoms { get; } = new LinkedHashSet<IAtom>();
 
         /// <summary>
         /// Access the bonds that belong to this substructure group.
         /// For data Sgroups, the bonds are the containment bonds,
         /// for all other <see cref="Sgroup"/> types, they are crossing bonds.
         /// </summary>
-        public ISet<IBond> Bonds { get; private set; }
+        public ISet<IBond> Bonds { get; } = new LinkedHashSet<IBond>();
 
         /// <summary>
         /// the parents of this Sgroup.
         /// </summary>
-        public ISet<Sgroup> Parents { get; private set; }
+        public ISet<Sgroup> Parents { get; private set; } = new LinkedHashSet<Sgroup>();
 
-        private readonly SortedDictionary<SgroupKey, object> attributes;
+        private readonly SortedDictionary<SgroupKey, object> attributes = new SortedDictionary<SgroupKey, object>();
 
         /// <summary>
         /// Create a new generic Sgroup.
         /// </summary>
         public Sgroup()
         {
-            this.attributes = new SortedDictionary<SgroupKey, object>();
-            Atoms = new HashSet<IAtom>();
-            Bonds = new HashSet<IBond>();
-            Parents = new HashSet<Sgroup>();
             Type = SgroupType.CtabGeneric;
         }
 

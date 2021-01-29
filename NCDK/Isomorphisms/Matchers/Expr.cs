@@ -735,9 +735,7 @@ namespace NCDK.Isomorphisms.Matchers
         /// Property Caches
         /// </summary>
         /// TODO: Imprements Cache
-        private static ConcurrentDictionary<IAtomContainer, int[]> cacheRCounts = new ConcurrentDictionary<IAtomContainer, int[]>();
-
-        private static readonly object sync_cacheRCounts = new object();
+        private static readonly ConcurrentDictionary<IAtomContainer, int[]> cacheRCounts = new ConcurrentDictionary<IAtomContainer, int[]>();
 
         private static int[] GetRingCounts(IAtomContainer mol)
         {

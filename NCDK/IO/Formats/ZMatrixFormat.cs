@@ -17,6 +17,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Common.Primitives;
 using NCDK.Tools;
 using System;
 using System.Collections.Generic;
@@ -60,7 +61,7 @@ namespace NCDK.IO.Formats
         /// <inheritdoc/>
         public override bool Matches(int lineNumber, string line)
         {
-            if (lineNumber == 4 && line.Contains("Z Matrix"))
+            if (lineNumber == 4 && line.ContainsOrdinal("Z Matrix"))
             {
                 return true;
             }

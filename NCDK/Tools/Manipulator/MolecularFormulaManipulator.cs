@@ -22,7 +22,9 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Common.Collections;
 using NCDK.Config;
+using NCDK.Sgroups;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -204,13 +206,13 @@ namespace NCDK.Tools.Manipulator
 
         private static void AppendElement(StringBuilder sb, int? mass, int elem, int count)
         {
+            var symbol = PeriodicTable.GetSymbol(elem);
+            if (!symbol.Any())
+                symbol = "R";
             if (mass != null)
-                sb.Append('[')
-                  .Append(mass)
-                  .Append(']')
-                  .Append(PeriodicTable.GetSymbol(elem));
+                sb.Append($"[{mass}]{symbol}");
             else
-                sb.Append(PeriodicTable.GetSymbol(elem));
+                sb.Append(symbol);
             if (count != 0)
                 sb.Append(count);
         }
@@ -572,7 +574,7 @@ namespace NCDK.Tools.Manipulator
         /// Add to an instance of IMolecularFormula the elements extracts form
         /// molecular formula string. The string is immediately analyzed and a set of Nodes
         /// is built based on this analysis. The hydrogens are assumed to be implicit.
-        /// The bool indicates if the major isotope is to be assumed, or if no
+        /// The boolean indicates if the major isotope is to be assumed, or if no
         /// assumption is to be made.
         /// </summary>
         /// <param name="stringMF">The molecularFormula string</param>
@@ -587,17 +589,26 @@ namespace NCDK.Tools.Manipulator
 
             // Extract charge from string when contains []X- format
             int? charge = null;
-            if ((stringMF.Contains("[") && stringMF.Contains("]")) && (stringMF.Contains("+") || stringMF.Contains(HYPHEN_STR) || stringMF.Contains(MINUS_STR)))
+            if (stringMF.Contains("+") 
+             || stringMF.Contains(HYPHEN_STR) 
+             || stringMF.Contains(MINUS_STR))
             {
-                charge = ExtractCharge(stringMF);
-                stringMF = CleanMFfromCharge(stringMF);
+                int pos = FindChargePosition(stringMF);
+                if (pos >= 0 && pos != stringMF.Length)
+                {
+                    charge = ParseCharge(new CharIter(pos, stringMF));
+                    stringMF = stringMF.Substring(0, pos);
+                    if (stringMF[0] == '[' &&
+                        stringMF[stringMF.Length - 1] == ']')
+                        stringMF = stringMF.Substring(1, stringMF.Length - 1 - 1);
+                }
             }
 
             if (string.IsNullOrEmpty(stringMF))
                 return null;
 
             var len = stringMF.Length;
-            var iter = new CharIter { str = stringMF };
+            var iter = new CharIter(0, stringMF);
             while (iter.pos < len)
             {
                 if (!ParseIsotope(iter, formula, assumeMajorIsotope))
@@ -611,80 +622,61 @@ namespace NCDK.Tools.Manipulator
             return formula;
         }
 
-        /// <summary>
-        /// Extract the molecular formula when it is defined with charge. e.g. [O3S]2-.
-        /// </summary>
-        /// <param name="formula">The formula to inspect</param>
-        /// <returns>The corrected formula</returns>
-        private static string CleanMFfromCharge(string formula)
+        private static int ParseCharge(CharIter iter)
         {
-            if (!(formula.Contains("[") && formula.Contains("]")))
-                return formula;
-            bool startBreak = false;
-            string finalFormula = "";
-            for (int f = 0; f < formula.Length; f++)
+            int sign = 0;
+            int number = iter.NextUInt();
+            switch (iter.Next())
             {
-                var thisChar = formula[f];
-                if (thisChar == '[')
-                {
-                    // start
-                    startBreak = true;
-                }
-                else if (thisChar == ']')
-                {
+                case '+':
+                    sign = +1;
                     break;
-                }
-                else if (startBreak)
-                    finalFormula += thisChar;
+                case HYPHEN:
+                case MINUS:
+                    sign = -1;
+                    break;
             }
-            return finalFormula;
-        }
-
-        /// <summary>
-        /// Extract the charge given a molecular formula format [O3S]2-.
-        /// </summary>
-        /// <param name="formula">The formula to inspect</param>
-        /// <returns>The charge</returns>
-        private static int ExtractCharge(string formula)
-        {
-            if (!(formula.Contains("[") && formula.Contains("]") && (formula.Contains("+") || formula.Contains(HYPHEN_STR) || formula.Contains(MINUS_STR))))
-                return 0;
-
-            bool finishBreak = false;
-            string multiple = "";
-            for (int f = 0; f < formula.Length; f++)
+            if (number < 0)
+                number = iter.NextUInt();
+            if (number < 0)
+                number = 1;
+            if (sign == 0)
             {
-                var thisChar = formula[f];
-                switch (thisChar)
+                switch (iter.Next())
                 {
-                    case ']':
-                        // finish
-                        finishBreak = true;
+                    case '+':
+                        sign = +1;
                         break;
                     case HYPHEN:
                     case MINUS:
-                        multiple = HYPHEN + multiple;
-                        goto Exit_For;
-                    case '+':
-                        goto Exit_For;
-                    default:
-                        if (finishBreak)
-                        {
-                            multiple += thisChar;
-                        }
+                        sign = -1;
                         break;
                 }
             }
-        Exit_For:
-            switch (multiple)
-            {
-                case "":
-                case HYPHEN_STR:
-                case MINUS_STR:
-                    multiple += 1;
-                    break;
-            }
-            return int.Parse(multiple, NumberFormatInfo.InvariantInfo);
+            return sign * number;
+        }
+
+        /**
+     * Extract the charge position given a molecular formula format [O3S]2-.
+     *
+     * @param formula The formula to inspect
+     * @return        The charge position in the string
+     */
+        private static int FindChargePosition(String formula)
+        {
+            int end = formula.Length - 1;
+            int pos = end;
+            while (pos >= 0 && IsSign(formula[pos]))
+                pos--;
+            int mark1 = pos;
+            while (pos >= 0 && IsDigit(formula[pos]))
+                pos--;
+            int mark2 = pos;
+            while (pos >= 0 && IsSign(formula[pos]))
+                pos--;
+            if (pos == mark2 && formula[pos] != ']')
+                pos = mark1; // not a charge CH3- we sucked up a number
+            return pos + 1;
         }
 
         [Obsolete("Call GetMass(IMolecularFormula, MolecularWeightTypes.MonoIsotopic) and adjusts for charge with CorrectMass(double, Integer). These functions should be used directly.")]
@@ -882,7 +874,7 @@ namespace NCDK.Tools.Manipulator
             {
                 if (isotope.Abundance == null)
                     return 0.0;
-                abundance = abundance * Math.Pow(isotope.Abundance.Value, formula.GetCount(isotope));
+                abundance *= Math.Pow(isotope.Abundance.Value, formula.GetCount(isotope));
             }
             return abundance / Math.Pow(100, GetAtomCount(formula));
         }
@@ -937,14 +929,46 @@ namespace NCDK.Tools.Manipulator
         /// <seealso cref="GetMolecularFormula(IAtomContainer)"/>
         public static IMolecularFormula GetMolecularFormula(IAtomContainer atomContainer, IMolecularFormula formula)
         {
+            // mark multi-center attachments to be excluded from the formula
+            ISet<IAtom> mattach = null;
+            var sgroups = atomContainer.GetCtabSgroups();
+            if (sgroups != null)
+            {
+                foreach (var sgroup in sgroups)
+                {
+                    if (sgroup.Type == SgroupType.ExtMulticenter)
+                    {
+                        foreach (var bond in sgroup.Bonds)
+                        {
+                            foreach (var atom in sgroup.Atoms)
+                            {
+                                if (bond.Contains(atom))
+                                {
+                                    if (mattach == null)
+                                        mattach = new HashSet<IAtom>();
+                                    mattach.Add(atom);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            if (mattach == null)
+                mattach = Sets.Empty<IAtom>();
+
             int charge = 0;
             int hcnt = 0;
-            foreach (var iAtom in atomContainer.Atoms)
+            foreach (var atm in atomContainer.Atoms)
             {
-                formula.Add(iAtom);
-                charge += iAtom.FormalCharge ?? 0;
-                hcnt += iAtom.ImplicitHydrogenCount ?? 0;
+                if (atm is IPseudoAtom atom && atom.AttachPointNum != 0)
+                    continue;
+                if (mattach.Contains(atm))
+                    continue;
+                formula.Add(atm);
+                charge += atm.FormalCharge ?? 0;
+                hcnt += atm.ImplicitHydrogenCount ?? 0;
             }
+        
             if (hcnt != 0)
             {
                 var hAtom = atomContainer.Builder.NewAtom("H");
@@ -968,12 +992,21 @@ namespace NCDK.Tools.Manipulator
         {
             return c >= '0' && c <= '9';
         }
+        private static bool IsSign(char c)
+        {
+            return c == '+' || c == '-' || c == MINUS;
+        }
 
         // helper class for parsing MFs
         sealed class CharIter
         {
             public int pos;
             public string str;
+            public CharIter(int pos, String str)
+            {
+                this.pos = pos;
+                this.str = str;
+            }
 
             public char Next()
             {
@@ -997,6 +1030,25 @@ namespace NCDK.Tools.Manipulator
                 return res;
             }
 
+            public ChemicalElement NextElement()
+            {
+                var c1 = Next();
+                if (!IsUpper(c1))
+                {
+                    if (c1 != '\0') 
+                        pos--;
+                    return null;
+                }
+                var c2 = Next();
+                if (!IsLower(c2))
+                {
+                    if (c2 != '\0') 
+                        pos--;
+                    return ChemicalElement.OfSymbol($"{c1}");
+                }
+                return ChemicalElement.OfSymbol($"{c1}{c2}");
+            }
+
             public bool NextIf(char c)
             {
                 if (str[pos] == c)
@@ -1010,45 +1062,37 @@ namespace NCDK.Tools.Manipulator
 
         // parses an isotope from a symbol in the form:
         // ('[' <DIGIT> ']')? <UPPER> <LOWER>? <DIGIT>+?
-        private static bool ParseIsotope(CharIter iter,
-                                            IMolecularFormula mf,
-                                            bool setMajor)
+        private static bool ParseIsotope(CharIter iter, IMolecularFormula mf, bool setMajor)
         {
-            int elemNumber = 0;
+            ChemicalElement elem = null;
             int mass = 0;
-            int count = 0;
+            int count;
             if (iter.NextIf('['))
             {
                 mass = iter.NextUInt();
                 if (mass < 0)
                     return false;
+                elem = iter.NextElement(); // optional
                 if (!iter.NextIf(']'))
                     return false;
             }
-            char c1 = iter.Next();
-            char c2 = iter.Next();
-            if (!IsLower(c2))
+            if (elem == null)
             {
-                // could use a switch, see SMARTS parser
-                elemNumber = ChemicalElement.OfSymbol("" + c1).AtomicNumber;
-                if (c2 != '\0')
-                    iter.pos--;
-            }
-            else
-            {
-                elemNumber = ChemicalElement.OfSymbol("" + c1 + c2).AtomicNumber;
+                elem = iter.NextElement();
+                if (elem == null)
+                    return false;
             }
             count = iter.NextUInt();
             if (count < 0)
                 count = 1;
-            var isotope = mf.Builder.NewIsotope(ChemicalElement.Of(elemNumber));
+            var isotope = mf.Builder.NewIsotope(elem);
             if (mass != 0)
                 isotope.MassNumber = mass;
             else if (setMajor)
             {
                 try
                 {
-                    var major = CDK.IsotopeFactory.GetMajorIsotope(elemNumber);
+                    var major = CDK.IsotopeFactory.GetMajorIsotope(elem.AtomicNumber);
                     if (major != null)
                         isotope.MassNumber = major.MassNumber;
                 }
@@ -1272,8 +1316,8 @@ namespace NCDK.Tools.Manipulator
                 }
                 newFormula = thisFormula;
             }
-            if (newFormula.Contains("("))
-                newFormula = BreakExtractor(newFormula);
+            if (newFormula.Contains('('))
+                BreakExtractor(newFormula);
 
             string recentElementSymbol = "";
             string recentElementCountString = "0";
@@ -1384,7 +1428,7 @@ namespace NCDK.Tools.Manipulator
                         multipliedformula += thisChar;
                 }
             }
-            finalformula += Muliplier(multipliedformula, multiple == "" ? 1 : int.Parse(multiple)) + formulaEnd;
+            finalformula += Muliplier(multipliedformula, string.IsNullOrEmpty(multiple) ? 1 : int.Parse(multiple)) + formulaEnd;
 
             if (finalformula.Contains("("))
                 return BreakExtractor(finalformula);

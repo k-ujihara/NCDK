@@ -216,6 +216,13 @@ namespace NCDK.Config
                     this.majorIsotope[elem] = major;
                 else
                     Trace.TraceError($"Could not find major isotope for: {elem}");
+                    // Note for SAChem:
+                    // Major (most abundant) isotope means something specific and in general
+                    // you shouldn't assign it to a structure unless you're working with mass
+                    // spectra definitely setting the InChI values is not sensible "(98)Tc" is synthetic
+                    // for example!!!
+                    // see also:
+                    // https://www.nextmovesoftware.com/talks/Mayfield_BuildingOnSand_InChI_201708.pdf
             }
             return Clone(major);
         }

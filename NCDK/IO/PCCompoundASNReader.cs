@@ -21,6 +21,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Common.Primitives;
 using NCDK.IO.Formats;
 using System;
 using System.Collections.Generic;
@@ -67,15 +68,15 @@ namespace NCDK.IO
 
         public override T Read<T>(T obj)
         {
-            if (obj is IChemFile)
+            if (obj is IChemFile file)
             {
 #if !DEBUG
                 try
-                {
 #endif
-                    return (T)ReadChemFile((IChemFile)obj);
-#if !DEBUG
+                {
+                    return (T)ReadChemFile(file);
                 }
+#if !DEBUG
                 catch (IOException e)
                 {
                     throw new CDKException("An IO Exception occurred while reading the file.", e);
@@ -206,7 +207,7 @@ namespace NCDK.IO
             var urn = new URN();
             while (line != null)
             {
-                if (line.Contains("urn"))
+                if (line.ContainsOrdinal("urn"))
                 {
                     urn = ExtractURN();
                 }
@@ -221,7 +222,7 @@ namespace NCDK.IO
                         {
                             case "InChI":
                                 {
-                                    string value = GetQuotedValue(line.Substring(line.IndexOf("value sval", StringComparison.Ordinal) + 10));
+                                    string value = GetQuotedValue(line.Substring(line.IndexOf("value sval") + 10));
                                     molecule.SetProperty(CDKPropertyName.InChI, value);
                                 }
                                 break;

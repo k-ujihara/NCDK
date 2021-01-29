@@ -47,7 +47,7 @@ namespace NCDK.IO
         /// Holder of reader event listeners.
         /// </summary>
         private readonly List<IChemObjectIOListener> listeners = new List<IChemObjectIOListener>(2);
-        private SettingManager<IOSetting> settings = new SettingManager<IOSetting>();
+        private readonly SettingManager<IOSetting> settings = new SettingManager<IOSetting>();
         public virtual ICollection<IChemObjectIOListener> Listeners => listeners;
         public virtual SettingManager<IOSetting> IOSettings => settings;
         public abstract IResourceFormat Format { get; }

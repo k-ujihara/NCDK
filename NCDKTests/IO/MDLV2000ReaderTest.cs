@@ -983,10 +983,10 @@ namespace NCDK.IO
                     foreach (var bond in atc.GetConnectedBonds(atom))
                     {
                         if (bond is QueryBond)
-                        {
-                            queryBondCount++;
-                            Assert.AreEqual(ExprType.True, ((QueryBond)bond).Expression.GetExprType());
-                        }
+                            if (((QueryBond)bond).Expression.GetExprType() == ExprType.True)
+                            {
+                                queryBondCount++;
+                            }
                     }
                 }
             }
@@ -1010,11 +1010,10 @@ namespace NCDK.IO
             foreach (var bond in atc.Bonds)
             {
                 if (bond is QueryBond)
-                {
-                    queryBondCount++;
-                    Assert.AreEqual(ExprType.SingleOrAromatic, ((QueryBond)bond).Expression.GetExprType());
-
-                }
+                    if (((QueryBond)bond).Expression.GetExprType() == ExprType.SingleOrAromatic)
+                    {
+                        queryBondCount++;
+                    }
             }
             Assert.AreEqual(6, queryBondCount, "Expecting six 'query' bond types");
         }
@@ -1913,6 +1912,140 @@ namespace NCDK.IO
                 IAtomContainer mol = mdlr.Read(bldr.NewAtomContainer());
                 Assert.IsInstanceOfType(mol.Atoms[0], typeof(IPseudoAtom));
                 Assert.AreEqual("Blah", ((IPseudoAtom)mol.Atoms[0]).Label);
+            }
+        }
+
+        [TestMethod()]
+        public void AtomList()
+        {
+            using (var mdlr = new MDLV2000Reader(ResourceLoader.GetAsStream(GetType(), "query_atomlist.mol")))
+            {
+                var mol = mdlr.Read(new QueryAtomContainer());
+                var deref = AtomRef.Deref(mol.Atoms[0]);
+                Assert.IsInstanceOfType(deref, typeof(QueryAtom));
+                var queryAtom = (QueryAtom)deref;
+                var expr = queryAtom.Expression;
+                var expected = new Expr(ExprType.Element, 9) // F
+                    .Or(new Expr(ExprType.Element, 7)) // N
+                    .Or(new Expr(ExprType.Element, 8)); // O
+                Assert.AreEqual(expected, expr);
+            }
+        }
+
+        [TestMethod()]
+        public void LegacyAtomList()
+        {
+            using (var mdlr = new MDLV2000Reader(ResourceLoader.GetAsStream(GetType(), "query_legacyatomlist.mol")))
+            {
+                var mol = mdlr.Read(new QueryAtomContainer());
+                var deref = AtomRef.Deref(mol.Atoms[0]);
+                Assert.IsInstanceOfType(deref, typeof(QueryAtom));
+                var queryAtom = (QueryAtom)deref;
+                var expr = queryAtom.Expression;
+                var expected = new Expr(ExprType.Element, 9) // F
+                    .Or(new Expr(ExprType.Element, 7)) // N
+                    .Or(new Expr(ExprType.Element, 8)); // O
+                Assert.AreEqual(expected, expr);
+            }
+        }
+
+        [TestMethod()]
+        public void NotatomList()
+        {
+            using (var mdlr = new MDLV2000Reader(ResourceLoader.GetAsStream(GetType(), "query_notatomlist.mol")))
+            {
+                var mol = mdlr.Read(new QueryAtomContainer());
+                var deref = AtomRef.Deref(mol.Atoms[0]);
+                Assert.IsInstanceOfType(deref, typeof(QueryAtom));
+                var queryAtom = (QueryAtom)deref;
+                var expr = queryAtom.Expression;
+                var expected = new Expr(ExprType.Element, 9) // F
+                    .Or(new Expr(ExprType.Element, 7)) // N
+                    .Or(new Expr(ExprType.Element, 8)); // O
+                expected = expected.Negate();
+                Assert.AreEqual(expected, expr);
+            }
+        }
+
+        [TestMethod()]
+        public void LegacynotatomList()
+        {
+            using (var mdlr = new MDLV2000Reader(ResourceLoader.GetAsStream(GetType(), "query_legacynotatomlist.mol")))
+            {
+                var mol = mdlr.Read(new QueryAtomContainer());
+                var deref = AtomRef.Deref(mol.Atoms[0]);
+                Assert.IsInstanceOfType(deref, typeof(QueryAtom));
+                var queryAtom = (QueryAtom)deref;
+                var expr = queryAtom.Expression;
+                var expected = new Expr(ExprType.Element, 9) // F
+                    .Or(new Expr(ExprType.Element, 7)) // N
+                    .Or(new Expr(ExprType.Element, 8)); // O
+                expected = expected.Negate();
+                Assert.AreEqual(expected, expr);
+            }
+        }
+
+        [TestMethod()]
+        public void SgroupsAbbrRoundTrip()
+        {
+            var sw = new StringWriter();
+            using (var mdlr = new MDLV3000Reader(ResourceLoader.GetAsStream(GetType(), "sgroup-sup.mol3")))
+            {
+                using (var mdlw = new MDLV2000Writer(sw))
+                {
+                    var mol = CDK.Builder.NewAtomContainer();
+                    mol = mdlr.Read(mol);
+                    mdlw.Write(mol);
+                }
+            }
+            Assert.IsTrue(sw.ToString().Contains("M  SAL   1  2   2   3", StringComparison.Ordinal));
+        }
+
+        [TestMethod()]
+        public void CheckFuseBondWithFewerBondsThanAtoms()
+        {
+            using (var reader = new MDLV2000Reader(ResourceLoader.GetAsStream(GetType(), "potentialLateFuse.mol")))
+            {
+                var mol = reader.Read(CDK.Builder.NewAtomContainer());
+                Assert.AreEqual(108, mol.Atoms.Count);
+            }
+        }
+
+        [TestMethod()]
+        public void AtomlistWithAtomContainer()
+        {
+            using (var reader = new MDLV2000Reader(ResourceLoader.GetAsStream(GetType(), "query_notatomlist.mol")))
+            {
+                var mol = reader.Read(CDK.Builder.NewAtomContainer());
+                var deref = AtomRef.Deref(mol.Atoms[0]);
+                Assert.IsInstanceOfType(deref, typeof(QueryAtom));
+            }
+        }
+
+        [TestMethod()]
+        public void DataSgroup()
+        {
+            const string path = "NCDK.Data.MDL.hbr_acoh_mix.mol";
+            using (var mdlr = new MDLV2000Reader(ResourceLoader.GetAsStream(path)))
+            {
+                var mol = mdlr.Read(CDK.Builder.NewAtomContainer());
+                var sgroups = mol.GetCtabSgroups();
+                Sgroup dataSgroup = null;
+                foreach (var sgroup in sgroups)
+                {
+                    if (sgroup.Type == SgroupType.CtabData)
+                    {
+                        dataSgroup = sgroup;
+                        break;
+                    }
+                }
+                Assert.IsNotNull(dataSgroup);
+                Assert.AreEqual("WEIGHT_PERCENT", (string)dataSgroup.GetValue(SgroupKey.DataFieldName));
+                // note it looks like MDL/Accelys/BIOVIA simply omit units/format
+                // but check we pass it okay
+                Assert.AreEqual("%", (string)dataSgroup.GetValue(SgroupKey.DataFieldUnits));
+                Assert.AreEqual("N", (string)dataSgroup.GetValue(SgroupKey.DataFieldFormat));
+                Assert.AreEqual("33%", (string)dataSgroup.GetValue(SgroupKey.Data));
             }
         }
     }

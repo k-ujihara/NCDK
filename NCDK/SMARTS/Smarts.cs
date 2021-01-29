@@ -3381,6 +3381,8 @@ namespace NCDK.SMARTS
                     {
                         var rnum = rnums[bond];
                         sb.Append(Generate(bond.GetOther(atom), ((QueryBond)BondRef.Deref(bond))));
+                        if (rnum >= 10)
+                            sb.Append('%'); 
                         sb.Append(rnum);
                         rvisit[rnum] = false;
                         rnums.Remove(bond);
@@ -3390,6 +3392,8 @@ namespace NCDK.SMARTS
                     else if (IsRingOpen(bond))
                     {
                         var rnum = NextRingNum();
+                        if (rnum >= 10)
+                            sb.Append('%');
                         sb.Append(rnum);
                         rnums[bond] = rnum;
                         rbonds.Remove(bond);
@@ -3448,7 +3452,7 @@ namespace NCDK.SMARTS
                 SetBondDirs(mol);
 
                 bool isRxn = Role(atoms[atoms.Length - 1]) != ReactionRole.None;
-                StringBuilder sb = new StringBuilder();
+                var sb = new StringBuilder();
                 if (isRxn)
                 {
                     WriteParts(atoms, sb, ReactionRole.Reactant);

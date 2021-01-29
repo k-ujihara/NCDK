@@ -17,6 +17,7 @@
  * along with JNI-InChI.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+using NCDK.Common.Primitives;
 using System;
 using System.Globalization;
 
@@ -161,7 +162,7 @@ namespace NCDK.Graphs.InChI
         private static string ToString(double x)
         {
             var s = x.ToString(NumberFormatInfo.InvariantInfo);
-            return s.Contains(".") ? s : s + ".0";
+            return s.ContainsOrdinal(".") ? s : s + ".0";
         }
 
         /// <summary>

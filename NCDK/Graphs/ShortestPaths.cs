@@ -220,7 +220,7 @@ namespace NCDK.Graphs
                     if (dist < distTo[w])
                     {
                         distTo[w] = dist;
-                        routeTo[w] = new SequentialRoute(this, routeTo[v], w); // append w to the route to v
+                        routeTo[w] = new SequentialRoute(this, routeTo[v], w); // Append w to the route to v
                         nPathsTo[w] = nPathsTo[v];
                         precedes[w] = precedes[v] && ordering[w] < ordering[start];
                         queue[n++] = w;

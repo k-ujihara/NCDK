@@ -32,7 +32,7 @@ namespace NCDK.Beam
 
             var replacements = new Traversal(g).replacement;
 
-            // append the edges, replacing any which need to be changed
+            // Append the edges, replacing any which need to be changed
             for (int u = 0; u < g.Order; u++)
             {
                 foreach (var e in g.GetEdges(u))

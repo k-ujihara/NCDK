@@ -17,6 +17,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Common.Primitives;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -36,19 +37,17 @@ namespace NCDK.IO.CML
         public override object GetEntity(Uri absoluteUri, string role, Type ofObjectToReturn)
         {
             Debug.WriteLine($"{nameof(CMLResolver)}: resolving {absoluteUri}");
-#pragma warning disable CA1308 // Normalize strings to uppercase
             var systemId = absoluteUri.AbsolutePath.ToLowerInvariant();
-#pragma warning restore CA1308 // Normalize strings to uppercase
-            if (systemId.Contains("cml-1999-05-15.dtd") 
-             || systemId.Contains("cml.dtd")
-             || systemId.Contains("cml1_0.dtd"))
+            if (systemId.ContainsOrdinal("cml-1999-05-15.dtd") 
+             || systemId.ContainsOrdinal("cml.dtd")
+             || systemId.ContainsOrdinal("cml1_0.dtd"))
             {
                 Trace.TraceInformation("File has CML 1.0 DTD");
                 return GetCMLType("cml1_0.dtd");
             }
-            else if (systemId.Contains("cml-2001-04-06.dtd")
-                  || systemId.Contains("cml1_0_1.dtd")
-                  || systemId.Contains("cml_1_0_1.dtd"))
+            else if (systemId.ContainsOrdinal("cml-2001-04-06.dtd")
+                  || systemId.ContainsOrdinal("cml1_0_1.dtd")
+                  || systemId.ContainsOrdinal("cml_1_0_1.dtd"))
             {
                 Trace.TraceInformation("File has CML 1.0.1 DTD");
                 return GetCMLType("cml1_0_1.dtd");

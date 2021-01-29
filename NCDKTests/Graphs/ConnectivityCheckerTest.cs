@@ -19,6 +19,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.IO;
+using NCDK.Sgroups;
 using NCDK.Templates;
 using NCDK.Tools.Manipulator;
 using System.Linq;
@@ -183,8 +184,8 @@ namespace NCDK.Graphs
         }
 
         /// <summary>
-       // @cdk.bug 2126904
-       /// </summary>
+        // @cdk.bug 2126904
+        /// </summary>
         [TestMethod()]
         public void TestIsConnectedFromSDFile()
         {
@@ -216,6 +217,31 @@ namespace NCDK.Graphs
         {
             var container = builder.NewAtomContainer();
             Assert.IsTrue(ConnectivityChecker.IsConnected(container), "Molecule appears not to be connected");
+        }
+
+        [TestMethod()]
+        public void CopySgroups()
+        {
+            const string filename = "NCDK.Data.MDL.sgroup-split.mol";
+            using (var reader = new MDLV2000Reader(ResourceLoader.GetAsStream(filename)))
+            {
+                var content = reader.Read(CDK.Builder.NewChemFile());
+                var cList = ChemFileManipulator.GetAllAtomContainers(content).ToList();
+                var ac = cList[0];
+                var containerSet = ConnectivityChecker.PartitionIntoMolecules(ac);
+                Assert.AreEqual(2, containerSet.Count);
+                var container1 = containerSet[0];
+                var container2 = containerSet[1];
+                var h2o = container1.Atoms.Count <= 3 ? container1 : container2;
+                Assert.IsNull(h2o.GetCtabSgroups());
+                var otherContainer = h2o == container1 ? container2 : container1;
+                var sgroups = otherContainer.GetCtabSgroups();
+                Assert.AreEqual(1, sgroups.Count);
+                var sgroup = sgroups[0];
+                Assert.AreEqual(SgroupType.CtabStructureRepeatUnit, sgroup.Type);
+                var atoms = sgroup.Atoms;
+                Assert.AreEqual(2, atoms.Count);
+            }
         }
     }
 }

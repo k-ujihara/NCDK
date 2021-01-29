@@ -371,6 +371,7 @@ namespace NCDK.Stereo
         {
             None("P(=N)(N)(C)CC");
             None("P(=O)(O)(C)CC");
+            None("P(=O)([O-])(C)CC");
             None("P(=S)(S)(C)CC");
             None("P(=[Se])([SeH])(C)C");
             None("P(=[Te])([TeH])(C)C");

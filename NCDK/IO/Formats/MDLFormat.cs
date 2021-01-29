@@ -67,8 +67,8 @@ namespace NCDK.IO.Formats
         {
             if (lineNumber == 4 
              && line.Length > 7 
-             && !line.Contains("2000") // MDL Mol V2000 format
-             && !line.Contains("3000")) // MDL Mol V3000 format
+             && !line.ContainsOrdinal("2000") // MDL Mol V2000 format
+             && !line.ContainsOrdinal("3000")) // MDL Mol V3000 format
             {
                 // possibly a MDL mol file
                 try

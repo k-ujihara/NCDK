@@ -23,10 +23,12 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Common.Collections;
 using NCDK.IO.Formats;
 using NCDK.IO.Setting;
 using NCDK.Isomorphisms.Matchers;
 using NCDK.Sgroups;
+using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
@@ -333,15 +335,34 @@ namespace NCDK.IO
             var atomstereo = new Dictionary<IAtom, ITetrahedralChirality>();
             var atomindex = new Dictionary<IAtom, int>();
             foreach (var element in container.StereoElements)
-                if (element is ITetrahedralChirality)
-                    atomstereo[((ITetrahedralChirality)element).ChiralAtom] = (ITetrahedralChirality)element;
+                if (element is ITetrahedralChirality chirality)
+                    atomstereo[chirality.ChiralAtom] = chirality;
             foreach (var atom in container.Atoms)
                 atomindex[atom] = atomindex.Count;
 
             // write Counts line
             line.Append(FormatMDLInt(container.Atoms.Count, 3));
             line.Append(FormatMDLInt(container.Bonds.Count, 3));
-            line.Append("  0  0");
+
+            //find all the atoms that should be atom lists
+            var atomLists = new LinkedHashMap<int, IAtom>();
+
+            for (int f = 0; f < container.Atoms.Count; f++)
+            {
+                if (container.Atoms[f] is IQueryAtom)
+                {
+                    QueryAtom queryAtom = (QueryAtom)AtomRef.Deref(container.Atoms[f]);
+                    Expr expr = queryAtom.Expression;
+                    if (IsValidAtomListExpression(expr))
+                    {
+                        atomLists[f] = container.Atoms[f];
+                    }
+                }
+            }
+            //write number of atom lists
+            line.Append(FormatMDLInt(atomLists.Count, 3));
+            line.Append("  0");
+
             // we mark all stereochemistry to absolute for now
             line.Append(!atomstereo.Any() ? "  0" : "  1");
             line.Append("  0  0  0  0  0999 V2000");
@@ -436,6 +457,10 @@ namespace NCDK.IO
                         }
                     }
                 }
+                else if (atomLists.ContainsKey(f))
+                {
+                    line.Append(FormatMDLString("L", 3));
+                }
                 else
                 {
                     line.Append(FormatMDLString(container.Atoms[f].Symbol, 3));
@@ -479,7 +504,7 @@ namespace NCDK.IO
                 }
                 else
                 {
-                    if (bond.Stereo == BondStereo.UpInverted 
+                    if (bond.Stereo == BondStereo.UpInverted
                      || bond.Stereo == BondStereo.DownInverted
                      || bond.Stereo == BondStereo.UpOrDownInverted)
                     {
@@ -586,7 +611,7 @@ namespace NCDK.IO
                             break;
                     }
                     if (writeDefaultProps.IsSet)
-                        line.Append("  0  0  0 ");
+                        line.Append("  0  0  0");
                     line.Append('\n');
                     writer.Write(line.ToString());
                 }
@@ -626,10 +651,11 @@ namespace NCDK.IO
             // write radical information
             if (container.SingleElectrons.Count > 0)
             {
-                var atomIndexSpinMap = new SortedDictionary<int, SpinMultiplicity>();
+                var atomIndexSpinMap = new LinkedHashMap<int, SpinMultiplicity>();
                 for (int i = 0; i < container.Atoms.Count; i++)
                 {
-                    var eCount = container.GetConnectedSingleElectrons(container.Atoms[i]).Count();
+                    var atom = container.Atoms[i];
+                    var eCount = container.GetConnectedSingleElectrons(atom).Count();
                     switch (eCount)
                     {
                         case 0:
@@ -638,8 +664,14 @@ namespace NCDK.IO
                             atomIndexSpinMap[i] = SpinMultiplicity.Monovalent;
                             break;
                         case 2:
-                            // information loss, divalent but singlet or triplet?
-                            atomIndexSpinMap[i] = SpinMultiplicity.DivalentSinglet;
+                            var multiplicity = atom.GetProperty<SpinMultiplicity>(CDKPropertyName.SpinMultiplicity);
+                            if (multiplicity != null)
+                                atomIndexSpinMap[i] = multiplicity;
+                            else
+                            {
+                                // information loss, divalent but singlet or triplet?
+                                atomIndexSpinMap[i] = SpinMultiplicity.DivalentSinglet;
+                            }
                             break;
                         default:
                             Debug.WriteLine($"Invalid number of radicals found: {eCount}");
@@ -733,6 +765,8 @@ namespace NCDK.IO
                     writer.Write('\n');
                 }
             }
+            //write atom lists
+            WriteAtomLists(atomLists, writer);
 
             WriteSgroups(container, writer, atomindex);
 
@@ -740,6 +774,131 @@ namespace NCDK.IO
             writer.Write("M  END");
             writer.Write('\n');
             writer.Flush();
+        }
+
+        private static void WriteAtomLists(IDictionary<int, IAtom> atomLists, TextWriter writer)
+        {
+            //write out first as the legacy atom list way and then as the M  ALS way
+            //since there should only be a few lines to write each way
+            //it's easier to write them out in one pass through our Map
+            // and save the lines to write into temp Lists to write out at the end.
+            var legacyLines = new List<string>(atomLists.Count);
+            var alsLines = new List<string>(atomLists.Count);
+
+            foreach (var entry in atomLists)
+            {
+                var qa = (QueryAtom)AtomRef.Deref(entry.Value);
+                //atom lists are limited to just a list of ELEMENTS OR'ed together
+                //with the whole expression possibly negated
+
+                var expression = qa.Expression;
+                var elements = GetAtomList(expression);
+                var legacyBuilder = new StringBuilder(80);
+                var alsBuilder = new StringBuilder(80);
+                alsBuilder.Append("M  ALS ");
+                alsBuilder.Append(FormatMDLInt(entry.Key + 1, 3));
+                alsBuilder.Append(FormatMDLInt(elements.Count, 3));
+
+                legacyBuilder.Append(FormatMDLInt(entry.Key + 1, 3));
+                //root expression type is either OR or NOT
+                if (expression.GetExprType() == ExprType.Not)
+                {
+                    alsBuilder.Append(" T ");
+                    legacyBuilder.Append(" T    ");
+                }
+                else
+                {
+                    alsBuilder.Append(" F ");
+                    legacyBuilder.Append(" F    ");
+                }
+                foreach (var symbol in elements)
+                {
+                    alsBuilder.Append(FormatMDLString(symbol, 4));
+                }
+                legacyBuilder.Append(FormatMDLInt(elements.Count, 1));
+                foreach (var atomicNumber in GetAtomListNumbers(expression))
+                {
+                    legacyBuilder.Append(" ").Append(FormatMDLInt(atomicNumber, 3));
+                }
+                alsBuilder.Append('\n');
+                legacyBuilder.Append('\n');
+
+                alsLines.Add(alsBuilder.ToString());
+                legacyLines.Add(legacyBuilder.ToString());
+            }
+            foreach (String line in legacyLines)
+            {
+                writer.Write(line);
+            }
+            foreach (String line in alsLines)
+            {
+                writer.Write(line);
+            }
+        }
+
+        private readonly static HashSet<ExprType> allowedTypes = new HashSet<ExprType>(
+            new ExprType[] {
+                ExprType.Element, ExprType.AliphaticElement, ExprType.AromaticElement, 
+            });
+        
+        private static bool IsValidAtomListExpression(Expr exp)
+        {
+
+            Expr rootToCheck;
+            if (ExprType.Not == exp.GetExprType())
+            {
+                rootToCheck = exp.Left;
+            }
+            else if (ExprType.Or == exp.GetExprType())
+            {
+                rootToCheck = exp;
+            }
+            else
+            {
+                //not a list
+                return false;
+            }
+
+            return AllOrsOfAllowedTypes(rootToCheck, allowedTypes);
+        }
+        private static bool AllOrsOfAllowedTypes(Expr expr, ISet<ExprType> allowedTypes)
+        {
+            if (expr.GetExprType() == ExprType.Or)
+            {
+                return AllOrsOfAllowedTypes(expr.Left, allowedTypes) && AllOrsOfAllowedTypes(expr.Right, allowedTypes);
+            }
+            return allowedTypes.Contains(expr.GetExprType());
+        }
+
+        private static List<string> GetAtomList(Expr exp)
+        {
+            var elist = new List<Expr>();
+            GetLeafNodes(exp, elist);
+            return elist.Select(expr => PeriodicTable.GetSymbol(expr.Value)).ToList();
+        }
+
+        private static List<int> GetAtomListNumbers(Expr exp)
+        {
+            var elist = new List<Expr>();
+            GetLeafNodes(exp, elist);
+            return elist.Select(expr => expr.Value).ToList();
+        }
+
+        private static void GetLeafNodes(Expr exr, List<Expr> elist)
+        {
+            if (exr.GetExprType().Equals(ExprType.Or) || exr.GetExprType().Equals(ExprType.And))
+            {
+                GetLeafNodes(exr.Left, elist);
+                GetLeafNodes(exr.Right, elist);
+            }
+            else if (exr.GetExprType().Equals(ExprType.Not))
+            {
+                GetLeafNodes(exr.Left, elist);
+            }
+            else
+            {
+                elist.Add(exr);
+            }
         }
 
         // 0 = uncharged or value other than these, 1 = +3, 2 = +2, 3 = +1,
@@ -778,7 +937,7 @@ namespace NCDK.IO
                 // ignored
             }
             if (!writeMajorIsotopes.IsSet
-             && major != null 
+             && major != null
              && mass.Equals(major.MassNumber))
                 mass = null;
             if (mass != null)
@@ -798,11 +957,11 @@ namespace NCDK.IO
                 return (int)amap;
             else
             {
-                if (amap is string)
+                if (amap is string str)
                 {
                     try
                     {
-                        return int.Parse((string)amap);
+                        return int.Parse(str);
                     }
                     catch (Exception)
                     {
@@ -843,7 +1002,7 @@ namespace NCDK.IO
         private int DetermineStereoParity(
             IAtomContainer container,
             Dictionary<IAtom, ITetrahedralChirality> atomstereo,
-            Dictionary<IAtom, int> atomindex, 
+            Dictionary<IAtom, int> atomindex,
             IAtom atom)
         {
             if (!atomstereo.TryGetValue(atom, out ITetrahedralChirality tc))
@@ -900,13 +1059,20 @@ namespace NCDK.IO
             // going to modify
             sgroups = new List<Sgroup>(sgroups);
 
-            // remove non-ctab Sgroups 
+            // remove non-ctab Sgroups
             {
-                var removes = new List<Sgroup>();
-                foreach (var e in sgroups.Where(n => n.Type == SgroupType.ExtMulticenter))
-                    removes.Add(e);
-                foreach (var e in removes)
-                    sgroups.Remove(e);
+                var toRemove = sgroups.Where(sgroup => !sgroup.Type.IsCtabStandard()).ToList();
+                foreach (var sgroup in toRemove)
+                    sgroups.Remove(sgroup);
+            }
+
+            var parentList = new List<KeyValuePair<Sgroup, Sgroup>>();
+
+            // collect parents
+            foreach (var sgroup in sgroups)
+            {
+                foreach (var parent in sgroup.Parents)
+                    parentList.Add(new KeyValuePair<Sgroup, Sgroup>(sgroup, parent));
             }
 
             foreach (var wrapSgroups in Wrap(sgroups, 8))
@@ -920,6 +1086,21 @@ namespace NCDK.IO
                     writer.Write(FormatMDLInt(1 + sgroups.IndexOf(sgroup), 3));
                     writer.Write(' ');
                     writer.Write(sgroup.Type.Key());
+                }
+                writer.Write('\n');
+            }
+
+            // Sgroup Parent List
+            foreach (var parents in Wrap(parentList, 8))
+            {
+                writer.Write("M  SPL");
+                writer.Write(FormatMDLInt(parents.Count, 3));
+                foreach (var e in parents)
+                {
+                    writer.Write(' ');
+                    writer.Write(FormatMDLInt(1 + sgroups.IndexOf(e.Key), 3));
+                    writer.Write(' ');
+                    writer.Write(FormatMDLInt(1 + sgroups.IndexOf(e.Value), 3));
                 }
                 writer.Write('\n');
             }
@@ -953,21 +1134,6 @@ namespace NCDK.IO
                     {
                         writer.Write(' ');
                         writer.Write(FormatMDLInt(1 + container.Bonds.IndexOf(bond), 3));
-                    }
-                    writer.Write('\n');
-                }
-
-                // Sgroup Parent List
-                foreach (var parents in Wrap(sgroup.Parents.ToReadOnlyList(), 8))
-                {
-                    writer.Write("M  SPL");
-                    writer.Write(FormatMDLInt(parents.Count, 3));
-                    foreach (var parent in parents)
-                    {
-                        writer.Write(' ');
-                        writer.Write(FormatMDLInt(id, 3));
-                        writer.Write(' ');
-                        writer.Write(FormatMDLInt(1 + sgroups.IndexOf(parent), 3));
                     }
                     writer.Write('\n');
                 }
@@ -1062,6 +1228,64 @@ namespace NCDK.IO
                             writer.Write(FormatMDLInt(compNumber, 3));
                             writer.Write('\n');
                             break;
+                        case SgroupKey.Data:
+                            var data = (string)sgroup.GetValue(SgroupKey.Data);
+                            if (data == null)
+                                break;
+                            // replace CR/LF with space
+                            data = Regex.Replace(data, "[\r\n]", " ");
+                            while (data.Length > 69)
+                            {
+                                writer.Write("M  SCD ");
+                                writer.Write(FormatMDLInt(id, 3));
+                                writer.Write(' ');
+                                writer.Write(data.Substring(0, 69));
+                                writer.Write('\n');
+                                data = data.Substring(69);
+                            }
+                            writer.Write("M  SED ");
+                            writer.Write(FormatMDLInt(id, 3));
+                            writer.Write(' ');
+                            writer.Write(data);
+                            writer.Write('\n');
+                            break;
+                        case SgroupKey.DataFieldName:
+                            var pad = new string(' ', 30).ToCharArray();
+                            var name = (string)sgroup.GetValue(SgroupKey.DataFieldName);
+                            var fmt = (string)sgroup.GetValue(SgroupKey.DataFieldFormat);
+                            var units = (string)sgroup.GetValue(SgroupKey.DataFieldUnits);
+                            if (name == null)
+                                break;
+                            if (name.Length > 30)
+                                name = name.Substring(0, 30);
+                            writer.Write("M  SDT ");
+                            writer.Write(FormatMDLInt(id, 3));
+                            writer.Write(' ');
+                            writer.Write(name);
+                            writer.Write(pad, 0, 30 - name.Length);
+                            if (fmt != null && fmt.Length > 0 &&
+                                (fmt[0] == 'N' ||
+                                 fmt[0] == 'F' ||
+                                 fmt[0] == 'T'))
+                            {
+                                writer.Write(fmt[0] + " ");
+                            }
+                            else
+                            {
+                                writer.Write("  ");
+                            }
+                            if (units != null)
+                            {
+                                if (units.Length > 20)
+                                    units = units.Substring(0, 20);
+                                writer.Write(units);
+                            }
+                            writer.Write('\n');
+                            break;
+                        case SgroupKey.DataFieldFormat:
+                        case SgroupKey.DataFieldUnits:
+                            // written as part of the field name
+                            break;
                     }
                 }
             }
@@ -1108,7 +1332,7 @@ namespace NCDK.IO
             writer.Write(" ");
             writer.Write(FormatMDLInt(entry.Value.Value, WIDTH));
 
-            i = i + 1;
+            i += 1;
             if (i < NN8 && iterator.MoveNext())
                 WriteRadicalPattern(iterator, i);
         }

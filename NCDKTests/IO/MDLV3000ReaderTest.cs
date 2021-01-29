@@ -157,5 +157,20 @@ namespace NCDK.IO
                 Assert.AreEqual(31, mol.Atoms.Count);
             }
         }
+
+        /// <summary>
+        /// MDLV3000Reader does not yet support queries. Parsed query bonds (order >= 4) should be set to <see cref="BondOrder.Unset"/>
+        /// to avoid NPE in valence calculation.
+        /// </summary>
+        /// @cdk.bug https://github.com/cdk/cdk/issues/664
+        [TestMethod()]
+        public void Reading_query_bond_should_not_npe()
+        {
+            using (var reader = new MDLV3000Reader(ResourceLoader.GetAsStream(GetType(), "v3000Query.mol")))
+            {
+                var container = reader.Read(CDK.Builder.NewAtomContainer());
+                Assert.AreEqual(BondOrder.Unset, container.Bonds[4].Order);
+            }
+        }
     }
 }

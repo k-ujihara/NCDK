@@ -17,6 +17,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Common.Primitives;
 using NCDK.Tools;
 using System;
 using System.Collections.Generic;
@@ -60,7 +61,7 @@ namespace NCDK.IO.Formats
         /// <inheritdoc/>
         public override bool Matches(int lineNumber, string line)
         {
-            if (line.Contains("Gaussian(R) 98") || line.Contains("Gaussian 98"))
+            if (line.ContainsOrdinal("Gaussian(R) 98") || line.ContainsOrdinal("Gaussian 98"))
             {
                 return true;
             }

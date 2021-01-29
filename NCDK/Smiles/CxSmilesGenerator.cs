@@ -74,6 +74,49 @@ namespace NCDK.Smiles
             return alen.CompareTo(blen);
         }
 
+        class CxPolymerSgroup_Comparer : IComparer<CxPolymerSgroup>
+        {
+            readonly Comparison<int> comp;
+
+            public CxPolymerSgroup_Comparer(Comparison<int> comp)
+            {
+                this.comp = comp;
+            }
+
+            public int Compare(CxPolymerSgroup a, CxPolymerSgroup b)
+            {
+                int cmp = 0;
+                cmp = a.type.CompareTo(b.type);
+                if (cmp != 0) 
+                    return cmp;
+                cmp = CxSmilesGenerator.Compare(comp, a.atoms, b.atoms);
+                return cmp;
+            }
+        }
+
+        class CxDataSgroup_Comparer : IComparer<CxDataSgroup>
+        {
+            readonly Comparison<int> comp;
+
+            public CxDataSgroup_Comparer(Comparison<int> comp)
+            {
+                this.comp = comp;
+            }
+
+            public int Compare(CxDataSgroup a, CxDataSgroup b)
+            {
+                int cmp = 0;
+                cmp = a.field.CompareTo(b.field);
+                if (cmp != 0) 
+                    return cmp;
+                cmp = a.value.CompareTo(b.value);
+                if (cmp != 0) 
+                    return cmp;
+                cmp = CxSmilesGenerator.Compare(comp, a.atoms, b.atoms);
+                return cmp;
+            }
+        }
+
         internal static string Generate(CxSmilesState state, SmiFlavors opts, int[] components, int[] ordering)
         {
             if (!SmiFlavorTool.IsSet(opts, SmiFlavors.CxSmilesWithCoords))
@@ -90,7 +133,7 @@ namespace NCDK.Smiles
 
             // Fragment Grouping
             if (SmiFlavorTool.IsSet(opts, SmiFlavors.CxFragmentGroup)
-             && state.fragGroups != null 
+             && state.fragGroups != null
              && state.fragGroups.Any())
             {
                 int maxCompId = 0;
@@ -132,7 +175,7 @@ namespace NCDK.Smiles
             }
 
             // Atom Labels
-            if (SmiFlavorTool.IsSet(opts, SmiFlavors.CxAtomLabel) 
+            if (SmiFlavorTool.IsSet(opts, SmiFlavors.CxAtomLabel)
              && state.atomLabels != null && state.atomLabels.Any())
             {
                 if (sb.Length > 2)
@@ -203,7 +246,7 @@ namespace NCDK.Smiles
 
             // Multi-center/Positional variation bonds
             if (SmiFlavorTool.IsSet(opts, SmiFlavors.CxMulticenter)
-             && state.positionVar != null 
+             && state.positionVar != null
              && state.positionVar.Any())
             {
                 if (sb.Length > 2)
@@ -228,39 +271,131 @@ namespace NCDK.Smiles
                 }
             }
 
+            if (SmiFlavorTool.IsSet(opts, SmiFlavors.CxLigandOrder) &&
+                state.ligandOrdering != null && state.ligandOrdering.Any())
+            {
+                if (sb.Length > 2)
+                    sb.Append(',');
+                sb.Append("LO");
+                sb.Append(':');
+
+                var ligandorderings = new List<KeyValuePair<int, IList<int>>>(state.ligandOrdering);
+
+                // consistent output order
+                ligandorderings.Sort((a, b) => comp(a.Key, b.Key));
+
+                for (int i = 0; i < ligandorderings.Count; i++)
+                {
+                    if (i != 0)
+                        sb.Append(',');
+                    var e = ligandorderings[i];
+                    sb.Append(ordering[e.Key]);
+                    sb.Append(':');
+                    AppendIntegers(ordering, '.', sb, e.Value);
+                }
+            }
+
+            int numSgroups = 0;
             // *CCO* |$_AP1;;;;_AP2$,Sg:n:1,2,3::ht|
             if (SmiFlavorTool.IsSet(opts, SmiFlavors.CxPolymer)
-             && state.sgroups != null && state.sgroups.Any())
+             && state.mysgroups != null && state.mysgroups.Any())
             {
-                var sgroups = new List<PolymerSgroup>(state.sgroups);
-
-                foreach (PolymerSgroup psgroup in sgroups)
-                    psgroup.atomset.Sort(comp);
-
-                sgroups.Sort((a, b) =>
+                var polysgroups = new List<CxPolymerSgroup>();
+                foreach (var polysgroup in state.mysgroups)
                 {
-                    int cmp = 0;
-                    cmp = string.CompareOrdinal(a.type, b.type);
-                    if (cmp != 0)
-                        return cmp;
-                    cmp = CxSmilesGenerator.Compare(comp, a.atomset, b.atomset);
-                    return cmp;
-                });
+                    if (polysgroup is CxPolymerSgroup)
+                    {
+                        polysgroups.Add((CxPolymerSgroup)polysgroup);
+                        polysgroup.atoms.Sort(comp);
+                    }
+                }
 
-                for (int i = 0; i < sgroups.Count; i++)
-                {
+                polysgroups.Sort(new CxPolymerSgroup_Comparer(comp));
+
+                foreach (var cxPolymerSgroup in polysgroups) {
+                    cxPolymerSgroup.id = numSgroups++;
                     if (sb.Length > 2) sb.Append(',');
                     sb.Append("Sg:");
-                    var sgroup = sgroups[i];
-                    sb.Append(sgroup.type);
+                    sb.Append(cxPolymerSgroup.type);
                     sb.Append(':');
-                    AppendIntegers(ordering, ',', sb, sgroup.atomset);
+                    AppendIntegers(ordering, ',', sb, cxPolymerSgroup.atoms);
                     sb.Append(':');
-                    if (sgroup.subscript != null)
-                        sb.Append(sgroup.subscript);
+                    if (cxPolymerSgroup.subscript != null)
+                        sb.Append(cxPolymerSgroup.subscript);
                     sb.Append(':');
-                    if (sgroup.supscript != null)
-                        sb.Append(sgroup.supscript.ToLowerInvariant());
+                    if (cxPolymerSgroup.supscript != null)
+                        sb.Append(cxPolymerSgroup.supscript.ToLowerInvariant());
+                }
+            }
+            if (SmiFlavorTool.IsSet(opts, SmiFlavors.CxDataSgroups)
+             && state.mysgroups != null && state.mysgroups.Any())
+            {
+                var datasgroups = new List<CxDataSgroup>();
+                foreach (var datasgroup in state.mysgroups)
+                {
+                    if (datasgroup is CxDataSgroup sgroup)
+                    {
+                        datasgroups.Add(sgroup);
+                        datasgroup.atoms.Sort(comp);
+                    }
+                }
+                datasgroups.Sort(new CxDataSgroup_Comparer(comp));
+
+                foreach (var cxDataSgroup in datasgroups)
+                {
+                    cxDataSgroup.id = numSgroups++;
+                    if (sb.Length > 2) 
+                        sb.Append(',');
+                    sb.Append("SgD:");
+                    AppendIntegers(ordering, ',', sb, cxDataSgroup.atoms);
+                    sb.Append(':');
+                    if (cxDataSgroup.field != null)
+                        sb.Append(cxDataSgroup.field);
+                    sb.Append(':');
+                    if (cxDataSgroup.value != null)
+                        sb.Append(cxDataSgroup.value);
+                    sb.Append(':');
+                    if (cxDataSgroup.operator_ != null)
+                        sb.Append(cxDataSgroup.operator_);
+                    sb.Append(':');
+                    if (cxDataSgroup.unit != null)
+                        sb.Append(cxDataSgroup.unit);
+                    // fmt (t/f/n) + coords?
+                }
+            }
+
+            // hierarchy information
+            if (numSgroups > 0)
+            {
+                bool firstSgH = true;
+                if (state.mysgroups != null)
+                {
+                    state.mysgroups.Sort((a, b) => a.id.CompareTo(b.id));
+                    foreach (var sgroup in state.mysgroups)
+                    {
+                        if (!sgroup.children.Any())
+                            continue;
+                        if (sb.Length > 2) 
+                            sb.Append(',');
+                        if (firstSgH)
+                        {
+                            sb.Append("SgH:");
+                            firstSgH = false;
+                        }
+                        sb.Append(sgroup.id).Append(':');
+                        bool first = true;
+                        var children = new List<CxSgroup>(sgroup.children);
+                        children.Sort((a, b) => a.id.CompareTo(b.id));
+                        foreach (var child in children)
+                        {
+                            if (child.id < 0)
+                                continue;
+                            if (!first)
+                                sb.Append('.');
+                            first = false;
+                            sb.Append(child.id);
+                        }
+                    }
                 }
             }
 
@@ -299,7 +434,7 @@ namespace NCDK.Smiles
             }
         }
 
-        private static void AppendIntegers(int[] invorder, char sep, StringBuilder sb, List<int> vals)
+        private static void AppendIntegers(int[] invorder, char sep, StringBuilder sb, IList<int> vals)
         {
             if (vals.Any())
                 sb.Append(string.Join(new string(new[] { sep }), vals.Select(v => invorder[v].ToString(NumberFormatInfo.InvariantInfo))));

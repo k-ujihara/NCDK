@@ -19,6 +19,7 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NCDK.Common.Primitives;
 using NCDK.IO;
 using NCDK.Numerics;
 using NCDK.Smiles;
@@ -892,12 +893,9 @@ namespace NCDK.Graphs.InChI
             }
         }
 
-        // if this test hits the timeout it's likely the users Locale is mixed, the
-        // InChI library was loaded in one mode and java is in another, the issue
-        // is InChI takes timeout in seconds and fractional seconds will be either
-        // 0.1 or 0,1 depending on locale.
+        [TestCategory("VerySlowTest")]
         [TestMethod()]
-        [Timeout(500)]
+        [Timeout(10000)]
         public void Timeout()
         {
             var smipar = new SmilesParser(builder);
@@ -907,8 +905,8 @@ namespace NCDK.Graphs.InChI
             var generator = inchiFact.GetInChIGenerator(mol, "W0.01");
             Assert.AreEqual(InChIReturnCode.Error, generator.ReturnStatus);
             Assert.IsTrue(
-                generator.Log.Contains("Time limit exceeded")
-             || generator.Log.Contains("Structure normalization timeout"));
+                generator.Log.ContainsOrdinal("Time limit exceeded")
+             || generator.Log.ContainsOrdinal("Structure normalization timeout"));
         }
 
         /// <summary>

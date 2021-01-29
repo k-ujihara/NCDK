@@ -52,11 +52,13 @@ namespace NCDK.Isomorphisms
     // @author John Mayfield
     public class DfPattern : Pattern
     {
-        private readonly IQueryAtomContainer query;
+        private readonly IAtomContainer src;
+        private readonly IAtomContainer query;
         private readonly DfState state;
 
-        private DfPattern(IQueryAtomContainer query)
+        private DfPattern(IAtomContainer src, IAtomContainer query)
         {
+            this.src = src;
             this.query = query;
             DetermineFilters(query);
             state = new DfState(query);
@@ -91,12 +93,12 @@ namespace NCDK.Isomorphisms
         public override Mappings MatchAll(IAtomContainer mol)
         {
             if (mol.Atoms.Count < query.Atoms.Count)
-                return new Mappings(query, mol, Array.Empty<int[]>());
+                return new Mappings(src, mol, Array.Empty<int[]>());
             if (mol.Atoms.Count > 0)
                 CheckCompatibleAPI(mol.Atoms[0]);
             var local = new DfState(state);
             local.SetMol(mol);
-            var mappings = new Mappings(query, mol, local);
+            var mappings = new Mappings(src, mol, local);
             return Filter(mappings, query, mol);
         }
 
@@ -143,16 +145,36 @@ namespace NCDK.Isomorphisms
         /// <seealso cref="QueryAtomContainer.Create(IAtomContainer, ExprType[])"/>
         public static new DfPattern CreateSubstructureFinder(IAtomContainer query)
         {
-            if (query is IQueryAtomContainer)
-                return new DfPattern((IQueryAtomContainer)query);
-            else
-                return new DfPattern(QueryAtomContainer.Create(
+            // if one or more atoms/bonds is not a query atom/bond we need to convert
+            // out input to a query molecule using some sensible defaults. Note any existing
+            // query atom/bonds will be copied
+            if (!IsCompleteQuery(query))
+            {
+                return new DfPattern(
                     query,
-                    ExprType.AliphaticElement,
-                    ExprType.AromaticElement,
-                    ExprType.SingleOrAromatic,
-                    ExprType.AliphaticOrder,
-                    ExprType.Stereochemistry));
+                    QueryAtomContainer.Create(
+                        query,
+                        ExprType.AliphaticElement,
+                        ExprType.AromaticElement,
+                        ExprType.SingleOrAromatic,
+                        ExprType.AliphaticOrder,
+                        ExprType.Stereochemistry));
+            }
+            else
+            {
+                return new DfPattern(query, query);
+            }
+        }
+
+        private static bool IsCompleteQuery(IAtomContainer query)
+        {
+            foreach (var atom in query.Atoms)
+                if (!(atom is IQueryAtom))
+                    return false;
+            foreach (var bond in query.Bonds)
+                if (!(bond is IQueryBond))
+                    return false;
+            return true;
         }
     }
 }

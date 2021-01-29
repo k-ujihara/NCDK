@@ -47,6 +47,11 @@ namespace NCDK.Sgroups
         CtabClass,
         CtabParentAtomList,
         CtabComponentNumber,
+        // Data Sgroups
+        DataFieldName,
+        DataFieldFormat,
+        DataFieldUnits,
+        DataDisplayInformation,
+        Data,
     }
 }
-

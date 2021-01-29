@@ -464,7 +464,7 @@ namespace NCDK.Smiles
                     var mol = atomToMol[old];
                     AtomContainerManipulator.ReplaceAtomByAtom(mol, old, pseudo);
                     atomToMol.Add(pseudo, mol);
-                    atoms[e.Key] = pseudo;
+                    atoms[e.Key] = mol.Atoms[old.Index];
                 }
             }
 
@@ -508,7 +508,6 @@ namespace NCDK.Smiles
                         continue;
 
                     int count = 0;
-                    var aa = e.Value;
                     switch (e.Value)
                     {
                         case CxSmilesState.Radical.Monovalent:
@@ -535,6 +534,7 @@ namespace NCDK.Smiles
             }
 
             var sgroupMap = new MultiDictionary<IAtomContainer, Sgroup>();
+            var sgroupRemap = new Dictionary<CxSmilesState.CxSgroup, Sgroup>();
 
             // positional-variation
             if (cxstate.positionVar != null)
@@ -546,7 +546,7 @@ namespace NCDK.Smiles
                     var mol = atomToMol[beg];
                     var bonds = mol.GetConnectedBonds(beg);
                     if (bonds.Count() == 0)
-                        continue; // bad
+                        continue; // possibly okay
                     sgroup.Add(beg);
                     sgroup.Add(bonds.First());
                     foreach (var endpt in e.Value)
@@ -555,27 +555,46 @@ namespace NCDK.Smiles
                 }
             }
 
-            // data sgroups
-            if (cxstate.dataSgroups != null)
+            // ligand ordering
+            if (cxstate.ligandOrdering != null)
             {
-                foreach (var dsgroup in cxstate.dataSgroups)
+                foreach (var e  in cxstate.ligandOrdering)
                 {
-                    if (dsgroup.Field != null && dsgroup.Field.StartsWith("cdk:", StringComparison.Ordinal))
+                    Sgroup sgroup = new Sgroup
                     {
-                        chemObj.SetProperty(dsgroup.Field, dsgroup.Value);
+                        Type = SgroupType.ExtAttachOrdering
+                    };
+                    IAtom beg = atoms[e.Key];
+                    IAtomContainer mol = atomToMol[beg];
+                    var bonds = mol.GetConnectedBonds(beg).ToList();
+                    if (!bonds.Any())
+                        throw new InvalidSmilesException("CXSMILES LO: no bonds to order");
+                    if (bonds.Count != e.Value.Count)
+                        throw new InvalidSmilesException("CXSMILES LO: bond count and ordering count was different");
+                    sgroup.Atoms.Add(beg);
+                    foreach (var endpt in e.Value)
+                    { 
+                        IBond bond = beg.GetBond(atoms[endpt]);
+                        if (bond == null)
+                            throw new InvalidSmilesException("CXSMILES LO: defined ordering to non-existant bond");
+                        sgroup.Bonds.Add(bond);
                     }
+                    sgroupMap.Add(mol, sgroup);
                 }
             }
 
             // polymer Sgroups
-            if (cxstate.sgroups != null)
+            if (cxstate.mysgroups != null)
             {
-                foreach (var psgroup in cxstate.sgroups)
+                foreach (var cxsgroup in cxstate.mysgroups)
                 {
+                    if (!(cxsgroup is CxSmilesState.CxPolymerSgroup))
+                        continue;
+                    var psgroup = (CxSmilesState.CxPolymerSgroup)cxsgroup;
                     var sgroup = new Sgroup();
                     var atomset = new HashSet<IAtom>();
                     IAtomContainer mol = null;
-                    foreach (var idx in psgroup.AtomSet)
+                    foreach (var idx in psgroup.atoms)
                     {
                         if (idx >= atoms.Count)
                             continue;
@@ -603,10 +622,10 @@ namespace NCDK.Smiles
                         sgroup.Add(atom);
                     }
 
-                    sgroup.Subscript = psgroup.Subscript;
-                    sgroup.PutValue(SgroupKey.CtabConnectivity, psgroup.Supscript);
+                    sgroup.Subscript = psgroup.subscript;
+                    sgroup.PutValue(SgroupKey.CtabConnectivity, psgroup.supscript);
 
-                    switch (psgroup.Type)
+                    switch (psgroup.type)
                     {
                         case "n":
                             sgroup.Type = SgroupType.CtabStructureRepeatUnit;
@@ -658,8 +677,79 @@ namespace NCDK.Smiles
                             break;
                     }
                     sgroupMap.Add(mol, sgroup);
+                    // CxState Sgroup => CDK Sgroup lookup
+                    sgroupRemap[psgroup] = sgroup;
                 C_PolySgroup:
                     ;
+                }
+            }
+
+            // data sgroups
+            if (cxstate.mysgroups != null)
+            {
+
+            DataSgroup:
+                foreach (var cxsgroup in cxstate.mysgroups)
+                {
+                    if (!(cxsgroup is CxSmilesState.CxDataSgroup))
+                        continue;
+                    var dsgroup = (CxSmilesState.CxDataSgroup)cxsgroup;
+
+                    var atomset = new HashSet<IAtom>();
+                    IAtomContainer mol = null;
+                    foreach (var idx in dsgroup.atoms)
+                    {
+                        if (idx >= atoms.Count)
+                            continue;
+                        var atom = atoms[idx];
+                        var amol = atomToMol[atom];
+
+                        if (mol == null)
+                            mol = amol;
+                        else if (amol != mol)
+                            goto DataSgroup_LoopEnd;
+
+                        atomset.Add(atom);
+                    }
+
+                    if (dsgroup.field != null && dsgroup.field.StartsWith("cdk:"))
+                    {
+                        chemObj.SetProperty(dsgroup.field, dsgroup.value);
+                    }
+                    else
+                    {
+                        var cdkSgroup = new Sgroup();
+                        cdkSgroup.Type = SgroupType.CtabData;
+                        foreach (var atom in atomset)
+                            cdkSgroup.Atoms.Add(atom);
+                        cdkSgroup.PutValue(SgroupKey.DataFieldName, dsgroup.field);
+                        cdkSgroup.PutValue(SgroupKey.DataFieldUnits, dsgroup.unit);
+                        cdkSgroup.PutValue(SgroupKey.Data, dsgroup.value);
+                        sgroupRemap[dsgroup] = cdkSgroup;
+                        if (mol != null)
+                            sgroupMap.Add(mol, cdkSgroup);
+                        else if (chemObj is IAtomContainer)
+                            sgroupMap.Add((IAtomContainer)chemObj, cdkSgroup);
+                    }
+                DataSgroup_LoopEnd:
+                    ;
+                }
+            }
+
+            if (cxstate.mysgroups != null)
+            {
+                foreach (var parent in cxstate.mysgroups)
+                {
+                    var cdkParent = sgroupRemap[parent];
+                    if (cdkParent == null)
+                        continue;
+                    foreach (var child in parent.children)
+                    {
+                        var cdkChild = sgroupRemap[child];
+                        if (cdkChild == null)
+                            continue;
+                        cdkChild.Parents.Add(cdkParent);
+                    }
                 }
             }
 

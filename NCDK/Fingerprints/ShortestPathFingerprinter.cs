@@ -52,6 +52,7 @@ namespace NCDK.Fingerprints
     /// <para>The FingerPrinter assumes that hydrogens are explicitly given! Furthermore, if pseudo atoms or atoms with
     /// malformed symbols are present, their atomic number is taken as one more than the last element currently supported in <see cref="NCDK.Tools.PeriodicTable"/>.
     /// </para>
+    /// <note type="important">This fingerprint can not be used for substructure screening.</note>
     /// </remarks>
     // @author Syed Asad Rahman (2012)
     // @cdk.keyword fingerprint
@@ -96,7 +97,7 @@ namespace NCDK.Fingerprints
         /// <returns>A <see cref="BitArray"/> representing the fingerprint</returns>
         public override IBitFingerprint GetBitFingerprint(IAtomContainer ac)
         {
-            IAtomContainer atomContainer = null;
+            IAtomContainer atomContainer;
             atomContainer = (IAtomContainer)ac.Clone();
             Aromaticity.CDKLegacy.Apply(atomContainer);
             var bitSet = new BitArray(fingerprintLength);
@@ -136,7 +137,9 @@ namespace NCDK.Fingerprints
             }
         }
 
+#pragma warning disable IDE0051 // Remove unused private members
         private void AddUniquePath(IAtomContainer atomContainer, Dictionary<string, int> uniquePaths)
+#pragma warning restore IDE0051 // Remove unused private members
         {
             int[] hashes;
             hashes = FindPaths(atomContainer);
@@ -224,8 +227,7 @@ namespace NCDK.Fingerprints
                 var lpInformation = new StringBuilder();
                 lpInformation.Append("LP: ").Append(container.LonePairs.Count);
                 paths.Insert(patternIndex, Strings.GetJavaHashCode(lpInformation.ToString()));
-                patternIndex++;
-            }
+              }
             return paths.ToArray();
         }
 

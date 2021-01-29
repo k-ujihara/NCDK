@@ -44,7 +44,8 @@ namespace NCDK.Geometries.CIP.Rules
             var massNumber = ligand.LigandAtom.MassNumber;
             if (massNumber != null)
                 return massNumber.Value;
-            return factory.GetMajorIsotope(ligand.LigandAtom.Symbol).MassNumber.Value;
+            var isotope = factory.GetMajorIsotope(ligand.LigandAtom.Symbol);
+            return isotope.MassNumber??0;
         }
     }
 }

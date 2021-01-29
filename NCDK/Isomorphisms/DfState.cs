@@ -87,7 +87,7 @@ namespace NCDK.Isomorphisms
         private int sptr;
         private StackFrame[] stack;
 
-        internal DfState(IQueryAtomContainer query)
+        internal DfState(IAtomContainer query)
         {
             var builder = Silent.ChemObjectBuilder.Instance;
 

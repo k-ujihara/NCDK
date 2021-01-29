@@ -920,7 +920,7 @@ namespace NCDK.Beam
                 Tellurium,
                 Bismuth);
 
-            private ICollection<Element> elements = new List<Element>();
+            private readonly ICollection<Element> elements = new List<Element>();
 
             AromaticSpecification(params Element[] es)
             {

@@ -25,15 +25,24 @@ using NCDK.Graphs;
 using NCDK.RingSearches;
 using NCDK.Tools.Manipulator;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 
 namespace NCDK.Fingerprints
 {
     /// <summary>
     /// Generates an extended fingerprint for a given <see cref="IAtomContainer"/>, that
-    /// the <see cref="Fingerprinter"/> with additional bits describing ring
-    /// features.
+    /// the <see cref="Fingerprinter"/> with additional (25) bits describing ring
+    /// features and isotopic masses.
     /// </summary>
+    /// <remarks>
+    /// <i>JWM Comment: It's better to actually just hash the rings over the entire
+    /// length simply using a different seed.
+    /// The original version of the class used non-unique SSSR which of course
+    /// doesn't work for substructure screening so this fingerprint can only
+    /// be used for similarity.</i>    
+    /// </remarks>
     /// <seealso cref="Fingerprinter"/>
     // @author         shk3
     // @cdk.created    2006-01-13
@@ -42,9 +51,10 @@ namespace NCDK.Fingerprints
     // @cdk.module     fingerprint
     public class ExtendedFingerprinter : Fingerprinter, IFingerprinter
     {
+        // number of bits to hash rings into
         private const int ReservedBits = 25;
 
-        private Fingerprinter fingerprinter = null;
+        private readonly Fingerprinter fingerprinter = null;
 
         /// <summary>
         /// Creates a fingerprint generator of length <see cref="Fingerprinter.DefaultSize"/> 
@@ -106,6 +116,7 @@ namespace NCDK.Fingerprints
         /// <param name="rslist">A list of all ring systems in ac</param>
         /// <exception cref="CDKException">for example if input can not be cloned.</exception>
         /// <returns>a BitArray representing the fingerprint</returns>
+        /// <exception cref="CDKException">for example if input can not be cloned.</exception>
         public IBitFingerprint GetBitFingerprint(IAtomContainer atomContainer, IRingSet ringSet, IEnumerable<IRingSet> rslist)
         {
             var container = (IAtomContainer)atomContainer.Clone();
@@ -148,6 +159,48 @@ namespace NCDK.Fingerprints
         public override ICountFingerprint GetCountFingerprint(IAtomContainer container)
         {
             throw new NotSupportedException();
+        }
+
+        public override string GetVersionDescription()
+        {
+            var sb = new StringBuilder();
+            sb.Append("CDK-")
+              .Append(GetType().Name)
+              .Append("/")
+              .Append(CDK.Version); // could version fingerprints separately
+            foreach (var param in GetParameters())
+            {
+                sb.Append(' ').Append(param.Key).Append('=').Append(param.Value);
+            }
+            return sb.ToString();
+        }
+
+        public override BitArray GetFingerprint(IAtomContainer mol)
+        {
+            return GetBitFingerprint(mol).AsBitSet();
+        }
+
+        /// <summary>
+        /// Set the pathLimit for the base daylight/path fingerprint. If too many paths are generated from a single atom
+        /// an exception is thrown.
+        /// </summary>
+        /// <param name="pathLimit">the number of paths to generate from a node</param>
+        /// <seealso cref="Fingerprinter"/>
+        public override void SetPathLimit(int pathLimit)
+        {
+            this.fingerprinter.SetPathLimit(pathLimit);
+        }
+
+        /// <summary>
+        ///Set the hashPseudoAtoms for the base daylight/path fingerprint.This indicates whether pseudo-atoms should be
+        ///hashed, for substructure screening this is not desirable - but this fingerprint uses SSSR so can't be used for
+        ///substructure screening regardless.
+        /// </summary>
+        /// <param name="hashPseudoAtoms">the number of paths to generate from a node</param>
+        /// <seealso cref="Fingerprinter"/>
+        public override void SetHashPseudoAtoms(bool hashPseudoAtoms)
+        {
+            this.fingerprinter.SetHashPseudoAtoms(hashPseudoAtoms);
         }
     }
 }

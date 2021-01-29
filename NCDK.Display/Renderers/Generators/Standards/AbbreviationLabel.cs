@@ -204,6 +204,12 @@ namespace NCDK.Renderers.Generators.Standards
                     case '=':
                         tokens.Add(c.ToString());
                         i++;
+
+                        int beg = i;
+                        while (i < label.Length && char.IsDigit(label[i]))
+                            i++;
+                        if (i > beg)
+                            tokens.Add(label.Substring(beg, i - beg));
                         continue;
                 }
 

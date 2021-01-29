@@ -26,6 +26,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Common.Base;
 using NCDK.Smiles;
 using System.Collections.Generic;
+using System.Linq;
 using static NCDK.Graphs.GraphUtil;
 
 namespace NCDK.Graphs.Invariant
@@ -128,6 +129,16 @@ namespace NCDK.Graphs.Invariant
             var m = Smi("B1[H]B[H]1");
             var mask = Canon.TerminalHydrogens(m, GraphUtil.ToAdjList(m));
             Assert.IsTrue(Compares.AreEqual(new bool[] { false, false, false, false }, mask));
+        }
+
+        [TestMethod()]
+        public void IsotopeFlavor()
+        {
+            IAtomContainer m = Smi("CC[13CH3]");
+            var symmetry = Canon.Symmetry(m, GraphUtil.ToAdjList(m), CanonOpts.Default);
+            Assert.IsTrue(new long[] { 1, 3, 1 }.SequenceEqual(symmetry));
+            var symmetry2 = Canon.Symmetry(m, GraphUtil.ToAdjList(m), CanonOpts.AtomicMass);
+            Assert.IsTrue(new long[] { 1, 2, 3 }.SequenceEqual(symmetry2));
         }
 
         [TestMethod()]

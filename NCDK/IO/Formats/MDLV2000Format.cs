@@ -17,6 +17,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Common.Primitives;
 using NCDK.Tools;
 using System.Collections.Generic;
 
@@ -50,7 +51,7 @@ namespace NCDK.IO.Formats
         /// <inheritdoc/>
         public override bool Matches(int lineNumber, string line)
         {
-            if (lineNumber == 4 && (line.Contains("v2000") || line.Contains("V2000")))
+            if (lineNumber == 4 && (line.ContainsOrdinal("v2000") || line.ContainsOrdinal("V2000")))
             {
                 return true;
             }

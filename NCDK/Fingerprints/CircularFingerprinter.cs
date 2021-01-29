@@ -97,8 +97,8 @@ namespace NCDK.Fingerprints
     /// Green et al (1994).</para>
     ///  
     /// <para>The fingerprints and their uses have been described in Clark et al. <token>cdk-cite-Clark2014</token>.</para>
-    ///  
-    /// <see href="http://www.jcheminf.com/content/6/1/38">http://www.jcheminf.com/content/6/1/38</see>
+    /// 
+    /// <note type="important">This fingerprint can not be used for substructure screening.</note>
     /// </remarks>
     // @author         am.clark
     // @cdk.created    2014-01-01
@@ -1042,7 +1042,7 @@ namespace NCDK.Fingerprints
                 }
                 if (stereo == BondStereo.UpOrDown)
                     return null; // squiggly line: definitely not
-                var o3d = atom.Point3D;
+                var o3d = mol.Bonds[bondAdj[aidx][n]].GetOther(atom).Point3D;
                 if (a3d != null && o3d != null && a3d.Value.Z != o3d.Value.Z)
                 {
                     wedgeOr3D = true;

@@ -1396,5 +1396,25 @@ namespace NCDK.Tools.Manipulator
             Assert.AreEqual(4729.147, AtomContainerManipulator.GetMass(mol, MolecularWeightTypes.MonoIsotopic), 0.001);
             Assert.AreEqual(4731.154, AtomContainerManipulator.GetMass(mol, MolecularWeightTypes.MostAbundant), 0.001);
         }
+
+        // can't put these test in cdk-formula since we can't access SMILES and it's a bit verbose
+        // to construct the molecules as needed
+        [TestMethod()]
+        public void GetFormulaMultiattach()
+        {
+            var smipar = CDK.SmilesParser;
+            var mol = smipar.ParseSmiles("[Ru]([P](CCC1=CC=CC=C1)(C2CCCCC2)C3CCCCC3)(Cl)(Cl)*.C1(=CC=C(C=C1)C(C)C)C |m:24:25.26.27.28.29.30|");
+            var mf = MolecularFormulaManipulator.GetString(MolecularFormulaManipulator.GetMolecularFormula(mol));
+            Assert.AreEqual("C30H45Cl2PRu", mf);
+        }
+
+        [TestMethod()]
+        public void GetFormulaAttach()
+        {
+            var smipar = CDK.SmilesParser;
+            var mol = smipar.ParseSmiles("*c1cc(*)ccc1 |$_AP1;;;;R;$|");
+            var mf = MolecularFormulaManipulator.GetString(MolecularFormulaManipulator.GetMolecularFormula(mol));
+            Assert.AreEqual("C6H4R", mf);
+        }
     }
 }

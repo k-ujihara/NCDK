@@ -565,7 +565,7 @@ namespace NCDK.Graphs
                 /// <inheritdoc/>
                 public override int[][] Apply(int[][] graph, int length)
                 {
-                    int threshold = 684; // see. AllRingsFinder.Threshold.Pubchem_99
+                    int threshold = 3072; // see. AllRingsFinder.Threshold.Pubchem_994
                     AllCycles ac = new AllCycles(graph, Math.Min(length, graph.Length), threshold);
                     if (!ac.Completed)
                         throw new IntractableException("A large number of cycles were being generated and the"
@@ -643,7 +643,7 @@ namespace NCDK.Graphs
                 /// <inheritdoc/>
                 public override int[][] Apply(int[][] graph, int length)
                 {
-                    int threshold = 684; // see. AllRingsFinder.Threshold.Pubchem_99
+                    int threshold = 3072; // see. AllRingsFinder.Threshold.Pubchem_994
                     AllCycles ac = new AllCycles(graph, Math.Min(length, graph.Length), threshold);
 
                     return ac.Completed ? ac.GetPaths() : VertexShort.Apply(graph, length);
@@ -816,10 +816,7 @@ namespace NCDK.Graphs
         {
             private readonly int predefinedLength;
 
-            /// <summary>
-            /// See <see cref="Threshold.PubChem99"/>.
-            /// </summary>
-            private readonly int threshold = 684;
+            private readonly int threshold = 3072; // see. AllRingsFinder.Threshold.Pubchem_994
 
             internal AllUpToLength(int length)
             {

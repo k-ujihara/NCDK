@@ -27,7 +27,9 @@ using NCDK.Smiles;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
+using System.Text;
 
 namespace NCDK.IO
 {
@@ -40,8 +42,11 @@ namespace NCDK.IO
     public class SMILESWriter : DefaultChemObjectWriter
     {
         private TextWriter writer;
-
-        private BooleanIOSetting useAromaticityFlag;
+        private BooleanIOSetting aromSetting;
+        private BooleanIOSetting titleSetting;
+        private IntegerIOSetting flavorSetting;
+        private SmilesGenerator smigen = new SmilesGenerator(SmiFlavors.Default);
+        private readonly StringBuilder buffer = new StringBuilder();
 
         /// <summary>
         /// Constructs a new SMILESWriter that can write a list of SMILES to a Writer
@@ -54,8 +59,31 @@ namespace NCDK.IO
         }
 
         public SMILESWriter(Stream output)
-                : this(new StreamWriter(output))
+            : this(new StreamWriter(output))
         { }
+
+        public SmiFlavors Flavor
+        {
+            get => (SmiFlavors)flavorSetting.GetSettingValue();
+
+            set
+            {
+                flavorSetting.Setting = Convert.ToString((int)value, NumberFormatInfo.InvariantInfo);
+                CustomizeJob();
+            }
+        }
+
+        public bool WriteTitle
+        {
+            get => titleSetting.IsSet;
+
+            set
+            {
+                titleSetting.Setting = Convert.ToString(value, NumberFormatInfo.InvariantInfo);
+                CustomizeJob();
+            }
+        }
+
 
         public override IResourceFormat Format => SMILESFormat.Instance;
 
@@ -93,17 +121,16 @@ namespace NCDK.IO
         /// <param name="obj">IChemObject of which the data is given as output.</param>
         public override void Write(IChemObject obj)
         {
-            if (obj is IEnumerableChemObject<IAtomContainer>)
+            switch (obj)
             {
-                WriteAtomContainerSet((IEnumerableChemObject<IAtomContainer>)obj);
-            }
-            else if (obj is IAtomContainer)
-            {
-                WriteAtomContainer((IAtomContainer)obj);
-            }
-            else
-            {
-                throw new CDKException("Only supported is writing of ChemFile and Molecule objects.");
+                case IEnumerableChemObject<IAtomContainer> o:
+                    WriteAtomContainerSet(o);
+                    break;
+                case IAtomContainer mol:
+                    WriteAtomContainer(mol);
+                    break;
+                default:
+                    throw new CDKException($"Only supported is writing of {nameof(IAtomContainer)}.");
             }
         }
 
@@ -113,7 +140,7 @@ namespace NCDK.IO
         /// <param name="som">MoleculeSet that is written to an Stream</param>
         public void WriteAtomContainerSet(IEnumerable<IAtomContainer> som)
         {
-            var listSom = som.ToReadOnlyList(); 
+            var listSom = som.ToReadOnlyList();
             WriteAtomContainer(listSom[0]);
             for (int i = 1; i <= listSom.Count - 1; i++)
             {
@@ -133,39 +160,46 @@ namespace NCDK.IO
         /// <param name="molecule">Molecule of which the data is given as output.</param>
         public void WriteAtomContainer(IAtomContainer molecule)
         {
-            SmilesGenerator sg = new SmilesGenerator();
-            if (useAromaticityFlag.IsSet) sg = sg.Aromatic();
-            string smiles = "";
             try
             {
-                smiles = sg.Create(molecule);
-                Debug.WriteLine($"Generated SMILES: {smiles}");
-                writer.Write(smiles);
-                writer.Write('\n');
+                buffer.Length = 0;
+                buffer.Append(smigen.Create(molecule));
+                if (titleSetting.IsSet && molecule.Title != null)
+                    buffer.Append('\t').Append(molecule.Title);
+                buffer.Append('\n');
+                writer.Write(buffer.ToString());
                 writer.Flush();
-                Debug.WriteLine("file flushed...");
             }
-            catch (Exception exc)
+            catch (Exception e)
             {
-                if (exc is CDKException | exc is IOException)
+                if (e is CDKException || e is IOException)
                 {
-                    Trace.TraceError($"Error while writing Molecule: {exc.Message}");
-                    Debug.WriteLine(exc);
+                    Trace.TraceError($"Error while writing Molecule: {e.Message}");
                 }
                 else
-                    throw;
+                    throw e;
             }
         }
 
         private void InitIOSettings()
         {
-            useAromaticityFlag = Add(new BooleanIOSetting("UseAromaticity", Importance.Low,
+            flavorSetting = Add(new IntegerIOSetting("SmilesFlavor", Importance.High,
+                    "Output SMILES flavor, binary option", ((int)SmiFlavors.Default).ToString()));
+            titleSetting = Add(new BooleanIOSetting("WriteTitle", Importance.High,
+                    "Write the molecule title after the SMILES", "true"));
+            aromSetting = Add(new BooleanIOSetting("UseAromaticity", Importance.Low,
                     "Should aromaticity information be stored in the SMILES?", "false"));
         }
 
         public void CustomizeJob()
         {
-            ProcessIOSettingQuestion(useAromaticityFlag);
+            ProcessIOSettingQuestion(flavorSetting);
+            ProcessIOSettingQuestion(titleSetting);
+            ProcessIOSettingQuestion(aromSetting);
+            var flav = this.Flavor;
+            if (aromSetting.IsSet)
+                flav |= SmiFlavors.UseAromaticSymbols;
+            smigen = new SmilesGenerator(flav);
         }
     }
 }

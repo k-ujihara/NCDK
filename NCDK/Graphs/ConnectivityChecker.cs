@@ -20,6 +20,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using NCDK.Sgroups;
 
 namespace NCDK.Graphs
 {
@@ -75,14 +76,20 @@ namespace NCDK.Graphs
 
             var containers = new IAtomContainer[maxComponentIndex + 1];
             var componentsMap = new Dictionary<IAtom, IAtomContainer>(2 * container.Atoms.Count);
+            var componentAtomMap = new Dictionary<IAtom, IAtom>(2 * container.Atoms.Count);
+            var componentBondMap = new Dictionary<IBond, IBond>(2 * container.Bonds.Count);
 
             for (int i = 1; i < containers.Length; i++)
                 containers[i] = container.Builder.NewAtomContainer();
 
             for (int i = 0; i < container.Atoms.Count; i++)
             {
-                componentsMap.Add(container.Atoms[i], containers[components[i]]);
-                containers[components[i]].Atoms.Add(container.Atoms[i]);
+                var origAtom = container.Atoms[i];
+                var newContainer = containers[components[i]];
+                componentsMap[origAtom] = newContainer;
+                newContainer.Atoms.Add(origAtom);
+                //the atom should always be added so this should be safe
+                componentAtomMap[origAtom] =newContainer.Atoms[newContainer.Atoms.Count - 1];
             }
 
             foreach (var bond in container.Bonds)
@@ -90,7 +97,11 @@ namespace NCDK.Graphs
                 var begComp = componentsMap[bond.Begin];
                 var endComp = componentsMap[bond.End];
                 if (begComp == endComp)
+                {
                     begComp.Bonds.Add(bond);
+                    //bond should always be added so this should be safe
+                    componentBondMap[bond] = begComp.Bonds[begComp.Bonds.Count - 1];
+                }
             }
 
             foreach (var electron in container.SingleElectrons)
@@ -117,11 +128,103 @@ namespace NCDK.Graphs
                 }
             }
 
+            //add SGroups
+            var sgroups = container.GetCtabSgroups();
+
+            if (sgroups != null)
+            {
+                var old2NewSgroupMap = new Dictionary<Sgroup, Sgroup>();
+                var newSgroups = new IList<Sgroup>[containers.Length];
+                foreach (var sgroup in sgroups)
+                {
+                    var merator = sgroup.Atoms.GetEnumerator();
+                    if (!merator.MoveNext())
+                        continue;
+
+                    var componentIndex = GetComponentIndexFor(components, containers, merator.Current);
+                    var allMatch = componentIndex >= 0;
+                    while (allMatch && merator.MoveNext())
+                    {
+                        //if component index for some atoms
+                        //don't match then the sgroup is split across components
+                        //so ignore it for now?
+                        allMatch = (componentIndex == GetComponentIndexFor(components, containers, merator.Current));
+                    }
+                    if (allMatch && componentIndex >= 0)
+                    {
+                        var cpy = new Sgroup();
+                        var newComponentSgroups = newSgroups[componentIndex];
+                        if (newComponentSgroups == null)
+                        {
+                            newComponentSgroups = newSgroups[componentIndex] = new List<Sgroup>();
+                        }
+                        newComponentSgroups.Add(cpy);
+                        old2NewSgroupMap[sgroup] = cpy;
+                        foreach (var atom in sgroup.Atoms)
+                        {
+                            cpy.Atoms.Add(componentAtomMap[atom]);
+
+                        }
+                        foreach (var bond in sgroup.Bonds)
+                        {
+                            var newBond = componentBondMap[bond];
+                            if (newBond != null)
+                            {
+                                cpy.Bonds.Add(newBond);
+                            }
+                        }
+
+                        foreach (var key in sgroup.AttributeKeys)
+                            cpy.PutValue(key, sgroup.GetValue(key));
+
+                    }
+                }
+                //finally update parents
+                foreach (var sgroup in sgroups)
+                {
+                    if (old2NewSgroupMap.TryGetValue(sgroup, out Sgroup newSgroup))
+                    {
+                        foreach (var parent in sgroup.Parents)
+                        {
+                            var newParent = old2NewSgroupMap[parent];
+                            if (newParent != null)
+                            {
+                                newSgroup.Parents.Add(newParent);
+                            }
+                        }
+                    }
+                }
+                for (int i = 1; i < containers.Length; i++)
+                {
+                    var sg = newSgroups[i];
+                    if (sg != null)
+                    {
+                        containers[i].SetCtabSgroups(sg);
+                    }
+                }
+            }
+
             // do not return IEnumerable, containers are modified above.
             var containerSet = new List<IAtomContainer>(containers.Skip(1));
 
             return containerSet;
         }
+
+        private static int GetComponentIndexFor(int[] components, IAtomContainer[] containers, IAtom atom)
+        {
+            if (atom.Index >= 0)
+            {
+                return components[atom.Index];
+            }
+            //if index isn't known check each container
+            for (int i = 1; i < containers.Length; i++)
+            {
+                if (containers[i].Contains(atom))
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
     }
 }
-        

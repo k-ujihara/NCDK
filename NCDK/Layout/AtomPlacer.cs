@@ -413,7 +413,8 @@ namespace NCDK.Layout
             var a = previousAtom.Point2D;
             var b = atom.Point2D;
 
-            if (IsColinear(atom, Molecule.GetConnectedBonds(atom)))
+            var bonds = Molecule.GetConnectedBonds(atom).ToReadOnlyList();
+            if (IsColinear(atom, bonds))
             {
                 return b.Value - a.Value;
             }
@@ -422,13 +423,16 @@ namespace NCDK.Layout
             double addAngle;
             if (IsTerminalD4(atom))
                 addAngle = Vectors.DegreeToRadian(45);
-            else
-                addAngle = Vectors.DegreeToRadian(120);
-
-            if (!trans)
-                addAngle = Vectors.DegreeToRadian(60);
-            if (IsColinear(atom, Molecule.GetConnectedBonds(atom)))
+            else if (IsColinear(atom, bonds))
                 addAngle = Vectors.DegreeToRadian(180);
+            else if (PeriodicTable.IsMetal(atom.AtomicNumber))
+                addAngle = (2 * Math.PI) / bonds.Count;
+            else
+            {
+                addAngle = Vectors.DegreeToRadian(120);
+                if (!trans)
+                    addAngle = Vectors.DegreeToRadian(60);
+            }
 
             angle += addAngle;
             var vec1 = new Vector2(Math.Cos(angle), Math.Sin(angle));

@@ -31,6 +31,7 @@ using NCDK.Isomorphisms.Matchers;
 using NCDK.Numerics;
 using NCDK.Sgroups;
 using NCDK.Stereo;
+using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
@@ -78,7 +79,7 @@ namespace NCDK.IO
     // @cdk.keyword file format, MDL molfile
     // @cdk.keyword file format, SDF
     // @cdk.bug 1587283
-    public class MDLV2000Reader 
+    public class MDLV2000Reader
         : DefaultChemObjectReader
     {
         TextReader input = null;
@@ -105,7 +106,7 @@ namespace NCDK.IO
         /// Constructs a new <see cref="MDLReader"/> that can read Molecule from a given <see cref="Stream"/>.
         /// </summary>
         /// <param name="input">The Stream to read from</param>
-        public MDLV2000Reader(Stream input) 
+        public MDLV2000Reader(Stream input)
             : this(new StreamReader(input))
         {
         }
@@ -152,21 +153,16 @@ namespace NCDK.IO
         /// <returns>The IChemObject read</returns>
         public override T Read<T>(T obj)
         {
-            if (obj is IAtomContainer)
+            switch (obj)
             {
-                return (T)ReadAtomContainer((IAtomContainer)obj);
-            }
-            else if (obj is IChemFile)
-            {
-                return (T)ReadChemFile((IChemFile)obj);
-            }
-            else if (obj is IChemModel)
-            {
-                return (T)ReadChemModel((IChemModel)obj);
-            }
-            else
-            {
-                throw new CDKException("Only supported are ChemFile and Molecule.");
+                case IAtomContainer mol:
+                    return (T)ReadAtomContainer(mol);
+                case IChemFile file:
+                    return (T)ReadChemFile(file);
+                case IChemModel model:
+                    return (T)ReadChemModel(model);
+                default:
+                    throw new CDKException("Only supported are ChemFile and Molecule.");
             }
         }
 
@@ -257,6 +253,7 @@ namespace NCDK.IO
         /// <returns>The Molecule that was read from the MDL file.</returns>
         private IAtomContainer ReadAtomContainer(IAtomContainer molecule)
         {
+            bool isQuery = molecule is IQueryAtomContainer;
             IAtomContainer outputContainer = null;
             var parities = new Dictionary<IAtom, int>();
 
@@ -348,7 +345,7 @@ namespace NCDK.IO
                     line = input.ReadLine();
                     linecount++;
 
-                    var atom = ReadAtomFast(line, molecule.Builder, parities, linecount);
+                    var atom = ReadAtomFast(line, molecule.Builder, parities, linecount, isQuery);
 
                     atoms[i] = atom;
 
@@ -395,17 +392,18 @@ namespace NCDK.IO
                     }
                 }
 
-                bool hasQueryBonds = false;
                 for (int i = 0; i < nBonds; i++)
                 {
                     line = input.ReadLine();
                     linecount++;
 
-                    bonds[i] = ReadBondFast(line, molecule.Builder, atoms, explicitValence, linecount);
-                    hasQueryBonds = hasQueryBonds || (bonds[i].Order == BondOrder.Unset && !bonds[i].IsAromatic);
+                    bonds[i] = ReadBondFast(line, molecule.Builder, atoms, explicitValence, linecount, isQuery);
+                    isQuery = isQuery
+                           || bonds[i] is IQueryBond
+                           || (bonds[i].Order.IsUnset() && !bonds[i].IsAromatic);
                 }
 
-                if (!hasQueryBonds)
+                if (!isQuery)
                     outputContainer = molecule;
                 else
                     outputContainer = new QueryAtomContainer();
@@ -488,7 +486,7 @@ namespace NCDK.IO
                     int valence = explicitValence[i - offset];
                     if (valence < 0)
                     {
-                        hasQueryBonds = true; // also counts aromatic bond as query
+                        isQuery = true; // also counts aromatic bond as query
                     }
                     else
                     {
@@ -497,23 +495,33 @@ namespace NCDK.IO
                     }
                 }
 
-                // sanity check that we have a decent molecule, query bonds mean we
+                // sanity check that we have a decent molecule, query bonds or query atoms mean we
                 // don't have a hydrogen count for atoms and stereo perception isn't
                 // currently possible
-                if (!hasQueryBonds && addStereoElements.IsSet && hasX && hasY)
+                if (!(outputContainer is IQueryAtomContainer) && !isQuery &&
+                    addStereoElements.IsSet && hasX && hasY)
                 {
-                    if (hasZ)
-                    { // has 3D coordinates
-                        outputContainer.SetStereoElements(StereoElementFactory.Using3DCoordinates(outputContainer)
-                                .CreateAll());
+                    //ALS property could have changed an atom into a QueryAtom
+                    foreach (IAtom atom in outputContainer.Atoms)
+                    {
+                        if (AtomRef.Deref(atom) is QueryAtom)
+                        {
+                            isQuery = true;
+                            break;
+                        }
                     }
-                    else if (!forceReadAs3DCoords.IsSet)
-                    { // has 2D coordinates (set as 2D coordinates)
-                        outputContainer.SetStereoElements(StereoElementFactory.Using2DCoordinates(outputContainer)
-                                .CreateAll());
+                    if (!isQuery)
+                    {
+                        if (hasZ)
+                        { // has 3D coordinates
+                            outputContainer.SetStereoElements(StereoElementFactory.Using3DCoordinates(outputContainer).CreateAll());
+                        }
+                        else if (!forceReadAs3DCoords.IsSet)
+                        { // has 2D coordinates (set as 2D coordinates)
+                            outputContainer.SetStereoElements(StereoElementFactory.Using2DCoordinates(outputContainer).CreateAll());
+                        }
                     }
                 }
-
             }
             catch (CDKException exception)
             {
@@ -655,7 +663,7 @@ namespace NCDK.IO
 
         internal IAtom ReadAtomFast(string line, IChemObjectBuilder builder, int lineNum)
         {
-            return ReadAtomFast(line, builder, new Dictionary<IAtom, int>(), lineNum);
+            return ReadAtomFast(line, builder, new Dictionary<IAtom, int>(), lineNum, false);
         }
 
         /// <summary>
@@ -677,7 +685,7 @@ namespace NCDK.IO
         /// <param name="parities">map of atom parities for creation 0D stereochemistry</param>
         /// <param name="lineNum">the line number - for printing error messages</param>
         /// <returns>a new atom instance</returns>
-        internal IAtom ReadAtomFast(string line, IChemObjectBuilder builder, Dictionary<IAtom, int> parities, int lineNum)
+        internal IAtom ReadAtomFast(string line, IChemObjectBuilder builder, Dictionary<IAtom, int> parities, int lineNum, bool isQuery)
         {
             // The line may be truncated and it's checked in reverse at the specified
             // lengths:
@@ -688,9 +696,12 @@ namespace NCDK.IO
 
             string symbol;
             double x = 0, y = 0, z = 0;
-            int massDiff = 0, charge = 0;
+            int massDiff = 0;
+            int charge = 0;
             int parity = 0;
-            int valence = 0, mapping = 0;
+            int valence = 0;
+            int mapping = 0;
+            int hcount = 0;
 
             int length = GetLength(line);
             if (length > 69) // excess data we should check all fields
@@ -713,9 +724,12 @@ namespace NCDK.IO
                     goto case 48;
                 case 48: // bbb: stereo care [query]
                 case 45: // hhh: hydrogen count + 1 [query]
+                    hcount = ReadMolfileInt(line, 42);
+                    goto case 42;
                 case 42: // sss: stereo parity
                     parity = ToInt(line[41]);
                     goto case 39;
+                // case 40: SAChem: I don't think this can happen in a valid molfile, maybe with a trailing tab?
                 case 39: // ccc: charge
                     charge = ToCharge(line[38]);
                     goto case 36;
@@ -736,6 +750,20 @@ namespace NCDK.IO
             }
 
             var atom = CreateAtom(symbol, builder, lineNum);
+
+            if (isQuery)
+            {
+                Expr expr = new Expr(ExprType.Element, atom.AtomicNumber);
+                if (hcount != 0)
+                {
+                    if (hcount < 0)
+                        hcount = 0;
+                    expr.And(new Expr(ExprType.ImplicitHCount, hcount));
+                }
+                atom = new QueryAtom();
+                ((QueryAtom)atom).Expression = expr;
+            }
+
             atom.Point3D = new Vector3(x, y, z);
             atom.FormalCharge = charge;
             atom.StereoParity = parity;
@@ -760,6 +788,12 @@ namespace NCDK.IO
             return atom;
         }
 
+        // for testing
+        internal IBond ReadBondFast(string line, IChemObjectBuilder builder, IAtom[] atoms, int[] explicitValence, int lineNum)
+        {
+            return ReadBondFast(line, builder, atoms, explicitValence, lineNum, false);
+        }
+
         /// <summary>
         /// Read a bond from a line in the MDL bond block. The bond block is
         /// formatted as follows, "111222tttsssxxxrrrccc", where:
@@ -779,7 +813,7 @@ namespace NCDK.IO
         /// <param name="lineNum">the input line number</param>
         /// <returns>a new bond</returns>
         /// <exception cref="CDKException">if the input was malformed or didn't make sense</exception>
-        internal IBond ReadBondFast(string line, IChemObjectBuilder builder, IAtom[] atoms, int[] explicitValence, int lineNum)
+        internal IBond ReadBondFast(string line, IChemObjectBuilder builder, IAtom[] atoms, int[] explicitValence, int lineNum, bool isQuery)
         {
             // The line may be truncated and it's checked in reverse at the specified
             // lengths. Absolutely required is atom indices, bond type and stereo.
@@ -860,6 +894,22 @@ namespace NCDK.IO
                 explicitValence[u] = explicitValence[v] = int.MinValue;
             }
 
+            if (isQuery && !(bond is QueryBond))
+            {
+                var order = bond.Order;
+                Expr expr;
+                if (bond.IsAromatic)
+                {
+                    expr = new Expr(ExprType.IsAromatic);
+                }
+                else
+                {
+                    expr = new Expr(ExprType.Order,
+                                    bond.Order.Numeric());
+                }
+                bond = new QueryBond(atoms[u], atoms[v], expr);
+            }
+
             return bond;
         }
 
@@ -931,6 +981,101 @@ namespace NCDK.IO
                     if (group == null)
                         return;
                 }
+                // Newer programs use the M ALS item in the properties block in place of the atom list
+                // block. The atom list block is retained for compatibility, but information in an M ALS item
+                // supersedes atom list block information.
+                // aaa kSSSSn 111 222 333 444 555
+                // 0123456789012345
+                // aaa = number of atom (L) where list is attached
+                // k = T = [NOT] list, = F = normal list
+                // n = number of entries in list; maximum is 5
+                // 111...555 = atomic number of each atom on the list
+                // S = space
+                else if (key == PropertyKey.LEGACY_ATOM_LIST)
+                {
+                    index = ReadUInt(line, 0, 3) - 1;
+                    {
+                        bool negate = line[3] == 'T' ||
+                                line[4] == 'T';
+                        Expr expr = new Expr(ExprType.True);
+                        for (int i = 11; i < line.Length; i += 4)
+                        {
+                            int atomicNumber = ReadUInt(line, i, 3);
+                            expr.Or(new Expr(ExprType.Element, atomicNumber));
+                        }
+
+                        if (negate)
+                            expr.Negate();
+                        var atom = container.Atoms[index];
+                        if (AtomRef.Deref(atom) is QueryAtom ref_)
+                        {
+                            ref_.Expression = expr;
+                        }
+                        else
+                        {
+                            QueryAtom queryAtom = new QueryAtom(expr)
+                            {
+                                //keep coordinates from old atom
+                                Point2D = atom.Point2D,
+                                Point3D = atom.Point3D
+                            };
+                            container.Atoms[index] = queryAtom;
+                        }
+                    }
+                }
+                // M  ALS aaannn e 11112222 ...
+                // 012345678901234567
+                // aaa:  atom index
+                // nnn:  count
+                // e:    T/F(default) exclusion list
+                // 1111: symbol
+                else if (key == PropertyKey.M_ALS)
+                {
+                    index = ReadUInt(line, 7, 3) - 1;
+                    // count = readUInt(line, 10, 3); // not needed
+                    {
+                        var negate = line[13] == 'T' || line[14] == 'T';
+                        Expr expr = new Expr(ExprType.True);
+                        StringBuilder sb = new StringBuilder();
+                        for (int i = 16; i < line.Length; i++)
+                        {
+                            if (line[i] != ' ')
+                            {
+                                sb.Append(line[i]);
+                            }
+                            else if (sb.Length != 0)
+                            {
+                                int elem = PeriodicTable.GetAtomicNumber(sb.ToString());
+                                if (elem != 0)
+                                    expr.Or(new Expr(ExprType.Element, elem));
+                                sb.Clear();
+                            }
+                        }
+                        if (sb.Length != 0)
+                        {
+                            int elem = PeriodicTable.GetAtomicNumber(sb.ToString());
+                            if (elem != 0)
+                                expr.Or(new Expr(ExprType.Element, elem));
+                        }
+                        if (negate)
+                            expr.Negate();
+                        var atom = container.Atoms[index];
+                        if (AtomRef.Deref(atom) is QueryAtom ref_)
+                        {
+                            ref_.Expression = expr;
+                        }
+                        else
+                        {
+                            var queryAtom = new QueryAtom(expr)
+                            {
+                                //keep coordinates from old atom
+                                Point2D = atom.Point2D,
+                                Point3D = atom.Point3D
+                            };
+                            container.Atoms[index] = queryAtom;
+                        }
+                    }
+                }
                 else if (key == PropertyKey.M_CHG)
                 {
                     // M  CHGnn8 aaa vvv ...
@@ -980,6 +1125,8 @@ namespace NCDK.IO
                         index = ReadMolfileInt(line, st) - 1;
                         var value = ReadMolfileInt(line, st + 4);
                         var multiplicity = SpinMultiplicity.OfValue(value);
+
+                        container.Atoms[offset + index].SetProperty(CDKPropertyName.SpinMultiplicity, multiplicity);
 
                         for (int e = 0; e < multiplicity.SingleElectrons; e++)
                             container.AddSingleElectronTo(container.Atoms[offset + index]);
@@ -1273,6 +1420,67 @@ namespace NCDK.IO
                                         ReadMolfileInt(line, st + 4));
                     }
                 }
+                // Data Sgroup Field Description
+                // M  SDT sss ffffffffffffffffffffffffffffffgghhhhhhhhhhhhhhhhhhhhiijjj...
+                // 0123456789012345678901234567890123456789012345678901234567890123456789
+                //           1         2         3         4         5         6
+                // 7  sss:       Index of data Sgroup
+                // 11 fff...fff: 30 character field name - no blanks, commas, or hyphens for MACCS-II
+                // 41 gg:        Field type - F=formatted, N=numberic, T=text (ignored)
+                // 43 hhh...hhh: 20-character field units or format
+                // 63 ii:        Nonblank if data line is a query rather than Sgroup data, MQ= MACCS-II query,
+                //               IQ= ISIS query, PQ = program name code query
+                // 65 jjj...:    Data query operator
+                else if (key == PropertyKey.M_SDT)
+                {
+                    sgroup = EnsureSgroup(sgroups, ReadMolfileInt(line, 7));
+                    if (length < 11)
+                        break;
+                    var name = line.Substring(11, Math.Min(41, length) - 11).Trim();
+                    sgroup.PutValue(SgroupKey.DataFieldName, name);
+                    if (length < 41)
+                        break;
+                    var fmt = line.Substring(41, Math.Min(43, length) - 41).Trim();
+                    if (fmt.Length == 1 &&
+                        fmt[0] != 'F' && fmt[0] != 'N' &&
+                        fmt[0] != 'T')
+                        HandleError("Invalid Data Sgroup field format: " + fmt);
+                    if (fmt.Any())
+                        sgroup.PutValue(SgroupKey.DataFieldFormat, fmt);
+                    if (length < 43)
+                        break;
+                    var units = line.Substring(43, Math.Min(63, length) - 43).Trim();
+                    if (units.Any())
+                        sgroup.PutValue(SgroupKey.DataFieldUnits, units);
+                    // We don't handle data group queries
+                }
+                // Data Sgroup Display Info
+                else if (key == PropertyKey.M_SDD)
+                {
+                    // TODO
+                }
+                // Data Sgroup Data
+                // M  SCD sss d...
+                // M  SED sss d...
+                // 0123456789012345...
+                //           1
+                //
+                // d...: Line of data for data Sgroup sss (69 chars per line, columns 12-80)
+                //
+                // SCD where C = Continue, SED where E = End
+                // Formally multi-line data should have one or more SCD's and
+                // end with an SED. Single line data just has a single SED
+                else if (key == PropertyKey.M_SCD || key == PropertyKey.M_SED)
+                {
+                    // we could be more strict and raise an error if we see an
+                    // SCD after SED...
+                    sgroup = EnsureSgroup(sgroups, ReadMolfileInt(line, 7));
+                    var data = line.Substring(11, Math.Min(79, length) - 11);
+                    var curr = sgroup.GetValue(SgroupKey.Data);
+                    if (curr != null) 
+                        data = curr + data;
+                    sgroup.PutValue(SgroupKey.Data, data);
+                }
                 else if (key == PropertyKey.M_END)
                 {
                     // M  END
@@ -1282,7 +1490,7 @@ namespace NCDK.IO
                     goto GoNext_LINES;
                 }
             }
-            GoNext_LINES:
+        GoNext_LINES:
 
             // check of ill specified atomic mass
             foreach (var atom in container.Atoms)
@@ -2129,9 +2337,9 @@ namespace NCDK.IO
                     var aliasAtom = container.Atoms[aliasAtomNumber - 1];
 
                     // skip if already a pseudoatom
-                    if (aliasAtom is IPseudoAtom)
+                    if (aliasAtom is IPseudoAtom atom)
                     {
-                        ((IPseudoAtom)aliasAtom).Label = alias;
+                        atom.Label = alias;
                         continue;
                     }
 
@@ -2225,7 +2433,7 @@ namespace NCDK.IO
                     }
                     catch (FormatException exception)
                     {
-                        var error = $"Error ({exception.ToString()}) while parsing line {linecount}: {line} in property block.";
+                        var error = $"Error ({exception}) while parsing line {linecount}: {line} in property block.";
                         Trace.TraceError(error);
                         HandleError("FormatException in group information", linecount, 4, 7, exception);
                     }
@@ -2462,10 +2670,10 @@ namespace NCDK.IO
             /// <summary>Data Sgroup Display Information [Sgroup].</summary>
             public static readonly PropertyKey M_SDD = new PropertyKey("M_SDD");
 
-            /// <summary>Data Sgroup Data.</summary>
+            /// <summary>Data Sgroup Continue.</summary>
             public static readonly PropertyKey M_SCD = new PropertyKey("M_SCD");
 
-            /// <summary>Data Sgroup Data.</summary>
+            /// <summary>Data Sgroup End.</summary>
             public static readonly PropertyKey M_SED = new PropertyKey("M_SED");
 
             /// <summary>Sgroup Hierarchy Information.</summary>
@@ -2488,6 +2696,9 @@ namespace NCDK.IO
 
             /// <summary>Non-property header.</summary>
             public static readonly PropertyKey Unknown = new PropertyKey("Unknown");
+
+            /// <summary> old atom list superseded by <see cref="M_ALS"/>.</summary>
+            public static readonly PropertyKey LEGACY_ATOM_LIST = new PropertyKey("LEGACY_ATOM_LIST");
 
             public static readonly PropertyKey[] Values = new[] {
                 ATOM_ALIAS,
@@ -2528,10 +2739,13 @@ namespace NCDK.IO
                 M_ZZC,
                 M_END,
                 Unknown,
+                LEGACY_ATOM_LIST,
             };
 
             /// <summary>Index of 'M XXX' properties for quick lookup.</summary>
-            private static Dictionary<string, PropertyKey> mSuffix = new Dictionary<string, PropertyKey>(60);
+            private static readonly Dictionary<string, PropertyKey> mSuffix = new Dictionary<string, PropertyKey>(60);
+            
+            private static readonly Regex LEGACY_ATOM_LIST_PATTERN = new Regex("^[0-9 ][0-9 ][0-9 ] [T|F]", RegexOptions.Compiled);
 
             static PropertyKey()
             {
@@ -2581,6 +2795,10 @@ namespace NCDK.IO
                         if (mSuffix.TryGetValue(Strings.Substring(line, 3, 3), out PropertyKey property))
                             return property;
                         return Unknown;
+                }
+                if (LEGACY_ATOM_LIST_PATTERN.IsMatch(line))
+                {
+                    return LEGACY_ATOM_LIST;
                 }
                 return Unknown;
             }

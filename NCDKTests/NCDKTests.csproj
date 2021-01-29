@@ -1,1477 +1,1498 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
-    <IsPackable>false</IsPackable>
-    <Authors>Kazuya Ujihara</Authors>
-    <RootNamespace>NCDK</RootNamespace>
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>ncdk.snk</AssemblyOriginatorKeyFile>
-    <Copyright>Copyright © 2016-2021 Kazuya Ujihara</Copyright>
-    <PackageLicenseUrl>https://github.com/kazuyaujihara/NCDK/blob/master/LICENSE</PackageLicenseUrl>
-    <PackageProjectUrl>https://github.com/kazuyaujihara/NCDK</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/kazuyaujihara/NCDK</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
-    <ApplicationIcon />
-    <OutputType>Library</OutputType>
-    <StartupObject />
-    <Platforms>AnyCPU</Platforms>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net50</TargetFramework>
+        <IsPackable>false</IsPackable>
+        <Authors>Kazuya Ujihara</Authors>
+        <RootNamespace>NCDK</RootNamespace>
+        <SignAssembly>true</SignAssembly>
+        <AssemblyOriginatorKeyFile>ncdk.snk</AssemblyOriginatorKeyFile>
+        <Copyright>Copyright © 2016-2021 Kazuya Ujihara</Copyright>
+        <PackageLicenseUrl>https://github.com/kazuyaujihara/NCDK/blob/master/LICENSE</PackageLicenseUrl>
+        <PackageProjectUrl>https://github.com/kazuyaujihara/NCDK</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/kazuyaujihara/NCDK</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <ApplicationIcon />
+        <OutputType>Library</OutputType>
+        <StartupObject />
+        <Platforms>AnyCPU</Platforms>
+    </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <NoWarn>1701;1702;0612;0618</NoWarn>
-  </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+        <NoWarn>1701;1702;0612;0618</NoWarn>
+    </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <NoWarn>1701;1702;0612;0618</NoWarn>
-  </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+        <NoWarn>1701;1702;0612;0618</NoWarn>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="Data\ABINIT\t54.in" />
-    <None Remove="Data\Aces2\ch3oh_ace.out" />
-    <None Remove="Data\ADF\ammonia.adf.out" />
-    <None Remove="Data\ARFF\Acetyl_EthylWithoutHetero.arff" />
-    <None Remove="Data\ARFF\Carbonyl1.arff" />
-    <None Remove="Data\ARFF\ConjugatedPiSys.arff" />
-    <None Remove="Data\ARFF\HeteroAtom1.arff" />
-    <None Remove="Data\ARFF\PySystWithHetero.arff" />
-    <None Remove="Data\ARFF\Table1.arff" />
-    <None Remove="Data\ARFF\Table2.arff" />
-    <None Remove="Data\ARFF\Table3.arff" />
-    <None Remove="Data\ARFF\Table4.arff" />
-    <None Remove="Data\ASN\PubChem\aceticAcids38.xml" />
-    <None Remove="Data\ASN\PubChem\cid1.asn" />
-    <None Remove="Data\ASN\PubChem\cid1145.xml" />
-    <None Remove="Data\ASN\PubChem\cid176.xml" />
-    <None Remove="Data\ASN\PubChem\list.asn" />
-    <None Remove="Data\ASN\PubChem\sid577309.xml" />
-    <None Remove="Data\ASN\PubChem\taxols.xml" />
-    <None Remove="Data\CDD\aromring_validation.zip" />
-    <None Remove="Data\CDD\Binders-ECFP6-1024-loo.bayesian" />
-    <None Remove="Data\CDD\Binders-ECFP6-32768-xv5.bayesian" />
-    <None Remove="Data\CDD\Binders-FCFP6-0-loo.bayesian" />
-    <None Remove="Data\CDD\Binders.sdf" />
-    <None Remove="Data\CDD\circular_validation.zip" />
-    <None Remove="Data\CDD\FoldedProbes.sdf" />
-    <None Remove="Data\CDD\MLProbes-ECFP6-1024-loo.bayesian" />
-    <None Remove="Data\CDD\MLProbes-ECFP6-32768-xv5.bayesian" />
-    <None Remove="Data\CDD\MLProbes-FCFP6-0-loo.bayesian" />
-    <None Remove="Data\CDD\MLProbes-FCFP6-256-xv3.bayesian" />
-    <None Remove="Data\CDD\MLProbes.sdf" />
-    <None Remove="Data\CDD\pyridineacid.mol" />
-    <None Remove="Data\CDD\Small.sdf" />
-    <None Remove="Data\CDD\Tiny.sdf" />
-    <None Remove="Data\CML\(1R)-1-aminoethan-1-ol-malformedDictRef.cml" />
-    <None Remove="Data\CML\(1R)-1-aminoethan-1-ol-multipleBondStereo.cml" />
-    <None Remove="Data\CML\(1R)-1-aminoethan-1-ol.cml" />
-    <None Remove="Data\CML\100-11-8.cml" />
-    <None Remove="Data\CML\1CKV_1.cml" />
-    <None Remove="Data\CML\3.cml" />
-    <None Remove="Data\CML\a-pinen.cml" />
-    <None Remove="Data\CML\aelfred2_test.cml" />
-    <None Remove="Data\CML\AlanineTree.cml" />
-    <None Remove="Data\CML\AlanineTreeReverse.cml" />
-    <None Remove="Data\CML\AZD5423.xml" />
-    <None Remove="Data\CML\benzene.cml" />
-    <None Remove="Data\CML\bug1014344-1.cml" />
-    <None Remove="Data\CML\bug1535055.cml" />
-    <None Remove="Data\CML\bug639455.cml" />
-    <None Remove="Data\CML\butadiene.cml" />
-    <None Remove="Data\CML\ceph-ns.xml" />
-    <None Remove="Data\CML\cmlConciseFormula.cml" />
-    <None Remove="Data\CML\cmlConciseFormula2.cml" />
-    <None Remove="Data\CML\cmlWithFormula.cml" />
-    <None Remove="Data\CML\COONa.cml" />
-    <None Remove="Data\CML\cs2a.cml" />
-    <None Remove="Data\CML\cs2a.mol.cml" />
-    <None Remove="Data\CML\curan.xml" />
-    <None Remove="Data\CML\custompropertiestest.cml" />
-    <None Remove="Data\CML\cyclohexane-xdrawchem.cml" />
-    <None Remove="Data\CML\dictref.cml" />
-    <None Remove="Data\CML\estron.cml" />
-    <None Remove="Data\CML\isolated_ringsystems.cml" />
-    <None Remove="Data\CML\keggtest.cml" />
-    <None Remove="Data\CML\methanol1.cml" />
-    <None Remove="Data\CML\methanol2.cml" />
-    <None Remove="Data\CML\mol28.cml" />
-    <None Remove="Data\CML\molAndspect.cml" />
-    <None Remove="Data\CML\naphtalene.cml" />
-    <None Remove="Data\CML\nitrate.cml" />
-    <None Remove="Data\CML\nsc2dcml.xml" />
-    <None Remove="Data\CML\nsc2dmol.1.cml" />
-    <None Remove="Data\CML\nsc2dmol.2.cml" />
-    <None Remove="Data\CML\nsc2dmol.a1.cml" />
-    <None Remove="Data\CML\nsc2dmol.a2.cml" />
-    <None Remove="Data\CML\nsc3dcml.xml" />
-    <None Remove="Data\CML\nsc3dmol.1.cml" />
-    <None Remove="Data\CML\nsc3dmol.2.cml" />
-    <None Remove="Data\CML\nsc3dmol.a1.cml" />
-    <None Remove="Data\CML\nsc3dmol.a2.cml" />
-    <None Remove="Data\CML\nucleustest.xml" />
-    <None Remove="Data\CML\olaCmlAtomType.cml" />
-    <None Remove="Data\CML\Ooporphyrin.cml" />
-    <None Remove="Data\CML\overlaptest.cml" />
-    <None Remove="Data\CML\overlaptest2.cml" />
-    <None Remove="Data\CML\overlaptest3.cml" />
-    <None Remove="Data\CML\phosphate.cml" />
-    <None Remove="Data\CML\r.cml" />
-    <None Remove="Data\CML\reaction.1.cml" />
-    <None Remove="Data\CML\reaction.2.cml" />
-    <None Remove="Data\CML\reaction.ArginineFragmentation.cml" />
-    <None Remove="Data\CML\reactionList.1.cml" />
-    <None Remove="Data\CML\reactionScheme.1.cml" />
-    <None Remove="Data\CML\reactionScheme.2.cml" />
-    <None Remove="Data\CML\reactionSchemeMoleculeSet.cml" />
-    <None Remove="Data\CML\reactionSchemeStepList.1.cml" />
-    <None Remove="Data\CML\reactionStepList.1.cml" />
-    <None Remove="Data\CML\SL0016a.cml" />
-    <None Remove="Data\CML\smiles1.cml" />
-    <None Remove="Data\CML\smiles2.cml" />
-    <None Remove="Data\CML\SN1_reaction.cml" />
-    <None Remove="Data\CML\test1.cml" />
-    <None Remove="Data\CML\testBug777488-1-AllRingsFinder.cml" />
-    <None Remove="Data\CML\testBug777488-2-AllRingsFinder.cml" />
-    <None Remove="Data\CML\testBug777488-3-AllRingsFinder.cml" />
-    <None Remove="Data\CML\toluene.cml" />
-    <None Remove="Data\CrystClust\estron.crystclust" />
-    <None Remove="Data\CTX\methanol_with_descriptors.ctx" />
-    <None Remove="Data\Gamess\Cl2O.log" />
-    <None Remove="Data\Gamess\ch3oh_gam.out" />
-    <None Remove="Data\Gaussian\4-cyanophenylnitrene-Benzazirine-TS.g94.out" />
-    <None Remove="Data\Gaussian\ch3oh_g94.out" />
-    <None Remove="Data\Gaussian\g98.out" />
-    <None Remove="Data\Gaussian\g98ReaderNMRTest.log" />
-    <None Remove="Data\Gaussian\phenol-without-para-H.g98.out" />
-    <None Remove="Data\Gaussian\phenylnitrene.g92.out" />
-    <None Remove="Data\Gaussian\phenylnitrene.g94.out" />
-    <None Remove="Data\Gaussian\tms.log" />
-    <None Remove="Data\Ghemical\ethene.mm1gp" />
-    <None Remove="Data\HIN\arorings.hin" />
-    <None Remove="Data\HIN\benzene.hin" />
-    <None Remove="Data\HIN\bug2984581.hin" />
-    <None Remove="Data\HIN\connectivity1.hin" />
-    <None Remove="Data\HIN\gravindex.hin" />
-    <None Remove="Data\HIN\molecule2.hin" />
-    <None Remove="Data\HIN\molecule3.hin" />
-    <None Remove="Data\HIN\momi2.hin" />
-    <None Remove="Data\HIN\multiple.hin" />
-    <None Remove="Data\IChI\random.ichi" />
-    <None Remove="Data\IChI\reserpine.ichi" />
-    <None Remove="Data\IChI\3-aminocyclopentene.ichi" />
-    <None Remove="Data\InChI\benzoicacid.mol.txt" />
-    <None Remove="Data\InChI\Figure04.inchi" />
-    <None Remove="Data\InChI\guanine.inchi" />
-    <None Remove="Data\InChI\guanine.inchi.xml" />
-    <None Remove="Data\InChI\H2O.inchi" />
-    <None Remove="Data\InChI\benzoicacid.inchi" />
-    <None Remove="Data\Jaguar\ch4-opt.out" />
-    <None Remove="Data\MDL\0002.stg01.rxn" />
-    <None Remove="Data\MDL\0024.stg02.rxn" />
-    <None Remove="Data\MDL\2,5-dimethyl-furan.mol" />
-    <None Remove="Data\MDL\24763.sdf" />
-    <None Remove="Data\MDL\332727182.radical.mol" />
-    <None Remove="Data\MDL\540545.mol" />
-    <None Remove="Data\MDL\5SD.mol" />
-    <None Remove="Data\MDL\9553-with-exp-hyd.mol" />
-    <None Remove="Data\MDL\9553.mol" />
-    <None Remove="Data\MDL\9554-with-exp-hyd.mol" />
-    <None Remove="Data\MDL\9554.mol" />
-    <None Remove="Data\MDL\a-pinene-with-atom-atom-mapping.mol" />
-    <None Remove="Data\MDL\a-pinene-with-undefined-stereo.mol" />
-    <None Remove="Data\MDL\a-pinene-with-valence.mol" />
-    <None Remove="Data\MDL\a-pinene.mol" />
-    <None Remove="Data\MDL\ADN.mol" />
-    <None Remove="Data\MDL\ADP.mol" />
-    <None Remove="Data\MDL\ADP_H.mol" />
-    <None Remove="Data\MDL\AliasPropertyRGroup.sdf" />
-    <None Remove="Data\MDL\allmol231.mol" />
-    <None Remove="Data\MDL\allmol232.mol" />
-    <None Remove="Data\MDL\atomValueLines.mol" />
-    <None Remove="Data\MDL\ATP.mol" />
-    <None Remove="Data\MDL\ATP_H.mol" />
-    <None Remove="Data\MDL\azulene.mol" />
-    <None Remove="Data\MDL\big.mol" />
-    <None Remove="Data\MDL\bismuth-ion.mol" />
-    <None Remove="Data\MDL\boronBuckyBall.mol" />
-    <None Remove="Data\MDL\BremserPredictionTest.mol" />
-    <None Remove="Data\MDL\brenda_molfile_rgroup.mol" />
-    <None Remove="Data\MDL\buckyball.mol" />
-    <None Remove="Data\MDL\bug-1649526.mol" />
-    <None Remove="Data\MDL\bug-1788686-adamantane-biphenyl.mol" />
-    <None Remove="Data\MDL\bug1014344-1.mol" />
-    <None Remove="Data\MDL\bug1089770-1.mol" />
-    <None Remove="Data\MDL\bug1089770-2.mol" />
-    <None Remove="Data\MDL\bug1241421.mol" />
-    <None Remove="Data\MDL\bug1295.mol" />
-    <None Remove="Data\MDL\bug1328739.mol" />
-    <None Remove="Data\MDL\bug1356.sdf" />
-    <None Remove="Data\MDL\bug1587283.mol" />
-    <None Remove="Data\MDL\bug1772609.mol" />
-    <None Remove="Data\MDL\bug1784850.mol" />
-    <None Remove="Data\MDL\bug2831420.mol" />
-    <None Remove="Data\MDL\bug2846213.mol" />
-    <None Remove="Data\MDL\bug2911300.sdf" />
-    <None Remove="Data\MDL\bug3485634.mol" />
-    <None Remove="Data\MDL\bug3488307.sdf" />
-    <None Remove="Data\MDL\bug599540.mol" />
-    <None Remove="Data\MDL\bug682233.mol" />
-    <None Remove="Data\MDL\bug698152.mol" />
-    <None Remove="Data\MDL\bug706786-1.mol" />
-    <None Remove="Data\MDL\bug706786-2.mol" />
-    <None Remove="Data\MDL\bug716259.mol" />
-    <None Remove="Data\MDL\bug771485-1.mol" />
-    <None Remove="Data\MDL\bug771485-2.mol" />
-    <None Remove="Data\MDL\bug853254-1.mol" />
-    <None Remove="Data\MDL\bug853254-2.mol" />
-    <None Remove="Data\MDL\bug931608-1.mol" />
-    <None Remove="Data\MDL\bug931608-2.mol" />
-    <None Remove="Data\MDL\bug934819-1.mol" />
-    <None Remove="Data\MDL\bug934819-2.mol" />
-    <None Remove="Data\MDL\bug982782.mol" />
-    <None Remove="Data\MDL\bugtest.mol" />
-    <None Remove="Data\MDL\bug_1750968.mol" />
-    <None Remove="Data\MDL\burden_undefined.sdf" />
-    <None Remove="Data\MDL\butadiene.mol" />
-    <None Remove="Data\MDL\Butane-TestFF-output.mol" />
-    <None Remove="Data\MDL\Butane-TestFF.mol" />
-    <None Remove="Data\MDL\butanoic_acid.mol" />
-    <None Remove="Data\MDL\C03374.mol" />
-    <None Remove="Data\MDL\C05787.mol" />
-    <None Remove="Data\MDL\C12308.mol" />
-    <None Remove="Data\MDL\carbocations.mol" />
-    <None Remove="Data\MDL\chebi.querybond.51736.mol" />
-    <None Remove="Data\MDL\chebifind.mol" />
-    <None Remove="Data\MDL\chebisearch.mol" />
-    <None Remove="Data\MDL\ChEBI_26120.mol" />
-    <None Remove="Data\MDL\ChEBI_29293.mol" />
-    <None Remove="Data\MDL\ChEBI_30668.mol" />
-    <None Remove="Data\MDL\ChEBI_37340.mol" />
-    <None Remove="Data\MDL\ChEBI_81539.mol" />
-    <None Remove="Data\MDL\chemblMolregno5369.mol" />
-    <None Remove="Data\MDL\chemblMolregno7039.mol" />
-    <None Remove="Data\MDL\chemsketch-all-labelled.mol" />
-    <None Remove="Data\MDL\chemsketch-embedded-space.mol" />
-    <None Remove="Data\MDL\chemsketch-leading-trailing-space.mol" />
-    <None Remove="Data\MDL\chemsketch-longest-label.mol" />
-    <None Remove="Data\MDL\chemsketch-one-label.mol" />
-    <None Remove="Data\MDL\chemsketch-printable-ascii.mol" />
-    <None Remove="Data\MDL\chlorobenzene.mol" />
-    <None Remove="Data\MDL\choloylcoa.mol" />
-    <None Remove="Data\MDL\cnssmarts.sdf" />
-    <None Remove="Data\MDL\CPD-7272.mol" />
-    <None Remove="Data\MDL\cpsa-charged.sdf" />
-    <None Remove="Data\MDL\cpsa-uncharged.sdf" />
-    <None Remove="Data\MDL\cyclooctadien.mol" />
-    <None Remove="Data\MDL\cyclooctan.mol" />
-    <None Remove="Data\MDL\cycloocten.mol" />
-    <None Remove="Data\MDL\cyclopropane.mol" />
-    <None Remove="Data\MDL\D+-glucose.mol" />
-    <None Remove="Data\MDL\d-ala.mol" />
-    <None Remove="Data\MDL\D-mannose.mol" />
-    <None Remove="Data\MDL\decalin.mol" />
-    <None Remove="Data\MDL\diadamantane-cubane.mol" />
-    <None Remove="Data\MDL\element-with-alias.mol" />
-    <None Remove="Data\MDL\emptyStructure.sdf" />
-    <None Remove="Data\MDL\emptyStructures.sdf" />
-    <None Remove="Data\MDL\equivClassPartiOOMBug.sdf" />
-    <None Remove="Data\MDL\error.sdf" />
-    <None Remove="Data\MDL\Ethane-TestFF-output.mol" />
-    <None Remove="Data\MDL\Ethane-TestFF.mol" />
-    <None Remove="Data\MDL\e_butene_0d.mol" />
-    <None Remove="Data\MDL\e_butene_2d.mol" />
-    <None Remove="Data\MDL\e_butene_3d.mol" />
-    <None Remove="Data\MDL\figueras-test-buried.mol" />
-    <None Remove="Data\MDL\figueras-test-inring.mol" />
-    <None Remove="Data\MDL\figueras-test-sep3D.mol" />
-    <None Remove="Data\MDL\fingerprints_from_modelbuilder3d.sdf" />
-    <None Remove="Data\MDL\formulatest.mol" />
-    <None Remove="Data\MDL\four-ring-5x10.mol" />
-    <None Remove="Data\MDL\frag5.mol" />
-    <None Remove="Data\MDL\furan.mol" />
-    <None Remove="Data\MDL\glycine-short-lines.mol" />
-    <None Remove="Data\MDL\heptane-modelbuilder-output.mol" />
-    <None Remove="Data\MDL\heptane-modelbuilder.mol" />
-    <None Remove="Data\MDL\Heptane-TestFF-output.mol" />
-    <None Remove="Data\MDL\Heptane-TestFF.mol" />
-    <None Remove="Data\MDL\heptane.mol" />
-    <None Remove="Data\MDL\heptane_almost_cyclic-output.mol" />
-    <None Remove="Data\MDL\heptane_almost_cyclic.mol" />
-    <None Remove="Data\MDL\het5.mol" />
-    <None Remove="Data\MDL\hisotopes.mol" />
-    <None Remove="Data\MDL\hydroxyamino.mol" />
-    <None Remove="Data\MDL\iridiumCoordination.chebi52748.mol" />
-    <None Remove="Data\MDL\iron-iii.mol" />
-    <None Remove="Data\MDL\isopropylacetate.mol" />
-    <None Remove="Data\MDL\iterconftest.sdf" />
-    <None Remove="Data\MDL\l-ala.mol" />
-    <None Remove="Data\MDL\ligand-1a0i.sdf" />
-    <None Remove="Data\MDL\lobtest.sdf" />
-    <None Remove="Data\MDL\lobtest2.sdf" />
-    <None Remove="Data\MDL\mappingTest.rxn" />
-    <None Remove="Data\MDL\massnumber.mol" />
-    <None Remove="Data\MDL\mdeotest.sdf" />
-    <None Remove="Data\MDL\mdlWithBond4.mol" />
-    <None Remove="Data\MDL\methylbenzol.mol" />
-    <None Remove="Data\MDL\mmff94AtomTypeTest_molecule.mol" />
-    <None Remove="Data\MDL\molecules_exception.sdf" />
-    <None Remove="Data\MDL\molV3000.mol" />
-    <None Remove="Data\MDL\mol_testAliasAtomNaming.mol" />
-    <None Remove="Data\MDL\mol_testAtomParity.mol" />
-    <None Remove="Data\MDL\multiplenewline-property.sdf" />
-    <None Remove="Data\MDL\multipleRadicals.mol" />
-    <None Remove="Data\MDL\murckoTest1.mol" />
-    <None Remove="Data\MDL\murckoTest10.mol" />
-    <None Remove="Data\MDL\murckoTest11.mol" />
-    <None Remove="Data\MDL\murckoTest2.mol" />
-    <None Remove="Data\MDL\murckoTest3.mol" />
-    <None Remove="Data\MDL\murckoTest4.mol" />
-    <None Remove="Data\MDL\murckoTest5.mol" />
-    <None Remove="Data\MDL\murckoTest6.mol" />
-    <None Remove="Data\MDL\murckoTest6_3d.mol" />
-    <None Remove="Data\MDL\murckoTest6_3d_2.mol" />
-    <None Remove="Data\MDL\murckoTest7.mol" />
-    <None Remove="Data\MDL\murckoTest8.mol" />
-    <None Remove="Data\MDL\murckoTest9.mol" />
-    <None Remove="Data\MDL\NN_dimethylaniline.mol" />
-    <None Remove="Data\MDL\no3dStructures.sdf" />
-    <None Remove="Data\MDL\nonConnectedPiSystems.mol" />
-    <None Remove="Data\MDL\noxide.sdf" />
-    <None Remove="Data\MDL\noxide2.sdf" />
-    <None Remove="Data\MDL\noxide3.sdf" />
-    <None Remove="Data\MDL\nozcoord.sdf" />
-    <None Remove="Data\MDL\nylon-6-source-rep.mol" />
-    <None Remove="Data\MDL\nylon-6-structure-rep.mol" />
-    <None Remove="Data\MDL\Ooporphyrin.mol" />
-    <None Remove="Data\MDL\output.rxn" />
-    <None Remove="Data\MDL\output_Cleaned.rxn" />
-    <None Remove="Data\MDL\pcoretest1.sdf" />
-    <None Remove="Data\MDL\petitejean.sdf" />
-    <None Remove="Data\MDL\piSystemCumulative.mol" />
-    <None Remove="Data\MDL\piSystemWithCarbokation.mol" />
-    <None Remove="Data\MDL\polycarpol.mol" />
-    <None Remove="Data\MDL\porphyrin.mol" />
-    <None Remove="Data\MDL\prediction-test.mol" />
-    <None Remove="Data\MDL\prev2000.sd" />
-    <None Remove="Data\MDL\pseudoatoms.sdf" />
-    <None Remove="Data\MDL\pseudoatomsv3000.mol" />
-    <None Remove="Data\MDL\qsar-reaction-test.rdf" />
-    <None Remove="Data\MDL\qsar-test.sdf" />
-    <None Remove="Data\MDL\queryBondTypes.mol" />
-    <None Remove="Data\MDL\r-group-with-alias.mol" />
-    <None Remove="Data\MDL\reaction-1.rxn" />
-    <None Remove="Data\MDL\reaction-2.rxn" />
-    <None Remove="Data\MDL\reaction-3.rxn" />
-    <None Remove="Data\MDL\reaction-4.rxn" />
-    <None Remove="Data\MDL\reaction_v3.rxn" />
-    <None Remove="Data\MDL\reserpine.mol" />
-    <None Remove="Data\MDL\rgfile.1.mol" />
-    <None Remove="Data\MDL\rgfile.2.mol" />
-    <None Remove="Data\MDL\rgfile.3.mol" />
-    <None Remove="Data\MDL\rgfile.4.mol" />
-    <None Remove="Data\MDL\rgfile.5.mol" />
-    <None Remove="Data\MDL\rgfile.6.mol" />
-    <None Remove="Data\MDL\rgfile.7.mol" />
-    <None Remove="Data\MDL\rgroups.mol" />
-    <None Remove="Data\MDL\rgroupsNumbered.mol" />
-    <None Remove="Data\MDL\ring_03419.mol" />
-    <None Remove="Data\MDL\SARGROUPTEST.sdf" />
-    <None Remove="Data\MDL\saturationcheckertest.mol" />
-    <None Remove="Data\MDL\sdg_test.mol" />
-    <None Remove="Data\MDL\sgroup-abbrv.mol" />
-    <None Remove="Data\MDL\sgroup-mod-example.mol" />
-    <None Remove="Data\MDL\sgroup-ord-mixture.mol" />
-    <None Remove="Data\MDL\sgroup-peptide.mol" />
-    <None Remove="Data\MDL\sgroup-ran-copolymer.mol" />
-    <None Remove="Data\MDL\sgroup-sru-bad-def.mol" />
-    <None Remove="Data\MDL\sgroup-sru-bad-scn.mol" />
-    <None Remove="Data\MDL\sgroup-sru-bracketstyles.mol" />
-    <None Remove="Data\MDL\sgroup-sru.mol" />
-    <None Remove="Data\MDL\sgroup-unord-mixture.mol" />
-    <None Remove="Data\MDL\sgroup-xl-copolymer.mol" />
-    <None Remove="Data\MDL\shortest_path_test.mol" />
-    <None Remove="Data\MDL\sim3d1.sdf" />
-    <None Remove="Data\MDL\sim3d2.sdf" />
-    <None Remove="Data\MDL\singleDoubletRadical.mol" />
-    <None Remove="Data\MDL\singleMol.sdf" />
-    <None Remove="Data\MDL\singleSingletRadical.mol" />
-    <None Remove="Data\MDL\singleTripletRadical.mol" />
-    <None Remove="Data\MDL\six-ring-4x4.mol" />
-    <None Remove="Data\MDL\squareplanar.mol" />
-    <None Remove="Data\MDL\Strychnine_nichtOK.mol" />
-    <None Remove="Data\MDL\sulfurCompound.mol" />
-    <None Remove="Data\MDL\superspiro.mol" />
-    <None Remove="Data\MDL\test.sdf" />
-    <None Remove="Data\MDL\test2.sdf" />
-    <None Remove="Data\MDL\test3.sdf" />
-    <None Remove="Data\MDL\test4.sdf" />
-    <None Remove="Data\MDL\test5.sdf" />
-    <None Remove="Data\MDL\test6.sdf" />
-    <None Remove="Data\MDL\testdoublebondconfig.mol" />
-    <None Remove="Data\MDL\testisopropylacetate.mol" />
-    <None Remove="Data\MDL\tetrahedral-parity-withExpH.mol" />
-    <None Remove="Data\MDL\tetrahedral-parity-withImplH.mol" />
-    <None Remove="Data\MDL\tetrahedral_1.mol" />
-    <None Remove="Data\MDL\tetrahedral_1_lazy.mol" />
-    <None Remove="Data\MDL\tetrahedral_2_lazy.mol" />
-    <None Remove="Data\MDL\tetrahedral_with_four_wedges.mol" />
-    <None Remove="Data\MDL\thiamin.mol" />
-    <None Remove="Data\MDL\too.many.rings.mol" />
-    <None Remove="Data\MDL\triacylglycerols.mol" />
-    <None Remove="Data\MDL\trigonal_bipyramidal.mol" />
-    <None Remove="Data\MDL\triphenyl-phosphate-contracted.mol" />
-    <None Remove="Data\MDL\triphenyl-phosphate-expanded.mol" />
-    <None Remove="Data\MDL\UITTimeout.sdf" />
-    <None Remove="Data\MDL\weirdprops.sdf" />
-    <None Remove="Data\MDL\with000coordinate.mol" />
-    <None Remove="Data\MDL\withcharges.mol" />
-    <None Remove="Data\MDL\wpn.sdf" />
-    <None Remove="Data\MDL\wpo.sdf" />
-    <None Remove="Data\MDL\writetest.sdf" />
-    <None Remove="Data\MDL\zinc_1309609.sdf" />
-    <None Remove="Data\Mol2\actives.mol2" />
-    <None Remove="Data\Mol2\atomtyping.mol2" />
-    <None Remove="Data\Mol2\atomtyping2.mol2" />
-    <None Remove="Data\Mol2\atomtyping3.mol2" />
-    <None Remove="Data\Mol2\atomtyping4.mol2" />
-    <None Remove="Data\Mol2\fromWebsite.mol2" />
-    <None Remove="Data\Mol2\NCI_feb03_2D.mol2.gz" />
-    <None Remove="Data\MOPAC\ethylene.dat.out" />
-    <None Remove="Data\MoSS\TKO.mossoutput" />
-    <None Remove="Data\OWL\molecule.n3" />
-    <None Remove="Data\PCore\multismartpcore.sdf" />
-    <None Remove="Data\PCore\pcore.xml" />
-    <None Remove="Data\PCore\pcoreangle.xml" />
-    <None Remove="Data\PCore\invalid1.xml" />
-    <None Remove="Data\PDB\114D.pdb" />
-    <None Remove="Data\PDB\1A00.pdb" />
-    <None Remove="Data\PDB\1A2C.pdb" />
-    <None Remove="Data\PDB\1ALE.pdb" />
-    <None Remove="Data\PDB\1ALM.pdb" />
-    <None Remove="Data\PDB\1ARJ.pdb" />
-    <None Remove="Data\PDB\1B07.pdb" />
-    <None Remove="Data\PDB\1BOQ.pdb" />
-    <None Remove="Data\PDB\1CKV.pdb" />
-    <None Remove="Data\PDB\1CRN.pdb" />
-    <None Remove="Data\PDB\1CRN_noSS.pdb" />
-    <None Remove="Data\PDB\1D66.pdb" />
-    <None Remove="Data\PDB\1D68.pdb" />
-    <None Remove="Data\PDB\1EBL.pdb" />
-    <None Remove="Data\PDB\1EPL.pdb" />
-    <None Remove="Data\PDB\1GCI.pdb" />
-    <None Remove="Data\PDB\1GFL.pdb" />
-    <None Remove="Data\PDB\1HJE.pdb" />
-    <None Remove="Data\PDB\1IHA.pdb" />
-    <None Remove="Data\PDB\1JGQ.pdb" />
-    <None Remove="Data\PDB\1LCD.pdb" />
-    <None Remove="Data\PDB\1MBO.pdb" />
-    <None Remove="Data\PDB\1NE6.pdb" />
-    <None Remove="Data\PDB\1NE6_noSS.pdb" />
-    <None Remove="Data\PDB\1OHG.pdb" />
-    <None Remove="Data\PDB\1PN8.pdb" />
-    <None Remove="Data\PDB\1PPA.pdb" />
-    <None Remove="Data\PDB\1SPX.pdb" />
-    <None Remove="Data\PDB\1TOH.pdb" />
-    <None Remove="Data\PDB\1TWV.pdb" />
-    <None Remove="Data\PDB\1XKQ.pdb" />
-    <None Remove="Data\PDB\coffeine.pdb" />
-    <None Remove="Data\PDB\hetatm_only.pdb" />
-    <None Remove="Data\PDB\hugeMembrane.pdb.gz" />
-    <None Remove="Data\PDB\Test-1crn.pdb" />
-    <None Remove="Data\PDB\unk.pdb" />
-    <None Remove="Data\PDB\viagra.pdb" />
-    <None Remove="Data\PMP\two_aceticacid.pmp" />
-    <None Remove="Data\PMP\aceticacid.pmp" />
-    <None Remove="Data\ShelX\frame_1.res" />
-    <None Remove="Data\Smiles\c10h16isomers.smi" />
-    <None Remove="Data\Smiles\drugs.smi" />
-    <None Remove="Data\Smiles\smiles.smi" />
-    <None Remove="Data\Smiles\smiles.txt" />
-    <None Remove="Data\Smiles\tabs.smi" />
-    <None Remove="Data\Smiles\test.smi" />
-    <None Remove="Data\Smiles\test2.smi" />
-    <None Remove="Data\Smiles\test3.smi" />
-    <None Remove="Data\VASP\LiMoS2_optimisation_ISIF3.vasp" />
-    <None Remove="Data\XYZ\bf3.xyz.gz" />
-    <None Remove="Data\XYZ\hydrogen.xyz" />
-    <None Remove="Data\XYZ\viagra.xyz" />
-    <None Remove="Data\XYZ\viagra_withComment.xyz" />
-    <None Remove="Data\XYZ\bf3.xyz" />
-    <None Remove="FaulonSignatures\Data\buckyball.mol" />
-    <None Remove="FaulonSignatures\Data\buckysigs.txt" />
-    <None Remove="FaulonSignatures\Data\buckysigs3.txt" />
-    <None Remove="FaulonSignatures\Data\large_example.sdf" />
-    <None Remove="FaulonSignatures\Data\multCycle.sdf" />
-    <None Remove="FaulonSignatures\Data\multCycleCanLabel.sdf" />
-    <None Remove="FaulonSignatures\Data\test.sdf" />
-    <None Remove="Hash\allene-explicit-3d-h.sdf" />
-    <None Remove="Hash\allene-explicit-h.sdf" />
-    <None Remove="Hash\allene-implicit-h.sdf" />
-    <None Remove="Hash\allene-unspecified.sdf" />
-    <None Remove="Hash\aminotetracosanones.sdf" />
-    <None Remove="Hash\butan-2-ols-explicit-hydrogens.sdf" />
-    <None Remove="Hash\butan-2-ols.sdf" />
-    <None Remove="Hash\cumulenes.sdf" />
-    <None Remove="Hash\dichloroethenes-explicit-hydrogens.sdf" />
-    <None Remove="Hash\dichloroethenes.sdf" />
-    <None Remove="Hash\ihlenfeldt93-figure-11.sdf" />
-    <None Remove="Hash\ihlenfeldt93-figure-12.sdf" />
-    <None Remove="Hash\ihlenfeldt93-figure-13a.sdf" />
-    <None Remove="Hash\ihlenfeldt93-figure-13b.sdf" />
-    <None Remove="Hash\ihlenfeldt93-figure-14.sdf" />
-    <None Remove="Hash\ihlenfeldt93-figure-15.sdf" />
-    <None Remove="Hash\ihlenfeldt93-figure-16a.sdf" />
-    <None Remove="Hash\ihlenfeldt93-figure-16b.sdf" />
-    <None Remove="Hash\ihlenfeldt93-figure-2a.sdf" />
-    <None Remove="Hash\ihlenfeldt93-figure-2b.sdf" />
-    <None Remove="Hash\ihlenfeldt93-figure-2c.sdf" />
-    <None Remove="Hash\ihlenfeldt93-figure-3.sdf" />
-    <None Remove="Hash\ihlenfeldt93-figure-7.sdf" />
-    <None Remove="Hash\inositols-explicit-hydrogens.sdf" />
-    <None Remove="Hash\inositols.sdf" />
-    <None Remove="Hash\ihlenfeldt93-figure-10.sdf" />
-    <None Remove="IO\CLMW1.mol2" />
-    <None Remove="IO\ethylesterification.mol" />
-    <None Remove="IO\finalPump96.09.06.pdb" />
-    <None Remove="IO\CH3.mol" />
-    <None Remove="IO\issue602.mol" />
-    <None Remove="IO\multicenterBond.mol" />
-    <None Remove="IO\pseudoAtomReplacement.mol" />
-    <None Remove="IO\1100784.cif" />
-    <None Remove="IO\seaborgium.mol" />
-    <None Remove="IO\seaborgium_abs.mol" />
-    <None Remove="IO\structure-with-radical.mol" />
-    <None Remove="IO\US06358966-20020319-C00001-enr.cml" />
-    <None Remove="IO\CML\cml23TestFramework.xml" />
-    <None Remove="IO\CML\cml25TestFramework.xml" />
-    <None Remove="IO\CML\cmlTestFramework.xml" />
-    <None Remove="IO\CML\cmlTestFramework4DTD.xml" />
-    <None Remove="IO\CML\cmlTestFramework_jumbo4.6.xml" />
-    <None Remove="Smiles\CHEBI_53695.mol" />
-    <None Remove="Smiles\CHEMBL367774.mol" />
-  </ItemGroup>
+    <ItemGroup>
+        <None Include="..\.editorconfig" Link=".editorconfig" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Include="Data\ABINIT\t54.in" />
-    <EmbeddedResource Include="Data\Aces2\ch3oh_ace.out" />
-    <EmbeddedResource Include="Data\ADF\ammonia.adf.out" />
-    <EmbeddedResource Include="Data\ARFF\Acetyl_EthylWithoutHetero.arff" />
-    <EmbeddedResource Include="Data\ARFF\Carbonyl1.arff" />
-    <EmbeddedResource Include="Data\ARFF\ConjugatedPiSys.arff" />
-    <EmbeddedResource Include="Data\ARFF\HeteroAtom1.arff" />
-    <EmbeddedResource Include="Data\ARFF\PySystWithHetero.arff" />
-    <EmbeddedResource Include="Data\ARFF\Table1.arff" />
-    <EmbeddedResource Include="Data\ARFF\Table2.arff" />
-    <EmbeddedResource Include="Data\ARFF\Table3.arff" />
-    <EmbeddedResource Include="Data\ARFF\Table4.arff" />
-    <EmbeddedResource Include="Data\ASN\PubChem\aceticAcids38.xml" />
-    <EmbeddedResource Include="Data\ASN\PubChem\cid1.asn" />
-    <EmbeddedResource Include="Data\ASN\PubChem\cid1145.xml" />
-    <EmbeddedResource Include="Data\ASN\PubChem\cid176.xml" />
-    <EmbeddedResource Include="Data\ASN\PubChem\list.asn" />
-    <EmbeddedResource Include="Data\ASN\PubChem\sid577309.xml" />
-    <EmbeddedResource Include="Data\ASN\PubChem\taxols.xml" />
-    <EmbeddedResource Include="Data\CDD\aromring_validation.zip" />
-    <EmbeddedResource Include="Data\CDD\Binders-ECFP6-1024-loo.bayesian" />
-    <EmbeddedResource Include="Data\CDD\Binders-ECFP6-32768-xv5.bayesian" />
-    <EmbeddedResource Include="Data\CDD\Binders-FCFP6-0-loo.bayesian" />
-    <EmbeddedResource Include="Data\CDD\Binders.sdf" />
-    <EmbeddedResource Include="Data\CDD\circular_validation.zip" />
-    <EmbeddedResource Include="Data\CDD\FoldedProbes.sdf" />
-    <EmbeddedResource Include="Data\CDD\MLProbes-ECFP6-1024-loo.bayesian" />
-    <EmbeddedResource Include="Data\CDD\MLProbes-ECFP6-32768-xv5.bayesian" />
-    <EmbeddedResource Include="Data\CDD\MLProbes-FCFP6-0-loo.bayesian" />
-    <EmbeddedResource Include="Data\CDD\MLProbes-FCFP6-256-xv3.bayesian" />
-    <EmbeddedResource Include="Data\CDD\MLProbes.sdf" />
-    <EmbeddedResource Include="Data\CDD\pyridineacid.mol" />
-    <EmbeddedResource Include="Data\CDD\Small.sdf" />
-    <EmbeddedResource Include="Data\CDD\Tiny.sdf" />
-    <EmbeddedResource Include="Data\CML\(1R)-1-aminoethan-1-ol-malformedDictRef.cml" />
-    <EmbeddedResource Include="Data\CML\(1R)-1-aminoethan-1-ol-multipleBondStereo.cml" />
-    <EmbeddedResource Include="Data\CML\(1R)-1-aminoethan-1-ol.cml" />
-    <EmbeddedResource Include="Data\CML\100-11-8.cml" />
-    <EmbeddedResource Include="Data\CML\1CKV_1.cml" />
-    <EmbeddedResource Include="Data\CML\3.cml" />
-    <EmbeddedResource Include="Data\CML\a-pinen.cml" />
-    <EmbeddedResource Include="Data\CML\aelfred2_test.cml" />
-    <EmbeddedResource Include="Data\CML\AlanineTree.cml" />
-    <EmbeddedResource Include="Data\CML\AlanineTreeReverse.cml" />
-    <EmbeddedResource Include="Data\CML\AZD5423.xml" />
-    <EmbeddedResource Include="Data\CML\benzene.cml" />
-    <EmbeddedResource Include="Data\CML\bug1014344-1.cml" />
-    <EmbeddedResource Include="Data\CML\bug1535055.cml" />
-    <EmbeddedResource Include="Data\CML\bug639455.cml" />
-    <EmbeddedResource Include="Data\CML\butadiene.cml" />
-    <EmbeddedResource Include="Data\CML\ceph-ns.xml" />
-    <EmbeddedResource Include="Data\CML\cmlConciseFormula.cml" />
-    <EmbeddedResource Include="Data\CML\cmlConciseFormula2.cml" />
-    <EmbeddedResource Include="Data\CML\cmlWithFormula.cml" />
-    <EmbeddedResource Include="Data\CML\COONa.cml" />
-    <EmbeddedResource Include="Data\CML\cs2a.cml" />
-    <EmbeddedResource Include="Data\CML\cs2a.mol.cml" />
-    <EmbeddedResource Include="Data\CML\curan.xml" />
-    <EmbeddedResource Include="Data\CML\custompropertiestest.cml" />
-    <EmbeddedResource Include="Data\CML\cyclohexane-xdrawchem.cml" />
-    <EmbeddedResource Include="Data\CML\dictref.cml" />
-    <EmbeddedResource Include="Data\CML\estron.cml" />
-    <EmbeddedResource Include="Data\CML\isolated_ringsystems.cml" />
-    <EmbeddedResource Include="Data\CML\keggtest.cml" />
-    <EmbeddedResource Include="Data\CML\methanol1.cml" />
-    <EmbeddedResource Include="Data\CML\methanol2.cml" />
-    <EmbeddedResource Include="Data\CML\mol28.cml" />
-    <EmbeddedResource Include="Data\CML\molAndspect.cml" />
-    <EmbeddedResource Include="Data\CML\naphtalene.cml" />
-    <EmbeddedResource Include="Data\CML\nitrate.cml" />
-    <EmbeddedResource Include="Data\CML\nsc2dcml.xml" />
-    <EmbeddedResource Include="Data\CML\nsc2dmol.1.cml" />
-    <EmbeddedResource Include="Data\CML\nsc2dmol.2.cml" />
-    <EmbeddedResource Include="Data\CML\nsc2dmol.a1.cml" />
-    <EmbeddedResource Include="Data\CML\nsc2dmol.a2.cml" />
-    <EmbeddedResource Include="Data\CML\nsc3dcml.xml" />
-    <EmbeddedResource Include="Data\CML\nsc3dmol.1.cml" />
-    <EmbeddedResource Include="Data\CML\nsc3dmol.2.cml" />
-    <EmbeddedResource Include="Data\CML\nsc3dmol.a1.cml" />
-    <EmbeddedResource Include="Data\CML\nsc3dmol.a2.cml" />
-    <EmbeddedResource Include="Data\CML\nucleustest.xml" />
-    <EmbeddedResource Include="Data\CML\olaCmlAtomType.cml" />
-    <EmbeddedResource Include="Data\CML\Ooporphyrin.cml" />
-    <EmbeddedResource Include="Data\CML\overlaptest.cml" />
-    <EmbeddedResource Include="Data\CML\overlaptest2.cml" />
-    <EmbeddedResource Include="Data\CML\overlaptest3.cml" />
-    <EmbeddedResource Include="Data\CML\phosphate.cml" />
-    <EmbeddedResource Include="Data\CML\r.cml" />
-    <EmbeddedResource Include="Data\CML\reaction.1.cml" />
-    <EmbeddedResource Include="Data\CML\reaction.2.cml" />
-    <EmbeddedResource Include="Data\CML\reaction.ArginineFragmentation.cml" />
-    <EmbeddedResource Include="Data\CML\reactionList.1.cml" />
-    <EmbeddedResource Include="Data\CML\reactionScheme.1.cml" />
-    <EmbeddedResource Include="Data\CML\reactionScheme.2.cml" />
-    <EmbeddedResource Include="Data\CML\reactionSchemeMoleculeSet.cml" />
-    <EmbeddedResource Include="Data\CML\reactionSchemeStepList.1.cml" />
-    <EmbeddedResource Include="Data\CML\reactionStepList.1.cml" />
-    <EmbeddedResource Include="Data\CML\SL0016a.cml" />
-    <EmbeddedResource Include="Data\CML\smiles1.cml" />
-    <EmbeddedResource Include="Data\CML\smiles2.cml" />
-    <EmbeddedResource Include="Data\CML\SN1_reaction.cml" />
-    <EmbeddedResource Include="Data\CML\test1.cml" />
-    <EmbeddedResource Include="Data\CML\testBug777488-1-AllRingsFinder.cml" />
-    <EmbeddedResource Include="Data\CML\testBug777488-2-AllRingsFinder.cml" />
-    <EmbeddedResource Include="Data\CML\testBug777488-3-AllRingsFinder.cml" />
-    <EmbeddedResource Include="Data\CML\toluene.cml" />
-    <EmbeddedResource Include="Data\CrystClust\estron.crystclust" />
-    <EmbeddedResource Include="Data\CTX\methanol_with_descriptors.ctx" />
-    <EmbeddedResource Include="Data\Gamess\Cl2O.log" />
-    <EmbeddedResource Include="Data\Gamess\ch3oh_gam.out" />
-    <EmbeddedResource Include="Data\Gaussian\4-cyanophenylnitrene-Benzazirine-TS.g94.out" />
-    <EmbeddedResource Include="Data\Gaussian\ch3oh_g94.out" />
-    <EmbeddedResource Include="Data\Gaussian\g98.out" />
-    <EmbeddedResource Include="Data\Gaussian\g98ReaderNMRTest.log" />
-    <EmbeddedResource Include="Data\Gaussian\phenol-without-para-H.g98.out" />
-    <EmbeddedResource Include="Data\Gaussian\phenylnitrene.g92.out" />
-    <EmbeddedResource Include="Data\Gaussian\phenylnitrene.g94.out" />
-    <EmbeddedResource Include="Data\Gaussian\tms.log" />
-    <EmbeddedResource Include="Data\Ghemical\ethene.mm1gp" />
-    <EmbeddedResource Include="Data\HIN\arorings.hin" />
-    <EmbeddedResource Include="Data\HIN\benzene.hin" />
-    <EmbeddedResource Include="Data\HIN\bug2984581.hin" />
-    <EmbeddedResource Include="Data\HIN\connectivity1.hin" />
-    <EmbeddedResource Include="Data\HIN\gravindex.hin" />
-    <EmbeddedResource Include="Data\HIN\molecule2.hin" />
-    <EmbeddedResource Include="Data\HIN\molecule3.hin" />
-    <EmbeddedResource Include="Data\HIN\momi2.hin" />
-    <EmbeddedResource Include="Data\HIN\multiple.hin" />
-    <EmbeddedResource Include="Data\IChI\random.ichi" />
-    <EmbeddedResource Include="Data\IChI\reserpine.ichi" />
-    <EmbeddedResource Include="Data\IChI\3-aminocyclopentene.ichi" />
-    <EmbeddedResource Include="Data\InChI\benzoicacid.mol.txt" />
-    <EmbeddedResource Include="Data\InChI\Figure04.inchi" />
-    <EmbeddedResource Include="Data\InChI\guanine.inchi" />
-    <EmbeddedResource Include="Data\InChI\guanine.inchi.xml" />
-    <EmbeddedResource Include="Data\InChI\H2O.inchi" />
-    <EmbeddedResource Include="Data\InChI\benzoicacid.inchi" />
-    <EmbeddedResource Include="Data\Jaguar\ch4-opt.out" />
-    <EmbeddedResource Include="Data\MDL\0002.stg01.rxn" />
-    <EmbeddedResource Include="Data\MDL\0024.stg02.rxn" />
-    <EmbeddedResource Include="Data\MDL\2,5-dimethyl-furan.mol" />
-    <EmbeddedResource Include="Data\MDL\24763.sdf" />
-    <EmbeddedResource Include="Data\MDL\332727182.radical.mol" />
-    <EmbeddedResource Include="Data\MDL\540545.mol" />
-    <EmbeddedResource Include="Data\MDL\5SD.mol" />
-    <EmbeddedResource Include="Data\MDL\9553-with-exp-hyd.mol" />
-    <EmbeddedResource Include="Data\MDL\9553.mol" />
-    <EmbeddedResource Include="Data\MDL\9554-with-exp-hyd.mol" />
-    <EmbeddedResource Include="Data\MDL\9554.mol" />
-    <EmbeddedResource Include="Data\MDL\a-pinene-with-atom-atom-mapping.mol" />
-    <EmbeddedResource Include="Data\MDL\a-pinene-with-undefined-stereo.mol" />
-    <EmbeddedResource Include="Data\MDL\a-pinene-with-valence.mol" />
-    <EmbeddedResource Include="Data\MDL\a-pinene.mol" />
-    <EmbeddedResource Include="Data\MDL\ADN.mol" />
-    <EmbeddedResource Include="Data\MDL\ADP.mol" />
-    <EmbeddedResource Include="Data\MDL\ADP_H.mol" />
-    <EmbeddedResource Include="Data\MDL\AliasPropertyRGroup.sdf" />
-    <EmbeddedResource Include="Data\MDL\allmol231.mol" />
-    <EmbeddedResource Include="Data\MDL\allmol232.mol" />
-    <EmbeddedResource Include="Data\MDL\atomValueLines.mol" />
-    <EmbeddedResource Include="Data\MDL\ATP.mol" />
-    <EmbeddedResource Include="Data\MDL\ATP_H.mol" />
-    <EmbeddedResource Include="Data\MDL\azulene.mol" />
-    <EmbeddedResource Include="Data\MDL\big.mol" />
-    <EmbeddedResource Include="Data\MDL\bismuth-ion.mol" />
-    <EmbeddedResource Include="Data\MDL\boronBuckyBall.mol" />
-    <EmbeddedResource Include="Data\MDL\BremserPredictionTest.mol" />
-    <EmbeddedResource Include="Data\MDL\brenda_molfile_rgroup.mol" />
-    <EmbeddedResource Include="Data\MDL\buckyball.mol" />
-    <EmbeddedResource Include="Data\MDL\bug-1649526.mol" />
-    <EmbeddedResource Include="Data\MDL\bug-1788686-adamantane-biphenyl.mol" />
-    <EmbeddedResource Include="Data\MDL\bug1014344-1.mol" />
-    <EmbeddedResource Include="Data\MDL\bug1089770-1.mol" />
-    <EmbeddedResource Include="Data\MDL\bug1089770-2.mol" />
-    <EmbeddedResource Include="Data\MDL\bug1241421.mol" />
-    <EmbeddedResource Include="Data\MDL\bug1295.mol" />
-    <EmbeddedResource Include="Data\MDL\bug1328739.mol" />
-    <EmbeddedResource Include="Data\MDL\bug1356.sdf" />
-    <EmbeddedResource Include="Data\MDL\bug1587283.mol" />
-    <EmbeddedResource Include="Data\MDL\bug1772609.mol" />
-    <EmbeddedResource Include="Data\MDL\bug1784850.mol" />
-    <EmbeddedResource Include="Data\MDL\bug2831420.mol" />
-    <EmbeddedResource Include="Data\MDL\bug2846213.mol" />
-    <EmbeddedResource Include="Data\MDL\bug2911300.sdf" />
-    <EmbeddedResource Include="Data\MDL\bug3485634.mol" />
-    <EmbeddedResource Include="Data\MDL\bug3488307.sdf" />
-    <EmbeddedResource Include="Data\MDL\bug599540.mol" />
-    <EmbeddedResource Include="Data\MDL\bug682233.mol" />
-    <EmbeddedResource Include="Data\MDL\bug698152.mol" />
-    <EmbeddedResource Include="Data\MDL\bug706786-1.mol" />
-    <EmbeddedResource Include="Data\MDL\bug706786-2.mol" />
-    <EmbeddedResource Include="Data\MDL\bug716259.mol" />
-    <EmbeddedResource Include="Data\MDL\bug771485-1.mol" />
-    <EmbeddedResource Include="Data\MDL\bug771485-2.mol" />
-    <EmbeddedResource Include="Data\MDL\bug853254-1.mol" />
-    <EmbeddedResource Include="Data\MDL\bug853254-2.mol" />
-    <EmbeddedResource Include="Data\MDL\bug931608-1.mol" />
-    <EmbeddedResource Include="Data\MDL\bug931608-2.mol" />
-    <EmbeddedResource Include="Data\MDL\bug934819-1.mol" />
-    <EmbeddedResource Include="Data\MDL\bug934819-2.mol" />
-    <EmbeddedResource Include="Data\MDL\bug982782.mol" />
-    <EmbeddedResource Include="Data\MDL\bugtest.mol" />
-    <EmbeddedResource Include="Data\MDL\bug_1750968.mol" />
-    <EmbeddedResource Include="Data\MDL\burden_undefined.sdf" />
-    <EmbeddedResource Include="Data\MDL\butadiene.mol" />
-    <EmbeddedResource Include="Data\MDL\Butane-TestFF-output.mol" />
-    <EmbeddedResource Include="Data\MDL\Butane-TestFF.mol" />
-    <EmbeddedResource Include="Data\MDL\butanoic_acid.mol" />
-    <EmbeddedResource Include="Data\MDL\C03374.mol" />
-    <EmbeddedResource Include="Data\MDL\C05787.mol" />
-    <EmbeddedResource Include="Data\MDL\C12308.mol" />
-    <EmbeddedResource Include="Data\MDL\carbocations.mol" />
-    <EmbeddedResource Include="Data\MDL\chebi.querybond.51736.mol" />
-    <EmbeddedResource Include="Data\MDL\chebifind.mol" />
-    <EmbeddedResource Include="Data\MDL\chebisearch.mol" />
-    <EmbeddedResource Include="Data\MDL\ChEBI_26120.mol" />
-    <EmbeddedResource Include="Data\MDL\ChEBI_29293.mol" />
-    <EmbeddedResource Include="Data\MDL\ChEBI_30668.mol" />
-    <EmbeddedResource Include="Data\MDL\ChEBI_37340.mol" />
-    <EmbeddedResource Include="Data\MDL\ChEBI_81539.mol" />
-    <EmbeddedResource Include="Data\MDL\chemblMolregno5369.mol" />
-    <EmbeddedResource Include="Data\MDL\chemblMolregno7039.mol" />
-    <EmbeddedResource Include="Data\MDL\chemsketch-all-labelled.mol" />
-    <EmbeddedResource Include="Data\MDL\chemsketch-embedded-space.mol" />
-    <EmbeddedResource Include="Data\MDL\chemsketch-leading-trailing-space.mol" />
-    <EmbeddedResource Include="Data\MDL\chemsketch-longest-label.mol" />
-    <EmbeddedResource Include="Data\MDL\chemsketch-one-label.mol" />
-    <EmbeddedResource Include="Data\MDL\chemsketch-printable-ascii.mol" />
-    <EmbeddedResource Include="Data\MDL\chlorobenzene.mol" />
-    <EmbeddedResource Include="Data\MDL\choloylcoa.mol" />
-    <EmbeddedResource Include="Data\MDL\cnssmarts.sdf" />
-    <EmbeddedResource Include="Data\MDL\CPD-7272.mol" />
-    <EmbeddedResource Include="Data\MDL\cpsa-charged.sdf" />
-    <EmbeddedResource Include="Data\MDL\cpsa-uncharged.sdf" />
-    <EmbeddedResource Include="Data\MDL\cyclooctadien.mol" />
-    <EmbeddedResource Include="Data\MDL\cyclooctan.mol" />
-    <EmbeddedResource Include="Data\MDL\cycloocten.mol" />
-    <EmbeddedResource Include="Data\MDL\cyclopropane.mol" />
-    <EmbeddedResource Include="Data\MDL\D+-glucose.mol" />
-    <EmbeddedResource Include="Data\MDL\d-ala.mol" />
-    <EmbeddedResource Include="Data\MDL\D-mannose.mol" />
-    <EmbeddedResource Include="Data\MDL\decalin.mol" />
-    <EmbeddedResource Include="Data\MDL\diadamantane-cubane.mol" />
-    <EmbeddedResource Include="Data\MDL\element-with-alias.mol" />
-    <EmbeddedResource Include="Data\MDL\emptyStructure.sdf" />
-    <EmbeddedResource Include="Data\MDL\emptyStructures.sdf" />
-    <EmbeddedResource Include="Data\MDL\equivClassPartiOOMBug.sdf" />
-    <EmbeddedResource Include="Data\MDL\error.sdf" />
-    <EmbeddedResource Include="Data\MDL\Ethane-TestFF-output.mol" />
-    <EmbeddedResource Include="Data\MDL\Ethane-TestFF.mol" />
-    <EmbeddedResource Include="Data\MDL\e_butene_0d.mol" />
-    <EmbeddedResource Include="Data\MDL\e_butene_2d.mol" />
-    <EmbeddedResource Include="Data\MDL\e_butene_3d.mol" />
-    <EmbeddedResource Include="Data\MDL\figueras-test-buried.mol" />
-    <EmbeddedResource Include="Data\MDL\figueras-test-inring.mol" />
-    <EmbeddedResource Include="Data\MDL\figueras-test-sep3D.mol" />
-    <EmbeddedResource Include="Data\MDL\fingerprints_from_modelbuilder3d.sdf" />
-    <EmbeddedResource Include="Data\MDL\formulatest.mol" />
-    <EmbeddedResource Include="Data\MDL\four-ring-5x10.mol" />
-    <EmbeddedResource Include="Data\MDL\frag5.mol" />
-    <EmbeddedResource Include="Data\MDL\furan.mol" />
-    <EmbeddedResource Include="Data\MDL\glycine-short-lines.mol" />
-    <EmbeddedResource Include="Data\MDL\heptane-modelbuilder-output.mol" />
-    <EmbeddedResource Include="Data\MDL\heptane-modelbuilder.mol" />
-    <EmbeddedResource Include="Data\MDL\Heptane-TestFF-output.mol" />
-    <EmbeddedResource Include="Data\MDL\Heptane-TestFF.mol" />
-    <EmbeddedResource Include="Data\MDL\heptane.mol" />
-    <EmbeddedResource Include="Data\MDL\heptane_almost_cyclic-output.mol" />
-    <EmbeddedResource Include="Data\MDL\heptane_almost_cyclic.mol" />
-    <EmbeddedResource Include="Data\MDL\het5.mol" />
-    <EmbeddedResource Include="Data\MDL\hisotopes.mol" />
-    <EmbeddedResource Include="Data\MDL\hydroxyamino.mol" />
-    <EmbeddedResource Include="Data\MDL\iridiumCoordination.chebi52748.mol" />
-    <EmbeddedResource Include="Data\MDL\iron-iii.mol" />
-    <EmbeddedResource Include="Data\MDL\isopropylacetate.mol" />
-    <EmbeddedResource Include="Data\MDL\iterconftest.sdf" />
-    <EmbeddedResource Include="Data\MDL\l-ala.mol" />
-    <EmbeddedResource Include="Data\MDL\ligand-1a0i.sdf" />
-    <EmbeddedResource Include="Data\MDL\lobtest.sdf" />
-    <EmbeddedResource Include="Data\MDL\lobtest2.sdf" />
-    <EmbeddedResource Include="Data\MDL\mappingTest.rxn" />
-    <EmbeddedResource Include="Data\MDL\massnumber.mol" />
-    <EmbeddedResource Include="Data\MDL\mdeotest.sdf" />
-    <EmbeddedResource Include="Data\MDL\mdlWithBond4.mol" />
-    <EmbeddedResource Include="Data\MDL\methylbenzol.mol" />
-    <EmbeddedResource Include="Data\MDL\mmff94AtomTypeTest_molecule.mol" />
-    <EmbeddedResource Include="Data\MDL\molecules_exception.sdf" />
-    <EmbeddedResource Include="Data\MDL\molV3000.mol" />
-    <EmbeddedResource Include="Data\MDL\mol_testAliasAtomNaming.mol" />
-    <EmbeddedResource Include="Data\MDL\mol_testAtomParity.mol" />
-    <EmbeddedResource Include="Data\MDL\multiplenewline-property.sdf" />
-    <EmbeddedResource Include="Data\MDL\multipleRadicals.mol" />
-    <EmbeddedResource Include="Data\MDL\murckoTest1.mol" />
-    <EmbeddedResource Include="Data\MDL\murckoTest10.mol" />
-    <EmbeddedResource Include="Data\MDL\murckoTest11.mol" />
-    <EmbeddedResource Include="Data\MDL\murckoTest2.mol" />
-    <EmbeddedResource Include="Data\MDL\murckoTest3.mol" />
-    <EmbeddedResource Include="Data\MDL\murckoTest4.mol" />
-    <EmbeddedResource Include="Data\MDL\murckoTest5.mol" />
-    <EmbeddedResource Include="Data\MDL\murckoTest6.mol" />
-    <EmbeddedResource Include="Data\MDL\murckoTest6_3d.mol" />
-    <EmbeddedResource Include="Data\MDL\murckoTest6_3d_2.mol" />
-    <EmbeddedResource Include="Data\MDL\murckoTest7.mol" />
-    <EmbeddedResource Include="Data\MDL\murckoTest8.mol" />
-    <EmbeddedResource Include="Data\MDL\murckoTest9.mol" />
-    <EmbeddedResource Include="Data\MDL\NN_dimethylaniline.mol" />
-    <EmbeddedResource Include="Data\MDL\no3dStructures.sdf" />
-    <EmbeddedResource Include="Data\MDL\nonConnectedPiSystems.mol" />
-    <EmbeddedResource Include="Data\MDL\noxide.sdf" />
-    <EmbeddedResource Include="Data\MDL\noxide2.sdf" />
-    <EmbeddedResource Include="Data\MDL\noxide3.sdf" />
-    <EmbeddedResource Include="Data\MDL\nozcoord.sdf" />
-    <EmbeddedResource Include="Data\MDL\nylon-6-source-rep.mol" />
-    <EmbeddedResource Include="Data\MDL\nylon-6-structure-rep.mol" />
-    <EmbeddedResource Include="Data\MDL\Ooporphyrin.mol" />
-    <EmbeddedResource Include="Data\MDL\output.rxn" />
-    <EmbeddedResource Include="Data\MDL\output_Cleaned.rxn" />
-    <EmbeddedResource Include="Data\MDL\pcoretest1.sdf" />
-    <EmbeddedResource Include="Data\MDL\petitejean.sdf" />
-    <EmbeddedResource Include="Data\MDL\piSystemCumulative.mol" />
-    <EmbeddedResource Include="Data\MDL\piSystemWithCarbokation.mol" />
-    <EmbeddedResource Include="Data\MDL\polycarpol.mol" />
-    <EmbeddedResource Include="Data\MDL\porphyrin.mol" />
-    <EmbeddedResource Include="Data\MDL\prediction-test.mol" />
-    <EmbeddedResource Include="Data\MDL\prev2000.sd" />
-    <EmbeddedResource Include="Data\MDL\pseudoatoms.sdf" />
-    <EmbeddedResource Include="Data\MDL\pseudoatomsv3000.mol" />
-    <EmbeddedResource Include="Data\MDL\qsar-reaction-test.rdf" />
-    <EmbeddedResource Include="Data\MDL\qsar-test.sdf" />
-    <EmbeddedResource Include="Data\MDL\queryBondTypes.mol" />
-    <EmbeddedResource Include="Data\MDL\r-group-with-alias.mol" />
-    <EmbeddedResource Include="Data\MDL\reaction-1.rxn" />
-    <EmbeddedResource Include="Data\MDL\reaction-2.rxn" />
-    <EmbeddedResource Include="Data\MDL\reaction-3.rxn" />
-    <EmbeddedResource Include="Data\MDL\reaction-4.rxn" />
-    <EmbeddedResource Include="Data\MDL\reaction_v3.rxn" />
-    <EmbeddedResource Include="Data\MDL\reserpine.mol" />
-    <EmbeddedResource Include="Data\MDL\rgfile.1.mol" />
-    <EmbeddedResource Include="Data\MDL\rgfile.2.mol" />
-    <EmbeddedResource Include="Data\MDL\rgfile.3.mol" />
-    <EmbeddedResource Include="Data\MDL\rgfile.4.mol" />
-    <EmbeddedResource Include="Data\MDL\rgfile.5.mol" />
-    <EmbeddedResource Include="Data\MDL\rgfile.6.mol" />
-    <EmbeddedResource Include="Data\MDL\rgfile.7.mol" />
-    <EmbeddedResource Include="Data\MDL\rgroups.mol" />
-    <EmbeddedResource Include="Data\MDL\rgroupsNumbered.mol" />
-    <EmbeddedResource Include="Data\MDL\ring_03419.mol" />
-    <EmbeddedResource Include="Data\MDL\SARGROUPTEST.sdf" />
-    <EmbeddedResource Include="Data\MDL\saturationcheckertest.mol" />
-    <EmbeddedResource Include="Data\MDL\sdg_test.mol" />
-    <EmbeddedResource Include="Data\MDL\sgroup-abbrv.mol" />
-    <EmbeddedResource Include="Data\MDL\sgroup-mod-example.mol" />
-    <EmbeddedResource Include="Data\MDL\sgroup-ord-mixture.mol" />
-    <EmbeddedResource Include="Data\MDL\sgroup-peptide.mol" />
-    <EmbeddedResource Include="Data\MDL\sgroup-ran-copolymer.mol" />
-    <EmbeddedResource Include="Data\MDL\sgroup-sru-bad-def.mol" />
-    <EmbeddedResource Include="Data\MDL\sgroup-sru-bad-scn.mol" />
-    <EmbeddedResource Include="Data\MDL\sgroup-sru-bracketstyles.mol" />
-    <EmbeddedResource Include="Data\MDL\sgroup-sru.mol" />
-    <EmbeddedResource Include="Data\MDL\sgroup-unord-mixture.mol" />
-    <EmbeddedResource Include="Data\MDL\sgroup-xl-copolymer.mol" />
-    <EmbeddedResource Include="Data\MDL\shortest_path_test.mol" />
-    <EmbeddedResource Include="Data\MDL\sim3d1.sdf" />
-    <EmbeddedResource Include="Data\MDL\sim3d2.sdf" />
-    <EmbeddedResource Include="Data\MDL\singleDoubletRadical.mol" />
-    <EmbeddedResource Include="Data\MDL\singleMol.sdf" />
-    <EmbeddedResource Include="Data\MDL\singleSingletRadical.mol" />
-    <EmbeddedResource Include="Data\MDL\singleTripletRadical.mol" />
-    <EmbeddedResource Include="Data\MDL\six-ring-4x4.mol" />
-    <EmbeddedResource Include="Data\MDL\squareplanar.mol" />
-    <EmbeddedResource Include="Data\MDL\Strychnine_nichtOK.mol" />
-    <EmbeddedResource Include="Data\MDL\sulfurCompound.mol" />
-    <EmbeddedResource Include="Data\MDL\superspiro.mol" />
-    <EmbeddedResource Include="Data\MDL\test.sdf" />
-    <EmbeddedResource Include="Data\MDL\test2.sdf" />
-    <EmbeddedResource Include="Data\MDL\test3.sdf" />
-    <EmbeddedResource Include="Data\MDL\test4.sdf" />
-    <EmbeddedResource Include="Data\MDL\test5.sdf" />
-    <EmbeddedResource Include="Data\MDL\test6.sdf" />
-    <EmbeddedResource Include="Data\MDL\testdoublebondconfig.mol" />
-    <EmbeddedResource Include="Data\MDL\testisopropylacetate.mol" />
-    <EmbeddedResource Include="Data\MDL\tetrahedral-parity-withExpH.mol" />
-    <EmbeddedResource Include="Data\MDL\tetrahedral-parity-withImplH.mol" />
-    <EmbeddedResource Include="Data\MDL\tetrahedral_1.mol" />
-    <EmbeddedResource Include="Data\MDL\tetrahedral_1_lazy.mol" />
-    <EmbeddedResource Include="Data\MDL\tetrahedral_2_lazy.mol" />
-    <EmbeddedResource Include="Data\MDL\tetrahedral_with_four_wedges.mol" />
-    <EmbeddedResource Include="Data\MDL\thiamin.mol" />
-    <EmbeddedResource Include="Data\MDL\too.many.rings.mol" />
-    <EmbeddedResource Include="Data\MDL\triacylglycerols.mol" />
-    <EmbeddedResource Include="Data\MDL\trigonal_bipyramidal.mol" />
-    <EmbeddedResource Include="Data\MDL\triphenyl-phosphate-contracted.mol" />
-    <EmbeddedResource Include="Data\MDL\triphenyl-phosphate-expanded.mol" />
-    <EmbeddedResource Include="Data\MDL\UITTimeout.sdf" />
-    <EmbeddedResource Include="Data\MDL\weirdprops.sdf" />
-    <EmbeddedResource Include="Data\MDL\with000coordinate.mol" />
-    <EmbeddedResource Include="Data\MDL\withcharges.mol" />
-    <EmbeddedResource Include="Data\MDL\wpn.sdf" />
-    <EmbeddedResource Include="Data\MDL\wpo.sdf" />
-    <EmbeddedResource Include="Data\MDL\writetest.sdf" />
-    <EmbeddedResource Include="Data\MDL\zinc_1309609.sdf" />
-    <EmbeddedResource Include="Data\Mol2\actives.mol2" />
-    <EmbeddedResource Include="Data\Mol2\atomtyping.mol2" />
-    <EmbeddedResource Include="Data\Mol2\atomtyping2.mol2" />
-    <EmbeddedResource Include="Data\Mol2\atomtyping3.mol2" />
-    <EmbeddedResource Include="Data\Mol2\atomtyping4.mol2" />
-    <EmbeddedResource Include="Data\Mol2\fromWebsite.mol2" />
-    <EmbeddedResource Include="Data\Mol2\NCI_feb03_2D.mol2.gz" />
-    <EmbeddedResource Include="Data\MOPAC\ethylene.dat.out" />
-    <EmbeddedResource Include="Data\MoSS\TKO.mossoutput" />
-    <EmbeddedResource Include="Data\OWL\molecule.n3" />
-    <EmbeddedResource Include="Data\PCore\multismartpcore.sdf" />
-    <EmbeddedResource Include="Data\PCore\pcore.xml" />
-    <EmbeddedResource Include="Data\PCore\pcoreangle.xml" />
-    <EmbeddedResource Include="Data\PCore\invalid1.xml" />
-    <EmbeddedResource Include="Data\PDB\114D.pdb" />
-    <EmbeddedResource Include="Data\PDB\1A00.pdb" />
-    <EmbeddedResource Include="Data\PDB\1A2C.pdb" />
-    <EmbeddedResource Include="Data\PDB\1ALE.pdb" />
-    <EmbeddedResource Include="Data\PDB\1ALM.pdb" />
-    <EmbeddedResource Include="Data\PDB\1ARJ.pdb" />
-    <EmbeddedResource Include="Data\PDB\1B07.pdb" />
-    <EmbeddedResource Include="Data\PDB\1BOQ.pdb" />
-    <EmbeddedResource Include="Data\PDB\1CKV.pdb" />
-    <EmbeddedResource Include="Data\PDB\1CRN.pdb" />
-    <EmbeddedResource Include="Data\PDB\1CRN_noSS.pdb" />
-    <EmbeddedResource Include="Data\PDB\1D66.pdb" />
-    <EmbeddedResource Include="Data\PDB\1D68.pdb" />
-    <EmbeddedResource Include="Data\PDB\1EBL.pdb" />
-    <EmbeddedResource Include="Data\PDB\1EPL.pdb" />
-    <EmbeddedResource Include="Data\PDB\1GCI.pdb" />
-    <EmbeddedResource Include="Data\PDB\1GFL.pdb" />
-    <EmbeddedResource Include="Data\PDB\1HJE.pdb" />
-    <EmbeddedResource Include="Data\PDB\1IHA.pdb" />
-    <EmbeddedResource Include="Data\PDB\1JGQ.pdb" />
-    <EmbeddedResource Include="Data\PDB\1LCD.pdb" />
-    <EmbeddedResource Include="Data\PDB\1MBO.pdb" />
-    <EmbeddedResource Include="Data\PDB\1NE6.pdb" />
-    <EmbeddedResource Include="Data\PDB\1NE6_noSS.pdb" />
-    <EmbeddedResource Include="Data\PDB\1OHG.pdb" />
-    <EmbeddedResource Include="Data\PDB\1PN8.pdb" />
-    <EmbeddedResource Include="Data\PDB\1PPA.pdb" />
-    <EmbeddedResource Include="Data\PDB\1SPX.pdb" />
-    <EmbeddedResource Include="Data\PDB\1TOH.pdb" />
-    <EmbeddedResource Include="Data\PDB\1TWV.pdb" />
-    <EmbeddedResource Include="Data\PDB\1XKQ.pdb" />
-    <EmbeddedResource Include="Data\PDB\coffeine.pdb" />
-    <EmbeddedResource Include="Data\PDB\hetatm_only.pdb" />
-    <EmbeddedResource Include="Data\PDB\hugeMembrane.pdb.gz" />
-    <EmbeddedResource Include="Data\PDB\Test-1crn.pdb" />
-    <EmbeddedResource Include="Data\PDB\unk.pdb" />
-    <EmbeddedResource Include="Data\PDB\viagra.pdb" />
-    <EmbeddedResource Include="Data\PMP\two_aceticacid.pmp" />
-    <EmbeddedResource Include="Data\PMP\aceticacid.pmp" />
-    <EmbeddedResource Include="Data\ShelX\frame_1.res" />
-    <EmbeddedResource Include="Data\Smiles\c10h16isomers.smi" />
-    <EmbeddedResource Include="Data\Smiles\drugs.smi" />
-    <EmbeddedResource Include="Data\Smiles\smiles.smi" />
-    <EmbeddedResource Include="Data\Smiles\smiles.txt" />
-    <EmbeddedResource Include="Data\Smiles\tabs.smi" />
-    <EmbeddedResource Include="Data\Smiles\test.smi" />
-    <EmbeddedResource Include="Data\Smiles\test2.smi" />
-    <EmbeddedResource Include="Data\Smiles\test3.smi" />
-    <EmbeddedResource Include="Data\VASP\LiMoS2_optimisation_ISIF3.vasp" />
-    <EmbeddedResource Include="Data\XYZ\bf3.xyz.gz" />
-    <EmbeddedResource Include="Data\XYZ\hydrogen.xyz" />
-    <EmbeddedResource Include="Data\XYZ\viagra.xyz" />
-    <EmbeddedResource Include="Data\XYZ\viagra_withComment.xyz" />
-    <EmbeddedResource Include="Data\XYZ\bf3.xyz" />
-    <EmbeddedResource Include="FaulonSignatures\Data\buckyball.mol" />
-    <EmbeddedResource Include="FaulonSignatures\Data\buckysigs.txt" />
-    <EmbeddedResource Include="FaulonSignatures\Data\buckysigs3.txt" />
-    <EmbeddedResource Include="FaulonSignatures\Data\large_example.sdf" />
-    <EmbeddedResource Include="FaulonSignatures\Data\multCycle.sdf" />
-    <EmbeddedResource Include="FaulonSignatures\Data\multCycleCanLabel.sdf" />
-    <EmbeddedResource Include="FaulonSignatures\Data\test.sdf" />
-    <EmbeddedResource Include="Hash\allene-explicit-3d-h.sdf" />
-    <EmbeddedResource Include="Hash\allene-explicit-h.sdf" />
-    <EmbeddedResource Include="Hash\allene-implicit-h.sdf" />
-    <EmbeddedResource Include="Hash\allene-unspecified.sdf" />
-    <EmbeddedResource Include="Hash\aminotetracosanones.sdf" />
-    <EmbeddedResource Include="Hash\butan-2-ols-explicit-hydrogens.sdf" />
-    <EmbeddedResource Include="Hash\butan-2-ols.sdf" />
-    <EmbeddedResource Include="Hash\cumulenes.sdf" />
-    <EmbeddedResource Include="Hash\dichloroethenes-explicit-hydrogens.sdf" />
-    <EmbeddedResource Include="Hash\dichloroethenes.sdf" />
-    <EmbeddedResource Include="Hash\ihlenfeldt93-figure-11.sdf" />
-    <EmbeddedResource Include="Hash\ihlenfeldt93-figure-12.sdf" />
-    <EmbeddedResource Include="Hash\ihlenfeldt93-figure-13a.sdf" />
-    <EmbeddedResource Include="Hash\ihlenfeldt93-figure-13b.sdf" />
-    <EmbeddedResource Include="Hash\ihlenfeldt93-figure-14.sdf" />
-    <EmbeddedResource Include="Hash\ihlenfeldt93-figure-15.sdf" />
-    <EmbeddedResource Include="Hash\ihlenfeldt93-figure-16a.sdf" />
-    <EmbeddedResource Include="Hash\ihlenfeldt93-figure-16b.sdf" />
-    <EmbeddedResource Include="Hash\ihlenfeldt93-figure-2a.sdf" />
-    <EmbeddedResource Include="Hash\ihlenfeldt93-figure-2b.sdf" />
-    <EmbeddedResource Include="Hash\ihlenfeldt93-figure-2c.sdf" />
-    <EmbeddedResource Include="Hash\ihlenfeldt93-figure-3.sdf" />
-    <EmbeddedResource Include="Hash\ihlenfeldt93-figure-7.sdf" />
-    <EmbeddedResource Include="Hash\inositols-explicit-hydrogens.sdf" />
-    <EmbeddedResource Include="Hash\inositols.sdf" />
-    <EmbeddedResource Include="Hash\ihlenfeldt93-figure-10.sdf" />
-    <EmbeddedResource Include="IO\CLMW1.mol2" />
-    <EmbeddedResource Include="IO\ethylesterification.mol" />
-    <EmbeddedResource Include="IO\finalPump96.09.06.pdb" />
-    <EmbeddedResource Include="IO\CH3.mol" />
-    <EmbeddedResource Include="IO\issue602.mol" />
-    <EmbeddedResource Include="IO\multicenterBond.mol" />
-    <EmbeddedResource Include="IO\pseudoAtomReplacement.mol" />
-    <EmbeddedResource Include="IO\1100784.cif" />
-    <EmbeddedResource Include="IO\seaborgium.mol" />
-    <EmbeddedResource Include="IO\seaborgium_abs.mol" />
-    <EmbeddedResource Include="IO\structure-with-radical.mol" />
-    <EmbeddedResource Include="IO\US06358966-20020319-C00001-enr.cml" />
-    <EmbeddedResource Include="IO\CML\cml23TestFramework.xml" />
-    <EmbeddedResource Include="IO\CML\cml25TestFramework.xml" />
-    <EmbeddedResource Include="IO\CML\cmlTestFramework.xml" />
-    <EmbeddedResource Include="IO\CML\cmlTestFramework4DTD.xml" />
-    <EmbeddedResource Include="IO\CML\cmlTestFramework_jumbo4.6.xml" />
-    <EmbeddedResource Include="Smiles\CHEBI_53695.mol" />
-    <EmbeddedResource Include="Smiles\CHEMBL367774.mol" />
-  </ItemGroup>
+    <ItemGroup Condition="'$(TargetFramework)'=='net461'">
+        <Reference Include="Microsoft.CSharp" />
+        <Reference Include="System.IO.Compression" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.3.0" />
-    <PackageReference Include="MSTest.TestAdapter" Version="2.0.0" />
-    <PackageReference Include="MSTest.TestFramework" Version="2.0.0" />
-    <PackageReference Include="Moq" Version="4.13.0" />
-  </ItemGroup>
+    <ItemGroup>
+        <None Remove="Data\ABINIT\t54.in" />
+        <None Remove="Data\Aces2\ch3oh_ace.out" />
+        <None Remove="Data\ADF\ammonia.adf.out" />
+        <None Remove="Data\ARFF\Acetyl_EthylWithoutHetero.arff" />
+        <None Remove="Data\ARFF\Carbonyl1.arff" />
+        <None Remove="Data\ARFF\ConjugatedPiSys.arff" />
+        <None Remove="Data\ARFF\HeteroAtom1.arff" />
+        <None Remove="Data\ARFF\PySystWithHetero.arff" />
+        <None Remove="Data\ARFF\Table1.arff" />
+        <None Remove="Data\ARFF\Table2.arff" />
+        <None Remove="Data\ARFF\Table3.arff" />
+        <None Remove="Data\ARFF\Table4.arff" />
+        <None Remove="Data\ASN\PubChem\aceticAcids38.xml" />
+        <None Remove="Data\ASN\PubChem\cid1.asn" />
+        <None Remove="Data\ASN\PubChem\cid1145.xml" />
+        <None Remove="Data\ASN\PubChem\cid176.xml" />
+        <None Remove="Data\ASN\PubChem\list.asn" />
+        <None Remove="Data\ASN\PubChem\sid577309.xml" />
+        <None Remove="Data\ASN\PubChem\taxols.xml" />
+        <None Remove="Data\CDD\aromring_validation.zip" />
+        <None Remove="Data\CDD\Binders-ECFP6-1024-loo.bayesian" />
+        <None Remove="Data\CDD\Binders-ECFP6-32768-xv5.bayesian" />
+        <None Remove="Data\CDD\Binders-FCFP6-0-loo.bayesian" />
+        <None Remove="Data\CDD\Binders.sdf" />
+        <None Remove="Data\CDD\circular_validation.zip" />
+        <None Remove="Data\CDD\FoldedProbes.sdf" />
+        <None Remove="Data\CDD\MLProbes-ECFP6-1024-loo.bayesian" />
+        <None Remove="Data\CDD\MLProbes-ECFP6-32768-xv5.bayesian" />
+        <None Remove="Data\CDD\MLProbes-FCFP6-0-loo.bayesian" />
+        <None Remove="Data\CDD\MLProbes-FCFP6-256-xv3.bayesian" />
+        <None Remove="Data\CDD\MLProbes.sdf" />
+        <None Remove="Data\CDD\pyridineacid.mol" />
+        <None Remove="Data\CDD\Small.sdf" />
+        <None Remove="Data\CDD\Tiny.sdf" />
+        <None Remove="Data\CML\(1R)-1-aminoethan-1-ol-malformedDictRef.cml" />
+        <None Remove="Data\CML\(1R)-1-aminoethan-1-ol-multipleBondStereo.cml" />
+        <None Remove="Data\CML\(1R)-1-aminoethan-1-ol.cml" />
+        <None Remove="Data\CML\100-11-8.cml" />
+        <None Remove="Data\CML\1CKV_1.cml" />
+        <None Remove="Data\CML\3.cml" />
+        <None Remove="Data\CML\a-pinen.cml" />
+        <None Remove="Data\CML\aelfred2_test.cml" />
+        <None Remove="Data\CML\AlanineTree.cml" />
+        <None Remove="Data\CML\AlanineTreeReverse.cml" />
+        <None Remove="Data\CML\AZD5423.xml" />
+        <None Remove="Data\CML\benzene.cml" />
+        <None Remove="Data\CML\bug1014344-1.cml" />
+        <None Remove="Data\CML\bug1535055.cml" />
+        <None Remove="Data\CML\bug639455.cml" />
+        <None Remove="Data\CML\butadiene.cml" />
+        <None Remove="Data\CML\ceph-ns.xml" />
+        <None Remove="Data\CML\cmlConciseFormula.cml" />
+        <None Remove="Data\CML\cmlConciseFormula2.cml" />
+        <None Remove="Data\CML\cmlWithFormula.cml" />
+        <None Remove="Data\CML\COONa.cml" />
+        <None Remove="Data\CML\cs2a.cml" />
+        <None Remove="Data\CML\cs2a.mol.cml" />
+        <None Remove="Data\CML\curan.xml" />
+        <None Remove="Data\CML\custompropertiestest.cml" />
+        <None Remove="Data\CML\cyclohexane-xdrawchem.cml" />
+        <None Remove="Data\CML\dictref.cml" />
+        <None Remove="Data\CML\estron.cml" />
+        <None Remove="Data\CML\isolated_ringsystems.cml" />
+        <None Remove="Data\CML\keggtest.cml" />
+        <None Remove="Data\CML\methanol1.cml" />
+        <None Remove="Data\CML\methanol2.cml" />
+        <None Remove="Data\CML\mol28.cml" />
+        <None Remove="Data\CML\molAndspect.cml" />
+        <None Remove="Data\CML\naphtalene.cml" />
+        <None Remove="Data\CML\nitrate.cml" />
+        <None Remove="Data\CML\nsc2dcml.xml" />
+        <None Remove="Data\CML\nsc2dmol.1.cml" />
+        <None Remove="Data\CML\nsc2dmol.2.cml" />
+        <None Remove="Data\CML\nsc2dmol.a1.cml" />
+        <None Remove="Data\CML\nsc2dmol.a2.cml" />
+        <None Remove="Data\CML\nsc3dcml.xml" />
+        <None Remove="Data\CML\nsc3dmol.1.cml" />
+        <None Remove="Data\CML\nsc3dmol.2.cml" />
+        <None Remove="Data\CML\nsc3dmol.a1.cml" />
+        <None Remove="Data\CML\nsc3dmol.a2.cml" />
+        <None Remove="Data\CML\nucleustest.xml" />
+        <None Remove="Data\CML\olaCmlAtomType.cml" />
+        <None Remove="Data\CML\Ooporphyrin.cml" />
+        <None Remove="Data\CML\overlaptest.cml" />
+        <None Remove="Data\CML\overlaptest2.cml" />
+        <None Remove="Data\CML\overlaptest3.cml" />
+        <None Remove="Data\CML\phosphate.cml" />
+        <None Remove="Data\CML\r.cml" />
+        <None Remove="Data\CML\reaction.1.cml" />
+        <None Remove="Data\CML\reaction.2.cml" />
+        <None Remove="Data\CML\reaction.ArginineFragmentation.cml" />
+        <None Remove="Data\CML\reactionList.1.cml" />
+        <None Remove="Data\CML\reactionScheme.1.cml" />
+        <None Remove="Data\CML\reactionScheme.2.cml" />
+        <None Remove="Data\CML\reactionSchemeMoleculeSet.cml" />
+        <None Remove="Data\CML\reactionSchemeStepList.1.cml" />
+        <None Remove="Data\CML\reactionStepList.1.cml" />
+        <None Remove="Data\CML\SL0016a.cml" />
+        <None Remove="Data\CML\smiles1.cml" />
+        <None Remove="Data\CML\smiles2.cml" />
+        <None Remove="Data\CML\SN1_reaction.cml" />
+        <None Remove="Data\CML\test1.cml" />
+        <None Remove="Data\CML\testBug777488-1-AllRingsFinder.cml" />
+        <None Remove="Data\CML\testBug777488-2-AllRingsFinder.cml" />
+        <None Remove="Data\CML\testBug777488-3-AllRingsFinder.cml" />
+        <None Remove="Data\CML\toluene.cml" />
+        <None Remove="Data\CrystClust\estron.crystclust" />
+        <None Remove="Data\CTX\methanol_with_descriptors.ctx" />
+        <None Remove="Data\Gamess\Cl2O.log" />
+        <None Remove="Data\Gamess\ch3oh_gam.out" />
+        <None Remove="Data\Gaussian\4-cyanophenylnitrene-Benzazirine-TS.g94.out" />
+        <None Remove="Data\Gaussian\ch3oh_g94.out" />
+        <None Remove="Data\Gaussian\g98.out" />
+        <None Remove="Data\Gaussian\g98ReaderNMRTest.log" />
+        <None Remove="Data\Gaussian\phenol-without-para-H.g98.out" />
+        <None Remove="Data\Gaussian\phenylnitrene.g92.out" />
+        <None Remove="Data\Gaussian\phenylnitrene.g94.out" />
+        <None Remove="Data\Gaussian\tms.log" />
+        <None Remove="Data\Ghemical\ethene.mm1gp" />
+        <None Remove="Data\HIN\arorings.hin" />
+        <None Remove="Data\HIN\benzene.hin" />
+        <None Remove="Data\HIN\bug2984581.hin" />
+        <None Remove="Data\HIN\connectivity1.hin" />
+        <None Remove="Data\HIN\gravindex.hin" />
+        <None Remove="Data\HIN\molecule2.hin" />
+        <None Remove="Data\HIN\molecule3.hin" />
+        <None Remove="Data\HIN\momi2.hin" />
+        <None Remove="Data\HIN\multiple.hin" />
+        <None Remove="Data\IChI\random.ichi" />
+        <None Remove="Data\IChI\reserpine.ichi" />
+        <None Remove="Data\IChI\3-aminocyclopentene.ichi" />
+        <None Remove="Data\InChI\benzoicacid.mol.txt" />
+        <None Remove="Data\InChI\Figure04.inchi" />
+        <None Remove="Data\InChI\guanine.inchi" />
+        <None Remove="Data\InChI\guanine.inchi.xml" />
+        <None Remove="Data\InChI\H2O.inchi" />
+        <None Remove="Data\InChI\benzoicacid.inchi" />
+        <None Remove="Data\Jaguar\ch4-opt.out" />
+        <None Remove="Data\MDL\0002.stg01.rxn" />
+        <None Remove="Data\MDL\0024.stg02.rxn" />
+        <None Remove="Data\MDL\2,5-dimethyl-furan.mol" />
+        <None Remove="Data\MDL\24763.sdf" />
+        <None Remove="Data\MDL\332727182.radical.mol" />
+        <None Remove="Data\MDL\540545.mol" />
+        <None Remove="Data\MDL\5SD.mol" />
+        <None Remove="Data\MDL\9553-with-exp-hyd.mol" />
+        <None Remove="Data\MDL\9553.mol" />
+        <None Remove="Data\MDL\9554-with-exp-hyd.mol" />
+        <None Remove="Data\MDL\9554.mol" />
+        <None Remove="Data\MDL\a-pinene-with-atom-atom-mapping.mol" />
+        <None Remove="Data\MDL\a-pinene-with-undefined-stereo.mol" />
+        <None Remove="Data\MDL\a-pinene-with-valence.mol" />
+        <None Remove="Data\MDL\a-pinene.mol" />
+        <None Remove="Data\MDL\ADN.mol" />
+        <None Remove="Data\MDL\ADP.mol" />
+        <None Remove="Data\MDL\ADP_H.mol" />
+        <None Remove="Data\MDL\AliasPropertyRGroup.sdf" />
+        <None Remove="Data\MDL\allmol231.mol" />
+        <None Remove="Data\MDL\allmol232.mol" />
+        <None Remove="Data\MDL\atomValueLines.mol" />
+        <None Remove="Data\MDL\ATP.mol" />
+        <None Remove="Data\MDL\ATP_H.mol" />
+        <None Remove="Data\MDL\azulene.mol" />
+        <None Remove="Data\MDL\big.mol" />
+        <None Remove="Data\MDL\bismuth-ion.mol" />
+        <None Remove="Data\MDL\boronBuckyBall.mol" />
+        <None Remove="Data\MDL\BremserPredictionTest.mol" />
+        <None Remove="Data\MDL\brenda_molfile_rgroup.mol" />
+        <None Remove="Data\MDL\buckyball.mol" />
+        <None Remove="Data\MDL\bug-1649526.mol" />
+        <None Remove="Data\MDL\bug-1788686-adamantane-biphenyl.mol" />
+        <None Remove="Data\MDL\bug1014344-1.mol" />
+        <None Remove="Data\MDL\bug1089770-1.mol" />
+        <None Remove="Data\MDL\bug1089770-2.mol" />
+        <None Remove="Data\MDL\bug1241421.mol" />
+        <None Remove="Data\MDL\bug1295.mol" />
+        <None Remove="Data\MDL\bug1328739.mol" />
+        <None Remove="Data\MDL\bug1356.sdf" />
+        <None Remove="Data\MDL\bug1587283.mol" />
+        <None Remove="Data\MDL\bug1772609.mol" />
+        <None Remove="Data\MDL\bug1784850.mol" />
+        <None Remove="Data\MDL\bug2831420.mol" />
+        <None Remove="Data\MDL\bug2846213.mol" />
+        <None Remove="Data\MDL\bug2911300.sdf" />
+        <None Remove="Data\MDL\bug3485634.mol" />
+        <None Remove="Data\MDL\bug3488307.sdf" />
+        <None Remove="Data\MDL\bug599540.mol" />
+        <None Remove="Data\MDL\bug682233.mol" />
+        <None Remove="Data\MDL\bug698152.mol" />
+        <None Remove="Data\MDL\bug706786-1.mol" />
+        <None Remove="Data\MDL\bug706786-2.mol" />
+        <None Remove="Data\MDL\bug716259.mol" />
+        <None Remove="Data\MDL\bug771485-1.mol" />
+        <None Remove="Data\MDL\bug771485-2.mol" />
+        <None Remove="Data\MDL\bug853254-1.mol" />
+        <None Remove="Data\MDL\bug853254-2.mol" />
+        <None Remove="Data\MDL\bug931608-1.mol" />
+        <None Remove="Data\MDL\bug931608-2.mol" />
+        <None Remove="Data\MDL\bug934819-1.mol" />
+        <None Remove="Data\MDL\bug934819-2.mol" />
+        <None Remove="Data\MDL\bug982782.mol" />
+        <None Remove="Data\MDL\bugtest.mol" />
+        <None Remove="Data\MDL\bug_1750968.mol" />
+        <None Remove="Data\MDL\burden_undefined.sdf" />
+        <None Remove="Data\MDL\butadiene.mol" />
+        <None Remove="Data\MDL\Butane-TestFF-output.mol" />
+        <None Remove="Data\MDL\Butane-TestFF.mol" />
+        <None Remove="Data\MDL\butanoic_acid.mol" />
+        <None Remove="Data\MDL\C03374.mol" />
+        <None Remove="Data\MDL\C05787.mol" />
+        <None Remove="Data\MDL\C12308.mol" />
+        <None Remove="Data\MDL\carbocations.mol" />
+        <None Remove="Data\MDL\chebi.querybond.51736.mol" />
+        <None Remove="Data\MDL\chebifind.mol" />
+        <None Remove="Data\MDL\chebisearch.mol" />
+        <None Remove="Data\MDL\ChEBI_26120.mol" />
+        <None Remove="Data\MDL\ChEBI_29293.mol" />
+        <None Remove="Data\MDL\ChEBI_30668.mol" />
+        <None Remove="Data\MDL\ChEBI_37340.mol" />
+        <None Remove="Data\MDL\ChEBI_81539.mol" />
+        <None Remove="Data\MDL\chemblMolregno5369.mol" />
+        <None Remove="Data\MDL\chemblMolregno7039.mol" />
+        <None Remove="Data\MDL\chemsketch-all-labelled.mol" />
+        <None Remove="Data\MDL\chemsketch-embedded-space.mol" />
+        <None Remove="Data\MDL\chemsketch-leading-trailing-space.mol" />
+        <None Remove="Data\MDL\chemsketch-longest-label.mol" />
+        <None Remove="Data\MDL\chemsketch-one-label.mol" />
+        <None Remove="Data\MDL\chemsketch-printable-ascii.mol" />
+        <None Remove="Data\MDL\chlorobenzene.mol" />
+        <None Remove="Data\MDL\choloylcoa.mol" />
+        <None Remove="Data\MDL\cnssmarts.sdf" />
+        <None Remove="Data\MDL\CPD-7272.mol" />
+        <None Remove="Data\MDL\cpsa-charged.sdf" />
+        <None Remove="Data\MDL\cpsa-uncharged.sdf" />
+        <None Remove="Data\MDL\cyclooctadien.mol" />
+        <None Remove="Data\MDL\cyclooctan.mol" />
+        <None Remove="Data\MDL\cycloocten.mol" />
+        <None Remove="Data\MDL\cyclopropane.mol" />
+        <None Remove="Data\MDL\D+-glucose.mol" />
+        <None Remove="Data\MDL\d-ala.mol" />
+        <None Remove="Data\MDL\D-mannose.mol" />
+        <None Remove="Data\MDL\decalin.mol" />
+        <None Remove="Data\MDL\diadamantane-cubane.mol" />
+        <None Remove="Data\MDL\element-with-alias.mol" />
+        <None Remove="Data\MDL\emptyStructure.sdf" />
+        <None Remove="Data\MDL\emptyStructures.sdf" />
+        <None Remove="Data\MDL\equivClassPartiOOMBug.sdf" />
+        <None Remove="Data\MDL\error.sdf" />
+        <None Remove="Data\MDL\Ethane-TestFF-output.mol" />
+        <None Remove="Data\MDL\Ethane-TestFF.mol" />
+        <None Remove="Data\MDL\e_butene_0d.mol" />
+        <None Remove="Data\MDL\e_butene_2d.mol" />
+        <None Remove="Data\MDL\e_butene_3d.mol" />
+        <None Remove="Data\MDL\figueras-test-buried.mol" />
+        <None Remove="Data\MDL\figueras-test-inring.mol" />
+        <None Remove="Data\MDL\figueras-test-sep3D.mol" />
+        <None Remove="Data\MDL\fingerprints_from_modelbuilder3d.sdf" />
+        <None Remove="Data\MDL\formulatest.mol" />
+        <None Remove="Data\MDL\four-ring-5x10.mol" />
+        <None Remove="Data\MDL\frag5.mol" />
+        <None Remove="Data\MDL\furan.mol" />
+        <None Remove="Data\MDL\glycine-short-lines.mol" />
+        <None Remove="Data\MDL\hbr_acoh_mix.mol" />
+        <None Remove="Data\MDL\heptane-modelbuilder-output.mol" />
+        <None Remove="Data\MDL\heptane-modelbuilder.mol" />
+        <None Remove="Data\MDL\Heptane-TestFF-output.mol" />
+        <None Remove="Data\MDL\Heptane-TestFF.mol" />
+        <None Remove="Data\MDL\heptane.mol" />
+        <None Remove="Data\MDL\heptane_almost_cyclic-output.mol" />
+        <None Remove="Data\MDL\heptane_almost_cyclic.mol" />
+        <None Remove="Data\MDL\het5.mol" />
+        <None Remove="Data\MDL\hisotopes.mol" />
+        <None Remove="Data\MDL\hydroxyamino.mol" />
+        <None Remove="Data\MDL\iridiumCoordination.chebi52748.mol" />
+        <None Remove="Data\MDL\iron-iii.mol" />
+        <None Remove="Data\MDL\isopropylacetate.mol" />
+        <None Remove="Data\MDL\iterconftest.sdf" />
+        <None Remove="Data\MDL\l-ala.mol" />
+        <None Remove="Data\MDL\ligand-1a0i.sdf" />
+        <None Remove="Data\MDL\lobtest.sdf" />
+        <None Remove="Data\MDL\lobtest2.sdf" />
+        <None Remove="Data\MDL\mappingTest.rxn" />
+        <None Remove="Data\MDL\massnumber.mol" />
+        <None Remove="Data\MDL\mdeotest.sdf" />
+        <None Remove="Data\MDL\mdlWithBond4.mol" />
+        <None Remove="Data\MDL\methylbenzol.mol" />
+        <None Remove="Data\MDL\mmff94AtomTypeTest_molecule.mol" />
+        <None Remove="Data\MDL\molecules_exception.sdf" />
+        <None Remove="Data\MDL\molV3000.mol" />
+        <None Remove="Data\MDL\mol_testAliasAtomNaming.mol" />
+        <None Remove="Data\MDL\mol_testAtomParity.mol" />
+        <None Remove="Data\MDL\multiplenewline-property.sdf" />
+        <None Remove="Data\MDL\multipleRadicals.mol" />
+        <None Remove="Data\MDL\murckoTest1.mol" />
+        <None Remove="Data\MDL\murckoTest10.mol" />
+        <None Remove="Data\MDL\murckoTest11.mol" />
+        <None Remove="Data\MDL\murckoTest2.mol" />
+        <None Remove="Data\MDL\murckoTest3.mol" />
+        <None Remove="Data\MDL\murckoTest4.mol" />
+        <None Remove="Data\MDL\murckoTest5.mol" />
+        <None Remove="Data\MDL\murckoTest6.mol" />
+        <None Remove="Data\MDL\murckoTest6_3d.mol" />
+        <None Remove="Data\MDL\murckoTest6_3d_2.mol" />
+        <None Remove="Data\MDL\murckoTest7.mol" />
+        <None Remove="Data\MDL\murckoTest8.mol" />
+        <None Remove="Data\MDL\murckoTest9.mol" />
+        <None Remove="Data\MDL\NN_dimethylaniline.mol" />
+        <None Remove="Data\MDL\no3dStructures.sdf" />
+        <None Remove="Data\MDL\nonConnectedPiSystems.mol" />
+        <None Remove="Data\MDL\noxide.sdf" />
+        <None Remove="Data\MDL\noxide2.sdf" />
+        <None Remove="Data\MDL\noxide3.sdf" />
+        <None Remove="Data\MDL\nozcoord.sdf" />
+        <None Remove="Data\MDL\nylon-6-source-rep.mol" />
+        <None Remove="Data\MDL\nylon-6-structure-rep.mol" />
+        <None Remove="Data\MDL\Ooporphyrin.mol" />
+        <None Remove="Data\MDL\output.rxn" />
+        <None Remove="Data\MDL\output_Cleaned.rxn" />
+        <None Remove="Data\MDL\pcoretest1.sdf" />
+        <None Remove="Data\MDL\petitejean.sdf" />
+        <None Remove="Data\MDL\piSystemCumulative.mol" />
+        <None Remove="Data\MDL\piSystemWithCarbokation.mol" />
+        <None Remove="Data\MDL\polycarpol.mol" />
+        <None Remove="Data\MDL\porphyrin.mol" />
+        <None Remove="Data\MDL\prediction-test.mol" />
+        <None Remove="Data\MDL\prev2000.sd" />
+        <None Remove="Data\MDL\pseudoatoms.sdf" />
+        <None Remove="Data\MDL\pseudoatomsv3000.mol" />
+        <None Remove="Data\MDL\qsar-reaction-test.rdf" />
+        <None Remove="Data\MDL\qsar-test.sdf" />
+        <None Remove="Data\MDL\queryBondTypes.mol" />
+        <None Remove="Data\MDL\r-group-with-alias.mol" />
+        <None Remove="Data\MDL\reaction-1.rxn" />
+        <None Remove="Data\MDL\reaction-2.rxn" />
+        <None Remove="Data\MDL\reaction-3.rxn" />
+        <None Remove="Data\MDL\reaction-4.rxn" />
+        <None Remove="Data\MDL\reaction_v3.rxn" />
+        <None Remove="Data\MDL\reserpine.mol" />
+        <None Remove="Data\MDL\rgfile.1.mol" />
+        <None Remove="Data\MDL\rgfile.2.mol" />
+        <None Remove="Data\MDL\rgfile.3.mol" />
+        <None Remove="Data\MDL\rgfile.4.mol" />
+        <None Remove="Data\MDL\rgfile.5.mol" />
+        <None Remove="Data\MDL\rgfile.6.mol" />
+        <None Remove="Data\MDL\rgfile.7.mol" />
+        <None Remove="Data\MDL\rgroups.mol" />
+        <None Remove="Data\MDL\rgroupsNumbered.mol" />
+        <None Remove="Data\MDL\ring_03419.mol" />
+        <None Remove="Data\MDL\SARGROUPTEST.sdf" />
+        <None Remove="Data\MDL\saturationcheckertest.mol" />
+        <None Remove="Data\MDL\sdg_test.mol" />
+        <None Remove="Data\MDL\sgroup-abbrv.mol" />
+        <None Remove="Data\MDL\sgroup-mod-example.mol" />
+        <None Remove="Data\MDL\sgroup-ord-mixture.mol" />
+        <None Remove="Data\MDL\sgroup-peptide.mol" />
+        <None Remove="Data\MDL\sgroup-ran-copolymer.mol" />
+        <None Remove="Data\MDL\sgroup-split.mol" />
+        <None Remove="Data\MDL\sgroup-sru-bad-def.mol" />
+        <None Remove="Data\MDL\sgroup-sru-bad-scn.mol" />
+        <None Remove="Data\MDL\sgroup-sru-bracketstyles.mol" />
+        <None Remove="Data\MDL\sgroup-sru.mol" />
+        <None Remove="Data\MDL\sgroup-unord-mixture.mol" />
+        <None Remove="Data\MDL\sgroup-xl-copolymer.mol" />
+        <None Remove="Data\MDL\shortest_path_test.mol" />
+        <None Remove="Data\MDL\sim3d1.sdf" />
+        <None Remove="Data\MDL\sim3d2.sdf" />
+        <None Remove="Data\MDL\singleDoubletRadical.mol" />
+        <None Remove="Data\MDL\singleMol.sdf" />
+        <None Remove="Data\MDL\singleSingletRadical.mol" />
+        <None Remove="Data\MDL\singleTripletRadical.mol" />
+        <None Remove="Data\MDL\six-ring-4x4.mol" />
+        <None Remove="Data\MDL\squareplanar.mol" />
+        <None Remove="Data\MDL\Strychnine_nichtOK.mol" />
+        <None Remove="Data\MDL\sulfurCompound.mol" />
+        <None Remove="Data\MDL\superspiro.mol" />
+        <None Remove="Data\MDL\test.sdf" />
+        <None Remove="Data\MDL\test2.sdf" />
+        <None Remove="Data\MDL\test3.sdf" />
+        <None Remove="Data\MDL\test4.sdf" />
+        <None Remove="Data\MDL\test5.sdf" />
+        <None Remove="Data\MDL\test6.sdf" />
+        <None Remove="Data\MDL\testdoublebondconfig.mol" />
+        <None Remove="Data\MDL\testisopropylacetate.mol" />
+        <None Remove="Data\MDL\tetrahedral-parity-withExpH.mol" />
+        <None Remove="Data\MDL\tetrahedral-parity-withImplH.mol" />
+        <None Remove="Data\MDL\tetrahedral_1.mol" />
+        <None Remove="Data\MDL\tetrahedral_1_lazy.mol" />
+        <None Remove="Data\MDL\tetrahedral_2_lazy.mol" />
+        <None Remove="Data\MDL\tetrahedral_with_four_wedges.mol" />
+        <None Remove="Data\MDL\thiamin.mol" />
+        <None Remove="Data\MDL\too.many.rings.mol" />
+        <None Remove="Data\MDL\triacylglycerols.mol" />
+        <None Remove="Data\MDL\trigonal_bipyramidal.mol" />
+        <None Remove="Data\MDL\triphenyl-phosphate-contracted.mol" />
+        <None Remove="Data\MDL\triphenyl-phosphate-expanded.mol" />
+        <None Remove="Data\MDL\UITTimeout.sdf" />
+        <None Remove="Data\MDL\weirdprops.sdf" />
+        <None Remove="Data\MDL\with000coordinate.mol" />
+        <None Remove="Data\MDL\withcharges.mol" />
+        <None Remove="Data\MDL\wpn.sdf" />
+        <None Remove="Data\MDL\wpo.sdf" />
+        <None Remove="Data\MDL\writetest.sdf" />
+        <None Remove="Data\MDL\zinc_1309609.sdf" />
+        <None Remove="Data\Mol2\actives.mol2" />
+        <None Remove="Data\Mol2\atomtyping.mol2" />
+        <None Remove="Data\Mol2\atomtyping2.mol2" />
+        <None Remove="Data\Mol2\atomtyping3.mol2" />
+        <None Remove="Data\Mol2\atomtyping4.mol2" />
+        <None Remove="Data\Mol2\fromWebsite.mol2" />
+        <None Remove="Data\Mol2\NCI_feb03_2D.mol2.gz" />
+        <None Remove="Data\MOPAC\ethylene.dat.out" />
+        <None Remove="Data\MoSS\TKO.mossoutput" />
+        <None Remove="Data\OWL\molecule.n3" />
+        <None Remove="Data\PCore\multismartpcore.sdf" />
+        <None Remove="Data\PCore\pcore.xml" />
+        <None Remove="Data\PCore\pcoreangle.xml" />
+        <None Remove="Data\PCore\invalid1.xml" />
+        <None Remove="Data\PDB\114D.pdb" />
+        <None Remove="Data\PDB\1A00.pdb" />
+        <None Remove="Data\PDB\1A2C.pdb" />
+        <None Remove="Data\PDB\1ALE.pdb" />
+        <None Remove="Data\PDB\1ALM.pdb" />
+        <None Remove="Data\PDB\1ARJ.pdb" />
+        <None Remove="Data\PDB\1B07.pdb" />
+        <None Remove="Data\PDB\1BOQ.pdb" />
+        <None Remove="Data\PDB\1CKV.pdb" />
+        <None Remove="Data\PDB\1CRN.pdb" />
+        <None Remove="Data\PDB\1CRN_noSS.pdb" />
+        <None Remove="Data\PDB\1D66.pdb" />
+        <None Remove="Data\PDB\1D68.pdb" />
+        <None Remove="Data\PDB\1EBL.pdb" />
+        <None Remove="Data\PDB\1EPL.pdb" />
+        <None Remove="Data\PDB\1GCI.pdb" />
+        <None Remove="Data\PDB\1GFL.pdb" />
+        <None Remove="Data\PDB\1HJE.pdb" />
+        <None Remove="Data\PDB\1IHA.pdb" />
+        <None Remove="Data\PDB\1JGQ.pdb" />
+        <None Remove="Data\PDB\1LCD.pdb" />
+        <None Remove="Data\PDB\1MBO.pdb" />
+        <None Remove="Data\PDB\1NE6.pdb" />
+        <None Remove="Data\PDB\1NE6_noSS.pdb" />
+        <None Remove="Data\PDB\1OHG.pdb" />
+        <None Remove="Data\PDB\1PN8.pdb" />
+        <None Remove="Data\PDB\1PPA.pdb" />
+        <None Remove="Data\PDB\1SPX.pdb" />
+        <None Remove="Data\PDB\1TOH.pdb" />
+        <None Remove="Data\PDB\1TWV.pdb" />
+        <None Remove="Data\PDB\1XKQ.pdb" />
+        <None Remove="Data\PDB\coffeine.pdb" />
+        <None Remove="Data\PDB\hetatm_only.pdb" />
+        <None Remove="Data\PDB\hugeMembrane.pdb.gz" />
+        <None Remove="Data\PDB\Test-1crn.pdb" />
+        <None Remove="Data\PDB\unk.pdb" />
+        <None Remove="Data\PDB\viagra.pdb" />
+        <None Remove="Data\PMP\two_aceticacid.pmp" />
+        <None Remove="Data\PMP\aceticacid.pmp" />
+        <None Remove="Data\ShelX\frame_1.res" />
+        <None Remove="Data\Smiles\c10h16isomers.smi" />
+        <None Remove="Data\Smiles\drugs.smi" />
+        <None Remove="Data\Smiles\smiles.smi" />
+        <None Remove="Data\Smiles\smiles.txt" />
+        <None Remove="Data\Smiles\tabs.smi" />
+        <None Remove="Data\Smiles\test.smi" />
+        <None Remove="Data\Smiles\test2.smi" />
+        <None Remove="Data\Smiles\test3.smi" />
+        <None Remove="Data\VASP\LiMoS2_optimisation_ISIF3.vasp" />
+        <None Remove="Data\XYZ\bf3.xyz.gz" />
+        <None Remove="Data\XYZ\hydrogen.xyz" />
+        <None Remove="Data\XYZ\viagra.xyz" />
+        <None Remove="Data\XYZ\viagra_withComment.xyz" />
+        <None Remove="Data\XYZ\bf3.xyz" />
+        <None Remove="FaulonSignatures\Data\buckyball.mol" />
+        <None Remove="FaulonSignatures\Data\buckysigs.txt" />
+        <None Remove="FaulonSignatures\Data\buckysigs3.txt" />
+        <None Remove="FaulonSignatures\Data\large_example.sdf" />
+        <None Remove="FaulonSignatures\Data\multCycle.sdf" />
+        <None Remove="FaulonSignatures\Data\multCycleCanLabel.sdf" />
+        <None Remove="FaulonSignatures\Data\test.sdf" />
+        <None Remove="Hash\allene-explicit-3d-h.sdf" />
+        <None Remove="Hash\allene-explicit-h.sdf" />
+        <None Remove="Hash\allene-implicit-h.sdf" />
+        <None Remove="Hash\allene-unspecified.sdf" />
+        <None Remove="Hash\aminotetracosanones.sdf" />
+        <None Remove="Hash\butan-2-ols-explicit-hydrogens.sdf" />
+        <None Remove="Hash\butan-2-ols.sdf" />
+        <None Remove="Hash\cumulenes.sdf" />
+        <None Remove="Hash\dichloroethenes-explicit-hydrogens.sdf" />
+        <None Remove="Hash\dichloroethenes.sdf" />
+        <None Remove="Hash\ihlenfeldt93-figure-11.sdf" />
+        <None Remove="Hash\ihlenfeldt93-figure-12.sdf" />
+        <None Remove="Hash\ihlenfeldt93-figure-13a.sdf" />
+        <None Remove="Hash\ihlenfeldt93-figure-13b.sdf" />
+        <None Remove="Hash\ihlenfeldt93-figure-14.sdf" />
+        <None Remove="Hash\ihlenfeldt93-figure-15.sdf" />
+        <None Remove="Hash\ihlenfeldt93-figure-16a.sdf" />
+        <None Remove="Hash\ihlenfeldt93-figure-16b.sdf" />
+        <None Remove="Hash\ihlenfeldt93-figure-2a.sdf" />
+        <None Remove="Hash\ihlenfeldt93-figure-2b.sdf" />
+        <None Remove="Hash\ihlenfeldt93-figure-2c.sdf" />
+        <None Remove="Hash\ihlenfeldt93-figure-3.sdf" />
+        <None Remove="Hash\ihlenfeldt93-figure-7.sdf" />
+        <None Remove="Hash\inositols-explicit-hydrogens.sdf" />
+        <None Remove="Hash\inositols.sdf" />
+        <None Remove="Hash\ihlenfeldt93-figure-10.sdf" />
+        <None Remove="IO\CLMW1.mol2" />
+        <None Remove="IO\ethylesterification.mol" />
+        <None Remove="IO\finalPump96.09.06.pdb" />
+        <None Remove="IO\CH3.mol" />
+        <None Remove="IO\issue602.mol" />
+        <None Remove="IO\multicenterBond.mol" />
+        <None Remove="IO\potentialLateFuse.mol" />
+        <None Remove="IO\pseudoAtomReplacement.mol" />
+        <None Remove="IO\1100784.cif" />
+        <None Remove="IO\query_atomlist.mol" />
+        <None Remove="IO\query_legacyatomlist.mol" />
+        <None Remove="IO\query_legacynotatomlist.mol" />
+        <None Remove="IO\query_manylegacyatomlist.mol" />
+        <None Remove="IO\query_notatomlist.mol" />
+        <None Remove="IO\seaborgium.mol" />
+        <None Remove="IO\seaborgium_abs.mol" />
+        <None Remove="IO\sgroup-sup.mol3" />
+        <None Remove="IO\structure-with-radical.mol" />
+        <None Remove="IO\US06358966-20020319-C00001-enr.cml" />
+        <None Remove="IO\CML\cml23TestFramework.xml" />
+        <None Remove="IO\CML\cml25TestFramework.xml" />
+        <None Remove="IO\CML\cmlTestFramework.xml" />
+        <None Remove="IO\CML\cmlTestFramework4DTD.xml" />
+        <None Remove="IO\CML\cmlTestFramework_jumbo4.6.xml" />
+        <None Remove="IO\v3000Query.mol" />
+        <None Remove="SMARTS\mdlquery.mol" />
+        <None Remove="Smiles\CHEBI_53695.mol" />
+        <None Remove="Smiles\CHEMBL367774.mol" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\NCDK.Math\NCDK.Math.csproj" />
-    <ProjectReference Include="..\NCDK\NCDK.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <EmbeddedResource Include="Data\ABINIT\t54.in" />
+        <EmbeddedResource Include="Data\Aces2\ch3oh_ace.out" />
+        <EmbeddedResource Include="Data\ADF\ammonia.adf.out" />
+        <EmbeddedResource Include="Data\ARFF\Acetyl_EthylWithoutHetero.arff" />
+        <EmbeddedResource Include="Data\ARFF\Carbonyl1.arff" />
+        <EmbeddedResource Include="Data\ARFF\ConjugatedPiSys.arff" />
+        <EmbeddedResource Include="Data\ARFF\HeteroAtom1.arff" />
+        <EmbeddedResource Include="Data\ARFF\PySystWithHetero.arff" />
+        <EmbeddedResource Include="Data\ARFF\Table1.arff" />
+        <EmbeddedResource Include="Data\ARFF\Table2.arff" />
+        <EmbeddedResource Include="Data\ARFF\Table3.arff" />
+        <EmbeddedResource Include="Data\ARFF\Table4.arff" />
+        <EmbeddedResource Include="Data\ASN\PubChem\aceticAcids38.xml" />
+        <EmbeddedResource Include="Data\ASN\PubChem\cid1.asn" />
+        <EmbeddedResource Include="Data\ASN\PubChem\cid1145.xml" />
+        <EmbeddedResource Include="Data\ASN\PubChem\cid176.xml" />
+        <EmbeddedResource Include="Data\ASN\PubChem\list.asn" />
+        <EmbeddedResource Include="Data\ASN\PubChem\sid577309.xml" />
+        <EmbeddedResource Include="Data\ASN\PubChem\taxols.xml" />
+        <EmbeddedResource Include="Data\CDD\aromring_validation.zip" />
+        <EmbeddedResource Include="Data\CDD\Binders-ECFP6-1024-loo.bayesian" />
+        <EmbeddedResource Include="Data\CDD\Binders-ECFP6-32768-xv5.bayesian" />
+        <EmbeddedResource Include="Data\CDD\Binders-FCFP6-0-loo.bayesian" />
+        <EmbeddedResource Include="Data\CDD\Binders.sdf" />
+        <EmbeddedResource Include="Data\CDD\circular_validation.zip" />
+        <EmbeddedResource Include="Data\CDD\FoldedProbes.sdf" />
+        <EmbeddedResource Include="Data\CDD\MLProbes-ECFP6-1024-loo.bayesian" />
+        <EmbeddedResource Include="Data\CDD\MLProbes-ECFP6-32768-xv5.bayesian" />
+        <EmbeddedResource Include="Data\CDD\MLProbes-FCFP6-0-loo.bayesian" />
+        <EmbeddedResource Include="Data\CDD\MLProbes-FCFP6-256-xv3.bayesian" />
+        <EmbeddedResource Include="Data\CDD\MLProbes.sdf" />
+        <EmbeddedResource Include="Data\CDD\pyridineacid.mol" />
+        <EmbeddedResource Include="Data\CDD\Small.sdf" />
+        <EmbeddedResource Include="Data\CDD\Tiny.sdf" />
+        <EmbeddedResource Include="Data\CML\(1R)-1-aminoethan-1-ol-malformedDictRef.cml" />
+        <EmbeddedResource Include="Data\CML\(1R)-1-aminoethan-1-ol-multipleBondStereo.cml" />
+        <EmbeddedResource Include="Data\CML\(1R)-1-aminoethan-1-ol.cml" />
+        <EmbeddedResource Include="Data\CML\100-11-8.cml" />
+        <EmbeddedResource Include="Data\CML\1CKV_1.cml" />
+        <EmbeddedResource Include="Data\CML\3.cml" />
+        <EmbeddedResource Include="Data\CML\a-pinen.cml" />
+        <EmbeddedResource Include="Data\CML\aelfred2_test.cml" />
+        <EmbeddedResource Include="Data\CML\AlanineTree.cml" />
+        <EmbeddedResource Include="Data\CML\AlanineTreeReverse.cml" />
+        <EmbeddedResource Include="Data\CML\AZD5423.xml" />
+        <EmbeddedResource Include="Data\CML\benzene.cml" />
+        <EmbeddedResource Include="Data\CML\bug1014344-1.cml" />
+        <EmbeddedResource Include="Data\CML\bug1535055.cml" />
+        <EmbeddedResource Include="Data\CML\bug639455.cml" />
+        <EmbeddedResource Include="Data\CML\butadiene.cml" />
+        <EmbeddedResource Include="Data\CML\ceph-ns.xml" />
+        <EmbeddedResource Include="Data\CML\cmlConciseFormula.cml" />
+        <EmbeddedResource Include="Data\CML\cmlConciseFormula2.cml" />
+        <EmbeddedResource Include="Data\CML\cmlWithFormula.cml" />
+        <EmbeddedResource Include="Data\CML\COONa.cml" />
+        <EmbeddedResource Include="Data\CML\cs2a.cml" />
+        <EmbeddedResource Include="Data\CML\cs2a.mol.cml" />
+        <EmbeddedResource Include="Data\CML\curan.xml" />
+        <EmbeddedResource Include="Data\CML\custompropertiestest.cml" />
+        <EmbeddedResource Include="Data\CML\cyclohexane-xdrawchem.cml" />
+        <EmbeddedResource Include="Data\CML\dictref.cml" />
+        <EmbeddedResource Include="Data\CML\estron.cml" />
+        <EmbeddedResource Include="Data\CML\isolated_ringsystems.cml" />
+        <EmbeddedResource Include="Data\CML\keggtest.cml" />
+        <EmbeddedResource Include="Data\CML\methanol1.cml" />
+        <EmbeddedResource Include="Data\CML\methanol2.cml" />
+        <EmbeddedResource Include="Data\CML\mol28.cml" />
+        <EmbeddedResource Include="Data\CML\molAndspect.cml" />
+        <EmbeddedResource Include="Data\CML\naphtalene.cml" />
+        <EmbeddedResource Include="Data\CML\nitrate.cml" />
+        <EmbeddedResource Include="Data\CML\nsc2dcml.xml" />
+        <EmbeddedResource Include="Data\CML\nsc2dmol.1.cml" />
+        <EmbeddedResource Include="Data\CML\nsc2dmol.2.cml" />
+        <EmbeddedResource Include="Data\CML\nsc2dmol.a1.cml" />
+        <EmbeddedResource Include="Data\CML\nsc2dmol.a2.cml" />
+        <EmbeddedResource Include="Data\CML\nsc3dcml.xml" />
+        <EmbeddedResource Include="Data\CML\nsc3dmol.1.cml" />
+        <EmbeddedResource Include="Data\CML\nsc3dmol.2.cml" />
+        <EmbeddedResource Include="Data\CML\nsc3dmol.a1.cml" />
+        <EmbeddedResource Include="Data\CML\nsc3dmol.a2.cml" />
+        <EmbeddedResource Include="Data\CML\nucleustest.xml" />
+        <EmbeddedResource Include="Data\CML\olaCmlAtomType.cml" />
+        <EmbeddedResource Include="Data\CML\Ooporphyrin.cml" />
+        <EmbeddedResource Include="Data\CML\overlaptest.cml" />
+        <EmbeddedResource Include="Data\CML\overlaptest2.cml" />
+        <EmbeddedResource Include="Data\CML\overlaptest3.cml" />
+        <EmbeddedResource Include="Data\CML\phosphate.cml" />
+        <EmbeddedResource Include="Data\CML\r.cml" />
+        <EmbeddedResource Include="Data\CML\reaction.1.cml" />
+        <EmbeddedResource Include="Data\CML\reaction.2.cml" />
+        <EmbeddedResource Include="Data\CML\reaction.ArginineFragmentation.cml" />
+        <EmbeddedResource Include="Data\CML\reactionList.1.cml" />
+        <EmbeddedResource Include="Data\CML\reactionScheme.1.cml" />
+        <EmbeddedResource Include="Data\CML\reactionScheme.2.cml" />
+        <EmbeddedResource Include="Data\CML\reactionSchemeMoleculeSet.cml" />
+        <EmbeddedResource Include="Data\CML\reactionSchemeStepList.1.cml" />
+        <EmbeddedResource Include="Data\CML\reactionStepList.1.cml" />
+        <EmbeddedResource Include="Data\CML\SL0016a.cml" />
+        <EmbeddedResource Include="Data\CML\smiles1.cml" />
+        <EmbeddedResource Include="Data\CML\smiles2.cml" />
+        <EmbeddedResource Include="Data\CML\SN1_reaction.cml" />
+        <EmbeddedResource Include="Data\CML\test1.cml" />
+        <EmbeddedResource Include="Data\CML\testBug777488-1-AllRingsFinder.cml" />
+        <EmbeddedResource Include="Data\CML\testBug777488-2-AllRingsFinder.cml" />
+        <EmbeddedResource Include="Data\CML\testBug777488-3-AllRingsFinder.cml" />
+        <EmbeddedResource Include="Data\CML\toluene.cml" />
+        <EmbeddedResource Include="Data\CrystClust\estron.crystclust" />
+        <EmbeddedResource Include="Data\CTX\methanol_with_descriptors.ctx" />
+        <EmbeddedResource Include="Data\Gamess\Cl2O.log" />
+        <EmbeddedResource Include="Data\Gamess\ch3oh_gam.out" />
+        <EmbeddedResource Include="Data\Gaussian\4-cyanophenylnitrene-Benzazirine-TS.g94.out" />
+        <EmbeddedResource Include="Data\Gaussian\ch3oh_g94.out" />
+        <EmbeddedResource Include="Data\Gaussian\g98.out" />
+        <EmbeddedResource Include="Data\Gaussian\g98ReaderNMRTest.log" />
+        <EmbeddedResource Include="Data\Gaussian\phenol-without-para-H.g98.out" />
+        <EmbeddedResource Include="Data\Gaussian\phenylnitrene.g92.out" />
+        <EmbeddedResource Include="Data\Gaussian\phenylnitrene.g94.out" />
+        <EmbeddedResource Include="Data\Gaussian\tms.log" />
+        <EmbeddedResource Include="Data\Ghemical\ethene.mm1gp" />
+        <EmbeddedResource Include="Data\HIN\arorings.hin" />
+        <EmbeddedResource Include="Data\HIN\benzene.hin" />
+        <EmbeddedResource Include="Data\HIN\bug2984581.hin" />
+        <EmbeddedResource Include="Data\HIN\connectivity1.hin" />
+        <EmbeddedResource Include="Data\HIN\gravindex.hin" />
+        <EmbeddedResource Include="Data\HIN\molecule2.hin" />
+        <EmbeddedResource Include="Data\HIN\molecule3.hin" />
+        <EmbeddedResource Include="Data\HIN\momi2.hin" />
+        <EmbeddedResource Include="Data\HIN\multiple.hin" />
+        <EmbeddedResource Include="Data\IChI\random.ichi" />
+        <EmbeddedResource Include="Data\IChI\reserpine.ichi" />
+        <EmbeddedResource Include="Data\IChI\3-aminocyclopentene.ichi" />
+        <EmbeddedResource Include="Data\InChI\benzoicacid.mol.txt" />
+        <EmbeddedResource Include="Data\InChI\Figure04.inchi" />
+        <EmbeddedResource Include="Data\InChI\guanine.inchi" />
+        <EmbeddedResource Include="Data\InChI\guanine.inchi.xml" />
+        <EmbeddedResource Include="Data\InChI\H2O.inchi" />
+        <EmbeddedResource Include="Data\InChI\benzoicacid.inchi" />
+        <EmbeddedResource Include="Data\Jaguar\ch4-opt.out" />
+        <EmbeddedResource Include="Data\MDL\0002.stg01.rxn" />
+        <EmbeddedResource Include="Data\MDL\0024.stg02.rxn" />
+        <EmbeddedResource Include="Data\MDL\2,5-dimethyl-furan.mol" />
+        <EmbeddedResource Include="Data\MDL\24763.sdf" />
+        <EmbeddedResource Include="Data\MDL\332727182.radical.mol" />
+        <EmbeddedResource Include="Data\MDL\540545.mol" />
+        <EmbeddedResource Include="Data\MDL\5SD.mol" />
+        <EmbeddedResource Include="Data\MDL\9553-with-exp-hyd.mol" />
+        <EmbeddedResource Include="Data\MDL\9553.mol" />
+        <EmbeddedResource Include="Data\MDL\9554-with-exp-hyd.mol" />
+        <EmbeddedResource Include="Data\MDL\9554.mol" />
+        <EmbeddedResource Include="Data\MDL\a-pinene-with-atom-atom-mapping.mol" />
+        <EmbeddedResource Include="Data\MDL\a-pinene-with-undefined-stereo.mol" />
+        <EmbeddedResource Include="Data\MDL\a-pinene-with-valence.mol" />
+        <EmbeddedResource Include="Data\MDL\a-pinene.mol" />
+        <EmbeddedResource Include="Data\MDL\ADN.mol" />
+        <EmbeddedResource Include="Data\MDL\ADP.mol" />
+        <EmbeddedResource Include="Data\MDL\ADP_H.mol" />
+        <EmbeddedResource Include="Data\MDL\AliasPropertyRGroup.sdf" />
+        <EmbeddedResource Include="Data\MDL\allmol231.mol" />
+        <EmbeddedResource Include="Data\MDL\allmol232.mol" />
+        <EmbeddedResource Include="Data\MDL\atomValueLines.mol" />
+        <EmbeddedResource Include="Data\MDL\ATP.mol" />
+        <EmbeddedResource Include="Data\MDL\ATP_H.mol" />
+        <EmbeddedResource Include="Data\MDL\azulene.mol" />
+        <EmbeddedResource Include="Data\MDL\big.mol" />
+        <EmbeddedResource Include="Data\MDL\bismuth-ion.mol" />
+        <EmbeddedResource Include="Data\MDL\boronBuckyBall.mol" />
+        <EmbeddedResource Include="Data\MDL\BremserPredictionTest.mol" />
+        <EmbeddedResource Include="Data\MDL\brenda_molfile_rgroup.mol" />
+        <EmbeddedResource Include="Data\MDL\buckyball.mol" />
+        <EmbeddedResource Include="Data\MDL\bug-1649526.mol" />
+        <EmbeddedResource Include="Data\MDL\bug-1788686-adamantane-biphenyl.mol" />
+        <EmbeddedResource Include="Data\MDL\bug1014344-1.mol" />
+        <EmbeddedResource Include="Data\MDL\bug1089770-1.mol" />
+        <EmbeddedResource Include="Data\MDL\bug1089770-2.mol" />
+        <EmbeddedResource Include="Data\MDL\bug1241421.mol" />
+        <EmbeddedResource Include="Data\MDL\bug1295.mol" />
+        <EmbeddedResource Include="Data\MDL\bug1328739.mol" />
+        <EmbeddedResource Include="Data\MDL\bug1356.sdf" />
+        <EmbeddedResource Include="Data\MDL\bug1587283.mol" />
+        <EmbeddedResource Include="Data\MDL\bug1772609.mol" />
+        <EmbeddedResource Include="Data\MDL\bug1784850.mol" />
+        <EmbeddedResource Include="Data\MDL\bug2831420.mol" />
+        <EmbeddedResource Include="Data\MDL\bug2846213.mol" />
+        <EmbeddedResource Include="Data\MDL\bug2911300.sdf" />
+        <EmbeddedResource Include="Data\MDL\bug3485634.mol" />
+        <EmbeddedResource Include="Data\MDL\bug3488307.sdf" />
+        <EmbeddedResource Include="Data\MDL\bug599540.mol" />
+        <EmbeddedResource Include="Data\MDL\bug682233.mol" />
+        <EmbeddedResource Include="Data\MDL\bug698152.mol" />
+        <EmbeddedResource Include="Data\MDL\bug706786-1.mol" />
+        <EmbeddedResource Include="Data\MDL\bug706786-2.mol" />
+        <EmbeddedResource Include="Data\MDL\bug716259.mol" />
+        <EmbeddedResource Include="Data\MDL\bug771485-1.mol" />
+        <EmbeddedResource Include="Data\MDL\bug771485-2.mol" />
+        <EmbeddedResource Include="Data\MDL\bug853254-1.mol" />
+        <EmbeddedResource Include="Data\MDL\bug853254-2.mol" />
+        <EmbeddedResource Include="Data\MDL\bug931608-1.mol" />
+        <EmbeddedResource Include="Data\MDL\bug931608-2.mol" />
+        <EmbeddedResource Include="Data\MDL\bug934819-1.mol" />
+        <EmbeddedResource Include="Data\MDL\bug934819-2.mol" />
+        <EmbeddedResource Include="Data\MDL\bug982782.mol" />
+        <EmbeddedResource Include="Data\MDL\bugtest.mol" />
+        <EmbeddedResource Include="Data\MDL\bug_1750968.mol" />
+        <EmbeddedResource Include="Data\MDL\burden_undefined.sdf" />
+        <EmbeddedResource Include="Data\MDL\butadiene.mol" />
+        <EmbeddedResource Include="Data\MDL\Butane-TestFF-output.mol" />
+        <EmbeddedResource Include="Data\MDL\Butane-TestFF.mol" />
+        <EmbeddedResource Include="Data\MDL\butanoic_acid.mol" />
+        <EmbeddedResource Include="Data\MDL\C03374.mol" />
+        <EmbeddedResource Include="Data\MDL\C05787.mol" />
+        <EmbeddedResource Include="Data\MDL\C12308.mol" />
+        <EmbeddedResource Include="Data\MDL\carbocations.mol" />
+        <EmbeddedResource Include="Data\MDL\chebi.querybond.51736.mol" />
+        <EmbeddedResource Include="Data\MDL\chebifind.mol" />
+        <EmbeddedResource Include="Data\MDL\chebisearch.mol" />
+        <EmbeddedResource Include="Data\MDL\ChEBI_26120.mol" />
+        <EmbeddedResource Include="Data\MDL\ChEBI_29293.mol" />
+        <EmbeddedResource Include="Data\MDL\ChEBI_30668.mol" />
+        <EmbeddedResource Include="Data\MDL\ChEBI_37340.mol" />
+        <EmbeddedResource Include="Data\MDL\ChEBI_81539.mol" />
+        <EmbeddedResource Include="Data\MDL\chemblMolregno5369.mol" />
+        <EmbeddedResource Include="Data\MDL\chemblMolregno7039.mol" />
+        <EmbeddedResource Include="Data\MDL\chemsketch-all-labelled.mol" />
+        <EmbeddedResource Include="Data\MDL\chemsketch-embedded-space.mol" />
+        <EmbeddedResource Include="Data\MDL\chemsketch-leading-trailing-space.mol" />
+        <EmbeddedResource Include="Data\MDL\chemsketch-longest-label.mol" />
+        <EmbeddedResource Include="Data\MDL\chemsketch-one-label.mol" />
+        <EmbeddedResource Include="Data\MDL\chemsketch-printable-ascii.mol" />
+        <EmbeddedResource Include="Data\MDL\chlorobenzene.mol" />
+        <EmbeddedResource Include="Data\MDL\choloylcoa.mol" />
+        <EmbeddedResource Include="Data\MDL\cnssmarts.sdf" />
+        <EmbeddedResource Include="Data\MDL\CPD-7272.mol" />
+        <EmbeddedResource Include="Data\MDL\cpsa-charged.sdf" />
+        <EmbeddedResource Include="Data\MDL\cpsa-uncharged.sdf" />
+        <EmbeddedResource Include="Data\MDL\cyclooctadien.mol" />
+        <EmbeddedResource Include="Data\MDL\cyclooctan.mol" />
+        <EmbeddedResource Include="Data\MDL\cycloocten.mol" />
+        <EmbeddedResource Include="Data\MDL\cyclopropane.mol" />
+        <EmbeddedResource Include="Data\MDL\D+-glucose.mol" />
+        <EmbeddedResource Include="Data\MDL\d-ala.mol" />
+        <EmbeddedResource Include="Data\MDL\D-mannose.mol" />
+        <EmbeddedResource Include="Data\MDL\decalin.mol" />
+        <EmbeddedResource Include="Data\MDL\diadamantane-cubane.mol" />
+        <EmbeddedResource Include="Data\MDL\element-with-alias.mol" />
+        <EmbeddedResource Include="Data\MDL\emptyStructure.sdf" />
+        <EmbeddedResource Include="Data\MDL\emptyStructures.sdf" />
+        <EmbeddedResource Include="Data\MDL\equivClassPartiOOMBug.sdf" />
+        <EmbeddedResource Include="Data\MDL\error.sdf" />
+        <EmbeddedResource Include="Data\MDL\Ethane-TestFF-output.mol" />
+        <EmbeddedResource Include="Data\MDL\Ethane-TestFF.mol" />
+        <EmbeddedResource Include="Data\MDL\e_butene_0d.mol" />
+        <EmbeddedResource Include="Data\MDL\e_butene_2d.mol" />
+        <EmbeddedResource Include="Data\MDL\e_butene_3d.mol" />
+        <EmbeddedResource Include="Data\MDL\figueras-test-buried.mol" />
+        <EmbeddedResource Include="Data\MDL\figueras-test-inring.mol" />
+        <EmbeddedResource Include="Data\MDL\figueras-test-sep3D.mol" />
+        <EmbeddedResource Include="Data\MDL\fingerprints_from_modelbuilder3d.sdf" />
+        <EmbeddedResource Include="Data\MDL\formulatest.mol" />
+        <EmbeddedResource Include="Data\MDL\four-ring-5x10.mol" />
+        <EmbeddedResource Include="Data\MDL\frag5.mol" />
+        <EmbeddedResource Include="Data\MDL\furan.mol" />
+        <EmbeddedResource Include="Data\MDL\glycine-short-lines.mol" />
+        <EmbeddedResource Include="Data\MDL\hbr_acoh_mix.mol" />
+        <EmbeddedResource Include="Data\MDL\heptane-modelbuilder-output.mol" />
+        <EmbeddedResource Include="Data\MDL\heptane-modelbuilder.mol" />
+        <EmbeddedResource Include="Data\MDL\Heptane-TestFF-output.mol" />
+        <EmbeddedResource Include="Data\MDL\Heptane-TestFF.mol" />
+        <EmbeddedResource Include="Data\MDL\heptane.mol" />
+        <EmbeddedResource Include="Data\MDL\heptane_almost_cyclic-output.mol" />
+        <EmbeddedResource Include="Data\MDL\heptane_almost_cyclic.mol" />
+        <EmbeddedResource Include="Data\MDL\het5.mol" />
+        <EmbeddedResource Include="Data\MDL\hisotopes.mol" />
+        <EmbeddedResource Include="Data\MDL\hydroxyamino.mol" />
+        <EmbeddedResource Include="Data\MDL\iridiumCoordination.chebi52748.mol" />
+        <EmbeddedResource Include="Data\MDL\iron-iii.mol" />
+        <EmbeddedResource Include="Data\MDL\isopropylacetate.mol" />
+        <EmbeddedResource Include="Data\MDL\iterconftest.sdf" />
+        <EmbeddedResource Include="Data\MDL\l-ala.mol" />
+        <EmbeddedResource Include="Data\MDL\ligand-1a0i.sdf" />
+        <EmbeddedResource Include="Data\MDL\lobtest.sdf" />
+        <EmbeddedResource Include="Data\MDL\lobtest2.sdf" />
+        <EmbeddedResource Include="Data\MDL\mappingTest.rxn" />
+        <EmbeddedResource Include="Data\MDL\massnumber.mol" />
+        <EmbeddedResource Include="Data\MDL\mdeotest.sdf" />
+        <EmbeddedResource Include="Data\MDL\mdlWithBond4.mol" />
+        <EmbeddedResource Include="Data\MDL\methylbenzol.mol" />
+        <EmbeddedResource Include="Data\MDL\mmff94AtomTypeTest_molecule.mol" />
+        <EmbeddedResource Include="Data\MDL\molecules_exception.sdf" />
+        <EmbeddedResource Include="Data\MDL\molV3000.mol" />
+        <EmbeddedResource Include="Data\MDL\mol_testAliasAtomNaming.mol" />
+        <EmbeddedResource Include="Data\MDL\mol_testAtomParity.mol" />
+        <EmbeddedResource Include="Data\MDL\multiplenewline-property.sdf" />
+        <EmbeddedResource Include="Data\MDL\multipleRadicals.mol" />
+        <EmbeddedResource Include="Data\MDL\murckoTest1.mol" />
+        <EmbeddedResource Include="Data\MDL\murckoTest10.mol" />
+        <EmbeddedResource Include="Data\MDL\murckoTest11.mol" />
+        <EmbeddedResource Include="Data\MDL\murckoTest2.mol" />
+        <EmbeddedResource Include="Data\MDL\murckoTest3.mol" />
+        <EmbeddedResource Include="Data\MDL\murckoTest4.mol" />
+        <EmbeddedResource Include="Data\MDL\murckoTest5.mol" />
+        <EmbeddedResource Include="Data\MDL\murckoTest6.mol" />
+        <EmbeddedResource Include="Data\MDL\murckoTest6_3d.mol" />
+        <EmbeddedResource Include="Data\MDL\murckoTest6_3d_2.mol" />
+        <EmbeddedResource Include="Data\MDL\murckoTest7.mol" />
+        <EmbeddedResource Include="Data\MDL\murckoTest8.mol" />
+        <EmbeddedResource Include="Data\MDL\murckoTest9.mol" />
+        <EmbeddedResource Include="Data\MDL\NN_dimethylaniline.mol" />
+        <EmbeddedResource Include="Data\MDL\no3dStructures.sdf" />
+        <EmbeddedResource Include="Data\MDL\nonConnectedPiSystems.mol" />
+        <EmbeddedResource Include="Data\MDL\noxide.sdf" />
+        <EmbeddedResource Include="Data\MDL\noxide2.sdf" />
+        <EmbeddedResource Include="Data\MDL\noxide3.sdf" />
+        <EmbeddedResource Include="Data\MDL\nozcoord.sdf" />
+        <EmbeddedResource Include="Data\MDL\nylon-6-source-rep.mol" />
+        <EmbeddedResource Include="Data\MDL\nylon-6-structure-rep.mol" />
+        <EmbeddedResource Include="Data\MDL\Ooporphyrin.mol" />
+        <EmbeddedResource Include="Data\MDL\output.rxn" />
+        <EmbeddedResource Include="Data\MDL\output_Cleaned.rxn" />
+        <EmbeddedResource Include="Data\MDL\pcoretest1.sdf" />
+        <EmbeddedResource Include="Data\MDL\petitejean.sdf" />
+        <EmbeddedResource Include="Data\MDL\piSystemCumulative.mol" />
+        <EmbeddedResource Include="Data\MDL\piSystemWithCarbokation.mol" />
+        <EmbeddedResource Include="Data\MDL\polycarpol.mol" />
+        <EmbeddedResource Include="Data\MDL\porphyrin.mol" />
+        <EmbeddedResource Include="Data\MDL\prediction-test.mol" />
+        <EmbeddedResource Include="Data\MDL\prev2000.sd" />
+        <EmbeddedResource Include="Data\MDL\pseudoatoms.sdf" />
+        <EmbeddedResource Include="Data\MDL\pseudoatomsv3000.mol" />
+        <EmbeddedResource Include="Data\MDL\qsar-reaction-test.rdf" />
+        <EmbeddedResource Include="Data\MDL\qsar-test.sdf" />
+        <EmbeddedResource Include="Data\MDL\queryBondTypes.mol" />
+        <EmbeddedResource Include="Data\MDL\r-group-with-alias.mol" />
+        <EmbeddedResource Include="Data\MDL\reaction-1.rxn" />
+        <EmbeddedResource Include="Data\MDL\reaction-2.rxn" />
+        <EmbeddedResource Include="Data\MDL\reaction-3.rxn" />
+        <EmbeddedResource Include="Data\MDL\reaction-4.rxn" />
+        <EmbeddedResource Include="Data\MDL\reaction_v3.rxn" />
+        <EmbeddedResource Include="Data\MDL\reserpine.mol" />
+        <EmbeddedResource Include="Data\MDL\rgfile.1.mol" />
+        <EmbeddedResource Include="Data\MDL\rgfile.2.mol" />
+        <EmbeddedResource Include="Data\MDL\rgfile.3.mol" />
+        <EmbeddedResource Include="Data\MDL\rgfile.4.mol" />
+        <EmbeddedResource Include="Data\MDL\rgfile.5.mol" />
+        <EmbeddedResource Include="Data\MDL\rgfile.6.mol" />
+        <EmbeddedResource Include="Data\MDL\rgfile.7.mol" />
+        <EmbeddedResource Include="Data\MDL\rgroups.mol" />
+        <EmbeddedResource Include="Data\MDL\rgroupsNumbered.mol" />
+        <EmbeddedResource Include="Data\MDL\ring_03419.mol" />
+        <EmbeddedResource Include="Data\MDL\SARGROUPTEST.sdf" />
+        <EmbeddedResource Include="Data\MDL\saturationcheckertest.mol" />
+        <EmbeddedResource Include="Data\MDL\sdg_test.mol" />
+        <EmbeddedResource Include="Data\MDL\sgroup-abbrv.mol" />
+        <EmbeddedResource Include="Data\MDL\sgroup-mod-example.mol" />
+        <EmbeddedResource Include="Data\MDL\sgroup-ord-mixture.mol" />
+        <EmbeddedResource Include="Data\MDL\sgroup-peptide.mol" />
+        <EmbeddedResource Include="Data\MDL\sgroup-ran-copolymer.mol" />
+        <EmbeddedResource Include="Data\MDL\sgroup-split.mol">
+          <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+        </EmbeddedResource>
+        <EmbeddedResource Include="Data\MDL\sgroup-sru-bad-def.mol" />
+        <EmbeddedResource Include="Data\MDL\sgroup-sru-bad-scn.mol" />
+        <EmbeddedResource Include="Data\MDL\sgroup-sru-bracketstyles.mol" />
+        <EmbeddedResource Include="Data\MDL\sgroup-sru.mol" />
+        <EmbeddedResource Include="Data\MDL\sgroup-unord-mixture.mol" />
+        <EmbeddedResource Include="Data\MDL\sgroup-xl-copolymer.mol" />
+        <EmbeddedResource Include="Data\MDL\shortest_path_test.mol" />
+        <EmbeddedResource Include="Data\MDL\sim3d1.sdf" />
+        <EmbeddedResource Include="Data\MDL\sim3d2.sdf" />
+        <EmbeddedResource Include="Data\MDL\singleDoubletRadical.mol" />
+        <EmbeddedResource Include="Data\MDL\singleMol.sdf" />
+        <EmbeddedResource Include="Data\MDL\singleSingletRadical.mol" />
+        <EmbeddedResource Include="Data\MDL\singleTripletRadical.mol" />
+        <EmbeddedResource Include="Data\MDL\six-ring-4x4.mol" />
+        <EmbeddedResource Include="Data\MDL\squareplanar.mol" />
+        <EmbeddedResource Include="Data\MDL\Strychnine_nichtOK.mol" />
+        <EmbeddedResource Include="Data\MDL\sulfurCompound.mol" />
+        <EmbeddedResource Include="Data\MDL\superspiro.mol" />
+        <EmbeddedResource Include="Data\MDL\test.sdf" />
+        <EmbeddedResource Include="Data\MDL\test2.sdf" />
+        <EmbeddedResource Include="Data\MDL\test3.sdf" />
+        <EmbeddedResource Include="Data\MDL\test4.sdf" />
+        <EmbeddedResource Include="Data\MDL\test5.sdf" />
+        <EmbeddedResource Include="Data\MDL\test6.sdf" />
+        <EmbeddedResource Include="Data\MDL\testdoublebondconfig.mol" />
+        <EmbeddedResource Include="Data\MDL\testisopropylacetate.mol" />
+        <EmbeddedResource Include="Data\MDL\tetrahedral-parity-withExpH.mol" />
+        <EmbeddedResource Include="Data\MDL\tetrahedral-parity-withImplH.mol" />
+        <EmbeddedResource Include="Data\MDL\tetrahedral_1.mol" />
+        <EmbeddedResource Include="Data\MDL\tetrahedral_1_lazy.mol" />
+        <EmbeddedResource Include="Data\MDL\tetrahedral_2_lazy.mol" />
+        <EmbeddedResource Include="Data\MDL\tetrahedral_with_four_wedges.mol" />
+        <EmbeddedResource Include="Data\MDL\thiamin.mol" />
+        <EmbeddedResource Include="Data\MDL\too.many.rings.mol" />
+        <EmbeddedResource Include="Data\MDL\triacylglycerols.mol" />
+        <EmbeddedResource Include="Data\MDL\trigonal_bipyramidal.mol" />
+        <EmbeddedResource Include="Data\MDL\triphenyl-phosphate-contracted.mol" />
+        <EmbeddedResource Include="Data\MDL\triphenyl-phosphate-expanded.mol" />
+        <EmbeddedResource Include="Data\MDL\UITTimeout.sdf" />
+        <EmbeddedResource Include="Data\MDL\weirdprops.sdf" />
+        <EmbeddedResource Include="Data\MDL\with000coordinate.mol" />
+        <EmbeddedResource Include="Data\MDL\withcharges.mol" />
+        <EmbeddedResource Include="Data\MDL\wpn.sdf" />
+        <EmbeddedResource Include="Data\MDL\wpo.sdf" />
+        <EmbeddedResource Include="Data\MDL\writetest.sdf" />
+        <EmbeddedResource Include="Data\MDL\zinc_1309609.sdf" />
+        <EmbeddedResource Include="Data\Mol2\actives.mol2" />
+        <EmbeddedResource Include="Data\Mol2\atomtyping.mol2" />
+        <EmbeddedResource Include="Data\Mol2\atomtyping2.mol2" />
+        <EmbeddedResource Include="Data\Mol2\atomtyping3.mol2" />
+        <EmbeddedResource Include="Data\Mol2\atomtyping4.mol2" />
+        <EmbeddedResource Include="Data\Mol2\fromWebsite.mol2" />
+        <EmbeddedResource Include="Data\Mol2\NCI_feb03_2D.mol2.gz" />
+        <EmbeddedResource Include="Data\MOPAC\ethylene.dat.out" />
+        <EmbeddedResource Include="Data\MoSS\TKO.mossoutput" />
+        <EmbeddedResource Include="Data\OWL\molecule.n3" />
+        <EmbeddedResource Include="Data\PCore\multismartpcore.sdf" />
+        <EmbeddedResource Include="Data\PCore\pcore.xml" />
+        <EmbeddedResource Include="Data\PCore\pcoreangle.xml" />
+        <EmbeddedResource Include="Data\PCore\invalid1.xml" />
+        <EmbeddedResource Include="Data\PDB\114D.pdb" />
+        <EmbeddedResource Include="Data\PDB\1A00.pdb" />
+        <EmbeddedResource Include="Data\PDB\1A2C.pdb" />
+        <EmbeddedResource Include="Data\PDB\1ALE.pdb" />
+        <EmbeddedResource Include="Data\PDB\1ALM.pdb" />
+        <EmbeddedResource Include="Data\PDB\1ARJ.pdb" />
+        <EmbeddedResource Include="Data\PDB\1B07.pdb" />
+        <EmbeddedResource Include="Data\PDB\1BOQ.pdb" />
+        <EmbeddedResource Include="Data\PDB\1CKV.pdb" />
+        <EmbeddedResource Include="Data\PDB\1CRN.pdb" />
+        <EmbeddedResource Include="Data\PDB\1CRN_noSS.pdb" />
+        <EmbeddedResource Include="Data\PDB\1D66.pdb" />
+        <EmbeddedResource Include="Data\PDB\1D68.pdb" />
+        <EmbeddedResource Include="Data\PDB\1EBL.pdb" />
+        <EmbeddedResource Include="Data\PDB\1EPL.pdb" />
+        <EmbeddedResource Include="Data\PDB\1GCI.pdb" />
+        <EmbeddedResource Include="Data\PDB\1GFL.pdb" />
+        <EmbeddedResource Include="Data\PDB\1HJE.pdb" />
+        <EmbeddedResource Include="Data\PDB\1IHA.pdb" />
+        <EmbeddedResource Include="Data\PDB\1JGQ.pdb" />
+        <EmbeddedResource Include="Data\PDB\1LCD.pdb" />
+        <EmbeddedResource Include="Data\PDB\1MBO.pdb" />
+        <EmbeddedResource Include="Data\PDB\1NE6.pdb" />
+        <EmbeddedResource Include="Data\PDB\1NE6_noSS.pdb" />
+        <EmbeddedResource Include="Data\PDB\1OHG.pdb" />
+        <EmbeddedResource Include="Data\PDB\1PN8.pdb" />
+        <EmbeddedResource Include="Data\PDB\1PPA.pdb" />
+        <EmbeddedResource Include="Data\PDB\1SPX.pdb" />
+        <EmbeddedResource Include="Data\PDB\1TOH.pdb" />
+        <EmbeddedResource Include="Data\PDB\1TWV.pdb" />
+        <EmbeddedResource Include="Data\PDB\1XKQ.pdb" />
+        <EmbeddedResource Include="Data\PDB\coffeine.pdb" />
+        <EmbeddedResource Include="Data\PDB\hetatm_only.pdb" />
+        <EmbeddedResource Include="Data\PDB\hugeMembrane.pdb.gz" />
+        <EmbeddedResource Include="Data\PDB\Test-1crn.pdb" />
+        <EmbeddedResource Include="Data\PDB\unk.pdb" />
+        <EmbeddedResource Include="Data\PDB\viagra.pdb" />
+        <EmbeddedResource Include="Data\PMP\two_aceticacid.pmp" />
+        <EmbeddedResource Include="Data\PMP\aceticacid.pmp" />
+        <EmbeddedResource Include="Data\ShelX\frame_1.res" />
+        <EmbeddedResource Include="Data\Smiles\c10h16isomers.smi" />
+        <EmbeddedResource Include="Data\Smiles\drugs.smi" />
+        <EmbeddedResource Include="Data\Smiles\smiles.smi" />
+        <EmbeddedResource Include="Data\Smiles\smiles.txt" />
+        <EmbeddedResource Include="Data\Smiles\tabs.smi" />
+        <EmbeddedResource Include="Data\Smiles\test.smi" />
+        <EmbeddedResource Include="Data\Smiles\test2.smi" />
+        <EmbeddedResource Include="Data\Smiles\test3.smi" />
+        <EmbeddedResource Include="Data\VASP\LiMoS2_optimisation_ISIF3.vasp" />
+        <EmbeddedResource Include="Data\XYZ\bf3.xyz.gz" />
+        <EmbeddedResource Include="Data\XYZ\hydrogen.xyz" />
+        <EmbeddedResource Include="Data\XYZ\viagra.xyz" />
+        <EmbeddedResource Include="Data\XYZ\viagra_withComment.xyz" />
+        <EmbeddedResource Include="Data\XYZ\bf3.xyz" />
+        <EmbeddedResource Include="FaulonSignatures\Data\buckyball.mol" />
+        <EmbeddedResource Include="FaulonSignatures\Data\buckysigs.txt" />
+        <EmbeddedResource Include="FaulonSignatures\Data\buckysigs3.txt" />
+        <EmbeddedResource Include="FaulonSignatures\Data\large_example.sdf" />
+        <EmbeddedResource Include="FaulonSignatures\Data\multCycle.sdf" />
+        <EmbeddedResource Include="FaulonSignatures\Data\multCycleCanLabel.sdf" />
+        <EmbeddedResource Include="FaulonSignatures\Data\test.sdf" />
+        <EmbeddedResource Include="Hash\allene-explicit-3d-h.sdf" />
+        <EmbeddedResource Include="Hash\allene-explicit-h.sdf" />
+        <EmbeddedResource Include="Hash\allene-implicit-h.sdf" />
+        <EmbeddedResource Include="Hash\allene-unspecified.sdf" />
+        <EmbeddedResource Include="Hash\aminotetracosanones.sdf" />
+        <EmbeddedResource Include="Hash\butan-2-ols-explicit-hydrogens.sdf" />
+        <EmbeddedResource Include="Hash\butan-2-ols.sdf" />
+        <EmbeddedResource Include="Hash\cumulenes.sdf" />
+        <EmbeddedResource Include="Hash\dichloroethenes-explicit-hydrogens.sdf" />
+        <EmbeddedResource Include="Hash\dichloroethenes.sdf" />
+        <EmbeddedResource Include="Hash\ihlenfeldt93-figure-11.sdf" />
+        <EmbeddedResource Include="Hash\ihlenfeldt93-figure-12.sdf" />
+        <EmbeddedResource Include="Hash\ihlenfeldt93-figure-13a.sdf" />
+        <EmbeddedResource Include="Hash\ihlenfeldt93-figure-13b.sdf" />
+        <EmbeddedResource Include="Hash\ihlenfeldt93-figure-14.sdf" />
+        <EmbeddedResource Include="Hash\ihlenfeldt93-figure-15.sdf" />
+        <EmbeddedResource Include="Hash\ihlenfeldt93-figure-16a.sdf" />
+        <EmbeddedResource Include="Hash\ihlenfeldt93-figure-16b.sdf" />
+        <EmbeddedResource Include="Hash\ihlenfeldt93-figure-2a.sdf" />
+        <EmbeddedResource Include="Hash\ihlenfeldt93-figure-2b.sdf" />
+        <EmbeddedResource Include="Hash\ihlenfeldt93-figure-2c.sdf" />
+        <EmbeddedResource Include="Hash\ihlenfeldt93-figure-3.sdf" />
+        <EmbeddedResource Include="Hash\ihlenfeldt93-figure-7.sdf" />
+        <EmbeddedResource Include="Hash\inositols-explicit-hydrogens.sdf" />
+        <EmbeddedResource Include="Hash\inositols.sdf" />
+        <EmbeddedResource Include="Hash\ihlenfeldt93-figure-10.sdf" />
+        <EmbeddedResource Include="IO\CLMW1.mol2" />
+        <EmbeddedResource Include="IO\ethylesterification.mol" />
+        <EmbeddedResource Include="IO\finalPump96.09.06.pdb" />
+        <EmbeddedResource Include="IO\CH3.mol" />
+        <EmbeddedResource Include="IO\issue602.mol" />
+        <EmbeddedResource Include="IO\multicenterBond.mol" />
+        <EmbeddedResource Include="IO\potentialLateFuse.mol" />
+        <EmbeddedResource Include="IO\pseudoAtomReplacement.mol" />
+        <EmbeddedResource Include="IO\1100784.cif" />
+        <EmbeddedResource Include="IO\query_atomlist.mol" />
+        <EmbeddedResource Include="IO\query_legacyatomlist.mol" />
+        <EmbeddedResource Include="IO\query_legacynotatomlist.mol" />
+        <EmbeddedResource Include="IO\query_manylegacyatomlist.mol" />
+        <EmbeddedResource Include="IO\query_notatomlist.mol" />
+        <EmbeddedResource Include="IO\seaborgium.mol" />
+        <EmbeddedResource Include="IO\seaborgium_abs.mol" />
+        <EmbeddedResource Include="IO\sgroup-sup.mol3" />
+        <EmbeddedResource Include="IO\structure-with-radical.mol" />
+        <EmbeddedResource Include="IO\US06358966-20020319-C00001-enr.cml" />
+        <EmbeddedResource Include="IO\CML\cml23TestFramework.xml" />
+        <EmbeddedResource Include="IO\CML\cml25TestFramework.xml" />
+        <EmbeddedResource Include="IO\CML\cmlTestFramework.xml" />
+        <EmbeddedResource Include="IO\CML\cmlTestFramework4DTD.xml" />
+        <EmbeddedResource Include="IO\CML\cmlTestFramework_jumbo4.6.xml" />
+        <EmbeddedResource Include="IO\v3000Query.mol" />
+        <EmbeddedResource Include="SMARTS\mdlquery.mol" />
+        <EmbeddedResource Include="Smiles\CHEBI_53695.mol" />
+        <EmbeddedResource Include="Smiles\CHEMBL367774.mol" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <None Update="QSAR\Descriptors\Moleculars\AutocorrelationDescriptorTest.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>AutocorrelationDescriptorTest.tt.cs</LastGenOutput>
-    </None>
-    <None Update="QSAR\Descriptors\Moleculars\ChiDescriptorTests.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ChiDescriptorTests.tt.cs</LastGenOutput>
-    </None>
-    <None Update="TT\AdductFormulaTest.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>AdductFormulaTest.tt.cs</LastGenOutput>
-    </None>
-    <None Update="TT\AminoAcidTest.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>AminoAcidTest.tt.cs</LastGenOutput>
-    </None>
-    <None Update="TT\AtomContainer2Test.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>AtomContainer2Test.tt.cs</LastGenOutput>
-    </None>
-    <None Update="TT\AtomContainerSetTest.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>AtomContainerSetTest.tt.cs</LastGenOutput>
-    </None>
-    <None Update="TT\AtomContainerTest.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>AtomContainerTest.tt.cs</LastGenOutput>
-    </None>
-    <None Update="TT\AtomTest.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>AtomTest.tt.cs</LastGenOutput>
-    </None>
-    <None Update="TT\AtomTypeTest.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>AtomTypeTest.tt.cs</LastGenOutput>
-    </None>
-    <None Update="TT\BioPolymerTest.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>BioPolymerTest.tt.cs</LastGenOutput>
-    </None>
-    <None Update="TT\BondTest.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>BondTest.tt.cs</LastGenOutput>
-    </None>
-    <None Update="TT\ChemFileTest.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ChemFileTest.tt.cs</LastGenOutput>
-    </None>
-    <None Update="TT\ChemModelTest.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ChemModelTest.tt.cs</LastGenOutput>
-    </None>
-    <None Update="TT\ChemObjectBuilderTest.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ChemObjectBuilderTest.tt.cs</LastGenOutput>
-    </None>
-    <None Update="TT\ChemObjectTest.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ChemObjectTest.tt.cs</LastGenOutput>
-    </None>
-    <None Update="TT\ChemSequenceTest.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ChemSequenceTest.tt.cs</LastGenOutput>
-    </None>
-    <None Update="TT\ConformerContainerTest.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ConformerContainerTest.tt.cs</LastGenOutput>
-    </None>
-    <None Update="TT\CrystalTest.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>CrystalTest.tt.cs</LastGenOutput>
-    </None>
-    <None Update="TT\ElectronContainerTest.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ElectronContainerTest.tt.cs</LastGenOutput>
-    </None>
-    <None Update="TT\FragmentAtomTest.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>FragmentAtomTest.tt.cs</LastGenOutput>
-    </None>
-    <None Update="TT\IsotopeTest.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>IsotopeTest.tt.cs</LastGenOutput>
-    </None>
-    <None Update="TT\LonePairTest.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>LonePairTest.tt.cs</LastGenOutput>
-    </None>
-    <None Update="TT\MappingTest.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>MappingTest.tt.cs</LastGenOutput>
-    </None>
-    <None Update="TT\MolecularFormulaSetTest.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>MolecularFormulaSetTest.tt.cs</LastGenOutput>
-    </None>
-    <None Update="TT\MolecularFormulaTest.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>MolecularFormulaTest.tt.cs</LastGenOutput>
-    </None>
-    <None Update="TT\MonomerTest.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>MonomerTest.tt.cs</LastGenOutput>
-    </None>
-    <None Update="TT\PDBAtomTest.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>PDBAtomTest.tt.cs</LastGenOutput>
-    </None>
-    <None Update="TT\PDBMonomerTest.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>PDBMonomerTest.tt.cs</LastGenOutput>
-    </None>
-    <None Update="TT\PDBPolymerTest.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>PDBPolymerTest.tt.cs</LastGenOutput>
-    </None>
-    <None Update="TT\PDBStructureTest.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>PDBStructureTest.tt.cs</LastGenOutput>
-    </None>
-    <None Update="TT\PolymerTest.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>PolymerTest.tt.cs</LastGenOutput>
-    </None>
-    <None Update="TT\PseudoAtomTest.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>PseudoAtomTest.tt.cs</LastGenOutput>
-    </None>
-    <None Update="TT\ReactionChainTest.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ReactionChainTest.tt.cs</LastGenOutput>
-    </None>
-    <None Update="TT\ReactionSchemeTest.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ReactionSchemeTest.tt.cs</LastGenOutput>
-    </None>
-    <None Update="TT\ReactionSetTest.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ReactionSetTest.tt.cs</LastGenOutput>
-    </None>
-    <None Update="TT\ReactionTest.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ReactionTest.tt.cs</LastGenOutput>
-    </None>
-    <None Update="TT\RingSetTest.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>RingSetTest.tt.cs</LastGenOutput>
-    </None>
-    <None Update="TT\RingTest.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>RingTest.tt.cs</LastGenOutput>
-    </None>
-    <None Update="TT\SingleElectronTest.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>SingleElectronTest.tt.cs</LastGenOutput>
-    </None>
-    <None Update="TT\StrandTest.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>StrandTest.tt.cs</LastGenOutput>
-    </None>
-    <None Update="TT\SubstanceTest.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>SubstanceTest.tt.cs</LastGenOutput>
-    </None>
-    <Compile Update="QSAR\Descriptors\Moleculars\AutocorrelationDescriptorTest.tt.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>AutocorrelationDescriptorTest.tt</DependentUpon>
-    </Compile>
-    <Compile Update="QSAR\Descriptors\Moleculars\ChiDescriptorTests.tt.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>ChiDescriptorTests.tt</DependentUpon>
-    </Compile>
-    <Compile Update="TT\AdductFormulaTest.tt.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>AdductFormulaTest.tt</DependentUpon>
-    </Compile>
-    <Compile Update="TT\AminoAcidTest.tt.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>AminoAcidTest.tt</DependentUpon>
-    </Compile>
-    <Compile Update="TT\AtomContainer2Test.tt.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>AtomContainer2Test.tt</DependentUpon>
-    </Compile>
-    <Compile Update="TT\AtomContainerSetTest.tt.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>AtomContainerSetTest.tt</DependentUpon>
-    </Compile>
-    <Compile Update="TT\AtomContainerTest.tt.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>AtomContainerTest.tt</DependentUpon>
-    </Compile>
-    <Compile Update="TT\AtomTest.tt.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>AtomTest.tt</DependentUpon>
-    </Compile>
-    <Compile Update="TT\AtomTypeTest.tt.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>AtomTypeTest.tt</DependentUpon>
-    </Compile>
-    <Compile Update="TT\BioPolymerTest.tt.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>BioPolymerTest.tt</DependentUpon>
-    </Compile>
-    <Compile Update="TT\BondTest.tt.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>BondTest.tt</DependentUpon>
-    </Compile>
-    <Compile Update="TT\ChemFileTest.tt.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>ChemFileTest.tt</DependentUpon>
-    </Compile>
-    <Compile Update="TT\ChemModelTest.tt.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>ChemModelTest.tt</DependentUpon>
-    </Compile>
-    <Compile Update="TT\ChemObjectBuilderTest.tt.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>ChemObjectBuilderTest.tt</DependentUpon>
-    </Compile>
-    <Compile Update="TT\ChemObjectTest.tt.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>ChemObjectTest.tt</DependentUpon>
-    </Compile>
-    <Compile Update="TT\ChemSequenceTest.tt.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>ChemSequenceTest.tt</DependentUpon>
-    </Compile>
-    <Compile Update="TT\ConformerContainerTest.tt.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>ConformerContainerTest.tt</DependentUpon>
-    </Compile>
-    <Compile Update="TT\CrystalTest.tt.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>CrystalTest.tt</DependentUpon>
-    </Compile>
-    <Compile Update="TT\ElectronContainerTest.tt.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>ElectronContainerTest.tt</DependentUpon>
-    </Compile>
-    <Compile Update="TT\FragmentAtomTest.tt.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>FragmentAtomTest.tt</DependentUpon>
-    </Compile>
-    <Compile Update="TT\IsotopeTest.tt.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>IsotopeTest.tt</DependentUpon>
-    </Compile>
-    <Compile Update="TT\LonePairTest.tt.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>LonePairTest.tt</DependentUpon>
-    </Compile>
-    <Compile Update="TT\MappingTest.tt.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>MappingTest.tt</DependentUpon>
-    </Compile>
-    <Compile Update="TT\MolecularFormulaSetTest.tt.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>MolecularFormulaSetTest.tt</DependentUpon>
-    </Compile>
-    <Compile Update="TT\MolecularFormulaTest.tt.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>MolecularFormulaTest.tt</DependentUpon>
-    </Compile>
-    <Compile Update="TT\MonomerTest.tt.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>MonomerTest.tt</DependentUpon>
-    </Compile>
-    <Compile Update="TT\PDBAtomTest.tt.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>PDBAtomTest.tt</DependentUpon>
-    </Compile>
-    <Compile Update="TT\PDBMonomerTest.tt.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>PDBMonomerTest.tt</DependentUpon>
-    </Compile>
-    <Compile Update="TT\PDBPolymerTest.tt.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>PDBPolymerTest.tt</DependentUpon>
-    </Compile>
-    <Compile Update="TT\PDBStructureTest.tt.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>PDBStructureTest.tt</DependentUpon>
-    </Compile>
-    <Compile Update="TT\PolymerTest.tt.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>PolymerTest.tt</DependentUpon>
-    </Compile>
-    <Compile Update="TT\PseudoAtomTest.tt.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>PseudoAtomTest.tt</DependentUpon>
-    </Compile>
-    <Compile Update="TT\ReactionChainTest.tt.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>ReactionChainTest.tt</DependentUpon>
-    </Compile>
-    <Compile Update="TT\ReactionSchemeTest.tt.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>ReactionSchemeTest.tt</DependentUpon>
-    </Compile>
-    <Compile Update="TT\ReactionSetTest.tt.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>ReactionSetTest.tt</DependentUpon>
-    </Compile>
-    <Compile Update="TT\ReactionTest.tt.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>ReactionTest.tt</DependentUpon>
-    </Compile>
-    <Compile Update="TT\RingSetTest.tt.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>RingSetTest.tt</DependentUpon>
-    </Compile>
-    <Compile Update="TT\RingTest.tt.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>RingTest.tt</DependentUpon>
-    </Compile>
-    <Compile Update="TT\SingleElectronTest.tt.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>SingleElectronTest.tt</DependentUpon>
-    </Compile>
-    <Compile Update="TT\StrandTest.tt.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>StrandTest.tt</DependentUpon>
-    </Compile>
-    <Compile Update="TT\SubstanceTest.tt.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>SubstanceTest.tt</DependentUpon>
-    </Compile>
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.3.0" />
+        <PackageReference Include="MSTest.TestAdapter" Version="2.0.0" />
+        <PackageReference Include="MSTest.TestFramework" Version="2.0.0" />
+        <PackageReference Include="Moq" Version="4.13.0" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Properties\" />
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\NCDK.Math\NCDK.Math.csproj" />
+        <ProjectReference Include="..\NCDK\NCDK.csproj" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <None Include="..\.editorconfig" Link=".editorconfig" />
-  </ItemGroup>
+    <ItemGroup>
+        <None Update="QSAR\Descriptors\Moleculars\AutocorrelationDescriptorTest.tt">
+            <Generator>TextTemplatingFileGenerator</Generator>
+            <LastGenOutput>AutocorrelationDescriptorTest.tt.cs</LastGenOutput>
+        </None>
+        <None Update="QSAR\Descriptors\Moleculars\ChiDescriptorTests.tt">
+            <Generator>TextTemplatingFileGenerator</Generator>
+            <LastGenOutput>ChiDescriptorTests.tt.cs</LastGenOutput>
+        </None>
+        <None Update="TT\AdductFormulaTest.tt">
+            <Generator>TextTemplatingFileGenerator</Generator>
+            <LastGenOutput>AdductFormulaTest.tt.cs</LastGenOutput>
+        </None>
+        <None Update="TT\AminoAcidTest.tt">
+            <Generator>TextTemplatingFileGenerator</Generator>
+            <LastGenOutput>AminoAcidTest.tt.cs</LastGenOutput>
+        </None>
+        <None Update="TT\AtomContainer2Test.tt">
+            <Generator>TextTemplatingFileGenerator</Generator>
+            <LastGenOutput>AtomContainer2Test.tt.cs</LastGenOutput>
+        </None>
+        <None Update="TT\AtomContainerSetTest.tt">
+            <Generator>TextTemplatingFileGenerator</Generator>
+            <LastGenOutput>AtomContainerSetTest.tt.cs</LastGenOutput>
+        </None>
+        <None Update="TT\AtomContainerTest.tt">
+            <Generator>TextTemplatingFileGenerator</Generator>
+            <LastGenOutput>AtomContainerTest.tt.cs</LastGenOutput>
+        </None>
+        <None Update="TT\AtomTest.tt">
+            <Generator>TextTemplatingFileGenerator</Generator>
+            <LastGenOutput>AtomTest.tt.cs</LastGenOutput>
+        </None>
+        <None Update="TT\AtomTypeTest.tt">
+            <Generator>TextTemplatingFileGenerator</Generator>
+            <LastGenOutput>AtomTypeTest.tt.cs</LastGenOutput>
+        </None>
+        <None Update="TT\BioPolymerTest.tt">
+            <Generator>TextTemplatingFileGenerator</Generator>
+            <LastGenOutput>BioPolymerTest.tt.cs</LastGenOutput>
+        </None>
+        <None Update="TT\BondTest.tt">
+            <Generator>TextTemplatingFileGenerator</Generator>
+            <LastGenOutput>BondTest.tt.cs</LastGenOutput>
+        </None>
+        <None Update="TT\ChemFileTest.tt">
+            <Generator>TextTemplatingFileGenerator</Generator>
+            <LastGenOutput>ChemFileTest.tt.cs</LastGenOutput>
+        </None>
+        <None Update="TT\ChemModelTest.tt">
+            <Generator>TextTemplatingFileGenerator</Generator>
+            <LastGenOutput>ChemModelTest.tt.cs</LastGenOutput>
+        </None>
+        <None Update="TT\ChemObjectBuilderTest.tt">
+            <Generator>TextTemplatingFileGenerator</Generator>
+            <LastGenOutput>ChemObjectBuilderTest.tt.cs</LastGenOutput>
+        </None>
+        <None Update="TT\ChemObjectTest.tt">
+            <Generator>TextTemplatingFileGenerator</Generator>
+            <LastGenOutput>ChemObjectTest.tt.cs</LastGenOutput>
+        </None>
+        <None Update="TT\ChemSequenceTest.tt">
+            <Generator>TextTemplatingFileGenerator</Generator>
+            <LastGenOutput>ChemSequenceTest.tt.cs</LastGenOutput>
+        </None>
+        <None Update="TT\ConformerContainerTest.tt">
+            <Generator>TextTemplatingFileGenerator</Generator>
+            <LastGenOutput>ConformerContainerTest.tt.cs</LastGenOutput>
+        </None>
+        <None Update="TT\CrystalTest.tt">
+            <Generator>TextTemplatingFileGenerator</Generator>
+            <LastGenOutput>CrystalTest.tt.cs</LastGenOutput>
+        </None>
+        <None Update="TT\ElectronContainerTest.tt">
+            <Generator>TextTemplatingFileGenerator</Generator>
+            <LastGenOutput>ElectronContainerTest.tt.cs</LastGenOutput>
+        </None>
+        <None Update="TT\FragmentAtomTest.tt">
+            <Generator>TextTemplatingFileGenerator</Generator>
+            <LastGenOutput>FragmentAtomTest.tt.cs</LastGenOutput>
+        </None>
+        <None Update="TT\IsotopeTest.tt">
+            <Generator>TextTemplatingFileGenerator</Generator>
+            <LastGenOutput>IsotopeTest.tt.cs</LastGenOutput>
+        </None>
+        <None Update="TT\LonePairTest.tt">
+            <Generator>TextTemplatingFileGenerator</Generator>
+            <LastGenOutput>LonePairTest.tt.cs</LastGenOutput>
+        </None>
+        <None Update="TT\MappingTest.tt">
+            <Generator>TextTemplatingFileGenerator</Generator>
+            <LastGenOutput>MappingTest.tt.cs</LastGenOutput>
+        </None>
+        <None Update="TT\MolecularFormulaSetTest.tt">
+            <Generator>TextTemplatingFileGenerator</Generator>
+            <LastGenOutput>MolecularFormulaSetTest.tt.cs</LastGenOutput>
+        </None>
+        <None Update="TT\MolecularFormulaTest.tt">
+            <Generator>TextTemplatingFileGenerator</Generator>
+            <LastGenOutput>MolecularFormulaTest.tt.cs</LastGenOutput>
+        </None>
+        <None Update="TT\MonomerTest.tt">
+            <Generator>TextTemplatingFileGenerator</Generator>
+            <LastGenOutput>MonomerTest.tt.cs</LastGenOutput>
+        </None>
+        <None Update="TT\PDBAtomTest.tt">
+            <Generator>TextTemplatingFileGenerator</Generator>
+            <LastGenOutput>PDBAtomTest.tt.cs</LastGenOutput>
+        </None>
+        <None Update="TT\PDBMonomerTest.tt">
+            <Generator>TextTemplatingFileGenerator</Generator>
+            <LastGenOutput>PDBMonomerTest.tt.cs</LastGenOutput>
+        </None>
+        <None Update="TT\PDBPolymerTest.tt">
+            <Generator>TextTemplatingFileGenerator</Generator>
+            <LastGenOutput>PDBPolymerTest.tt.cs</LastGenOutput>
+        </None>
+        <None Update="TT\PDBStructureTest.tt">
+            <Generator>TextTemplatingFileGenerator</Generator>
+            <LastGenOutput>PDBStructureTest.tt.cs</LastGenOutput>
+        </None>
+        <None Update="TT\PolymerTest.tt">
+            <Generator>TextTemplatingFileGenerator</Generator>
+            <LastGenOutput>PolymerTest.tt.cs</LastGenOutput>
+        </None>
+        <None Update="TT\PseudoAtomTest.tt">
+            <Generator>TextTemplatingFileGenerator</Generator>
+            <LastGenOutput>PseudoAtomTest.tt.cs</LastGenOutput>
+        </None>
+        <None Update="TT\ReactionChainTest.tt">
+            <Generator>TextTemplatingFileGenerator</Generator>
+            <LastGenOutput>ReactionChainTest.tt.cs</LastGenOutput>
+        </None>
+        <None Update="TT\ReactionSchemeTest.tt">
+            <Generator>TextTemplatingFileGenerator</Generator>
+            <LastGenOutput>ReactionSchemeTest.tt.cs</LastGenOutput>
+        </None>
+        <None Update="TT\ReactionSetTest.tt">
+            <Generator>TextTemplatingFileGenerator</Generator>
+            <LastGenOutput>ReactionSetTest.tt.cs</LastGenOutput>
+        </None>
+        <None Update="TT\ReactionTest.tt">
+            <Generator>TextTemplatingFileGenerator</Generator>
+            <LastGenOutput>ReactionTest.tt.cs</LastGenOutput>
+        </None>
+        <None Update="TT\RingSetTest.tt">
+            <Generator>TextTemplatingFileGenerator</Generator>
+            <LastGenOutput>RingSetTest.tt.cs</LastGenOutput>
+        </None>
+        <None Update="TT\RingTest.tt">
+            <Generator>TextTemplatingFileGenerator</Generator>
+            <LastGenOutput>RingTest.tt.cs</LastGenOutput>
+        </None>
+        <None Update="TT\SingleElectronTest.tt">
+            <Generator>TextTemplatingFileGenerator</Generator>
+            <LastGenOutput>SingleElectronTest.tt.cs</LastGenOutput>
+        </None>
+        <None Update="TT\StrandTest.tt">
+            <Generator>TextTemplatingFileGenerator</Generator>
+            <LastGenOutput>StrandTest.tt.cs</LastGenOutput>
+        </None>
+        <None Update="TT\SubstanceTest.tt">
+            <Generator>TextTemplatingFileGenerator</Generator>
+            <LastGenOutput>SubstanceTest.tt.cs</LastGenOutput>
+        </None>
+        <Compile Update="QSAR\Descriptors\Moleculars\AutocorrelationDescriptorTest.tt.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>AutocorrelationDescriptorTest.tt</DependentUpon>
+        </Compile>
+        <Compile Update="QSAR\Descriptors\Moleculars\ChiDescriptorTests.tt.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>ChiDescriptorTests.tt</DependentUpon>
+        </Compile>
+        <Compile Update="TT\AdductFormulaTest.tt.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>AdductFormulaTest.tt</DependentUpon>
+        </Compile>
+        <Compile Update="TT\AminoAcidTest.tt.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>AminoAcidTest.tt</DependentUpon>
+        </Compile>
+        <Compile Update="TT\AtomContainer2Test.tt.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>AtomContainer2Test.tt</DependentUpon>
+        </Compile>
+        <Compile Update="TT\AtomContainerSetTest.tt.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>AtomContainerSetTest.tt</DependentUpon>
+        </Compile>
+        <Compile Update="TT\AtomContainerTest.tt.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>AtomContainerTest.tt</DependentUpon>
+        </Compile>
+        <Compile Update="TT\AtomTest.tt.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>AtomTest.tt</DependentUpon>
+        </Compile>
+        <Compile Update="TT\AtomTypeTest.tt.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>AtomTypeTest.tt</DependentUpon>
+        </Compile>
+        <Compile Update="TT\BioPolymerTest.tt.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>BioPolymerTest.tt</DependentUpon>
+        </Compile>
+        <Compile Update="TT\BondTest.tt.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>BondTest.tt</DependentUpon>
+        </Compile>
+        <Compile Update="TT\ChemFileTest.tt.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>ChemFileTest.tt</DependentUpon>
+        </Compile>
+        <Compile Update="TT\ChemModelTest.tt.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>ChemModelTest.tt</DependentUpon>
+        </Compile>
+        <Compile Update="TT\ChemObjectBuilderTest.tt.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>ChemObjectBuilderTest.tt</DependentUpon>
+        </Compile>
+        <Compile Update="TT\ChemObjectTest.tt.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>ChemObjectTest.tt</DependentUpon>
+        </Compile>
+        <Compile Update="TT\ChemSequenceTest.tt.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>ChemSequenceTest.tt</DependentUpon>
+        </Compile>
+        <Compile Update="TT\ConformerContainerTest.tt.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>ConformerContainerTest.tt</DependentUpon>
+        </Compile>
+        <Compile Update="TT\CrystalTest.tt.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>CrystalTest.tt</DependentUpon>
+        </Compile>
+        <Compile Update="TT\ElectronContainerTest.tt.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>ElectronContainerTest.tt</DependentUpon>
+        </Compile>
+        <Compile Update="TT\FragmentAtomTest.tt.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>FragmentAtomTest.tt</DependentUpon>
+        </Compile>
+        <Compile Update="TT\IsotopeTest.tt.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>IsotopeTest.tt</DependentUpon>
+        </Compile>
+        <Compile Update="TT\LonePairTest.tt.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>LonePairTest.tt</DependentUpon>
+        </Compile>
+        <Compile Update="TT\MappingTest.tt.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>MappingTest.tt</DependentUpon>
+        </Compile>
+        <Compile Update="TT\MolecularFormulaSetTest.tt.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>MolecularFormulaSetTest.tt</DependentUpon>
+        </Compile>
+        <Compile Update="TT\MolecularFormulaTest.tt.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>MolecularFormulaTest.tt</DependentUpon>
+        </Compile>
+        <Compile Update="TT\MonomerTest.tt.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>MonomerTest.tt</DependentUpon>
+        </Compile>
+        <Compile Update="TT\PDBAtomTest.tt.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>PDBAtomTest.tt</DependentUpon>
+        </Compile>
+        <Compile Update="TT\PDBMonomerTest.tt.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>PDBMonomerTest.tt</DependentUpon>
+        </Compile>
+        <Compile Update="TT\PDBPolymerTest.tt.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>PDBPolymerTest.tt</DependentUpon>
+        </Compile>
+        <Compile Update="TT\PDBStructureTest.tt.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>PDBStructureTest.tt</DependentUpon>
+        </Compile>
+        <Compile Update="TT\PolymerTest.tt.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>PolymerTest.tt</DependentUpon>
+        </Compile>
+        <Compile Update="TT\PseudoAtomTest.tt.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>PseudoAtomTest.tt</DependentUpon>
+        </Compile>
+        <Compile Update="TT\ReactionChainTest.tt.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>ReactionChainTest.tt</DependentUpon>
+        </Compile>
+        <Compile Update="TT\ReactionSchemeTest.tt.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>ReactionSchemeTest.tt</DependentUpon>
+        </Compile>
+        <Compile Update="TT\ReactionSetTest.tt.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>ReactionSetTest.tt</DependentUpon>
+        </Compile>
+        <Compile Update="TT\ReactionTest.tt.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>ReactionTest.tt</DependentUpon>
+        </Compile>
+        <Compile Update="TT\RingSetTest.tt.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>RingSetTest.tt</DependentUpon>
+        </Compile>
+        <Compile Update="TT\RingTest.tt.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>RingTest.tt</DependentUpon>
+        </Compile>
+        <Compile Update="TT\SingleElectronTest.tt.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>SingleElectronTest.tt</DependentUpon>
+        </Compile>
+        <Compile Update="TT\StrandTest.tt.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>StrandTest.tt</DependentUpon>
+        </Compile>
+        <Compile Update="TT\SubstanceTest.tt.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>SubstanceTest.tt</DependentUpon>
+        </Compile>
+    </ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="System.IO.Compression" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
-  </ItemGroup>
+    <ItemGroup>
+        <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+    </ItemGroup>
 
 </Project>

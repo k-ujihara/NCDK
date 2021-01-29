@@ -21,6 +21,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Common.Primitives;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -68,7 +69,7 @@ namespace NCDK.Dict
         {
             EntryDictionary dictionary;
             // to distinguish between OWL: QSAR & REACT
-            if (type.Contains("_React"))
+            if (type.ContainsOrdinal("_React"))
                 databaseLocator += "." + type.Substring(0, type.Length - 6);
             else
                 databaseLocator += "." + type;

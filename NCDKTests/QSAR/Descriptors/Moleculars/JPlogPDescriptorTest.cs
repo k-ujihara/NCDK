@@ -26,7 +26,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestPyridine()
         {
-            var mol =AtomTyperTests.ParseSmiles("c1ncccc1");
+            var mol = AtomTyperTests.ParseSmiles("c1ncccc1");
             var desc = new JPlogPDescriptor();
             var answer = desc.Calculate(mol);
             var output = answer.Value;
@@ -36,7 +36,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestPropionicAcid()
         {
-            var mol =AtomTyperTests.ParseSmiles("CCC(=O)O");
+            var mol = AtomTyperTests.ParseSmiles("CCC(=O)O");
             var desc = new JPlogPDescriptor();
             var answer = desc.Calculate(mol);
             var output = answer.Value;
@@ -46,7 +46,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestAcetonitrile()
         {
-            var mol =AtomTyperTests.ParseSmiles("CC#N");
+            var mol = AtomTyperTests.ParseSmiles("CC#N");
             var desc = new JPlogPDescriptor();
             var answer = desc.Calculate(mol);
             var output = answer.Value;
@@ -56,7 +56,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestAniline()
         {
-            var mol =AtomTyperTests.ParseSmiles("Nc1ccccc1");
+            var mol = AtomTyperTests.ParseSmiles("Nc1ccccc1");
             var desc = new JPlogPDescriptor();
             var answer = desc.Calculate(mol);
             var output = answer.Value;
@@ -66,7 +66,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         [TestMethod()]
         public void TestFluorobenzene()
         {
-            var mol =AtomTyperTests.ParseSmiles("Fc1ccccc1");
+            var mol = AtomTyperTests.ParseSmiles("Fc1ccccc1");
             var desc = new JPlogPDescriptor();
             var answer = desc.Calculate(mol);
             var output = answer.Value;

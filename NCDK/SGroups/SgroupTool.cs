@@ -35,8 +35,17 @@ namespace NCDK.Sgroups
             ["FOR"] = SgroupType.CtabFormulation,
             ["DAT"] = SgroupType.CtabData,
             ["GEN"] = SgroupType.CtabGeneric,
-            ["N/A"] = SgroupType.ExtMulticenter,
+            ["_MAP"] = SgroupType.ExtMulticenter,
+            ["_APO"] = SgroupType.ExtAttachOrdering,
         };
+
+        /// <summary>
+        /// Indicates if this SGroup type is support by standard CTAB (Molfile/SDfile) sgroups.
+        /// </summary>
+        /// <param name="value">Value to evaluate.</param>
+        /// <returns>true if <paramref name="value"/> is supported by standard CTAB.</returns>
+        public static bool IsCtabStandard(this SgroupType value)
+            => value != SgroupType.ExtMulticenter && value != SgroupType.ExtAttachOrdering;
 
         public static string Key(this SgroupType value)
             => StrToSgroupTypeMap.Keys.ElementAt((int)value);

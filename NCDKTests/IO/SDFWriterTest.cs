@@ -20,6 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Silent;
 using NCDK.IO.Listener;
@@ -28,6 +29,7 @@ using NCDK.Templates;
 using System;
 using System.Collections.Specialized;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace NCDK.IO
 {
@@ -353,10 +355,37 @@ namespace NCDK.IO
             }
 
             var sdf = sw.ToString();
-            foreach (var mol in sdf.Split("\\$\\$\\$\\$", 2))
+            foreach (var mol in Regex.Split(sdf, "\\$\\$\\$\\$"))
             {
-                Assert.IsTrue(mol.Contains("Bioclip"));
+                if (!string.IsNullOrWhiteSpace(mol))
+                    Assert.IsTrue(mol.IndexOf("Bioclip", StringComparison.Ordinal) >= 0);
             }
+        }
+
+        [TestMethod()]
+        public void OptionallyTruncateLongProperties()
+        {
+            var sw = new StringWriter();
+            using (var sdfw = new SDFWriter(sw))
+            {
+                sdfw.IOSettings[MDLV2000Writer.OptWriteDefaultProperties].Setting = "false";
+                sdfw.IOSettings[SDFWriter.OptTruncateLongData].Setting = "true";
+                IAtomContainer mol = TestMoleculeFactory.Make123Triazole();
+                mol.SetProperty("MyLongField",
+                                "ThisIsAVeryLongFieldThatShouldBeWrapped" +
+                                "ThisIsAVeryLongFieldThatShouldBeWrapped" +
+                                "ThisIsAVeryLongFieldThatShouldBeWrapped" +
+                                "ThisIsAVeryLongFieldThatShouldBeWrapped" +
+                                "ThisIsAVeryLongFieldThatShouldBeWrapped" +
+                                "ThisIsAVeryLongFieldThatShouldBeWrapped" +
+                                "ThisIsAVeryLongFieldThatShouldBeWrapped" +
+                                "ThisIsAVeryLongFieldThatShouldBeWrapped" +
+                                "ThisIsAVeryLongFieldThatShouldBeWrapped" +
+                                "ThisIsAVeryLongFieldThatShouldBeWrapped");
+                sdfw.Write(mol);
+            }
+            var sdf = sw.ToString();
+            Assert.IsTrue(sdf.Contains("ThisIsAVeryLongFieldThatShouldBeWrappedThisIsAVeryLongFieldThatShouldBeWrappedThisIsAVeryLongFieldThatShouldBeWrappedThisIsAVeryLongFieldThatShouldBeWrappedThisIsAVeryLongFieldThatShouldBeWrappedThisI\n"));
         }
     }
 }

@@ -60,11 +60,7 @@ namespace NCDK.IO.Formats
         /// <inheritdoc/>
         public override bool Matches(int lineNumber, string line)
         {
-            if (line.StartsWith("INChI=", StringComparison.Ordinal))
-            {
-                return true;
-            }
-            return false;
+            return line.StartsWith("InChI=", StringComparison.Ordinal);
         }
 
         /// <inheritdoc/>

@@ -55,9 +55,6 @@ namespace NCDK.Isomorphisms.Matchers
             return s.ToString();
         }
 
-        public override object Clone()
-        {
-            throw new InvalidOperationException();
-        }
+        object ICloneable.Clone() => throw new InvalidOperationException();
     }
 }

@@ -173,6 +173,14 @@ namespace NCDK.Renderers.Generators.Standards
         }
 
         [TestMethod()]
+        public void HydrateFormatting()
+        {
+            List<string> tokens = new List<string>();
+            Assert.IsTrue(AbbreviationLabel.Parse("SnCl4.2H2O", tokens));
+            Assert.IsTrue(tokens.SequenceEqual(new[] { "Sn", "Cl4", ".", "2", "H2", "O" }));
+        }
+
+        [TestMethod()]
         public void NonAbbreviationLabel()
         {
             var tokens = new List<string>();

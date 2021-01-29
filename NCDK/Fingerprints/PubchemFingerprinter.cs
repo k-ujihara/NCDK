@@ -68,6 +68,7 @@ namespace NCDK.Fingerprints
     /// This class is not thread-safe and uses stores intermediate steps
     /// internally. Please use a separate instance of the class for each thread.
     /// </note>
+    /// <note type="important">This fingerprint can not be used for substructure screening.</note>
     /// </remarks>
     /// <threadsafety static="true" instance="false"/>
     // @author Rajarshi Guha
@@ -82,9 +83,9 @@ namespace NCDK.Fingerprints
         /// </summary>
         const int FPSize = 881;
 
-        private byte[] m_bits;
+        private readonly byte[] m_bits;
 
-        private Dictionary<string, SmartsPattern> cache = new Dictionary<string, SmartsPattern>();
+        private readonly Dictionary<string, SmartsPattern> cache = new Dictionary<string, SmartsPattern>();
 
         public PubchemFingerprinter()
         {
@@ -320,7 +321,7 @@ namespace NCDK.Fingerprints
 
         class SubstructuresCounter
         {
-            PubchemFingerprinter parent;
+            private readonly PubchemFingerprinter parent;
             private readonly IAtomContainer mol;
 
             public SubstructuresCounter(PubchemFingerprinter parent, IAtomContainer m)
@@ -341,7 +342,7 @@ namespace NCDK.Fingerprints
             }
         }
 
-        private void _GenerateFp(byte[] fp, IAtomContainer mol)
+        private void GenerateFp(byte[] fp, IAtomContainer mol)
         {
             SmartsPattern.Prepare(mol);
             CountElements(fp, mol);
@@ -355,7 +356,7 @@ namespace NCDK.Fingerprints
             {
                 m_bits[i] = 0;
             }
-            _GenerateFp(m_bits, mol);
+            GenerateFp(m_bits, mol);
         }
 
         private bool IsBitOn(int bit)
@@ -417,7 +418,9 @@ namespace NCDK.Fingerprints
         }
 
         /// the first four bytes contains the length of the fingerprint
+#pragma warning disable IDE0051 // Remove unused private members
         private string Encode()
+#pragma warning restore IDE0051 // Remove unused private members
         {
             byte[] pack = new byte[4 + m_bits.Length];
 

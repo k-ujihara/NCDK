@@ -49,8 +49,7 @@ namespace NCDK.AtomTypes
         private readonly AtomTypeFactory factory = CDK.CdkAtomTypeFactory;
         private readonly Mode mode;
 
-        private static ConcurrentDictionary<Mode, CDKAtomTypeMatcher> factories = new ConcurrentDictionary<Mode, CDKAtomTypeMatcher>();
-        private static readonly object syncFactorie = new object();
+        private static readonly ConcurrentDictionary<Mode, CDKAtomTypeMatcher> factories = new ConcurrentDictionary<Mode, CDKAtomTypeMatcher>();
 
         private CDKAtomTypeMatcher(Mode mode)
         {

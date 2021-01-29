@@ -67,17 +67,8 @@ namespace NCDK.Indexes
                 string part1 = matcher.Groups[1].Value;
                 string part2 = matcher.Groups[2].Value;
                 string part3 = matcher.Groups[3].Value;
-                int part1value = int.Parse(part1, NumberFormatInfo.InvariantInfo);
-                if (part1value < 50)
-                {
-                    overall = false;
-                    // CAS numbers start at 50-00-0
-                }
-                else
-                {
-                    int digit = CASNumber.CalculateCheckDigit(part1, part2);
-                    overall = overall && (digit == int.Parse(part3, NumberFormatInfo.InvariantInfo));
-                }
+                int digit = CalculateCheckDigit(part1, part2);
+                overall = overall && (digit == int.Parse(part3, NumberFormatInfo.InvariantInfo));
             }
 
             return overall;
@@ -86,12 +77,12 @@ namespace NCDK.Indexes
         private static int CalculateCheckDigit(string part1, string part2)
         {
             int total = 0;
-            total = total + 1 * int.Parse(part2.Substring(1, 1), NumberFormatInfo.InvariantInfo);
-            total = total + 2 * int.Parse(part2.Substring(0, 1), NumberFormatInfo.InvariantInfo);
+            total += 1 * int.Parse(part2.Substring(1, 1), NumberFormatInfo.InvariantInfo);
+            total += 2 * int.Parse(part2.Substring(0, 1), NumberFormatInfo.InvariantInfo);
             int length = part1.Length;
             for (int i = 0; i < length; i++)
             {
-                total = total + (3 + i) * int.Parse(part1.Substring(length - 1 - i, 1), NumberFormatInfo.InvariantInfo);
+                total += (3 + i) * int.Parse(part1.Substring(length - 1 - i, 1), NumberFormatInfo.InvariantInfo);
             }
             return total % 10;
         }

@@ -106,9 +106,7 @@ namespace NCDK.IO.Iterator
                 IAtomContainer nextMolecule;
                 try
                 {
-                    string suffix = Suffix(line);
                     nextMolecule = ReadSmiles(line);
-                    nextMolecule.Title = suffix;
                 }
                 catch (Exception exception)
                 {
@@ -132,7 +130,8 @@ namespace NCDK.IO.Iterator
             for (int i = 0; i < line.Length; i++)
             {
                 char c = line[i];
-                if (c == ' ' || c == '\t') return line.Substring(i + 1);
+                if (c == ' ' || c == '\t') 
+                    return line.Substring(i + 1);
             }
             return "";
         }
@@ -151,8 +150,9 @@ namespace NCDK.IO.Iterator
             catch (CDKException e)
             {
                 Trace.TraceError("Error while reading the SMILES from: " + line + ", ", e);
-                IAtomContainer empty = builder.NewAtomContainer();
+                var empty = builder.NewAtomContainer();
                 empty.SetProperty(BadSmilesInput, line);
+                empty.Title = Suffix(line);
                 return empty;
             }
         }

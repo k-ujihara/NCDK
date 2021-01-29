@@ -81,7 +81,7 @@ namespace NCDK.Aromaticities
             // - this avoids costly operations such as looking up connected
             // bonds on each atom at the cost of memory
             var degree = new int[n];
-            var bondOrderSum = new int[n];
+            var valence = new int[n];
             var nCyclicPiBonds = new int[n];
             var exocyclicPiBond = new int[n];
             var electrons = new int[n];
@@ -94,8 +94,9 @@ namespace NCDK.Aromaticities
             {
                 var a = container.Atoms[i];
                 atomIndex.Add(a, i);
-                degree[i] = CheckNotNull(a.ImplicitHydrogenCount,
-                        "Aromaticity model requires implicit hydrogen count is set.");
+                var implH = CheckNotNull(a.ImplicitHydrogenCount, "Aromaticity model requires implicit hydrogen count is set.");
+                degree[i] = implH;
+                valence[i] = implH;
             }
 
             // for each bond we increase the degree count and check for cyclic and
@@ -135,8 +136,8 @@ namespace NCDK.Aromaticities
                  || order == BondOrder.Triple
                  || order == BondOrder.Quadruple)
                 {
-                    bondOrderSum[u] += order.Numeric();
-                    bondOrderSum[v] += order.Numeric();
+                    valence[u] += order.Numeric();
+                    valence[v] += order.Numeric();
                 }
             }
 
@@ -148,7 +149,7 @@ namespace NCDK.Aromaticities
 
                 // abnormal valence, usually indicated a radical. these cause problems
                 // with kekulisations
-                var bondedValence = bondOrderSum[i] + container.Atoms[i].ImplicitHydrogenCount.Value;
+                var bondedValence = valence[i];
                 if (!Normal(element, charge, bondedValence))
                 {
                     electrons[i] = -1;
@@ -182,7 +183,7 @@ namespace NCDK.Aromaticities
                 // check if the bonded valence is okay (i.e. not a radical)
                 else if (charge <= 0 && charge > -3)
                 {
-                    if (Valence(element, charge) - bondOrderSum[i] >= 2)
+                    if (Valence(element, charge) - valence[i] >= 2)
                         electrons[i] = 2;
                     else
                         electrons[i] = -1;

@@ -17,6 +17,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Common.Primitives;
 using NCDK.Stereo;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -79,7 +80,7 @@ namespace NCDK.Graphs.InChI
             {
                 Input = new NInChIInputAdapter(options);
                 GenerateInChIFromCDKAtomContainer(atomContainer, ignoreAromaticBonds);
-                auxNone = Input.Options != null && Input.Options.Contains("AuxNone");
+                auxNone = Input.Options != null && Input.Options.ContainsOrdinal("AuxNone");
             }
             catch (NInchiException jie)
             {
@@ -101,7 +102,7 @@ namespace NCDK.Graphs.InChI
             {
                 Input = new NInChIInputAdapter(new List<InChIOption>(options));
                 GenerateInChIFromCDKAtomContainer(atomContainer, ignoreAromaticBonds);
-                auxNone = Input.Options != null && Input.Options.Contains("AuxNone");
+                auxNone = Input.Options != null && Input.Options.ContainsOrdinal("AuxNone");
             }
             catch (NInchiException jie)
             {
@@ -213,7 +214,6 @@ namespace NCDK.Graphs.InChI
             }
 
             // Process bonds
-            var bondMap = new Dictionary<IBond, NInchiBond>();
             foreach (var bond in atomContainer.Bonds)
             {
                 // Assumes 2 centre bond

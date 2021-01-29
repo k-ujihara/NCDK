@@ -311,22 +311,22 @@ namespace NCDK.ForceFields
         public void IntractableNumberOfCycles()
         {
             // to ensure intractable cycles are handled we create a complete graph
-            // where every vertex is attached to every other vertex. K8 is sufficient
-            // to trigger an abort when finding cycles
+            // where every vertex is attached to every other vertex. K9 is sufficient
+            // to trigger an abort when finding cycles for setting PubChem_994
             IAtomContainer container = new Mock<IAtomContainer>().Object;
-            int[][] graphK8 = Arrays.CreateJagged<int>(8, 7);
+            int[][] graphK9 = Arrays.CreateJagged<int>(9, 8);
 
-            for (int i = 0; i < graphK8.Length; i++)
+            for (int i = 0; i < graphK9.Length; i++)
             {
                 int n = 0;
-                for (int j = 0; j < graphK8.Length; j++)
+                for (int j = 0; j < graphK9.Length; j++)
                 {
                     if (i == j) continue;
-                    graphK8[i][n++] = j;
+                    graphK9[i][n++] = j;
                 }
             }
 
-            Assert.AreEqual(0, MmffAromaticTypeMapping.CyclesOfSizeFiveOrSix(container, graphK8).Length);
+            Assert.AreEqual(0, MmffAromaticTypeMapping.CyclesOfSizeFiveOrSix(container, graphK9).Length);
         }
 
         [TestMethod()]

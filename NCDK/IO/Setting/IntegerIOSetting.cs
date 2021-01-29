@@ -33,20 +33,24 @@ namespace NCDK.IO.Setting
         { }
 
         /// <summary>
-        /// Sets the setting for a certain question. The setting
-        /// is a bool, and it accepts only "true" and "false".
+        /// The setting for a certain question. The setting
+        /// is a integer, and it accepts only integer.
         /// </summary>
         public override string Setting
         {
+            get => base.Setting;
+
             set
             {
-                if (int.TryParse(value, out int dumy))
+#pragma warning disable IDE0059 // Unnecessary assignment of a value
+                if (int.TryParse(value, out int dummy))
+#pragma warning restore IDE0059 // Unnecessary assignment of a value
                 {
                     base.Setting = value;
                 }
                 else
                 {
-                    throw new CDKException("Setting " + value + " is not an integer.");
+                    throw new CDKException($"Setting {value} is not an integer.");
                 }
             }
         }
