@@ -52,6 +52,8 @@ namespace NCDK.Renderers.Generators.Standards
         private readonly double labelScale;
         private readonly StandardAtomGenerator atomGenerator;
         private readonly RendererModel parameters;
+        private readonly MultiDictionary<Sgroup, Sgroup> children = new MultiDictionary<Sgroup, Sgroup>();
+        private readonly Dictionary<Sgroup, Bounds> boundsMap = new Dictionary<Sgroup, Bounds>();
 
         private StandardSgroupGenerator(RendererModel parameters, StandardAtomGenerator atomGenerator, double stroke, Typeface font, double emSize, Color foreground)
         {
@@ -263,6 +265,20 @@ namespace NCDK.Renderers.Generators.Standards
             }
         }
 
+        int GetTotalChildCount(MultiDictionary<Sgroup, Sgroup> map, Sgroup key)
+        {
+            int count = 0;
+            var deque = new ArrayDeque<Sgroup>();
+            deque.AddRange(map[key]);
+            while (deque.Any())
+            {
+                Sgroup sgroup = deque.Poll();
+                deque.AddRange(map[sgroup]);
+                ++count;
+            }
+            return count;
+        }
+
         /// <summary>
         /// Generate the Sgroup elements for the provided atom contains.
         /// </summary>
@@ -282,6 +298,18 @@ namespace NCDK.Renderers.Generators.Standards
                 if (symbols[i] != null)
                     symbolMap[container.Atoms[i]] = symbols[i];
             }
+
+            foreach (var sgroup in sgroups)
+            {
+                foreach (var parent in sgroup.Parents)
+                {
+                    children.Add(parent, sgroup);
+                }
+            }
+
+            // generate child brackets first
+            sgroups = new List<Sgroup>(sgroups);
+            ((List<Sgroup>)sgroups).Sort((o1, o2) => GetTotalChildCount(children, o1).CompareTo(GetTotalChildCount(children, o2)));
 
             foreach (var sgroup in sgroups)
             {
@@ -306,7 +334,7 @@ namespace NCDK.Renderers.Generators.Standards
                     case SgroupType.CtabComponent:
                     case SgroupType.CtabMixture:
                     case SgroupType.CtabFormulation:
-                        result.Add(GenerateMixtureSgroup(sgroup));
+                        result.Add(GenerateMixtureSgroup(sgroup, sgroups, symbolMap));
                         break;
                     case SgroupType.CtabGeneric:
                         // not strictly a polymer but okay to draw as one
@@ -498,7 +526,7 @@ namespace NCDK.Renderers.Generators.Standards
             }
         }
 
-        private IRenderingElement GenerateMixtureSgroup(Sgroup sgroup)
+        private IRenderingElement GenerateMixtureSgroup(Sgroup sgroup, IList<Sgroup> sgroups, Dictionary<IAtom, AtomSymbol> symbolMap)
         {
             // draw the brackets
             // TODO - mixtures normally have attached Sgroup data
@@ -525,11 +553,29 @@ namespace NCDK.Renderers.Generators.Standards
                         break;
                 }
 
+                string superscript = null;
+                foreach (var child in sgroups)
+                {
+                    if (child.Type == SgroupType.CtabData &&
+                        child.Parents.Contains(sgroup))
+                    {
+                        var value = (string)child.GetValue(SgroupKey.Data);
+                        var units = (string)child.GetValue(SgroupKey.DataFieldUnits);
+                        if (value != null)
+                        {
+                            superscript = value;
+                            if (units != null)
+                                superscript += units;
+                        }
+                        break;
+                    }
+                }
+
                 return GenerateSgroupBrackets(sgroup,
                                               brackets,
-                                              null,
+                                              symbolMap,
                                               subscript,
-                                              null);
+                                              superscript);
             }
             else
             {
@@ -560,6 +606,16 @@ namespace NCDK.Renderers.Generators.Standards
                                                          string subscriptSuffix,
                                                          string superscriptSuffix)
         {
+            return GenerateSgroupBrackets(sgroup, brackets, symbols, subscriptSuffix, superscriptSuffix, null);
+        }
+
+        private IRenderingElement GenerateSgroupBrackets(Sgroup sgroup,
+                                                         IList<SgroupBracket> brackets,
+                                                         IReadOnlyDictionary<IAtom, AtomSymbol> symbols,
+                                                         string subscriptSuffix,
+                                                         string superscriptSuffix,
+                                                         string superscriptPrefix)
+        {
             // brackets are square by default (style:0)
             var style = (int?)sgroup.GetValue(SgroupKey.CtabBracketStyle);
             bool round = style != null && style == 1;
@@ -577,7 +633,9 @@ namespace NCDK.Renderers.Generators.Standards
             var pairs = crossingBonds.Count == brackets.Count ? BracketBondPairs(brackets, crossingBonds) : Dictionaries.Empty<SgroupBracket, IBond>();
 
             // override bracket layout around single atoms to bring them in closer
-            if (atoms.Count == 1)
+            if (atoms.Count == 1
+             && (sgroup.Type == SgroupType.CtabStructureRepeatUnit
+              || sgroup.Type == SgroupType.CtabMultipleGroup))
             {
                 var atom = atoms.First();
 
@@ -586,7 +644,7 @@ namespace NCDK.Renderers.Generators.Standards
                     !crossingBonds.Any() &&
                     symbols.ContainsKey(atom))
                 {
-                    var prefix = new TextOutline('·' + subscriptSuffix, font, emSize).Resize(1 / scale, 1 / -scale);
+                    var prefix = new TextOutline($"{INTERPUNCT}{subscriptSuffix}", font, emSize).Resize(1 / scale, 1 / -scale);
                     var prefixBounds = prefix.LogicalBounds;
 
                     var symbol = symbols[atom];
@@ -599,7 +657,7 @@ namespace NCDK.Renderers.Generators.Standards
                                       bounds.Width + 4 * stroke,
                                       bounds.Height + 4 * stroke);
 
-                    prefix = prefix.Translate(bounds.Bottom - prefixBounds.Top,
+                    prefix = prefix.Translate(bounds.Left - prefixBounds.Right,
                                               symbol.GetAlignmentCenter().Y - prefixBounds.CenterY());
 
                     result.Add(GeneralPath.ShapeOf(prefix.GetOutline(), foreground));
@@ -641,6 +699,7 @@ namespace NCDK.Renderers.Generators.Standards
                     result.Add(GeneralPath.ShapeOf(leftBracket.GetOutline(), foreground));
                     result.Add(GeneralPath.ShapeOf(rightBracket.GetOutline(), foreground));
 
+                    var leftBracketBounds = leftBracket.GetBounds();
                     var rightBracketBounds = rightBracket.GetBounds();
 
                     // subscript/superscript suffix annotation
@@ -660,6 +719,15 @@ namespace NCDK.Renderers.Generators.Standards
                                                                                 rightBracketBounds.Bottom + 0.1),
                                                                     new Vector2(-rightBracketBounds.Width, 0),
                                                                     scriptscale));
+                        result.Add(GeneralPath.ShapeOf(superscriptOutline.GetOutline(), foreground));
+                    }
+                    if (superscriptPrefix != null && superscriptPrefix.Any())
+                    {
+                        TextOutline superscriptOutline = RightAlign(MakeText(superscriptPrefix.ToLowerInvariant(),
+                                                                            new Vector2(leftBracketBounds.Top,
+                                                                                        leftBracketBounds.Bottom + 0.1),
+                                                                            new Vector2(-leftBracketBounds.Width, 0),
+                                                                            scriptscale));
                         result.Add(GeneralPath.ShapeOf(superscriptOutline.GetOutline(), foreground));
                     }
                 }
@@ -748,12 +816,43 @@ namespace NCDK.Renderers.Generators.Standards
                     }
                 }
             }
+            // no crossing-bonds we can shrink things down
             else if (brackets.Count == 2)
             {
-                var b1p1 = brackets[0].FirstPoint;
-                var b1p2 = brackets[0].SecondPoint;
-                var b2p1 = brackets[1].FirstPoint;
-                var b2p2 = brackets[1].SecondPoint;
+                var bounds = new Bounds();
+                foreach (var atom in sgroup.Atoms)
+                {
+                    var atomSymbol = symbols[atom];
+                    if (atomSymbol != null)
+                    {
+                        var hull = atomSymbol.GetConvexHull();
+                        var bounds2D = hull.Outline.Bounds;
+                        bounds.Add(bounds2D.Left, bounds2D.Bottom);
+                        bounds.Add(bounds2D.Right, bounds2D.Top);
+                    }
+                    else
+                    {
+                        bounds.Add(atom.Point2D.Value.X, atom.Point2D.Value.Y);
+                    }
+                }
+                foreach (Sgroup child in children[sgroup])
+                {
+                    Bounds childBounds = boundsMap[child];
+                    if (childBounds != null)
+                        bounds.Add(childBounds);
+                }
+
+                Vector2 b1p1 = brackets[0].FirstPoint;
+                Vector2 b1p2 = brackets[0].SecondPoint;
+                Vector2 b2p1 = brackets[1].FirstPoint;
+                Vector2 b2p2 = brackets[1].SecondPoint;
+
+                double margin = 5 * (parameters.GetMargin() / scale);
+
+                b1p1 = new Vector2(bounds.MinX + margin, bounds.MinY + margin);
+                b1p2 = new Vector2(bounds.MinX + margin, bounds.MaxY - margin);
+                b2p1 = new Vector2(bounds.MaxX - margin, bounds.MinY + margin);
+                b2p2 = new Vector2(bounds.MaxX - margin, bounds.MaxY - margin);
 
                 var b1vec = VecmathUtil.NewUnitVector(b1p1, b1p2);
                 var b2vec = VecmathUtil.NewUnitVector(b2p1, b2p2);
@@ -772,7 +871,7 @@ namespace NCDK.Renderers.Generators.Standards
                 b2pvec *= bracketDepth;
 
                 // bad brackets
-                if (double.IsNaN(b1pvec.X) || double.IsNaN(b1pvec.Y) 
+                if (double.IsNaN(b1pvec.X) || double.IsNaN(b1pvec.Y)
                  || double.IsNaN(b2pvec.X) || double.IsNaN(b2pvec.Y))
                     return result;
 
@@ -859,6 +958,7 @@ namespace NCDK.Renderers.Generators.Standards
 
                 var subSufPnt = b2p2;
                 var supSufPnt = b2p1;
+                var supPrefPnt = b1p2;
                 var subpvec = b2pvec;
 
                 var bXDiff = b1MaxX - b2MaxX;
@@ -892,7 +992,20 @@ namespace NCDK.Renderers.Generators.Standards
                     var superscriptOutline = LeftAlign(MakeText(superscriptSuffix.ToLowerInvariant(), supSufPnt, subpvec, labelScale));
                     result.Add(GeneralPath.ShapeOf(superscriptOutline.GetOutline(), foreground));
                 }
+                if (superscriptPrefix != null && superscriptPrefix.Any())
+                {
+                    subpvec = Vector2.Negate(subpvec);
+                    TextOutline superscriptOutline = RightAlign(MakeText(superscriptPrefix.ToLowerInvariant(),
+                                                                         supPrefPnt, subpvec, labelScale));
+                    result.Add(GeneralPath.ShapeOf(superscriptOutline.GetOutline(), foreground));
+                }
             }
+            {
+                Bounds bounds = new Bounds();
+                bounds.Add(result);
+                boundsMap[sgroup] = bounds;
+            }
+
             return result;
         }
 
@@ -974,6 +1087,13 @@ namespace NCDK.Renderers.Generators.Standards
             var center = outline.GetCenter();
             var first = outline.GetFirstGlyphCenter();
             return outline.Translate(center.X - first.X, center.Y - first.Y);
+        }
+        private TextOutline RightAlign(TextOutline outline)
+        {
+            var center = outline.GetCenter();
+            var last = outline.GetLastGlyphCenter();
+            return outline.Translate(center.X  - last.X,
+                                     center.Y - last.Y);
         }
     }
 }

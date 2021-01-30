@@ -1,6 +1,7 @@
 ﻿<#@ template debug="false" hostspecific="false" language="C#" #>
 <#@ output extension=".tt.cs" #>
 
+using System;
 using NCDK.Numerics;
 using NCDK.Renderers.Colors;
 using NCDK.Renderers.Generators;
@@ -87,7 +88,9 @@ namespace NCDK.Renderers
         P("SgroupFontScale", "double", "0.6", "scale Sgroup annotations relative to the normal font size (atom symbol)");
         P("OmitMajorIsotopes", "bool", "false", "whether Major Isotopes e.g. 12C, 16O should be omitted");
         P("ForceDelocalisedBondDisplay", "bool", "false", "indicate delocalised/aromatic bonds should always be rendered, even when there is a valid Kekule structure. Delocalised bonds will either be rendered as a dashed bond to the side or as a circle/donut/life buoy inside small rings. This depiction is used by default when a bond does not have an order assigned (e.g. null/unset), for example: c1cccc1. Turning this option on means all delocalised bonds will be rendered this way even when they have bond orders correctly assigned: e.g. c1ccccc1, [cH-]1cccc1. <br/><b>As recommended by IUPAC, their usage is discouraged and the Kekule representation is more clear.</b>");
-		P("DelocalisedDonutsBondDisplay", "bool", "true", "render small delocalised rings as bonds/life buoys? This can sometimes be misleading for fused rings but is commonly used.");
+        P("DelocalisedDonutsBondDisplay", "bool", "true", "render small delocalised rings as bonds/life buoys? This can sometimes be misleading for fused rings but is commonly used.");
+        P("DeuteriumSymbol", "bool", "true", "Display deuterium '[2H]' as 'D'.");
+        P("PseudoFontStyle", "Tuple<WPF.FontStyle, WPF.FontWeight>", "new Tuple<WPF.FontStyle, WPF.FontWeight>(WPF.FontStyles.Italic, WPF.FontWeights.Bold)", "The default font style for pseudo-atoms, is Bold and Italic. This allows one to distinguish a 'Y/W' for an R group 'Y' Yttrium etc. To render symbols the same as other atoms set this to '0'.");
 
         //
         // BasicScene

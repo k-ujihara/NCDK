@@ -564,17 +564,17 @@ namespace NCDK.Fingerprints
             }
         }
 
-        public void SetPathLimit(int limit)
+        public virtual void SetPathLimit(int limit)
         {
             this.pathLimit = limit;
         }
 
-        public void SetHashPseudoAtoms(bool value)
+        public virtual void SetHashPseudoAtoms(bool value)
         {
             this.hashPseudoAtoms = value;
         }
 
-        public int SearchDepth { get; }
+        public virtual int SearchDepth { get; }
 
         public override int Length => size;
 

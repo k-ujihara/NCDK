@@ -19,7 +19,7 @@ namespace NCDK.Fingerprints
             return Array.Empty<KeyValuePair<string, string>>();
         }
 
-        public string GetVersionDescription()
+        public virtual string GetVersionDescription()
         {
             var sb = new StringBuilder();
             sb.Append("CDK-")

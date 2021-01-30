@@ -565,6 +565,7 @@
         <None Remove="IO\CML\cmlTestFramework4DTD.xml" />
         <None Remove="IO\CML\cmlTestFramework_jumbo4.6.xml" />
         <None Remove="IO\v3000Query.mol" />
+        <None Remove="SMARTS\mdlquery.mol" />
         <None Remove="Smiles\CHEBI_53695.mol" />
         <None Remove="Smiles\CHEMBL367774.mol" />
     </ItemGroup>
@@ -1101,6 +1102,7 @@
         <EmbeddedResource Include="IO\CML\cmlTestFramework4DTD.xml" />
         <EmbeddedResource Include="IO\CML\cmlTestFramework_jumbo4.6.xml" />
         <EmbeddedResource Include="IO\v3000Query.mol" />
+        <EmbeddedResource Include="SMARTS\mdlquery.mol" />
         <EmbeddedResource Include="Smiles\CHEBI_53695.mol" />
         <EmbeddedResource Include="Smiles\CHEMBL367774.mol" />
     </ItemGroup>

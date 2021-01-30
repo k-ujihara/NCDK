@@ -98,7 +98,7 @@ namespace NCDK.Fingerprints
     ///  
     /// <para>The fingerprints and their uses have been described in Clark et al. <token>cdk-cite-Clark2014</token>.</para>
     /// 
-    /// <note type="warning">Important! this fingerprint can not be used for substructure screening.</note>
+    /// <note type="important">This fingerprint can not be used for substructure screening.</note>
     /// </remarks>
     // @author         am.clark
     // @cdk.created    2014-01-01

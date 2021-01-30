@@ -24,6 +24,7 @@
 using NCDK.Common.Primitives;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 
@@ -55,18 +56,9 @@ namespace NCDK.Graphs.InChI
 
         private static bool IsTimeoutOptions(string op)
         {
-            if (op == null || op.Length < 2) return false;
-            int pos = 0;
-            int len = op.Length;
-            if (op[pos] == 'W')
-                pos++;
-            while (pos < len && char.IsDigit(op[pos]))
-                pos++;
-            if (pos < len && (op[pos] == '.' || op[pos] == ','))
-                pos++;
-            while (pos < len && char.IsDigit(op[pos]))
-                pos++;
-            return pos == len;
+            if (op == null || op.Length < 2)
+                return false;
+            return op[0] == 'W';
         }
 
         private static bool IsSubSecondTimeout(string op)
@@ -100,18 +92,14 @@ namespace NCDK.Graphs.InChI
                     }
                     else if (IsTimeoutOptions(op))
                     {
-                        hasUserSpecifiedTimeout = true;
-                        // only reformat if we actually have a decimal
-                        if (IsSubSecondTimeout(op))
+                        var time = Math.Ceiling(double.Parse(op.Substring(1), NumberFormatInfo.InvariantInfo));
+                        // fix #653: safer to use whole seconds, rounded to next bigger integer
+                        if (time >= 0.0)
                         {
-                            // because the JNI-InChI library is expecting an platform number, format it as such
-                            var time = double.Parse(op.Substring(1));
-                            return $"{FLAG_CHAR}W{time.ToString("F2")}";
+                            return $"{FLAG_CHAR}W{string.Format("F1", time)}";
+                            hasUserSpecifiedTimeout = true;
                         }
-                        else
-                        {
-                            return $"{FLAG_CHAR}{op}";
-                        }
+                        return "";
                     }
                     // 1,5 tautomer option
                     else if (string.Equals("15T", op, StringComparison.Ordinal))

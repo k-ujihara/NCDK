@@ -66,7 +66,7 @@ namespace NCDK.IO
             mdlWriter.Close();
             var output = writermdl.ToString().Replace("\r\n", "\n");
             //if there would be 3 instances (as in the bug), the only instance wouldnt't be right at the end
-            Assert.AreEqual(2994, output.IndexOf("M  END"));
+            Assert.AreEqual(2961, output.IndexOf("M  END"));
             //there would need some $$$$ to be in
             Assert.AreEqual(-1, output.IndexOf("$$$$"));
             //check atom/bond count

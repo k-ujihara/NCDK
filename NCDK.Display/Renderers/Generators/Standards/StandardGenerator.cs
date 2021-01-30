@@ -32,6 +32,8 @@ using System.Linq;
 using System.Windows.Media;
 using static NCDK.Renderers.Generators.Standards.VecmathUtil;
 using WPF = System.Windows;
+using NCDK.Sgroups;
+using NCDK.Renderers;
 
 namespace NCDK.Renderers.Generators.Standards
 {
@@ -440,10 +442,65 @@ namespace NCDK.Renderers.Generators.Standards
                 foreach (var outline in attachNumOutlines)
                 {
                     var group = new ElementGroup();
-                    var radius = 2 * stroke + maxRadius;
+                    var radius = 1.2 * stroke + maxRadius;
                     var shape = new EllipseGeometry(outline.GetCenter(), radius, radius);
                     var area1 = Geometry.Combine(shape, outline.GetOutline(), GeometryCombineMode.Exclude, Transform.Identity);
                     group.Add(GeneralPath.ShapeOf(area1, foreground));
+                    annotations.Add(group);
+                }
+            }
+
+            // ligand/attachment ordering annotations on bonds
+            var sgroups = container.GetCtabSgroups();
+            if (sgroups != null)
+            {
+                var attachNumOutlines = new List<TextOutline>();
+                double maxRadius = 0;
+
+                foreach (var sgroup in sgroups)
+                {
+                    if (sgroup.Type == SgroupType.ExtAttachOrdering)
+                    {
+                        int number = 1;
+                        foreach (var bond in sgroup.Bonds)
+                        {
+                            var beg = bond.Begin.Point2D.Value;
+                            var end = bond.End.Point2D.Value;
+                            var mid = VecmathUtil.Midpoint(beg, end);
+
+                            number++;
+                            var outline = GenerateAnnotation(
+                                mid,
+                                number.ToString(),
+                                new Vector2(0, 0),
+                                0,
+                                annScale,
+                                font.DeriveFont(weight:WPF.FontWeights.Bold),
+                                emSize,
+                                null);
+
+                            attachNumOutlines.Add(outline);
+
+                            double w = outline.GetBounds().Width;
+                            double h = outline.GetBounds().Height;
+                            double r = Math.Sqrt(w * w + h * h) / 2;
+                            if (r > maxRadius)
+                                maxRadius = r;
+                        }
+                    }
+                }
+
+                foreach (var outline in attachNumOutlines)
+                {
+                    var group = new ElementGroup();
+                    double radius = 1.2 * stroke + maxRadius;
+                    var shape = new EllipseGeometry(
+                        new WPF.Point(outline.GetCenter().X - radius, outline.GetCenter().Y - radius),
+                        2 * radius, 2 * radius);
+                    //var area1 = shape;
+                    group.Add(GeneralPath.ShapeOf(shape, WPF.Media.Colors.White));
+                    group.Add(GeneralPath.OutlineOf(shape, 0.2 * stroke, foreground));
+                    group.Add(GeneralPath.ShapeOf(outline.GetOutline(), foreground));
                     annotations.Add(group);
                 }
             }

@@ -3448,7 +3448,7 @@ namespace NCDK.SMARTS
                 SetBondDirs(mol);
 
                 bool isRxn = Role(atoms[atoms.Length - 1]) != ReactionRole.None;
-                StringBuilder sb = new StringBuilder();
+                var sb = new StringBuilder();
                 if (isRxn)
                 {
                     WriteParts(atoms, sb, ReactionRole.Reactant);

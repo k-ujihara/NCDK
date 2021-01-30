@@ -1,4 +1,5 @@
 ﻿
+using System;
 using NCDK.Numerics;
 using NCDK.Renderers.Colors;
 using NCDK.Renderers.Generators;
@@ -963,6 +964,72 @@ namespace NCDK.Renderers
         public static bool HasDelocalisedDonutsBondDisplay(this RendererModel model)
         {
             const string key = "DelocalisedDonutsBondDisplay";
+            return model.Parameters.ContainsKey(key);
+        }
+
+        public static readonly bool DefaultDeuteriumSymbol = true;
+
+        /// <summary>
+        /// Get Display deuterium '[2H]' as 'D'.. Default value is true.
+        /// </summary>
+        /// <returns>Display deuterium '[2H]' as 'D'.</returns>
+        public static bool GetDeuteriumSymbol(this RendererModel model)
+        {
+            const string key = "DeuteriumSymbol";
+            bool value;
+            if (model.Parameters.TryGetValue(key, out object v))
+                value = (bool)v;
+            else
+                model.Parameters[key] = value = DefaultDeuteriumSymbol;
+
+            return value;
+        }
+
+        /// <summary>
+        /// Set Display deuterium '[2H]' as 'D'..
+        /// </summary>
+        public static void SetDeuteriumSymbol(this RendererModel model, bool value)
+        {
+            const string key = "DeuteriumSymbol";
+            model.Parameters[key] = value;
+        }
+
+        public static bool HasDeuteriumSymbol(this RendererModel model)
+        {
+            const string key = "DeuteriumSymbol";
+            return model.Parameters.ContainsKey(key);
+        }
+
+        public static readonly Tuple<WPF.FontStyle, WPF.FontWeight> DefaultPseudoFontStyle = new Tuple<WPF.FontStyle, WPF.FontWeight>(WPF.FontStyles.Italic, WPF.FontWeights.Bold);
+
+        /// <summary>
+        /// Get The default font style for pseudo-atoms, is Bold and Italic. This allows one to distinguish a 'Y/W' for an R group 'Y' Yttrium etc. To render symbols the same as other atoms set this to '0'.. Default value is new Tuple{WPF.FontStyle, WPF.FontWeight}(WPF.FontStyles.Italic, WPF.FontWeights.Bold).
+        /// </summary>
+        /// <returns>The default font style for pseudo-atoms, is Bold and Italic. This allows one to distinguish a 'Y/W' for an R group 'Y' Yttrium etc. To render symbols the same as other atoms set this to '0'.</returns>
+        public static Tuple<WPF.FontStyle, WPF.FontWeight> GetPseudoFontStyle(this RendererModel model)
+        {
+            const string key = "PseudoFontStyle";
+            Tuple<WPF.FontStyle, WPF.FontWeight> value;
+            if (model.Parameters.TryGetValue(key, out object v))
+                value = (Tuple<WPF.FontStyle, WPF.FontWeight>)v;
+            else
+                model.Parameters[key] = value = DefaultPseudoFontStyle;
+
+            return value;
+        }
+
+        /// <summary>
+        /// Set The default font style for pseudo-atoms, is Bold and Italic. This allows one to distinguish a 'Y/W' for an R group 'Y' Yttrium etc. To render symbols the same as other atoms set this to '0'..
+        /// </summary>
+        public static void SetPseudoFontStyle(this RendererModel model, Tuple<WPF.FontStyle, WPF.FontWeight> value)
+        {
+            const string key = "PseudoFontStyle";
+            model.Parameters[key] = value;
+        }
+
+        public static bool HasPseudoFontStyle(this RendererModel model)
+        {
+            const string key = "PseudoFontStyle";
             return model.Parameters.ContainsKey(key);
         }
 

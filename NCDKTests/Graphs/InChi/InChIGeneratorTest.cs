@@ -892,12 +892,8 @@ namespace NCDK.Graphs.InChI
             }
         }
 
-        // if this test hits the timeout it's likely the users Locale is mixed, the
-        // InChI library was loaded in one mode and java is in another, the issue
-        // is InChI takes timeout in seconds and fractional seconds will be either
-        // 0.1 or 0,1 depending on locale.
         [TestMethod()]
-        [Timeout(500)]
+        [Timeout(1500)]
         public void Timeout()
         {
             var smipar = new SmilesParser(builder);

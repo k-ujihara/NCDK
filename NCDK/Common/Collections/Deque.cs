@@ -3,11 +3,9 @@ using System.Collections.Generic;
 
 namespace NCDK.Common.Collections
 {
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     public class ArrayDeque<T> : Deque<T>
     { }
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     public class Deque<T> : List<T>
     {
         public void Push(T e)

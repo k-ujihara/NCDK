@@ -464,9 +464,22 @@ namespace NCDK.Depict
         /// <param name="reactants">reaction reactants</param>
         /// <param name="products">reaction products</param>
         /// <returns>the highlight map</returns>
-        private Dictionary<IChemObject, Color> MakeHighlightAtomMap(List<IAtomContainer> reactants,
-                                                             List<IAtomContainer> products)
+        private Dictionary<IChemObject, Color> MakeHighlightAtomMap(List<IAtomContainer> reactants, List<IAtomContainer> products)
         {
+            // only highlight atom-maps that appear in both the reactant+product
+            var reactantMapIdxs = new HashSet<int>();
+            var productMapIdxs = new HashSet<int>();
+            foreach (var mol in reactants)
+            {
+                foreach (IAtom atom in mol.Atoms)
+                    reactantMapIdxs.Add(AccessAtomMap(atom));
+            }
+            foreach (IAtomContainer mol in products)
+            {
+                foreach (IAtom atom in mol.Atoms)
+                    productMapIdxs.Add(AccessAtomMap(atom));
+            }
+
             var colorMap = new Dictionary<IChemObject, Color>();
             var mapToColor = new Dictionary<int, Color>();
             var amap = new Dictionary<int, IAtom>();
@@ -477,7 +490,7 @@ namespace NCDK.Depict
                 foreach (var atom in mol.Atoms)
                 {
                     int mapidx = AccessAtomMap(atom);
-                    if (mapidx > 0)
+                    if (mapidx > 0 && productMapIdxs.Contains(mapidx))
                     {
                         if (prevPalletIdx == colorIdx)
                         {
@@ -510,7 +523,7 @@ namespace NCDK.Depict
                 foreach (var atom in mol.Atoms)
                 {
                     int mapidx = AccessAtomMap(atom);
-                    if (mapidx > 0)
+                    if (mapidx > 0 && reactantMapIdxs.Contains(mapidx))
                     {
                         colorMap[atom] = mapToColor[mapidx];
                     }
@@ -976,12 +989,21 @@ namespace NCDK.Depict
         }
 
         /// <summary>
-        /// Low-level option method to set a rendering model parameter.
+        /// Indicate whether <sup>2</sup>H should be rendered as 'D'. Default: true.
         /// </summary>
-        /// <typeparam name="T">option value type</typeparam>
-        /// <param name="key">option key</param>
-        /// <param name="value">option value</param>
-        public void SetParameter<T>(string key, T value)
+        public bool DeuteriumSymbol
+        {
+            get => templateModel.GetDeuteriumSymbol();
+            set => templateModel.SetDeuteriumSymbol(value);
+        }
+
+    /// <summary>
+    /// Low-level option method to set a rendering model parameter.
+    /// </summary>
+    /// <typeparam name="T">option value type</typeparam>
+    /// <param name="key">option key</param>
+    /// <param name="value">option value</param>
+    public void SetParameter<T>(string key, T value)
         {
             templateModel.Parameters[key] = value;
         }

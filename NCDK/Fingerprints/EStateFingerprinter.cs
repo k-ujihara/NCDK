@@ -49,6 +49,7 @@ namespace NCDK.Fingerprints
     /// the superstructures. Some keys check for hydrogen counts which may not be
     /// preserved in a superstructure.
     /// </note>
+    /// <note type="important">This fingerprint can not be used for substructure screening.</note>
     /// </remarks>
     // @author Rajarhi Guha
     // @cdk.created 2008-07-23
