@@ -39,16 +39,16 @@ namespace NCDK.IO.CML
 #pragma warning disable CA1308 // Normalize strings to uppercase
             var systemId = absoluteUri.AbsolutePath.ToLowerInvariant();
 #pragma warning restore CA1308 // Normalize strings to uppercase
-            if (systemId.Contains("cml-1999-05-15.dtd") 
-             || systemId.Contains("cml.dtd")
-             || systemId.Contains("cml1_0.dtd"))
+            if (systemId.Contains("cml-1999-05-15.dtd", StringComparison.Ordinal) 
+             || systemId.Contains("cml.dtd", StringComparison.Ordinal)
+             || systemId.Contains("cml1_0.dtd", StringComparison.Ordinal))
             {
                 Trace.TraceInformation("File has CML 1.0 DTD");
                 return GetCMLType("cml1_0.dtd");
             }
-            else if (systemId.Contains("cml-2001-04-06.dtd")
-                  || systemId.Contains("cml1_0_1.dtd")
-                  || systemId.Contains("cml_1_0_1.dtd"))
+            else if (systemId.Contains("cml-2001-04-06.dtd", StringComparison.Ordinal)
+                  || systemId.Contains("cml1_0_1.dtd", StringComparison.Ordinal)
+                  || systemId.Contains("cml_1_0_1.dtd", StringComparison.Ordinal))
             {
                 Trace.TraceInformation("File has CML 1.0.1 DTD");
                 return GetCMLType("cml1_0_1.dtd");

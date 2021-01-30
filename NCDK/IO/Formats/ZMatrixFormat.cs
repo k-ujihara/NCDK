@@ -60,7 +60,7 @@ namespace NCDK.IO.Formats
         /// <inheritdoc/>
         public override bool Matches(int lineNumber, string line)
         {
-            if (lineNumber == 4 && line.Contains("Z Matrix"))
+            if (lineNumber == 4 && line.Contains("Z Matrix", StringComparison.Ordinal))
             {
                 return true;
             }

@@ -605,8 +605,6 @@ namespace NCDK.IO
             Assert.AreEqual("M  RAD  1   2   2", lines[7], "incorrect radical output");
         }
 
-        // XXX: information loss, CDK does not distinquish between divalence
-        //      singlet and triplet and only stores the unpaired electrons
         [TestMethod()]
         public void TestSingleTripletRadical()
         {
@@ -624,7 +622,7 @@ namespace NCDK.IO
             string[] lines = SplitLines(sw.ToString());
 
             Assert.AreEqual(9, lines.Length, "incorrect file length");
-            Assert.AreEqual("M  RAD  1   2   1", lines[7], "incorrect radical output");
+            Assert.AreEqual("M  RAD  1   2   3", lines[7], "incorrect radical output");
         }
 
         [TestMethod()]
@@ -708,7 +706,7 @@ namespace NCDK.IO
                 mdlw.Write(mdlr.Read(builder.NewAtomContainer()));
                 string output = sw.ToString();
                 Assert.IsTrue(output.Contains("M  STY  3   1 COM   2 COM   3 MIX"));
-                Assert.IsTrue(output.Contains("M  SPL  1   1   3"));
+                Assert.IsTrue(output.Contains("M  SPL  2   1   3   2   3"));
             }
         }
 
@@ -842,7 +840,7 @@ namespace NCDK.IO
                 mdlw.SetWriteAromaticBondTypes(true);
                 mdlw.Write(mol);
             }
-            Assert.IsTrue(sw.ToString().Contains("  1  2  4  0  0  0  0 \n"));
+            Assert.IsTrue(sw.ToString().Contains("  1  2  4  0  0  0  0\n"));
         }
 
         [TestMethod()]
@@ -987,6 +985,107 @@ namespace NCDK.IO
                     + "  1  4  1  0\n"
                     + "  1  5  1  0\n"
                     + "M  END"));
+            }
+        }
+
+        [TestMethod()]
+        public void WriteParentAtomSgroupAsList()
+        {
+            var mol = CDK.Builder.NewAtomContainer();
+            var atom = CDK.Builder.NewAtom();
+            atom.Symbol = "C";
+            mol.Atoms.Add(atom);
+            // build multiple group Sgroup
+            var sgroup = new Sgroup();
+            sgroup.Type = SgroupType.CtabMultipleGroup;
+            sgroup.Atoms.Add(atom);
+            var patoms = new List<IAtom>();
+
+            patoms.Add(atom);
+
+            sgroup.PutValue(SgroupKey.CtabParentAtomList, patoms);
+            mol.SetCtabSgroups(new[] { sgroup });
+            var sw = new StringWriter();
+            using (var mdlw = new MDLV2000Writer(sw))
+            {
+                mdlw.Write(mol);
+            }
+            Assert.IsTrue(sw.ToString().Contains("SPA   1  1", StringComparison.Ordinal));
+        }
+
+        [TestMethod()]
+        public void RoundTripWithNotAtomList()
+        {
+            using (var mdlr = new MDLV2000Reader(ResourceLoader.GetAsStream(GetType(), "query_notatomlist.mol")))
+            {
+                var mol = mdlr.Read(CDK.Builder.NewAtomContainer());
+                var sw = new StringWriter();
+                using (var mdlw = new MDLV2000Writer(sw))
+                {
+                    mdlw.Write(mol);
+                }
+                var writtenMol = sw.ToString();
+                Assert.IsTrue(writtenMol.Contains(
+                    "  1 T    3   9   7   8\n" +
+                    "M  ALS   1  3 T F   N   O"));
+            }
+        }
+
+        [TestMethod()]
+        public void RoundTripWithAtomList()
+        {
+            using (var mdlr = new MDLV2000Reader(ResourceLoader.GetAsStream(GetType(), "query_notatomlist.mol")))
+            {
+                var mol = mdlr.Read(CDK.Builder.NewAtomContainer());
+                var sw = new StringWriter();
+                using (var mdlw = new MDLV2000Writer(sw))
+                {
+                    mdlw.Write(mol);
+                }
+                var writtenMol = sw.ToString();
+                Assert.IsTrue(writtenMol.Contains(
+                    "  1 F    3   9   7   8\n" +
+                    "M  ALS   1  3 F F   N   O"));
+            }
+        }
+
+        [TestMethod()]
+        public void RoundTripWithMultipleLegacyAtomLists()
+        {
+            using (var mdlr = new MDLV2000Reader(ResourceLoader.GetAsStream(GetType(), "query_notatomlist.mol")))
+            {
+                var mol = mdlr.Read(CDK.Builder.NewAtomContainer());
+                var sw = new StringWriter();
+                using (var mdlw = new MDLV2000Writer(sw))
+                {
+                    mdlw.Write(mol);
+                }
+                var writtenMol = sw.ToString();
+                Assert.IsTrue(writtenMol.Contains(
+                    "  4 F    2   8   7\n" +
+                    "  5 F    2   7   8\n" +
+                    "  6 F    2   7   8\n" +
+                    "M  ALS   4  2 F O   N   \n" +
+                    "M  ALS   5  2 F N   O   \n" +
+                    "M  ALS   6  2 F N   O"));
+            }
+        }
+
+        [TestMethod()]
+        public void DataSgroupRoundTrip()
+        {
+            const string path = "NCDK.data.MDL.hbr_acoh_mix.mol";
+            using (var mdlr = new MDLV2000Reader(ResourceLoader.GetAsStream(path)))
+            {
+                var mol = mdlr.Read(CDK.Builder.NewAtomContainer());
+                var sw = new StringWriter();
+                using (var writer = new MDLV2000Writer(sw))
+                {
+                    writer.Write(mol);
+                }
+                var output = sw.ToString();
+                Assert.IsTrue(output.Contains("M  SDT   3 WEIGHT_PERCENT                N %", StringComparison.Ordinal));
+                Assert.IsTrue(output.Contains("M  SED   3 33%", StringComparison.Ordinal));
             }
         }
     }

@@ -59,7 +59,7 @@ namespace NCDK.IO.Formats
         /// <inheritdoc/>
         public override bool Matches(int lineNumber, string line)
         {
-            if (line.Contains("MOPAC2002"))
+            if (line.Contains("MOPAC2002", StringComparison.Ordinal))
             {
                 return true;
             }

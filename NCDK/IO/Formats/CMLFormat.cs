@@ -62,12 +62,12 @@ namespace NCDK.IO.Formats
         /// <inheritdoc/>
         public override bool Matches(int lineNumber, string line)
         {
-            if (line.Contains("http://www.xml-cml.org/schema")
-             || line.Contains("<atom")
-             || line.Contains("<molecule")
-             || line.Contains("<reaction") 
-             || line.Contains("<cml")
-             || line.Contains("<bond") )
+            if (line.Contains("http://www.xml-cml.org/schema", StringComparison.Ordinal)
+             || line.Contains("<atom", StringComparison.Ordinal)
+             || line.Contains("<molecule", StringComparison.Ordinal)
+             || line.Contains("<reaction", StringComparison.Ordinal) 
+             || line.Contains("<cml", StringComparison.Ordinal)
+             || line.Contains("<bond", StringComparison.Ordinal) )
             {
                 return true;
             }

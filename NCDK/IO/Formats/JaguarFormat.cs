@@ -62,7 +62,7 @@ namespace NCDK.IO.Formats
         /// <inheritdoc/>
         public override bool Matches(int lineNumber, string line)
         {
-            if (line.Contains("Jaguar") && line.Contains("Schrodinger"))
+            if (line.Contains("Jaguar", StringComparison.Ordinal) && line.Contains("Schrodinger", StringComparison.Ordinal))
             {
                 return true;
             }

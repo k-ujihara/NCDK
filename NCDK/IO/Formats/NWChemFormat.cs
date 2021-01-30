@@ -62,7 +62,7 @@ namespace NCDK.IO.Formats
         /// <inheritdoc/>
         public override bool Matches(int lineNumber, string line)
         {
-            if (line.Contains("Northwest Computational Chemistry Package"))
+            if (line.Contains("Northwest Computational Chemistry Package", StringComparison.Ordinal))
             {
                 return true;
             }

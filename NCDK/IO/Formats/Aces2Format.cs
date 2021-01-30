@@ -60,7 +60,7 @@ namespace NCDK.IO.Formats
         /// <inheritdoc/>
         public override bool Matches(int lineNumber, string line)
         {
-            if (line.Contains("ACES2"))
+            if (line.Contains("ACES2", StringComparison.Ordinal))
             {
                 return true;
             }

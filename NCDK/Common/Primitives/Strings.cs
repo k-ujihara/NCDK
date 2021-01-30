@@ -46,7 +46,7 @@ namespace NCDK.Common.Primitives
                 else if (s.StartsWith("-0", StringComparison.Ordinal))
                     s = "-" + s.Substring(2);
             }
-            if (!s.Contains("."))
+            if (!s.Contains(".", StringComparison.Ordinal))
                 return s;
             while (s.EndsWithChar('0'))
                 s = s.Substring(0, s.Length - 1);

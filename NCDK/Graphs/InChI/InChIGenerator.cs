@@ -79,7 +79,7 @@ namespace NCDK.Graphs.InChI
             {
                 Input = new NInChIInputAdapter(options);
                 GenerateInChIFromCDKAtomContainer(atomContainer, ignoreAromaticBonds);
-                auxNone = Input.Options != null && Input.Options.Contains("AuxNone");
+                auxNone = Input.Options != null && Input.Options.Contains("AuxNone", StringComparison.Ordinal);
             }
             catch (NInchiException jie)
             {
@@ -101,7 +101,7 @@ namespace NCDK.Graphs.InChI
             {
                 Input = new NInChIInputAdapter(new List<InChIOption>(options));
                 GenerateInChIFromCDKAtomContainer(atomContainer, ignoreAromaticBonds);
-                auxNone = Input.Options != null && Input.Options.Contains("AuxNone");
+                auxNone = Input.Options != null && Input.Options.Contains("AuxNone", StringComparison.Ordinal);
             }
             catch (NInchiException jie)
             {

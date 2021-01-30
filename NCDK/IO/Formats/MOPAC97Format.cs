@@ -57,7 +57,7 @@ namespace NCDK.IO.Formats
         public override string WriterClassName => null;
 
         /// <inheritdoc/>
-        public override bool Matches(int lineNumber, string line) => line.Contains("MOPAC  97.");
+        public override bool Matches(int lineNumber, string line) => line.Contains("MOPAC  97.", StringComparison.Ordinal);
 
         /// <inheritdoc/>
         public override bool IsXmlBased => false;

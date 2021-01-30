@@ -60,7 +60,7 @@ namespace NCDK.IO.Formats
         /// <inheritdoc/>
         public override bool Matches(int lineNumber, string line)
         {
-            if (line.Contains("Gaussian 94"))
+            if (line.Contains("Gaussian 94", StringComparison.Ordinal))
             {
                 return true;
             }

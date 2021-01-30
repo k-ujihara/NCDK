@@ -60,7 +60,7 @@ namespace NCDK.IO.Formats
         /// <inheritdoc/>
         public override bool Matches(int lineNumber, string line)
         {
-            if (lineNumber == 4 && (line.Contains("v3000")|| line.Contains("V3000")))
+            if (lineNumber == 4 && (line.Contains("v3000", StringComparison.Ordinal) || line.Contains("V3000", StringComparison.Ordinal)))
             {
                 return true;
             }

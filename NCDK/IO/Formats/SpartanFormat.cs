@@ -60,7 +60,7 @@ namespace NCDK.IO.Formats
         /// <inheritdoc/>
         public override bool Matches(int lineNumber, string line)
         {
-            if (line.Contains("Spartan") && line.Contains("Quantum Mechanics Program"))
+            if (line.Contains("Spartan", StringComparison.Ordinal) && line.Contains("Quantum Mechanics Program", StringComparison.Ordinal))
             {
                 return true;
             }

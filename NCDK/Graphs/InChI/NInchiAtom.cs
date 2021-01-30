@@ -161,7 +161,7 @@ namespace NCDK.Graphs.InChI
         private static string ToString(double x)
         {
             var s = x.ToString(NumberFormatInfo.InvariantInfo);
-            return s.Contains(".") ? s : s + ".0";
+            return s.Contains(".", StringComparison.Ordinal) ? s : s + ".0";
         }
 
         /// <summary>

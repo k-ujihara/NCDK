@@ -71,9 +71,9 @@ namespace NCDK.IO.Formats
             int i = 0;
             foreach (var line in lines)
             {
-                if (line.Contains("<PC-Compound") && result == MatchResult.NoMatch)
+                if (line.Contains("<PC-Compound", StringComparison.Ordinal) && result == MatchResult.NoMatch)
                     result = new MatchResult(true, this, i);
-                if (line.Contains("<PC-Compounds"))
+                if (line.Contains("<PC-Compounds", StringComparison.Ordinal))
                     return MatchResult.NoMatch;
                 i++;
             }

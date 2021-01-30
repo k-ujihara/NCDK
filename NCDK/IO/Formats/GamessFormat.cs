@@ -62,7 +62,7 @@ namespace NCDK.IO.Formats
         /// <inheritdoc/>
         public override bool Matches(int lineNumber, string line)
         {
-            if (line.Contains("GAMESS execution script") || line.Contains("GAMESS VERSION"))
+            if (line.Contains("GAMESS execution script", StringComparison.Ordinal) || line.Contains("GAMESS VERSION", StringComparison.Ordinal))
             {
                 return true;
             }

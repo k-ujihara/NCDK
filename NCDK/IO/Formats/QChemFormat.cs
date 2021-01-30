@@ -62,7 +62,7 @@ namespace NCDK.IO.Formats
         /// <inheritdoc/>
         public override bool Matches(int lineNumber, string line)
         {
-            if (line.Contains("Welcome to Q-Chem"))
+            if (line.Contains("Welcome to Q-Chem", StringComparison.Ordinal))
             {
                 return true;
             }

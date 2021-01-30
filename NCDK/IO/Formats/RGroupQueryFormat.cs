@@ -68,7 +68,7 @@ namespace NCDK.IO.Formats
         /// <inheritdoc/>
         public override bool Matches(int lineNumber, string line)
         {
-            if (line.Contains("$RGP"))
+            if (line.Contains("$RGP", StringComparison.Ordinal))
                 return true;
             else
                 return false;

@@ -62,7 +62,7 @@ namespace NCDK.IO.Formats
         /// <inheritdoc/>
         public override bool Matches(int lineNumber, string line)
         {
-            if (line.Contains("<TRIPOS>"))
+            if (line.Contains("<TRIPOS>", StringComparison.Ordinal))
             {
                 return true;
             }

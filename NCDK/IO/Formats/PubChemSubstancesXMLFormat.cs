@@ -69,7 +69,8 @@ namespace NCDK.IO.Formats
         /// <inheritdoc/>
         public override bool Matches(int lineNumber, string line)
         {
-            if (line.Contains("<PC-Substances")) return true;
+            if (line.Contains("<PC-Substances", StringComparison.Ordinal)) 
+                return true;
             return false;
         }
     }

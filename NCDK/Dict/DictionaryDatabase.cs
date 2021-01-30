@@ -68,7 +68,7 @@ namespace NCDK.Dict
         {
             EntryDictionary dictionary;
             // to distinguish between OWL: QSAR & REACT
-            if (type.Contains("_React"))
+            if (type.Contains("_React", StringComparison.Ordinal))
                 databaseLocator += "." + type.Substring(0, type.Length - 6);
             else
                 databaseLocator += "." + type;
