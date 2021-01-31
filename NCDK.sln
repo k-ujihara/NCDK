@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NCDKTests", "NCDKTests\NCDK
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NCDK.Math", "NCDK.Math\NCDK.Math.csproj", "{5923EC1F-F0C2-4E15-8714-C6937D3F39D2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{980FFA5A-353C-41B2-A5F2-4CDDE20FC45D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{5923EC1F-F0C2-4E15-8714-C6937D3F39D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5923EC1F-F0C2-4E15-8714-C6937D3F39D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5923EC1F-F0C2-4E15-8714-C6937D3F39D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{980FFA5A-353C-41B2-A5F2-4CDDE20FC45D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{980FFA5A-353C-41B2-A5F2-4CDDE20FC45D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{980FFA5A-353C-41B2-A5F2-4CDDE20FC45D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{980FFA5A-353C-41B2-A5F2-4CDDE20FC45D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

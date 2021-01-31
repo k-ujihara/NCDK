@@ -361,5 +361,31 @@ namespace NCDK.IO
                     Assert.IsTrue(mol.IndexOf("Bioclip", StringComparison.Ordinal) >= 0);
             }
         }
+
+        [TestMethod()]
+        public void OptionallyTruncateLongProperties()
+        {
+            var sw = new StringWriter();
+            using (var sdfw = new SDFWriter(sw))
+            {
+                sdfw.IOSettings[MDLV2000Writer.OptWriteDefaultProperties].Setting = "false";
+                sdfw.IOSettings[SDFWriter.OptTruncateLongData].Setting = "true";
+                IAtomContainer mol = TestMoleculeFactory.Make123Triazole();
+                mol.SetProperty("MyLongField",
+                                "ThisIsAVeryLongFieldThatShouldBeWrapped" +
+                                "ThisIsAVeryLongFieldThatShouldBeWrapped" +
+                                "ThisIsAVeryLongFieldThatShouldBeWrapped" +
+                                "ThisIsAVeryLongFieldThatShouldBeWrapped" +
+                                "ThisIsAVeryLongFieldThatShouldBeWrapped" +
+                                "ThisIsAVeryLongFieldThatShouldBeWrapped" +
+                                "ThisIsAVeryLongFieldThatShouldBeWrapped" +
+                                "ThisIsAVeryLongFieldThatShouldBeWrapped" +
+                                "ThisIsAVeryLongFieldThatShouldBeWrapped" +
+                                "ThisIsAVeryLongFieldThatShouldBeWrapped");
+                sdfw.Write(mol);
+            }
+            var sdf = sw.ToString();
+            Assert.IsTrue(sdf.Contains("ThisIsAVeryLongFieldThatShouldBeWrappedThisIsAVeryLongFieldThatShouldBeWrappedThisIsAVeryLongFieldThatShouldBeWrappedThisIsAVeryLongFieldThatShouldBeWrappedThisIsAVeryLongFieldThatShouldBeWrappedThisI\n"));
+        }
     }
 }

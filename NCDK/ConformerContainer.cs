@@ -47,7 +47,7 @@ namespace NCDK
     public class ConformerContainer : IList<IAtomContainer>
     {
         private IAtomContainer atomContainer = null;
-        private IList<Vector3[]> coordinates;
+        private readonly IList<Vector3[]> coordinates;
 
         private static Vector3[] GetCoordinateList(IAtomContainer atomContainer)
         {
@@ -206,13 +206,9 @@ namespace NCDK
                 Title = atomContainer.Title;
             }
             if (Title == null)
-            {
                 throw new ArgumentException("At least one of the input molecules does not have a title");
-            }
             if (!Title.Equals(atomContainer.Title, StringComparison.Ordinal))
-                throw new ArgumentException("The input molecules does not have the same title ('" + Title
-                        + "') as the other conformers ('" + atomContainer.Title + "')");
-
+                throw new ArgumentException($"The input molecules does not have the same title ('{Title}') as the other conformers ('{atomContainer.Title}')");
             if (atomContainer.Atoms.Count != this.atomContainer.Atoms.Count)
                 throw new ArgumentException("Doesn't have the same number of atoms as the rest of the conformers");
 

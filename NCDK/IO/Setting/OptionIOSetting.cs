@@ -28,7 +28,7 @@ namespace NCDK.IO.Setting
     // @author Egon Willighagen <egonw@sci.kun.nl>
     public class OptionIOSetting : IOSetting
     {
-        private List<string> settings;
+        private IList<string> settings;
 
         /// <summary>
         /// OptionIOSetting is IOSetting for which the value must be in the list of possible options.
@@ -38,7 +38,7 @@ namespace NCDK.IO.Setting
         /// <param name="question"></param>
         /// <param name="settings"></param>
         /// <param name="defaultSetting"></param>
-        public OptionIOSetting(string name, Importance level, string question, List<string> settings, string defaultSetting)
+        public OptionIOSetting(string name, Importance level, string question, IList<string> settings, string defaultSetting)
             : base(name, level, question, defaultSetting)
         {
             this.settings = settings;
@@ -61,7 +61,7 @@ namespace NCDK.IO.Setting
             }
             else
             {
-                throw new CDKException("Setting " + setting + " is not allowed.");
+                throw new CDKException($"Setting {setting} is not allowed.");
             }
         }
 
@@ -79,7 +79,7 @@ namespace NCDK.IO.Setting
             }
             else
             {
-                throw new CDKException("Setting " + setting + " does not exist.");
+                throw new CDKException($"Setting {setting} does not exist.");
             }
         }
 
@@ -87,7 +87,7 @@ namespace NCDK.IO.Setting
         /// Returns a Vector of Strings containing all possible options.
         /// </summary>
         /// <returns></returns>
-        public List<string> GetOptions()
+        public IList<string> GetOptions()
         {
             return settings;
         }

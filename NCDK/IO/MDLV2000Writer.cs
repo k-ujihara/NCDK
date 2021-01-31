@@ -334,8 +334,8 @@ namespace NCDK.IO
             var atomstereo = new Dictionary<IAtom, ITetrahedralChirality>();
             var atomindex = new Dictionary<IAtom, int>();
             foreach (var element in container.StereoElements)
-                if (element is ITetrahedralChirality)
-                    atomstereo[((ITetrahedralChirality)element).ChiralAtom] = (ITetrahedralChirality)element;
+                if (element is ITetrahedralChirality chirality)
+                    atomstereo[chirality.ChiralAtom] = chirality;
             foreach (var atom in container.Atoms)
                 atomindex[atom] = atomindex.Count;
 
@@ -956,11 +956,11 @@ namespace NCDK.IO
                 return (int)amap;
             else
             {
-                if (amap is string)
+                if (amap is string str)
                 {
                     try
                     {
-                        return int.Parse((string)amap);
+                        return int.Parse(str);
                     }
                     catch (Exception)
                     {
@@ -1331,7 +1331,7 @@ namespace NCDK.IO
             writer.Write(" ");
             writer.Write(FormatMDLInt(entry.Value.Value, WIDTH));
 
-            i = i + 1;
+            i += 1;
             if (i < NN8 && iterator.MoveNext())
                 WriteRadicalPattern(iterator, i);
         }

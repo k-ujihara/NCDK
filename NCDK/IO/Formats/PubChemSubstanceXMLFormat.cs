@@ -17,6 +17,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Common.Primitives;
 using NCDK.Tools;
 using System.Collections.Generic;
 
@@ -74,9 +75,9 @@ namespace NCDK.IO.Formats
             int i = 0;
             foreach (var line in lines)
             {
-                if (line.Contains("<PC-Substance", StringComparison.Ordinal) && result == MatchResult.NoMatch)
+                if (line.ContainsOrdinal("<PC-Substance") && result == MatchResult.NoMatch)
                     result = new MatchResult(true, this, i);
-                if (line.Contains("<PC-Substances", StringComparison.Ordinal))
+                if (line.ContainsOrdinal("<PC-Substances"))
                     return MatchResult.NoMatch;
                 i++;
             }

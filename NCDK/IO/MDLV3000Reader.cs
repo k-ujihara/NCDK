@@ -47,8 +47,8 @@ namespace NCDK.IO
     {
         TextReader input = null;
 
-        private Regex keyValueTuple;
-        private Regex keyValueTuple2;
+        private readonly Regex keyValueTuple;
+        private readonly Regex keyValueTuple2;
 
         private int lineNumber;
 
@@ -190,7 +190,7 @@ namespace NCDK.IO
             if (line3.Length > 0)
                 readData.SetProperty(CDKPropertyName.Comment, line3);
             var line4 = ReadLine();
-            if (!line4.Contains("3000", StringComparison.Ordinal))
+            if (!line4.ContainsOrdinal("3000"))
             {
                 throw new CDKException("This file is not a MDL V3000 molfile.");
             }
@@ -207,7 +207,7 @@ namespace NCDK.IO
             var isotopeFactory = CDK.IsotopeFactory;
 
             int RGroupCounter = 1;
-            int Rnumber = 0;
+            int Rnumber;
             string[] rGroup = null;
 
             bool foundEND = false;
@@ -269,20 +269,17 @@ namespace NCDK.IO
                     {
                         Debug.WriteLine($"Atom {element} is not an regular element. Creating a PseudoAtom.");
                         //check if the element is R
-                        var rGroupNumStr = element.Substring(1);
+                        try
                         {
-                            try
-                            {
-                                Rnumber = int.Parse(rGroup[(rGroup.Length - 1)], NumberFormatInfo.InvariantInfo);
-                                RGroupCounter = Rnumber;
-                            }
-                            catch (Exception)
-                            {
-                                Rnumber = RGroupCounter;
-                                RGroupCounter++;
-                            }
-                            element = "R" + Rnumber;
+                            Rnumber = int.Parse(rGroup[(rGroup.Length - 1)], NumberFormatInfo.InvariantInfo);
+                            RGroupCounter = Rnumber;
                         }
+                        catch (Exception)
+                        {
+                            Rnumber = RGroupCounter;
+                            RGroupCounter++;
+                        }
+                        element = "R" + Rnumber;
                         atom = readData.Builder.NewPseudoAtom(element);
                     }
                     else

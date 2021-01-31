@@ -33,8 +33,7 @@ namespace NCDK.Formula
     [TestClass()]
     public class MolecularFormulaCheckerTest : CDKTestCase
     {
-        private static readonly IChemObjectBuilder builder = CDK.Builder;
-        private IsotopeFactory ifac;
+        private readonly IsotopeFactory ifac;
 
         public MolecularFormulaCheckerTest()
             : base()
@@ -87,16 +86,14 @@ namespace NCDK.Formula
             formula.Add(ifac.GetMajorIsotope("C"), 1);
             formula.Add(ifac.GetMajorIsotope("H"), 100);
 
-            List<IRule> rules = new List<IRule>
+            var rules = new List<IRule>
             {
                 new MMElementRule()
             };
 
-            MolecularFormulaChecker MFChecker = new MolecularFormulaChecker(rules);
-
-            IMolecularFormula formulaWith = MFChecker.IsValid(formula);
-
-            Assert.AreEqual(0.0, formulaWith.GetProperty<double>((new MMElementRule()).GetType().ToString()));
+            var MFChecker = new MolecularFormulaChecker(rules);
+            var formulaWith = MFChecker.IsValid(formula);
+            Assert.AreEqual(0.0, formulaWith.GetProperty<double>(new MMElementRule().GetType().ToString()), 0.01);
         }
 
         [TestMethod()]
@@ -136,8 +133,8 @@ namespace NCDK.Formula
 
             IMolecularFormula formulaWith = MFChecker.IsValid(formula);
 
-            Assert.AreEqual(0.0, formulaWith.GetProperty<double>((new MMElementRule()).GetType().ToString()));
-            Assert.AreEqual(1.0, formulaWith.GetProperty<double>((new ChargeRule()).GetType().ToString()));
+            Assert.AreEqual(0.0, formulaWith.GetProperty<double>((new MMElementRule()).GetType().ToString()), 0.01);
+            Assert.AreEqual(1.0, formulaWith.GetProperty<double>((new ChargeRule()).GetType().ToString()), 0.01);
         }
 
         [TestMethod()]
@@ -177,9 +174,8 @@ namespace NCDK.Formula
 
             IMolecularFormula formulaWith = MFChecker.IsValid(formula);
 
-            Assert.AreEqual(1.0, formulaWith.GetProperty<double>((new MMElementRule()).GetType().ToString()));
-            Assert.AreEqual(1.0, formulaWith.GetProperty<double>((new ChargeRule()).GetType().ToString()));
+            Assert.AreEqual(1.0, formulaWith.GetProperty<double>((new MMElementRule()).GetType().ToString()), 0.01);
+            Assert.AreEqual(1.0, formulaWith.GetProperty<double>((new ChargeRule()).GetType().ToString()), 0.01);
         }
     }
 }
-

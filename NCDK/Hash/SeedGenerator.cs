@@ -33,14 +33,15 @@ namespace NCDK.Hash
     /// The seed values should be used with another <see cref="IAtomHashGenerator"/> which
     /// will differentiate atoms experiencing different environments, such as, <see cref="BasicAtomHashGenerator"/>.
     /// </summary>
-    /// <example><code>
+    /// <example>
+    /// <code>
     /// // create a new seed generator
     /// AtomEncoder encoder   = ConjugatedAtomEncoder.Create(ATOMIC_NUMBER, MASS_NUMBER);
     /// AtomHashGenerator generator = new SeedGenerator(encoder);
     ///
     /// // generate six hash codes for each atom of benzene
-    /// IAtomContainer benzene   = MoleculeFactory.MakeBenzene();
-    /// long[]         hashCodes = generator.Generate(benzene);
+    /// var benzene = MoleculeFactory.MakeBenzene();
+    /// var hashCodes = generator.Generate(benzene);
     /// </code></example>
     /// <seealso cref="BasicAtomHashGenerator"/>
     /// <seealso cref="ConjugatedAtomEncoder"/>

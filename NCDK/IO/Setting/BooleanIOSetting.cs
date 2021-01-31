@@ -32,18 +32,13 @@ namespace NCDK.IO.Setting
             : base(name, level, question, defaultSetting)
         { }
 
-        private string setting;
-
         /// <summary>
         /// Sets the setting for a certain question. The setting
         /// is a boolean, and it accepts only "true" and "false".
         /// </summary>
         public override string Setting
         {
-            get
-            {
-                return setting;
-            }
+            get => base.Setting;
 
             set
             {
@@ -51,17 +46,17 @@ namespace NCDK.IO.Setting
                 {
                     case "true":
                     case "false":
-                        this.setting = value;
+                        base.Setting = value;
                         break;
                     case "True":
                     case "yes":
                     case "y":
-                        this.setting = "true";
+                        base.Setting = "true";
                         break;
                     case "False":
                     case "no":
                     case "n":
-                        this.setting = "false";
+                        base.Setting = "false";
                         break;
                     default:
                         throw new CDKException($"Setting {value} is not a boolean.");
@@ -69,6 +64,6 @@ namespace NCDK.IO.Setting
             }
         }
 
-        public bool IsSet => string.Equals(setting, "true", StringComparison.Ordinal);
+        public bool IsSet => string.Equals(this.Setting, "true", StringComparison.Ordinal);
     }
 }

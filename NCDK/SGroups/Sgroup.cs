@@ -59,9 +59,9 @@ namespace NCDK.Sgroups
         public Sgroup()
         {
             this.attributes = new SortedDictionary<SgroupKey, object>();
-            Atoms = new HashSet<IAtom>();
-            Bonds = new HashSet<IBond>();
-            Parents = new HashSet<Sgroup>();
+            Atoms = new SortedSet<IAtom>();
+            Bonds = new SortedSet<IBond>();
+            Parents = new SortedSet<Sgroup>();
             Type = SgroupType.CtabGeneric;
         }
 

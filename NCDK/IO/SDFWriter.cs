@@ -46,11 +46,13 @@ namespace NCDK.IO
     {
         public const string OptAlwaysV3000 = "writeV3000";
         public const string OptWriteData = "writeProperties";
+        public const string OptTruncateLongData = "TruncateLongData";
 
         private TextWriter writer;
         private BooleanIOSetting paramWriteData;
         private BooleanIOSetting paramWriteV3000;
-        private ICollection<string> propertiesToWrite;
+        private BooleanIOSetting truncateData;
+        private readonly ICollection<string> propertiesToWrite;
 
         /// <summary>
         /// Create an SDfile writer.
@@ -142,29 +144,26 @@ namespace NCDK.IO
         {
             try
             {
-                if (obj is IEnumerableChemObject<IAtomContainer>)
+                switch (obj)
                 {
-                    WriteMoleculeSet((IEnumerableChemObject<IAtomContainer>)obj);
-                    return;
-                }
-                else if (obj is IChemFile)
-                {
-                    WriteChemFile((IChemFile)obj);
-                    return;
-                }
-                else if (obj is IChemModel)
-                {
-                    IChemFile file = obj.Builder.NewChemFile();
-                    IChemSequence sequence = obj.Builder.NewChemSequence();
-                    sequence.Add((IChemModel)obj);
-                    file.Add(sequence);
-                    WriteChemFile((IChemFile)file);
-                    return;
-                }
-                else if (obj is IAtomContainer)
-                {
-                    WriteMolecule((IAtomContainer)obj);
-                    return;
+                    case IEnumerableChemObject<IAtomContainer> o:
+                        WriteMoleculeSet(o);
+                        return;
+                    case IChemFile file:
+                        WriteChemFile(file);
+                        return;
+                    case IChemModel model:
+                        {
+                            var file = obj.Builder.NewChemFile();
+                            var sequence = obj.Builder.NewChemSequence();
+                            sequence.Add(model);
+                            file.Add(sequence);
+                            WriteChemFile(file);
+                        }
+                        return;
+                    case IAtomContainer mol:
+                        WriteMolecule(mol);
+                        return;
                 }
             }
             catch (Exception ex)
@@ -236,7 +235,7 @@ namespace NCDK.IO
                                 if (writeAllProperties || propertiesToWrite.Contains(headerKey))
                                 {
                                     string cleanHeaderKey = ReplaceInvalidHeaderChars(headerKey);
-                                    if (!cleanHeaderKey.Equals(headerKey, StringComparison.Ordinal))
+                                    if (!cleanHeaderKey.Equals(headerKey))
                                         Trace.TraceInformation("Replaced characters in SDfile data header: ", headerKey, " written as: ", cleanHeaderKey);
 
                                     Object val = sdFields[propKey];
@@ -246,7 +245,24 @@ namespace NCDK.IO
                                         writer.Write("> <" + cleanHeaderKey + ">");
                                         writer.Write('\n');
                                         if (val != null)
-                                            writer.Write(val.ToString());
+                                        {
+                                            var valStr = val.ToString();
+                                            int maxDataLen = 200; // set in the spec
+                                            if (truncateData.IsSet)
+                                            {
+                                                foreach (var line in valStr.Split('\n'))
+                                                {
+                                                    if (line.Length > maxDataLen)
+                                                        writer.Write(line.Substring(0, maxDataLen));
+                                                    else
+                                                        writer.Write(valStr);
+                                                }
+                                            }
+                                            else
+                                            {
+                                                writer.Write(valStr);
+                                            }
+                                        }
                                         writer.Write('\n');
                                         writer.Write('\n');
                                     }
@@ -296,7 +312,7 @@ namespace NCDK.IO
         /// A list of properties used by CDK algorithms which must never be
         /// serialized into the SD file format.
         /// </summary>
-        private static List<string> cdkInternalProperties = new List<string>()
+        private static readonly List<string> cdkInternalProperties = new List<string>(new string[]
             {
                 InvPair.CanonicalLabelPropertyKey,
                 InvPair.InvariancePairPropertyKey,
@@ -305,7 +321,7 @@ namespace NCDK.IO
                 CDKPropertyName.Remark,
                 CDKPropertyName.Title,
                 // I think there are a few more, but cannot find them right now
-            };
+            });
 
         private static bool IsCDKInternalProperty(object propKey)
         {
@@ -320,6 +336,8 @@ namespace NCDK.IO
                 "Should molecule properties be written as non-structural data", "true"));
             paramWriteV3000 = Add(new BooleanIOSetting(OptAlwaysV3000, Importance.Low, 
                 "Write all records as V3000", "false"));
+            truncateData = Add(new BooleanIOSetting(OptTruncateLongData, Importance.Low,
+                "Truncate long data files >200 characters", "false"));
             AddSettings(new MDLV2000Writer().IOSettings.Settings);
             AddSettings(new MDLV3000Writer().IOSettings.Settings);
         }

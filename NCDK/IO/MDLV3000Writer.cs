@@ -231,8 +231,12 @@ namespace NCDK.IO
                     case 1: // 2
                         rad = MDLV2000Writer.SpinMultiplicity.Monovalent.Value;
                         break;
-                    case 2: // 1 or 3? Information loss as to which
-                        rad = MDLV2000Writer.SpinMultiplicity.DivalentSinglet.Value;
+                    case 2:
+                        var spinMultiplicity = atom.GetProperty<MDLV2000Writer.SpinMultiplicity>(CDKPropertyName.SpinMultiplicity);
+                        if (spinMultiplicity != null)
+                            rad = spinMultiplicity.Value;
+                        else // 1 or 3? Information loss as to which
+                            rad = MDLV2000Writer.SpinMultiplicity.DivalentSinglet.Value;
                         break;
                 }
 
@@ -341,8 +345,8 @@ namespace NCDK.IO
         /// <returns>atom symbol</returns>
         private static string GetSymbol(IAtom atom, int elem)
         {
-            if (atom is IPseudoAtom)
-                return ((IPseudoAtom)atom).Label;
+            if (atom is IPseudoAtom atom1)
+                return atom1.Label;
             string symbol = ChemicalElement.Of(elem).Symbol;
             if (symbol.Length == 0)
                 symbol = atom.Symbol;
@@ -546,7 +550,7 @@ namespace NCDK.IO
             // when reading (we do).
             var a_sgroups = new List<Sgroup>(
                 sgroups
-                .Where(g => g.Type != SgroupType.ExtMulticenter)    // remove non-ctab Sgroups
+                .Where(sgroup => sgroup.Type.IsCtabStandard())    // remove non-ctab Sgroups
                 .OrderBy(g => g, aSgroupComparator));
             // going to reorder but keep the originals untouched
             // don't use  sgroups.Sort(aSgroupComparator) because Sort method is not stable sort but OrderBy is stable.
@@ -663,7 +667,7 @@ namespace NCDK.IO
 
             int numSgroups = 0;
             foreach (var sgroup in sgroups)
-                if (sgroup.Type != SgroupType.ExtMulticenter)
+                if (sgroup.Type.IsCtabStandard())
                     numSgroups++;
 
             writer.Write("BEGIN CTAB\n");
@@ -690,8 +694,8 @@ namespace NCDK.IO
             // index stereo elements for lookup
             foreach (var se in mol.StereoElements)
             {
-                if (se is ITetrahedralChirality)
-                    atomToStereo[((ITetrahedralChirality)se).ChiralAtom] = (ITetrahedralChirality)se;
+                if (se is ITetrahedralChirality chirality)
+                    atomToStereo[chirality.ChiralAtom] = chirality;
             }
 
             WriteAtomBlock(mol, atoms, idxs, atomToStereo);
@@ -711,8 +715,8 @@ namespace NCDK.IO
         {
             try
             {
-                if (obj is IAtomContainer)
-                    WriteMol((IAtomContainer)obj);
+                if (obj is IAtomContainer container)
+                    WriteMol(container);
                 else
                     throw new CDKException($"Unsupported ChemObject {obj.GetType()}");
             }

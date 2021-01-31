@@ -41,7 +41,7 @@ namespace NCDK.Common.Collections
 
     internal class WrappedSet<T> : ISet<T>
     {
-        ICollection<T> collection;
+        readonly ICollection<T> collection;
 
         public WrappedSet(ICollection<T> collection)
         {

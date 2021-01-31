@@ -28,6 +28,7 @@ using System.Collections.Generic;
 
 namespace NCDK.Smiles
 {
+    [TestClass()]
     public class CxSmilesGeneratorTest
     {
         private readonly IChemObjectBuilder builder = CDK.Builder;
@@ -35,7 +36,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void EmptyCXSMILES()
         {
-            CxSmilesState state = new CxSmilesState();
+            var state = new CxSmilesState();
             Assert.AreEqual("", CxSmilesGenerator.Generate(state, SmiFlavors.CxSmiles, Array.Empty<int>(), Array.Empty<int>()));
         }
 
@@ -51,7 +52,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void Coords2d()
         {
-            CxSmilesState state = new CxSmilesState
+            var state = new CxSmilesState
             {
                 atomCoords = new List<double[]>
                 {
@@ -66,7 +67,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void Sgroups()
         {
-            CxSmilesState state = new CxSmilesState
+            var state = new CxSmilesState
             {
                 mysgroups = new List<CxSmilesState.CxSgroup>(1)
                 {
@@ -80,7 +81,7 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void Radicals()
         {
-            CxSmilesState state = new CxSmilesState
+            var state = new CxSmilesState
             {
                 atomRads = new SortedDictionary<int, CxSmilesState.Radical>
                 {
@@ -102,8 +103,8 @@ namespace NCDK.Smiles
             using (var ins = GetType().Assembly.GetManifestResourceStream(GetType(), "CHEBI_53695.mol"))
             using (var mdlr = new MDLV2000Reader(ins))
             {
-                IAtomContainer mol = mdlr.Read(CDK.Builder.NewAtomContainer());
-                SmilesGenerator smigen = new SmilesGenerator(SmiFlavors.CxSmiles | SmiFlavors.AtomicMassStrict);
+                var mol = mdlr.Read(CDK.Builder.NewAtomContainer());
+                var smigen = new SmilesGenerator(SmiFlavors.CxSmiles | SmiFlavors.AtomicMassStrict);
                 Assert.AreEqual("C(C(=O)OC)(C*)*C(C(C1=C(C(=C(C(=C1[2H])[2H])[2H])[2H])[2H])(*)[2H])([2H])[2H] |Sg:n:0,1,2,3,4,5:n:ht,Sg:n:8,9,10,11,12,13,14,15,16,17,18,19,20,22,23,24:m:ht|", smigen.Create(mol));
             }
         }
@@ -111,10 +112,10 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void Chembl367774()
         {
-            using (MDLV2000Reader mdlr = new MDLV2000Reader(GetType().Assembly.GetManifestResourceStream(GetType(), "CHEMBL367774.mol")))
+            using (var mdlr = new MDLV2000Reader(GetType().Assembly.GetManifestResourceStream(GetType(), "CHEMBL367774.mol")))
             {
-                IAtomContainer container = mdlr.Read(builder.NewAtomContainer());
-                SmilesGenerator smigen = new SmilesGenerator(SmiFlavors.CxSmiles);
+                var container = mdlr.Read(builder.NewAtomContainer());
+                var smigen = new SmilesGenerator(SmiFlavors.CxSmiles);
                 Assert.AreEqual("OC(=O)C1=CC(F)=CC=2NC(=NC12)C3=CC=C(C=C3F)C4=CC=CC=C4", smigen.Create(container));
             }
         }
@@ -124,7 +125,7 @@ namespace NCDK.Smiles
         {
             var builder = CDK.Builder;
 
-            IAtomContainer mola = builder.NewAtomContainer();
+            var mola = builder.NewAtomContainer();
             mola.Atoms.Add(builder.NewAtom("CH3"));
             mola.Atoms.Add(builder.NewAtom("CH2"));
             mola.Atoms.Add(builder.NewAtom("CH2"));
@@ -140,9 +141,9 @@ namespace NCDK.Smiles
             mola.AddBond(mola.Atoms[0], mola.Atoms[5], BondOrder.Single);
             mola.AddSingleElectronTo(mola.Atoms[1]);
 
-            SmilesParser smipar = new SmilesParser(builder);
+            var smipar = new SmilesParser(builder);
             var molb = smipar.ParseSmiles("CC(CCC[CH2])C |^1:5|");
-            SmilesGenerator smigen = new SmilesGenerator(SmiFlavors.Canonical | SmiFlavors.CxRadical);
+            var smigen = new SmilesGenerator(SmiFlavors.Canonical | SmiFlavors.CxRadical);
             Assert.AreEqual(smigen.Create(molb), smigen.Create(mola));
         }
 

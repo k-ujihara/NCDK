@@ -169,10 +169,12 @@ namespace NCDK.Smiles
         /// </summary>
         CxLigandOrder = 0x200000,
 
+        _AtomAtomMapRenumber = 0x2000000,
+
         /// <summary>
         /// Renumber AtomAtomMaps during canonical generation
         /// </summary>
-        AtomAtomMapRenumber = Canonical | AtomAtomMap | 0x2000000,
+        AtomAtomMapRenumber = Canonical | AtomAtomMap | _AtomAtomMapRenumber,
 
         /// <summary>
         /// Output data Sgroups.

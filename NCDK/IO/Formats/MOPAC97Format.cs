@@ -17,6 +17,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Common.Primitives;
 using NCDK.Tools;
 using System.Collections.Generic;
 
@@ -57,7 +58,7 @@ namespace NCDK.IO.Formats
         public override string WriterClassName => null;
 
         /// <inheritdoc/>
-        public override bool Matches(int lineNumber, string line) => line.Contains("MOPAC  97.", StringComparison.Ordinal);
+        public override bool Matches(int lineNumber, string line) => line.ContainsOrdinal("MOPAC  97.");
 
         /// <inheritdoc/>
         public override bool IsXmlBased => false;
