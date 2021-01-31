@@ -166,7 +166,7 @@ namespace NCDK.IO
                 smigen.Flavor = SmiFlavors.InChILabelling;
                 smigen.Write(mol);
             }
-            Assert.IsFalse(wtr.ToString().ContainsOrdinal("C=1C=CC=CC1"));
+            Assert.IsTrue(wtr.ToString().ContainsOrdinal("C=1C=CC=CC1"));
         }
     }
 }

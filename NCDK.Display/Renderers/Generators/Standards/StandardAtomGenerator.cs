@@ -152,7 +152,15 @@ namespace NCDK.Renderers.Generators.Standards
         /// <returns>the atom symbol</returns>
         public AtomSymbol GeneratePseudoSymbol(string label, HydrogenPosition position, RendererModel model)
         {
-            var stylisedFont = font.DeriveFont(model.GetPseudoFontStyle());
+            Typeface stylisedFont;
+            if (model != null)
+            {
+                stylisedFont = font.DeriveFont(model.GetPseudoFontStyle());
+            }
+            else
+            {
+                stylisedFont = font;
+            }
             var outlines = new List<TextOutline>(3);
 
             int beg = 0;
