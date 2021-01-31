@@ -747,6 +747,9 @@ namespace NCDK.Stereo
                 if (HasUnspecifiedParity(focus))
                     return null;
 
+                if (container.GetConnectedBonds(focus).Count() != 2)
+                    return null;
+
                 var terminals = ExtendedTetrahedral.FindTerminalAtoms(container, focus);
 
                 int t0 = container.Atoms.IndexOf(terminals[0]);
@@ -773,6 +776,8 @@ namespace NCDK.Stereo
                         continue;
                     if (IsUnspecified(bond))
                         return null;
+                    if (n == 2) 
+                        return null;
                     neighbors[n] = container.Atoms[w];
                     elevation[n] = ElevationOf(terminals[0], bond);
                     n++;
@@ -786,6 +791,8 @@ namespace NCDK.Stereo
                     if (bond.Order != BondOrder.Single)
                         continue;
                     if (IsUnspecified(bond))
+                        return null;
+                    if (n == 4) 
                         return null;
                     neighbors[n] = container.Atoms[w];
                     elevation[n] = ElevationOf(terminals[1], bond);

@@ -169,11 +169,7 @@ namespace NCDK.IO
             using (var reader = new MDLV3000Reader(ResourceLoader.GetAsStream(GetType(), "v3000Query.mol")))
             {
                 var container = reader.Read(CDK.Builder.NewAtomContainer());
-                foreach (var bond in container.Bonds)
-                {
-                    Assert.AreNotEqual(BondOrder.Unset, bond.Order);
-                }
-                Assert.AreEqual(BondOrder.Unset, container.Bonds[4]);
+                Assert.AreEqual(BondOrder.Unset, container.Bonds[4].Order);
             }
         }
     }

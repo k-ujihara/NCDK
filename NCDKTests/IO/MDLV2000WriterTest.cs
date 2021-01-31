@@ -1034,25 +1034,27 @@ namespace NCDK.IO
         [TestMethod()]
         public void RoundTripWithAtomList()
         {
-            using (var mdlr = new MDLV2000Reader(ResourceLoader.GetAsStream(GetType(), "query_notatomlist.mol")))
+            using (var mdlr = new MDLV2000Reader(ResourceLoader.GetAsStream(GetType(), "query_atomlist.mol")))
             {
                 var mol = mdlr.Read(CDK.Builder.NewAtomContainer());
-                var sw = new StringWriter();
-                using (var mdlw = new MDLV2000Writer(sw))
+                using (var sw = new StringWriter())
                 {
-                    mdlw.Write(mol);
+                    using (var mdlw = new MDLV2000Writer(sw))
+                    {
+                        mdlw.Write(mol);
+                    }
+                    var writtenMol = sw.ToString();
+                    Assert.IsTrue(writtenMol.Contains(
+                        "  1 F    3   9   7   8\n" +
+                        "M  ALS   1  3 F F   N   O"));
                 }
-                var writtenMol = sw.ToString();
-                Assert.IsTrue(writtenMol.Contains(
-                    "  1 F    3   9   7   8\n" +
-                    "M  ALS   1  3 F F   N   O"));
             }
         }
 
         [TestMethod()]
         public void RoundTripWithMultipleLegacyAtomLists()
         {
-            using (var mdlr = new MDLV2000Reader(ResourceLoader.GetAsStream(GetType(), "query_notatomlist.mol")))
+            using (var mdlr = new MDLV2000Reader(ResourceLoader.GetAsStream(GetType(), "query_manylegacyatomlist.mol")))
             {
                 var mol = mdlr.Read(CDK.Builder.NewAtomContainer());
                 var sw = new StringWriter();
@@ -1074,7 +1076,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void DataSgroupRoundTrip()
         {
-            const string path = "NCDK.data.MDL.hbr_acoh_mix.mol";
+            const string path = "NCDK.Data.MDL.hbr_acoh_mix.mol";
             using (var mdlr = new MDLV2000Reader(ResourceLoader.GetAsStream(path)))
             {
                 var mol = mdlr.Read(CDK.Builder.NewAtomContainer());

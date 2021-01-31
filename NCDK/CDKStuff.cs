@@ -46,10 +46,8 @@ namespace NCDK
             {
                 case IReadOnlyList<TSource> list:
                     return list;
-                case IList<TSource> list:
-                    return new ReadOnlyCollection<TSource>(list);
                 default:
-                    return new List<TSource>(source);
+                    return source.ToList();
             }
         }
 
@@ -193,9 +191,9 @@ namespace NCDK
             {
                 if (o == null)
                     return "null";
-                if (o is IChemObject)
+                if (o is IChemObject co)
                 {
-                    return new StringMaker((IChemObject)o, this).ToString();
+                    return new StringMaker(co, this).ToString();
                 }
                 else
                     return o.ToString();
@@ -239,12 +237,10 @@ namespace NCDK
                 : IA
             {
                 private readonly KeyValuePair<object, object> p;
-                private readonly object obj;
 
-                public ADicProperties(KeyValuePair<object, object> p, object obj)
+                public ADicProperties(KeyValuePair<object, object> p)
                 {
                     this.p = p;
-                    this.obj = obj;
                 }
 
                 public string Name => p.Key.ToString();
@@ -257,7 +253,7 @@ namespace NCDK
                 var x = obj.GetType().GetProperties().Select(a => new APropertyInfo(a, obj)).Cast<IA>();
                 if (obj is IChemObject co)
                 {
-                    x = x.Concat(co.GetProperties().Select(a => new ADicProperties(a, obj)));
+                    x = x.Concat(co.GetProperties().Select(a => new ADicProperties(a)));
                 }
                 return x;
             }

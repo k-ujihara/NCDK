@@ -19,6 +19,7 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NCDK.Common.Primitives;
 using NCDK.IO;
 using NCDK.Numerics;
 using NCDK.Smiles;
@@ -892,8 +893,9 @@ namespace NCDK.Graphs.InChI
             }
         }
 
+        [TestCategory("VerySlowTest")]
         [TestMethod()]
-        [Timeout(1500)]
+        [Timeout(10000)]
         public void Timeout()
         {
             var smipar = new SmilesParser(builder);
@@ -903,8 +905,8 @@ namespace NCDK.Graphs.InChI
             var generator = inchiFact.GetInChIGenerator(mol, "W0.01");
             Assert.AreEqual(InChIReturnCode.Error, generator.ReturnStatus);
             Assert.IsTrue(
-                generator.Log.Contains("Time limit exceeded")
-             || generator.Log.Contains("Structure normalization timeout"));
+                generator.Log.ContainsOrdinal("Time limit exceeded")
+             || generator.Log.ContainsOrdinal("Structure normalization timeout"));
         }
 
         /// <summary>

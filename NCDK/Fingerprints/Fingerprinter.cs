@@ -257,14 +257,14 @@ namespace NCDK.Fingerprints
         {
             internal int numPaths = 0;
             private JavaRandom rand = new JavaRandom(0);
-            private BitArray fp;
-            private IAtomContainer mol;
-            private HashSet<IAtom> visited = new HashSet<IAtom>();
+            private readonly BitArray fp;
+            private readonly IAtomContainer mol;
+            private readonly HashSet<IAtom> visited = new HashSet<IAtom>();
             internal List<IAtom> apath = new List<IAtom>();
             internal List<IBond> bpath = new List<IBond>();
             internal readonly int maxDepth;
             private readonly int fpsize;
-            private Dictionary<IAtom, List<IBond>> cache = new Dictionary<IAtom, List<IBond>>();
+            private readonly Dictionary<IAtom, List<IBond>> cache = new Dictionary<IAtom, List<IBond>>();
             public StringBuilder buffer = new StringBuilder();
 
             public State(IAtomContainer mol, BitArray fp, int fpsize, int maxDepth)

@@ -5,7 +5,7 @@ NCDK is .NET port of [the Chemistry Development Project (CDK)](https://github.co
 
 NCDK is covered under LGPL v2.1. The modules are free and open-source and is easily integrated with other open-source or in-house projects.
 
-The current release is based on [CDK 2019-11-27](https://github.com/cdk/cdk/tree/c76443e0a69a4110c6a0fe65704abccce8a435ff) snapshot.
+The current release is based on [CDK 2021-01-31](https://github.com/cdk/cdk/tree/a027f6689a34d9ede3bb9befad2d0f1c5b2bb711) snapshot.
 
 Getting Started
 ---------------
@@ -22,57 +22,6 @@ Most of codes are written in C&#35;. You can learn NCDK from CDK documents, NCDK
 * NCDK.LegacyTests --- Unit test for NCDK.Legacy.
 * MolViewer -- MOL file viewer, which can depict SMILES. It includes WPF control to show molecular/reaction.
 * Documentation -- Sandcastle Help File Builder project.
-
-Chem object contains utility methods for quick access to frequently used functions. The methods' name are called after RDKit. They should work within C&#35; interactive.
-
-```
-    using System;
-    using System.IO;
-    using System.IO.Compression;
-    using System.Linq;
-
-    class Chem_Example
-    {
-        static void Main(string[] args)
-        {
-            var toluene = Chem.MolFromSmiles("Cc1ccccc1");
-            var mol1 = Chem.MolFromFile("Data/input.mol");
-            var stringWithMolData = new StreamReader("Data/input.mol").ReadToEnd();
-            var mol2 = Chem.MolFromMolBlock(stringWithMolData);
-
-            using (var suppl = Chem.SDMolSupplier("Data/5ht3ligs.sdf"))
-            {
-                Console.WriteLine(suppl.Count);
-                foreach (var mol in suppl)
-                {
-                    if (mol == null)
-                        continue;
-                    Console.WriteLine(mol.Atoms.Count);
-                }
-                Console.WriteLine(suppl[0].Atoms.Count);
-            }
-
-            using (var fsuppl = Chem.ForwardSDMolSupplier(new FileStream("Data/5ht3ligs.sdf", FileMode.Open)))
-            {
-                foreach (var mol in fsuppl)
-                {
-                    if (mol == null)
-                        continue;
-                    Console.WriteLine(mol.Atoms.Count);
-                }
-            }
-
-            using (var gzsuppl = Chem.ForwardSDMolSupplier(
-                new GZipStream(
-                    new FileStream("Data/actives_5ht3.sdf.gz", FileMode.Open), 
-                    CompressionMode.Decompress)))
-            {
-                Console.WriteLine(gzsuppl.Count(x => x != null));
-            }
-        }
-    }
-
-```
 
 Build from Command Line
 -----------------------

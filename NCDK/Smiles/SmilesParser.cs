@@ -508,7 +508,6 @@ namespace NCDK.Smiles
                         continue;
 
                     int count = 0;
-                    var aa = e.Value;
                     switch (e.Value)
                     {
                         case CxSmilesState.Radical.Monovalent:
@@ -561,8 +560,10 @@ namespace NCDK.Smiles
             {
                 foreach (var e  in cxstate.ligandOrdering)
                 {
-                    Sgroup sgroup = new Sgroup();
-                    sgroup.Type = SgroupType.ExtAttachOrdering;
+                    Sgroup sgroup = new Sgroup
+                    {
+                        Type = SgroupType.ExtAttachOrdering
+                    };
                     IAtom beg = atoms[e.Key];
                     IAtomContainer mol = atomToMol[beg];
                     var bonds = mol.GetConnectedBonds(beg).ToList();

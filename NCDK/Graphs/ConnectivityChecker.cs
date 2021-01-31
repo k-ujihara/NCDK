@@ -182,8 +182,7 @@ namespace NCDK.Graphs
                 //finally update parents
                 foreach (var sgroup in sgroups)
                 {
-                    var newSgroup = old2NewSgroupMap[sgroup];
-                    if (newSgroup != null)
+                    if (old2NewSgroupMap.TryGetValue(sgroup, out Sgroup newSgroup))
                     {
                         foreach (var parent in sgroup.Parents)
                         {

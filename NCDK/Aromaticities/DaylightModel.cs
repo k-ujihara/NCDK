@@ -149,7 +149,7 @@ namespace NCDK.Aromaticities
 
                 // abnormal valence, usually indicated a radical. these cause problems
                 // with kekulisations
-                var bondedValence = valence[i] + container.Atoms[i].ImplicitHydrogenCount.Value;
+                var bondedValence = valence[i];
                 if (!Normal(element, charge, bondedValence))
                 {
                     electrons[i] = -1;

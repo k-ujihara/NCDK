@@ -32,7 +32,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// <remarks>
     /// These decsriptors were described by Randic (<token>cdk-cite-RAN84</token>) and characterize molecular
     /// branching. Five descriptors are calculated, based on the implementation in the ADAPT
-    /// software package. Note that the descriptor is based on identifying <b>all</b> pahs between pairs of
+    /// software package. Note that the descriptor is based on identifying <b>all</b> paths between pairs of
     /// atoms and so is NP-hard. This means that it can take some time for large, complex molecules.
     /// </remarks>
     // @author Rajarshi Guha

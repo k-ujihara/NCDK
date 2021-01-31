@@ -27,6 +27,7 @@ using NCDK.Smiles;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Text;
 
@@ -58,34 +59,31 @@ namespace NCDK.IO
         }
 
         public SMILESWriter(Stream output)
-                : this(new StreamWriter(output))
+            : this(new StreamWriter(output))
         { }
 
-        public void SetFlavor(SmiFlavors flav)
+        public SmiFlavors Flavor
         {
-            try
+            get => (SmiFlavors)flavorSetting.GetSettingValue();
+
+            set
             {
-                flavorSetting.Setting = Convert.ToString((int)flav, 2);
+                flavorSetting.Setting = Convert.ToString((int)value, NumberFormatInfo.InvariantInfo);
+                CustomizeJob();
             }
-            catch (CDKException)
-            {
-                // ignored
-            }
-            CustomizeJob();
         }
 
-        public void SetWriteTitle(bool val)
+        public bool WriteTitle
         {
-            try
+            get => titleSetting.IsSet;
+
+            set
             {
-                titleSetting.Setting = val.ToString();
+                titleSetting.Setting = Convert.ToString(value, NumberFormatInfo.InvariantInfo);
+                CustomizeJob();
             }
-            catch (CDKException)
-            {
-                // ignored
-            }
-            CustomizeJob();
         }
+
 
         public override IResourceFormat Format => SMILESFormat.Instance;
 
@@ -198,7 +196,7 @@ namespace NCDK.IO
             ProcessIOSettingQuestion(flavorSetting);
             ProcessIOSettingQuestion(titleSetting);
             ProcessIOSettingQuestion(aromSetting);
-            var flav = (SmiFlavors)flavorSetting.GetSettingValue();
+            var flav = this.Flavor;
             if (aromSetting.IsSet)
                 flav |= SmiFlavors.UseAromaticSymbols;
             smigen = new SmilesGenerator(flav);

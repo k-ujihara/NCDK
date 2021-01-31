@@ -56,7 +56,7 @@
     <AssemblyOriginatorKeyFile>ncdk.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>NCDK.Issue20</StartupObject>
+    <StartupObject>NCDK.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="PresentationCore" />

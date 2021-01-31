@@ -39,19 +39,26 @@ using System.Linq;
 namespace NCDK.Layout
 {
     /// <summary>
-    /// Generates 2D coordinates for a molecule for which only connectivity is known
-    /// or the coordinates have been discarded for some reason.
+    /// Generates 2D coordinates for a molecule.
     /// </summary>
     /// <example>
-    /// Usage: Create an instance of this class, thereby assigning a molecule,
-    /// call <see cref="GenerateCoordinates()"/> and get your molecule back:
-    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Layout.StructureDiagramGenerator_Example.cs"]/*' />
+    /// <para>Basic Usage:</para>
+    /// If you just want to generate coordinate for a molecule (or reaction) you
+    /// can use the following one-liner:
+    /// <code language="cs">
+    /// new StructureDiagramGenerator().GenerateCoordinates(molecule);
+    /// </code>
+    /// The older versions of the API suggested using the following a
+    /// set/generate/get idiom but this performs an unnecessary (in most cases) copy.
+    /// <code>
+    /// StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+    /// sdg.Molecule = molecule;  // cloned!
+    /// sdg.GenerateCoordinates();
+    /// molecule = sdg.Molecule;
+    /// </code>
+    /// This idiom only needs to be used when 'fixing' parts of an existing
+    /// layout with <see cref="SetMolecule(IAtomContainer, bool, ISet{IAtom}, ISet{IBond})"/>.
     /// </example>
-    /// <remarks>
-    /// The method will fail if the molecule is disconnected. The 
-    /// <see cref="ConnectivityChecker.PartitionIntoMolecules(IAtomContainer)"/> can help here.
-    /// </remarks>
-    /// <seealso cref="ConnectivityChecker.PartitionIntoMolecules(IAtomContainer)"/>
     // @author steinbeck
     // @cdk.created 2004-02-02
     // @cdk.keyword Layout
@@ -65,6 +72,7 @@ namespace NCDK.Layout
     public class StructureDiagramGenerator
     {
         internal const double DefaultBondLength = 1.5;
+        internal const double SGROUP_BRACKET_PADDING_FACTOR = 0.5;
         static Vector2 DefaultBondVector { get; } = new Vector2(0, 1);
         private static IdentityTemplateLibrary DefaultTempleteLibrary =
                 IdentityTemplateLibrary.LoadFromResource("custom-templates.smi")
@@ -909,6 +917,20 @@ namespace NCDK.Layout
             var refiner = new LayoutRefiner(molecule, afix, bfix);
             refiner.Refine();
 
+            // check for attachment points, these override the direction which we rorate structures
+            {
+                IAtom begAttach = null;
+                foreach (IAtom atom in molecule.Atoms)
+                {
+                    if (atom is IPseudoAtom atom1 && atom1.AttachPointNum == 1)
+                    {
+                        begAttach = atom;
+                        selectOrientation = true;
+                        break;
+                    }
+                }
+            }
+
             // choose the orientation in which to display the structure
             if (selectOrientation)
             {
@@ -1207,13 +1229,48 @@ namespace NCDK.Layout
             var afixbackup = new HashSet<IAtom>(afix);
             var bfixbackup = new HashSet<IBond>(bfix);
 
+            var sgroups = mol.GetCtabSgroups();
+
             // generate the sub-layouts
             foreach (var fragment in frags)
             {
                 SetMolecule(fragment, false, afix, bfix);
                 GenerateCoordinates(DefaultBondVector, true, true);
                 LengthenIonicBonds(ionicBonds, fragment);
-                limits.Add(GetAprxBounds(fragment));
+                double[] aprxBounds = GetAprxBounds(fragment);
+
+                if (sgroups != null && sgroups.Count > 0)
+                {
+                    bool hasBracket = false;
+                    foreach (Sgroup sgroup in sgroups)
+                    {
+                        if (!HasBrackets(sgroup))
+                            continue;
+                        bool contained = true;
+                        var aset = sgroup.Atoms;
+                        foreach (var atom in sgroup.Atoms)
+                        {
+                            if (!aset.Contains(atom))
+                                contained = false;
+                        }
+                        if (contained)
+                        {
+                            hasBracket = true;
+                            break;
+                        }
+                    }
+
+                    if (hasBracket)
+                    {
+                        // consider potential Sgroup brackets
+                        aprxBounds[0] -= SGROUP_BRACKET_PADDING_FACTOR * DefaultBondLength;
+                        aprxBounds[1] -= SGROUP_BRACKET_PADDING_FACTOR * DefaultBondLength;
+                        aprxBounds[2] += SGROUP_BRACKET_PADDING_FACTOR * DefaultBondLength;
+                        aprxBounds[3] += SGROUP_BRACKET_PADDING_FACTOR * DefaultBondLength;
+                    }
+                }
+
+                limits.Add(aprxBounds);
             }
 
             // restore
@@ -2731,6 +2788,13 @@ namespace NCDK.Layout
             }
             return cnt;
         }
+        private void UpdateMinMax(double[] minmax, Vector2 p)
+        {
+            minmax[0] = Math.Min(p.X, minmax[0]);
+            minmax[1] = Math.Min(p.Y, minmax[1]);
+            minmax[2] = Math.Max(p.X, minmax[2]);
+            minmax[3] = Math.Max(p.Y, minmax[3]);
+        }
 
         /// <summary>
         /// Place and update brackets for polymer Sgroups.
@@ -2744,6 +2808,7 @@ namespace NCDK.Layout
 
             // index all crossing bonds
             var bondMap = new MultiDictionary<IBond, Sgroup>();
+            var childMap = new MultiDictionary<Sgroup, Sgroup>();
             var counter = new Dictionary<IBond, int>();
             foreach (var sgroup in sgroups)
             {
@@ -2754,18 +2819,14 @@ namespace NCDK.Layout
                     bondMap.Add(bond, sgroup);
                     counter[bond] = 0;
                 }
+                foreach (Sgroup parent in sgroup.Parents)
+                    childMap.Add(parent, sgroup);
             }
             sgroups = new List<Sgroup>(sgroups);
-            // place child sgroups first
+            // place child sgroups first, or those with less total children
             ((List<Sgroup>)sgroups).Sort((o1, o2) =>
             {
-                if (o1.Parents.Any() != o2.Parents.Any())
-                {
-                    if (!o1.Parents.Any())
-                        return +1;
-                    return -1;
-                }
-                return 0;
+                return childMap[o1].Count().CompareTo(childMap[o2].Count());
             });
 
             foreach (var sgroup in sgroups)
@@ -2804,6 +2865,20 @@ namespace NCDK.Layout
                     foreach (var atom in atoms)
                         tmp.Atoms.Add(atom);
                     var minmax = GeometryUtil.GetMinMax(tmp);
+                    // if a child Sgroup also has brackets, account for that in our
+                    // bounds calculation
+                    foreach (var child in childMap[sgroup])
+                    {
+                        var brackets = (IEnumerable<SgroupBracket>)child.GetValue(SgroupKey.CtabBracket);
+                        if (brackets != null)
+                        {
+                            foreach (var bracket in brackets)
+                            {
+                                UpdateMinMax(minmax, bracket.FirstPoint);
+                                UpdateMinMax(minmax, bracket.SecondPoint);
+                            }
+                        }
+                    }
                     var padding = 0.7 * BondLength;
                     sgroup.AddBracket(new SgroupBracket(minmax[0] - padding, minmax[1] - padding,
                                                         minmax[0] - padding, minmax[3] + padding));

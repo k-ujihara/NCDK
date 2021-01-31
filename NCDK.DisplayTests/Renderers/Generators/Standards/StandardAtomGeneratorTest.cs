@@ -147,14 +147,13 @@ namespace NCDK.Renderers.Generators.Standards
             // hydrogen is arbitrarily moved to ensure x/y are different from the element
             var charge = new TextOutline("+", font, emSize);
             var localHydrogen = hydrogen.Translate(10, 10);
-            var positioned = atomGenerator.PositionChargeLabel(1, HydrogenPosition.Left, charge, element,
-                    localHydrogen);
+            var positioned = atomGenerator.PositionChargeLabel(1, HydrogenPosition.Left, charge, element, localHydrogen);
 
             var elementBounds = element.GetBounds();
             var chargeBounds = positioned.GetBounds();
-
+            
             Assert.IsTrue(chargeBounds.Left > elementBounds.Left);
-            Assert.AreEqual(elementBounds.Top, chargeBounds.CenterY(), 0.01);
+            Assert.AreEqual(localHydrogen.GetBounds().Top, chargeBounds.CenterY(), 0.01);
         }
 
         [TestMethod()]
@@ -183,8 +182,9 @@ namespace NCDK.Renderers.Generators.Standards
             var hydrogenBounds = localHydrogen.GetBounds();
             var chargeBounds = positioned.GetBounds();
 
-            Assert.IsTrue(chargeBounds.Left > hydrogenBounds.Left);
-            Assert.AreEqual(hydrogenBounds.Top, chargeBounds.CenterY(), 0.01);
+            var elementBounds = element.GetBounds();
+            Assert.IsTrue(chargeBounds.Left > elementBounds.Left);
+            Assert.AreEqual(elementBounds.Top, chargeBounds.CenterY(), 0.01);
         }
 
         [TestMethod()]
@@ -206,49 +206,49 @@ namespace NCDK.Renderers.Generators.Standards
         [TestMethod()]
         public void GenerateWithNoAdjuncts()
         {
-            var symbol = atomGenerator.GeneratePeriodicSymbol(7, 0, -1, 0, 0, HydrogenPosition.Right);
+            var symbol = atomGenerator.GeneratePeriodicSymbol(7, 0, -1, 0, 0, HydrogenPosition.Right, null);
             Assert.AreEqual(1, symbol.GetOutlines().Count);
         }
 
         [TestMethod()]
         public void GenerateWithHydrogenAdjunct()
         {
-            var symbol = atomGenerator.GeneratePeriodicSymbol(7, 1, -1, 0, 0, HydrogenPosition.Right);
+            var symbol = atomGenerator.GeneratePeriodicSymbol(7, 1, -1, 0, 0, HydrogenPosition.Right, null);
             Assert.AreEqual(2, symbol.GetOutlines().Count);
         }
 
         [TestMethod()]
         public void GenerateWithHydrogenAndCountAdjunct()
         {
-            var symbol = atomGenerator.GeneratePeriodicSymbol(7, 2, -1, 0, 0, HydrogenPosition.Right);
+            var symbol = atomGenerator.GeneratePeriodicSymbol(7, 2, -1, 0, 0, HydrogenPosition.Right, null);
             Assert.AreEqual(3, symbol.GetOutlines().Count);
         }
 
         [TestMethod()]
         public void GenerateWithMassAdjunct()
         {
-            var symbol = atomGenerator.GeneratePeriodicSymbol(7, 0, 15, 0, 0, HydrogenPosition.Right);
+            var symbol = atomGenerator.GeneratePeriodicSymbol(7, 0, 15, 0, 0, HydrogenPosition.Right, null);
             Assert.AreEqual(2, symbol.GetOutlines().Count);
         }
 
         [TestMethod()]
         public void GenerateWithChargeAdjunct()
         {
-            var symbol = atomGenerator.GeneratePeriodicSymbol(7, 0, -1, 1, 0, HydrogenPosition.Right);
+            var symbol = atomGenerator.GeneratePeriodicSymbol(7, 0, -1, 1, 0, HydrogenPosition.Right, null);
             Assert.AreEqual(2, symbol.GetOutlines().Count);
         }
 
         [TestMethod()]
         public void GenerateWithRadicalAdjunct()
         {
-            var symbol = atomGenerator.GeneratePeriodicSymbol(7, 0, -1, 0, 1, HydrogenPosition.Right);
+            var symbol = atomGenerator.GeneratePeriodicSymbol(7, 0, -1, 0, 1, HydrogenPosition.Right, null);
             Assert.AreEqual(2, symbol.GetOutlines().Count);
         }
 
         [TestMethod()]
         public void HydrogenDodgesMassLabel()
         {
-            var symbol = atomGenerator.GeneratePeriodicSymbol(7, 1, 15, 0, 0, HydrogenPosition.Left);
+            var symbol = atomGenerator.GeneratePeriodicSymbol(7, 1, 15, 0, 0, HydrogenPosition.Left, null);
             var outlines = symbol.GetOutlines();
             Assert.AreEqual(3, outlines.Count);
             var hydrogenShape = outlines[1];
@@ -259,7 +259,7 @@ namespace NCDK.Renderers.Generators.Standards
         [TestMethod()]
         public void HydrogenAndHydrogenCountDodgesMassLabel()
         {
-            var symbol = atomGenerator.GeneratePeriodicSymbol(7, 2, 15, 0, 0, HydrogenPosition.Left);
+            var symbol = atomGenerator.GeneratePeriodicSymbol(7, 2, 15, 0, 0, HydrogenPosition.Left, null);
             var outlines = symbol.GetOutlines();
             Assert.AreEqual(4, outlines.Count);
             var hydrogenShape = outlines[1];
@@ -278,7 +278,7 @@ namespace NCDK.Renderers.Generators.Standards
         [TestMethod()]
         public void HydrogenCountDodgesElement()
         {
-            var symbol = atomGenerator.GeneratePeriodicSymbol(7, 2, -1, 0, 0, HydrogenPosition.Left);
+            var symbol = atomGenerator.GeneratePeriodicSymbol(7, 2, -1, 0, 0, HydrogenPosition.Left, null);
             var outlines = symbol.GetOutlines();
             Assert.AreEqual(3, outlines.Count);
             var elementShape = outlines[0];
@@ -292,7 +292,7 @@ namespace NCDK.Renderers.Generators.Standards
         [TestMethod()]
         public void HydrogenDoesNotNeedToDodge()
         {
-            var symbol = atomGenerator.GeneratePeriodicSymbol(7, 1, -1, 0, 0, HydrogenPosition.Left);
+            var symbol = atomGenerator.GeneratePeriodicSymbol(7, 1, -1, 0, 0, HydrogenPosition.Left, null);
             var outlines = symbol.GetOutlines();
             Assert.AreEqual(2, outlines.Count);
             var elementShape = outlines[0];
@@ -375,7 +375,7 @@ namespace NCDK.Renderers.Generators.Standards
         [TestMethod()]
         public void NumberedRgroupSymbol()
         {
-            var atomSymbol = atomGenerator.GeneratePseudoSymbol("R1", HydrogenPosition.Right);
+            var atomSymbol = atomGenerator.GeneratePseudoSymbol("R1", HydrogenPosition.Right, null);
             var shapes = atomSymbol.GetOutlines();
             Assert.AreEqual(2, shapes.Count);
         }
@@ -383,7 +383,7 @@ namespace NCDK.Renderers.Generators.Standards
         [TestMethod()]
         public void RgroupSymbol2A()
         {
-            var atomSymbol = atomGenerator.GeneratePseudoSymbol("R2a", HydrogenPosition.Right);
+            var atomSymbol = atomGenerator.GeneratePseudoSymbol("R2a", HydrogenPosition.Right, null);
             var shapes = atomSymbol.GetOutlines();
             Assert.AreEqual(2, shapes.Count);
         }
@@ -391,7 +391,7 @@ namespace NCDK.Renderers.Generators.Standards
         [TestMethod()]
         public void RgroupSymbolY()
         {
-            var atomSymbol = atomGenerator.GeneratePseudoSymbol("Y1a2", HydrogenPosition.Right);
+            var atomSymbol = atomGenerator.GeneratePseudoSymbol("Y1a2", HydrogenPosition.Right, null);
             var shapes = atomSymbol.GetOutlines();
             Assert.AreEqual(1, shapes.Count);
         }
@@ -399,7 +399,7 @@ namespace NCDK.Renderers.Generators.Standards
         [TestMethod()]
         public void RgroupSymbolPrime()
         {
-            var atomSymbol = atomGenerator.GeneratePseudoSymbol("R'", HydrogenPosition.Right);
+            var atomSymbol = atomGenerator.GeneratePseudoSymbol("R'", HydrogenPosition.Right, null);
             var shapes = atomSymbol.GetOutlines();
             Assert.AreEqual(2, shapes.Count);
         }
@@ -407,7 +407,7 @@ namespace NCDK.Renderers.Generators.Standards
         [TestMethod()]
         public void RgroupSymbolNumberedPrime()
         {
-            var atomSymbol = atomGenerator.GeneratePseudoSymbol("R2'", HydrogenPosition.Right);
+            var atomSymbol = atomGenerator.GeneratePseudoSymbol("R2'", HydrogenPosition.Right, null);
             var shapes = atomSymbol.GetOutlines();
             Assert.AreEqual(3, shapes.Count);
         }
@@ -415,7 +415,7 @@ namespace NCDK.Renderers.Generators.Standards
         [TestMethod()]
         public void PseudoSymbol()
         {
-            var atomSymbol = atomGenerator.GeneratePseudoSymbol("Protein", HydrogenPosition.Right);
+            var atomSymbol = atomGenerator.GeneratePseudoSymbol("Protein", HydrogenPosition.Right, null);
             var shapes = atomSymbol.GetOutlines();
             Assert.AreEqual(1, shapes.Count);
         }
@@ -426,7 +426,7 @@ namespace NCDK.Renderers.Generators.Standards
             var mock_container = new Mock<IAtomContainer>(); var container = mock_container.Object;
             var mock_atom = new Mock<IPseudoAtom>(); var atom = mock_atom.Object;
             mock_atom.Setup(n => n.Label).Returns("R1");
-            var atomSymbol = atomGenerator.GenerateSymbol(container, atom, HydrogenPosition.Left, new RendererModel());
+            var atomSymbol = atomGenerator.GenerateSymbol(container, atom, HydrogenPosition.Left, null);
             var shapes = atomSymbol.GetOutlines();
             Assert.AreEqual(2, shapes.Count);
         }

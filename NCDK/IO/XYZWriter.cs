@@ -125,7 +125,7 @@ namespace NCDK.IO
                 writer.Write(s1, 0, s1.Length);
                 writer.Write('\n');
 
-                string s2 = null; // FIXME: add some interesting comment
+                string s2 = mol.Title;
                 if (s2 != null)
                 {
                     writer.Write(s2, 0, s2.Length);

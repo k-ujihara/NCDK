@@ -794,13 +794,11 @@ namespace NCDK.Smiles
                 }
                 foreach (Sgroup sgroup in sgroups)
                 {
-                    CxSmilesState.CxSgroup cxChild = mapping[sgroup];
-                    if (cxChild == null)
+                    if (!mapping.TryGetValue(sgroup, out CxSmilesState.CxSgroup cxChild))
                         continue;
                     foreach (Sgroup parent in sgroup.Parents)
                     {
-                        CxSmilesState.CxSgroup cxParent = mapping[parent];
-                        if (cxParent == null)
+                        if (!mapping.TryGetValue(parent, out CxSmilesState.CxSgroup cxParent))
                             continue;
                         cxParent.children.Add(cxChild);
                     }

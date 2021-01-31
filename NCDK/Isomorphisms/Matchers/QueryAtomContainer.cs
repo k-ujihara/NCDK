@@ -107,11 +107,13 @@ namespace NCDK.Isomorphisms.Matchers
             foreach (var atom in src.Atoms)
             {
                 Expr expr;
-                if (atom is IQueryAtom) {
+                if (atom is IQueryAtom) 
+                {
                     expr = ((QueryAtom)AtomRef.Deref(atom)).Expression;
-                    var se = stereos[atom];
-                    if (se != null) qstereo.Add(se);
-                } else
+                    if (stereos.TryGetValue(atom, out IStereoElement<IChemObject, IChemObject> se))
+                        qstereo.Add(se);
+                } 
+                else
                 {
                     expr = new Expr();
 
@@ -190,13 +192,14 @@ namespace NCDK.Isomorphisms.Matchers
                     }
                     if (optset.Contains(ExprType.FormalCharge) && atom.FormalCharge != null)
                         expr.And(new Expr(ExprType.FormalCharge, atom.FormalCharge.Value));
-                    var se = stereos[atom];
-                    if (se != null 
-                     && se.Class == StereoClass.Tetrahedral
-                     && optset.Contains(ExprType.Stereochemistry))
+                    if (stereos.TryGetValue(atom, out IStereoElement<IChemObject, IChemObject> se))
                     {
-                        expr.And(new Expr(ExprType.Stereochemistry, (int)se.Configure));
-                        qstereo.Add(se);
+                        if (se.Class == StereoClass.Tetrahedral
+                         && optset.Contains(ExprType.Stereochemistry))
+                        {
+                            expr.And(new Expr(ExprType.Stereochemistry, (int)se.Configure));
+                            qstereo.Add(se);
+                        }
                     }
                 }
                 var qatom = new QueryAtom(expr)
@@ -245,12 +248,13 @@ namespace NCDK.Isomorphisms.Matchers
                         expr.And(new Expr(ExprType.IsInRing));
                     else if (optset.Contains(ExprType.IsInChain) && !bond.IsInRing)
                         expr.And(new Expr(ExprType.IsInChain));
-                    var se = stereos[bond];
-                    if (se != null &&
-                            optset.Contains(ExprType.Stereochemistry))
+                    if (stereos.TryGetValue(bond, out IStereoElement<IChemObject, IChemObject> se))
                     {
-                        expr.And(new Expr(ExprType.Stereochemistry, (int)se.Configure));
-                        qstereo.Add(se);
+                        if (optset.Contains(ExprType.Stereochemistry))
+                        {
+                            expr.And(new Expr(ExprType.Stereochemistry, (int)se.Configure));
+                            qstereo.Add(se);
+                        }
                     }
                 }
                 var qbond = new QueryBond(mapping.Get(bond.Begin), mapping.Get(bond.End), expr)
@@ -271,7 +275,7 @@ namespace NCDK.Isomorphisms.Matchers
             }
             foreach (var se in qstereo)
             {
-                query.StereoElements.Add((IStereoElement<IChemObject, IChemObject>)se.Clone(mapping));
+                dst.StereoElements.Add((IStereoElement<IChemObject, IChemObject>)se.Clone(mapping));
             }            
         }
 

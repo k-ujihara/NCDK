@@ -220,7 +220,7 @@ namespace NCDK.Stereo
         /// <item><see cref="CenterType.True"/> - the atom has constitutionally different neighbors</item> 
         /// <item><see cref="CenterType.Para"/> - the atom resembles a stereo centre but has constitutionally equivalent neighbors
         /// (e.g. inositol, decalin). The stereocenter depends on the configuration of one or more stereocenters.</item> 
-        /// <item><see cref="CenterType.Potential"/> - the atom can supported stereo chemistry but has not be shown ot be a true or para center.</item> 
+        /// <item><see cref="CenterType.Potential"/> - the atom can supported stereo chemistry but has not be shown to be a true or para center.</item> 
         /// <item><see cref="CenterType.None"/> - the atom is not a stereocenter (e.g. methane).</item>
         /// </list>
         /// </summary>
@@ -626,6 +626,9 @@ namespace NCDK.Stereo
 
             bool found = false;
 
+            // group the 'X' neighbours we care about,
+            // N=>1, O=>2, S=>3, etc, anything we don't care
+            // about goes in slot 0
             foreach (var w in g[v])
             {
                 int idx = IndexNeighbor(container.Atoms[w]);
@@ -636,6 +639,10 @@ namespace NCDK.Stereo
             if (!found)
                 return true;
 
+            // now we have the neighbours group check out one,
+            // N first, O, then S, etc and check if there is at
+            // least two terminals atom and the total number of H
+            // connected to these terminals is >= 1. i.e. -XHm and -XHn, (n+m>0)
             for (int i = 1; i < counts.Length; i++)
             {
                 if (counts[i] < 2)
@@ -646,22 +653,28 @@ namespace NCDK.Stereo
 
                 for (int j = 0; j < counts[i]; j++)
                 {
-                    int hCount = 0;
-                    var ws = g[atoms[i][j]];
-                    foreach (var w in g[atoms[i][j]])
+                    int explHCount = 0;
+                    int[] ws = g[atoms[i][j]];
+                    foreach (int w in g[atoms[i][j]])
                     {
                         var atom = container.Atoms[w];
                         if (GetAtomicNumber(atom) == 1 && atom.MassNumber == null)
                         {
-                            hCount++;
+                            explHCount++;
                         }
                     }
 
-                    // is terminal?
-                    if (ws.Length - hCount == 1)
+                    int degree = ws.Length - explHCount;
+                    if (degree == 1)
                     {
                         terminalCount++;
-                        terminalHCount += hCount + container.Atoms[atoms[i][j]].ImplicitHydrogenCount.Value;
+                        terminalHCount += explHCount;
+                        var atom = container.Atoms[atoms[i][j]];
+                        var implHCount = atom.ImplicitHydrogenCount;
+                        terminalHCount += implHCount ?? 0;
+                        // O, S, Se, Te, or N with -1 charge is equiv to having a H
+                        if (atom.FormalCharge == -1)
+                            terminalHCount++;
                     }
                 }
 
@@ -744,7 +757,7 @@ namespace NCDK.Stereo
             if (GetRingDegree(container.Atoms.IndexOf(beg)) < 3
              && GetRingDegree(container.Atoms.IndexOf(end)) < 3)
                 return false;
-            var avisit = new bool[container.Bonds.Count];
+            var avisit = new bool[container.Atoms.Count];
             avisit[container.Atoms.IndexOf(beg)] = true;
             avisit[container.Atoms.IndexOf(end)] = true;
             int count = 0;

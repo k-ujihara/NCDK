@@ -2,27 +2,27 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <!-- Windows -->
-  <ItemGroup Condition=" '$(Platform)' == 'x64' ">
+  <ItemGroup Condition="!$(TargetFramework.Contains('netstandard')) And !$(TargetFramework.Contains('netcoreapp')) And !$(TargetFramework.Contains('net5')) And '$(Platform)' == 'x64' ">
     <None Include="$(MSBuildThisFileDirectory)..\runtimes\win-x64\native\libinchi.dll">
-      <Link>libinchi.dll</Link>
+      <Link>../runtimes/win-x64/native/libinchi.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(Platform)' == 'x86' ">
+  <ItemGroup Condition="!$(TargetFramework.Contains('netstandard')) And !$(TargetFramework.Contains('netcoreapp')) And !$(TargetFramework.Contains('net5')) And '$(Platform)' == 'x86' ">
     <None Include="$(MSBuildThisFileDirectory)..\runtimes\win-x86\native\libinchi.dll">
-      <Link>libinchi.dll</Link>
+      <Link>../runtimes/win-x86/native/libinchi.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+  <ItemGroup Condition="!$(TargetFramework.Contains('netstandard')) And !$(TargetFramework.Contains('netcoreapp')) And !$(TargetFramework.Contains('net5')) And '$(Platform)' == 'AnyCPU' ">
     <None Include="$(MSBuildThisFileDirectory)..\runtimes\win-x64\native\libinchi.dll">
-      <Link>x64\libinchi.dll</Link>
+      <Link>../runtimes/win-x64/native/libinchi.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="$(MSBuildThisFileDirectory)..\runtimes\win-x86\native\libinchi.dll">
-      <Link>x86\libinchi.dll</Link>
+      <Link>../runtimes/win-x86/native/libinchi.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

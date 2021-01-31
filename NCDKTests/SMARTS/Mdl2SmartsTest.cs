@@ -38,7 +38,7 @@ namespace NCDK.SMARTS
                 // Important! MDL => SMARTS is not exact since SMARTS has no was of
                 //            expressing double bond, = means "double aliphatic" and will
                 //            not match benzene (for example) where as the MDL query would
-                Assert.Equals("[F,#7,#8]-[#6]1-[#6h0]=[#6h1]-[#6]=[#6]-[#6]=1", Smarts.Generate(mol));
+                Assert.AreEqual("[F,#7,#8]-[#6]1-[#6h0]=[#6h1]-[#6]=[#6]-[#6]=1", Smarts.Generate(mol));
             }
         }
     }

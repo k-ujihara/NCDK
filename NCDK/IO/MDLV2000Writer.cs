@@ -23,6 +23,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Common.Collections;
 using NCDK.IO.Formats;
 using NCDK.IO.Setting;
 using NCDK.Isomorphisms.Matchers;
@@ -344,7 +345,7 @@ namespace NCDK.IO
             line.Append(FormatMDLInt(container.Bonds.Count, 3));
 
             //find all the atoms that should be atom lists
-            var atomLists = new SortedDictionary<int, IAtom>();
+            var atomLists = new LinkedHashMap<int, IAtom>();
 
             for (int f = 0; f < container.Atoms.Count; f++)
             {
@@ -650,7 +651,7 @@ namespace NCDK.IO
             // write radical information
             if (container.SingleElectrons.Count > 0)
             {
-                var atomIndexSpinMap = new SortedDictionary<int, SpinMultiplicity>();
+                var atomIndexSpinMap = new LinkedHashMap<int, SpinMultiplicity>();
                 for (int i = 0; i < container.Atoms.Count; i++)
                 {
                     var atom = container.Atoms[i];

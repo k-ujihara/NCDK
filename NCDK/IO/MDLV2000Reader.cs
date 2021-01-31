@@ -153,21 +153,16 @@ namespace NCDK.IO
         /// <returns>The IChemObject read</returns>
         public override T Read<T>(T obj)
         {
-            if (obj is IAtomContainer)
+            switch (obj)
             {
-                return (T)ReadAtomContainer((IAtomContainer)obj);
-            }
-            else if (obj is IChemFile)
-            {
-                return (T)ReadChemFile((IChemFile)obj);
-            }
-            else if (obj is IChemModel)
-            {
-                return (T)ReadChemModel((IChemModel)obj);
-            }
-            else
-            {
-                throw new CDKException("Only supported are ChemFile and Molecule.");
+                case IAtomContainer mol:
+                    return (T)ReadAtomContainer(mol);
+                case IChemFile file:
+                    return (T)ReadChemFile(file);
+                case IChemModel model:
+                    return (T)ReadChemModel(model);
+                default:
+                    throw new CDKException("Only supported are ChemFile and Molecule.");
             }
         }
 
@@ -2342,9 +2337,9 @@ namespace NCDK.IO
                     var aliasAtom = container.Atoms[aliasAtomNumber - 1];
 
                     // skip if already a pseudoatom
-                    if (aliasAtom is IPseudoAtom)
+                    if (aliasAtom is IPseudoAtom atom)
                     {
-                        ((IPseudoAtom)aliasAtom).Label = alias;
+                        atom.Label = alias;
                         continue;
                     }
 
@@ -2438,7 +2433,7 @@ namespace NCDK.IO
                     }
                     catch (FormatException exception)
                     {
-                        var error = $"Error ({exception.ToString()}) while parsing line {linecount}: {line} in property block.";
+                        var error = $"Error ({exception}) while parsing line {linecount}: {line} in property block.";
                         Trace.TraceError(error);
                         HandleError("FormatException in group information", linecount, 4, 7, exception);
                     }

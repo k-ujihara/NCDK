@@ -22,6 +22,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using NCDK.Tools;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -114,12 +115,9 @@ namespace NCDK.Renderers.Generators.Standards
                         var charge = pAtom.FormalCharge ?? 0;
                         var hcnt = pAtom.ImplicitHydrogenCount ?? 0;
                         var nrad = container.GetConnectedSingleElectrons(atom).Count();
-                        if (mass != 0 || charge != 0 || hcnt != 0)
-                        {
-                            return GeneratePeriodicSymbol(0, hcnt, mass, charge, nrad, position);
-                        }
+                        return GeneratePeriodicSymbol(0, hcnt, mass, charge, nrad, position, model);
                     }
-                    return GeneratePseudoSymbol(AccessPseudoLabel(pAtom, "?"), position);
+                    return GeneratePseudoSymbol(AccessPseudoLabel(pAtom, "?"), position, model);
                 }
                 else
                     return null; // attach point drawn in bond generator
@@ -144,7 +142,7 @@ namespace NCDK.Renderers.Generators.Standards
                     atom.ImplicitHydrogenCount ?? 0,
                     mass ?? -1, 
                     atom.FormalCharge ?? 0,
-                    container.GetConnectedSingleElectrons(atom).Count(), position);
+                    container.GetConnectedSingleElectrons(atom).Count(), position, model);
             }
         }
 
@@ -152,9 +150,9 @@ namespace NCDK.Renderers.Generators.Standards
         /// Generates an atom symbol for a pseudo atom.
         /// </summary>
         /// <returns>the atom symbol</returns>
-        public AtomSymbol GeneratePseudoSymbol(string label, HydrogenPosition position)
+        public AtomSymbol GeneratePseudoSymbol(string label, HydrogenPosition position, RendererModel model)
         {
-            var italicFont = new Typeface(font.FontFamily, FontStyles.Italic, FontWeights.Bold, font.Stretch);
+            var stylisedFont = font.DeriveFont(model.GetPseudoFontStyle());
             var outlines = new List<TextOutline>(3);
 
             int beg = 0;
@@ -170,7 +168,7 @@ namespace NCDK.Renderers.Generators.Standards
 
             if (pos > beg)
             {
-                outlines.Add(new TextOutline(label.Substring(beg, pos), italicFont, emSize));
+                outlines.Add(new TextOutline(label.Substring(beg, pos), stylisedFont, emSize));
                 beg = pos;
                 // 2a etc.
                 while (pos < len && IsDigit(label[pos]))
@@ -180,7 +178,7 @@ namespace NCDK.Renderers.Generators.Standards
 
                 if (pos > beg)
                 {
-                    var outline = new TextOutline(label.Substring(beg, pos - beg), italicFont, emSize);
+                    var outline = new TextOutline(label.Substring(beg, pos - beg), stylisedFont, emSize);
                     outline = outline.Resize(scriptSize, scriptSize);
                     outline = PositionSuperscript(outlines[0], outline);
                     outlines.Add(outline);
@@ -220,7 +218,7 @@ namespace NCDK.Renderers.Generators.Standards
                 if (pos < len)
                 {
                     return new AtomSymbol(
-                        new TextOutline(label, italicFont, emSize),
+                        new TextOutline(label, stylisedFont, emSize),
                         Array.Empty<TextOutline>());
                 }
                 else
@@ -261,7 +259,7 @@ namespace NCDK.Renderers.Generators.Standards
             }
             else
             {
-                return new AtomSymbol(new TextOutline(label, italicFont, emSize), Array.Empty<TextOutline>());
+                return new AtomSymbol(new TextOutline(label, stylisedFont, emSize), Array.Empty<TextOutline>());
             }
         }
 
@@ -377,11 +375,32 @@ namespace NCDK.Renderers.Generators.Standards
         /// <param name="unpaired">number of unpaired electrons</param>
         /// <param name="position">placement of hydrogen</param>
         /// <returns>laid out atom symbol</returns>
-        public AtomSymbol GeneratePeriodicSymbol(int number, int hydrogens, int mass, int charge, int unpaired, HydrogenPosition position)
+        public AtomSymbol GeneratePeriodicSymbol(int number, int hydrogens, int mass, int charge, int unpaired, HydrogenPosition position, RendererModel opts)
         {
-            var element = number == 0 
-                        ? new TextOutline("*", font, emSize)
-                        : new TextOutline(ChemicalElement.Of(number).Symbol, font, emSize);
+            var myfont = font;
+            string label;
+            switch (number)
+            {
+                case 0:
+                    label = "*";
+                    myfont = font.DeriveFont(FontWeights.Bold);
+                    break;
+                case 1:
+                    if (mass == 2 && opts.GetDeuteriumSymbol())
+                    {
+                        label = "D";
+                        mass = 0;
+                    }
+                    else
+                    {
+                        label = PeriodicTable.GetSymbol(number);
+                    }
+                    break;
+                default:
+                    label = PeriodicTable.GetSymbol(number);
+                    break;
+            }
+            TextOutline element = new TextOutline(label, myfont, emSize);
             var hydrogenAdjunct = defaultHydrogenLabel;
 
             // the hydrogen count, charge, and mass adjuncts are script size
@@ -397,12 +416,13 @@ namespace NCDK.Renderers.Generators.Standards
 
             // when the hydrogen label is positioned to the left we may need to nudge it
             // over to account for the hydrogen count and/or the mass adjunct colliding
-            // with the element label
+            // with the element label, we also need to move the charge too '+H3N'
             if (position == HydrogenPosition.Left)
             {
                 var nudgeX = HydrogenXDodge(hydrogens, mass, element, hydrogenAdjunct, hydrogenCount, massAdjunct);
                 hydrogenAdjunct = hydrogenAdjunct.Translate(nudgeX, 0);
                 hydrogenCount = hydrogenCount.Translate(nudgeX, 0);
+                chargeAdjunct = chargeAdjunct.Translate(nudgeX, 0);
             }
 
             var adjuncts = new List<TextOutline>(4);
@@ -496,12 +516,14 @@ namespace NCDK.Renderers.Generators.Standards
             // are in the way - in which case we place it relative to the
             // hydrogen
             var referenceBounds = element.GetBounds();
-            if (hydrogens > 0 && position == HydrogenPosition.Right)
+            if (hydrogens > 0 && (position == HydrogenPosition.Left || position == HydrogenPosition.Right))
                 referenceBounds = hydrogen.GetBounds();
-            else if (hydrogens > 1 && position == HydrogenPosition.Above) referenceBounds = hydrogen.GetBounds();
-
-            return charge.Translate((referenceBounds.Right + padding) - chargeBounds.Left,
-                                    (referenceBounds.Top - (chargeBounds.Height / 2)) - chargeBounds.Top);
+            if (position == HydrogenPosition.Left)
+                return charge.Translate((referenceBounds.Left - padding) - chargeBounds.Right,
+                                        (referenceBounds.Top - (chargeBounds.Height / 2)) - chargeBounds.Top);
+            else
+                return charge.Translate((referenceBounds.Right + padding) - chargeBounds.Left,
+                                        (referenceBounds.Top - (chargeBounds.Height / 2)) - chargeBounds.Top);
         }
 
         /// <summary>

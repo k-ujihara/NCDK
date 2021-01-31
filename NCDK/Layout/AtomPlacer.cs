@@ -413,7 +413,7 @@ namespace NCDK.Layout
             var a = previousAtom.Point2D;
             var b = atom.Point2D;
 
-            var bonds = Molecule.GetConnectedBonds(atom).ToList();
+            var bonds = Molecule.GetConnectedBonds(atom).ToReadOnlyList();
             if (IsColinear(atom, bonds))
             {
                 return b.Value - a.Value;

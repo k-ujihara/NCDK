@@ -113,7 +113,7 @@ namespace NCDK.IO
             using var wtr = new StringWriter();
             using (var smigen = new SMILESWriter(wtr))
             {
-                smigen.SetFlavor(SmiFlavors.Canonical);
+                smigen.Flavor = SmiFlavors.Canonical;
                 smigen.Write(mol1);
                 smigen.Write(mol2);
             }
@@ -130,13 +130,13 @@ namespace NCDK.IO
             using var wtr = new StringWriter();
             using (var smigen = new SMILESWriter(wtr))
             {
-                smigen.SetFlavor(SmiFlavors.Canonical);
-                smigen.SetWriteTitle(true);
+                smigen.Flavor = SmiFlavors.Canonical;
+                smigen.WriteTitle = true;
                 smigen.Write(mol1);
                 smigen.Write(mol2);
             }
-            Assert.IsTrue(wtr.ToString().ContainsOrdinal("CCO mol 1"));
-            Assert.IsTrue(wtr.ToString().ContainsOrdinal("OCC mol 2"));
+            Assert.IsTrue(wtr.ToString().ContainsOrdinal("mol 1"));
+            Assert.IsTrue(wtr.ToString().ContainsOrdinal("mol 2"));
         }
 
         [TestMethod()]
@@ -147,13 +147,26 @@ namespace NCDK.IO
             using var wtr = new StringWriter();
             using (var smigen = new SMILESWriter(wtr))
             {
-                smigen.SetFlavor(SmiFlavors.Canonical);
-                smigen.SetWriteTitle(false);
+                smigen.Flavor = SmiFlavors.Canonical;
+                smigen.WriteTitle = false;
                 smigen.Write(mol1);
                 smigen.Write(mol2);
             }
-            Assert.IsTrue(wtr.ToString().ContainsOrdinal("mol 1"));
-            Assert.IsTrue(wtr.ToString().ContainsOrdinal("mol 2"));
+            Assert.IsFalse(wtr.ToString().ContainsOrdinal("mol 1"));
+            Assert.IsFalse(wtr.ToString().ContainsOrdinal("mol 2"));
+        }
+
+        [TestMethod()]
+        public void TestWriteSmiFlavor()
+        {
+            var mol = CDK.SmilesParser.ParseSmiles("c1ccccc1");
+            using var wtr = new StringWriter();
+            using (var smigen = new SMILESWriter(wtr))
+            {
+                smigen.Flavor = SmiFlavors.InChILabelling;
+                smigen.Write(mol);
+            }
+            Assert.IsFalse(wtr.ToString().ContainsOrdinal("C=1C=CC=CC1"));
         }
     }
 }
