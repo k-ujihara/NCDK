@@ -56,9 +56,9 @@ namespace NCDK.Beam
         private RingBond[] rings = new RingBond[10];
 
         /// <summary>Local arrangement for ring openings.</summary>
-        private Dictionary<int, LocalArrangement> arrangement = new Dictionary<int, LocalArrangement>(5);
+        private readonly Dictionary<int, LocalArrangement> arrangement = new Dictionary<int, LocalArrangement>(5);
 
-        private Dictionary<int, Configuration> configurations = new Dictionary<int, Configuration>(5);
+        private readonly Dictionary<int, Configuration> configurations = new Dictionary<int, Configuration>(5);
 
         /// <summary>Current bond.</summary>
         private Bond bond = Bond.Implicit;
@@ -71,7 +71,7 @@ namespace NCDK.Beam
         /// and all vertices which immediately follow a 'dot' bond. These are
         /// required to correctly store atom topologies.
         /// </summary>
-        private ICollection<int> start = new SortedSet<int>();
+        private readonly ICollection<int> start = new SortedSet<int>();
 
         /// <summary>Number of open rings - all rings should be closed.</summary>
         private int openRings = 0;
@@ -79,7 +79,7 @@ namespace NCDK.Beam
         /// <summary>Strict parsing.</summary>
         internal readonly bool strict;
 
-        private BitArray checkDirectionalBonds = new BitArray(0);    // realloc on demand
+        private readonly BitArray checkDirectionalBonds = new BitArray(0);    // realloc on demand
 
         private int lastBondPos = -1;
         private readonly Dictionary<Edge, int> bondStrPos = new Dictionary<Edge, int>();
@@ -119,7 +119,8 @@ namespace NCDK.Beam
                         foreach (var e in g.GetEdges(i))
                         {
                             if (e.Bond == Bond.Aromatic 
-                             || e.Bond == Bond.Implicit && g.GetAtom(e.Other(i)).IsAromatic())
+                             || e.Bond == Bond.Implicit 
+                             && g.GetAtom(e.Other(i)).IsAromatic())
                                 nArom++;
                         }
                         if (nArom >= 2)
@@ -209,8 +210,8 @@ namespace NCDK.Beam
                     int d = g.Degree(v);
                     for (int j = 0; j < d; ++j)
                     {
-                        Edge e = g.EdgeAt(v, j);
-                        Bond bond = e.GetBond(v);
+                        var e = g.EdgeAt(v, j);
+                        var bond = e.GetBond(v);
                         if (bond == Bond.Up)
                             nUpV++;
                         else if (bond == Bond.Down)
@@ -230,8 +231,8 @@ namespace NCDK.Beam
                     int d = g.Degree(w);
                     for (int j = 0; j < d; ++j)
                     {
-                        Edge e = g.EdgeAt(w, j);
-                        Bond bond = e.GetBond(w);
+                        var e = g.EdgeAt(w, j);
+                        var bond = e.GetBond(w);
                         if (bond == Bond.Up)
                             nUpW++;
                         else if (bond == Bond.Down)
@@ -255,9 +256,10 @@ namespace NCDK.Beam
                             else
                                 offset2 = bondStrPos[e];
                     }
-                    var errorPos = InvalidSmilesException.Display(buffer,
-                                                                     offset1 - buffer.Length,
-                                                                     offset2 - buffer.Length);
+                    var errorPos = InvalidSmilesException.Display(
+                        buffer,
+                        offset1 - buffer.Length,
+                        offset2 - buffer.Length);
                     if (strict)
                         throw new InvalidSmilesException($"Ignored invalid Cis/Trans specification: {errorPos}");
                     else
@@ -275,9 +277,10 @@ namespace NCDK.Beam
                             else
                                 offset2 = bondStrPos[e];
                     }
-                    var errorPos = InvalidSmilesException.Display(buffer,
-                                                                     offset1 - buffer.Length,
-                                                                     offset2 - buffer.Length);
+                    var errorPos = InvalidSmilesException.Display(
+                        buffer,
+                        offset1 - buffer.Length,
+                        offset2 - buffer.Length);
                     if (strict)
                         throw new InvalidSmilesException($"Ignored invalid Cis/Trans specification: {errorPos}");
                     else
@@ -348,9 +351,9 @@ namespace NCDK.Beam
         /// <returns>the carrier list</returns>
         public int[] GetAlleneCarriers(int focus)
         {
-            int[] carriers = new int[4];
+            var carriers = new int[4];
             int i = 0;
-            int[] ends = FindExtendedTetrahedralEnds(focus);
+            var ends = FindExtendedTetrahedralEnds(focus);
             int beg = ends[0];
             int end = ends[1];
             bool begh = g.ImplHCount(beg) == 1;
@@ -365,7 +368,7 @@ namespace NCDK.Beam
                     carriers[i++] = beg;
                     continue;
                 }
-                int bnbr = bEdge.Other(beg);
+                var bnbr = bEdge.Other(beg);
                 if (beg < bnbr && begh)
                 {
                     carriers[i++] = beg;
@@ -409,7 +412,7 @@ namespace NCDK.Beam
             // stereo on ring closure - use local arrangement
             if (arrangement.ContainsKey(u))
             {
-                int[] us = arrangement[u].ToArray();
+                var us = arrangement[u].ToArray();
                 var es = GetLocalEdges(u);
 
                 if (c.Type == Configuration.ConfigurationType.Tetrahedral)
@@ -427,7 +430,7 @@ namespace NCDK.Beam
             }
             else
             {
-                int[] us = new int[g.Degree(u)];
+                var us = new int[g.Degree(u)];
                 var es = g.GetEdges(u);
                 for (int i = 0; i < us.Length; i++)
                     us[i] = es[i].Other(u);
@@ -484,10 +487,10 @@ namespace NCDK.Beam
         /// <param name="buffer"></param>
         private void AddAtom(IAtom a, CharBuffer buffer)
         {
-            int v = g.AddAtom(a);
+            var v = g.AddAtom(a);
             if (!stack.IsEmpty)
             {
-                int u = stack.Pop();
+                var u = stack.Pop();
                 if (bond != Bond.Dot)
                 {
                     var e = new Edge(u, v, bond);
@@ -529,7 +532,7 @@ namespace NCDK.Beam
             // primary dispatch
             while (buffer.HasRemaining())
             {
-                char c = buffer.Get();
+                var c = buffer.Get();
                 switch (c)
                 {
                     // aliphatic subset
@@ -635,7 +638,7 @@ namespace NCDK.Beam
                         Ring(c - '0', buffer);
                         break;
                     case '%':
-                        int num = buffer.GetNumber(2);
+                        var num = buffer.GetNumber(2);
                         if (num < 0)
                             throw new InvalidSmilesException("a number (<digit>+) must follow '%':", buffer);
                         if (strict && num < 10)
@@ -745,7 +748,7 @@ namespace NCDK.Beam
         /// <exception cref="InvalidSmilesException">if the bracket atom did not match the grammar, invalid symbol, missing closing bracket or invalid chiral specification.</exception>
         public IAtom ReadBracketAtom(CharBuffer buffer)
         {
-            int start = buffer.Position;
+            var start = buffer.Position;
 
             bool arbitraryLabel = false;
 
@@ -838,7 +841,7 @@ namespace NCDK.Beam
             if (buffer.GetIf('H'))
             {
                 // when no number is specified 'H' then there is 1 hydrogen
-                int count = buffer.GetNumber();
+                var count = buffer.GetNumber();
                 return count < 0 ? 1 : count;
             }
             return 0;
@@ -931,9 +934,8 @@ namespace NCDK.Beam
         private void OpenRing(int rnum, CharBuffer buffer)
         {
             if (rnum >= rings.Length)
-                rings = Arrays.CopyOf(rings,
-                                      Math.Min(100, rnum * 2)); // max rnum: 99
-            int u = stack.Peek();
+                rings = Arrays.CopyOf(rings, Math.Min(100, rnum * 2)); // max rnum: 99
+            var u = stack.Peek();
 
             // create a ring bond
             rings[rnum] = new RingBond(u, bond, lastBondPos);
@@ -956,10 +958,10 @@ namespace NCDK.Beam
             if (!arrangement.TryGetValue(u, out LocalArrangement la))
             {
                 la = new LocalArrangement();
-                int d = g.Degree(u);
+                var d = g.Degree(u);
                 for (int j = 0; j < d; ++j)
                 {
-                    Edge e = g.EdgeAt(u, j);
+                    var e = g.EdgeAt(u, j);
                     la.Add(e.Other(u));
                 }
                 arrangement[u] = la;
@@ -977,8 +979,8 @@ namespace NCDK.Beam
         {
             var rbond = rings[rnum];
             rings[rnum] = null;
-            int u = rbond.u;
-            int v = stack.Peek();
+            var u = rbond.u;
+            var v = stack.Peek();
 
             if (u == v)
                 throw new InvalidSmilesException("Endpoints of ringbond are the same - loops are not allowed",

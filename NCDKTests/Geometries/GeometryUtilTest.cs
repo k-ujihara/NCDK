@@ -106,8 +106,7 @@ namespace NCDK.Geometries
         {
             var container = builder.NewAtomContainer();
             Assert.AreEqual(GeometryUtil.CoordinateCoverage.None, GeometryUtil.Get2DCoordinateCoverage(container));
-            Assert.AreEqual(GeometryUtil.CoordinateCoverage.None,
-                                GeometryUtil.Get2DCoordinateCoverage((IAtomContainer)null));
+            Assert.AreEqual(GeometryUtil.CoordinateCoverage.None, GeometryUtil.Get2DCoordinateCoverage(null));
         }
 
         [TestMethod()]
@@ -194,33 +193,27 @@ namespace NCDK.Geometries
         [TestMethod()]
         public void TestMapAtomsOfAlignedStructures()
         {
-            string filenameMolOne = "NCDK.Data.MDL.murckoTest6_3d_2.mol";
-            string filenameMolTwo = "NCDK.Data.MDL.murckoTest6_3d.mol";
-            //string filenameMolTwo = "NCDK.Data.MDL.murckoTest6_3d_2.mol";
-            var ins = ResourceLoader.GetAsStream(filenameMolOne);
+            const string filenameMolOne = "NCDK.Data.MDL.murckoTest6_3d_2.mol";
+            const string filenameMolTwo = "NCDK.Data.MDL.murckoTest6_3d.mol";
+            var mappedAtoms = new Dictionary<int, int>();
+
             IAtomContainer molOne;
             IAtomContainer molTwo;
-            var mappedAtoms = new Dictionary<int, int>();
-            var reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
-            molOne = reader.Read(builder.NewAtomContainer());
-
-            ins = ResourceLoader.GetAsStream(filenameMolTwo);
-            reader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
-            molTwo = reader.Read(builder.NewAtomContainer());
+            using (var reader = new MDLV2000Reader(ResourceLoader.GetAsStream(filenameMolOne), ChemObjectReaderMode.Strict))
+            {
+                molOne = reader.Read(builder.NewAtomContainer());
+            }
+            using (var reader = new MDLV2000Reader(ResourceLoader.GetAsStream(filenameMolTwo), ChemObjectReaderMode.Strict))
+            {
+                molTwo = reader.Read(builder.NewAtomContainer());
+            }
 
             AtomMappingTools.MapAtomsOfAlignedStructures(molOne, molTwo, mappedAtoms);
-            //Debug.WriteLine("mappedAtoms:"+mappedAtoms.ToString());
-            //Debug.WriteLine("***** ANGLE VARIATIONS *****");
-            double AngleRMSD = GeometryUtil.GetAngleRMSD(molOne, molTwo, mappedAtoms);
-            //Debug.WriteLine("The Angle RMSD between the first and the second structure is :"+AngleRMSD);
-            //Debug.WriteLine("***** ALL ATOMS RMSD *****");
+            var AngleRMSD = GeometryUtil.GetAngleRMSD(molOne, molTwo, mappedAtoms);
             Assert.AreEqual(0.2, AngleRMSD, 0.1);
-            double AllRMSD = GeometryUtil.GetAllAtomRMSD(molOne, molTwo, mappedAtoms, true);
-            //Debug.WriteLine("The RMSD between the first and the second structure is :"+AllRMSD);
+            var AllRMSD = GeometryUtil.GetAllAtomRMSD(molOne, molTwo, mappedAtoms, true);
             Assert.AreEqual(0.242, AllRMSD, 0.001);
-            //Debug.WriteLine("***** BOND LENGTH RMSD *****");
-            double BondLengthRMSD = GeometryUtil.GetBondLengthRMSD(molOne, molTwo, mappedAtoms, true);
-            //Debug.WriteLine("The Bond length RMSD between the first and the second structure is :"+BondLengthRMSD);
+            var BondLengthRMSD = GeometryUtil.GetBondLengthRMSD(molOne, molTwo, mappedAtoms, true);
             Assert.AreEqual(0.2, BondLengthRMSD, 0.1);
         }
 
@@ -476,7 +469,7 @@ namespace NCDK.Geometries
         {
             var container = builder.NewAtomContainer();
             Assert.AreEqual(GeometryUtil.CoordinateCoverage.None, GeometryUtil.Get3DCoordinateCoverage(container));
-            Assert.AreEqual(GeometryUtil.CoordinateCoverage.None, GeometryUtil.Get3DCoordinateCoverage((IAtomContainer)null));
+            Assert.AreEqual(GeometryUtil.CoordinateCoverage.None, GeometryUtil.Get3DCoordinateCoverage(null));
         }
 
         [TestMethod()]

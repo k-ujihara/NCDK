@@ -74,7 +74,7 @@ namespace NCDK.Layout
         internal const double DefaultBondLength = 1.5;
         internal const double SGROUP_BRACKET_PADDING_FACTOR = 0.5;
         static Vector2 DefaultBondVector { get; } = new Vector2(0, 1);
-        private static IdentityTemplateLibrary DefaultTempleteLibrary =
+        private static readonly IdentityTemplateLibrary DefaultTempleteLibrary =
                 IdentityTemplateLibrary.LoadFromResource("custom-templates.smi")
            .Add(IdentityTemplateLibrary.LoadFromResource("chebi-ring-templates.smi"));
 
@@ -99,8 +99,8 @@ namespace NCDK.Layout
         public double BondLength { get; } = DefaultBondLength;
 
         private Vector2 firstBondVector;
-        private RingPlacer ringPlacer = new RingPlacer();
-        private AtomPlacer atomPlacer = new AtomPlacer();
+        private readonly RingPlacer ringPlacer = new RingPlacer();
+        private readonly AtomPlacer atomPlacer = new AtomPlacer();
         private MacroCycleLayout macroPlacer = null;
         private List<IRingSet> ringSystems = null;
         private ISet<IAtom> afix = null;
@@ -707,8 +707,6 @@ namespace NCDK.Layout
 
         private void SeedLayout()
         {
-            int numAtoms = this.molecule.Atoms.Count;
-            int numBonds = this.molecule.Bonds.Count;
             if (HasFixedPart(molecule))
             {
                 if (PrepareRingSystems() > 0)
@@ -919,12 +917,10 @@ namespace NCDK.Layout
 
             // check for attachment points, these override the direction which we rorate structures
             {
-                IAtom begAttach = null;
                 foreach (IAtom atom in molecule.Atoms)
                 {
                     if (atom is IPseudoAtom atom1 && atom1.AttachPointNum == 1)
                     {
-                        begAttach = atom;
                         selectOrientation = true;
                         break;
                     }
@@ -1027,7 +1023,7 @@ namespace NCDK.Layout
                 var vec = new Vector2(end.X - beg.X, end.Y - beg.Y);
                 if (vec.X < 0)
                     vec = -vec;
-                double angle = Math.PI / 2 + Math.Atan2(vec.Y, vec.X);
+                var angle = Math.PI / 2 + Math.Atan2(vec.Y, vec.X);
                 counts[(int)(Math.Round(Vectors.RadianToDegree(angle)) % lim)]++;
             }
         }
@@ -2203,15 +2199,12 @@ namespace NCDK.Layout
         /// <returns>an IAtomContainer with the atoms of the bond and the bond itself</returns>
         private IAtomContainer PlaceFirstBond(IBond bond, ref Vector2 bondVector)
         {
-            IAtomContainer sharedAtoms = null;
-
             bondVector = Vector2.Normalize(bondVector);
             Debug.WriteLine($"placeFirstBondOfFirstRing->bondVector.Length: {bondVector.Length()}");
             bondVector *= BondLength;
             Debug.WriteLine($"placeFirstBondOfFirstRing->bondVector.Length after scaling:{bondVector.Length()}");
-            IAtom atom;
             var point = Vector2.Zero;
-            atom = bond.Begin;
+            var atom = bond.Begin;
             Debug.WriteLine("Atom 1 of first Bond: " + (molecule.Atoms.IndexOf(atom) + 1));
             atom.Point2D = point;
             atom.IsPlaced = true;
@@ -2227,7 +2220,7 @@ namespace NCDK.Layout
             // already been draw and to which the new ring is somehow connected,
             // or some other system of atoms in an aliphatic chain. In this
             // case, it's the first bond that we layout by hand.
-            sharedAtoms = atom.Builder.NewAtomContainer();
+            var sharedAtoms = atom.Builder.NewAtomContainer();
             sharedAtoms.Atoms.Add(bond.Begin);
             sharedAtoms.Atoms.Add(bond.End);
             sharedAtoms.Bonds.Add(bond);
@@ -2278,10 +2271,9 @@ namespace NCDK.Layout
         /// <returns>the ring system the given atom is part of</returns>
         private static IRingSet GetRingSystemOfAtom(IList<IRingSet> ringSystems, IAtom ringAtom)
         {
-            IRingSet ringSet = null;
             for (int f = 0; f < ringSystems.Count; f++)
             {
-                ringSet = ringSystems[f];
+                var ringSet = ringSystems[f];
                 if (ringSet.Contains(ringAtom))
                 {
                     return ringSet;
@@ -2295,7 +2287,6 @@ namespace NCDK.Layout
         /// </summary>
         private void ResetUnplacedRings()
         {
-            IRing ring = null;
             if (sssr == null)
             {
                 return;
@@ -2303,7 +2294,7 @@ namespace NCDK.Layout
             int unplacedCounter = 0;
             for (int f = 0; f < sssr.Count; f++)
             {
-                ring = sssr[f];
+                var ring = sssr[f];
                 if (!ring.IsPlaced)
                 {
                     Debug.WriteLine("Ring with " + ring.Atoms.Count + " atoms is not placed.");
@@ -2510,7 +2501,7 @@ namespace NCDK.Layout
 
         class AtomicNumberAtomMatcher : AtomMatcher
         {
-            HashSet<IAtom> visit;
+            readonly HashSet<IAtom> visit;
 
             public AtomicNumberAtomMatcher(HashSet<IAtom> visit)
             {

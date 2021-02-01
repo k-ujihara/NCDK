@@ -69,10 +69,9 @@ namespace NCDK.Tools.Manipulator
         {
             IRingSet largestRingSet = null;
             int atomNumber = 0;
-            IAtomContainer container = null;
             foreach (var ringSystem in ringSystems)
             {
-                container = RingSetManipulator.GetAllInOneContainer(ringSystem);
+                var container = RingSetManipulator.GetAllInOneContainer(ringSystem);
                 if (atomNumber < container.Atoms.Count)
                 {
                     atomNumber = container.Atoms.Count;
@@ -135,10 +134,11 @@ namespace NCDK.Tools.Manipulator
             int maxOrderSum = 0;
             foreach (var ring1 in rings)
             {
-                if (maxOrderSum < ((IRing)ring1).GetBondOrderSum())
+                var ring1BondOrderSum = ring1.GetBondOrderSum();
+                if (maxOrderSum < ring1BondOrderSum)
                 {
-                    ring = (IRing)ring1;
-                    maxOrderSum = ring.GetBondOrderSum();
+                    ring = ring1;
+                    maxOrderSum = ring1BondOrderSum;
                 }
             }
             return ring;
@@ -154,28 +154,27 @@ namespace NCDK.Tools.Manipulator
         public static IRing GetMostComplexRing(IChemObjectSet<IRing> ringSet)
         {
             var neighbors = new int[ringSet.Count];
-            IRing ring1, ring2;
-            IAtom atom1, atom2;
-            int mostComplex = 0, mostComplexPosition = 0;
+            int mostComplex = 0;
+            int mostComplexPosition = 0;
             /* for all rings in this RingSet */
             for (int i = 0; i < ringSet.Count; i++)
             {
                 /* Take each ring */
-                ring1 = (IRing)ringSet[i];
+                var ring1 = ringSet[i];
                 // look at each Atom in this ring whether it is part of any other ring
                 for (int j = 0; j < ring1.Atoms.Count; j++)
                 {
-                    atom1 = ring1.Atoms[j];
+                    var atom1 = ring1.Atoms[j];
                     /* Look at each of the other rings in the ring set */
                     for (int k = i + 1; k < ringSet.Count; k++)
                     {
-                        ring2 = (IRing)ringSet[k];
-                        if (ring1 != ring2)
+                        var ring2 = ringSet[k];
+                        if (!ring1.Equals(ring2))
                         {
                             for (int l = 0; l < ring2.Atoms.Count; l++)
                             {
-                                atom2 = ring2.Atoms[l];
-                                if (atom1 == atom2)
+                                var atom2 = ring2.Atoms[l];
+                                if (atom1.Equals(atom2))
                                 {
                                     neighbors[i]++;
                                     neighbors[k]++;
@@ -194,7 +193,7 @@ namespace NCDK.Tools.Manipulator
                     mostComplexPosition = i;
                 }
             }
-            return (IRing)ringSet[mostComplexPosition];
+            return ringSet[mostComplexPosition];
         }
 
         /// <summary>
@@ -216,7 +215,7 @@ namespace NCDK.Tools.Manipulator
         {
             foreach (var atomContainer in ringSet)
             {
-                var ring = (IRing)atomContainer;
+                var ring = atomContainer;
                 if (ring.Contains(atom1) && ring.Contains(atom2))
                     return true;
             }
@@ -233,14 +232,11 @@ namespace NCDK.Tools.Manipulator
         /// <returns><see langword="true"/> if it is already stored</returns>
         public static bool RingAlreadyInSet(IRing newRing, IRingSet ringSet)
         {
-            IRing ring;
-            int equalCount;
-            bool equals;
             for (int f = 0; f < ringSet.Count; f++)
             {
-                equals = false;
-                equalCount = 0;
-                ring = (IRing)ringSet[f];
+                bool equals = false;
+                int equalCount = 0;
+                var ring = (IRing)ringSet[f];
 
                 if (ring.Bonds.Count == newRing.Bonds.Count)
                 {

@@ -118,8 +118,8 @@ namespace NCDK.Geometries
         public static void ScaleMolecule(IAtomContainer atomCon, double[] areaDim, double fillFactor)
         {
             var molDim = Get2DDimension(atomCon);
-            var widthFactor = (double)areaDim[0] / (double)molDim[0];
-            var heightFactor = (double)areaDim[1] / (double)molDim[1];
+            var widthFactor = areaDim[0] / molDim[0];
+            var heightFactor = areaDim[1] / molDim[1];
             var scaleFactor = Math.Min(widthFactor, heightFactor) * fillFactor;
             ScaleMolecule(atomCon, scaleFactor);
         }
@@ -565,24 +565,7 @@ namespace NCDK.Geometries
         /// <returns>The angle value</returns>
         public static double GetAngle(double xDiff, double yDiff)
         {
-            double angle = 0;
-            if (xDiff >= 0 && yDiff >= 0)
-            {
-                angle = Math.Atan(yDiff / xDiff);
-            }
-            else if (xDiff < 0 && yDiff >= 0)
-            {
-                angle = Math.PI + Math.Atan(yDiff / xDiff);
-            }
-            else if (xDiff < 0 && yDiff < 0)
-            {
-                angle = Math.PI + Math.Atan(yDiff / xDiff);
-            }
-            else if (xDiff >= 0 && yDiff < 0)
-            {
-                angle = 2 * Math.PI + Math.Atan(yDiff / xDiff);
-            }
-            return angle;
+            return Math.Atan2(yDiff, xDiff);
         }
 
         /// <summary>
@@ -1345,56 +1328,44 @@ namespace NCDK.Geometries
         /// <returns>double: the value of the RMSD</returns>
         public static double GetAngleRMSD(IAtomContainer firstAtomContainer, IAtomContainer secondAtomContainer, IReadOnlyDictionary<int, int> mappedAtoms)
         {
-            //Debug.WriteLine("**** GT GetAngleRMSD ****");
-            IEnumerable<int> firstAtoms = mappedAtoms.Keys;
-            //Debug.WriteLine("mappedAtoms:"+mappedAtoms.ToString());
-            IAtom firstAtomfirstAC;
-            IAtom centerAtomfirstAC;
-            IAtom firstAtomsecondAC;
-            IAtom secondAtomsecondAC;
-            IAtom centerAtomsecondAC;
-            double angleFirstMolecule;
-            double angleSecondMolecule;
+            var firstAtoms = mappedAtoms.Keys;
             double sum = 0;
-            double n = 0;
+            int n = 0;
             foreach (var firstAtomNumber in firstAtoms)
             {
-                centerAtomfirstAC = firstAtomContainer.Atoms[firstAtomNumber];
+                var centerAtomfirstAC = firstAtomContainer.Atoms[firstAtomNumber];
                 var connectedAtoms = firstAtomContainer.GetConnectedAtoms(centerAtomfirstAC).ToReadOnlyList();
                 if (connectedAtoms.Count > 1)
                 {
                     for (int i = 0; i < connectedAtoms.Count - 1; i++)
                     {
-                        firstAtomfirstAC = connectedAtoms[i];
+                        var firstAtomfirstAC = connectedAtoms[i];
                         for (int j = i + 1; j < connectedAtoms.Count; j++)
                         {
-                            angleFirstMolecule = GetAngle(centerAtomfirstAC, firstAtomfirstAC, connectedAtoms[j]);
-                            centerAtomsecondAC = secondAtomContainer.Atoms[mappedAtoms[firstAtomContainer
-                                    .Atoms.IndexOf(centerAtomfirstAC)]];
-                            firstAtomsecondAC = secondAtomContainer.Atoms[mappedAtoms[firstAtomContainer
-                                    .Atoms.IndexOf(firstAtomfirstAC)]];
-                            secondAtomsecondAC = secondAtomContainer.Atoms[mappedAtoms[firstAtomContainer
-                                    .Atoms.IndexOf(connectedAtoms[j])]];
-                            angleSecondMolecule = GetAngle(centerAtomsecondAC, firstAtomsecondAC, secondAtomsecondAC);
-                            sum = sum + Math.Pow(angleFirstMolecule - angleSecondMolecule, 2);
+                            var angleFirstMolecule = GetAngle(centerAtomfirstAC, firstAtomfirstAC, connectedAtoms[j]);
+                            var centerAtomsecondAC = secondAtomContainer.Atoms[mappedAtoms[firstAtomContainer.Atoms.IndexOf(centerAtomfirstAC)]];
+                            var firstAtomsecondAC = secondAtomContainer.Atoms[mappedAtoms[firstAtomContainer.Atoms.IndexOf(firstAtomfirstAC)]];
+                            var secondAtomsecondAC = secondAtomContainer.Atoms[mappedAtoms[firstAtomContainer.Atoms.IndexOf(connectedAtoms[j])]];
+                            var angleSecondMolecule = GetAngle(centerAtomsecondAC, firstAtomsecondAC, secondAtomsecondAC);
+                            sum += Math.Pow(angleFirstMolecule - angleSecondMolecule, 2);
                             n++;
                         }
                     }
-                }//if
+                }
             }
             return Math.Sqrt(sum / n);
         }
 
         private static double GetAngle(IAtom atom1, IAtom atom2, IAtom atom3)
         {
-            Vector3 centerAtom = new Vector3
+            var centerAtom = new Vector3
             {
                 X = atom1.Point3D.Value.X,
                 Y = atom1.Point3D.Value.Y,
                 Z = atom1.Point3D.Value.Z
             };
-            Vector3 firstAtom = new Vector3();
-            Vector3 secondAtom = new Vector3();
+            var firstAtom = new Vector3();
+            var secondAtom = new Vector3();
 
             firstAtom.X = atom2.Point3D.Value.X;
             firstAtom.Y = atom2.Point3D.Value.Y;
@@ -1404,8 +1375,8 @@ namespace NCDK.Geometries
             secondAtom.Y = atom3.Point3D.Value.Y;
             secondAtom.Z = atom3.Point3D.Value.Z;
 
-            firstAtom = firstAtom - centerAtom;
-            secondAtom = secondAtom - centerAtom;
+            firstAtom -= centerAtom;
+            secondAtom -= centerAtom;
 
             return Vectors.Angle(firstAtom, secondAtom);
         }

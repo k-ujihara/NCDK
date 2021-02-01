@@ -170,21 +170,19 @@ namespace NCDK.Layout
         public IAtomContainer PlaceRingSubstituents(IRingSet rs, double bondLength)
         {
             Debug.WriteLine("RingPlacer.PlaceRingSubstituents() start");
-            IRing ring = null;
-            IAtom atom = null;
-            IAtomContainer unplacedPartners = rs.Builder.NewAtomContainer();
-            IAtomContainer sharedAtoms = rs.Builder.NewAtomContainer();
-            IAtomContainer primaryAtoms = rs.Builder.NewAtomContainer();
-            IAtomContainer treatedAtoms = rs.Builder.NewAtomContainer();
+            var unplacedPartners = rs.Builder.NewAtomContainer();
+            var sharedAtoms = rs.Builder.NewAtomContainer();
+            var primaryAtoms = rs.Builder.NewAtomContainer();
+            var treatedAtoms = rs.Builder.NewAtomContainer();
             for (int j = 0; j < rs.Count; j++)
             {
-                ring = (IRing)rs[j]; // Get the j-th Ring in RingSet rs 
+                var ring = (IRing)rs[j]; // Get the j-th Ring in RingSet rs 
                 for (int k = 0; k < ring.Atoms.Count; k++)
                 {
                     unplacedPartners.RemoveAllElements();
                     sharedAtoms.RemoveAllElements();
                     primaryAtoms.RemoveAllElements();
-                    atom = ring.Atoms[k];
+                    var atom = ring.Atoms[k];
                     var rings = rs.GetRings(atom);
                     var centerOfRingGravity = GeometryUtil.Get2DCenter(rings);
                     AtomPlacer.PartitionPartners(atom, unplacedPartners, sharedAtoms);
@@ -284,7 +282,7 @@ namespace NCDK.Layout
             }
 
             Vector2.Normalize(ringCenterVector);
-            ringCenterVector = ringCenterVector * (radius - offset);
+            ringCenterVector *= (radius - offset);
             ringCenter += ringCenterVector;
 
             bondAtom1Vector -= ringCenter;
@@ -529,7 +527,7 @@ namespace NCDK.Layout
                 currentAtom = currentBond.GetOther(currentAtom);
                 atomsToDraw.Add(currentAtom);
             }
-            addAngle = addAngle * direction;
+            addAngle *= direction;
 
 #if DEBUG
             Debug.WriteLine("placeFusedRing->startAngle: " + Vectors.RadianToDegree(startAngle));
@@ -629,11 +627,10 @@ namespace NCDK.Layout
         /// <param name="rs">The ringset to be checked</param>
         public static void CheckAndMarkPlaced(IRingSet rs)
         {
-            bool allPlaced = true;
             bool ringsetPlaced = true;
             foreach (var ring in rs)
             {
-                allPlaced = true;
+                var allPlaced = true;
                 for (int j = 0; j < ring.Atoms.Count; j++)
                 {
                     if (!(ring.Atoms[j]).IsPlaced)
@@ -779,7 +776,7 @@ namespace NCDK.Layout
                             if (terminalOnly.Atoms.Count == 2)
                             {
                                 newRingCenterVector = GeometryUtil.Get2DCenter(terminalOnly);
-                                newRingCenterVector = oldRingCenter;
+                                newRingCenterVector -= oldRingCenter;
                                 connectedRing.SetProperty(RingPlacer.SnapHint, true);
                             }
                             else
@@ -818,8 +815,6 @@ namespace NCDK.Layout
                         Debug.WriteLine($"placeConnectedRing -> bondCenter: {sharedAtomsCenter}");
                         Debug.WriteLine($"placeConnectedRing -> oldRingCenterVector.Length: {oldRingCenterVector.Length()}");
                         Debug.WriteLine($"placeConnectedRing -> newRingCenterVector.Length: {newRingCenterVector.Length()}");
-                        Vector2 tempPoint = sharedAtomsCenter;
-                        tempPoint += newRingCenterVector;
                         PlaceRing(connectedRing, sharedAtoms, sharedAtomsCenter, newRingCenterVector, bondLength);
                         connectedRing.IsPlaced = true;
                         PlaceConnectedRings(rs, connectedRing, handleType, bondLength);

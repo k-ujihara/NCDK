@@ -18,9 +18,8 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
-using System.Linq;
 using NCDK.Numerics;
+using System.Linq;
 
 namespace NCDK
 {
@@ -34,13 +33,13 @@ namespace NCDK
         [TestMethod()]
         public override void TestCompare_Object()
         {
-            IBond b = (IBond)NewChemObject();
-            IAtom c = b.Builder.NewAtom("C");
-            IAtom o = b.Builder.NewAtom("O");
+            var b = (IBond)NewChemObject();
+            var c = b.Builder.NewAtom("C");
+            var o = b.Builder.NewAtom("O");
             b.SetAtoms(new[] { c, o });
             b.Order = BondOrder.Single;
 
-            IBond b2 = (IBond)NewChemObject();
+            var b2 = (IBond)NewChemObject();
             b2.SetAtoms(new[] { c, o });
             b2.Order = BondOrder.Single;
 
@@ -50,9 +49,9 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestContains_IAtom()
         {
-            IBond b = (IBond)NewChemObject();
-            IAtom c = b.Builder.NewAtom("C");
-            IAtom o = b.Builder.NewAtom("O");
+            var b = (IBond)NewChemObject();
+            var c = b.Builder.NewAtom("C");
+            var o = b.Builder.NewAtom("O");
             b.SetAtoms(new[] { c, o });
             b.Order = BondOrder.Single;
 
@@ -63,9 +62,9 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestGetAtomCount()
         {
-            IBond b = (IBond)NewChemObject();
-            IAtom c = b.Builder.NewAtom("C");
-            IAtom o = b.Builder.NewAtom("O");
+            var b = (IBond)NewChemObject();
+            var c = b.Builder.NewAtom("C");
+            var o = b.Builder.NewAtom("O");
             b.SetAtoms(new[] { c, o });
             b.Order = BondOrder.Single;
 
@@ -75,9 +74,9 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestSetAtoms_arrayIAtom()
         {
-            IBond b = (IBond)NewChemObject();
+            var b = (IBond)NewChemObject();
 
-            IAtom[] atomsToAdd = new IAtom[2];
+            var atomsToAdd = new IAtom[2];
             atomsToAdd[0] = b.Builder.NewAtom("C");
             atomsToAdd[1] = b.Builder.NewAtom("O");
             b.SetAtoms(atomsToAdd);
@@ -90,7 +89,7 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestSetAtom_SomeNull()
         {
-            IBond b = (IBond)NewChemObject();
+            var b = (IBond)NewChemObject();
             b.Atoms.Add(b.Builder.NewAtom("C"));
             Assert.AreEqual(1, b.Atoms.Count);
         }
@@ -98,7 +97,7 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestUnSetAtom()
         {
-            IBond b = (IBond)NewChemObject();
+            var b = (IBond)NewChemObject();
             b.Atoms.Add(b.Builder.NewAtom("C"));
             Assert.AreEqual(1, b.Atoms.Count);
             b.Atoms[0] = b.Builder.NewAtom("C");
@@ -112,7 +111,7 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestOverwriteAtom()
         {
-            IBond b = (IBond)NewChemObject();
+            var b = (IBond)NewChemObject();
             b.Atoms.Add(b.Builder.NewAtom("C"));
             Assert.AreEqual(1, b.Atoms.Count);
             b.Atoms[0] = b.Builder.NewAtom("C");
@@ -128,13 +127,13 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestAtoms()
         {
-            IBond b = (IBond)NewChemObject();
-            IAtom c = b.Builder.NewAtom("C");
-            IAtom o = b.Builder.NewAtom("O");
+            var b = (IBond)NewChemObject();
+            var c = b.Builder.NewAtom("C");
+            var o = b.Builder.NewAtom("O");
             b.SetAtoms(new[] { c, o });
             b.Order = BondOrder.Single;
 
-            IEnumerator<IAtom> atoms = b.Atoms.GetEnumerator();
+            var atoms = b.Atoms.GetEnumerator();
             Assert.AreEqual(2, b.Atoms.Count);
             Assert.IsTrue(atoms.MoveNext());
             Assert.AreEqual(c, atoms.Current);
@@ -146,9 +145,9 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestGetAtom_int()
         {
-            IBond b = (IBond)NewChemObject();
-            IAtom c = b.Builder.NewAtom("C");
-            IAtom o = b.Builder.NewAtom("O");
+            var b = (IBond)NewChemObject();
+            var c = b.Builder.NewAtom("C");
+            var o = b.Builder.NewAtom("O");
             b.SetAtoms(new[] { c, o });
             b.Order = BondOrder.Single;
 
@@ -159,9 +158,9 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestSetAtom_IAtom_int()
         {
-            IBond b = (IBond)NewChemObject();
-            IAtom c = b.Builder.NewAtom("C");
-            IAtom o = b.Builder.NewAtom("O");
+            var b = (IBond)NewChemObject();
+            var c = b.Builder.NewAtom("C");
+            var o = b.Builder.NewAtom("O");
 
             b.SetAtoms(new[] { c, o });
 
@@ -172,9 +171,9 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestGetConnectedAtom_IAtom()
         {
-            IBond b = (IBond)NewChemObject();
-            IAtom c = b.Builder.NewAtom("C");
-            IAtom o = b.Builder.NewAtom("O");
+            var b = (IBond)NewChemObject();
+            var c = b.Builder.NewAtom("C");
+            var o = b.Builder.NewAtom("O");
             b.SetAtoms(new[] { c, o });
             b.Order = BondOrder.Single;
 
@@ -188,15 +187,15 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestGetConnectedAtoms_IAtom()
         {
-            IBond b = (IBond)NewChemObject();
-            IAtom[] atoms = new IAtom[3];
+            var b = (IBond)NewChemObject();
+            var atoms = new IAtom[3];
             atoms[0] = b.Builder.NewAtom("B");
             atoms[1] = b.Builder.NewAtom("H");
             atoms[2] = b.Builder.NewAtom("B");
             b.SetAtoms(atoms);
             b.Order = BondOrder.Single; // C=O bond
 
-            IEnumerable<IAtom> connectedAtoms = b.GetConnectedAtoms(atoms[1]);
+            var connectedAtoms = b.GetConnectedAtoms(atoms[1]);
             Assert.IsNotNull(connectedAtoms);
             Assert.AreEqual(2, connectedAtoms.Count());
             Assert.IsNotNull(connectedAtoms.ElementAt(0));
@@ -210,15 +209,15 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestIsConnectedTo_IBond()
         {
-            IBond b = (IBond)NewChemObject();
-            IAtom c1 = b.Builder.NewAtom("C");
-            IAtom o = b.Builder.NewAtom("O");
-            IAtom c2 = b.Builder.NewAtom("C");
-            IAtom c3 = b.Builder.NewAtom("C");
+            var b = (IBond)NewChemObject();
+            var c1 = b.Builder.NewAtom("C");
+            var o = b.Builder.NewAtom("O");
+            var c2 = b.Builder.NewAtom("C");
+            var c3 = b.Builder.NewAtom("C");
 
-            IBond b1 = b.Builder.NewBond(c1, o);
-            IBond b2 = b.Builder.NewBond(o, c2);
-            IBond b3 = b.Builder.NewBond(c2, c3);
+            var b1 = b.Builder.NewBond(c1, o);
+            var b2 = b.Builder.NewBond(o, c2);
+            var b3 = b.Builder.NewBond(c2, c3);
 
             Assert.IsTrue(b1.IsConnectedTo(b2));
             Assert.IsTrue(b2.IsConnectedTo(b1));
@@ -231,9 +230,9 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestGetOrder()
         {
-            IBond b = (IBond)NewChemObject();
-            IAtom c = b.Builder.NewAtom("C");
-            IAtom o = b.Builder.NewAtom("O");
+            var b = (IBond)NewChemObject();
+            var c = b.Builder.NewAtom("C");
+            var o = b.Builder.NewAtom("O");
             b.SetAtoms(new[] { c, o });
             b.Order = BondOrder.Double;
 
@@ -243,9 +242,9 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestSetOrder_BondOrder()
         {
-            IBond b = (IBond)NewChemObject();
-            IAtom c = b.Builder.NewAtom("C");
-            IAtom o = b.Builder.NewAtom("O");
+            var b = (IBond)NewChemObject();
+            var c = b.Builder.NewAtom("C");
+            var o = b.Builder.NewAtom("O");
             b.SetAtoms(new[] { c, o });
             b.Order = BondOrder.Double;
 
@@ -258,9 +257,9 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestSetOrder_electronCounts()
         {
-            IBond b = (IBond)NewChemObject();
-            IAtom c = b.Builder.NewAtom("C");
-            IAtom o = b.Builder.NewAtom("C");
+            var b = (IBond)NewChemObject();
+            var c = b.Builder.NewAtom("C");
+            var o = b.Builder.NewAtom("C");
 
             b.SetAtoms(new[] { c, o });
             b.Order = BondOrder.Single;
@@ -304,9 +303,9 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestSetStereo_IBond_Stereo()
         {
-            IBond b = (IBond)NewChemObject();
-            IAtom c = b.Builder.NewAtom("C");
-            IAtom o = b.Builder.NewAtom("O");
+            var b = (IBond)NewChemObject();
+            var c = b.Builder.NewAtom("C");
+            var o = b.Builder.NewAtom("O");
             b.SetAtoms(new[] { c, o });
             b.Order = BondOrder.Double;
             b.Stereo = BondStereo.Down;
@@ -318,21 +317,21 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestGetStereo()
         {
-            IChemObject obj = NewChemObject();
-            IAtom c = obj.Builder.NewAtom("C");
-            IAtom o = obj.Builder.NewAtom("O");
+            var obj = NewChemObject();
+            var c = obj.Builder.NewAtom("C");
+            var o = obj.Builder.NewAtom("O");
 
-            IBond b = obj.Builder.NewBond(c, o, BondOrder.Double, BondStereo.Up);
+            var b = obj.Builder.NewBond(c, o, BondOrder.Double, BondStereo.Up);
             Assert.AreEqual(BondStereo.Up, b.Stereo);
         }
 
         [TestMethod()]
         public virtual void TestGet2DCenter()
         {
-            IChemObject obj = NewChemObject();
-            IAtom o = obj.Builder.NewAtom("O", Vector2.Zero);
-            IAtom c = obj.Builder.NewAtom("C", new Vector2(1, 1));
-            IBond b = obj.Builder.NewBond(c, o);
+            var obj = NewChemObject();
+            var o = obj.Builder.NewAtom("O", Vector2.Zero);
+            var c = obj.Builder.NewAtom("C", new Vector2(1, 1));
+            var b = obj.Builder.NewBond(c, o);
 
             var b2d = b.GetGeometric2DCenter();
             Assert.AreEqual(0.5, b2d.X, 0.001);
@@ -342,10 +341,10 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestGet3DCenter()
         {
-            IChemObject obj = NewChemObject();
-            IAtom o = obj.Builder.NewAtom("O", Vector3.Zero);
-            IAtom c = obj.Builder.NewAtom("C", new Vector3(1, 1, 1));
-            IBond b = obj.Builder.NewBond(c, o);
+            var obj = NewChemObject();
+            var o = obj.Builder.NewAtom("O", Vector3.Zero);
+            var c = obj.Builder.NewAtom("C", new Vector3(1, 1, 1));
+            var b = obj.Builder.NewBond(c, o);
 
             var b3d = b.GetGeometric3DCenter();
             Assert.AreEqual(0.5, b3d.X, 0.001);
@@ -357,7 +356,7 @@ namespace NCDK
 
         public override void TestClone()
         {
-            IBond bond = (IBond)NewChemObject();
+            var bond = (IBond)NewChemObject();
             object clone = bond.Clone();
             Assert.IsNotNull(clone);
             Assert.IsTrue(clone is IBond);
@@ -366,11 +365,11 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestClone_IAtom()
         {
-            IChemObject obj = NewChemObject();
-            IAtom atom1 = obj.Builder.NewAtom("C");
-            IAtom atom2 = obj.Builder.NewAtom("O");
-            IBond bond = obj.Builder.NewBond(atom1, atom2);
-            IBond clone = (IBond)bond.Clone();
+            var obj = NewChemObject();
+            var atom1 = obj.Builder.NewAtom("C");
+            var atom2 = obj.Builder.NewAtom("O");
+            var bond = obj.Builder.NewBond(atom1, atom2);
+            var clone = (IBond)bond.Clone();
 
             // test cloning of atoms
             Assert.AreNotSame(atom1, clone.Begin);
@@ -380,11 +379,11 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestClone_Order()
         {
-            IChemObject obj = NewChemObject();
-            IAtom atom1 = obj.Builder.NewAtom("C");
-            IAtom atom2 = obj.Builder.NewAtom("O");
-            IBond bond = obj.Builder.NewBond(atom1, atom2, BondOrder.Single);
-            IBond clone = (IBond)bond.Clone();
+            var obj = NewChemObject();
+            var atom1 = obj.Builder.NewAtom("C");
+            var atom2 = obj.Builder.NewAtom("O");
+            var bond = obj.Builder.NewBond(atom1, atom2, BondOrder.Single);
+            var clone = (IBond)bond.Clone();
 
             // test cloning of bond order
             bond.Order = BondOrder.Double;
@@ -394,11 +393,11 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestClone_Stereo()
         {
-            IChemObject obj = NewChemObject();
-            IAtom atom1 = obj.Builder.NewAtom("C");
-            IAtom atom2 = obj.Builder.NewAtom("O");
-            IBond bond = obj.Builder.NewBond(atom1, atom2, BondOrder.Single, BondStereo.Up);
-            IBond clone = (IBond)bond.Clone();
+            var obj = NewChemObject();
+            var atom1 = obj.Builder.NewAtom("C");
+            var atom2 = obj.Builder.NewAtom("O");
+            var bond = obj.Builder.NewBond(atom1, atom2, BondOrder.Single, BondStereo.Up);
+            var clone = (IBond)bond.Clone();
 
             // test cloning of bond order
             bond.Stereo = BondStereo.UpInverted;
@@ -411,8 +410,8 @@ namespace NCDK
         [TestMethod()]
         public override void TestToString()
         {
-            IBond bond = (IBond)NewChemObject();
-            string description = bond.ToString();
+            var bond = (IBond)NewChemObject();
+            var description = bond.ToString();
             for (int i = 0; i < description.Length; i++)
             {
                 Assert.IsTrue(description[i] != '\n');
@@ -423,12 +422,12 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestMultiCenter1()
         {
-            IChemObject obj = NewChemObject();
-            IAtom atom1 = obj.Builder.NewAtom("C");
-            IAtom atom2 = obj.Builder.NewAtom("O");
-            IAtom atom3 = obj.Builder.NewAtom("C");
+            var obj = NewChemObject();
+            var atom1 = obj.Builder.NewAtom("C");
+            var atom2 = obj.Builder.NewAtom("O");
+            var atom3 = obj.Builder.NewAtom("C");
 
-            IBond bond = obj.Builder.NewBond(new IAtom[] { atom1, atom2, atom3 });
+            var bond = obj.Builder.NewBond(new IAtom[] { atom1, atom2, atom3 });
             Assert.AreEqual(3, bond.Atoms.Count);
             Assert.AreEqual(atom1, bond.Atoms[0]);
             Assert.AreEqual(atom2, bond.Atoms[1]);
@@ -440,31 +439,31 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestMultiCenterCompare()
         {
-            IChemObject obj = NewChemObject();
-            IAtom atom1 = obj.Builder.NewAtom("C");
-            IAtom atom2 = obj.Builder.NewAtom("O");
-            IAtom atom3 = obj.Builder.NewAtom("C");
+            var obj = NewChemObject();
+            var atom1 = obj.Builder.NewAtom("C");
+            var atom2 = obj.Builder.NewAtom("O");
+            var atom3 = obj.Builder.NewAtom("C");
 
-            IBond bond1 = obj.Builder.NewBond(new IAtom[] { atom1, atom2, atom3 });
-            IBond bond2 = obj.Builder.NewBond(new IAtom[] { atom1, atom2, atom3 });
+            var bond1 = obj.Builder.NewBond(new IAtom[] { atom1, atom2, atom3 });
+            var bond2 = obj.Builder.NewBond(new IAtom[] { atom1, atom2, atom3 });
 
             Assert.IsTrue(bond1.Compare(bond2));
 
-            IAtom atom4 = obj.Builder.NewAtom("C");
-            IBond bond3 = obj.Builder.NewBond(new IAtom[] { atom1, atom2, atom4 });
+            var atom4 = obj.Builder.NewAtom("C");
+            var bond3 = obj.Builder.NewBond(new IAtom[] { atom1, atom2, atom4 });
             Assert.IsFalse(bond1.Compare(bond3));
         }
 
         [TestMethod()]
         public virtual void TestMultiCenterContains()
         {
-            IChemObject obj = NewChemObject();
-            IAtom atom1 = obj.Builder.NewAtom("C");
-            IAtom atom2 = obj.Builder.NewAtom("O");
-            IAtom atom3 = obj.Builder.NewAtom("C");
-            IAtom atom4 = obj.Builder.NewAtom("C");
+            var obj = NewChemObject();
+            var atom1 = obj.Builder.NewAtom("C");
+            var atom2 = obj.Builder.NewAtom("O");
+            var atom3 = obj.Builder.NewAtom("C");
+            var atom4 = obj.Builder.NewAtom("C");
 
-            IBond bond1 = obj.Builder.NewBond(new IAtom[] { atom1, atom2, atom3 });
+            var bond1 = obj.Builder.NewBond(new IAtom[] { atom1, atom2, atom3 });
             Assert.IsTrue(bond1.Contains(atom1));
             Assert.IsTrue(bond1.Contains(atom2));
             Assert.IsTrue(bond1.Contains(atom3));
@@ -474,14 +473,14 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestMultiCenterIterator()
         {
-            IChemObject obj = NewChemObject();
-            IAtom atom1 = obj.Builder.NewAtom("C");
-            IAtom atom2 = obj.Builder.NewAtom("O");
-            IAtom atom3 = obj.Builder.NewAtom("C");
-            IAtom atom4 = obj.Builder.NewAtom("C");
+            var obj = NewChemObject();
+            var atom1 = obj.Builder.NewAtom("C");
+            var atom2 = obj.Builder.NewAtom("O");
+            var atom3 = obj.Builder.NewAtom("C");
+            var atom4 = obj.Builder.NewAtom("C");
 
-            IBond bond1 = obj.Builder.NewBond(new IAtom[] { atom1, atom2, atom3, atom4 });
-            IEnumerable<IAtom> atoms = bond1.Atoms;
+            var bond1 = obj.Builder.NewBond(new IAtom[] { atom1, atom2, atom3, atom4 });
+            var atoms = bond1.Atoms;
             int natom = 0;
             foreach (var atom in atoms)
             {
@@ -494,21 +493,21 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestMultiCenterConnectedAtoms()
         {
-            IChemObject obj = NewChemObject();
-            IAtom atom1 = obj.Builder.NewAtom("C");
-            IAtom atom2 = obj.Builder.NewAtom("O");
-            IAtom atom3 = obj.Builder.NewAtom("C");
-            IAtom atom4 = obj.Builder.NewAtom("C");
+            var obj = NewChemObject();
+            var atom1 = obj.Builder.NewAtom("C");
+            var atom2 = obj.Builder.NewAtom("O");
+            var atom3 = obj.Builder.NewAtom("C");
+            var atom4 = obj.Builder.NewAtom("C");
 
-            IBond bond1 = obj.Builder.NewBond(new IAtom[] { atom1, atom2, atom3, atom4 });
+            var bond1 = obj.Builder.NewBond(new IAtom[] { atom1, atom2, atom3, atom4 });
             Assert.AreEqual(atom2, bond1.GetOther(atom1));
             Assert.IsNull(bond1.GetOther(obj.Builder.NewAtom()));
 
-            IEnumerable<IAtom> conAtoms = bond1.GetConnectedAtoms(atom1);
+            var conAtoms = bond1.GetConnectedAtoms(atom1);
             bool correct = true;
             foreach (var atom in conAtoms)
             {
-                if (atom == atom1)
+                if (atom.Equals(atom1))
                 {
                     correct = false;
                     break;
@@ -520,7 +519,7 @@ namespace NCDK
             correct = true;
             foreach (var atom in conAtoms)
             {
-                if (atom == atom3)
+                if (atom.Equals(atom3))
                 {
                     correct = false;
                     break;
@@ -532,17 +531,17 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestMultiCenterIsConnectedTo()
         {
-            IChemObject obj = NewChemObject();
-            IAtom atom1 = obj.Builder.NewAtom("C");
-            IAtom atom2 = obj.Builder.NewAtom("O");
-            IAtom atom3 = obj.Builder.NewAtom("C");
-            IAtom atom4 = obj.Builder.NewAtom("C");
-            IAtom atom5 = obj.Builder.NewAtom("C");
+            var obj = NewChemObject();
+            var atom1 = obj.Builder.NewAtom("C");
+            var atom2 = obj.Builder.NewAtom("O");
+            var atom3 = obj.Builder.NewAtom("C");
+            var atom4 = obj.Builder.NewAtom("C");
+            var atom5 = obj.Builder.NewAtom("C");
 
-            IBond bond1 = obj.Builder.NewBond(new IAtom[] { atom1, atom2, atom3 });
-            IBond bond2 = obj.Builder.NewBond(new IAtom[] { atom2, atom3, atom4 });
-            IBond bond3 = obj.Builder.NewBond(new IAtom[] { atom2, atom4 });
-            IBond bond4 = obj.Builder.NewBond(new IAtom[] { atom5, atom4 });
+            var bond1 = obj.Builder.NewBond(new IAtom[] { atom1, atom2, atom3 });
+            var bond2 = obj.Builder.NewBond(new IAtom[] { atom2, atom3, atom4 });
+            var bond3 = obj.Builder.NewBond(new IAtom[] { atom2, atom4 });
+            var bond4 = obj.Builder.NewBond(new IAtom[] { atom5, atom4 });
 
             Assert.IsTrue(bond1.IsConnectedTo(bond2));
             Assert.IsTrue(bond2.IsConnectedTo(bond1));

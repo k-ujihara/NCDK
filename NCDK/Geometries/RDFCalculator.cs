@@ -100,14 +100,14 @@ namespace NCDK.Geometries
         /// </summary>
         public double[] Calculate(IAtomContainer container, IAtom atom)
         {
-            int length = (int)((cutoff - startCutoff) / resolution) + 1;
+            var length = (int)((cutoff - startCutoff) / resolution) + 1;
             Debug.WriteLine($"Creating RDF of length {length}");
 
             // the next we need for Gaussian smoothing
-            int binsToFillOnEachSide = (int)(peakWidth * 3.0 / resolution);
-            double sigmaSquare = Math.Pow(peakWidth, 2.0);
+            var binsToFillOnEachSide = (int)(peakWidth * 3.0 / resolution);
+            var sigmaSquare = Math.Pow(peakWidth, 2.0);
             // factors is only half a Gaussian, taking advantage of being symmetrical!
-            double[] factors = new double[binsToFillOnEachSide];
+            var factors = new double[binsToFillOnEachSide];
             double totalArea = 0.0;
             if (factors.Length > 0)
             {
@@ -126,17 +126,16 @@ namespace NCDK.Geometries
             }
 
             // this we need always
-            double[] rdf = new double[length];
-            double distance = 0.0;
-            int index = 0;
+            var rdf = new double[length];
 
             var atomPoint = atom.Point3D;
             foreach (var atomInContainer in container.Atoms)
             {
-                if (atom == atomInContainer) continue; // don't include the central atom
-                distance = Vector3.Distance(atomPoint.Value, atomInContainer.Point3D.Value);
-                index = (int)((distance - startCutoff) / this.resolution);
-                double weight = 1.0;
+                if (atom.Equals(atomInContainer))
+                    continue; // don't include the central atom
+                var distance = Vector3.Distance(atomPoint.Value, atomInContainer.Point3D.Value);
+                var index = (int)((distance - startCutoff) / this.resolution);
+                var weight = 1.0;
                 if (weightFunction != null)
                 {
                     weight = weightFunction(atom, atomInContainer);
@@ -147,7 +146,7 @@ namespace NCDK.Geometries
                     rdf[index] += weight * factors[0];
                     for (int binCounter = 1; binCounter < factors.Length; binCounter++)
                     {
-                        double diff = weight * factors[binCounter];
+                        var diff = weight * factors[binCounter];
                         if ((index - binCounter) >= 0)
                         {
                             rdf[index - binCounter] += diff;

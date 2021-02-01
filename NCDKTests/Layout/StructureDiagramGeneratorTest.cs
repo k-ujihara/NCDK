@@ -22,6 +22,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Common.Mathematics;
 using NCDK.Geometries;
+using NCDK.Graphs;
 using NCDK.IO;
 using NCDK.Numerics;
 using NCDK.Sgroups;
@@ -254,14 +255,14 @@ namespace NCDK.Layout
         {
             var filename = "NCDK.Data.MDL.sdg_test.mol";
 
-            //        set up molecule reader
+            // set up molecule reader
             var ins = ResourceLoader.GetAsStream(filename);
-            ISimpleChemObjectReader molReader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
+            var molReader = new MDLV2000Reader(ins, ChemObjectReaderMode.Strict);
 
-            //        read molecule
-            IAtomContainer molecule = molReader.Read(builder.NewAtomContainer());
+            // read molecule
+            var molecule = molReader.Read(builder.NewAtomContainer());
 
-            //        rebuild 2D coordinates
+            // rebuild 2D coordinates
             for (int i = 0; i < 10; i++)
             {
                 Layout(molecule);
@@ -577,11 +578,11 @@ namespace NCDK.Layout
         {
             var filename = "NCDK.Data.MDL.bug_1750968.mol";
 
-            //        set up molecule reader
+            // set up molecule reader
             var ins = ResourceLoader.GetAsStream(filename);
             var molReader = new MDLReader(ins, ChemObjectReaderMode.Strict);
 
-            //        read molecule
+            // read molecule
             return molReader.Read(builder.NewAtomContainer());
         }
 
@@ -1322,6 +1323,23 @@ namespace NCDK.Layout
             sdg.GenerateCoordinates(reaction);
             foreach (var atom in ReactionManipulator.ToMolecule(reaction).Atoms)
                 Assert.IsNotNull(atom.Point2D);
+        }
+
+        /// <summary>
+        /// https://github.com/kazuyaujihara/NCDK/issues/24
+        /// </summary>
+        [TestMethod()]
+        public void TestIssue24()
+        {
+            var smi = "CCOC(=O)[C@]12CCC[C@]3([C@H]1CCC[C@H]3c1ccccc1)C2(F)F";
+            var mol = Chem.MolFromSmiles(smi);
+            var smigen = new SmilesGenerator(SmiFlavors.UniversalSmiles);
+            smi = smigen.Create(mol);
+            mol = Chem.MolFromSmiles(smi);
+            var sdg = new StructureDiagramGenerator();
+            ConnectivityChecker.PartitionIntoMolecules(mol);
+            sdg.Molecule = mol;
+            sdg.GenerateCoordinates();
         }
     }
 }
