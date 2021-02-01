@@ -26,14 +26,14 @@ Most of codes are written in C&#35;. You can learn NCDK from CDK documents, NCDK
 Build from Command Line
 -----------------------
 
-Windows: Open Developer Command Prompt for VS 2017, and launch `BuildAll.bat`.
+Windows: Open Developer Command Prompt for VS 2019, and launch `BuildAll.bat`.
 
 Linux (.NET Core): To build NCDK.dll, launch `dotnet build --framework netstandard2.0` in NCDK directory.
 
 Test from Command Line
 ---------------------
 
-Windows: Launch `vstest.console.exe NCDK.Tests\bin\Release\netcoreapp2.1\NCDK.Tests.dll` and `vstest.console.exe NCDK.DisplayTests\bin\Release\NCDK.DisplayTests.dll`.
+Windows: Launch `vstest.console.exe NCDK.Tests\bin\Release\net5.0\NCDK.Tests.dll` and `vstest.console.exe NCDK.DisplayTests\bin\Release\NCDK.DisplayTests.dll`.
 
 Linux: Launch `dotnet build` to build assemblies and copy `libinchi.so.#.##` to output directory of NCDK.Tests, and make a link of libinchi.so to the `libinchi.so.#.##`.
 And then, launch `dotnet test` in NCDK.Tests directory to test it.
@@ -41,7 +41,7 @@ And then, launch `dotnet test` in NCDK.Tests directory to test it.
 NuGet Packages
 --------------
 
-* [NCDK](https://www.nuget.org/packages/NCDK/) -- for .NET Standard 2.0 and .NET Framework 4.6.1. InChI features work only on Intel-based Windows or Intel-based Linux system.
+* [NCDK](https://www.nuget.org/packages/NCDK/) -- for .NET Standard 2.0 and .NET Core 3.1. InChI features work only on Intel-based Windows or Intel-based Linux system.
 * [NCDK.Display](https://www.nuget.org/packages/NCDK.Display/) -- for .NET Framework 4.6.1.
 
-Copyright (c) 2016-2019 Kazuya Ujihara
+Copyright (c) 2016-2021 Kazuya Ujihara
