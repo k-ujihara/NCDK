@@ -75,8 +75,11 @@ namespace NCDK.Default
             cTerminus = atom;
         }
 
+        public new IAminoAcid Clone() => (IAminoAcid)Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
+
         /// <inheritdoc/>
-        public new AminoAcid Clone(CDKObjectMap map)
+        public override ICDKObject Clone(CDKObjectMap map)
         {
             var clone = (AminoAcid)base.Clone(map);
             if (nTerminus != null)
@@ -85,10 +88,6 @@ namespace NCDK.Default
                 clone.cTerminus = clone.atoms[this.atoms.IndexOf(cTerminus)];
             return clone;
         }
-        
-        public new AminoAcid Clone() => Clone(new CDKObjectMap());
-        object ICloneable.Clone() => Clone();
-        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
     }
 }
 namespace NCDK.Silent
@@ -136,8 +135,11 @@ namespace NCDK.Silent
             cTerminus = atom;
         }
 
+        public new IAminoAcid Clone() => (IAminoAcid)Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
+
         /// <inheritdoc/>
-        public new AminoAcid Clone(CDKObjectMap map)
+        public override ICDKObject Clone(CDKObjectMap map)
         {
             var clone = (AminoAcid)base.Clone(map);
             if (nTerminus != null)
@@ -146,9 +148,5 @@ namespace NCDK.Silent
                 clone.cTerminus = clone.atoms[this.atoms.IndexOf(cTerminus)];
             return clone;
         }
-        
-        public new AminoAcid Clone() => Clone(new CDKObjectMap());
-        object ICloneable.Clone() => Clone();
-        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
     }
 }

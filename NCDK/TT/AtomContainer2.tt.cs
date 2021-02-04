@@ -38,8 +38,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
-#pragma warning disable CA1710 // Identifiers should have correct suffix
-
 namespace NCDK.Default
 {
     /// <summary>
@@ -422,6 +420,11 @@ namespace NCDK.Default
                     return Deref().Equals(((BondRef)obj).Deref());
                 return Deref().Equals(obj);
             }
+
+            public new IPseudoAtom Clone() => (IPseudoAtom)Clone(new CDKObjectMap());
+            object ICloneable.Clone() => Clone();
+            /// <inheritdoc/>
+            public override ICDKObject Clone(CDKObjectMap map) => Deref().Clone(map);
         }
 
         internal sealed class QueryAtomRef : BaseAtomRef, IQueryAtom
@@ -463,6 +466,11 @@ namespace NCDK.Default
             public bool Oxt { get => pdbAtom.Oxt; set => pdbAtom.Oxt = value; }
             public bool? HetAtom { get => pdbAtom.HetAtom; set => pdbAtom.HetAtom = value; }
             public double? Occupancy { get => pdbAtom.Occupancy; set => pdbAtom.Occupancy = value; }
+
+            public new IPDBAtom Clone() => (IPDBAtom)Clone(new CDKObjectMap());
+            object ICloneable.Clone() => Clone();
+            /// <inheritdoc/>
+            public override ICDKObject Clone(CDKObjectMap map) => Deref().Clone(map);
         }
 
         internal sealed class QueryBondRef 
@@ -1330,8 +1338,10 @@ namespace NCDK.Default
             return CDKStuff.ToString(this);   
         }
 
+        public new IAtomContainer Clone() => (IAtomContainer)Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
         /// <inheritdoc/>
-        public new AtomContainer2 Clone(CDKObjectMap map)
+        public override ICDKObject Clone(CDKObjectMap map)
         {
             CDKObjectMap refmap = new CDKObjectMap();
 
@@ -1423,10 +1433,6 @@ namespace NCDK.Default
 
             return clone;
         }
-
-        public new AtomContainer2 Clone() => Clone(new CDKObjectMap());
-        object ICloneable.Clone() => Clone();
-        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
 
         /// <inheritdoc/>
         public void OnStateChanged(ChemObjectChangeEventArgs evt)
@@ -1818,6 +1824,11 @@ namespace NCDK.Silent
                     return Deref().Equals(((BondRef)obj).Deref());
                 return Deref().Equals(obj);
             }
+
+            public new IPseudoAtom Clone() => (IPseudoAtom)Clone(new CDKObjectMap());
+            object ICloneable.Clone() => Clone();
+            /// <inheritdoc/>
+            public override ICDKObject Clone(CDKObjectMap map) => Deref().Clone(map);
         }
 
         internal sealed class QueryAtomRef : BaseAtomRef, IQueryAtom
@@ -1859,6 +1870,11 @@ namespace NCDK.Silent
             public bool Oxt { get => pdbAtom.Oxt; set => pdbAtom.Oxt = value; }
             public bool? HetAtom { get => pdbAtom.HetAtom; set => pdbAtom.HetAtom = value; }
             public double? Occupancy { get => pdbAtom.Occupancy; set => pdbAtom.Occupancy = value; }
+
+            public new IPDBAtom Clone() => (IPDBAtom)Clone(new CDKObjectMap());
+            object ICloneable.Clone() => Clone();
+            /// <inheritdoc/>
+            public override ICDKObject Clone(CDKObjectMap map) => Deref().Clone(map);
         }
 
         internal sealed class QueryBondRef 
@@ -2690,8 +2706,10 @@ namespace NCDK.Silent
             return CDKStuff.ToString(this);   
         }
 
+        public new IAtomContainer Clone() => (IAtomContainer)Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
         /// <inheritdoc/>
-        public new AtomContainer2 Clone(CDKObjectMap map)
+        public override ICDKObject Clone(CDKObjectMap map)
         {
             CDKObjectMap refmap = new CDKObjectMap();
 
@@ -2783,10 +2801,6 @@ namespace NCDK.Silent
 
             return clone;
         }
-
-        public new AtomContainer2 Clone() => Clone(new CDKObjectMap());
-        object ICloneable.Clone() => Clone();
-        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
 
         /// <inheritdoc/>
         public void OnStateChanged(ChemObjectChangeEventArgs evt)

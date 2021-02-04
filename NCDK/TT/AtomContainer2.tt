@@ -36,8 +36,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
-#pragma warning disable CA1710 // Identifiers should have correct suffix
-
 <#
 foreach (var ns in namespaces) 
 {
@@ -406,6 +404,11 @@ namespace <#= ns.NS #>
                     return Deref().Equals(((BondRef)obj).Deref());
                 return Deref().Equals(obj);
             }
+
+            public new IPseudoAtom Clone() => (IPseudoAtom)Clone(new CDKObjectMap());
+            object ICloneable.Clone() => Clone();
+            /// <inheritdoc/>
+            public override ICDKObject Clone(CDKObjectMap map) => Deref().Clone(map);
         }
 
         internal sealed class QueryAtomRef : BaseAtomRef, IQueryAtom
@@ -447,6 +450,11 @@ namespace <#= ns.NS #>
             public bool Oxt { get => pdbAtom.Oxt; set => pdbAtom.Oxt = value; }
             public bool? HetAtom { get => pdbAtom.HetAtom; set => pdbAtom.HetAtom = value; }
             public double? Occupancy { get => pdbAtom.Occupancy; set => pdbAtom.Occupancy = value; }
+
+            public new IPDBAtom Clone() => (IPDBAtom)Clone(new CDKObjectMap());
+            object ICloneable.Clone() => Clone();
+            /// <inheritdoc/>
+            public override ICDKObject Clone(CDKObjectMap map) => Deref().Clone(map);
         }
 
         internal sealed class QueryBondRef 
@@ -1362,8 +1370,10 @@ namespace <#= ns.NS #>
             return CDKStuff.ToString(this);   
         }
 
+        public new IAtomContainer Clone() => (IAtomContainer)Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
         /// <inheritdoc/>
-        public new AtomContainer2 Clone(CDKObjectMap map)
+        public override ICDKObject Clone(CDKObjectMap map)
         {
             CDKObjectMap refmap = new CDKObjectMap();
 
@@ -1469,10 +1479,6 @@ namespace <#= ns.NS #>
 
             return clone;
         }
-
-        public new AtomContainer2 Clone() => Clone(new CDKObjectMap());
-        object ICloneable.Clone() => Clone();
-        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
 
         /// <inheritdoc/>
         public void OnStateChanged(ChemObjectChangeEventArgs evt)

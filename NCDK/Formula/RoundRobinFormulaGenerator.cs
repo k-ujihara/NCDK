@@ -33,11 +33,6 @@ namespace NCDK.Formula
     internal class RoundRobinFormulaGenerator : IFormulaGenerator
     {
         /// <summary>
-        /// generates the IMolecularFormula and IMolecularFormulaSet instances
-        /// </summary>
-        protected readonly IChemObjectBuilder builder;
-
-        /// <summary>
         /// the decomposer algorithm with the cached extended residue table
         /// </summary>
         protected readonly RangeMassDecomposer.DecompIterator decomposer;
@@ -66,11 +61,8 @@ namespace NCDK.Formula
         /// <param name="mfRange">A range of elemental compositions defining the search space</param>
         /// <exception cref="ArgumentOutOfRangeException">In case some of the isotopes in mfRange has undefined exact mass or in case illegal parameters are provided (e.g., negative mass values or empty MolecularFormulaRange)</exception>
         /// <seealso cref="MolecularFormulaRange"/>
-        internal RoundRobinFormulaGenerator(IChemObjectBuilder builder,
-                                    double minMass, double maxMass,
-                                    MolecularFormulaRange mfRange)
+        internal RoundRobinFormulaGenerator(double minMass, double maxMass, MolecularFormulaRange mfRange)
         {
-            this.builder = builder;
             var isotopes = new List<IIsotope>(mfRange.GetIsotopes().Count());
             foreach (IIsotope iso in mfRange.GetIsotopes())
             {
@@ -88,7 +80,7 @@ namespace NCDK.Formula
             if (!done && decomposer.Next())
             {
                 this.lastDecomposition = decomposer.GetCurrentCompomere();
-                return decomposer.GenerateCurrentMolecularFormula(builder);
+                return decomposer.GenerateCurrentMolecularFormula();
             }
             else
             {
@@ -101,12 +93,14 @@ namespace NCDK.Formula
         [MethodImpl(MethodImplOptions.Synchronized)]
         public virtual IMolecularFormulaSet GetAllFormulas()
         {
-            IMolecularFormulaSet set = builder.NewMolecularFormulaSet();
-            if (done) return set;
-            for (IMolecularFormula formula = GetNextFormula(); formula != null; formula = GetNextFormula())
+            var set = CDK.Builder.NewMolecularFormulaSet();
+            if (done) 
+                return set;
+            for (var formula = GetNextFormula(); formula != null; formula = GetNextFormula())
             {
                 set.Add(formula);
-                if (done) return set;
+                if (done) 
+                    return set;
             }
             done = true;
             return set;
@@ -120,17 +114,19 @@ namespace NCDK.Formula
         /// </summary>
         public virtual double GetFinishedPercentage()
         {
-            if (done) return 1d;
+            if (done) 
+                return 1d;
             int[] lastDecomposition = this.lastDecomposition;
-            if (lastDecomposition == null) return 0;
+            if (lastDecomposition == null) 
+                return 0;
             double result = 0.0;
             double remainingPerc = 1.0;
 
             for (int i = lastDecomposition.Length - 1; i >= 0; i--)
             {
-                double max = mfRange.GetIsotopeCountMax(decomposer.weights[i].GetOwner());
+                var max = mfRange.GetIsotopeCountMax(decomposer.weights[i].GetOwner());
                 if (i > 0)
-                    max += 1.0;
+                    max += 1;
                 result += remainingPerc * ((double)lastDecomposition[i] / max);
                 remainingPerc /= max;
             }
@@ -174,8 +170,9 @@ namespace NCDK.Formula
                         return decomposer_;
                     }
                 }
-                if (decomposerCache.Count >= maximalNumberOfCachedDecomposers) decomposerCache.RemoveAt(0);
-                RangeMassDecomposer decomposer = new RangeMassDecomposer(alphabet);
+                if (decomposerCache.Count >= maximalNumberOfCachedDecomposers) 
+                    decomposerCache.RemoveAt(0);
+                var decomposer = new RangeMassDecomposer(alphabet);
                 decomposerCache.Add(decomposer);
                 return decomposer;
             }
@@ -261,10 +258,12 @@ namespace NCDK.Formula
             /// </summary>
             private void Init()
             {
-                if (ERTs != null) return;
+                if (ERTs != null) 
+                    return;
                 lock (this)
                 {
-                    if (ERTs != null) return;
+                    if (ERTs != null) 
+                        return;
                     DiscretizeMasses();
                     DivideByGCD();
                     ComputeLCMs();
@@ -292,7 +291,8 @@ namespace NCDK.Formula
                 for (int i = minmax[0]; i <= minmax[1]; ++i)
                 {
                     int r = i % a;
-                    if (i >= ERTs[0][r][weights.Count - 1]) return true;
+                    if (i >= ERTs[0][r][weights.Count - 1]) 
+                        return true;
                 }
                 return false;
             }
@@ -307,8 +307,9 @@ namespace NCDK.Formula
             {
                 Init();
                 if (to < 0d || from < 0d)
-                    throw new ArgumentException("Expect positive mass for decomposition: [" + from + ", " + to + "]");
-                if (to < from) throw new ArgumentException("Negative range given: [" + from + ", " + to + "]");
+                    throw new ArgumentException($"Expect positive mass for decomposition: [{from}, {to}]");
+                if (to < from) 
+                    throw new ArgumentException($"Negative range given: [{from}, {to}]");
                 int[] minValues = new int[weights.Count];
                 int[] boundsarray = new int[weights.Count];
                 double cfrom = from, cto = to;
@@ -317,9 +318,9 @@ namespace NCDK.Formula
                 {
                     for (int i = 0; i < boundsarray.Length; i++)
                     {
-                        IIsotope el = weights[i].GetOwner();
-                        int max = boundaries.GetIsotopeCountMax(el);
-                        int min = boundaries.GetIsotopeCountMin(el);
+                        var el = weights[i].GetOwner();
+                        var max = boundaries.GetIsotopeCountMax(el);
+                        var min = boundaries.GetIsotopeCountMin(el);
                         if (min >= 0 || max >= 0)
                         {
                             boundsarray[i] = max - min;
@@ -333,21 +334,23 @@ namespace NCDK.Formula
                         }
                     }
                 }
-                int[] minmax = new int[2];
+                var minmax = new int[2];
                 IntegerBound(cfrom, cto, minmax);
-                int deviation = minmax[1] - minmax[0];
+                var deviation = minmax[1] - minmax[0];
                 //calculate the required ERTs
                 if ((1 << (ERTs.Length - 1)) <= deviation)
                 {
                     CalcERT(deviation);
                 }
                 {
-                    int[][][] ERTs = this.ERTs;
+                    var ERTs = this.ERTs;
 
                     //take ERT with required deviation
                     int[][] currentERT;
-                    if (deviation == 0) currentERT = ERTs[0];
-                    else currentERT = ERTs[32 - Ints.NumberOfLeadingZeros(deviation)];
+                    if (deviation == 0) 
+                        currentERT = ERTs[0];
+                    else 
+                        currentERT = ERTs[32 - Ints.NumberOfLeadingZeros(deviation)];
 
                     return new DecompIterator(currentERT, minmax[0], minmax[1], from, to, minValues, boundsarray, weights);
                 }
@@ -359,13 +362,13 @@ namespace NCDK.Formula
             /// </summary>
             private void CalcERT(int deviation)
             {
-                int[][][] ERTs = this.ERTs;
-                int currentLength = ERTs.Length;
+                var ERTs = this.ERTs;
+                var currentLength = ERTs.Length;
 
                 // we have to extend the ERT table
 
-                int[][] lastERT = ERTs[ERTs.Length - 1];
-                int[][] nextERT = Arrays.CreateJagged<int>(lastERT.Length, weights.Count);
+                var lastERT = ERTs[ERTs.Length - 1];
+                var nextERT = Arrays.CreateJagged<int>(lastERT.Length, weights.Count);
                 if (currentLength == 1)
                 {
                     //first line compares biggest residue and 0
@@ -404,7 +407,7 @@ namespace NCDK.Formula
                 // now store newly calculated ERT
                 lock (this)
                 {
-                    int[][][] tables = this.ERTs;
+                    var tables = this.ERTs;
                     if (tables.Length == currentLength)
                     {
                         this.ERTs = Arrays.CopyOf(this.ERTs, this.ERTs.Length + 1);
@@ -417,14 +420,14 @@ namespace NCDK.Formula
                 }
                 // recursively calculate ERTs for higher deviations
                 // current ERT is already sufficient
-                if ((1 << (currentLength - 1)) <= deviation) CalcERT(deviation);
+                if ((1 << (currentLength - 1)) <= deviation) 
+                    CalcERT(deviation);
             }
 
             private void CalcERT()
             {
-                int firstLongVal = weights[0].GetIntegerMass();
-                int[][] ERT = Arrays.CreateJagged<int>(firstLongVal, weights.Count);
-                int d, r, n, argmin;
+                var firstLongVal = weights[0].GetIntegerMass();
+                var ERT = Arrays.CreateJagged<int>(firstLongVal, weights.Count);
 
                 //Init
                 ERT[0][0] = 0;
@@ -437,9 +440,10 @@ namespace NCDK.Formula
                 for (int j = 1; j < ERT[0].Length; ++j)
                 {
                     ERT[0][j] = 0; // Init again
-                    d = Gcd(firstLongVal, weights[j].GetIntegerMass());
+                    var d = Gcd(firstLongVal, weights[j].GetIntegerMass());
                     for (int p = 0; p < d; p++)
                     { // Need to start d Round Robin loops
+                        int n;
                         if (p == 0)
                         {
                             n = 0; // 0 is the min in the complete RT or the first p-loop
@@ -447,7 +451,7 @@ namespace NCDK.Formula
                         else
                         {
                             n = int.MaxValue; // should be infinity
-                            argmin = p;
+                            var argmin = p;
                             for (int i = p; i < ERT.Length; i += d)
                             { // Find Minimum in specific part of ERT
                                 if (ERT[i][j - 1] < n)
@@ -474,8 +478,9 @@ namespace NCDK.Formula
                                 {
                                     throw new ArithmeticException("Integer overflow occurs. DECOMP cannot calculate decompositions for the given alphabet as it exceeds the 32 bit integer space. Please use a smaller precision value.");
                                 }
-                                r = n % firstLongVal;
-                                if (ERT[r][j - 1] < n) n = ERT[r][j - 1]; // get the min
+                                var r = n % firstLongVal;
+                                if (ERT[r][j - 1] < n) 
+                                    n = ERT[r][j - 1]; // get the min
                                 ERT[r][j] = n;
                             }
                         }
@@ -489,7 +494,6 @@ namespace NCDK.Formula
                     }
                 }
             }
-
 
             private void DiscretizeMasses()
             {
@@ -508,10 +512,11 @@ namespace NCDK.Formula
                     for (int i = 2; i < weights.Count; ++i)
                     {
                         d = Gcd(d, weights[i].GetIntegerMass());
-                        if (d == 1) return;
+                        if (d == 1) 
+                            return;
                     }
                     precision *= d;
-                    foreach (ChemicalElement weight in weights)
+                    foreach (var weight in weights)
                     {
                         weight.SetIntegerMass(weight.GetIntegerMass() / d);
                     }
@@ -520,13 +525,13 @@ namespace NCDK.Formula
 
             private void ComputeLCMs()
             {
-                ChemicalElement first = weights[0];
+                var first = weights[0];
                 first.SetL(1);
                 first.SetLcm(first.GetIntegerMass());
 
                 for (int i = 1; i < weights.Count; i++)
                 {
-                    ChemicalElement weight = weights[i];
+                    var weight = weights[i];
                     int temp = first.GetIntegerMass() / Gcd(first.GetIntegerMass(), weight.GetIntegerMass());
                     weight.SetL(temp);
                     weight.SetLcm(temp * weight.GetIntegerMass());
@@ -537,9 +542,9 @@ namespace NCDK.Formula
             {
                 this.minError = 0d;
                 this.maxError = 0d;
-                foreach (ChemicalElement weight in weights)
+                foreach (var weight in weights)
                 {
-                    double error = (precision * weight.GetIntegerMass() - weight.GetMass()) / weight.GetMass();
+                    var error = (precision * weight.GetIntegerMass() - weight.GetMass()) / weight.GetMass();
                     minError = Math.Min(minError, error);
                     maxError = Math.Max(maxError, error);
                 }
@@ -547,8 +552,8 @@ namespace NCDK.Formula
 
             private void IntegerBound(double from, double to, int[] bounds)
             {
-                double fromD = Math.Ceiling((1 + minError) * from / precision);
-                double toD = Math.Floor((1 + maxError) * to / precision);
+                var fromD = Math.Ceiling((1 + minError) * from / precision);
+                var toD = Math.Floor((1 + maxError) * to / precision);
                 if (fromD > int.MaxValue || toD > int.MaxValue)
                 {
                     throw new ArithmeticException("Given mass is too large to decompose. Please use a smaller precision value, i.e. mass/precision have to be within 32 bit integer space");
@@ -588,7 +593,6 @@ namespace NCDK.Formula
                 internal bool rewind;
                 internal int i;
 
-
                 internal DecompIterator(int[][] ERT, int minIntegerMass, int maxIntegerMass, double minDoubleMass, double maxDoubleMass, int[] minValues, int[] maxValues, List<ChemicalElement> weights)
                 {
                     this.ERT = ERT;
@@ -598,11 +602,14 @@ namespace NCDK.Formula
                     if (minValues != null)
                     {
                         bool allZero = true;
-                        foreach (int k in minValues) if (k > 0) allZero = false;
+                        foreach (int k in minValues) 
+                            if (k > 0) 
+                                allZero = false;
                         if (!allZero) this.minValues = minValues;
                         else this.minValues = null;
                     }
-                    else this.minValues = null;
+                    else 
+                        this.minValues = null;
                     this.maxValues = maxValues;
                     this.weights = weights;
 
@@ -680,7 +687,8 @@ namespace NCDK.Formula
                                     r[i] = m[i - 1] % a;
                                     //changed from normal algorithm: you have to look up the minimum at 2 position
                                     int pos = r[i] - deviation + ERTdev;
-                                    if (pos < 0) pos += ERT.Length;
+                                    if (pos < 0) 
+                                        pos += ERT.Length;
                                     lbound[i] = Math.Min(ERT[r[i]][i - 1], ERT[pos][i - 1]);
                                     flagWhile = true; // call the while loop
                                     ++j[i];
@@ -740,12 +748,13 @@ namespace NCDK.Formula
                     buffer[i] += weights[i].GetL();
                 }
 
-                internal IMolecularFormula GenerateCurrentMolecularFormula(IChemObjectBuilder builder)
+                internal IMolecularFormula GenerateCurrentMolecularFormula()
                 {
-                    IMolecularFormula formula = builder.NewMolecularFormula();
+                    var formula = CDK.Builder.NewMolecularFormula();
                     for (int k = 0; k < buffer.Length; ++k)
                     {
-                        if (buffer[k] > 0) formula.Add(GetCharacterAt(k), buffer[k]);
+                        if (buffer[k] > 0) 
+                            formula.Add(GetCharacterAt(k), buffer[k]);
                     }
                     return formula;
                 }
@@ -766,7 +775,8 @@ namespace NCDK.Formula
         /// <summary>
         /// A POJO storing the weight information about a character in the alphabet
         /// </summary>
-        internal class ChemicalElement : IComparable<ChemicalElement>
+        internal class ChemicalElement 
+            : IComparable<ChemicalElement>
         {
             /// <summary>
             /// corresponding character in the alphabet

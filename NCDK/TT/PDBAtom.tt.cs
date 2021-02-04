@@ -162,6 +162,9 @@ namespace NCDK.Default
         /// </summary>
 
         public double? Occupancy { get; set; }
+
+        public new IPDBAtom Clone() => (IPDBAtom)Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
     }
 }
 namespace NCDK.Silent
@@ -295,5 +298,8 @@ namespace NCDK.Silent
         /// </summary>
 
         public double? Occupancy { get; set; }
+
+        public new IPDBAtom Clone() => (IPDBAtom)Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
     }
 }

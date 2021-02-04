@@ -47,5 +47,8 @@ namespace NCDK
 
         /// <summary>the number of asymmetric parts in the unit cell.</summary>
         int? Z { get; set; }
+
+        /// <inheritdoc/>
+        new ICrystal Clone();
     }
 }

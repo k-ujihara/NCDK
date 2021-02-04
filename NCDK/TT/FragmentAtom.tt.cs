@@ -59,7 +59,7 @@ namespace NCDK.Default
             set { throw new InvalidOperationException($"Cannot set the mass of a {nameof(IFragmentAtom)}."); }
         }
 
-        public new FragmentAtom Clone(CDKObjectMap map)
+        public override ICDKObject Clone(CDKObjectMap map)
         {
             FragmentAtom clone = (FragmentAtom)base.Clone(map);
             clone.Fragment = (IAtomContainer)Fragment.Clone(map);
@@ -67,9 +67,8 @@ namespace NCDK.Default
             return clone;
         }
 
-        public new FragmentAtom Clone() => Clone(new CDKObjectMap());
+        public new IFragmentAtom Clone() => (IFragmentAtom)Clone(new CDKObjectMap());
         object ICloneable.Clone() => Clone();
-        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
     }
 }
 namespace NCDK.Silent
@@ -100,7 +99,7 @@ namespace NCDK.Silent
             set { throw new InvalidOperationException($"Cannot set the mass of a {nameof(IFragmentAtom)}."); }
         }
 
-        public new FragmentAtom Clone(CDKObjectMap map)
+        public override ICDKObject Clone(CDKObjectMap map)
         {
             FragmentAtom clone = (FragmentAtom)base.Clone(map);
             clone.Fragment = (IAtomContainer)Fragment.Clone(map);
@@ -108,8 +107,7 @@ namespace NCDK.Silent
             return clone;
         }
 
-        public new FragmentAtom Clone() => Clone(new CDKObjectMap());
+        public new IFragmentAtom Clone() => (IFragmentAtom)Clone(new CDKObjectMap());
         object ICloneable.Clone() => Clone();
-        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
     }
 }

@@ -34,5 +34,8 @@ namespace NCDK
         /// </summary>
         /// <returns>a boolean indicating if this ring set no reactions</returns>
         bool IsEmpty();
+
+        /// <inheritdoc/>
+        new IReactionSet Clone();
     }
 }

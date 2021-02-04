@@ -42,8 +42,8 @@ namespace NCDK.Formula
     // @cdk.keyword molecular formula
     public class MolecularFormulaRange
     {
-        private Dictionary<IIsotope, int> isotopesMax;
-        private Dictionary<IIsotope, int> isotopesMin;
+        private readonly Dictionary<IIsotope, int> isotopesMax;
+        private readonly Dictionary<IIsotope, int> isotopesMin;
 
         /// <summary>
         /// Constructs an empty MolecularFormulaExpand.

@@ -19,8 +19,6 @@
 
 using System.Collections.Generic;
 
-#pragma warning disable CA1710 // Identifiers should have correct suffix
-
 namespace NCDK
 {
     /// <summary>
@@ -65,5 +63,7 @@ namespace NCDK
         /// <param name="isotope">The IIsotope this AdductFormula is searched for</param>
         /// <returns>True, if the AdductFormula contains the given isotope object</returns>
         bool Contains(IIsotope isotope);
+
+        new IAdductFormula Clone();
     }
 }

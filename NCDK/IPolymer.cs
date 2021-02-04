@@ -66,5 +66,8 @@ namespace NCDK
         /// </summary>
         /// <param name="name">The name of the monomer to be removed</param>
         void RemoveMonomer(string name);
+
+        /// <inheritdoc/>
+        new IPolymer Clone();
     }
 }

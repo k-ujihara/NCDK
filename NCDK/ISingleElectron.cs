@@ -44,5 +44,8 @@ namespace NCDK
         /// <param name="atom">The atom to be tested if it participates in this bond</param>
         /// <returns><see langword="true"/> if this <see cref="ISingleElectron"/> is associated with the atom</returns>
         bool Contains(IAtom atom);
+
+        /// <inheritdoc/>
+        new ISingleElectron Clone();
     }
 }

@@ -50,5 +50,8 @@ namespace NCDK
         IReadOnlyList<IAtom> Ligands { get; set; }
         IAtom ChiralAtom { get; }
         TetrahedralStereo Stereo { get; set; }
+
+        /// <inheritdoc/>
+        new ITetrahedralChirality Clone();
     }
 }

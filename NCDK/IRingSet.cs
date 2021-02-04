@@ -64,5 +64,8 @@ namespace NCDK
         /// <param name="atom">Atom to check</param>
         /// <returns>true, if the ringset contains the atom</returns>
         bool Contains(IAtom atom);
+
+        /// <inheritdoc/>
+        new IRingSet Clone();
     }
 }

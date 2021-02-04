@@ -113,11 +113,8 @@ namespace NCDK.Stereo
             return Create(newfocus, newcarriers, value);
         }
 
-        public virtual AbstractStereo<TF, TC> Clone()
-        {
-            return Clone(new CDKObjectMap());
-        }
-
+        public AbstractStereo<TF, TC> Clone() => Clone(new CDKObjectMap());
+        IStereoElement<TF, TC> IStereoElement<TF, TC>.Clone() => Clone();
         object ICloneable.Clone() => Clone();
         ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
 

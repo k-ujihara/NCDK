@@ -61,7 +61,7 @@ namespace <#= ns.NS #>
             set { throw new InvalidOperationException($"Cannot set the mass of a {nameof(IFragmentAtom)}."); }
         }
 
-        public new FragmentAtom Clone(CDKObjectMap map)
+        public override ICDKObject Clone(CDKObjectMap map)
         {
             FragmentAtom clone = (FragmentAtom)base.Clone(map);
             clone.Fragment = (IAtomContainer)Fragment.Clone(map);
@@ -69,9 +69,8 @@ namespace <#= ns.NS #>
             return clone;
         }
 
-        public new FragmentAtom Clone() => Clone(new CDKObjectMap());
+        public new IFragmentAtom Clone() => (IFragmentAtom)Clone(new CDKObjectMap());
         object ICloneable.Clone() => Clone();
-        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
     }
 }
 <#

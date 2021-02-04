@@ -435,7 +435,7 @@ namespace NCDK.Default
             return clone;
         }
 
-        public new Bond Clone() => Clone(new CDKObjectMap());
+        public new IBond Clone() => Clone(new CDKObjectMap());
         object ICloneable.Clone() => Clone();
         ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
 
@@ -884,7 +884,7 @@ namespace NCDK.Silent
             return clone;
         }
 
-        public new Bond Clone() => Clone(new CDKObjectMap());
+        public new IBond Clone() => Clone(new CDKObjectMap());
         object ICloneable.Clone() => Clone();
         ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
 

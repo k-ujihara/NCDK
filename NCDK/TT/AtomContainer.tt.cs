@@ -636,8 +636,10 @@ namespace NCDK.Default
             return false;
         }
 
+        public new IAtomContainer Clone() => (IAtomContainer)Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
         /// <inheritdoc/>
-        public new AtomContainer Clone(CDKObjectMap map)
+        public override ICDKObject Clone(CDKObjectMap map)
         {
             var clone = (AtomContainer)base.Clone(map);            
             clone.atoms = new ObservableChemObjectCollection_IAtom(this, atoms.Where(n => n != null).Select(n => (IAtom)n.Clone(map)));
@@ -655,10 +657,6 @@ namespace NCDK.Default
 
             return clone;
         }
-
-        public new AtomContainer Clone() => Clone(new CDKObjectMap());
-        object ICloneable.Clone() => Clone();
-        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
 
         /// <inheritdoc/>
         public virtual IEnumerable<IElectronContainer> GetElectronContainers()
@@ -1293,8 +1291,10 @@ namespace NCDK.Silent
             return false;
         }
 
+        public new IAtomContainer Clone() => (IAtomContainer)Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
         /// <inheritdoc/>
-        public new AtomContainer Clone(CDKObjectMap map)
+        public override ICDKObject Clone(CDKObjectMap map)
         {
             var clone = (AtomContainer)base.Clone(map);            
             clone.atoms = new ObservableChemObjectCollection_IAtom(this, atoms.Where(n => n != null).Select(n => (IAtom)n.Clone(map)));
@@ -1312,10 +1312,6 @@ namespace NCDK.Silent
 
             return clone;
         }
-
-        public new AtomContainer Clone() => Clone(new CDKObjectMap());
-        object ICloneable.Clone() => Clone();
-        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
 
         /// <inheritdoc/>
         public virtual IEnumerable<IElectronContainer> GetElectronContainers()

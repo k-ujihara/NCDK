@@ -164,6 +164,9 @@ namespace <#= ns.NS #>
         /// </summary>
 
         public double? Occupancy { get; set; }
+
+        public new IPDBAtom Clone() => (IPDBAtom)Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
     }
 }
 <#

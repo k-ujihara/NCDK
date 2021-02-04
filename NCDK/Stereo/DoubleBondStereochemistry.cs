@@ -61,5 +61,7 @@ namespace NCDK.Stereo
         {
             return new DoubleBondStereochemistry(focus, carriers, stereo);
         }
+
+        IDoubleBondStereochemistry IDoubleBondStereochemistry.Clone() => (IDoubleBondStereochemistry)Clone();
     }
 }

@@ -142,5 +142,8 @@ namespace NCDK
         /// The map index for this atom.
         /// </summary>
         int MapIdx { get; set; }
+
+        /// <inheritdoc/>
+        new IAtom Clone();
     }
 }

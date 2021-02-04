@@ -46,5 +46,8 @@ namespace NCDK
 
         /// <summary>Flag is set if <see cref="IChemObject"/> has been visited</summary>
         bool IsVisited { get; set; }
+
+        /// <inheritdoc/>
+        new IChemObject Clone();
     }
 }

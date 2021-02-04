@@ -117,14 +117,12 @@ namespace NCDK
             return chemobj.Compare(obj);
         }
 
-        public ChemObjectRef Clone(CDKObjectMap map)
+        public IChemObject Clone() => (IChemObject)Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
+
+        public virtual ICDKObject Clone(CDKObjectMap map)
         {
             return new ChemObjectRef((IChemObject)chemobj.Clone(map));
         }
-
-        /// <inheritdoc/>
-        public ChemObjectRef Clone() => Clone(new CDKObjectMap());
-        object ICloneable.Clone() => Clone();
-        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
     }
 }

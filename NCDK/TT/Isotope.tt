@@ -242,6 +242,9 @@ namespace <#= ns.NS #>
                     return false;
             return true;
         }
+
+        public new IIsotope Clone() => (IIsotope)Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
     }
 }
 <#

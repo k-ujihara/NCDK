@@ -29,8 +29,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Collections;
 
-#pragma warning disable CA1710 // Identifiers should have correct suffix
-
 <#
 foreach (var ns in namespaces) 
 {
@@ -43,6 +41,8 @@ namespace <#= ns.NS #>
         public AtomContainerSet()
             : base()
         {}
+
+        IAtomContainerSet IAtomContainerSet.Clone() => (IAtomContainerSet)Clone();
     }
 
     /// <summary>
@@ -227,7 +227,7 @@ namespace <#= ns.NS #>
             return clone;
         }
 
-        public new ChemObjectSet<T> Clone() => Clone(new CDKObjectMap());
+        public new IChemObjectSet<T> Clone() => Clone(new CDKObjectMap());
         object ICloneable.Clone() => Clone();
         ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
 
@@ -296,7 +296,7 @@ namespace <#= ns.NS #>
         class CompareRefByIndex : IComparer<int>
         {
             private readonly ChemObjectSet<T> parent;
-            private IComparer<T> comparator;
+            private readonly IComparer<T> comparator;
 
             public CompareRefByIndex(ChemObjectSet<T> parent, IComparer<T> comparator)
             {

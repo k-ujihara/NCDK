@@ -32,6 +32,8 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using System;
+
 namespace NCDK.Default
 {
     /// <summary>
@@ -418,6 +420,8 @@ namespace NCDK.Default
             else
                 flags &= ~CDKConstants.IsReactiveCenterMask; 
         }
+        public new IAtomType Clone() => (AtomType)base.Clone();
+        object ICloneable.Clone() => Clone();
     }
 }
 namespace NCDK.Silent
@@ -792,5 +796,7 @@ namespace NCDK.Silent
             else
                 flags &= ~CDKConstants.IsReactiveCenterMask; 
         }
+        public new IAtomType Clone() => (AtomType)base.Clone();
+        object ICloneable.Clone() => Clone();
     }
 }

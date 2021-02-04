@@ -51,5 +51,8 @@ namespace NCDK
         /// </summary>
         /// <param name="scheme">The scheme to be removed from this </param>
         void Remove(IReactionScheme scheme);
+
+        /// <inheritdoc/>
+        new IReactionScheme Clone();
     }
 }

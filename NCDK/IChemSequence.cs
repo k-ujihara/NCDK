@@ -32,5 +32,7 @@ namespace NCDK
     public interface IChemSequence
         : IChemObject, IList<IChemModel>
     {
+        /// <inheritdoc/>
+        new IChemSequence Clone();
     }
 }

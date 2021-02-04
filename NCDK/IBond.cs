@@ -58,9 +58,7 @@ namespace NCDK
         /// The end (or second) atom of the bond.
         /// </summary>
         /// <returns>the end atom</returns>
-#pragma warning disable CA1716 // Identifiers should not match keywords
         IAtom End { get; }
-#pragma warning restore CA1716 // Identifiers should not match keywords
 
         int Index { get; }
 
@@ -158,5 +156,8 @@ namespace NCDK
         /// It has reactive center. It is used for example in reaction.
         /// </summary>
         bool IsReactiveCenter { get; set; }
+
+        /// <inheritdoc/>
+        new IBond Clone();
     }
 }

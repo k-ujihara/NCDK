@@ -42,5 +42,8 @@ namespace NCDK
         /// </summary>
         /// <value>The default, 0, indicates this atom is not an attachment point.</value>
         int AttachPointNum { get; set; }
+
+        /// <inheritdoc/>
+        new IPseudoAtom Clone();
     }
 }

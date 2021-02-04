@@ -46,5 +46,8 @@ namespace NCDK
         /// </summary>
         /// <value><see langword="null"/> when unconfigured.</value>
         int? MassNumber { get; set; }
+
+        /// <inheritdoc/>
+        new IIsotope Clone();
     }
 }

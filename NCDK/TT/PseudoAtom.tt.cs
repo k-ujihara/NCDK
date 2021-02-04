@@ -35,7 +35,6 @@ using System.Text;
 namespace NCDK.Default
 {
     /// <inheritdoc cref="IPseudoAtom"/>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     public class PseudoAtom
         : Atom, ICloneable, IPseudoAtom
     {
@@ -142,20 +141,18 @@ namespace NCDK.Default
             return sb.ToString();
         }
 
-        public new PseudoAtom Clone(CDKObjectMap map)
+        public override ICDKObject Clone(CDKObjectMap map)
         {
             return (PseudoAtom)base.Clone(map);
         }
 
-        public new PseudoAtom Clone() => Clone(new CDKObjectMap());
+        public new IPseudoAtom Clone() => (IPseudoAtom)Clone(new CDKObjectMap());
         object ICloneable.Clone() => Clone();
-        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
     }
 }
 namespace NCDK.Silent
 {
     /// <inheritdoc cref="IPseudoAtom"/>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     public class PseudoAtom
         : Atom, ICloneable, IPseudoAtom
     {
@@ -262,13 +259,12 @@ namespace NCDK.Silent
             return sb.ToString();
         }
 
-        public new PseudoAtom Clone(CDKObjectMap map)
+        public override ICDKObject Clone(CDKObjectMap map)
         {
             return (PseudoAtom)base.Clone(map);
         }
 
-        public new PseudoAtom Clone() => Clone(new CDKObjectMap());
+        public new IPseudoAtom Clone() => (IPseudoAtom)Clone(new CDKObjectMap());
         object ICloneable.Clone() => Clone();
-        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
     }
 }

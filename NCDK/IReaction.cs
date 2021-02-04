@@ -64,5 +64,8 @@ namespace NCDK
         /// Returns the mappings between the reactant and the product side.
         /// </summary>
         IList<IMapping> Mappings { get; }
+
+        /// <inheritdoc/>
+        new IReaction Clone();
     }
 }

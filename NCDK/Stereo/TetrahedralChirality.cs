@@ -90,5 +90,7 @@ namespace NCDK.Stereo
             sb.Append('}');
             return sb.ToString();
         }
+
+        ITetrahedralChirality ITetrahedralChirality.Clone() => (ITetrahedralChirality)Clone();
     }
 }

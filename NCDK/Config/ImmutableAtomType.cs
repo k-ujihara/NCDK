@@ -247,12 +247,13 @@ namespace NCDK.Config
         public bool Notification { get { return false; } set { } }
         public void NotifyChanged() { }
 
-        public ImmutableAtomType Clone() => Clone((CDKObjectMap)null); // no need to new CDKObjectMap
-
-        public ImmutableAtomType Clone(CDKObjectMap map) => (ImmutableAtomType)this.MemberwiseClone();
-
-        object ICloneable.Clone() => Clone();
-        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
+        public ImmutableAtomType Clone() => this;
+        public ImmutableAtomType Clone(CDKObjectMap map) => this;
+        IAtomType IAtomType.Clone() => this;
+        IIsotope IIsotope.Clone() => this;
+        IChemObject IChemObject.Clone() => this;
+        object ICloneable.Clone() => this;
+        ICDKObject ICDKObject.Clone(CDKObjectMap map) => this;
 
         public override string ToString()
         {

@@ -29,8 +29,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-#pragma warning disable CA1710 // Identifiers should have correct suffix
-
 namespace NCDK.Default
 {
     /// <summary>
@@ -51,7 +49,7 @@ namespace NCDK.Default
         : IEnumerable<IMolecularFormula>, IAdductFormula
     {
         /// <summary> Internal List of IMolecularFormula.</summary>
-        private List<IMolecularFormula> components;
+        private readonly List<IMolecularFormula> components;
 
         /// <summary>
         /// Constructs an empty AdductFormula.
@@ -166,9 +164,7 @@ namespace NCDK.Default
         /// <summary>
         /// The number of <see cref="IMolecularFormula"/>s in this AdductFormula.
         /// </summary>
-#pragma warning disable CA1721 // Property names should not match get methods
         public virtual int Count => components.Count;
-#pragma warning restore CA1721 // Property names should not match get methods
 
         /// <summary>
         /// <see langword="true"/> if the <see cref="AdductFormula"/> contains the given <see cref="IMolecularFormula"/> object.
@@ -221,9 +217,12 @@ namespace NCDK.Default
         /// Clones this AdductFormula object and its content.
         /// </summary>
         /// <returns> The cloned object</returns>
-        public AdductFormula Clone()
+        public IAdductFormula Clone() => (IAdductFormula)Clone(null);
+
+        /// <inheritdoc/>
+        public virtual ICDKObject Clone(CDKObjectMap map)
         {
-            AdductFormula clone = new AdductFormula();
+            var clone = new AdductFormula();
             foreach (var form in this)
             {
                 clone.Add((IMolecularFormula)form.Clone());
@@ -231,10 +230,7 @@ namespace NCDK.Default
             return clone;
         }
 
-        public AdductFormula Clone(CDKObjectMap map) => Clone();
-
         object ICloneable.Clone() => Clone();
-        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
 
         /// <summary>
         /// Compare to IIsotope. The method doesn't compare instance but if they
@@ -304,7 +300,7 @@ namespace NCDK.Silent
         : IEnumerable<IMolecularFormula>, IAdductFormula
     {
         /// <summary> Internal List of IMolecularFormula.</summary>
-        private List<IMolecularFormula> components;
+        private readonly List<IMolecularFormula> components;
 
         /// <summary>
         /// Constructs an empty AdductFormula.
@@ -419,9 +415,7 @@ namespace NCDK.Silent
         /// <summary>
         /// The number of <see cref="IMolecularFormula"/>s in this AdductFormula.
         /// </summary>
-#pragma warning disable CA1721 // Property names should not match get methods
         public virtual int Count => components.Count;
-#pragma warning restore CA1721 // Property names should not match get methods
 
         /// <summary>
         /// <see langword="true"/> if the <see cref="AdductFormula"/> contains the given <see cref="IMolecularFormula"/> object.
@@ -474,9 +468,12 @@ namespace NCDK.Silent
         /// Clones this AdductFormula object and its content.
         /// </summary>
         /// <returns> The cloned object</returns>
-        public AdductFormula Clone()
+        public IAdductFormula Clone() => (IAdductFormula)Clone(null);
+
+        /// <inheritdoc/>
+        public virtual ICDKObject Clone(CDKObjectMap map)
         {
-            AdductFormula clone = new AdductFormula();
+            var clone = new AdductFormula();
             foreach (var form in this)
             {
                 clone.Add((IMolecularFormula)form.Clone());
@@ -484,10 +481,7 @@ namespace NCDK.Silent
             return clone;
         }
 
-        public AdductFormula Clone(CDKObjectMap map) => Clone();
-
         object ICloneable.Clone() => Clone();
-        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
 
         /// <summary>
         /// Compare to IIsotope. The method doesn't compare instance but if they

@@ -55,8 +55,8 @@ namespace NCDK
         /// <returns>non-pointer bond</returns>
         public static IBond Deref(IBond bond)
         {
-            while (bond is BondRef)
-                bond = ((BondRef)bond).Deref();
+            while (bond is BondRef ref_)
+                bond = ref_.Deref();
             return bond;
         }
 
@@ -217,20 +217,17 @@ namespace NCDK
         }
 
         /// <inheritdoc/>
-        public new IBond Clone(CDKObjectMap map)
-        {
-            return (IBond)bond.Clone(map);
-        }
-
-        /// <inheritdoc/>
-        public new IBond Clone() => Clone(new CDKObjectMap());
+        public override ICDKObject Clone(CDKObjectMap map) => (IBond)bond.Clone(map);
         object ICloneable.Clone() => Clone();
-        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
-
+        /// <inheritdoc/>
+        public new IBond Clone() => (IBond)Clone(new CDKObjectMap());
+        IElectronContainer IElectronContainer.Clone() => Clone();
+        IChemObject IChemObject.Clone() => Clone();
+        
         /// <inheritdoc/>
         public override string ToString()
         {
-            return $"{nameof(BondRef)}({bond.ToString()})";
+            return $"{nameof(BondRef)}({bond})";
         }
     }
 }

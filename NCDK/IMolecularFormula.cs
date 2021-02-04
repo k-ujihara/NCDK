@@ -132,5 +132,8 @@ namespace NCDK
         /// <value>
         /// If the charge has not been set the return value is <see langword="null"/>.</value>
         int? Charge { get; set; }
+
+        /// <inheritdoc/>
+        new IMolecularFormula Clone();
     }
 }

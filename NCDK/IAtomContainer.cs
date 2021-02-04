@@ -316,5 +316,8 @@ namespace NCDK
         /// The title of the record.
         /// </summary>
         string Title { get; set; }
+
+        /// <inheritdoc/>
+        new IAtomContainer Clone();
     }
 }

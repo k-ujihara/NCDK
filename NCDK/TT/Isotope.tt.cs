@@ -230,6 +230,9 @@ namespace NCDK.Default
                     return false;
             return true;
         }
+
+        public new IIsotope Clone() => (IIsotope)Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
     }
 }
 namespace NCDK.Silent
@@ -427,5 +430,8 @@ namespace NCDK.Silent
                     return false;
             return true;
         }
+
+        public new IIsotope Clone() => (IIsotope)Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
     }
 }

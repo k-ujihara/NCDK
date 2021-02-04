@@ -42,5 +42,8 @@ namespace NCDK
         /// </summary>
         /// <returns>An <see cref="IEnumerable{T}"/> to two <see cref="IChemObject"/>s that define the mapping</returns>
         IEnumerable<IChemObject> GetRelatedChemObjects();
+
+        /// <inheritdoc/>
+        new IMapping Clone();
     }
 }

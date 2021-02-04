@@ -65,12 +65,7 @@ namespace NCDK.Default
             ChainID = null;
         }
 
-        /// <inheritdoc/>
-        public new PDBMonomer Clone()
-        {
-            return (PDBMonomer)base.Clone();
-        }
-
+        public new IPDBMonomer Clone() => (IPDBMonomer)Clone(new CDKObjectMap());
         object ICloneable.Clone() => Clone();
     }
 }
@@ -109,12 +104,7 @@ namespace NCDK.Silent
             ChainID = null;
         }
 
-        /// <inheritdoc/>
-        public new PDBMonomer Clone()
-        {
-            return (PDBMonomer)base.Clone();
-        }
-
+        public new IPDBMonomer Clone() => (IPDBMonomer)Clone(new CDKObjectMap());
         object ICloneable.Clone() => Clone();
     }
 }

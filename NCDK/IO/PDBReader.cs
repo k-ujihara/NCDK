@@ -123,9 +123,9 @@ namespace NCDK.IO
         /// <exception cref="CDKException"></exception>
         public override T Read<T>(T o)
         {
-            if (o is IChemFile)
+            if (o is IChemFile file)
             {
-                return (T)ReadChemFile((IChemFile)o);
+                return (T)ReadChemFile(file);
             }
             else
             {
@@ -157,7 +157,6 @@ namespace NCDK.IO
             var molecularStructure = oFile.Builder.NewAtomContainer();
             string cRead = "";
             char chain = 'A'; // To ensure stringent name giving of monomers
-            int lineLength = 0;
 
             bool isProteinStructure = false;
 
@@ -168,7 +167,9 @@ namespace NCDK.IO
             }
 
             // do the reading of the Input
+#if !DEBUG
             try
+#endif
             {
                 do
                 {
@@ -176,12 +177,12 @@ namespace NCDK.IO
                     Debug.WriteLine($"Read line: {cRead}");
                     if (cRead != null)
                     {
-                        lineLength = cRead.Length;
+                        var lineLength = cRead.Length;
 
                         // make sure the record name is 6 characters long
                         if (lineLength < 6)
                         {
-                            cRead = cRead + "      ";
+                            cRead += "      ";
                         }
                         // check the first column to decide what to do
                         var cCol = cRead.Substring(0, 6);
@@ -194,7 +195,7 @@ namespace NCDK.IO
                                 break;
                             case "ATOM  ":
                                 {
-                                    #region
+#region
                                     // read an atom record
                                     var oAtom = ReadAtom(cRead, lineLength);
 
@@ -265,12 +266,12 @@ namespace NCDK.IO
 
                                     // As HETATMs cannot be considered to either belong to a certain monomer or strand,
                                     // they are dealt with separately.
-                                    #endregion
+#endregion
                                 }
                                 break;
                             case "HETATM":
                                 {
-                                    #region
+#region
                                     // read an atom record
                                     var oAtom = ReadAtom(cRead, lineLength);
                                     oAtom.HetAtom = true;
@@ -288,23 +289,23 @@ namespace NCDK.IO
                                         Trace.TraceWarning($"Duplicate serial ID found for atom: {oAtom}");
 
                                     Debug.WriteLine($"Added HETATM: {oAtom}");
-                                    #endregion
+#endregion
                                 }
                                 break;
                             case "TER   ":
                                 {
-                                    #region
+#region
                                     // start new strand
                                     chain++;
                                     var oStrand = CDK.Builder.NewPDBStrand();
                                     oStrand.StrandName = chain.ToString(NumberFormatInfo.InvariantInfo);
                                     Debug.WriteLine("Added new STRAND");
-                                    #endregion
+#endregion
                                 }
                                 break;
                             case "END   ":
                                 {
-                                    #region
+#region
                                     atomNumberMap.Clear();
                                     if (isProteinStructure)
                                     {
@@ -334,12 +335,12 @@ namespace NCDK.IO
                                             CreateBondsWithRebondTool(molecularStructure);
                                         oSet.Add(molecularStructure);
                                     }
-                                    #endregion
+#endregion
                                 }
                                 break;
                             case "MODEL ":
                                 {
-                                    #region
+#region
                                     // OK, start a new model and save the current one first *if* it contains atoms
                                     if (isProteinStructure)
                                     {
@@ -371,37 +372,36 @@ namespace NCDK.IO
                                             oSet = oFile.Builder.NewAtomContainerSet();
                                         }
                                     }
-                                    #endregion
+#endregion
                                 }
                                 break;
                             case "REMARK":
                                 {
-                                    #region
-                                    var comment = oFile.GetProperty<string>(CDKPropertyName.Comment, "");
+#region
+                                    var comment = oFile.GetProperty(CDKPropertyName.Comment, "");
                                     if (lineLength > 12)
                                     {
-                                        comment = comment + cRead.Substring(11).Trim()
-                                                + "\n";
+                                        comment = $"{comment}{cRead.Substring(11).Trim()}\n";
                                         oFile.SetProperty(CDKPropertyName.Comment, comment);
                                     }
                                     else
                                     {
                                         Trace.TraceWarning("REMARK line found without any comment!");
                                     }
-                                    #endregion
+#endregion
                                 }
                                 break;
                             case "COMPND":
                                 {
-                                    #region
+#region
                                     var title = cRead.Substring(10).Trim();
                                     oFile.SetProperty(CDKPropertyName.Title, title);
-                                    #endregion
+#endregion
                                 }
                                 break;
                             case "CONECT":
                                 {
-                                    #region
+#region
                                     // Read connectivity information from CONECT records. Only
                                     // covalent bonds are dealt with. Perhaps salt bridges
                                     // should be dealt with in the same way..?
@@ -450,12 +450,12 @@ namespace NCDK.IO
                                             lineIndex += 5;
                                         }
                                     }
-                                    #endregion
+#endregion
                                 }
                                 break;
                             case "HELIX ":
                                 {
-                                    #region
+#region
                                     // HELIX    1 H1A CYS A   11  LYS A   18  1 RESIDUE 18 HAS POSITIVE PHI    1D66  72
                                     //           1         2         3         4         5         6         7
                                     // 01234567890123456789012345678901234567890123456789012345678901234567890123456789
@@ -468,12 +468,12 @@ namespace NCDK.IO
                                     structure.EndSequenceNumber = int.Parse(cRead.Substring(33, 4).Trim(), NumberFormatInfo.InvariantInfo);
                                     structure.EndInsertionCode = cRead[37];
                                     oBP.Add(structure);
-                                    #endregion
+#endregion
                                 }
                                 break;
                             case "SHEET ":
                                 {
-                                    #region
+#region
                                     var structure = CDK.Builder.NewPDBStructure();
                                     structure.StructureType = PDBStructureType.Sheet;
                                     structure.StartChainID = cRead[21];
@@ -483,12 +483,12 @@ namespace NCDK.IO
                                     structure.EndSequenceNumber = int.Parse(cRead.Substring(33, 4).Trim(), NumberFormatInfo.InvariantInfo);
                                     structure.EndInsertionCode = cRead[37];
                                     oBP.Add(structure);
-                                    #endregion
+#endregion
                                 }
                                 break;
                             case "TURN  ":
                                 {
-                                    #region
+#region
                                     var structure = CDK.Builder.NewPDBStructure();
                                     structure.StructureType = PDBStructureType.Turn;
                                     structure.StartChainID = cRead[19];
@@ -498,7 +498,7 @@ namespace NCDK.IO
                                     structure.EndSequenceNumber = int.Parse(cRead.Substring(31, 4).Trim(), NumberFormatInfo.InvariantInfo);
                                     structure.EndInsertionCode = cRead[35];
                                     oBP.Add(structure);
-                                    #endregion
+#endregion
                                 }
                                 break;
                             default:
@@ -507,6 +507,7 @@ namespace NCDK.IO
                     }
                 } while (cRead != null);
             }
+#if !DEBUG
             catch (Exception e)
             {
                 if (e is IOException || e is ArgumentException)
@@ -522,6 +523,7 @@ namespace NCDK.IO
                 else
                     throw;
             }
+#endif
 
             // try to close the Input
             try
@@ -859,7 +861,7 @@ namespace NCDK.IO
             return hetDictionary;
         }
 
-        #region IDisposable Support
+#region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls
 
         protected override void Dispose(bool disposing)
@@ -877,7 +879,7 @@ namespace NCDK.IO
                 base.Dispose(disposing);
             }
         }
-        #endregion
+#endregion
 
         private void InitIOSettings()
         {

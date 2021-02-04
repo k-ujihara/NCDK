@@ -34,7 +34,6 @@ namespace NCDK.Default
     /// Maintains a set of Ring objects.
     /// </summary>
     // @cdk.keyword ring, set of
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     public class RingSet
         : ChemObjectSet<IRing>, IRingSet, ICloneable
     {
@@ -98,6 +97,9 @@ namespace NCDK.Default
         /// <returns>true, if the ringset contains the atom</returns>
         public bool Contains(IAtom atom)
             => this.Any(n => n.Contains(atom));
+
+        public new IRingSet Clone() => (IRingSet)Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
     }
 }
 namespace NCDK.Silent
@@ -106,7 +108,6 @@ namespace NCDK.Silent
     /// Maintains a set of Ring objects.
     /// </summary>
     // @cdk.keyword ring, set of
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     public class RingSet
         : ChemObjectSet<IRing>, IRingSet, ICloneable
     {
@@ -170,5 +171,8 @@ namespace NCDK.Silent
         /// <returns>true, if the ringset contains the atom</returns>
         public bool Contains(IAtom atom)
             => this.Any(n => n.Contains(atom));
+
+        public new IRingSet Clone() => (IRingSet)Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
     }
 }

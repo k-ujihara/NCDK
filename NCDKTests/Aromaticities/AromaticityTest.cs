@@ -95,7 +95,7 @@ namespace NCDK.Aromaticities
         [TestMethod()]
         public void ClearFlags_cyclobutadiene()
         {
-            IAtomContainer cyclobutadiene = CreateFromSmiles("c1ccc1");
+            var cyclobutadiene = CreateFromSmiles("c1ccc1");
             daylight.Apply(cyclobutadiene);
             foreach (var bond in cyclobutadiene.Bonds)
                 Assert.IsFalse(bond.IsAromatic);
@@ -106,7 +106,7 @@ namespace NCDK.Aromaticities
         [TestMethod()]
         public void ClearFlags_quinone()
         {
-            IAtomContainer quinone = CreateFromSmiles("O=c1ccc(=O)cc1");
+            var quinone = CreateFromSmiles("O=c1ccc(=O)cc1");
             daylight.Apply(quinone);
             foreach (var bond in quinone.Bonds)
                 Assert.IsFalse(bond.IsAromatic);
@@ -153,12 +153,12 @@ namespace NCDK.Aromaticities
         [TestMethod()]
         public void EnsureConsistentRepresentation()
         {
-            IAtomContainer a = CreateFromSmiles("C1=CC2=CC3=CC4=C(C=CC=C4)C=C3C=C2C=C1");
-            IAtomContainer b = CreateFromSmiles("c1cc2cc3cc4c(cccc4)cc3cc2cc1");
-            Aromaticity arom = new Aromaticity(ElectronDonation.DaylightModel, Cycles.AllSimpleFinder);
+            var a = CreateFromSmiles("C1=CC2=CC3=CC4=C(C=CC=C4)C=C3C=C2C=C1");
+            var b = CreateFromSmiles("c1cc2cc3cc4c(cccc4)cc3cc2cc1");
+            var arom = new Aromaticity(ElectronDonation.DaylightModel, Cycles.AllSimpleFinder);
             arom.Apply(a);
             arom.Apply(b);
-            Assert.IsTrue(AtomContainerDiff.Diff(a, b).Count() == 0);
+            Assert.IsTrue(AtomContainerDiff.Diff(a, b).Length == 0);
         }
 
         static IAtomContainer CreateFromSmiles(string smi)

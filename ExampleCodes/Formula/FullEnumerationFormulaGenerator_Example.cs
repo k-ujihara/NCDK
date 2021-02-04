@@ -26,7 +26,7 @@ namespace NCDK.Formula
 
             double minMass = 133.003;
             double maxMass = 133.005;
-            MolecularFormulaGenerator mfg = new MolecularFormulaGenerator(builder, minMass, maxMass, mfRange);
+            MolecularFormulaGenerator mfg = new MolecularFormulaGenerator(minMass, maxMass, mfRange);
             IMolecularFormulaSet mfSet = mfg.GetAllFormulas();
             #endregion
         }

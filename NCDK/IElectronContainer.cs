@@ -31,5 +31,8 @@ namespace NCDK
         /// The number of electrons in this electron container.
         /// </summary>
         int? ElectronCount { get; set; }
+
+        /// <inheritdoc/>
+        new IElectronContainer Clone();
     }
 }

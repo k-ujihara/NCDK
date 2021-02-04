@@ -53,7 +53,6 @@ namespace NCDK.Default
     /// </code>
     /// </example>
     // @cdk.keyword reaction
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     public class ReactionSet
         : ChemObject, IReactionSet, IChemObjectListener, ICloneable
     {
@@ -140,7 +139,7 @@ namespace NCDK.Default
 
         public bool IsEmpty() => reactions.Count == 0;
 
-        public new ReactionSet Clone(CDKObjectMap map)
+        public override ICDKObject Clone(CDKObjectMap map)
         {
             var clonedReactions = new List<IReaction>();
             foreach (var reaction in reactions)
@@ -150,9 +149,8 @@ namespace NCDK.Default
             return clone;
         }
 
-        public new ReactionSet Clone() => Clone(new CDKObjectMap());
+        public new IReactionSet Clone() => (IReactionSet)Clone(new CDKObjectMap());
         object ICloneable.Clone() => Clone();
-        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
 
         public void OnStateChanged(ChemObjectChangeEventArgs evt)
         {
@@ -184,7 +182,6 @@ namespace NCDK.Silent
     /// </code>
     /// </example>
     // @cdk.keyword reaction
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     public class ReactionSet
         : ChemObject, IReactionSet, IChemObjectListener, ICloneable
     {
@@ -271,7 +268,7 @@ namespace NCDK.Silent
 
         public bool IsEmpty() => reactions.Count == 0;
 
-        public new ReactionSet Clone(CDKObjectMap map)
+        public override ICDKObject Clone(CDKObjectMap map)
         {
             var clonedReactions = new List<IReaction>();
             foreach (var reaction in reactions)
@@ -281,9 +278,8 @@ namespace NCDK.Silent
             return clone;
         }
 
-        public new ReactionSet Clone() => Clone(new CDKObjectMap());
+        public new IReactionSet Clone() => (IReactionSet)Clone(new CDKObjectMap());
         object ICloneable.Clone() => Clone();
-        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
 
         public void OnStateChanged(ChemObjectChangeEventArgs evt)
         {

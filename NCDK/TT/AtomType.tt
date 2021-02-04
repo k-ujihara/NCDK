@@ -30,6 +30,8 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using System;
+
 <#
 foreach (var ns in namespaces) 
 {
@@ -294,6 +296,8 @@ namespace <#= ns.NS #>
         AddIsFlag("virtual", "IsInRing", !ns.IsSilent);
         AddIsFlag("virtual", "IsReactiveCenter", !ns.IsSilent);
 #>
+        public new IAtomType Clone() => (AtomType)base.Clone();
+        object ICloneable.Clone() => Clone();
     }
 }
 <#

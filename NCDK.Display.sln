@@ -1,13 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2024
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3ED0556C-42B8-4FEF-9606-B0474A2E69D2}"
 	ProjectSection(SolutionItems) = preProject
+		BuildAll.bat = BuildAll.bat
 		ChemObjectConfig.ttinclude = ChemObjectConfig.ttinclude
 		Config.ttinclude = Config.ttinclude
 		IncludeExamples.ttinclude = IncludeExamples.ttinclude
+		NCDK.Display.nuspec = NCDK.Display.nuspec
+		NCDK.nuspec = NCDK.nuspec
+		NCDK.targets = NCDK.targets
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NCDK", "NCDK\NCDK.csproj", "{B0B5EACF-5F39-42D0-BACD-1FF559CCC8B2}"

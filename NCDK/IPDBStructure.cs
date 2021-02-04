@@ -71,5 +71,8 @@ namespace NCDK
         /// the Structure Type of this structure
         /// </summary>
         string StructureType { get; set; }
+
+        /// <inheritdoc/>
+        new IPDBStructure Clone();
     }
 }

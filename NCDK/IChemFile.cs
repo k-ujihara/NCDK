@@ -30,5 +30,7 @@ namespace NCDK
     public interface IChemFile
         : IChemObject, IList<IChemSequence>
     {
+        /// <inheritdoc/>
+        new IChemFile Clone();
     }
 }

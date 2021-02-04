@@ -112,7 +112,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             /// </summary>
             private readonly IReadOnlyDictionary<int, double> coeffs;
 
-            private IAtomContainer container;
+            private readonly IAtomContainer container;
 
             public JPlogPCalculator(IAtomContainer container, IReadOnlyDictionary<int, double> coeffs)
             {
@@ -128,7 +128,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
             public double CalcLogP()
             {
-                bool inDomain = true;
                 double logP = 0.0;
 
                 try
@@ -199,13 +198,13 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 int nonHNeighbours = NonHNeighbours(atom);
                 int charge = atom.FormalCharge.Value;
                 int aNum = atom.AtomicNumber;
-                int toadd = 0;
 
                 // Initialise the type integer with what we know so far
                 returnMe += 100000 * (charge + 1);
                 returnMe += aNum * 1000;
                 returnMe += nonHNeighbours * 100;
 
+                int toadd;
                 switch (atomicNumber)
                 {
                     case AtomicNumbers.C:
@@ -330,12 +329,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             {
                 int toadd;
                 int numconn = atom.Bonds.Count;
-                int neighbourconn = 0;
                 if (numconn == 1)
                 {
                     var bond = atom.Bonds[0];
                     var next = bond.GetOther(atom);
-                    neighbourconn = next.Bonds.Count;
+                    var neighbourconn = next.Bonds.Count;
                     var ox = GetNumMoreElectronegativethanCarbon(next);
                     switch (next.AtomicNumber)
                     {

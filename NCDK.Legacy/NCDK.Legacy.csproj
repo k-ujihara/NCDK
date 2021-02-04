@@ -1,27 +1,26 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
-    <Version>1.5.7</Version>
+    <TargetFrameworks>netcoreapp3.1;netstandard2.0</TargetFrameworks>
+    <Version>1.6.0</Version>
     <Authors>Kazuya Ujihara</Authors>
     <Product>NCDK</Product>
     <Description>The legacy classes of NCDK.</Description>
-    <Copyright>Copyright © 2019 Kazuya Ujihara</Copyright>
-    <PackageLicenseUrl>https://github.com/kazuyaujihara/NCDK/blob/master/LICENSE</PackageLicenseUrl>
+    <Copyright>Copyright © 2019-2021 Kazuya Ujihara</Copyright>
+    <PackageLicenseUrl></PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/kazuyaujihara/NCDK</PackageProjectUrl>
     <RepositoryUrl>https://github.com/kazuyaujihara/NCDK</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>ncdk.snk</AssemblyOriginatorKeyFile>
     <RootNamespace>NCDK</RootNamespace>
-    <AssemblyVersion>1.5.6.0</AssemblyVersion>
-    <FileVersion>1.5.6.0</FileVersion>
-    <PackageReleaseNotes>This release is based on [cdk 2019-11-27](https://github.com/cdk/cdk/tree/c76443e0a69a4110c6a0fe65704abccce8a435ff) snapshot.</PackageReleaseNotes>
+    <PackageReleaseNotes>This release is based on [cdk 2021-01-31](https://github.com/cdk/cdk/tree/a027f6689a34d9ede3bb9befad2d0f1c5b2bb711f) snapshot.</PackageReleaseNotes>
+    <PackageLicenseExpression>LGPL 2.1</PackageLicenseExpression>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <NoWarn>1701;1702;0612;1573;1591</NoWarn>
-    <DocumentationFile>bin\Release\net461\NCDK.Legacy.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\$(TargetFramework)\NCDK.Legacy.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

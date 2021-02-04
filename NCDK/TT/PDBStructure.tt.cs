@@ -22,6 +22,8 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using System;
+
 namespace NCDK.Default
 {
     /// <summary>
@@ -67,6 +69,9 @@ namespace NCDK.Default
         /// The ending Code for insertion of residues of this structure.
         /// </summary>
         public char? EndInsertionCode { get; set; }
+    
+        public new IPDBStructure Clone() => (IPDBStructure)Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
     }
 }
 namespace NCDK.Silent
@@ -114,5 +119,8 @@ namespace NCDK.Silent
         /// The ending Code for insertion of residues of this structure.
         /// </summary>
         public char? EndInsertionCode { get; set; }
+    
+        public new IPDBStructure Clone() => (IPDBStructure)Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
     }
 }

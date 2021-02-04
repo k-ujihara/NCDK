@@ -1,19 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
 
-    <AssemblyVersion>1.5.6.0</AssemblyVersion>
-    <FileVersion>1.5.6.0</FileVersion>
-    <Version>1.5.7</Version>
-    <Copyright>Copyright © 2019 Kazuya Ujihara</Copyright>
+    <Version>1.6.0</Version>
+    <Copyright>Copyright © 2019-2021 Kazuya Ujihara</Copyright>
 
     <PackageId>NCDK.RDF</PackageId>
     <Product>NCDK.RDF: RDF package for NCDK</Product>
     <Description>RDF package for NCDK.</Description>
 
     <PackageTags>cdk cheminformatics chemistry toolkit</PackageTags>
-    <PackageReleaseNotes>This release is based on [cdk 2019-11-27](https://github.com/cdk/cdk/tree/c76443e0a69a4110c6a0fe65704abccce8a435ff) snapshot.</PackageReleaseNotes>
+    <PackageReleaseNotes>This release is based on [cdk 2021-01-31](https://github.com/cdk/cdk/tree/a027f6689a34d9ede3bb9befad2d0f1c5b2bb711f) snapshot.</PackageReleaseNotes>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
 
     <Authors>Kazuya Ujihara</Authors>
@@ -24,7 +22,8 @@
     <AssemblyOriginatorKeyFile>ncdk.snk</AssemblyOriginatorKeyFile>
     <RootNamespace>NCDK</RootNamespace>
     <PackageProjectUrl>https://github.com/kazuyaujihara/NCDK</PackageProjectUrl>
-    <PackageLicenseUrl>https://github.com/kazuyaujihara/NCDK/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageLicenseUrl></PackageLicenseUrl>
+    <PackageLicenseExpression>LPGL 2.1</PackageLicenseExpression>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -37,20 +36,16 @@
     <NoWarn>1701;1702;0162,0164,0219,0612,0618,0672,0809,1591,3021,1573</NoWarn>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net461|AnyCPU'">
-    <DocumentationFile>bin\Release\net461\NCDK.RDF.xml</DocumentationFile>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>bin\Release\$(TargetFramework)\NCDK.RDF.xml</DocumentationFile>
   </PropertyGroup>
-  
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
-    <DocumentationFile>bin\Release\netstandard2.0\NCDK.RDF.xml</DocumentationFile>
-  </PropertyGroup>
-  
+
   <ItemGroup>
     <Compile Include="..\NCDK\Properties\InternalVisibles..cs" Link="Properties\InternalVisibles..cs" />
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="dotNetRDF" Version="2.2.0" />
+    <PackageReference Include="dotNetRDF" Version="2.6.1" />
   </ItemGroup>
   
   <ItemGroup>

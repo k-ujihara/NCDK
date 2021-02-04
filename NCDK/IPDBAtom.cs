@@ -90,5 +90,8 @@ namespace NCDK
         /// the Occupancy of this atom
         /// </summary>
         double? Occupancy { get; set; }
+
+        /// <inheritdoc/>
+        new IPDBAtom Clone();
     }
 }

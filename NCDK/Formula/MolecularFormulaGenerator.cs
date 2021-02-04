@@ -39,14 +39,12 @@ namespace NCDK.Formula
         /// <param name="mfRange">A range of elemental compositions defining the search space</param>
         /// <exception cref="ArgumentOutOfRangeException">In case some of the isotopes in mfRange has undefined exact mass or in case illegal parameters are provided (e.g.,             negative mass values or empty MolecularFormulaRange)</exception>
         /// <seealso cref="MolecularFormulaRange"/>
-        public MolecularFormulaGenerator(IChemObjectBuilder builder,
-                                         double minMass, double maxMass,
-                                         MolecularFormulaRange mfRange)
+        public MolecularFormulaGenerator(double minMass, double maxMass, MolecularFormulaRange mfRange)
         {
-            CheckInputParameters(builder, minMass, maxMass, mfRange);
+            CheckInputParameters(minMass, maxMass, mfRange);
             this.formulaGenerator = IsIllPosed(minMass, maxMass, mfRange) 
-                ? new FullEnumerationFormulaGenerator(builder, minMass, maxMass, mfRange)
-                : (IFormulaGenerator)new RoundRobinFormulaGenerator(builder, minMass, maxMass, mfRange);
+                ? new FullEnumerationFormulaGenerator(minMass, maxMass, mfRange)
+                : (IFormulaGenerator)new RoundRobinFormulaGenerator(minMass, maxMass, mfRange);
         }
 
         /// <summary>
@@ -148,9 +146,7 @@ namespace NCDK.Formula
         /// <summary>
         /// Checks if input parameters are valid and throws an <see cref="ArgumentOutOfRangeException"/> otherwise.
         /// </summary>
-        private static void CheckInputParameters(IChemObjectBuilder builder,
-                                             double minMass, double maxMass,
-                                             MolecularFormulaRange mfRange)
+        private static void CheckInputParameters(double minMass, double maxMass, MolecularFormulaRange mfRange)
         {
             if (minMass < 0.0)
                 throw new ArgumentOutOfRangeException(nameof(minMass), "The minimum mass values must be >=0");
@@ -166,13 +162,11 @@ namespace NCDK.Formula
 
             // Sort the elements by mass in ascending order. That speeds up
             // the search.
-            foreach (IIsotope isotope in mfRange.GetIsotopes())
+            foreach (var isotope in mfRange.GetIsotopes())
             {
                 // Check if exact mass of each isotope is set
                 if (isotope.ExactMass == null)
-                    throw new ArgumentException(
-                            "The exact mass value of isotope " + isotope
-                                    + " is not set");
+                    throw new ArgumentException($"The exact mass value of isotope {isotope} is not set", nameof(mfRange));
             }
         }
     }

@@ -316,7 +316,7 @@ namespace NCDK.Default
                 && Charge == aa.Charge;
         }
 
-        public new Atom Clone(CDKObjectMap map)
+        public override ICDKObject Clone(CDKObjectMap map)
         {
             if (map == null)
                 throw new ArgumentNullException(nameof(map));
@@ -327,9 +327,8 @@ namespace NCDK.Default
             return clone;
         }
 
-        public new Atom Clone() => Clone(new CDKObjectMap());
+        public new IAtom Clone() => (IAtom)Clone(new CDKObjectMap());
         object ICloneable.Clone() => Clone();
-        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
 
         private static bool IsUpper(char c)
         {
@@ -352,7 +351,6 @@ namespace NCDK.Default
             int pos = 0;
 
             int mass = -1;
-            int anum = 0;
             int hcnt = 0;
             int chg = 0;
 
@@ -389,6 +387,7 @@ namespace NCDK.Default
             }
 
             // atom symbol
+            int anum;
             if (pos < len && IsUpper(str[pos]))
             {
                 int beg = pos;
@@ -474,8 +473,8 @@ namespace NCDK.Default
         /// <inheritdoc/>
         public override bool Equals(object other) 
         {
-            if (other is AtomRef)
-                return base.Equals(((AtomRef)other).Deref());
+            if (other is AtomRef ref_)
+                return base.Equals(ref_.Deref());
             return base.Equals(other);
         }
     }
@@ -755,7 +754,7 @@ namespace NCDK.Silent
                 && Charge == aa.Charge;
         }
 
-        public new Atom Clone(CDKObjectMap map)
+        public override ICDKObject Clone(CDKObjectMap map)
         {
             if (map == null)
                 throw new ArgumentNullException(nameof(map));
@@ -766,9 +765,8 @@ namespace NCDK.Silent
             return clone;
         }
 
-        public new Atom Clone() => Clone(new CDKObjectMap());
+        public new IAtom Clone() => (IAtom)Clone(new CDKObjectMap());
         object ICloneable.Clone() => Clone();
-        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
 
         private static bool IsUpper(char c)
         {
@@ -791,7 +789,6 @@ namespace NCDK.Silent
             int pos = 0;
 
             int mass = -1;
-            int anum = 0;
             int hcnt = 0;
             int chg = 0;
 
@@ -828,6 +825,7 @@ namespace NCDK.Silent
             }
 
             // atom symbol
+            int anum;
             if (pos < len && IsUpper(str[pos]))
             {
                 int beg = pos;
@@ -913,8 +911,8 @@ namespace NCDK.Silent
         /// <inheritdoc/>
         public override bool Equals(object other) 
         {
-            if (other is AtomRef)
-                return base.Equals(((AtomRef)other).Deref());
+            if (other is AtomRef ref_)
+                return base.Equals(ref_.Deref());
             return base.Equals(other);
         }
     }

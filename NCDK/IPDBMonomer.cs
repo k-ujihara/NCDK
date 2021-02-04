@@ -43,5 +43,8 @@ namespace NCDK
         /// the sequence identifier of this monomer
         /// </summary>
         string ResSeq { get; set; }
+
+        /// <inheritdoc/>
+        new IPDBMonomer Clone();
     }
 }

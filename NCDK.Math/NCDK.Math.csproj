@@ -1,10 +1,20 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>netcoreapp3.1;netstandard2.0</TargetFrameworks>
     <RootNamespace>NCDK</RootNamespace>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>ncdk.snk</AssemblyOriginatorKeyFile>
+    <Version>1.6.0</Version>
+    <Copyright>Copyright © 2016-2021 Kazuya Ujihara</Copyright>
+    <PackageProjectUrl></PackageProjectUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>cdk cheminformatics chemistry toolkit</PackageTags>
+    <RepositoryUrl>https://github.com/kazuyaujihara/NCDK</RepositoryUrl>
+    <Product>NCDK.Math: Math functions of NCDK</Product>
+    <PackageLicenseExpression>LPGL 2.1</PackageLicenseExpression>
+    <Description>Math package for NCDK.</Description>
+    <PackageReleaseNotes>This release is based on [cdk 2021-01-31](https://github.com/cdk/cdk/tree/a027f6689a34d9ede3bb9befad2d0f1c5b2bb711f) snapshot.</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -15,12 +25,12 @@
     <NoWarn>1701;1702;0162,0164,0219,0612,0618,0672,0809,1591,3021,1573</NoWarn>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net461|AnyCPU'">
-    <DocumentationFile>bin\Release\net461\NCDK.Math.xml</DocumentationFile>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>bin\Release\$(TargetFramework)\NCDK.Math.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MathNet.Numerics.Signed" Version="4.9.0" />
+    <PackageReference Include="MathNet.Numerics.Signed" Version="4.15.0" />
   </ItemGroup>
 
   <ItemGroup>

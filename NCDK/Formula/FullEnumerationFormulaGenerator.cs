@@ -45,8 +45,6 @@ namespace NCDK.Formula
     // @cdk.created 2014-12-28
     internal class FullEnumerationFormulaGenerator : IFormulaGenerator
     {
-        private readonly IChemObjectBuilder builder;
-
         /// <summary>
         /// Mass range to search by this instance of MolecularFormulaGenerator
         /// </summary>
@@ -86,15 +84,15 @@ namespace NCDK.Formula
         /// <param name="mfRange">A range of elemental compositions defining the search space</param>
         /// <exception cref="ArgumentOutOfRangeException">In case some of the isotopes in mfRange has undefined exact mass or in case illegal parameters are provided (e.g.,             negative mass values or empty MolecularFormulaRange)</exception>
         /// <seealso cref="MolecularFormulaRange"/>
-        public FullEnumerationFormulaGenerator(IChemObjectBuilder builder,
-                                                double minMass, double maxMass,
-                                                MolecularFormulaRange mfRange)
+        public FullEnumerationFormulaGenerator(double minMass, double maxMass, MolecularFormulaRange mfRange)
         {
-            Trace.TraceInformation("Initiate MolecularFormulaGenerator, mass range " + minMass + "-" + maxMass);
+            Trace.TraceInformation($"Initiate MolecularFormulaGenerator, mass range {minMass}-{maxMass}");
 
             // Check parameter values
-            if (minMass < 0.0) throw (new ArgumentOutOfRangeException(nameof(minMass), "The minimum and maximum mass values must be >=0"));
-            if (maxMass < 0.0) throw (new ArgumentOutOfRangeException(nameof(maxMass), "The minimum and maximum mass values must be >=0"));
+            if (minMass < 0.0) 
+                throw (new ArgumentOutOfRangeException(nameof(minMass), "The minimum and maximum mass values must be >=0"));
+            if (maxMass < 0.0) 
+                throw (new ArgumentOutOfRangeException(nameof(maxMass), "The minimum and maximum mass values must be >=0"));
 
             if ((minMass > maxMass))
                 throw (new ArgumentException("Minimum mass must be <= maximum mass"));
@@ -103,15 +101,13 @@ namespace NCDK.Formula
                 throw (new ArgumentException("The MolecularFormulaRange parameter must be non-null and must contain at least one isotope"));
 
             // Save the parameters
-            this.builder = builder;
             this.minMass = minMass;
             this.maxMass = maxMass;
 
             // Sort the elements by mass in ascending order. That speeds up
             // the search.
-            var isotopesSet = new SortedSet<IIsotope>(
-                        new IIsotopeSorterByMass());
-            foreach (IIsotope isotope in mfRange.GetIsotopes())
+            var isotopesSet = new SortedSet<IIsotope>(new IIsotopeSorterByMass());
+            foreach (var isotope in mfRange.GetIsotopes())
             {
                 // Check if exact mass of each isotope is set
                 if (isotope.ExactMass == null)
@@ -129,11 +125,9 @@ namespace NCDK.Formula
                 maxCounts[i] = mfRange.GetIsotopeCountMax(isotopes[i]);
 
                 // Update the maximum count according to the mass limit
-                int maxCountAccordingToMass = (int)Math.Floor(maxMass
-                        / isotopes[i].ExactMass.Value);
+                var maxCountAccordingToMass = (int)Math.Floor(maxMass / isotopes[i].ExactMass.Value);
                 if (maxCounts[i] > maxCountAccordingToMass)
                     maxCounts[i] = maxCountAccordingToMass;
-
             }
 
             // Set the current counters to minimal values, initially
@@ -151,7 +145,7 @@ namespace NCDK.Formula
             // Main cycle iterating through element counters
             while (searchRunning)
             {
-                double currentMass = CalculateCurrentMass();
+                var currentMass = CalculateCurrentMass();
 
                 // Heuristics: if we are over the mass, it is meaningless to add
                 // more atoms, so let's jump directly to the maximum count at the
@@ -173,7 +167,7 @@ namespace NCDK.Formula
                 // return it
                 if ((currentMass >= minMass) && (currentMass <= maxMass))
                 {
-                    IMolecularFormula cdkFormula = GenerateFormulaObject();
+                    var cdkFormula = GenerateFormulaObject();
                     IncreaseCounter(0);
                     return cdkFormula;
                 }
@@ -189,13 +183,13 @@ namespace NCDK.Formula
         }
 
         /// <summary>
-        /// Generates a <see cref="IMolecularFormulaSet"/> by repeatedly calling <see cref="FullEnumerationFormulaGenerator.GetNextFormula()"/> until all possible formulas are generated. There is no
+        /// Generates a <see cref="IMolecularFormulaSet"/> by repeatedly calling <see cref="GetNextFormula()"/> until all possible formulas are generated. There is no
         /// guaranteed order to the formulas in the resulting
         /// <see cref="IMolecularFormulaSet"/>.
         /// </summary>
         /// <remarks>
         /// <note type="note">
-        /// If some formulas were already generated by calling <see cref="FullEnumerationFormulaGenerator.GetNextFormula()"/> on this MolecularFormulaGenerator instance, those
+        /// If some formulas were already generated by calling <see cref="GetNextFormula()"/> on this MolecularFormulaGenerator instance, those
         /// formulas will not be included in the returned
         /// </note>
         /// </remarks> 
@@ -204,7 +198,7 @@ namespace NCDK.Formula
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IMolecularFormulaSet GetAllFormulas()
         {
-            IMolecularFormulaSet result = builder.NewMolecularFormulaSet();
+            var result = CDK.Builder.NewMolecularFormulaSet();
             IMolecularFormula nextFormula;
             while ((nextFormula = GetNextFormula()) != null)
             {
@@ -221,13 +215,10 @@ namespace NCDK.Formula
         /// <param name="position">Index to the currentCounts[] array that should be increased</param>
         private void IncreaseCounter(int position)
         {
-
             // This should never happen, but let's check, just in case
             if (position >= currentCounts.Length)
             {
-                throw new ArgumentException(
-                        "Cannot increase the currentCounts counter at position "
-                                + position);
+                throw new ArgumentException($"Cannot increase the currentCounts counter at position {position}");
             }
 
             lastIncreasedPosition = position;
@@ -257,8 +248,7 @@ namespace NCDK.Formula
 
                         // Copy the maxCounts[] array to currentCounts[]. This
                         // ensures that getFinishedPercentage() will return 1.0
-                        System.Array.Copy(maxCounts, 0, currentCounts, 0,
-                                maxCounts.Length);
+                        System.Array.Copy(maxCounts, 0, currentCounts, 0, maxCounts.Length);
                     }
                 }
             }
@@ -288,7 +278,7 @@ namespace NCDK.Formula
         /// </summary>
         private IMolecularFormula GenerateFormulaObject()
         {
-            IMolecularFormula formulaObject = builder.NewMolecularFormula();
+            var formulaObject = CDK.Builder.NewMolecularFormula();
             for (int i = 0; i < isotopes.Length; i++)
             {
                 if (currentCounts[i] == 0)
@@ -320,7 +310,7 @@ namespace NCDK.Formula
                     double max = maxCounts[i];
                     if (i > 0)
                         max += 1.0;
-                    result += remainingPerc * ((double)currentCounts[i] / max);
+                    result += remainingPerc * (currentCounts[i] / max);
                     remainingPerc /= max;
                 }
             }
@@ -331,10 +321,10 @@ namespace NCDK.Formula
         /// Cancel the current search. This method can be called from any thread. If
         /// another thread is executing the <see cref="FullEnumerationFormulaGenerator.GetNextFormula()"/> method, that
         /// method call will return immediately with null return value. If another
-        /// thread is executing the <see cref="FullEnumerationFormulaGenerator.GetAllFormulas()"/> method, that method call
+        /// thread is executing the <see cref="GetAllFormulas()"/> method, that method call
         /// will return immediately, returning all formulas generated until this
         /// moment. The search cannot be restarted once canceled - any subsequent
-        /// calls to <see cref="FullEnumerationFormulaGenerator.GetNextFormula()"/> will return null.
+        /// calls to <see cref="GetNextFormula()"/> will return null.
         /// </summary>
         public void Cancel()
         {

@@ -37,7 +37,6 @@ namespace NCDK.Default
     /// </summary>
     // @cdk.keyword animation
     // @cdk.keyword reaction
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     public class ChemSequence
         : ChemObject, IChemSequence, IChemObjectListener, ICloneable
     {
@@ -91,7 +90,7 @@ namespace NCDK.Default
         public void RemoveAt(int index) => chemModels.RemoveAt(index);
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        public new ChemSequence Clone(CDKObjectMap map)
+        public override ICDKObject Clone(CDKObjectMap map)
         {
             var clone_chemModels = new List<IChemModel>();
             foreach (var chemModel in chemModels)
@@ -101,9 +100,8 @@ namespace NCDK.Default
             return clone;
         }
 
-        public new ChemSequence Clone() => Clone(new CDKObjectMap());
+        public new IChemSequence Clone() => (IChemSequence)Clone(new CDKObjectMap());
         object ICloneable.Clone() => Clone();
-        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
 
         /// <summary>
         ///  Called by objects to which this object has
@@ -124,7 +122,6 @@ namespace NCDK.Silent
     /// </summary>
     // @cdk.keyword animation
     // @cdk.keyword reaction
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     public class ChemSequence
         : ChemObject, IChemSequence, IChemObjectListener, ICloneable
     {
@@ -172,7 +169,7 @@ namespace NCDK.Silent
         public void RemoveAt(int index) => chemModels.RemoveAt(index);
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        public new ChemSequence Clone(CDKObjectMap map)
+        public override ICDKObject Clone(CDKObjectMap map)
         {
             var clone_chemModels = new List<IChemModel>();
             foreach (var chemModel in chemModels)
@@ -182,9 +179,8 @@ namespace NCDK.Silent
             return clone;
         }
 
-        public new ChemSequence Clone() => Clone(new CDKObjectMap());
+        public new IChemSequence Clone() => (IChemSequence)Clone(new CDKObjectMap());
         object ICloneable.Clone() => Clone();
-        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
 
         /// <summary>
         ///  Called by objects to which this object has

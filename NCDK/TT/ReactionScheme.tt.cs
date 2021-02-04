@@ -70,7 +70,7 @@ namespace NCDK.Default
         public IEnumerable<IReaction> Reactions => this;
 
         /// <inheritdoc/>
-        public new ReactionScheme Clone(CDKObjectMap map)
+        public override ICDKObject Clone(CDKObjectMap map)
         {
             var reactionScheme = new List<IReactionScheme>();
             foreach (var scheme in Schemes)
@@ -82,9 +82,8 @@ namespace NCDK.Default
             return clone;
         }
 
-        public new ReactionScheme Clone() => Clone(new CDKObjectMap());
+        public new IReactionScheme Clone() => (IReactionScheme)Clone(new CDKObjectMap());
         object ICloneable.Clone() => Clone();
-        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
     }
 }
 namespace NCDK.Silent
@@ -130,7 +129,7 @@ namespace NCDK.Silent
         public IEnumerable<IReaction> Reactions => this;
 
         /// <inheritdoc/>
-        public new ReactionScheme Clone(CDKObjectMap map)
+        public override ICDKObject Clone(CDKObjectMap map)
         {
             var reactionScheme = new List<IReactionScheme>();
             foreach (var scheme in Schemes)
@@ -142,8 +141,7 @@ namespace NCDK.Silent
             return clone;
         }
 
-        public new ReactionScheme Clone() => Clone(new CDKObjectMap());
+        public new IReactionScheme Clone() => (IReactionScheme)Clone(new CDKObjectMap());
         object ICloneable.Clone() => Clone();
-        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
     }
 }

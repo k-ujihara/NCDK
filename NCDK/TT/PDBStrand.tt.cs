@@ -28,6 +28,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+using System;
 using System.Collections.Generic;
 
 namespace NCDK.Default
@@ -41,7 +42,6 @@ namespace NCDK.Default
     // @author      Egon Willighagen
     // @cdk.created 2006-04-19
     // @cdk.keyword polymer
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     public class PDBStrand 
         : Strand, IPDBStrand
     {
@@ -79,6 +79,9 @@ namespace NCDK.Default
             // don't return the original
             return new List<string>(sequentialListOfMonomers);
         }
+
+        public new IPDBStrand Clone() => (IPDBStrand)Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
     }
 }
 namespace NCDK.Silent
@@ -92,7 +95,6 @@ namespace NCDK.Silent
     // @author      Egon Willighagen
     // @cdk.created 2006-04-19
     // @cdk.keyword polymer
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     public class PDBStrand 
         : Strand, IPDBStrand
     {
@@ -130,5 +132,8 @@ namespace NCDK.Silent
             // don't return the original
             return new List<string>(sequentialListOfMonomers);
         }
+
+        public new IPDBStrand Clone() => (IPDBStrand)Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
     }
 }

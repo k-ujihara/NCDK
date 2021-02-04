@@ -14,7 +14,7 @@ namespace NCDK.Formula
     // @cdk.module  formula
     public class IsotopeContainer
     {
-        private List<IMolecularFormula> forms = new List<IMolecularFormula>();
+        private readonly List<IMolecularFormula> forms = new List<IMolecularFormula>();
         private double mass;
         private double intensity;
 

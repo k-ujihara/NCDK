@@ -39,7 +39,6 @@ namespace NCDK.Default
     /// </summary>
     // @cdk.module  data
     // @cdk.keyword ring 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     public class Ring
         : AtomContainer, IRing
     {
@@ -111,14 +110,13 @@ namespace NCDK.Default
         public int GetBondOrderSum()
             => bonds.Where(n => !n.Order.IsUnset()).Select(n => n.Order.Numeric()).Sum();
 
-        public new Ring Clone(CDKObjectMap map)
+        public override ICDKObject Clone(CDKObjectMap map)
         {
             return (Ring)base.Clone(map);
         }
 
-        public new Ring Clone() => Clone(new CDKObjectMap());
+        public new IRing Clone() => (IRing)Clone(new CDKObjectMap());
         object ICloneable.Clone() => Clone();
-        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
     }
 }
 namespace NCDK.Silent
@@ -132,7 +130,6 @@ namespace NCDK.Silent
     /// </summary>
     // @cdk.module  data
     // @cdk.keyword ring 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     public class Ring
         : AtomContainer, IRing
     {
@@ -204,13 +201,12 @@ namespace NCDK.Silent
         public int GetBondOrderSum()
             => bonds.Where(n => !n.Order.IsUnset()).Select(n => n.Order.Numeric()).Sum();
 
-        public new Ring Clone(CDKObjectMap map)
+        public override ICDKObject Clone(CDKObjectMap map)
         {
             return (Ring)base.Clone(map);
         }
 
-        public new Ring Clone() => Clone(new CDKObjectMap());
+        public new IRing Clone() => (IRing)Clone(new CDKObjectMap());
         object ICloneable.Clone() => Clone();
-        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
     }
 }

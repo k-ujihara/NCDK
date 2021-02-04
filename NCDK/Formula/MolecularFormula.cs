@@ -37,9 +37,10 @@ namespace NCDK.Formula
     // @author      miguelrojasch
     // @cdk.created 2007-11-20
     // @cdk.keyword molecular formula
-    public partial class MolecularFormula : IMolecularFormula
+    public partial class MolecularFormula 
+        : IMolecularFormula
     {
-        private Dictionary<IIsotope, int?> isotopes;
+        private readonly Dictionary<IIsotope, int?> isotopes;
 
         /// <inheritdoc/>
         public int? Charge { get; set; } = null;
@@ -166,9 +167,11 @@ namespace NCDK.Formula
         /// Clones this <see cref="MolecularFormula"/> object and its content. I should integrate into ChemObject.
         /// </summary>
         /// <returns>The cloned object</returns>
-        public MolecularFormula Clone()
+        public IMolecularFormula Clone() => (IMolecularFormula)Clone(new CDKObjectMap()); 
+        
+        public virtual ICDKObject Clone(CDKObjectMap map) 
         {
-            MolecularFormula clone = new MolecularFormula();
+            var clone = new MolecularFormula();
             foreach (var isotope_count in isotopes)
             {
                 clone.isotopes.Add(isotope_count.Key, isotope_count.Value);
@@ -176,11 +179,8 @@ namespace NCDK.Formula
             clone.Charge = Charge;
             return clone;
         }
-
-        public MolecularFormula Clone(CDKObjectMap map) => Clone();
-
+        
         object ICloneable.Clone() => Clone();
-        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
 
         /// <summary>
         /// Compare to IIsotope. The method doesn't compare instance but if they

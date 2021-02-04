@@ -23,10 +23,9 @@ namespace NCDK.Formula
             mfRange.AddIsotope(p, 0, 10);
             mfRange.AddIsotope(s, 0, 10);
 
-            var builder = Silent.ChemObjectBuilder.Instance;
             double minMass = 133.003;
             double maxMass = 133.005;
-            MolecularFormulaGenerator mfg = new MolecularFormulaGenerator(builder, minMass, maxMass, mfRange);
+            MolecularFormulaGenerator mfg = new MolecularFormulaGenerator(minMass, maxMass, mfRange);
             IMolecularFormulaSet mfSet = mfg.GetAllFormulas();
             #endregion
         }

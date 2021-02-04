@@ -65,5 +65,8 @@ namespace NCDK
         /// </summary>
         /// <returns>Collection containing the PDBStructure in the PDBPolymer</returns>
         IEnumerable<IPDBStructure> GetStructures();
+
+        /// <inheritdoc/>
+        new IPDBPolymer Clone();
     }
 }

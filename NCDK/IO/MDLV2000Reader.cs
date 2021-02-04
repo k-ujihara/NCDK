@@ -259,7 +259,6 @@ namespace NCDK.IO
 
             int linecount = 0;
             string title = null;
-            string program = null;
             string remark = null;
             string line = "";
 
@@ -282,7 +281,7 @@ namespace NCDK.IO
                 }
                 line = input.ReadLine();
                 linecount++;
-                program = line;
+                var program = line;
                 line = input.ReadLine();
                 linecount++;
                 if (line.Length > 0)
@@ -695,7 +694,11 @@ namespace NCDK.IO
             // xxxxx.xxxxyyyyy.yyyyzzzzz.zzzz aaaddcccssshhhbbbvvvHHHrrriiimmmnnneee
 
             string symbol;
+<<<<<<< HEAD
             double x = 0, y = 0, z = 0;
+=======
+            double x, y, z;
+>>>>>>> Fix typed Clone methods and cleanup
             int massDiff = 0;
             int charge = 0;
             int parity = 0;
@@ -896,7 +899,10 @@ namespace NCDK.IO
 
             if (isQuery && !(bond is QueryBond))
             {
+<<<<<<< HEAD
                 var order = bond.Order;
+=======
+>>>>>>> Fix typed Clone methods and cleanup
                 Expr expr;
                 if (bond.IsAromatic)
                 {
@@ -1894,7 +1900,7 @@ namespace NCDK.IO
         internal static void Label(IAtomContainer container, int index, string label)
         {
             var atom = container.Atoms[index];
-            var pseudoAtom = atom is IPseudoAtom ? (IPseudoAtom)atom : container.Builder.NewPseudoAtom();
+            var pseudoAtom = atom is IPseudoAtom atom1 ? atom1 : container.Builder.NewPseudoAtom();
             if (atom == pseudoAtom)
             {
                 pseudoAtom.Label = label;

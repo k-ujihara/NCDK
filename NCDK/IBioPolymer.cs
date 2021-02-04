@@ -88,5 +88,8 @@ namespace NCDK
         /// </summary>
         /// <param name="name">The name of the strand to remove</param>
         void RemoveStrand(string name);
+
+        /// <inheritdoc/>
+        new IBioPolymer Clone();
     }
 }

@@ -38,15 +38,17 @@ namespace NCDK.AtomTypes
     {
         private static readonly IChemObjectBuilder builder = CDK.Builder;
 
+        [Ignore()]
+        [TestMethod()]
         public void TestPDBfiles()
         {
-            string DIRNAME = "NCDK.Data.PDB.";
+            const string DIRNAME = "NCDK.Data.PDB.";
             string[] testFiles = { "114D.pdb", "1CRN.pdb", "1D66.pdb", "1IHA.pdb", "1PN8.pdb", };
             int tested = 0;
             int failed = 0;
             foreach (var testFile in testFiles)
             {
-                TestResults results = TestFile(DIRNAME, testFile, typeof(PDBReader));
+                var results = TestFile(DIRNAME, testFile, typeof(PDBReader));
                 tested += results.tested;
                 failed += results.failed;
             }
@@ -56,13 +58,13 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestMOL2files()
         {
-            string DIRNAME = "NCDK.Data.Mol2.";
+            const string DIRNAME = "NCDK.Data.Mol2.";
             string[] testFiles = { "fromWebsite.mol2", };
             int tested = 0;
             int failed = 0;
             foreach (var testFile in testFiles)
             {
-                TestResults results = TestFile(DIRNAME, testFile, typeof(PDBReader));
+                var results = TestFile(DIRNAME, testFile, typeof(PDBReader));
                 tested += results.tested;
                 failed += results.failed;
             }
@@ -78,7 +80,7 @@ namespace NCDK.AtomTypes
             int failed = 0;
             foreach (var testFile in testFiles)
             {
-                TestResults results = TestFile(DIRNAME, testFile, typeof(PDBReader));
+                var results = TestFile(DIRNAME, testFile, typeof(PDBReader));
                 tested += results.tested;
                 failed += results.failed;
             }
@@ -88,7 +90,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestMDLMolfiles()
         {
-            string DIRNAME = "NCDK.Data.MDL.";
+            const string DIRNAME = "NCDK.Data.MDL.";
             string[] testFiles = {"2,5-dimethyl-furan.mol", "5SD.mol", "9553.mol", "9554.mol", "ADN.mol", "allmol231.mol",
                 "allmol232.mol", "a-pinene.mol", "azulene.mol", "big.mol", "BremserPredictionTest.mol",
                 "bug1014344-1.mol", "bug1089770-1.mol", "bug1089770-2.mol", "bug1328739.mol", "bug_1750968.mol",
@@ -126,19 +128,19 @@ namespace NCDK.AtomTypes
             {
                 try
                 {
-                    TestResults results = TestFile(DIRNAME, testFile, typeof(MDLV2000Reader));
+                    var results = TestFile(DIRNAME, testFile, typeof(MDLV2000Reader));
                     tested += results.tested;
                     failed += results.failed;
                 }
                 catch (Exception e)
                 {
-                    Assert.Fail(testFile + " caused an error: " + e);
+                    Assert.Fail($"{testFile} caused an error: {e}");
                 }
             }
             Assert.AreEqual(tested, (tested - failed), "Could not match all atom types!");
         }
 
-        private TestResults TestFile(string dir, string filename, Type readerType)
+        private static TestResults TestFile(string dir, string filename, Type readerType)
         {
             var matcher = CDK.AtomTypeMatcher;
             var ins = ResourceLoader.GetAsStream(dir + filename);
@@ -157,18 +159,18 @@ namespace NCDK.AtomTypes
                     mol.Add(container);
             }
 
-            Assert.IsNotNull(mol, "Could not read the file into a IAtomContainer: " + filename);
+            Assert.IsNotNull(mol, $"Could not read the file into a IAtomContainer: {filename}");
 
-            TestResults results = new TestResults();
+            var results = new TestResults();
             Trace.Assert(mol != null);
             foreach (var atom in mol.Atoms)
             {
                 results.tested++;
-                IAtomType matched = matcher.FindMatchingAtomType(mol, atom);
+                var matched = matcher.FindMatchingAtomType(mol, atom);
                 if (matched == null)
                 {
                     results.failed++;
-                    Console.Out.WriteLine("Could not match atom: " + results.tested + " in file " + filename);
+                    Console.Out.WriteLine($"Could not match atom: {results.tested} in file {filename}");
                 }
                 else
                 // OK, the matcher did find something. Now, let's see of the
@@ -177,46 +179,35 @@ namespace NCDK.AtomTypes
                 {
                     // OK, OK, that's very basic indeed, but why not
                     results.failed++;
-                    Console.Out.WriteLine("Symbol does not match: " + results.tested + " in file " + filename);
-                    Console.Out.WriteLine("Found: " + atom.Symbol + ", expected: " + matched.Symbol);
+                    Console.Out.WriteLine($"Symbol does not match: {results.tested} in file {filename}");
+                    Console.Out.WriteLine($"Found: {atom.Symbol}, expected: {matched.Symbol}");
                 }
                 else if (!atom.Hybridization.IsUnset()
                       && atom.Hybridization != matched.Hybridization)
                 {
                     results.failed++;
-                    Console.Out.WriteLine("Hybridization does not match: " + results.tested + " in file " + filename);
-                    Console.Out.WriteLine("Found: " + atom.Hybridization + ", expected: " + matched.Hybridization
-                            + " (" + matched.AtomTypeName + ")");
+                    Console.Out.WriteLine($"Hybridization does not match: {results.tested} in file {filename}");
+                    Console.Out.WriteLine($"Found: {atom.Hybridization}, expected: {matched.Hybridization} ({matched.AtomTypeName})");
                 }
                 else if (atom.FormalCharge.Value != matched.FormalCharge.Value)
                 {
                     results.failed++;
-                    Console.Out.WriteLine("Formal charge does not match: " + results.tested + " in file " + filename);
-                    Console.Out.WriteLine("Found: " + atom.FormalCharge + ", expected: " + matched.FormalCharge
-                            + " (" + matched.AtomTypeName + ")");
+                    Console.Out.WriteLine($"Formal charge does not match: {results.tested} in file {filename}");
+                    Console.Out.WriteLine($"Found: {atom.FormalCharge}, expected: {matched.FormalCharge} ({matched.AtomTypeName})");
                 }
                 else
                 {
                     var connections = mol.GetConnectedBonds(atom);
                     int connectionCount = connections.Count();
-                    //                int piBondsFound = (int)mol.GetBondOrderSum(atom) - connectionCount;
                     // there might be missing hydrogens, so: found <= expected
                     if (matched.FormalNeighbourCount != null
-                            && connectionCount > matched.FormalNeighbourCount
-                            && !"X".Equals(matched.AtomTypeName))
+                     && connectionCount > matched.FormalNeighbourCount
+                     && !"X".Equals(matched.AtomTypeName))
                     {
                         results.failed++;
-                        Console.Out.WriteLine("Number of neighbors is too high: " + results.tested + " in file " + filename);
-                        Console.Out.WriteLine("Found: " + connectionCount + ", expected (max): "
-                                + matched.FormalNeighbourCount + " (" + matched.AtomTypeName + ")");
+                        Console.Out.WriteLine($"Number of neighbors is too high: {results.tested} in file {filename}");
+                        Console.Out.WriteLine($"Found: {connectionCount}, expected (max): {matched.FormalNeighbourCount} ({matched.AtomTypeName})");
                     }
-                    // there might be missing double bonds, so: found <= expected
-                    //                if (piBondsFound > matched.GetXXXX()) {
-                    //                    results.failed++;
-                    //                    Console.Out.WriteLine("Number of neighbors is too high: " + results.tested + " in file " + filename);
-                    //                    Console.Out.WriteLine("Found: " + atom.FormalNeighbourCount +
-                    //                                       ", expected (max): " + matched.FormalNeighbourCount);
-                    //                }
                 }
             }
             return results;

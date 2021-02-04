@@ -43,8 +43,7 @@ namespace NCDK.Default
     /// </example>
     // @cdk.keyword radical
     // @cdk.keyword electron, unpaired
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
-    public class SingleElectron
+     public class SingleElectron
         : ElectronContainer, ISingleElectron, ICloneable
     {
         private IAtom atom;
@@ -94,16 +93,15 @@ namespace NCDK.Default
         /// <returns>true if this SingleElectron is associated with the atom</returns>
         public bool Contains(IAtom atom) => this.atom.Equals(atom);
 
-        public new SingleElectron Clone(CDKObjectMap map)
+        public override ICDKObject Clone(CDKObjectMap map)
         {
             var clone = (SingleElectron)base.Clone(map);
             clone.atom = (IAtom)atom?.Clone(map);
             return clone;
         }
 
-        public new SingleElectron Clone() => Clone(new CDKObjectMap());
+        public new ISingleElectron Clone() => (ISingleElectron)Clone(new CDKObjectMap());
         object ICloneable.Clone() => Clone();
-        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
     }
 }
 namespace NCDK.Silent
@@ -123,8 +121,7 @@ namespace NCDK.Silent
     /// </example>
     // @cdk.keyword radical
     // @cdk.keyword electron, unpaired
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
-    public class SingleElectron
+     public class SingleElectron
         : ElectronContainer, ISingleElectron, ICloneable
     {
         private IAtom atom;
@@ -174,15 +171,14 @@ namespace NCDK.Silent
         /// <returns>true if this SingleElectron is associated with the atom</returns>
         public bool Contains(IAtom atom) => this.atom.Equals(atom);
 
-        public new SingleElectron Clone(CDKObjectMap map)
+        public override ICDKObject Clone(CDKObjectMap map)
         {
             var clone = (SingleElectron)base.Clone(map);
             clone.atom = (IAtom)atom?.Clone(map);
             return clone;
         }
 
-        public new SingleElectron Clone() => Clone(new CDKObjectMap());
+        public new ISingleElectron Clone() => (ISingleElectron)Clone(new CDKObjectMap());
         object ICloneable.Clone() => Clone();
-        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
     }
 }

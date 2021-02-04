@@ -101,7 +101,7 @@ namespace NCDK.Graphs
             public IList<IAtom> Atoms => Array.Empty<IAtom>();
             public IList<IBond> Bonds => Array.Empty<IBond>();
             public IChemObjectBuilder Builder
-            { get { throw new InvalidOperationException("not supported"); } }
+            { get     => throw new InvalidOperationException("not supported"); }
 
             public ICollection<IChemObjectListener> Listeners { get; } = Array.Empty<IChemObjectListener>();
             public bool Notification { get { return false; } set { } }
@@ -109,7 +109,7 @@ namespace NCDK.Graphs
 
             public string Id
             {
-                get { throw new InvalidOperationException("not supported"); }
+                get     => throw new InvalidOperationException("not supported");
                 set { }
             }
 
@@ -119,25 +119,25 @@ namespace NCDK.Graphs
 
             public bool IsPlaced
             {
-                get { throw new InvalidOperationException("not supported"); }
+                get     => throw new InvalidOperationException("not supported");
                 set { }
             }
 
             public bool IsVisited
             {
-                get { throw new InvalidOperationException("not supported"); }
+                get     => throw new InvalidOperationException("not supported");
                 set { }
             }
 
             public bool IsSingleOrDouble
             {
-                get { throw new InvalidOperationException("not supported"); }
+                get     => throw new InvalidOperationException("not supported");
                 set { }
             }
 
             public bool IsAromatic
             {
-                get { throw new InvalidOperationException("not supported"); }
+                get     => throw new InvalidOperationException("not supported");
                 set { }
             }
 
@@ -145,21 +145,25 @@ namespace NCDK.Graphs
             public IList<ISingleElectron> SingleElectrons => Array.Empty<ISingleElectron>();
 
             public void Add(IAtomContainer atomContainer)
-            { throw new InvalidOperationException("not supported"); }
+                => throw new InvalidOperationException("not supported");
 
             public void Add(IAtom atom)
-            { throw new InvalidOperationException("not supported"); }
+                => throw new InvalidOperationException("not supported");
 
             public void Add(IElectronContainer electronContainer)
-            { throw new InvalidOperationException("not supported"); }
+                => throw new InvalidOperationException("not supported");
 
             public IAtomContainer Clone()
-            { throw new InvalidOperationException("not supported"); }
+                => throw new InvalidOperationException("not supported");
+
+            IChemObject IChemObject.Clone()
+                => throw new InvalidOperationException("not supported");
 
             public IAtomContainer Clone(CDKObjectMap map)
-            { throw new InvalidOperationException("not supported"); }
+                => throw new InvalidOperationException("not supported");
 
             object ICloneable.Clone() => Clone();
+
             ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
 
             public bool Contains(ILonePair lonePair)
@@ -178,42 +182,42 @@ namespace NCDK.Graphs
                 => false;
 
             public IBond GetBond(IAtom atom1, IAtom atom2)
-            { throw new InvalidOperationException("not supported"); }
+                => throw new InvalidOperationException("not supported");
 
             public double GetBondOrderSum(IAtom atom)
-            { throw new InvalidOperationException("not supported"); }
+                => throw new InvalidOperationException("not supported");
 
             public IEnumerable<IAtom> GetConnectedAtoms(IAtom atom)
-            { throw new InvalidOperationException("not supported"); }
+                => throw new InvalidOperationException("not supported");
 
             public IEnumerable<IBond> GetConnectedBonds(IAtom atom)
-            { throw new InvalidOperationException("not supported"); }
+                => throw new InvalidOperationException("not supported");
 
             public IEnumerable<IElectronContainer> GetConnectedElectronContainers(IAtom atom)
-            { throw new InvalidOperationException("not supported"); }
+                => throw new InvalidOperationException("not supported");
 
             public IEnumerable<ILonePair> GetConnectedLonePairs(IAtom atom)
-            { throw new InvalidOperationException("not supported"); }
+                => throw new InvalidOperationException("not supported");
 
             public IEnumerable<ISingleElectron> GetConnectedSingleElectrons(IAtom atom)
-            { throw new InvalidOperationException("not supported"); }
+                => throw new InvalidOperationException("not supported");
 
             public IEnumerable<IElectronContainer> GetElectronContainers()
-            { throw new InvalidOperationException("not supported"); }
+                => throw new InvalidOperationException("not supported");
 
             public BondOrder GetMaximumBondOrder(IAtom atom)
-            { throw new InvalidOperationException("not supported"); }
+                => throw new InvalidOperationException("not supported");
 
             public BondOrder GetMinimumBondOrder(IAtom atom)
-            { throw new InvalidOperationException("not supported"); }
+                => throw new InvalidOperationException("not supported");
 
-            public void SetProperties(IEnumerable<KeyValuePair<object, object>> properties) { throw new InvalidOperationException("not supported"); }
-            public void AddProperties(IEnumerable<KeyValuePair<object, object>> properties) { throw new InvalidOperationException("not supported"); }
-            public IReadOnlyDictionary<object, object> GetProperties() { throw new InvalidOperationException("not supported"); }
-            public T GetProperty<T>(object description, T defautValue) { throw new InvalidOperationException("not supported"); }
+            public void SetProperties(IEnumerable<KeyValuePair<object, object>> properties)     => throw new InvalidOperationException("not supported");
+            public void AddProperties(IEnumerable<KeyValuePair<object, object>> properties)     => throw new InvalidOperationException("not supported");
+            public IReadOnlyDictionary<object, object> GetProperties()     => throw new InvalidOperationException("not supported");
+            public T GetProperty<T>(object description, T defautValue)     => throw new InvalidOperationException("not supported");
             public T GetProperty<T>(object description) => GetProperty(description, default(T));
             public void RemoveProperty(object description) { }
-            public void SetProperty(object key, object value) { throw new InvalidOperationException("not supported"); }
+            public void SetProperty(object key, object value)     => throw new InvalidOperationException("not supported");
 
             public ICollection<IStereoElement<IChemObject, IChemObject>> StereoElements => Array.Empty<IStereoElement<IChemObject, IChemObject>>();
 
@@ -253,10 +257,10 @@ namespace NCDK.Graphs
             }
 
             public void SetAtoms(IEnumerable<IAtom> atoms)
-            { throw new InvalidOperationException("not supported"); }
+                => throw new InvalidOperationException("not supported");
 
             public void SetBonds(IEnumerable<IBond> bonds)
-            { throw new InvalidOperationException("not supported"); }
+                => throw new InvalidOperationException("not supported");
 
             public string Title
             {

@@ -31,10 +31,11 @@ namespace NCDK.Formula
     // @author      miguelrojasch
     // @cdk.created 2007-11-20
     // @cdk.keyword molecular formula
-    public class MolecularFormulaSet : IMolecularFormulaSet, ICloneable
+    public class MolecularFormulaSet 
+        : IMolecularFormulaSet, ICloneable
     {
         /// <summary> Internal List of IMolecularFormula.</summary>
-        private IList<IMolecularFormula> components;
+        private readonly IList<IMolecularFormula> components;
 
         /// <summary>
         /// Constructs an empty MolecularFormulaSet.
@@ -144,20 +145,19 @@ namespace NCDK.Formula
         /// Clones this MolecularFormulaSet object and its content.
         /// </summary>
         /// <returns>The cloned object</returns>
-        public virtual MolecularFormulaSet Clone()
+        public IMolecularFormulaSet Clone() => (IMolecularFormulaSet)Clone(new CDKObjectMap());
+
+        public virtual ICDKObject Clone(CDKObjectMap map)
         {
-            MolecularFormulaSet clone = new MolecularFormulaSet();
+            var clone = new MolecularFormulaSet();
             foreach (var mf in this)
             {
-                clone.Add((IMolecularFormula)mf.Clone());
+                clone.Add(mf.Clone());
             }
             return clone;
         }
 
-        public MolecularFormulaSet Clone(CDKObjectMap map) => Clone();
-
         object ICloneable.Clone() => Clone();
-        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
 
         public int IndexOf(IMolecularFormula item)
         {

@@ -23,7 +23,10 @@ namespace NCDK
 {
     public interface IAtomContainerSet
         : IChemObjectSet<IAtomContainer>
-    { }
+    {
+        /// <inheritdoc/>
+        new IAtomContainerSet Clone();
+    }
 
     public interface IEnumerableChemObject<out T>
         : IEnumerable<T>, IChemObject where T : IChemObject
@@ -111,5 +114,8 @@ namespace NCDK
         /// </summary>
         /// <returns>a boolean indicating if this set contains no atom containers</returns>
         bool IsEmpty();
+
+        /// <inheritdoc/>
+        new IChemObjectSet<T> Clone();
     }
 }

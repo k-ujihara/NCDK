@@ -275,3 +275,5 @@ ModelManifest.xml
 !NCDK/x86/libinchi.dll
 !NCDK/x64/libinchi.dll
 !BuildAll.bat
+Test.sln
+Test/

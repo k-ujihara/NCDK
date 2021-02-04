@@ -42,5 +42,8 @@ namespace NCDK
         /// The type of the Monomer object.
         /// </summary>
         string MonomerType { get; set; }
+
+        /// <inheritdoc/>
+        new IMonomer Clone();
     }
 }

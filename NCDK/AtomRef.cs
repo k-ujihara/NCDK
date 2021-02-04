@@ -294,13 +294,13 @@ namespace NCDK
             return atom.Equals(other);
         }
 
-        /// <inheritdoc/>
-        public new IAtom Clone(CDKObjectMap map) => (IAtom)atom.Clone(map);
-
-        /// <inheritdoc/>
-        public new IAtom Clone() => Clone(new CDKObjectMap());
+        public new IAtom Clone() => (IAtom)Clone(new CDKObjectMap());
         object ICloneable.Clone() => Clone();
-        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
+        /// <inheritdoc/>
+        public override ICDKObject Clone(CDKObjectMap map) => atom.Clone(map);
+
+        IAtomType IAtomType.Clone() => Clone();
+        IIsotope IIsotope.Clone() => Clone();
 
         /// <inheritdoc/>
         public override string ToString()

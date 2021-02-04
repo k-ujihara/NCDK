@@ -262,7 +262,9 @@ namespace NCDK.Default
             NotifyChanged();
         }
 
-        public ChemObject Clone(CDKObjectMap map)
+        public IChemObject Clone() => (IChemObject)Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
+        public virtual ICDKObject Clone(CDKObjectMap map)
         {
             var clone = (ChemObject)MemberwiseClone();
 
@@ -275,10 +277,6 @@ namespace NCDK.Default
             return clone;
         }
 
-        public ChemObject Clone() => Clone(new CDKObjectMap());
-        object ICloneable.Clone() => Clone();
-        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
-
         /// <summary>
         /// Compares a <see cref="IChemObject"/> with this <see cref="IChemObject"/>.
         /// </summary>
@@ -286,7 +284,7 @@ namespace NCDK.Default
         /// <returns><see langword="true"/> if the atom types are equal</returns>
         public virtual bool Compare(object obj)
         {
-            return !(obj is IChemObject o) ? false : Id == o.Id;
+            return obj is IChemObject o && Id == o.Id;
         }
 
         private string id;
@@ -520,7 +518,9 @@ namespace NCDK.Silent
                 this.properties[pair.Key] = pair.Value;
         }
 
-        public ChemObject Clone(CDKObjectMap map)
+        public IChemObject Clone() => (IChemObject)Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
+        public virtual ICDKObject Clone(CDKObjectMap map)
         {
             var clone = (ChemObject)MemberwiseClone();
 
@@ -533,10 +533,6 @@ namespace NCDK.Silent
             return clone;
         }
 
-        public ChemObject Clone() => Clone(new CDKObjectMap());
-        object ICloneable.Clone() => Clone();
-        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
-
         /// <summary>
         /// Compares a <see cref="IChemObject"/> with this <see cref="IChemObject"/>.
         /// </summary>
@@ -544,7 +540,7 @@ namespace NCDK.Silent
         /// <returns><see langword="true"/> if the atom types are equal</returns>
         public virtual bool Compare(object obj)
         {
-            return !(obj is IChemObject o) ? false : Id == o.Id;
+            return obj is IChemObject o && Id == o.Id;
         }
 
         private string id;

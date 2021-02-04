@@ -117,9 +117,13 @@ namespace NCDK.Geometries.CIP
         }
 
         public ImmutableHydrogen Clone() => this;
-        public ImmutableHydrogen Clone(CDKObjectMap map) => Clone();
-        object ICloneable.Clone() => Clone();
-        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
+        public ImmutableHydrogen Clone(CDKObjectMap map) => this;
+        IAtom IAtom.Clone() => this;
+        IAtomType IAtomType.Clone() => this;
+        IIsotope IIsotope.Clone() => this;
+        IChemObject IChemObject.Clone() => this;
+        object ICloneable.Clone() => this;
+        ICDKObject ICDKObject.Clone(CDKObjectMap map) => this;
 
         public IChemObjectBuilder Builder => null;
         public IAtomContainer Container => null;

@@ -36,8 +36,8 @@ namespace NCDK.Pharmacophore
     // @cdk.keyword 3D isomorphism
     public class PharmacophoreQueryBond : Silent.Bond, IQueryBond
     {
-        private double upper;
-        private double lower;
+        private readonly double upper;
+        private readonly double lower;
 
         public PharmacophoreQueryBond() { }
 

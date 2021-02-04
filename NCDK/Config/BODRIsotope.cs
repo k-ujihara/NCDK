@@ -109,8 +109,9 @@ namespace NCDK.Config
         }
 
         public BODRIsotope Clone() => this;
-        public BODRIsotope Clone(CDKObjectMap map)  => this;
-
+        public BODRIsotope Clone(CDKObjectMap map) => this;
+        IIsotope IIsotope.Clone() => Clone();
+        IChemObject IChemObject.Clone() => Clone();
         object ICloneable.Clone() => Clone();
         ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
     }

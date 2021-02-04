@@ -45,8 +45,8 @@ namespace NCDK.Default
     public class PDBPolymer 
         : BioPolymer, ICloneable, IPDBPolymer
     {
-        List<string> sequentialListOfMonomers;
-        List<IPDBStructure> secondaryStructures;
+        readonly List<string> sequentialListOfMonomers;
+        readonly List<IPDBStructure> secondaryStructures;
 
         /// <summary>
         /// Constructs a new Polymer to store the <see cref="IMonomer"/>s.
@@ -117,12 +117,7 @@ namespace NCDK.Default
             return new List<string>(sequentialListOfMonomers);
         }
 
-        /// <inheritdoc/>
-        public new PDBPolymer Clone()
-        {
-            return (PDBPolymer)base.Clone();
-        }
-
+        public new IPDBPolymer Clone() => (IPDBPolymer)Clone(new CDKObjectMap());
         object ICloneable.Clone() => Clone();
     }
 }
@@ -140,8 +135,8 @@ namespace NCDK.Silent
     public class PDBPolymer 
         : BioPolymer, ICloneable, IPDBPolymer
     {
-        List<string> sequentialListOfMonomers;
-        List<IPDBStructure> secondaryStructures;
+        readonly List<string> sequentialListOfMonomers;
+        readonly List<IPDBStructure> secondaryStructures;
 
         /// <summary>
         /// Constructs a new Polymer to store the <see cref="IMonomer"/>s.
@@ -212,12 +207,7 @@ namespace NCDK.Silent
             return new List<string>(sequentialListOfMonomers);
         }
 
-        /// <inheritdoc/>
-        public new PDBPolymer Clone()
-        {
-            return (PDBPolymer)base.Clone();
-        }
-
+        public new IPDBPolymer Clone() => (IPDBPolymer)Clone(new CDKObjectMap());
         object ICloneable.Clone() => Clone();
     }
 }

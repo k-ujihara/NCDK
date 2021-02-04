@@ -73,5 +73,8 @@ namespace NCDK
         /// The configuration of the stereochemistry.
         /// </summary>
         StereoConfigurations Configure { get; set; }
+
+        /// <inheritdoc/>
+        new IStereoElement<TFocus, TCarriers> Clone();
     }
 }

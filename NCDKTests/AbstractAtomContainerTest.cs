@@ -412,12 +412,12 @@ namespace NCDK
 
             var elements = clone.StereoElements;
 
-            Assert.IsTrue(elements.Count() > 0, "no stereo elements cloned");
+            Assert.IsTrue(elements.Count > 0, "no stereo elements cloned");
 
             var element = elements.First();
 
             Assert.IsInstanceOfType(chirality, element.GetType(), "cloned element was incorrect class");
-            Assert.IsTrue(elements.Count() == 1, "too many stereo elements");
+            Assert.IsTrue(elements.Count == 1, "too many stereo elements");
 
             // we've tested the class already  - cast is okay
             var cloneChirality = (ITetrahedralChirality)element;
@@ -476,12 +476,12 @@ namespace NCDK
 
             var elements = clone.StereoElements;
 
-            Assert.IsTrue(elements.Count() > 0, "no stereo elements cloned");
+            Assert.IsTrue(elements.Count > 0, "no stereo elements cloned");
 
             var element = elements.First();
 
             Assert.IsInstanceOfType(dbStereo, element.GetType(), "cloned element was incorrect class");
-            Assert.IsTrue(elements.Count() == 1, "too many stereo elements");
+            Assert.IsTrue(elements.Count == 1, "too many stereo elements");
 
             // we've tested the class already - cast is okay
             var clonedDBStereo = (IDoubleBondStereochemistry)element;
@@ -541,12 +541,12 @@ namespace NCDK
 
             var elements = clone.StereoElements;
 
-            Assert.IsTrue(elements.Count() > 0, "no stereo elements cloned");
+            Assert.IsTrue(elements.Count > 0, "no stereo elements cloned");
 
             var element = elements.First();
 
             Assert.IsInstanceOfType(chirality, element.GetType(), "cloned element was incorrect class");
-            Assert.IsTrue(elements.Count() == 1, "too many stereo elements");
+            Assert.IsTrue(elements.Count == 1, "too many stereo elements");
 
             // we've tested the class already  - cast is okay
             var cloneChirality = (ITetrahedralChirality)element;

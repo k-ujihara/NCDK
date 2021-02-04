@@ -117,6 +117,10 @@ namespace NCDK.Default
             : base(container)
         {
         }
+
+        public override ICDKObject Clone(CDKObjectMap map) => base.Clone(map);
+        public new ICrystal Clone() => (ICrystal)Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
     }
 }
 namespace NCDK.Silent
@@ -209,5 +213,9 @@ namespace NCDK.Silent
             : base(container)
         {
         }
+
+        public override ICDKObject Clone(CDKObjectMap map) => base.Clone(map);
+        public new ICrystal Clone() => (ICrystal)Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
     }
 }

@@ -6,5 +6,8 @@ namespace NCDK
         : IStrand
     {
         IReadOnlyCollection<string> GetMonomerNamesInSequentialOrder();
+
+        /// <inheritdoc/>
+        new IPDBStrand Clone();
     }
 }

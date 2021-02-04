@@ -52,5 +52,8 @@ namespace NCDK
         /// </summary>
         /// <returns>a boolean indicating if this model has no content</returns>
         bool IsEmpty();
+
+        /// <inheritdoc/>
+        new IChemModel Clone();
     }
 }

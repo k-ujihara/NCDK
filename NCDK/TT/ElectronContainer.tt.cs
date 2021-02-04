@@ -34,7 +34,6 @@ namespace NCDK.Default
     // @cdk.keyword orbital
     // @cdk.keyword lone-pair
     // @cdk.keyword bond 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     public class ElectronContainer 
         : ChemObject, IElectronContainer, ICloneable
     {
@@ -65,6 +64,9 @@ namespace NCDK.Default
                 NotifyChanged();
             }
         }
+
+        public new IElectronContainer Clone() => (IElectronContainer)Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
     }
 }
 namespace NCDK.Silent
@@ -75,7 +77,6 @@ namespace NCDK.Silent
     // @cdk.keyword orbital
     // @cdk.keyword lone-pair
     // @cdk.keyword bond 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     public class ElectronContainer 
         : ChemObject, IElectronContainer, ICloneable
     {
@@ -105,5 +106,8 @@ namespace NCDK.Silent
                 electronCount = value;
             }
         }
+
+        public new IElectronContainer Clone() => (IElectronContainer)Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
     }
 }

@@ -43,5 +43,8 @@ namespace NCDK
         /// The fully expanded form as an <see cref="IAtomContainer"/>  object
         /// </summary>
         IAtomContainer Fragment { get; set; }
+
+        /// <inheritdoc/>
+        new IFragmentAtom Clone();
     }
 }

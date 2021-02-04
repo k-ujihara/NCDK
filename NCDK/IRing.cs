@@ -50,5 +50,8 @@ namespace NCDK
         /// The sum of all bond orders in the ring.
         /// </summary>
         int GetBondOrderSum();
+
+        /// <inheritdoc/>
+        new IRing Clone();
     }
 }

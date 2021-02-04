@@ -42,7 +42,6 @@ namespace NCDK.Default
     // @cdk.created 2004-12-20
     // @author      Martin Eklund <martin.eklund@farmbio.uu.se>
     // @author      Ola Spjuth <ola.spjuth@farmbio.uu.se>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     public class Strand 
         : AtomContainer, IStrand
     {
@@ -102,7 +101,7 @@ namespace NCDK.Default
         private class ReadOnlyNonEmptyDictionary<T>
             : IReadOnlyDictionary<string, T>
         {
-            IReadOnlyDictionary<string, T> dictionary;
+            readonly IReadOnlyDictionary<string, T> dictionary;
 
             public ReadOnlyNonEmptyDictionary(IReadOnlyDictionary<string, T> dictionary)
             {
@@ -153,7 +152,7 @@ namespace NCDK.Default
             }
         }
 
-        public new Strand Clone(CDKObjectMap map)
+        public override ICDKObject Clone(CDKObjectMap map)
         {
             var clone = (Strand)base.Clone(map);
             clone.monomers = new Dictionary<string, IMonomer>();
@@ -167,9 +166,8 @@ namespace NCDK.Default
             return clone;
         }
 
-        public new Strand Clone() => Clone(new CDKObjectMap());
+        public new IStrand Clone() => (IStrand)Clone(new CDKObjectMap());
         object ICloneable.Clone() => Clone();
-        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
     }
 }
 namespace NCDK.Silent
@@ -182,7 +180,6 @@ namespace NCDK.Silent
     // @cdk.created 2004-12-20
     // @author      Martin Eklund <martin.eklund@farmbio.uu.se>
     // @author      Ola Spjuth <ola.spjuth@farmbio.uu.se>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     public class Strand 
         : AtomContainer, IStrand
     {
@@ -242,7 +239,7 @@ namespace NCDK.Silent
         private class ReadOnlyNonEmptyDictionary<T>
             : IReadOnlyDictionary<string, T>
         {
-            IReadOnlyDictionary<string, T> dictionary;
+            readonly IReadOnlyDictionary<string, T> dictionary;
 
             public ReadOnlyNonEmptyDictionary(IReadOnlyDictionary<string, T> dictionary)
             {
@@ -293,7 +290,7 @@ namespace NCDK.Silent
             }
         }
 
-        public new Strand Clone(CDKObjectMap map)
+        public override ICDKObject Clone(CDKObjectMap map)
         {
             var clone = (Strand)base.Clone(map);
             clone.monomers = new Dictionary<string, IMonomer>();
@@ -307,8 +304,7 @@ namespace NCDK.Silent
             return clone;
         }
 
-        public new Strand Clone() => Clone(new CDKObjectMap());
+        public new IStrand Clone() => (IStrand)Clone(new CDKObjectMap());
         object ICloneable.Clone() => Clone();
-        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
     }
 }

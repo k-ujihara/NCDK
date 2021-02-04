@@ -36,7 +36,6 @@ namespace NCDK
     // @author      miguelrojasch
     // @cdk.created 2007-11-20
     // @cdk.keyword molecular formula
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     public interface IMolecularFormulaSet
         : ICDKObject, IList<IMolecularFormula>
     {

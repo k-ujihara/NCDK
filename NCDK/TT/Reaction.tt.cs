@@ -34,7 +34,6 @@ using System.Collections.Generic;
 namespace NCDK.Default
 {
     /// <inheritdoc cref="IReaction"/>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     public class Reaction
         : ChemObject, IReaction, ICloneable
     {
@@ -78,7 +77,7 @@ namespace NCDK.Default
             direction = ReactionDirection.Forward;
         }
 
-        public new Reaction Clone(CDKObjectMap map)
+        public override ICDKObject Clone(CDKObjectMap map)
         {
             var clone_reactants = (IChemObjectSet<IAtomContainer>)reactants.Clone(map);
             var clone_agents = (IChemObjectSet<IAtomContainer>)agents.Clone(map);
@@ -97,15 +96,13 @@ namespace NCDK.Default
             return clone;
         }
 
-        public new Reaction Clone() => Clone(new CDKObjectMap());
+        public new IReaction Clone() => (IReaction)Clone(new CDKObjectMap());
         object ICloneable.Clone() => Clone();
-        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
     }
 }
 namespace NCDK.Silent
 {
     /// <inheritdoc cref="IReaction"/>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     public class Reaction
         : ChemObject, IReaction, ICloneable
     {
@@ -149,7 +146,7 @@ namespace NCDK.Silent
             direction = ReactionDirection.Forward;
         }
 
-        public new Reaction Clone(CDKObjectMap map)
+        public override ICDKObject Clone(CDKObjectMap map)
         {
             var clone_reactants = (IChemObjectSet<IAtomContainer>)reactants.Clone(map);
             var clone_agents = (IChemObjectSet<IAtomContainer>)agents.Clone(map);
@@ -168,8 +165,7 @@ namespace NCDK.Silent
             return clone;
         }
 
-        public new Reaction Clone() => Clone(new CDKObjectMap());
+        public new IReaction Clone() => (IReaction)Clone(new CDKObjectMap());
         object ICloneable.Clone() => Clone();
-        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
     }
 }

@@ -37,7 +37,6 @@ foreach (var ns in namespaces)
 namespace <#= ns.NS #>
 {
     /// <inheritdoc cref="IPseudoAtom"/>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     public class PseudoAtom
         : Atom, ICloneable, IPseudoAtom
     {
@@ -144,14 +143,13 @@ namespace <#= ns.NS #>
             return sb.ToString();
         }
 
-        public new PseudoAtom Clone(CDKObjectMap map)
+        public override ICDKObject Clone(CDKObjectMap map)
         {
             return (PseudoAtom)base.Clone(map);
         }
 
-        public new PseudoAtom Clone() => Clone(new CDKObjectMap());
+        public new IPseudoAtom Clone() => (IPseudoAtom)Clone(new CDKObjectMap());
         object ICloneable.Clone() => Clone();
-        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
     }
 }
 <#

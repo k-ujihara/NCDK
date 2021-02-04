@@ -98,7 +98,6 @@ namespace NCDK.Isomorphisms.Matchers
         public static void Create(IAtomContainer dst, IAtomContainer src, params ExprType[] opts)
         {
             var optset = new HashSet<ExprType>(opts);
-            var query = new QueryAtomContainer();
             var mapping = new CDKObjectMap();
             var stereos = new Dictionary<IChemObject, IStereoElement<IChemObject, IChemObject>>();
             foreach (var se in src.StereoElements)

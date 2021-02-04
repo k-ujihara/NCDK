@@ -54,5 +54,8 @@ namespace NCDK
         /// </summary>
         /// <param name="atom">The Atom that is the C-terminus</param>
         void AddCTerminus(IAtom atom);
+
+        /// <inheritdoc/>
+        new IAminoAcid Clone();
     }
 }

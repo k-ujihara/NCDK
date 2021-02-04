@@ -28,7 +28,6 @@ using System;
 
 namespace NCDK.Default
 {
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     public class Substance
         : ChemObjectSet<IAtomContainer>, ISubstance, ICloneable
     {
@@ -36,11 +35,13 @@ namespace NCDK.Default
             : base()
         {
         }
+
+        public new ISubstance Clone() => (ISubstance)Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
     }
 }
 namespace NCDK.Silent
 {
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     public class Substance
         : ChemObjectSet<IAtomContainer>, ISubstance, ICloneable
     {
@@ -48,5 +49,8 @@ namespace NCDK.Silent
             : base()
         {
         }
+
+        public new ISubstance Clone() => (ISubstance)Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
     }
 }

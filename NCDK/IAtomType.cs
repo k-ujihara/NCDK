@@ -105,5 +105,8 @@ namespace NCDK
         /// set if a chemobject has reactive center. It is used for example in reaction.
         /// </summary>
         bool IsReactiveCenter { get; set; }
+
+        /// <inheritdoc/>
+        new IAtomType Clone();
     }
 }

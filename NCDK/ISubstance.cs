@@ -29,5 +29,7 @@ namespace NCDK
     public interface ISubstance
         : IChemObjectSet<IAtomContainer>
     {
+        /// <inheritdoc/>
+        new ISubstance Clone();
     }
 }

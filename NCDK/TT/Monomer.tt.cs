@@ -39,7 +39,6 @@ namespace NCDK.Default
     // @author     Edgar Luttmann <edgar@uni-paderborn.de>
     // @cdk.created    2001-08-06 
     // @cdk.keyword    monomer  
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     public class Monomer 
         : AtomContainer, IMonomer, ICloneable
     {
@@ -73,14 +72,13 @@ namespace NCDK.Default
         {
         }
 
-        public new Monomer Clone(CDKObjectMap map)
+        public new IMonomer Clone() => (IMonomer)Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
+        /// <inheritdoc/>
+        public override ICDKObject Clone(CDKObjectMap map)
         {
             return (Monomer)base.Clone(map);
         }
-
-        public new Monomer Clone() => Clone(new CDKObjectMap());
-        object ICloneable.Clone() => Clone();
-        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
     }
 }
 namespace NCDK.Silent
@@ -92,7 +90,6 @@ namespace NCDK.Silent
     // @author     Edgar Luttmann <edgar@uni-paderborn.de>
     // @cdk.created    2001-08-06 
     // @cdk.keyword    monomer  
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "Ignored")]
     public class Monomer 
         : AtomContainer, IMonomer, ICloneable
     {
@@ -126,13 +123,12 @@ namespace NCDK.Silent
         {
         }
 
-        public new Monomer Clone(CDKObjectMap map)
+        public new IMonomer Clone() => (IMonomer)Clone(new CDKObjectMap());
+        object ICloneable.Clone() => Clone();
+        /// <inheritdoc/>
+        public override ICDKObject Clone(CDKObjectMap map)
         {
             return (Monomer)base.Clone(map);
         }
-
-        public new Monomer Clone() => Clone(new CDKObjectMap());
-        object ICloneable.Clone() => Clone();
-        ICDKObject ICDKObject.Clone(CDKObjectMap map) => Clone(map);
     }
 }

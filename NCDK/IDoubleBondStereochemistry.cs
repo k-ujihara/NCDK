@@ -54,5 +54,8 @@ namespace NCDK
         /// </summary>
         /// <value>The <see cref="DoubleBondConformation"/> for this stereo element.</value>
         DoubleBondConformation Stereo { get; }
+
+        /// <inheritdoc/>
+        new IDoubleBondStereochemistry Clone();
     }
 }
