@@ -303,7 +303,7 @@ namespace NCDK.Isomorphisms.Matchers
         /// Please note not all <see cref="ExprType"/>s are currently supported, if you
         /// require a specific type that you think is useful please open an issue.
         /// </remarks>
-        /// <param name="mol">the molecule</param>
+        /// <param name="src">the molecule</param>
         /// <param name="opts">set of the expr types to match</param>
         /// <returns>the query molecule</returns>
         public static QueryAtomContainer Create(IAtomContainer src, params ExprType[] opts)

@@ -7,7 +7,7 @@
     <RootNamespace>NCDK</RootNamespace>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>ncdk.snk</AssemblyOriginatorKeyFile>
-    <Copyright>Copyright © 2016-2019 Kazuya Ujihara</Copyright>
+    <Copyright>Copyright © 2016-2021 Kazuya Ujihara</Copyright>
     <PackageLicenseUrl>https://github.com/kazuyaujihara/NCDK/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/kazuyaujihara/NCDK</PackageProjectUrl>
     <RepositoryUrl>https://github.com/kazuyaujihara/NCDK</RepositoryUrl>
@@ -27,8 +27,8 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.3.0" />
-    <PackageReference Include="MSTest.TestAdapter" Version="2.0.0" />
-    <PackageReference Include="MSTest.TestFramework" Version="2.0.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="2.1.2" />
+    <PackageReference Include="MSTest.TestFramework" Version="2.1.2" />
   </ItemGroup>
 
   <ItemGroup>

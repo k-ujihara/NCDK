@@ -3,9 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>netcoreapp3.1;netstandard2.0</TargetFrameworks>
 
-    <AssemblyVersion>1.6.0.0</AssemblyVersion>
-    <FileVersion>1.6.0.0</FileVersion>
-    <Version>1.6.0</Version>
+    <Version>1.6.1</Version>
     <Copyright>Copyright © 2016-2021 Kazuya Ujihara</Copyright>
 
     <PackageId>NCDK</PackageId>
@@ -54,6 +52,10 @@
   
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
     <DocumentationFile>bin\Release\netstandard2.0\NCDK.xml</DocumentationFile>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netcoreapp3.1|AnyCPU'">
+    <DocumentationFile>C:\Users\ujiha\Documents\NCDK\NCDK\NCDK.xml</DocumentationFile>
   </PropertyGroup>
   
   <ItemGroup>
@@ -297,10 +299,10 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>$ExampleCodes.cs</LastGenOutput>
     </None>
-    <None Update="runtimes\linux-x64\native\libinchi.so.1.05.00">
+    <None Update="runtimes\linux-x64\native\libinchi.so">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="runtimes\linux-x86\native\libinchi.so.1.05.00">
+    <None Update="runtimes\linux-x86\native\libinchi.so">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="TT\AdductFormula.tt">

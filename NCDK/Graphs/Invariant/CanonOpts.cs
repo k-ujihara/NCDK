@@ -25,7 +25,7 @@ namespace NCDK.Graphs.Invariant
 {
     /// <summary>
     /// Basic flavor options to tweak canonical invariants, note these deliberately mirror some fields
-    /// from the <see cref="NCDK.Smiles.SmiFlavor"/> .
+    /// from the <see cref="NCDK.Smiles.SmiFlavors"/> .
     /// </summary>
     public static class CanonOpts
     {

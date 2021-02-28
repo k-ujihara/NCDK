@@ -15,5 +15,5 @@ using System.Windows;
 [assembly: AssemblyCompany("Kazuya Ujihara")]
 [assembly: AssemblyCopyright("Copyright © 2016-2021 Kazuya Ujihara")]
 [assembly: AssemblyTrademark("")]
-[assembly: AssemblyVersion("1.6.0.0")]
-[assembly: AssemblyFileVersion("1.6.0.0")]
+[assembly: AssemblyVersion("1.6.1.0")]
+[assembly: AssemblyFileVersion("1.6.1.0")]

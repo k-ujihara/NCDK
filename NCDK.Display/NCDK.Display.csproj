@@ -3,10 +3,8 @@
     <OutputType>Library</OutputType>
     <TargetFramework>net461</TargetFramework>
 
-    <AssemblyVersion>1.5.6.0</AssemblyVersion>
-    <FileVersion>1.5.6.0</FileVersion>
-    <Version>1.5.6</Version>
-    <Copyright>Copyright © 2016-2019 Kazuya Ujihara</Copyright>
+    <Version>1.6.1</Version>
+    <Copyright>Copyright © 2016-2021 Kazuya Ujihara</Copyright>
 
     <PackageId>NCDK.Display</PackageId>
     <Product>NCDK.Display: Depiction module of NCDK</Product>

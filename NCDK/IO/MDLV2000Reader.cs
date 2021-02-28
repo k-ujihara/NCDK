@@ -694,11 +694,7 @@ namespace NCDK.IO
             // xxxxx.xxxxyyyyy.yyyyzzzzz.zzzz aaaddcccssshhhbbbvvvHHHrrriiimmmnnneee
 
             string symbol;
-<<<<<<< HEAD
-            double x = 0, y = 0, z = 0;
-=======
             double x, y, z;
->>>>>>> Fix typed Clone methods and cleanup
             int massDiff = 0;
             int charge = 0;
             int parity = 0;
@@ -899,10 +895,6 @@ namespace NCDK.IO
 
             if (isQuery && !(bond is QueryBond))
             {
-<<<<<<< HEAD
-                var order = bond.Order;
-=======
->>>>>>> Fix typed Clone methods and cleanup
                 Expr expr;
                 if (bond.IsAromatic)
                 {
@@ -910,8 +902,7 @@ namespace NCDK.IO
                 }
                 else
                 {
-                    expr = new Expr(ExprType.Order,
-                                    bond.Order.Numeric());
+                    expr = new Expr(ExprType.Order, bond.Order.Numeric());
                 }
                 bond = new QueryBond(atoms[u], atoms[v], expr);
             }
