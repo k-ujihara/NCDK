@@ -47,7 +47,7 @@
   </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-        <DocumentationFile>bin\Release\$(TargetFramework)\NCDK.Math.xml</DocumentationFile>
+        <DocumentationFile>bin\Release\$(TargetFramework)\NCDK.xml</DocumentationFile>
     </PropertyGroup>
   
   <ItemGroup>
