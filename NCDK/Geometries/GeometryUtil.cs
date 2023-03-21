@@ -409,12 +409,10 @@ namespace NCDK.Geometries
             foreach (var ring in ringSet)
             {
                 var centerPoint = Get2DCenter(ring);
-                if (centerPoint != null)
-                {
-                    centerX += centerPoint.X;
-                    centerY += centerPoint.Y;
-                    count++;
-                }
+                centerX += centerPoint.X;
+                centerY += centerPoint.Y;
+                count++;
+
             }
             if (count == 0)
                 return new Vector2(double.NaN, double.NaN);
@@ -484,8 +482,6 @@ namespace NCDK.Geometries
         public static void Translate2DCenterTo(IAtomContainer container, Vector2 p)
         {
             var com = Get2DCenter(container);
-            if (com == null)
-                return;
             var translation = new Vector2(p.X - com.X, p.Y - com.Y);
             foreach (var atom in container.Atoms)
             {
@@ -767,8 +763,6 @@ namespace NCDK.Geometries
             foreach (var currentBond in atomCon.Bonds)
             {
                 var bondCenter = Get2DCenter(currentBond.Atoms);
-                if (bondCenter == null)
-                    continue;
                 var mouseDistance = Math.Sqrt(Math.Pow(bondCenter.X - xPosition, 2) + Math.Pow(bondCenter.Y - yPosition, 2));
                 if (mouseDistance < smallestMouseDistance || smallestMouseDistance == -1)
                 {
@@ -793,8 +787,6 @@ namespace NCDK.Geometries
             foreach (var currentBond in atomCon.Bonds)
             {
                 var bondCenter = Get2DCenter(currentBond.Atoms);
-                if (bondCenter == null)
-                    continue;
                 var mouseDistance = Math.Sqrt(Math.Pow(bondCenter.X - xPosition, 2) + Math.Pow(bondCenter.Y - yPosition, 2));
                 if (mouseDistance < smallestMouseDistance || smallestMouseDistance == -1)
                 {
@@ -885,12 +877,12 @@ namespace NCDK.Geometries
             {
                 return 0.0;
             }
-            var point1 = bond.Begin.Point2D.Value;
-            var point2 = bond.End.Point2D.Value;
-            if (point1 == null || point2 == null)
+            if (bond.Begin.Point2D == null || bond.End.Point2D == null)
             {
                 return 0.0;
             }
+            var point1 = bond.Begin.Point2D.Value;
+            var point2 = bond.End.Point2D.Value;
             return Vector2.Distance(point1, point2);
         }
 

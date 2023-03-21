@@ -34,7 +34,7 @@ namespace NCDK.SMARTS
     /// <summary>
     /// A <see cref="Pattern"/> for matching a single SMARTS query against multiple target
     /// compounds. The class should <b>not</b> be used for matching many queries
-    /// against a single target as in substructure keyed fingerprints. The <see cref="Smiles.SMARTS.SMARTSQueryTool"/> 
+    /// against a single target as in substructure keyed fingerprints. The SMARTSQueryTool
     /// is currently a better option as less target initialistion is performed.
     /// </summary>
     /// <example>

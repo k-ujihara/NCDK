@@ -134,7 +134,11 @@ namespace NCDK.Graphs.InChI
                         if (SetDllDirectoryIfFileExist(Path.GetDirectoryName(executingAsm.Location), subdir, DllFileName))
                             break;
                         // for ASP.NET
+#if NETSTANDARD
                         var uri = new Uri(executingAsm.CodeBase);
+#elif NETCOREAPP
+                        var uri = new Uri(executingAsm.Location);
+#endif
                         if (uri.Scheme == "file")
                         {
                             if (SetDllDirectoryIfFileExist(Path.GetDirectoryName(uri.AbsolutePath), subdir, DllFileName))
@@ -184,7 +188,7 @@ namespace NCDK.Graphs.InChI
         }
 #endif
 
-        static NInchiWrapper()
+                        static NInchiWrapper()
         {
             LoadDll();
         }

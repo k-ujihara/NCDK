@@ -223,11 +223,11 @@ namespace NCDK.IO
                         };
                         itemElement.Add(subjectElement);
                     }
-                    if (DateMap[chemObject] != null)
+                    if (DateMap.TryGetValue(chemObject, out DateTime value))
                     {
                         var dateElement = new XElement(NS_DCELEMENTS + "date")
                         {
-                            Value = DateMap[chemObject].ToString("yyyy-MM-dd'T'HH:mm:ss", DateTimeFormatInfo.InvariantInfo) + TimeZone
+                            Value = value.ToString("yyyy-MM-dd'T'HH:mm:ss", DateTimeFormatInfo.InvariantInfo) + TimeZone
                         };
                         itemElement.Add(dateElement);
                     }

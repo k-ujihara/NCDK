@@ -8,7 +8,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>NCDK</RootNamespace>
     <AssemblyName>ExampleCodes</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
@@ -27,6 +27,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -209,28 +210,6 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NCDK.Display\NCDK.Display.csproj">
-      <Project>{60b8bebc-9968-44a7-ab0b-11c03116579d}</Project>
-      <Name>NCDK.Display</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NCDK.Legacy\NCDK.Legacy.csproj">
-      <Project>{d69ed942-9971-4f54-884d-4d795f74c6a4}</Project>
-      <Name>NCDK.Legacy</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NCDK.Math\NCDK.Math.csproj">
-      <Project>{1641eaa9-6ece-4929-85b7-7d3ea4f24c78}</Project>
-      <Name>NCDK.Math</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NCDK.RDF\NCDK.RDF.csproj">
-      <Project>{0467822d-ad0a-434a-9888-94522bfe6076}</Project>
-      <Name>NCDK.RDF</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NCDK\NCDK.csproj">
-      <Project>{b0b5eacf-5f39-42d0-bacd-1ff559ccc8b2}</Project>
-      <Name>NCDK</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="QSAR\" />
     <Folder Include="Templates\" />
   </ItemGroup>
@@ -245,6 +224,28 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NCDK.Display\NCDK.Display.csproj">
+      <Project>{60b8bebc-9968-44a7-ab0b-11c03116579d}</Project>
+      <Name>NCDK.Display</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NCDK.Legacy\NCDK.Legacy.csproj">
+      <Project>{d69ed942-9971-4f54-884d-4d795f74c6a4}</Project>
+      <Name>NCDK.Legacy</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NCDK.Math\NCDK.Math.csproj">
+      <Project>{dd515727-9b6f-4e80-89e6-6c55ab531f7e}</Project>
+      <Name>NCDK.Math</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NCDK.RDF\NCDK.RDF.csproj">
+      <Project>{526d1704-b989-420c-80d7-3fba101eb96d}</Project>
+      <Name>NCDK.RDF</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NCDK\NCDK.csproj">
+      <Project>{b0b5eacf-5f39-42d0-bacd-1ff559ccc8b2}</Project>
+      <Name>NCDK</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

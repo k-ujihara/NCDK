@@ -177,7 +177,7 @@ namespace NCDK.IO
                     Trace.TraceError($"Error while writing Molecule: {e.Message}");
                 }
                 else
-                    throw e;
+                    throw;
             }
         }
 

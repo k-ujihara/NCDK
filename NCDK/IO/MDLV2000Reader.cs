@@ -382,11 +382,8 @@ namespace NCDK.IO
                         foreach (var atomToUpdate in atoms)
                         {
                             var p3d = atomToUpdate.Point3D.Value;
-                            if (p3d != null)
-                            {
-                                atomToUpdate.Point2D = new Vector2(p3d.X, p3d.Y);
-                                atomToUpdate.Point3D = null;
-                            }
+                            atomToUpdate.Point2D = new Vector2(p3d.X, p3d.Y);
+                            atomToUpdate.Point3D = null;
                         }
                     }
                 }

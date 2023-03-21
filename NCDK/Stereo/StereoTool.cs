@@ -377,10 +377,7 @@ namespace NCDK.Stereo
         /// <returns>the signed distance to the plane</returns>
         public static double SignedDistanceToPlane(Vector3 planeNormal, Vector3 pointInPlane, Vector3 point)
         {
-            if (planeNormal == null) return double.NaN;
-
-            Vector3 pointPointDiff = new Vector3();
-            pointPointDiff = Vector3.Subtract(point, pointInPlane);
+            var pointPointDiff = Vector3.Subtract(point, pointInPlane);
             return Vector3.Dot(planeNormal, pointPointDiff);
         }
 
