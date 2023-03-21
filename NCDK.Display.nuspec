@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>NCDK.Display</id>
-        <version>1.6.1</version>
+        <version>1.6.2</version>
         <title>NCDK.Display: Depiction module of NCDK</title>
         <authors>Kazuya Ujihara</authors>
         <owners>kazuya</owners>
@@ -11,7 +11,7 @@
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>Depiction module of NCDK</description>
         <releaseNotes>This release is based on https://github.com/cdk/cdk/tree/a027f6689a34d9ede3bb9befad2d0f1c5b2bb711 snapshot.</releaseNotes>
-        <copyright>Copyright © 2016-2021 Kazuya Ujihara</copyright>
+        <copyright>Copyright © 2016-2023 Kazuya Ujihara</copyright>
         <tags>cdk cheminformatics chemistry toolkit</tags>
         <frameworkAssemblies>
             <frameworkAssembly assemblyName="PresentationCore" />
@@ -20,7 +20,7 @@
             <frameworkAssembly assemblyName="WindowsBase" />
         </frameworkAssemblies>
         <dependencies>
-            <dependency id="NCDK" version="1.6.1" />
+            <dependency id="NCDK" version="1.6.2" />
         </dependencies>
     </metadata>
     <files>

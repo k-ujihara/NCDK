@@ -25,7 +25,7 @@ using System.Runtime.InteropServices;
 using System.Security;
 using System.Text;
 using System.IO;
-#if NETCOREAPP3_1
+#if NETCOREAPP3_1 || NET5_0_OR_GREATER
 using System.Reflection;
 #endif
 
@@ -53,7 +53,7 @@ namespace NCDK.Graphs.InChI
     {
         private const string DllBaseName = "libinchi";
 
-#if NETCOREAPP3_1
+#if NETCOREAPP3_1 || NET5_0_OR_GREATER
         static void LoadDll()
         {
             var os = Environment.OSVersion;
@@ -74,9 +74,8 @@ namespace NCDK.Graphs.InChI
             var ext = os.Platform == PlatformID.Win32NT ? "dll" : "so";
             var dllBaseName = $"{libraryName}.{ext}";
 
-            IntPtr libHandle;
 
-            if (NativeLibrary.TryLoad(dllBaseName, assembly, DllImportSearchPath.SafeDirectories, out libHandle))
+            if (NativeLibrary.TryLoad(dllBaseName, assembly, DllImportSearchPath.SafeDirectories, out nint libHandle))
                 return libHandle;
 
             switch (os.Platform)
@@ -93,7 +92,7 @@ namespace NCDK.Graphs.InChI
                             return libHandle;
                     }
                     // for ASP.NET
-                    var uri = new Uri(assembly.CodeBase);
+                    var uri = new Uri(assembly.Location);
                     if (uri.Scheme == "file")
                     {
                         asmLocation = Path.GetDirectoryName(uri.AbsolutePath);
@@ -134,11 +133,7 @@ namespace NCDK.Graphs.InChI
                         if (SetDllDirectoryIfFileExist(Path.GetDirectoryName(executingAsm.Location), subdir, DllFileName))
                             break;
                         // for ASP.NET
-#if NETSTANDARD
-                        var uri = new Uri(executingAsm.CodeBase);
-#elif NETCOREAPP
                         var uri = new Uri(executingAsm.Location);
-#endif
                         if (uri.Scheme == "file")
                         {
                             if (SetDllDirectoryIfFileExist(Path.GetDirectoryName(uri.AbsolutePath), subdir, DllFileName))
@@ -188,7 +183,7 @@ namespace NCDK.Graphs.InChI
         }
 #endif
 
-                        static NInchiWrapper()
+        static NInchiWrapper()
         {
             LoadDll();
         }
@@ -216,12 +211,12 @@ namespace NCDK.Graphs.InChI
             public fixed sbyte/*char*/ elname[ATOM_EL_LEN];    /* zero-terminated chemical element name: "H", "Si", etc. */
             public Int16/*AT_NUM*/ num_bonds;                  /* number of neighbors, bond types and bond stereo in the adjacency list */
             public fixed SByte/*S_CHAR*/ num_iso_H[NUM_H_ISOTOPES + 1]; /* implicit hydrogen atoms */
-                                                                        /* [0]: number of implicit non-isotopic H
-                                                                                (exception: num_iso_H[0]=-1 means INCHI
-                                                                                adds implicit H automatically),
-                                                                           [1]: number of implicit isotopic 1H (protium),
-                                                                           [2]: number of implicit 2H (deuterium),
-                                                                           [3]: number of implicit 3H (tritium) */
+            /* [0]: number of implicit non-isotopic H
+                    (exception: num_iso_H[0]=-1 means INCHI
+                    adds implicit H automatically),
+               [1]: number of implicit isotopic 1H (protium),
+               [2]: number of implicit 2H (deuterium),
+               [3]: number of implicit 3H (tritium) */
             public Int16/*AT_NUM*/ isotopic_mass;        /* 0 => non-isotopic; isotopic mass or ISOTOPIC_SHIFT_FLAG + mass - (average atomic mass) */
             public SByte/*S_CHAR*/ radical;              /* inchi_Radical */
             public SByte/*S_CHAR*/ charge;               /* positive or negative; 0 => no charge */
@@ -257,7 +252,7 @@ namespace NCDK.Graphs.InChI
             /* the caller is responsible for the data allocation and deallocation */
             public IntPtr/*char**/ szInChI;     /* InChI ASCIIZ string to be converted to a structure */
             public IntPtr/*char**/ szOptions;   /* InChI options: space-delimited; each is preceded by */
-                                                /* '/' or '-' depending on OS and compiler */
+            /* '/' or '-' depending on OS and compiler */
         }
 
         /* Structure -> InChI */
@@ -270,7 +265,7 @@ namespace NCDK.Graphs.InChI
             public IntPtr/*char**/ szAuxInfo;   /* Aux info ASCIIZ string */
             public IntPtr/*char**/ szMessage;   /* Error/warning ASCIIZ message */
             public IntPtr/*char**/ szLog;       /* log-file ASCIIZ string, contains a human-readable list */
-                                                /* of recognized options and possibly an Error/warning message */
+            /* of recognized options and possibly an Error/warning message */
         }
 
         /* InChI -> Structure */
@@ -294,10 +289,10 @@ namespace NCDK.Graphs.InChI
             public IntPtr/*char**/ szMessage;    /* Error/warning ASCIIZ message */
             public IntPtr/*char**/ szLog;        /* log-file ASCIIZ string, contains a human-readable list  of recognized options and possibly an Error/warning message */
             public fixed UInt64 WarningFlags[4]; /* warnings, see INCHIDIFF in inchicmp.h */
-                                                 /* [x][y]: x=0 => Reconnected if present in InChI otherwise Disconnected/Normal
-                                                            x=1 => Disconnected layer if Reconnected layer is present
-                                                            y=1 => Main layer or Mobile-H
-                                                            y=0 => Fixed-H layer */
+            /* [x][y]: x=0 => Reconnected if present in InChI otherwise Disconnected/Normal
+                       x=1 => Disconnected layer if Reconnected layer is present
+                       y=1 => Main layer or Mobile-H
+                       y=0 => Fixed-H layer */
         }
 
         public const int STR_ERR_LEN = 256;
@@ -369,7 +364,7 @@ namespace NCDK.Graphs.InChI
         internal static extern void Free_std_inchi_Input([In] ref Inchi_Input pInp);
         [SuppressUnmanagedCodeSecurity]
         [DllImport(DllBaseName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-        internal static extern int CheckINCHI([MarshalAs(UnmanagedType.LPStr)] [In] string szINCHI, int strict);
+        internal static extern int CheckINCHI([MarshalAs(UnmanagedType.LPStr)][In] string szINCHI, int strict);
 
         [SuppressUnmanagedCodeSecurity]
         [DllImport(DllBaseName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, BestFitMapping = false, ThrowOnUnmappableChar = true)]
@@ -473,7 +468,7 @@ namespace NCDK.Graphs.InChI
                 {
                     var atom = input.Atoms[i];
 
-                    Inchi_Atom iatom = new Inchi_Atom();
+                    var iatom = new Inchi_Atom();
                     {
                         var elname = Encoding.ASCII.GetBytes(atom.ElementType);
                         for (int n = 0; n < elname.Length; n++)
@@ -609,8 +604,8 @@ namespace NCDK.Graphs.InChI
             fixed (Inchi_Atom* atoms = prep.atoms)
             fixed (Inchi_Stereo0D* stereos = prep.stereos)
             {
-                Inchi_Input native_input = new Inchi_Input();
-                Inchi_Output native_output = new Inchi_Output();
+                var native_input = new Inchi_Input();
+                var native_output = new Inchi_Output();
 
                 native_input.atom = new IntPtr(atoms);
                 native_input.num_atoms = (Int16)input.Atoms.Count;
@@ -652,8 +647,8 @@ namespace NCDK.Graphs.InChI
             fixed (Inchi_Atom* atoms = prep.atoms)
             fixed (Inchi_Stereo0D* stereos = prep.stereos)
             {
-                Inchi_Input native_input = new Inchi_Input();
-                Inchi_Output native_output = new Inchi_Output();
+                var native_input = new Inchi_Input();
+                var native_output = new Inchi_Output();
 
                 native_input.atom = new IntPtr(atoms);
                 native_input.num_atoms = (Int16)input.Atoms.Count;
@@ -806,7 +801,7 @@ namespace NCDK.Graphs.InChI
 
                 var ret = GetStructFromINCHI(ref native_input, out native_output);
 
-                NInchiOutputStructure output = new NInchiOutputStructure(ret,
+                var output = new NInchiOutputStructure(ret,
                     Marshal.PtrToStringAnsi(native_output.szMessage),
                     Marshal.PtrToStringAnsi(native_output.szLog),
                     native_output.WarningFlags[0], native_output.WarningFlags[1],
@@ -844,7 +839,7 @@ namespace NCDK.Graphs.InChI
             var szXtra2 = Marshal.AllocHGlobal(65);
             var ret = GetINCHIKeyFromINCHI(inchi, 1, 2, szINCHIKey, szXtra1, szXtra2);
 
-            NInchiOutputKey oo = new NInchiOutputKey(ret, Marshal.PtrToStringAnsi(szINCHIKey));
+            var oo = new NInchiOutputKey(ret, Marshal.PtrToStringAnsi(szINCHIKey));
 
             Marshal.FreeHGlobal(szXtra2);
             Marshal.FreeHGlobal(szXtra1);
@@ -901,7 +896,7 @@ namespace NCDK.Graphs.InChI
                 int ret;
                 ret = Get_inchi_Input_FromAuxInfo(auxInfo, 0, 0, out native_output);
 
-                NInchiInput oos = new NInchiInput();
+                var oos = new NInchiInput();
                 Inchi_Input* pii = (Inchi_Input*)native_output.pInp.ToPointer();
                 {
                     CreateAtoms(oos, pii->num_atoms, pii->atom);

@@ -277,3 +277,4 @@ ModelManifest.xml
 !BuildAll.bat
 Test.sln
 Test/
+.vscode/

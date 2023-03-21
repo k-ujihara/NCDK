@@ -3,8 +3,8 @@
     <OutputType>Library</OutputType>
     <TargetFramework>net48</TargetFramework>
 
-    <Version>1.6.1</Version>
-    <Copyright>Copyright © 2016-2021 Kazuya Ujihara</Copyright>
+    <Version>1.6.2</Version>
+    <Copyright>Copyright © 2016-2023 Kazuya Ujihara</Copyright>
 
     <PackageId>NCDK.Display</PackageId>
     <Product>NCDK.Display: Depiction module of NCDK</Product>

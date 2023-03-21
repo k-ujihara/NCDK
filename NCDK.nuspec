@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>NCDK</id>
-        <version>1.6.1</version>
+        <version>1.6.2</version>
         <title>NCDK: library of algorithms for structural cheminformatics</title>
         <authors>Kazuya Ujihara</authors>
         <owners>kazuya</owners>
@@ -11,7 +11,7 @@
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>NCDK is C# implementation of the Chemistry Development Kit (CDK), which is an open-source library of algorithms for structural cheminformatics and bioinformatics.</description>
         <releaseNotes>This release is based on https://github.com/cdk/cdk/tree/a027f6689a34d9ede3bb9befad2d0f1c5b2bb711 snapshot.</releaseNotes>
-        <copyright>Copyright © 2016-2021 Kazuya Ujihara</copyright>
+        <copyright>Copyright © 2016-2023 Kazuya Ujihara</copyright>
         <tags>cdk cheminformatics chemistry toolkit</tags>
         <dependencies>
             <dependency id="MathNet.Numerics.Signed" version="4.15.0" />
@@ -22,15 +22,15 @@
     </metadata>
     <files>
         <file src="NCDK.targets" target="build/" />
-        <file src="NCDK/bin/Release/netcoreapp3.1/NCDK.dll" target="lib/netcoreapp3.1" />
-        <file src="NCDK/bin/Release/netcoreapp3.1/NCDK.xml" target="lib/netcoreapp3.1" />
-        <file src="NCDK.Math/bin/Release/netcoreapp3.1/NCDK.Math.dll" target="lib/netcoreapp3.1" />
-        <file src="NCDK.Math/bin/Release/netcoreapp3.1/NCDK.Math.xml" target="lib/netcoreapp3.1" />
+        <file src="NCDK/bin/Release/net7.0/NCDK.dll" target="lib/net7.0" />
+        <file src="NCDK/bin/Release/net7.0/NCDK.xml" target="lib/net7.0" />
+        <file src="NCDK.Math/bin/Release/net7.0/NCDK.Math.dll" target="lib/net7.0" />
+        <file src="NCDK.Math/bin/Release/net7.0/NCDK.Math.xml" target="lib/net7.0" />
         <!--
-        <file src="NCDK.RDF/bin/Release/netcoreapp3.1/NCDK.RDF.dll" target="lib/netcoreapp3.1" />
-        <file src="NCDK.RDF/bin/Release/netcoreapp3.1/NCDK.RDF.xml" target="lib/netcoreapp3.1" />
-        <file src="NCDK.Legacy/bin/Release/netcoreapp3.1/NCDK.Legacy.dll" target="lib/netcoreapp3.1" />
-        <file src="NCDK.Legacy/bin/Release/netcoreapp3.1/NCDK.Legacy.xml" target="lib/netcoreapp3.1" />
+        <file src="NCDK.RDF/bin/Release/net7.0/NCDK.RDF.dll" target="lib/net7.0" />
+        <file src="NCDK.RDF/bin/Release/net7.0/NCDK.RDF.xml" target="lib/net7.0" />
+        <file src="NCDK.Legacy/bin/Release/net7.0/NCDK.Legacy.dll" target="lib/net7.0" />
+        <file src="NCDK.Legacy/bin/Release/net7.0/NCDK.Legacy.xml" target="lib/net7.0" />
         -->
         <file src="NCDK/bin/Release/netstandard2.0/NCDK.dll" target="lib/netstandard2.0" />
         <file src="NCDK/bin/Release/netstandard2.0/NCDK.xml" target="lib/netstandard2.0" />

@@ -11,7 +11,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>NCDK is C# implementation of the Chemistry Development Kit (CDK), which is an open-source library of algorithms for structural cheminformatics and bioinformatics.</description>
     <releaseNotes>This release is based on https://github.com/cdk/cdk/tree/a027f6689a34d9ede3bb9befad2d0f1c5b2bb711 snapshot.</releaseNotes>
-    <copyright>Copyright © 2016-2021 Kazuya Ujihara</copyright>
+    <copyright>Copyright © 2016-2023 Kazuya Ujihara</copyright>
     <tags>cdk cheminformatics chemistry toolkit</tags>
     <dependencies>
       <dependency id="MathNet.Numerics.Signed" version="4.9.0" />
@@ -19,8 +19,8 @@
   </metadata>
   <files>
     <file src="NCDK.targets" target="build/" />
-    <file src="bin/Release/netcoreapp3.1/NCDK.dll" target="lib/net461" />
-    <file src="bin/Release/netcoreapp3.1/NCDK.xml" target="lib/net461" />
+    <file src="bin/Release/net7.0/NCDK.dll" target="lib/net461" />
+    <file src="bin/Release/net7.0/NCDK.xml" target="lib/net461" />
     <file src="bin/Release/netstandard2.0/NCDK.dll" target="lib/netstandard2.0" />
     <file src="bin/Release/netstandard2.0/NCDK.xml" target="lib/netstandard2.0" />
     <file src="runtimes/win-x64/native/libinchi.dll" target="runtimes/win-x64/native" />

@@ -26,9 +26,9 @@ Most of codes are written in C&#35;. You can learn NCDK from CDK documents, NCDK
 Build from Command Line
 -----------------------
 
-Windows: Open Developer Command Prompt for VS 2019, and launch `BuildAll.bat`.
+Windows: Open Developer Command Prompt for VS 2022, and launch `BuildAll.bat`.
 
-Linux (.NET Core): To build NCDK.dll, launch `dotnet build --framework netstandard2.0` in NCDK directory.
+Linux (.NET): To build NCDK.dll, launch `dotnet build --framework netstandard2.0` in NCDK directory.
 
 Test from Command Line
 ---------------------
@@ -41,7 +41,7 @@ And then, launch `dotnet test` in NCDK.Tests directory to test it.
 NuGet Packages
 --------------
 
-* [NCDK](https://www.nuget.org/packages/NCDK/) -- for .NET Standard 2.0 and .NET Core 3.1. InChI features work only on Intel-based Windows or Intel-based Linux system.
-* [NCDK.Display](https://www.nuget.org/packages/NCDK.Display/) -- for .NET Framework 4.6.1.
+* [NCDK](https://www.nuget.org/packages/NCDK/) -- for .NET Standard 2.0 and .NET 7.0. InChI features work only on Intel-based Windows or Intel-based Linux system.
+* [NCDK.Display](https://www.nuget.org/packages/NCDK.Display/) -- for .NET Framework 4.8.
 
-Copyright (c) 2016-2021 Kazuya Ujihara
+Copyright (c) 2016-2023 Kazuya Ujihara

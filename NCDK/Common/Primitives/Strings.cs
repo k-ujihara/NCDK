@@ -217,7 +217,7 @@ namespace NCDK.Common.Primitives
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool ContainsOrdinal(this string str, string value)
         {
-#if NETSTANDARD2_1 || NETCOREAPP2_1 || NETCOREAPP3 || NETCOREAPP3_1
+#if NETSTANDARD2_1 || NETCOREAPP2_1 || NETCOREAPP3 || NETCOREAPP3_1 || NET5_0_OR_GREATER
             return str.Contains(value, StringComparison.Ordinal);
 #else
             return str.Contains(value);

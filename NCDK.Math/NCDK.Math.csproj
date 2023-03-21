@@ -5,8 +5,8 @@
     <RootNamespace>NCDK</RootNamespace>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>ncdk.snk</AssemblyOriginatorKeyFile>
-    <Version>1.6.1</Version>
-    <Copyright>Copyright © 2016-2021 Kazuya Ujihara</Copyright>
+    <Version>1.6.2</Version>
+    <Copyright>Copyright © 2016-2023 Kazuya Ujihara</Copyright>
     <PackageProjectUrl></PackageProjectUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>cdk cheminformatics chemistry toolkit</PackageTags>

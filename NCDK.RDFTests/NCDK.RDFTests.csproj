@@ -7,7 +7,7 @@
     <RootNamespace>NCDK</RootNamespace>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>ncdk.snk</AssemblyOriginatorKeyFile>
-    <Copyright>Copyright © 2016-2021 Kazuya Ujihara</Copyright>
+    <Copyright>Copyright © 2016-2023 Kazuya Ujihara</Copyright>
     <PackageLicenseUrl>https://github.com/kazuyaujihara/NCDK/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/kazuyaujihara/NCDK</PackageProjectUrl>
     <RepositoryUrl>https://github.com/kazuyaujihara/NCDK</RepositoryUrl>
